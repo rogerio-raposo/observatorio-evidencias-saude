@@ -39,6 +39,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [20 — Modelo Conceitual de Dados do OES](docs/architecture/20-modelo-conceitual-dados.md)
 - [21 — Modelo Lógico de Dados do OES](docs/architecture/21-modelo-logico-dados.md)
 - [22 — Validação Arquitetural por Casos de Uso](docs/architecture/22-validacao-arquitetural-casos-uso.md)
+- [23 — Checagem de Integridade do Modelo de Dados](docs/architecture/23-checagem-integridade-modelo-dados.md)
 
 ## Arquitetura documental prevista
 
@@ -63,7 +64,8 @@ observatorio-evidencias-saude/
 │   └── architecture/
 │       ├── 20-modelo-conceitual-dados.md
 │       ├── 21-modelo-logico-dados.md
-│       └── 22-validacao-arquitetural-casos-uso.md
+│       ├── 22-validacao-arquitetural-casos-uso.md
+│       └── 23-checagem-integridade-modelo-dados.md
 ├── templates/
 └── references/
 ```
@@ -115,9 +117,13 @@ Alterações metodológicas relevantes devem:
 3. ser registradas no `CHANGELOG.md` quando consolidadas;
 4. manter coerência entre documentos dependentes.
 
+## Gate arquitetural
+
+**GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas explícitas para aplicabilidade, produtos, monitoramento e vocabulários.
+
 ## Próxima etapa
 
-**Checar a integridade dos Documentos 20–22 e fechar o modelo lógico candidato**, antes de elaborar qualquer modelo físico ou selecionar tecnologia.
+**Elaborar o primeiro desenho físico candidato e comparar alternativas arquiteturais**, preservando reversibilidade e sem selecionar stack definitiva nesta etapa.
 
 ---
 
