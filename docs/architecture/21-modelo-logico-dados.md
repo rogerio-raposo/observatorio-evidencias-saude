@@ -920,6 +920,31 @@ Campos:
 - reviewed_at;
 - disagreement_note.
 
+## 35.1 ApplicabilityAssessment — interface reservada
+
+**ID reservado:** `OES-AP-AAAA-NNNNNN`
+
+A metodologia do OES já separa aplicabilidade de certeza/indirectness. Por isso, o modelo lógico reserva uma entidade própria, mas **não fixa ainda categorias, score, domínios ou thresholds**.
+
+Campos mínimos provisórios:
+
+- id;
+- version_no;
+- investigation_id;
+- target_context;
+- source_context_summary;
+- assessment_status;
+- rationale;
+- assessor;
+- assessed_at;
+- status.
+
+Regra:
+
+- `Product.applicability_summary` será uma representação derivada;
+- quando houver ApplicabilityAssessment formal, o produto deverá referenciar sua versão;
+- a entidade somente poderá receber estrutura operacional definitiva após formalização metodológica da camada de aplicabilidade.
+
 ---
 
 # PARTE X — PRODUTOS
@@ -1073,6 +1098,7 @@ Entidades mescladas poderão receber estado `superseded` apontando para a identi
 - RiskAssessment exige target válido.
 - Product publicado exige evidence_cutoff_date.
 - Product que comunica certeza deve apontar para CertaintyAssessment e versão explícitos.
+- Product.applicability_summary não substitui ApplicabilityAssessment quando houver avaliação formal.
 - Result de desempenho de modelo de predição deve apontar para PredictionModel quando o modelo possuir identidade reutilizável.
 - NMA deve estruturar StudyGroups e nós/contrastes da síntese quando necessário.
 - versão superseded não pode ser tratada como current.
@@ -1141,7 +1167,8 @@ Versioning → entidades persistentes
 26. ReportRelation representará correções, retrações e relações documentais.
 27. InvestigationRelation representará atualização/derivação entre investigações.
 28. Product apontará para versões específicas de Synthesis e Certainty.
-29. Nenhuma decisão acima fixa tecnologia física.
+29. ApplicabilityAssessment permanece como interface reservada, sem taxonomia operacional prematura.
+30. Nenhuma decisão acima fixa tecnologia física.
 
 ---
 
