@@ -328,3 +328,30 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 
 - alternativas arquiteturais e primeiro desenho físico candidato.
 
+## 2026-10-03 — Documentos 24–25: Persistência e desenho físico candidato
+
+### Adicionado
+
+- `docs/architecture/24-alternativas-arquiteturais-persistencia.md`;
+- `docs/architecture/25-primeiro-desenho-fisico-candidato.md`.
+
+### Arquitetura candidata
+
+- **OES-H1:** núcleo relacional canônico + extensões documentais controladas + object storage + projeções opcionais;
+- bancos documentais e de grafo permanecem alternativas/projeções especializadas, não fontes paralelas de verdade nesta fase;
+- PostgreSQL foi adotado apenas como referência de prova arquitetural por combinar constraints relacionais e JSONB, sem decisão definitiva de stack.
+
+### Desenho físico candidato
+
+- **OES-P1:** registry global de entidades e versões + entidades tipadas + tabelas associativas + JSONB controlado + artifact metadata + dependency projection;
+- `core.entity` fornece identidade estável;
+- `core.entity_version` fornece FK real para versões e elimina a necessidade de referências polimórficas sem integridade;
+- provenance aponta para versões concretas;
+- object storage mantém bytes fora das tabelas de domínio;
+- `dependency_edge` é projeção derivada, não fonte primária;
+- JSONB não poderá substituir relações que exigem FK.
+
+### Próxima etapa
+
+- PoC-S1 do schema mínimo para validar OES-P1.
+
