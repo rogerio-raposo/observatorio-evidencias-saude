@@ -204,6 +204,28 @@ Campos:
 
 Isso evita limitar uma Investigation a uma única Question lógica.
 
+## 11.1 InvestigationRelation
+
+Representa relação semântica entre investigações distintas.
+
+Campos:
+
+- source_investigation_id;
+- target_investigation_id;
+- relation_type;
+- rationale;
+- created_at.
+
+`relation_type`:
+
+- update_of;
+- extends;
+- reanalysis_of;
+- supersedes;
+- derived_from.
+
+Permite distinguir nova versão operacional de uma investigação viva de uma nova Investigation derivada de trabalho anterior.
+
 ---
 
 # PARTE III — BUSCA E RECUPERAÇÃO
@@ -384,10 +406,65 @@ Campos:
 - protocol;
 - follow_up;
 - subgroup_report;
-- correction;
 - multiple_studies_reported.
 
 Esta entidade substitui qualquer suposição rígida de que cada Report pertence a apenas um Study.
+
+## 19.1 StudyGroup
+
+**ID:** `OES-SG-AAAA-NNNNNN`
+
+Representa braço, grupo, coorte analítica ou estrato dentro de Study.
+
+Campos:
+
+- id;
+- study_id;
+- label;
+- group_type;
+- n_planned, opcional;
+- n_analyzed, opcional;
+- status.
+
+Referências a grupos em Result serão opcionais conforme o desenho.
+
+## 19.2 GroupComponent
+
+Permite estruturar o conteúdo de um StudyGroup.
+
+Campos:
+
+- study_group_id;
+- component_type;
+- concept_id, opcional;
+- label;
+- dose_or_intensity, opcional;
+- duration, opcional;
+- notes.
+
+Pode representar intervenção, comparador, exposição, ausência de exposição ou combinação.
+
+## 19.3 ReportRelation
+
+Representa relações documentais entre Reports.
+
+Campos:
+
+- source_report_id;
+- target_report_id;
+- relation_type;
+- relation_date;
+- notes.
+
+`relation_type`:
+
+- correction_of;
+- retraction_of;
+- expression_of_concern_for;
+- update_of;
+- supplement_to.
+
+Correção ou retração deverá poder disparar reavaliação de Results, Syntheses, Certainty Assessments e Products dependentes.
 
 ---
 
@@ -440,9 +517,11 @@ Campos mínimos:
 - outcome_id;
 - operationalization_id, opcional;
 - population_descriptor;
-- group_a;
-- group_b;
+- group_a_id, opcional;
+- group_b_id, opcional;
 - timepoint;
+- timepoint_value, opcional;
+- timepoint_unit, opcional;
 - estimand;
 - measure;
 - reported_value;
@@ -455,6 +534,26 @@ Campos mínimos:
 - analysis_population;
 - missing_data_state;
 - status.
+
+## 22.1 DiagnosticResultDetail
+
+Extensão opcional para acurácia diagnóstica.
+
+Campos:
+
+- result_id;
+- index_test_concept_id, opcional;
+- reference_standard_concept_id, opcional;
+- threshold;
+- true_positive;
+- false_positive;
+- false_negative;
+- true_negative;
+- sensitivity, opcional;
+- specificity, opcional;
+- notes.
+
+Evita forçar a estrutura diagnóstica no Result genérico.
 
 ## 23. ResultSource
 
@@ -491,6 +590,52 @@ Campos:
 
 Nenhum valor derivado deve existir sem DerivationRecord quando a transformação for material.
 
+## 24.1 PredictionModel
+
+**ID:** `OES-PM-AAAA-NNNNNN`
+
+Representa identidade persistente de um modelo de predição que pode ser desenvolvido e avaliado em múltiplos Studies.
+
+Campos:
+
+- id;
+- name_or_label;
+- target_outcome_id;
+- intended_use;
+- model_type;
+- development_study_id, opcional;
+- status;
+- version_no.
+
+Result poderá referenciar `prediction_model_id` quando representar desempenho do modelo.
+
+## 24.2 PredictionModelIdentifier
+
+Campos:
+
+- prediction_model_id;
+- namespace;
+- value;
+- normalized_value;
+- verified_at.
+
+## 24.3 PredictionModelStudyRole
+
+Campos:
+
+- prediction_model_id;
+- study_id;
+- role;
+- notes.
+
+`role`:
+
+- development;
+- internal_validation;
+- external_validation;
+- updating;
+- impact_evaluation.
+
 ---
 
 # PARTE VI — TRIAGEM E EXTRAÇÃO
@@ -503,7 +648,8 @@ Campos:
 
 - id;
 - investigation_id;
-- report_id;
+- target_type;
+- target_id;
 - stage;
 - reviewer;
 - decision;
@@ -511,6 +657,13 @@ Campos:
 - decided_at;
 - parent_decision_id, opcional;
 - adjudication_flag.
+
+`target_type` será, nesta fase:
+
+- report;
+- study.
+
+Na triagem inicial o alvo tende a ser Report; após desambiguação documental, decisões de elegibilidade podem ocorrer no nível Study.
 
 Permite múltiplos revisores e decisões independentes.
 
@@ -589,6 +742,8 @@ Campos:
 - timepoint;
 - estimand;
 - synthesis_type;
+- synthesis_origin;
+- source_study_id, opcional;
 - method;
 - model;
 - software;
@@ -614,6 +769,46 @@ Campos:
 - included_sensitivity;
 - exclusion_reason;
 - notes.
+
+## 30.1 SynthesisNode
+
+**ID:** `OES-SN-AAAA-NNNNNN`
+
+Representa nó analítico em sínteses com múltiplas intervenções/exposições, especialmente NMA.
+
+Campos:
+
+- id;
+- synthesis_id;
+- label;
+- concept_id, opcional;
+- node_definition;
+- status.
+
+## 30.2 SynthesisNodeMapping
+
+Mapeia grupos de estudos a nós da síntese.
+
+Campos:
+
+- synthesis_node_id;
+- study_group_id;
+- mapping_rationale;
+- reviewer;
+- status.
+
+## 30.3 SynthesisContrast
+
+Representa contraste explícito entre nós.
+
+Campos:
+
+- id;
+- synthesis_id;
+- node_a_id;
+- node_b_id;
+- contrast_type;
+- status.
 
 ## 31. SynthesisStatistic
 
@@ -655,7 +850,23 @@ Campos:
 
 Permite vínculo explícito com GRADE-CERQual.
 
+## 32.1 FindingContribution
+
+Relaciona Studies/Reports a ReviewFinding.
+
+Campos:
+
+- review_finding_id;
+- study_id;
+- report_id, opcional;
+- contribution_role;
+- relevance_note, opcional;
+- adequacy_note, opcional;
+- notes.
+
 ---
+
+
 
 # PARTE IX — CERTEZA/CONFIANÇA
 
@@ -746,7 +957,9 @@ Campos:
 Campos:
 
 - product_id;
+- product_version_no;
 - synthesis_id;
+- synthesis_version_no;
 - role;
 - sequence.
 
@@ -755,7 +968,9 @@ Campos:
 Campos:
 
 - product_id;
+- product_version_no;
 - certainty_assessment_id;
+- certainty_version_no;
 - role;
 - sequence.
 
@@ -854,10 +1069,12 @@ Entidades mescladas poderão receber estado `superseded` apontando para a identi
 - Certainty GRADE exige Synthesis/outcome identificável.
 - Certainty CERQual exige ReviewFinding.
 - SearchHit exige Search.
-- ScreeningDecision exige Investigation e Report.
+- ScreeningDecision exige Investigation e target válido (Report ou Study).
 - RiskAssessment exige target válido.
 - Product publicado exige evidence_cutoff_date.
-- Product que comunica certeza deve apontar para CertaintyAssessment vigente.
+- Product que comunica certeza deve apontar para CertaintyAssessment e versão explícitos.
+- Result de desempenho de modelo de predição deve apontar para PredictionModel quando o modelo possuir identidade reutilizável.
+- NMA deve estruturar StudyGroups e nós/contrastes da síntese quando necessário.
 - versão superseded não pode ser tratada como current.
 
 ---
@@ -873,6 +1090,7 @@ Question
       → SearchHit
         → Report
           ↔ Study
+            → StudyGroup
             → Result
               → Synthesis
                 → CertaintyAssessment
@@ -914,7 +1132,16 @@ Versioning → entidades persistentes
 17. Ficha de Evidência será inicialmente modelada como Product subtype.
 18. ProvenanceRecord será transversal.
 19. MergeDecision preservará identidade e reversibilidade.
-20. Nenhuma decisão acima fixa tecnologia física.
+20. ScreeningDecision terá alvo tipado Report/Study.
+21. StudyGroup e GroupComponent representarão braços/coortes analíticas.
+22. SynthesisNode e SynthesisContrast suportarão NMA e outros contrastes estruturados.
+23. DiagnosticResultDetail estenderá Result em acurácia diagnóstica.
+24. PredictionModel terá identidade persistente entre desenvolvimento e validações.
+25. FindingContribution vinculará estudos aos achados qualitativos.
+26. ReportRelation representará correções, retrações e relações documentais.
+27. InvestigationRelation representará atualização/derivação entre investigações.
+28. Product apontará para versões específicas de Synthesis e Certainty.
+29. Nenhuma decisão acima fixa tecnologia física.
 
 ---
 
@@ -942,17 +1169,15 @@ Validar com casos reais:
 
 # PARTE XVII — PRÓXIMA ETAPA
 
-A próxima etapa será a **validação arquitetural por casos de uso**, antes do modelo físico.
+A primeira bateria de validação arquitetural está documentada no **Documento 22**.
 
-Objetivos:
+Próxima etapa:
 
-1. testar cardinalidades;
-2. detectar entidades ausentes;
-3. testar proveniência;
-4. testar versionamento;
-5. testar atualização da Ficha de Evidência;
-6. testar documentos não convencionais;
-7. revisar o modelo lógico antes de escolher tecnologia.
+1. executar checagem de integridade entre Documentos 20–22;
+2. verificar consistência dos novos objetos especializados;
+3. testar impactos de correção/retração e atualização;
+4. fechar o modelo lógico candidato;
+5. somente depois elaborar o primeiro desenho físico candidato.
 
 ---
 
