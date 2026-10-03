@@ -42,6 +42,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [23 — Checagem de Integridade do Modelo de Dados](docs/architecture/23-checagem-integridade-modelo-dados.md)
 - [24 — Alternativas Arquiteturais de Persistência](docs/architecture/24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](docs/architecture/25-primeiro-desenho-fisico-candidato.md)
+- [26 — PoC-S1: Validação do Schema Mínimo](docs/architecture/26-poc-s1-validacao.md)
 
 ## Arquitetura documental prevista
 
@@ -69,7 +70,8 @@ observatorio-evidencias-saude/
 │       ├── 22-validacao-arquitetural-casos-uso.md
 │       ├── 23-checagem-integridade-modelo-dados.md
 │       ├── 24-alternativas-arquiteturais-persistencia.md
-│       └── 25-primeiro-desenho-fisico-candidato.md
+│       ├── 25-primeiro-desenho-fisico-candidato.md
+│       └── 26-poc-s1-validacao.md
 ├── templates/
 └── references/
 ```
@@ -129,9 +131,13 @@ Alterações metodológicas relevantes devem:
 
 **OES-H1** foi selecionada para prova arquitetural e **OES-P1** é o primeiro desenho físico candidato. Nenhuma stack de produção foi escolhida.
 
+## Gate físico
+
+**GATE F2-B — Execução da PoC-S1 em PostgreSQL: PENDENTE.** A validação estática foi concluída, mas não existe servidor PostgreSQL disponível no ambiente desta etapa.
+
 ## Próxima etapa
 
-**PoC-S1 — prova de conceito do schema mínimo**, destinada a validar identidade, versões, relações, proveniência e lineage antes de qualquer implementação ampla.
+Prosseguir pela trilha documental permitida: **plano formal de testes do F2-B, política de identidade/versionamento e política de proveniência**, sem promover OES-P1 a definitivo.
 
 ---
 
