@@ -41,6 +41,7 @@ Template canônico:
 - 11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências
 - 12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica
 - 13 — Protocolo de Extração e Estruturação de Dados
+- 14 — Protocolo de Síntese de Evidências
 
 ### Estrutura operacional
 
@@ -50,6 +51,7 @@ Template canônico:
 - Screening Record
 - Risk of Bias / Critical Appraisal Record
 - Data Extraction Record
+- Synthesis Record
 - Índice de fontes metodológicas
 
 ## 3. Decisões arquiteturais já firmadas
@@ -72,29 +74,28 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**14 — Protocolo de Síntese de Evidências**
+**15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências**
 
 Deverá definir:
 
-- critérios de combinabilidade;
-- síntese narrativa e síntese quantitativa;
-- medidas de efeito;
-- modelos estatísticos;
-- heterogeneidade;
-- intervalos de predição quando pertinentes;
-- subgrupos e meta-regressão;
-- análises de sensibilidade;
-- múltiplos braços e dependência;
-- dados raros;
-- síntese sem meta-análise;
-- integração do risco de viés;
-- apresentação e interpretação dos resultados.
+- GRADE e certeza por desfecho;
+- risco de viés;
+- inconsistência;
+- indirectness;
+- imprecisão;
+- missing evidence/publication bias;
+- fatores de aumento quando aplicáveis;
+- certeza em diagnóstico, prognóstico, predição e prevalência;
+- CERQual para evidência qualitativa;
+- certeza em network meta-analysis;
+- Summary of Findings;
+- comunicação da certeza;
+- separação entre certeza e recomendação.
 
 ## 5. Etapas metodológicas seguintes
 
-Depois do documento 13:
+Depois do documento 14:
 
-- 14 — Síntese de Evidências
 - 15 — Certeza/Confiança na Evidência
 
 Somente depois deverá ser consolidado o modelo de dados e aprofundada a arquitetura tecnológica.
