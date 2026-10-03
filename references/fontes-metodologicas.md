@@ -171,3 +171,33 @@ Sempre que uma ferramenta metodológica for atualizada, a versão vigente dever�
 
 - JBI Manual for Evidence Synthesis  
   https://synthesismanual.jbi.global/
+
+## Certeza/confiança no corpo de evidências
+
+- GRADE Working Group  
+  https://www.gradeworkinggroup.org/
+
+- Cochrane Handbook — Chapter 14: Completing “Summary of findings” tables and grading the certainty of the evidence  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-14
+
+- Cochrane — GRADE in the Cochrane Handbook / transição para o GRADE Book  
+  https://www.cochrane.org/learn/courses-and-resources/cochrane-methodology/grade/grade-cochrane-handbook
+
+- GRADE-CERQual — Confidence in the Evidence from Reviews of Qualitative Research  
+  https://www.cerqual.org/
+
+- GRADE-CERQual — Official guidance  
+  https://www.cerqual.org/official-guidance-for-applying-grade-cerqual/
+
+- CINeMA — Confidence in Network Meta-Analysis  
+  https://cinema.ispm.unibe.ch/
+
+- Cochrane Handbook — Chapter 11.5: Evaluating confidence in network meta-analysis  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11
+
+- Cochrane Handbook for Systematic Reviews of Diagnostic Test Accuracy  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook-systematic-reviews-diagnostic-test-accuracy
+
+- Cochrane Handbook for Systematic Reviews of Prognosis Research and Prediction Models  
+  https://www.cochrane.org/authors/handbooks-and-manuals/cochrane-handbook-systematic-reviews-prognosis-research-and-prediction-models
+
