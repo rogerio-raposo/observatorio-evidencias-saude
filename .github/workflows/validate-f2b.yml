@@ -1,0 +1,130 @@
+name: OES F2-B PostgreSQL PoC
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'database/**'
+      - '.github/workflows/validate-f2b.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-f2b-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  postgres-poc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: oes_poc
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_poc"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: oes_poc
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Ensure PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version
+
+      - name: Capture PostgreSQL server version
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -Atc "SELECT version();"
+
+      - name: Apply PoC-S1 baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/poc-s1.sql
+
+      - name: Apply PoC-S2 migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/002_poc_s2_search_screening_risk.sql
+
+      - name: Run PoC-S1 smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/poc-s1-smoke.sql
+
+      - name: Verify installed objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          DO $verify$
+          DECLARE
+            table_count integer;
+            view_count integer;
+          BEGIN
+            SELECT count(*)
+              INTO table_count
+              FROM information_schema.tables
+             WHERE table_schema IN (
+               'core','investigation','evidence','synthesis',
+               'appraisal','product','provenance','artifact'
+             )
+               AND table_type = 'BASE TABLE';
+
+            IF table_count <> 39 THEN
+              RAISE EXCEPTION
+                'Expected 39 OES tables after S1+S2, found %',
+                table_count;
+            END IF;
+
+            SELECT count(*)
+              INTO view_count
+              FROM information_schema.views
+             WHERE table_schema IN (
+               'core','evidence','synthesis','appraisal','product'
+             );
+
+            IF view_count <> 5 THEN
+              RAISE EXCEPTION
+                'Expected 5 OES views, found %',
+                view_count;
+            END IF;
+          END
+          $verify$;
+          SQL
+
+      - name: F2-B preliminary status
+        shell: bash
+        run: |
+          echo "PoC-S1 baseline parsed and applied successfully."
+          echo "PoC-S2 migration parsed and applied successfully."
+          echo "PoC-S1 smoke completed with ON_ERROR_STOP=1."
+          echo "Object-count assertions passed."
+          echo "Full F2-B remains subject to negative/versioning/lineage tests T03-T19."
