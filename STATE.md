@@ -50,6 +50,8 @@ Template canônico:
 - 21 — Modelo Lógico de Dados do OES
 - 22 — Validação Arquitetural por Casos de Uso
 - 23 — Checagem de Integridade do Modelo de Dados
+- 24 — Alternativas Arquiteturais de Persistência
+- 25 — Primeiro Desenho Físico Candidato
 
 ### Estrutura operacional
 
@@ -87,19 +89,24 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**Alternativas arquiteturais e primeiro desenho físico candidato.**
+**PoC-S1 — prova de conceito do schema mínimo de OES-P1.**
 
 Próximo trabalho:
 
-- comparar armazenamento relacional, documental, grafo e híbrido;
-- separar dados canônicos de artefatos binários/volumosos;
-- testar mecanismos de versionamento, proveniência e targets tipados;
-- escolher arquitetura candidata reversível;
-- elaborar primeiro desenho físico sem congelar stack definitiva.
+- implementar registry de entidades/versões;
+- implementar núcleo Question/Investigation/Study/Report/Result/Synthesis/Certainty/Product;
+- implementar provenance e artifact metadata;
+- validar lineage e impacto de atualização/retração;
+- manter a PoC isolada de qualquer decisão de produção.
 
 ## 5. Gate arquitetural
 
 **GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas metodológicas explícitas.
+
+Arquiteturas candidatas:
+
+- **OES-H1** — persistência híbrida com núcleo relacional canônico;
+- **OES-P1** — primeiro desenho físico candidato.
 
 ## 6. Estado das fases
 
@@ -130,11 +137,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 9. Checkpoint atual
 
-**CP09 — 2026-10-03**
+**CP10 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP09.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP10.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -153,8 +160,10 @@ Cobertura:
 - modelo conceitual de dados;
 - modelo lógico de dados;
 - validação arquitetural e gate F2-A;
+- alternativas de persistência OES-H1;
+- desenho físico candidato OES-P1;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Alternativas arquiteturais e primeiro desenho físico candidato.**
+**PoC-S1 — schema mínimo de OES-P1.**
