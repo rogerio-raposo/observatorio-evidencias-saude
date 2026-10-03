@@ -37,6 +37,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 ### Arquitetura e dados
 
 - [20 — Modelo Conceitual de Dados do OES](docs/architecture/20-modelo-conceitual-dados.md)
+- [21 — Modelo Lógico de Dados do OES](docs/architecture/21-modelo-logico-dados.md)
 
 ## Arquitetura documental prevista
 
@@ -59,7 +60,8 @@ observatorio-evidencias-saude/
 │   │   └── 15-certeza-evidencia.md
 │   ├── products/
 │   └── architecture/
-│       └── 20-modelo-conceitual-dados.md
+│       ├── 20-modelo-conceitual-dados.md
+│       └── 21-modelo-logico-dados.md
 ├── templates/
 └── references/
 ```
@@ -113,7 +115,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-**Desenvolver o modelo lógico de dados**, usando o Documento 20 como base e preservando proveniência, versionamento e as entidades metodológicas dos Documentos 00–15.
+**Validar o modelo lógico por casos de uso**, testando cardinalidades, proveniência, versionamento, atualização e documentos não convencionais antes de definir o modelo físico.
 
 ---
 
