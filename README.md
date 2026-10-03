@@ -8,6 +8,10 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 **Fase atual:** concepção e fundamentos metodológicos.
 
+**Checkpoint vivo:** [STATE.md](STATE.md)
+
+O arquivo STATE.md deve ser atualizado a cada marco relevante e serve como ponto principal de retomada entre conversas e sessões.
+
 O repositório passa a ser a **fonte canônica do projeto**. As conversas de desenvolvimento são utilizadas para elaboração e revisão; as decisões consolidadas devem ser registradas aqui.
 
 ## Documentos atuais
