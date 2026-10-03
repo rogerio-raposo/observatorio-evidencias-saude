@@ -42,6 +42,7 @@ Template canônico:
 - 12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica
 - 13 — Protocolo de Extração e Estruturação de Dados
 - 14 — Protocolo de Síntese de Evidências
+- 15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências
 
 ### Estrutura operacional
 
@@ -52,6 +53,7 @@ Template canônico:
 - Risk of Bias / Critical Appraisal Record
 - Data Extraction Record
 - Synthesis Record
+- Certainty Assessment Record
 - Índice de fontes metodológicas
 
 ## 3. Decisões arquiteturais já firmadas
@@ -69,36 +71,31 @@ Template canônico:
 - valor originalmente relatado e valor derivado devem permanecer separados;
 - dados críticos devem manter proveniência rastreável;
 - busca científica deverá ser auditável;
+- certeza do corpo de evidências será avaliada de forma explícita e rastreável;
+- GRADE será a referência central quando aplicável, com CERQual separado para achados qualitativos;
+- aplicabilidade ao Brasil não será confundida automaticamente com indirectness;
+- certeza permanecerá separada de recomendação;
 - IA apoia, mas não é fonte de evidência científica;
 - o repositório, e não a memória da conversa, é o registro persistente do projeto.
 
 ## 4. Próxima etapa
 
-**15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências**
+**Consolidação do modelo conceitual de dados e aprofundamento da arquitetura tecnológica.**
 
-Deverá definir:
+Próximo trabalho:
 
-- GRADE e certeza por desfecho;
-- risco de viés;
-- inconsistência;
-- indirectness;
-- imprecisão;
-- missing evidence/publication bias;
-- fatores de aumento quando aplicáveis;
-- certeza em diagnóstico, prognóstico, predição e prevalência;
-- CERQual para evidência qualitativa;
-- certeza em network meta-analysis;
-- Summary of Findings;
-- comunicação da certeza;
-- separação entre certeza e recomendação.
+- mapear entidades e relações definidas nos Documentos 00–15;
+- distinguir entidades persistentes, registros operacionais e artefatos derivados;
+- definir cardinalidades e identificadores;
+- modelar proveniência e versionamento;
+- verificar a posição da Ficha de Evidência na arquitetura;
+- preservar o princípio “metodologia antes da automação”.
 
-## 5. Etapas metodológicas seguintes
+## 5. Etapa seguinte
 
-Depois do documento 14:
+A base metodológica inicial dos Documentos 10–15 está consolidada como documentação viva.
 
-- 15 — Certeza/Confiança na Evidência
-
-Somente depois deverá ser consolidado o modelo de dados e aprofundada a arquitetura tecnológica.
+O próximo marco será transformar essas definições em um modelo conceitual de dados coerente antes de aprofundar automação e implementação tecnológica.
 
 ## 6. Questões ainda provisórias
 
@@ -122,11 +119,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 8. Checkpoint atual
 
-**CP05 — 2026-10-03**
+**CP06 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP05.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP06.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -141,8 +138,9 @@ Cobertura:
 - avaliação de risco de viés e qualidade metodológica;
 - extração e estruturação de dados;
 - síntese de evidências;
+- avaliação da certeza/confiança no corpo de evidências;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Avaliação da Certeza/Confiança no Corpo de Evidências.**
+**Modelo conceitual de dados e arquitetura tecnológica inicial.**
