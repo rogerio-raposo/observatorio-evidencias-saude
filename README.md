@@ -1,0 +1,104 @@
+# Observatório de Evidências em Saúde (OES)
+
+O **Observatório de Evidências em Saúde — OES** é um projeto para identificar, avaliar criticamente, sintetizar, atualizar e comunicar evidências científicas relevantes em saúde de forma transparente, rastreável e metodologicamente explícita.
+
+> **Princípio estrutural:** metodologia antes da automação.
+
+## Estado do projeto
+
+**Fase atual:** concepção e fundamentos metodológicos.
+
+O repositório passa a ser a **fonte canônica do projeto**. As conversas de desenvolvimento são utilizadas para elaboração e revisão; as decisões consolidadas devem ser registradas aqui.
+
+## Documentos atuais
+
+### Concepção e arquitetura metodológica
+
+- [00 — Documento de Concepção](docs/governance/00-documento-de-concepcao.md)
+- [01 — Escopo Científico e Taxonomia das Perguntas](docs/governance/01-taxonomia-perguntas.md)
+- [02 — Arquitetura de Níveis de Investigação e Produtos](docs/governance/02-niveis-investigacao-produtos.md)
+- [03 — Protocolo de Entrada, Triagem e Roteamento Metodológico](docs/governance/03-roteamento-metodologico.md)
+
+### Metodologia
+
+- [10 — Protocolo de Busca e Recuperação de Evidências](docs/methodology/10-busca-recuperacao-evidencias.md)
+
+## Arquitetura documental prevista
+
+```text
+observatorio-evidencias-saude/
+├── README.md
+├── CHANGELOG.md
+├── docs/
+│   ├── governance/
+│   │   ├── 00-documento-de-concepcao.md
+│   │   ├── 01-taxonomia-perguntas.md
+│   │   ├── 02-niveis-investigacao-produtos.md
+│   │   └── 03-roteamento-metodologico.md
+│   ├── methodology/
+│   │   ├── 10-busca-recuperacao-evidencias.md
+│   │   ├── 11-elegibilidade-triagem-selecao.md
+│   │   ├── 12-avaliacao-risco-vies.md
+│   │   ├── 13-extracao-dados.md
+│   │   ├── 14-sintese-evidencias.md
+│   │   └── 15-certeza-evidencia.md
+│   ├── products/
+│   └── architecture/
+├── templates/
+└── references/
+```
+
+Arquivos previstos ainda não desenvolvidos **não são criados como documentos substantivos** até que sua metodologia seja discutida e consolidada.
+
+## Fluxo conceitual atual
+
+```text
+Pergunta
+  ↓
+Entrada e registro
+  ↓
+Normalização científica
+  ↓
+Classificação metodológica
+  ↓
+Roteamento de profundidade (N0–N4)
+  ↓
+Roteamento de manutenção (M0–M3)
+  ↓
+Busca e recuperação
+  ↓
+Elegibilidade e seleção
+  ↓
+Avaliação crítica
+  ↓
+Extração
+  ↓
+Síntese
+  ↓
+Certeza/confiança
+  ↓
+Aplicabilidade
+  ↓
+Produto OES
+  ↓
+Monitoramento e atualização
+```
+
+## Convenção de desenvolvimento
+
+Os documentos são **vivos** durante a fase de desenvolvimento. O histórico Git registra cada alteração. Versões formais (`v0.1`, `v0.2`, `v1.0`) deverão ser atribuídas somente em marcos deliberadamente aprovados.
+
+Alterações metodológicas relevantes devem:
+
+1. ser justificadas;
+2. preservar rastreabilidade;
+3. ser registradas no `CHANGELOG.md` quando consolidadas;
+4. manter coerência entre documentos dependentes.
+
+## Próxima etapa metodológica
+
+**11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências.**
+
+---
+
+**Projeto iniciado:** 3 de outubro de 2026.
