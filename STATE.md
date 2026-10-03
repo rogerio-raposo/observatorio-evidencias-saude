@@ -38,12 +38,14 @@ Template canônico:
 ### Metodologia
 
 - 10 — Protocolo de Busca e Recuperação de Evidências
+- 11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências
 
 ### Estrutura operacional
 
 - Question Record
 - Routing Record
 - Search Record
+- Screening Record
 - Índice de fontes metodológicas
 
 ## 3. Decisões arquiteturais já firmadas
@@ -63,19 +65,17 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências**
+**12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica**
 
 Deverá definir:
 
-- critérios de inclusão e exclusão;
-- triagem por título/resumo;
-- avaliação de texto completo;
-- dupla triagem e verificações proporcionais por N0–N4;
-- resolução de discordâncias;
-- uso de IA na triagem;
-- motivos de exclusão;
-- fluxo PRISMA;
-- vinculação de múltiplos relatórios ao mesmo Study ID.
+- distinção entre risco de viés, qualidade de relato e certeza;
+- instrumentos por desenho;
+- regras de dupla avaliação;
+- discordâncias e adjudicação;
+- uso de IA;
+- política sobre scores agregados;
+- integração com síntese e certeza da evidência.
 
 ## 5. Etapas metodológicas seguintes
 
