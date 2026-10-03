@@ -39,6 +39,9 @@ Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 - [24 — Alternativas Arquiteturais de Persistência](architecture/24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](architecture/25-primeiro-desenho-fisico-candidato.md)
 - [26 — PoC-S1: Validação do Schema Mínimo](architecture/26-poc-s1-validacao.md)
+- [27 — Plano Formal de Testes do GATE F2-B](architecture/27-plano-testes-gate-f2b.md)
+- [28 — Política de Identidade e Versionamento](architecture/28-politica-identidade-versionamento.md)
+- [29 — Política de Proveniência e Lineage](architecture/29-politica-proveniencia-lineage.md)
 
 ## Regra editorial
 
