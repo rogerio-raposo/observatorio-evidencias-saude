@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP04 — 2026-10-03**
+**CP05 — 2026-10-03**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP04.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP05.md`
 
 Checkpoint anterior:
 
-`CP03`
+`CP04`
 
 Status:
 
@@ -65,3 +65,4 @@ em **Modo Continuidade**.
 - **CP03 — 2026-10-03:** consolida o Documento 12, o Risk of Bias / Critical Appraisal Record e registra como ponto de retomada o Documento 13 — Extração e Estruturação de Dados.
 
 - **CP04 — 2026-10-03:** consolida o Documento 13, o Data Extraction Record e registra como ponto de retomada o Documento 14 — Síntese de Evidências.
+- **CP05 — 2026-10-03:** consolida o Documento 14, o Synthesis Record e registra como ponto de retomada o Documento 15 — Avaliação da Certeza/Confiança no Corpo de Evidências.
