@@ -38,6 +38,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 
 - [20 — Modelo Conceitual de Dados do OES](docs/architecture/20-modelo-conceitual-dados.md)
 - [21 — Modelo Lógico de Dados do OES](docs/architecture/21-modelo-logico-dados.md)
+- [22 — Validação Arquitetural por Casos de Uso](docs/architecture/22-validacao-arquitetural-casos-uso.md)
 
 ## Arquitetura documental prevista
 
@@ -61,7 +62,8 @@ observatorio-evidencias-saude/
 │   ├── products/
 │   └── architecture/
 │       ├── 20-modelo-conceitual-dados.md
-│       └── 21-modelo-logico-dados.md
+│       ├── 21-modelo-logico-dados.md
+│       └── 22-validacao-arquitetural-casos-uso.md
 ├── templates/
 └── references/
 ```
@@ -115,7 +117,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-**Validar o modelo lógico por casos de uso**, testando cardinalidades, proveniência, versionamento, atualização e documentos não convencionais antes de definir o modelo físico.
+**Checar a integridade dos Documentos 20–22 e fechar o modelo lógico candidato**, antes de elaborar qualquer modelo físico ou selecionar tecnologia.
 
 ---
 
