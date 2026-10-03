@@ -33,6 +33,7 @@ Especificações dos produtos do OES. Ainda não formalizadas.
 Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 
 - [20 — Modelo Conceitual de Dados do OES](architecture/20-modelo-conceitual-dados.md)
+- [21 — Modelo Lógico de Dados do OES](architecture/21-modelo-logico-dados.md)
 
 ## Regra editorial
 
