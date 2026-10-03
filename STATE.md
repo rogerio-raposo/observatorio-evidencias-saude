@@ -53,6 +53,9 @@ Template canônico:
 - 24 — Alternativas Arquiteturais de Persistência
 - 25 — Primeiro Desenho Físico Candidato
 - 26 — PoC-S1: Validação do Schema Mínimo
+- 27 — Plano Formal de Testes do GATE F2-B
+- 28 — Política de Identidade e Versionamento
+- 29 — Política de Proveniência e Lineage
 
 ### Estrutura operacional
 
@@ -90,16 +93,15 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**Trilha B enquanto o GATE F2-B aguarda execução PostgreSQL.**
+**Migrações e PoC-S2 enquanto o GATE F2-B permanece pendente.**
 
 Próximo trabalho:
 
-- plano formal de testes do F2-B;
-- política de identidade e IDs;
-- política de versionamento;
-- política de proveniência;
-- desenho de migrações;
-- extensão controlada para Search/Screening/RiskAssessment.
+- formalizar política de migrações;
+- estender a PoC para Search/SearchHit/DedupCluster;
+- adicionar ScreeningDecision;
+- adicionar RiskAssessment/RiskAssessmentDomain;
+- validar novas invariantes e incorporar testes ao F2-B.
 
 ## 5. Gate arquitetural
 
@@ -139,11 +141,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 9. Checkpoint atual
 
-**CP11 — 2026-10-03**
+**CP12 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP11.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP12.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -166,8 +168,10 @@ Cobertura:
 - desenho físico candidato OES-P1;
 - PoC-S1 criada e estaticamente validada;
 - GATE F2-B pendente;
+- plano F2-B formalizado;
+- políticas de identidade/versionamento e provenance formalizadas;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Trilha B documental enquanto F2-B permanece pendente.**
+**Política de migrações e PoC-S2.**
