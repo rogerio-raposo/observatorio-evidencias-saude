@@ -48,6 +48,8 @@ Template canônico:
 
 - 20 — Modelo Conceitual de Dados do OES
 - 21 — Modelo Lógico de Dados do OES
+- 22 — Validação Arquitetural por Casos de Uso
+- 23 — Checagem de Integridade do Modelo de Dados
 
 ### Estrutura operacional
 
@@ -85,25 +87,28 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**Validação arquitetural por casos de uso.**
+**Alternativas arquiteturais e primeiro desenho físico candidato.**
 
 Próximo trabalho:
 
-- testar o modelo lógico em cenários representativos;
-- verificar cardinalidades e entidades ausentes;
-- testar proveniência, deduplicação e versionamento;
-- testar atualizações da Ficha de Evidência;
-- testar síntese qualitativa, NMA e documentos não convencionais;
-- corrigir o modelo antes de qualquer desenho físico.
+- comparar armazenamento relacional, documental, grafo e híbrido;
+- separar dados canônicos de artefatos binários/volumosos;
+- testar mecanismos de versionamento, proveniência e targets tipados;
+- escolher arquitetura candidata reversível;
+- elaborar primeiro desenho físico sem congelar stack definitiva.
 
-## 5. Estado das fases
+## 5. Gate arquitetural
+
+**GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas metodológicas explícitas.
+
+## 6. Estado das fases
 
 - Fase 0 — Concepção e fundamentos: base inicial consolidada como documentação viva;
 - Fase 1 — Manual Metodológico: base inicial dos Documentos 10–15 consolidada;
 - Fase 2 — Modelo de Dados da Evidência: em desenvolvimento;
 - Fases 3–7: ainda não iniciadas formalmente.
 
-## 6. Questões ainda provisórias
+## 7. Questões ainda provisórias
 
 - nomenclatura final dos produtos;
 - critérios operacionais precisos para descritores baixa/moderada/alta no roteamento;
@@ -113,7 +118,7 @@ Próximo trabalho:
 - especificação definitiva da Ficha de Evidência;
 - política formal de versionamento dos produtos.
 
-## 7. Regra de retomada
+## 8. Regra de retomada
 
 Ao retomar o projeto em nova conversa ou sessão:
 
@@ -123,13 +128,13 @@ Ao retomar o projeto em nova conversa ou sessão:
 4. verificar CHANGELOG.md quando houver dúvida sobre decisões anteriores;
 5. atualizar este arquivo ao encerrar um novo marco metodológico.
 
-## 8. Checkpoint atual
+## 9. Checkpoint atual
 
-**CP08 — 2026-10-03**
+**CP09 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP08.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP09.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -147,8 +152,9 @@ Cobertura:
 - avaliação da certeza/confiança no corpo de evidências;
 - modelo conceitual de dados;
 - modelo lógico de dados;
+- validação arquitetural e gate F2-A;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Validação arquitetural por casos de uso.**
+**Alternativas arquiteturais e primeiro desenho físico candidato.**
