@@ -11,6 +11,9 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [24 — Alternativas Arquiteturais de Persistência](24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](25-primeiro-desenho-fisico-candidato.md)
 - [26 — PoC-S1: Validação do Schema Mínimo](26-poc-s1-validacao.md)
+- [27 — Plano Formal de Testes do GATE F2-B](27-plano-testes-gate-f2b.md)
+- [28 — Política de Identidade e Versionamento](28-politica-identidade-versionamento.md)
+- [29 — Política de Proveniência e Lineage](29-politica-proveniencia-lineage.md)
 
 ## Entidades conceituais centrais
 
@@ -61,4 +64,4 @@ O modelo separa:
 
 ## Próxima etapa
 
-Enquanto F2-B aguarda ambiente PostgreSQL, avançar na trilha documental: plano formal de testes, identidade/versionamento e proveniência.
+Enquanto F2-B aguarda ambiente PostgreSQL, avançar para política de migrações e extensão controlada da PoC para Search/Screening/RiskAssessment.
