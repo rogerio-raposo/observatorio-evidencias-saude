@@ -203,3 +203,28 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 
 - Consolidar o modelo conceitual de dados e aprofundar a arquitetura tecnológica do OES.
 
+## 2026-10-03 — Documento 20: Modelo Conceitual de Dados
+
+### Adicionado
+
+- `docs/architecture/20-modelo-conceitual-dados.md`.
+
+### Decisões arquiteturais
+
+- o modelo conceitual é independente de tecnologia;
+- entidades científicas, registros operacionais, produtos e artefatos derivados são camadas distintas;
+- Question e Investigation são entidades distintas;
+- Study, Report e Result permanecem entidades distintas;
+- Search possui identidade própria e relação N:M com Reports por meio de Search Hit/Retrieval Record;
+- Result preserva proveniência e pode ser documentado por múltiplos Reports;
+- Synthesis é entidade explícita com relação N:M com Results por Synthesis Contribution;
+- Certainty Assessment é entidade explícita e versionável;
+- Ficha de Evidência permanece candidata a objeto persistente composto, sem substituir Study/Synthesis;
+- proveniência e versionamento são requisitos transversais;
+- o modelo físico somente será definido após validação do modelo conceitual e lógico.
+
+### Transição de fase
+
+- a base metodológica inicial dos Documentos 10–15 passa a sustentar a Fase 2 — Modelo de Dados da Evidência;
+- próxima etapa: modelo lógico de dados.
+
