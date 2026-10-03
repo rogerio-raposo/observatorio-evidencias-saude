@@ -102,3 +102,33 @@ Sempre que uma ferramenta metodológica for atualizada, a versão vigente dever�
 
 - JBI Manual for Evidence Synthesis  
   https://synthesismanual.jbi.global/
+
+
+## Risco de viés e avaliação crítica
+
+- Cochrane Handbook — Chapter 7: Considering bias and conflicts of interest  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-07
+
+- Cochrane Handbook — Chapter 8: RoB 2  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-08
+
+- RoB 2 / ROBINS-I / ROBINS-E  
+  https://www.riskofbias.info/
+
+- QUADAS-3  
+  https://www.bristol.ac.uk/population-health-sciences/projects/quadas/quadas-3/
+
+- Cochrane Prognosis Methods Group / QUIPS  
+  https://methods.cochrane.org/prognosis/tools
+
+- PROBAST+AI  
+  https://www.bmj.com/content/388/bmj-2024-082505
+
+- JBI Critical Appraisal Tools  
+  https://jbi.global/critical-appraisal-tools
+
+- ROBIS  
+  https://www.bristol.ac.uk/population-health-sciences/projects/robis/
+
+- AMSTAR 2  
+  https://amstar.ca/Amstar-2.php
