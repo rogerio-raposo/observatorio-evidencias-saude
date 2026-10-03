@@ -7,6 +7,7 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [20 — Modelo Conceitual de Dados do OES](20-modelo-conceitual-dados.md)
 - [21 — Modelo Lógico de Dados do OES](21-modelo-logico-dados.md)
 - [22 — Validação Arquitetural por Casos de Uso](22-validacao-arquitetural-casos-uso.md)
+- [23 — Checagem de Integridade do Modelo de Dados](23-checagem-integridade-modelo-dados.md)
 
 ## Entidades conceituais centrais
 
@@ -41,6 +42,10 @@ O modelo separa:
 - versionamento sem sobrescrita silenciosa;
 - modelo conceitual independente da tecnologia.
 
+## Gate atual
+
+**GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas metodológicas explícitas.
+
 ## Próxima etapa
 
-Executar a checagem de integridade dos Documentos 20–22 e fechar o modelo lógico candidato antes do desenho físico.
+Elaborar o primeiro desenho físico candidato e comparar alternativas arquiteturais, sem congelar schema ou stack.
