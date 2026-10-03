@@ -428,3 +428,44 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - extensão controlada da PoC para Search/Screening/RiskAssessment;
 - F2-B continua pendente de PostgreSQL real.
 
+## 2026-10-03 — Política de migrações e PoC-S2
+
+### Adicionado
+
+- `docs/architecture/30-politica-migracoes.md`;
+- `database/002_poc_s2_search_screening_risk.sql`;
+- `docs/architecture/31-poc-s2-validacao.md`.
+
+### Política de migrações
+
+- `poc-s1.sql` passa a funcionar como baseline experimental;
+- extensões posteriores devem preferir migrações incrementais;
+- adotado padrão expand–migrate–contract;
+- migrações técnicas não podem alterar significado científico silenciosamente;
+- projection rebuild é separado de migration canônica;
+- migration ledger permanece requisito antes de ambiente persistente.
+
+### PoC-S2
+
+- adicionados Search, SearchHit, DedupCluster e ScreeningDecision;
+- adicionados RiskAssessment, RiskAssessmentVersion e RiskAssessmentDomain;
+- Screening target limitado a Report/Study;
+- Risk target limitado a Study/Result/Report;
+- exclusão em screening exige motivo;
+- SearchHit permanece preservado após deduplicação.
+
+### Validação estática
+
+- 7 novas tabelas;
+- 17 REFERENCES;
+- 3 triggers;
+- 2 funções PL/pgSQL;
+- zero referências ausentes considerando baseline + migration;
+- transação, parênteses e dollar tags balanceados.
+
+### Gate F2-B
+
+- plano ampliado de T01–T14 para **T01–T19**;
+- próxima etapa prioritária: execução real em PostgreSQL descartável;
+- expansões relevantes adicionais do schema ficam suspensas até essa execução.
+
