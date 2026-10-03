@@ -7,7 +7,8 @@ Este diretório contém artefatos experimentais do modelo físico do OES.
 Arquivos:
 
 - `poc-s1.sql` — schema mínimo;
-- `poc-s1-smoke.sql` — cadeia mínima e consultas de validação.
+- `poc-s1-smoke.sql` — cadeia mínima e consultas de validação;
+- `002_poc_s2_search_screening_risk.sql` — migração experimental Search/Screening/RiskAssessment.
 
 Objetivo:
 
@@ -70,3 +71,8 @@ Consulte:
 - `docs/architecture/26-poc-s1-validacao.md`
 
 **GATE F2-B:** pendente de execução real em PostgreSQL.
+
+
+## PoC-S2
+
+A migration `OES-DBM-2026-0002` estende o baseline sem reescrevê-lo. Sua validação está documentada em `docs/architecture/31-poc-s2-validacao.md`.
