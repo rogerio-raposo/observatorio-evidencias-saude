@@ -355,3 +355,45 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 
 - PoC-S1 do schema mínimo para validar OES-P1.
 
+## 2026-10-03 — PoC-S1: Schema mínimo e validação estática
+
+### Adicionado
+
+- `database/poc-s1.sql`;
+- `database/poc-s1-smoke.sql`;
+- `database/README.md`;
+- `docs/architecture/26-poc-s1-validacao.md`.
+
+### Validação estática do schema
+
+- 32 tabelas;
+- 5 views;
+- 63 referências;
+- nenhuma referência a tabela inexistente;
+- nenhuma tabela CREATE duplicada;
+- parênteses e bloco BEGIN/COMMIT balanceados.
+
+### Validação estática do smoke test
+
+- 30 statements INSERT;
+- 30 alvos de INSERT válidos;
+- nenhuma tabela/view ausente em FROM/JOIN;
+- 101 UUIDs bem formados;
+- CTE recursiva de lineage presente;
+- ROLLBACK final presente.
+
+### Limitação
+
+- o ambiente de execução não possui PostgreSQL, psql, initdb, Docker ou Podman; portanto o DDL ainda não foi executado contra um servidor real.
+
+### Gate
+
+- **GATE F2-B — Execução da PoC-S1 em PostgreSQL: PENDENTE**.
+
+### Próxima etapa permitida
+
+- plano de testes F2-B;
+- política de identidade/versionamento;
+- política de proveniência;
+- sem promoção do schema ou stack.
+
