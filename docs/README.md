@@ -38,6 +38,7 @@ Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 - [23 — Checagem de Integridade do Modelo de Dados](architecture/23-checagem-integridade-modelo-dados.md)
 - [24 — Alternativas Arquiteturais de Persistência](architecture/24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](architecture/25-primeiro-desenho-fisico-candidato.md)
+- [26 — PoC-S1: Validação do Schema Mínimo](architecture/26-poc-s1-validacao.md)
 
 ## Regra editorial
 
