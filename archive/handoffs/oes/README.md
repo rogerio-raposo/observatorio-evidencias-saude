@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP08 — 2026-10-03**
+**CP09 — 2026-10-03**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP08.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP09.md`
 
 Checkpoint anterior:
 
-`CP07`
+`CP08`
 
 Status:
 
@@ -69,3 +69,4 @@ em **Modo Continuidade**.
 - **CP06 — 2026-10-03:** consolida o Documento 15, o Certainty Assessment Record e registra como ponto de retomada a consolidação do modelo conceitual de dados e o aprofundamento da arquitetura tecnológica.
 - **CP07 — 2026-10-03:** consolida o Documento 20 — Modelo Conceitual de Dados, formaliza a transição para a Fase 2 e registra como ponto de retomada o desenvolvimento do modelo lógico de dados.
 - **CP08 — 2026-10-03:** consolida o Documento 21 — Modelo Lógico de Dados e registra como ponto de retomada a validação arquitetural por casos de uso.
+- **CP09 — 2026-10-03:** consolida a validação arquitetural, a checagem de integridade e o GATE F2-A; registra como ponto de retomada as alternativas arquiteturais e o primeiro desenho físico candidato.
