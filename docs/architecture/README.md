@@ -14,6 +14,8 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [27 — Plano Formal de Testes do GATE F2-B](27-plano-testes-gate-f2b.md)
 - [28 — Política de Identidade e Versionamento](28-politica-identidade-versionamento.md)
 - [29 — Política de Proveniência e Lineage](29-politica-proveniencia-lineage.md)
+- [30 — Política de Migrações do Modelo de Dados](30-politica-migracoes.md)
+- [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](31-poc-s2-validacao.md)
 
 ## Entidades conceituais centrais
 
@@ -62,6 +64,10 @@ O modelo separa:
 - **F2-A — Modelo Lógico Candidato:** aprovado.
 - **F2-B — Execução da PoC-S1 em PostgreSQL:** pendente.
 
+## Estado de execução
+
+PoC-S1 + migration PoC-S2 estão documental e estaticamente preparadas. **F2-B continua pendente de execução real em PostgreSQL.**
+
 ## Próxima etapa
 
-Enquanto F2-B aguarda ambiente PostgreSQL, avançar para política de migrações e extensão controlada da PoC para Search/Screening/RiskAssessment.
+Executar F2-B quando houver ambiente PostgreSQL descartável. Evitar expansão relevante adicional do schema antes dessa execução.
