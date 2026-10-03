@@ -74,3 +74,36 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - Documento 12 — Avaliação de Risco de Viés e Qualidade Metodológica.
+
+
+## 2026-10-03 — Documento 12: Risco de Viés e Qualidade Metodológica
+
+### Adicionado
+
+- `docs/methodology/12-avaliacao-risco-vies.md`.
+- `templates/risk-of-bias-record.md`.
+
+### Decisões metodológicas
+
+- risco de viés, qualidade metodológica, qualidade de relato, aplicabilidade e certeza são constructos distintos;
+- não será criado score universal de qualidade;
+- instrumentos manterão suas categorias e lógica originais;
+- versão exata de cada ferramenta deverá ser registrada;
+- RoB 2 será padrão para ensaios randomizados;
+- ROBINS-I será candidato padrão para intervenções não randomizadas, com versão fixada por protocolo;
+- ROBINS-E será candidato para exposições observacionais;
+- QUADAS-3 será padrão para acurácia diagnóstica;
+- QUIPS será candidato padrão para fatores prognósticos;
+- PROBAST+AI será padrão para modelos de predição;
+- JBI será referência central para prevalência, qualitativos e outros desenhos quando apropriado;
+- ROBIS será padrão para risco de viés de revisões sistemáticas;
+- AMSTAR 2 poderá complementar appraisal de revisões, sem score numérico;
+- N3: um avaliador + verificação de todos os julgamentos por segundo avaliador;
+- N4: pelo menos dois avaliadores independentes;
+- IA poderá assistir, mas não produzirá julgamento final autônomo em N2–N4;
+- alto risco de viés não implica exclusão automática;
+- aplicabilidade ao Brasil permanece separada da validade interna.
+
+### Próxima etapa
+
+- Documento 13 — Extração e Estruturação de Dados.
