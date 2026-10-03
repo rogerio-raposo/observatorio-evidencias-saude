@@ -136,3 +136,37 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - Documento 14 — Síntese de Evidências.
+
+
+## 2026-10-03 — Documento 14: Síntese de Evidências
+
+### Adicionado
+
+- `docs/methodology/14-sintese-evidencias.md`.
+- `templates/synthesis-record.md`.
+
+### Decisões metodológicas
+
+- síntese não é sinônimo de meta-análise;
+- combinabilidade será julgada clínica, metodológica e estatisticamente;
+- cada síntese terá unidade analítica explícita e Synthesis ID provisório;
+- escolha entre common/fixed-effect e random-effects não será feita por teste Q ou corte de I²;
+- random-effects deverá ser interpretado com heterogeneidade e, quando apropriado, intervalo de predição;
+- subgrupos serão preferencialmente pré-especificados e comparados por interação;
+- meta-regressão será utilizada com parcimônia;
+- análises de sensibilidade testarão robustez e não escolherão o resultado mais conveniente;
+- risco de viés deverá ser incorporado à interpretação;
+- missing evidence será distinguido do risco de viés interno;
+- funnel plot não será tratado como diagnóstico automático de publication bias;
+- eventos raros, multi-arm e dependência exigirão métodos específicos;
+- network meta-analysis exigirá transitivity e coherence;
+- SWiM será referência para relato de síntese quantitativa sem meta-análise;
+- vote counting por significância estatística será evitado;
+- DTA, prognóstico, predição, prevalência/incidência e qualitativos usarão métodos especializados;
+- JBI meta-aggregation será abordagem candidata para síntese qualitativa compatível;
+- N3–N4 exigirão análise reproduzível e versionada;
+- IA poderá auxiliar, mas não decidirá silenciosamente combinabilidade, modelo ou conclusão.
+
+### Próxima etapa
+
+- Documento 15 — Avaliação da Certeza/Confiança no Corpo de Evidências.
