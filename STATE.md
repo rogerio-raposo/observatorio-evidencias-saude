@@ -40,6 +40,7 @@ Template canônico:
 - 10 — Protocolo de Busca e Recuperação de Evidências
 - 11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências
 - 12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica
+- 13 — Protocolo de Extração e Estruturação de Dados
 
 ### Estrutura operacional
 
@@ -48,6 +49,7 @@ Template canônico:
 - Search Record
 - Screening Record
 - Risk of Bias / Critical Appraisal Record
+- Data Extraction Record
 - Índice de fontes metodológicas
 
 ## 3. Decisões arquiteturais já firmadas
@@ -61,31 +63,37 @@ Template canônico:
 - roteamento sem score numérico nesta fase;
 - toda decisão de roteamento exige justificativa textual;
 - estudo e publicação são entidades distintas;
+- Study, Report e Result são entidades distintas na extração;
+- valor originalmente relatado e valor derivado devem permanecer separados;
+- dados críticos devem manter proveniência rastreável;
 - busca científica deverá ser auditável;
 - IA apoia, mas não é fonte de evidência científica;
 - o repositório, e não a memória da conversa, é o registro persistente do projeto.
 
 ## 4. Próxima etapa
 
-**13 — Protocolo de Extração e Estruturação de Dados**
+**14 — Protocolo de Síntese de Evidências**
 
 Deverá definir:
 
-- dados de características e desfechos;
-- unidades Study/Report/Result;
-- medidas de efeito e estatísticas;
-- dupla extração e verificação;
-- dados ausentes e contato com autores;
-- extração de gráficos;
-- normalização e proveniência por campo;
-- automação e IA;
-- controle de erros e versionamento.
+- critérios de combinabilidade;
+- síntese narrativa e síntese quantitativa;
+- medidas de efeito;
+- modelos estatísticos;
+- heterogeneidade;
+- intervalos de predição quando pertinentes;
+- subgrupos e meta-regressão;
+- análises de sensibilidade;
+- múltiplos braços e dependência;
+- dados raros;
+- síntese sem meta-análise;
+- integração do risco de viés;
+- apresentação e interpretação dos resultados.
 
 ## 5. Etapas metodológicas seguintes
 
-Depois do documento 12:
+Depois do documento 13:
 
-- 13 — Extração de Dados
 - 14 — Síntese de Evidências
 - 15 — Certeza/Confiança na Evidência
 
@@ -113,11 +121,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 8. Checkpoint atual
 
-**CP03 — 2026-10-03**
+**CP04 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP03.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP04.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -130,8 +138,9 @@ Cobertura:
 - busca e recuperação;
 - elegibilidade, triagem e seleção;
 - avaliação de risco de viés e qualidade metodológica;
+- extração e estruturação de dados;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Extração e Estruturação de Dados.**
+**Síntese de Evidências.**
