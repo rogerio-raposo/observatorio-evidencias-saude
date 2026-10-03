@@ -42,6 +42,8 @@ Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 - [27 — Plano Formal de Testes do GATE F2-B](architecture/27-plano-testes-gate-f2b.md)
 - [28 — Política de Identidade e Versionamento](architecture/28-politica-identidade-versionamento.md)
 - [29 — Política de Proveniência e Lineage](architecture/29-politica-proveniencia-lineage.md)
+- [30 — Política de Migrações do Modelo de Dados](architecture/30-politica-migracoes.md)
+- [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](architecture/31-poc-s2-validacao.md)
 
 ## Regra editorial
 
