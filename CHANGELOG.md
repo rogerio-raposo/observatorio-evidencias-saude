@@ -47,3 +47,30 @@ Durante a fase de concepção, os documentos são vivos e o histórico Git prese
 `Template canônico → README/pointer → checkpoint vigente → Freshness Gate → Diagnóstico de Continuidade → retomada controlada`
 
 Checkpoints são artefatos operacionais e não normativos. A documentação canônica vigente prevalece em caso de conflito.
+
+
+## 2026-10-03 — Documento 11: Elegibilidade, Triagem e Seleção
+
+### Adicionado
+
+- `docs/methodology/11-elegibilidade-triagem-selecao.md`.
+- `templates/screening-record.md`.
+
+### Decisões metodológicas
+
+- critérios de elegibilidade pré-especificados para investigações formais;
+- separação entre registro, relatório/publicação e estudo;
+- triagem inicial orientada à sensibilidade;
+- dúvida em título/resumo favorece avanço para texto completo;
+- relatório não recuperado não equivale a estudo excluído;
+- ausência de dado utilizável não implica inelegibilidade;
+- motivos de exclusão de texto completo devem ser explícitos;
+- múltiplos relatórios devem ser vinculados a um Study ID;
+- N4 exige dois revisores independentes para decisão final por texto completo;
+- N3 pode utilizar triagem abreviada calibrada e declarada;
+- IA pode priorizar e assistir, mas não recebe autorização geral para exclusão silenciosa em N2–N4;
+- PRISMA é referência para rastreabilidade do fluxo de seleção.
+
+### Próxima etapa
+
+- Documento 12 — Avaliação de Risco de Viés e Qualidade Metodológica.
