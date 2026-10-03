@@ -10,6 +10,7 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [23 — Checagem de Integridade do Modelo de Dados](23-checagem-integridade-modelo-dados.md)
 - [24 — Alternativas Arquiteturais de Persistência](24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](25-primeiro-desenho-fisico-candidato.md)
+- [26 — PoC-S1: Validação do Schema Mínimo](26-poc-s1-validacao.md)
 
 ## Entidades conceituais centrais
 
@@ -53,6 +54,11 @@ O modelo separa:
 - **OES-H1:** núcleo relacional + JSON/documentos controlados + object storage + projeções opcionais.
 - **OES-P1:** registry global + versões + entidades tipadas + núcleo relacional + JSONB controlado + artifact/dependency projection.
 
+## Gates
+
+- **F2-A — Modelo Lógico Candidato:** aprovado.
+- **F2-B — Execução da PoC-S1 em PostgreSQL:** pendente.
+
 ## Próxima etapa
 
-Executar a **PoC-S1** do schema mínimo para validar OES-P1, sem assumir stack de produção.
+Enquanto F2-B aguarda ambiente PostgreSQL, avançar na trilha documental: plano formal de testes, identidade/versionamento e proveniência.
