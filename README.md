@@ -46,6 +46,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [27 — Plano Formal de Testes do GATE F2-B](docs/architecture/27-plano-testes-gate-f2b.md)
 - [28 — Política de Identidade e Versionamento](docs/architecture/28-politica-identidade-versionamento.md)
 - [29 — Política de Proveniência e Lineage](docs/architecture/29-politica-proveniencia-lineage.md)
+- [30 — Política de Migrações do Modelo de Dados](docs/architecture/30-politica-migracoes.md)
+- [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](docs/architecture/31-poc-s2-validacao.md)
 
 ## Arquitetura documental prevista
 
@@ -77,7 +79,9 @@ observatorio-evidencias-saude/
 │       ├── 26-poc-s1-validacao.md
 │       ├── 27-plano-testes-gate-f2b.md
 │       ├── 28-politica-identidade-versionamento.md
-│       └── 29-politica-proveniencia-lineage.md
+│       ├── 29-politica-proveniencia-lineage.md
+│       ├── 30-politica-migracoes.md
+│       └── 31-poc-s2-validacao.md
 ├── templates/
 └── references/
 ```
@@ -143,7 +147,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-O plano F2-B e as políticas de identidade/versionamento e provenance já estão formalizados. Próximo passo documental: **política de migrações e extensão controlada da PoC para Search/Screening/RiskAssessment**, mantendo F2-B pendente.
+A política de migrações e a PoC-S2 já estão formalizadas. **O próximo passo prioritário é executar o GATE F2-B em PostgreSQL descartável.** Até essa execução, expansões relevantes adicionais do schema ficam suspensas.
 
 ---
 
