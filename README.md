@@ -8,9 +8,11 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 **Fase atual:** concepção e fundamentos metodológicos.
 
-**Checkpoint vivo:** [STATE.md](STATE.md)
+**Painel de estado vivo:** [STATE.md](STATE.md)
 
-O arquivo STATE.md deve ser atualizado a cada marco relevante e serve como ponto principal de retomada entre conversas e sessões.
+**Continuidade formal:** [archive/handoffs/oes/README.md](archive/handoffs/oes/README.md)
+
+O STATE.md registra o estado corrente do projeto. A retomada formal entre conversas usa o mecanismo **snapshot + pointer**: template canônico → ponteiro → checkpoint vigente → Freshness Gate → Diagnóstico de Continuidade.
 
 O repositório passa a ser a **fonte canônica do projeto**. As conversas de desenvolvimento são utilizadas para elaboração e revisão; as decisões consolidadas devem ser registradas aqui.
 
@@ -106,3 +108,13 @@ Alterações metodológicas relevantes devem:
 ---
 
 **Projeto iniciado:** 3 de outubro de 2026.
+
+
+## Continuidade entre conversas
+
+O mecanismo formal está documentado em:
+
+- [Template canônico de abertura e continuidade](archive/continuity/OES_Template_Abertura_Continuidade.md)
+- [Ponteiro para o checkpoint vigente](archive/handoffs/oes/README.md)
+
+Checkpoints são snapshots operacionais imutáveis e não normativos. O ponteiro indica qual CP está vigente.
