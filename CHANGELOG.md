@@ -107,3 +107,32 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - Documento 13 — Extração e Estruturação de Dados.
+
+
+## 2026-10-03 — Documento 13: Extração e Estruturação de Dados
+
+### Adicionado
+
+- `docs/methodology/13-extracao-dados.md`.
+- `templates/data-extraction-record.md`.
+
+### Decisões metodológicas
+
+- Study, Report e Result permanecem entidades distintas;
+- valor originalmente relatado e valor derivado serão preservados separadamente;
+- proveniência será obrigatória para dados críticos;
+- formulário estruturado será padrão em N2–N4;
+- N3: um extrator com verificação por segundo revisor dos dados críticos capazes de alterar resultados ou conclusões;
+- N4: extração independente em duplicata para dados de desfecho que alimentem sínteses;
+- múltiplos Reports serão vinculados e reconciliados, sem duplicação artificial de estudos;
+- discrepâncias entre fontes deverão ser registradas e resolvidas por regra explícita;
+- estados de dados ausentes serão diferenciados;
+- transformações deverão ser reproduzíveis e manter o valor de origem;
+- dados obtidos de gráficos serão identificados como derivados;
+- IA poderá auxiliar extração e controle de qualidade, mas não substituir silenciosamente a verificação humana de dados críticos em N3–N4;
+- correções deverão preservar histórico e rastreabilidade;
+- o futuro modelo de dados deverá suportar múltiplos Reports/Results, proveniência por campo, valores derivados e versionamento.
+
+### Próxima etapa
+
+- Documento 14 — Síntese de Evidências.
