@@ -110,11 +110,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 8. Checkpoint atual
 
-**CP01 — 2026-10-03**
+**CP02 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP01.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP02.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -125,8 +125,9 @@ Cobertura:
 - níveis e produtos;
 - roteamento;
 - busca e recuperação;
+- elegibilidade, triagem e seleção;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Elegibilidade, Triagem e Seleção de Evidências.**
+**Avaliação de Risco de Viés e Qualidade Metodológica.**
