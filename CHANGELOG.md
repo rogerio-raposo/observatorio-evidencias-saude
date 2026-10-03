@@ -28,3 +28,22 @@ Durante a fase de concepção, os documentos são vivos e o histórico Git prese
 - Estudo e publicação serão entidades distintas.
 - Busca científica deverá ser auditável e proporcional ao nível de investigação.
 - IA será ferramenta de apoio, não fonte de evidência.
+
+
+## 2026-10-03 — Mecanismo formal de continuidade
+
+### Adicionado
+
+- Template canônico de abertura e continuidade.
+- Arquitetura `snapshot + pointer` para checkpoints.
+- Ponteiro operacional único em `archive/handoffs/oes/README.md`.
+- Checkpoint inaugural `CP01`.
+- Freshness Gate obrigatório antes de retomadas.
+- Diagnóstico de Continuidade obrigatório.
+- Separação entre `STATE.md` (painel vivo) e checkpoints (snapshots imutáveis).
+
+### Regra operacional
+
+`Template canônico → README/pointer → checkpoint vigente → Freshness Gate → Diagnóstico de Continuidade → retomada controlada`
+
+Checkpoints são artefatos operacionais e não normativos. A documentação canônica vigente prevalece em caso de conflito.
