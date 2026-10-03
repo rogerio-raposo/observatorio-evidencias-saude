@@ -43,6 +43,9 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [24 — Alternativas Arquiteturais de Persistência](docs/architecture/24-alternativas-arquiteturais-persistencia.md)
 - [25 — Primeiro Desenho Físico Candidato](docs/architecture/25-primeiro-desenho-fisico-candidato.md)
 - [26 — PoC-S1: Validação do Schema Mínimo](docs/architecture/26-poc-s1-validacao.md)
+- [27 — Plano Formal de Testes do GATE F2-B](docs/architecture/27-plano-testes-gate-f2b.md)
+- [28 — Política de Identidade e Versionamento](docs/architecture/28-politica-identidade-versionamento.md)
+- [29 — Política de Proveniência e Lineage](docs/architecture/29-politica-proveniencia-lineage.md)
 
 ## Arquitetura documental prevista
 
@@ -71,7 +74,10 @@ observatorio-evidencias-saude/
 │       ├── 23-checagem-integridade-modelo-dados.md
 │       ├── 24-alternativas-arquiteturais-persistencia.md
 │       ├── 25-primeiro-desenho-fisico-candidato.md
-│       └── 26-poc-s1-validacao.md
+│       ├── 26-poc-s1-validacao.md
+│       ├── 27-plano-testes-gate-f2b.md
+│       ├── 28-politica-identidade-versionamento.md
+│       └── 29-politica-proveniencia-lineage.md
 ├── templates/
 └── references/
 ```
@@ -137,7 +143,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-Prosseguir pela trilha documental permitida: **plano formal de testes do F2-B, política de identidade/versionamento e política de proveniência**, sem promover OES-P1 a definitivo.
+O plano F2-B e as políticas de identidade/versionamento e provenance já estão formalizados. Próximo passo documental: **política de migrações e extensão controlada da PoC para Search/Screening/RiskAssessment**, mantendo F2-B pendente.
 
 ---
 
