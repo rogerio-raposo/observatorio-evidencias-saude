@@ -32,6 +32,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica](docs/methodology/12-avaliacao-risco-vies.md)
 - [13 — Protocolo de Extração e Estruturação de Dados](docs/methodology/13-extracao-dados.md)
 - [14 — Protocolo de Síntese de Evidências](docs/methodology/14-sintese-evidencias.md)
+- [15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências](docs/methodology/15-certeza-evidencia.md)
 
 ## Arquitetura documental prevista
 
@@ -105,9 +106,9 @@ Alterações metodológicas relevantes devem:
 3. ser registradas no `CHANGELOG.md` quando consolidadas;
 4. manter coerência entre documentos dependentes.
 
-## Próxima etapa metodológica
+## Próxima etapa
 
-**15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências.**
+**Consolidar o modelo conceitual de dados e aprofundar a arquitetura tecnológica**, usando como base os Documentos 00–15.
 
 ---
 
