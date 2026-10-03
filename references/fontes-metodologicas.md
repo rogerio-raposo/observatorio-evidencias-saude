@@ -132,3 +132,15 @@ Sempre que uma ferramenta metodológica for atualizada, a versão vigente dever�
 
 - AMSTAR 2  
   https://amstar.ca/Amstar-2.php
+
+
+## Extração e estruturação de dados
+
+- Cochrane Handbook — Chapter 5: Collecting data  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-05
+
+- Garritty et al. — Updated recommendations for the Cochrane rapid review methods guidance (BMJ 2024;384:e076335)  
+  https://www.bmj.com/content/384/bmj-2023-076335
+
+- JBI Manual for Evidence Synthesis  
+  https://synthesismanual.jbi.global/
