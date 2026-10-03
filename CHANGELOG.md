@@ -228,3 +228,38 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - a base metodológica inicial dos Documentos 10–15 passa a sustentar a Fase 2 — Modelo de Dados da Evidência;
 - próxima etapa: modelo lógico de dados.
 
+## 2026-10-03 — Documento 21: Modelo Lógico de Dados
+
+### Adicionado
+
+- `docs/architecture/21-modelo-logico-dados.md`.
+
+### Refinamento do Documento 20
+
+- a relação Study ↔ Report foi refinada de 1:N para N:M por `StudyReportLink`, preservando o caso predominante de múltiplos Reports por Study e suportando Reports que documentem múltiplos Studies.
+
+### Decisões lógicas
+
+- Question terá hierarquia por autorreferência;
+- Investigation poderá vincular múltiplas Questions via `InvestigationQuestion`;
+- Concept foi previsto para normalização semântica, sem fixar vocabulário nesta fase;
+- Outcome será entidade reutilizável;
+- SearchHit preservará a ocorrência bruta de recuperação;
+- deduplicação será auditável e reversível;
+- identificadores externos de Study e Report serão aliases, não chaves primárias;
+- Result exigirá Study e proveniência documental;
+- transformações materiais gerarão `DerivationRecord`;
+- RiskAssessment manterá julgamentos por domínio;
+- SynthesisContribution materializará Result N:M Synthesis;
+- ReviewFinding suportará síntese qualitativa e CERQual;
+- CertaintyAssessment será vinculada explicitamente à unidade avaliada;
+- Product agregará Investigation/Synthesis/Certainty por relações próprias;
+- Ficha de Evidência será inicialmente tratada como `Product subtype`, decisão reversível;
+- ProvenanceRecord será transversal;
+- merges de identidade serão auditáveis e reversíveis;
+- nenhuma decisão lógica fixa SGBD ou stack tecnológica.
+
+### Próxima etapa
+
+- validação arquitetural por casos de uso antes do modelo físico.
+
