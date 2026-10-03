@@ -560,8 +560,7 @@ FROM core.entity_version ev
 WHERE ev.version_status = 'current';
 
 CREATE VIEW evidence.current_result AS
-SELECT r.entity_uuid,
-       rv.*
+SELECT rv.*
 FROM evidence.result r
 JOIN evidence.result_version rv
   ON rv.entity_uuid = r.entity_uuid
@@ -570,8 +569,7 @@ JOIN core.entity_version ev
 WHERE ev.version_status = 'current';
 
 CREATE VIEW synthesis.current_synthesis AS
-SELECT s.entity_uuid,
-       sv.*
+SELECT sv.*
 FROM synthesis.synthesis s
 JOIN synthesis.synthesis_version sv
   ON sv.entity_uuid = s.entity_uuid
@@ -580,8 +578,7 @@ JOIN core.entity_version ev
 WHERE ev.version_status = 'current';
 
 CREATE VIEW appraisal.current_certainty AS
-SELECT ca.entity_uuid,
-       cav.*
+SELECT cav.*
 FROM appraisal.certainty_assessment ca
 JOIN appraisal.certainty_assessment_version cav
   ON cav.entity_uuid = ca.entity_uuid
@@ -590,8 +587,7 @@ JOIN core.entity_version ev
 WHERE ev.version_status = 'current';
 
 CREATE VIEW product.current_product AS
-SELECT p.entity_uuid,
-       pv.*
+SELECT pv.*
 FROM product.product p
 JOIN product.product_version pv
   ON pv.entity_uuid = p.entity_uuid
