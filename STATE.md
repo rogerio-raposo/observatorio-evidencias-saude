@@ -39,6 +39,7 @@ Template canônico:
 
 - 10 — Protocolo de Busca e Recuperação de Evidências
 - 11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências
+- 12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica
 
 ### Estrutura operacional
 
@@ -46,6 +47,7 @@ Template canônico:
 - Routing Record
 - Search Record
 - Screening Record
+- Risk of Bias / Critical Appraisal Record
 - Índice de fontes metodológicas
 
 ## 3. Decisões arquiteturais já firmadas
@@ -65,23 +67,24 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica**
+**13 — Protocolo de Extração e Estruturação de Dados**
 
 Deverá definir:
 
-- distinção entre risco de viés, qualidade de relato e certeza;
-- instrumentos por desenho;
-- regras de dupla avaliação;
-- discordâncias e adjudicação;
-- uso de IA;
-- política sobre scores agregados;
-- integração com síntese e certeza da evidência.
+- dados de características e desfechos;
+- unidades Study/Report/Result;
+- medidas de efeito e estatísticas;
+- dupla extração e verificação;
+- dados ausentes e contato com autores;
+- extração de gráficos;
+- normalização e proveniência por campo;
+- automação e IA;
+- controle de erros e versionamento.
 
 ## 5. Etapas metodológicas seguintes
 
-Depois do documento 11:
+Depois do documento 12:
 
-- 12 — Avaliação de Risco de Viés
 - 13 — Extração de Dados
 - 14 — Síntese de Evidências
 - 15 — Certeza/Confiança na Evidência
