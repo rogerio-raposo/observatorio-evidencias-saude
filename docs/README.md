@@ -18,8 +18,8 @@ Fundamentos conceituais, escopo, taxonomia e regras de orquestração metodológ
 Protocolos que definem como a evidência é localizada, selecionada, avaliada, extraída e sintetizada.
 
 - [10 — Busca e Recuperação de Evidências](methodology/10-busca-recuperacao-evidencias.md)
-- 11 — Elegibilidade, Triagem e Seleção — **próximo documento**
-- 12 — Avaliação de Risco de Viés — planejado
+- [11 — Elegibilidade, Triagem e Seleção](methodology/11-elegibilidade-triagem-selecao.md)
+- 12 — Avaliação de Risco de Viés — **próximo documento**
 - 13 — Extração de Dados — planejado
 - 14 — Síntese de Evidências — planejado
 - 15 — Certeza/Confiança na Evidência — planejado
