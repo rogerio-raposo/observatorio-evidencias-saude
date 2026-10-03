@@ -397,3 +397,34 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - política de proveniência;
 - sem promoção do schema ou stack.
 
+## 2026-10-03 — Trilha B: F2-B, identidade/versionamento e provenance
+
+### Adicionado
+
+- `docs/architecture/27-plano-testes-gate-f2b.md`;
+- `docs/architecture/28-politica-identidade-versionamento.md`;
+- `docs/architecture/29-politica-proveniencia-lineage.md`.
+
+### Hardening da PoC-S1
+
+- `core.entity_version.supersedes_version_uuid` passou a possuir FK composta que garante supersessão dentro da mesma entity;
+- função `core.assert_entity_type()` adicionada com delimitador PL/pgSQL explícito;
+- 9 triggers garantem compatibilidade entre registry `entity_type` e tabelas de subtipo;
+- `provenance.record` passou a suportar estado, supersessão, invalidação e motivo sem UPDATE destrutivo;
+- validação estática atual: 32 tabelas, 5 views, 64 REFERENCES, 9 triggers e zero referências a tabelas ausentes.
+
+### Política
+
+- identidade estável e versão separada;
+- IDs externos permanecem aliases;
+- histórico não será sobrescrito;
+- provenance é dado de primeira classe;
+- dependency_edge permanece projeção derivada;
+- plano F2-B define 14 grupos de teste, incluindo constraints, versionamento, lineage, rollback e reconstrução do zero.
+
+### Próxima etapa
+
+- política de migrações;
+- extensão controlada da PoC para Search/Screening/RiskAssessment;
+- F2-B continua pendente de PostgreSQL real.
+
