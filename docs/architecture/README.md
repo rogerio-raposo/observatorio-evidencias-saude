@@ -5,6 +5,7 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 ## Documento atual
 
 - [20 — Modelo Conceitual de Dados do OES](20-modelo-conceitual-dados.md)
+- [21 — Modelo Lógico de Dados do OES](21-modelo-logico-dados.md)
 
 ## Entidades conceituais centrais
 
@@ -41,4 +42,4 @@ O modelo separa:
 
 ## Próxima etapa
 
-Desenvolver o modelo lógico de dados a partir do Documento 20.
+Validar o modelo lógico por casos de uso antes da definição do modelo físico e da stack tecnológica.
