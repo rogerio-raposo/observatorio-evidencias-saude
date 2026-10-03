@@ -6,6 +6,7 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 
 - [20 — Modelo Conceitual de Dados do OES](20-modelo-conceitual-dados.md)
 - [21 — Modelo Lógico de Dados do OES](21-modelo-logico-dados.md)
+- [22 — Validação Arquitetural por Casos de Uso](22-validacao-arquitetural-casos-uso.md)
 
 ## Entidades conceituais centrais
 
@@ -42,4 +43,4 @@ O modelo separa:
 
 ## Próxima etapa
 
-Validar o modelo lógico por casos de uso antes da definição do modelo físico e da stack tecnológica.
+Executar a checagem de integridade dos Documentos 20–22 e fechar o modelo lógico candidato antes do desenho físico.
