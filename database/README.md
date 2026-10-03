@@ -4,9 +4,10 @@ Este diretório contém artefatos experimentais do modelo físico do OES.
 
 ## PoC-S1
 
-Arquivo:
+Arquivos:
 
-- `poc-s1.sql`
+- `poc-s1.sql` — schema mínimo;
+- `poc-s1-smoke.sql` — cadeia mínima e consultas de validação.
 
 Objetivo:
 
@@ -60,3 +61,12 @@ Além da execução do DDL, a validação deverá incluir smoke tests de:
 5. impacto de Report corrigido/retratado;
 6. integridade das FKs;
 7. rollback transacional.
+
+
+## Registro de validação
+
+Consulte:
+
+- `docs/architecture/26-poc-s1-validacao.md`
+
+**GATE F2-B:** pendente de execução real em PostgreSQL.
