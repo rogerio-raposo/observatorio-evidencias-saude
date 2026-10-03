@@ -21,8 +21,7 @@ Protocolos que definem como a evidência é localizada, selecionada, avaliada, e
 - [11 — Elegibilidade, Triagem e Seleção](methodology/11-elegibilidade-triagem-selecao.md)
 - [12 — Avaliação de Risco de Viés e Qualidade Metodológica](methodology/12-avaliacao-risco-vies.md)
 - [13 — Extração e Estruturação de Dados](methodology/13-extracao-dados.md)
-- 14 — Síntese de Evidências — **próximo documento**
-- 15 — Certeza/Confiança na Evidência — planejado
+- 15 — Certeza/Confiança na Evidência — **próximo documento**
 
 ### products/
 
