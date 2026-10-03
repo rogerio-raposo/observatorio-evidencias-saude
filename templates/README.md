@@ -8,6 +8,7 @@ Arquivos atuais:
 - routing-record.md — registro de classificação e roteamento;
 - search-record.md — registro de uma execução de busca;
 - screening-record.md — registro de decisões de triagem, elegibilidade, discordância e adjudicação;
-- risk-of-bias-record.md — registro estruturado de risco de viés/critical appraisal, versão do instrumento, justificativas e adjudicação.
+- risk-of-bias-record.md — registro estruturado de risco de viés/critical appraisal, versão do instrumento, justificativas e adjudicação;
+- data-extraction-record.md — registro estruturado de características, resultados, proveniência, transformações, discrepâncias e verificação da extração.
 
 Os templates permanecerão provisórios até a consolidação do modelo de dados.
