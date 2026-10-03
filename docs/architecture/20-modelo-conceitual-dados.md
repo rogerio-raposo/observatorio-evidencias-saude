@@ -253,9 +253,9 @@ Pode incluir:
 
 Relação central:
 
-**Study 1 → N Reports**
+**Study N ↔ M Reports**, por meio de `StudyReportLink`.
 
-Um Report deverá poder ser relacionado a um Study mesmo quando a vinculação estiver inicialmente incerta.
+O caso predominante continuará sendo um Study com múltiplos Reports, mas o modelo deverá suportar Reports que descrevam mais de um Study. O vínculo poderá permanecer inicialmente incerto.
 
 ## 16. Result
 
@@ -460,11 +460,11 @@ Será necessário um objeto intermediário conceitual:
 
 **Search Hit / Retrieval Record**
 
-### Study → Report
+### Study ↔ Report
 
-**1:N**
+**N:M**, por meio de **StudyReportLink**.
 
-Um estudo pode possuir múltiplos relatórios.
+O caso mais comum é um Study com múltiplos Reports, mas um Report pode excepcionalmente documentar mais de um Study.
 
 ### Study → Result
 
@@ -670,7 +670,7 @@ erDiagram
     INVESTIGATION ||--o{ SEARCH : "executa"
     SEARCH ||--o{ SEARCH_HIT : "recupera"
     REPORT ||--o{ SEARCH_HIT : "é localizado em"
-    STUDY ||--o{ REPORT : "possui"
+    STUDY }o--o{ REPORT : "é documentado por"
     STUDY ||--o{ RESULT : "produz"
     REPORT }o--o{ RESULT : "documenta"
     STUDY ||--o{ RISK_OF_BIAS : "é avaliado"
@@ -688,7 +688,7 @@ Este diagrama é conceitual e não representa ainda tabelas físicas.
 ## 42. Regras que a implementação não poderá violar
 
 1. Study e Report são entidades distintas.
-2. Um Study pode possuir vários Reports.
+2. Study e Report se relacionam de forma N:M, preservando o caso predominante de múltiplos Reports por Study.
 3. Um Study pode possuir vários Results.
 4. Result deve preservar proveniência.
 5. Valor original e derivado não podem ser colapsados.
