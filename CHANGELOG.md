@@ -263,3 +263,34 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 
 - validação arquitetural por casos de uso antes do modelo físico.
 
+## 2026-10-03 — Documento 22: Validação Arquitetural por Casos de Uso
+
+### Adicionado
+
+- `docs/architecture/22-validacao-arquitetural-casos-uso.md`.
+
+### Resultado da primeira bateria
+
+- 15 cenários arquiteturais testados;
+- 6 PASS;
+- 7 PASS WITH REFINEMENT;
+- 2 FAIL estruturais detectados antes da implementação física.
+
+### Correções incorporadas ao Documento 21
+
+- `ScreeningDecision` passou a suportar target tipado Report/Study;
+- `StudyGroup` e `GroupComponent` foram adicionados;
+- `SynthesisNode`, `SynthesisNodeMapping` e `SynthesisContrast` foram adicionados para NMA;
+- `DiagnosticResultDetail` foi adicionado;
+- `PredictionModel`, `PredictionModelIdentifier` e `PredictionModelStudyRole` foram adicionados;
+- `FindingContribution` foi adicionado para síntese qualitativa;
+- `ReportRelation` foi adicionado para correções/retrações e relações documentais;
+- `InvestigationRelation` foi adicionado para updates/derivações;
+- Product passou a apontar para versões específicas de Synthesis e Certainty;
+- Synthesis passou a registrar origem e eventual Study externo fonte;
+- Result passou a aceitar grupos estruturados e timepoint estruturado.
+
+### Próxima etapa
+
+- checagem de integridade entre Documentos 20–22 e fechamento do modelo lógico candidato.
+
