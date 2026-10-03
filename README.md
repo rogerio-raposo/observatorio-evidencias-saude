@@ -28,6 +28,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 ### Metodologia
 
 - [10 — Protocolo de Busca e Recuperação de Evidências](docs/methodology/10-busca-recuperacao-evidencias.md)
+- [11 — Protocolo de Elegibilidade, Triagem e Seleção](docs/methodology/11-elegibilidade-triagem-selecao.md)
 
 ## Arquitetura documental prevista
 
@@ -103,7 +104,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa metodológica
 
-**11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências.**
+**12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica.**
 
 ---
 
