@@ -70,7 +70,7 @@ CREATE INDEX ix_entity_version_entity ON core.entity_version(entity_uuid);
 CREATE OR REPLACE FUNCTION core.assert_entity_type()
 RETURNS trigger
 LANGUAGE plpgsql
-AS $
+AS $fn$
 DECLARE
     actual_type text;
 BEGIN
@@ -91,7 +91,7 @@ BEGIN
 
     RETURN NEW;
 END;
-$;
+$fn$;
 
 -- ---------------------------------------------------------------------------
 -- ARTIFACT METADATA
@@ -510,7 +510,21 @@ CREATE TABLE provenance.record (
     process_record_uuid uuid,
     transformation jsonb,
     actor text,
-    created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status text NOT NULL DEFAULT 'active' CHECK (
+        status IN ('active','superseded','invalidated')
+    ),
+    supersedes_provenance_uuid uuid REFERENCES provenance.record(provenance_uuid),
+    invalidated_at timestamptz,
+    invalidation_reason text,
+    CHECK (
+        supersedes_provenance_uuid IS NULL
+        OR supersedes_provenance_uuid <> provenance_uuid
+    ),
+    CHECK (
+        status <> 'invalidated'
+        OR (invalidated_at IS NOT NULL AND invalidation_reason IS NOT NULL)
+    )
 );
 
 CREATE INDEX ix_provenance_target
