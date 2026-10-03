@@ -143,7 +143,7 @@ Provocar erro no meio de transação com múltiplas inserções.
 
 ### T14 — reconstrução do zero
 
-Dropar banco e repetir T01–T13 a partir apenas dos artefatos versionados.
+Dropar banco e repetir o conjunto aplicável de testes a partir apenas dos artefatos versionados.
 
 **Esperado:** resultados equivalentes.
 
@@ -183,7 +183,7 @@ Salvar como artefatos:
 
 ### PASS
 
-- T01–T14 aprovados;
+- T01–T19 aprovados;
 - nenhum erro estrutural crítico;
 - correções incorporadas e reexecutadas;
 - evidências arquivadas.
