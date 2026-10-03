@@ -84,3 +84,21 @@ Este arquivo **não substitui** referências específicas de cada protocolo. Sua
 ## Regra de manutenção
 
 Sempre que uma ferramenta metodológica for atualizada, a versão vigente deverá ser confirmada antes de sua incorporação a um protocolo operacional do OES.
+
+
+## Seleção e elegibilidade
+
+- Cochrane Handbook — Chapter 3: Defining eligibility criteria  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-03
+
+- Cochrane Handbook — Chapter 4: Searching for and selecting studies  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04
+
+- Cochrane Rapid Reviews Methods Group / Garritty et al., BMJ 2024;384:e076335  
+  https://methods.cochrane.org/rapidreviews/
+
+- PRISMA 2020  
+  https://www.prisma-statement.org/prisma-2020
+
+- JBI Manual for Evidence Synthesis  
+  https://synthesismanual.jbi.global/
