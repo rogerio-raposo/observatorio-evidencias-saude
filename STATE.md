@@ -10,6 +10,22 @@ Este repositório é a fonte canônica do Observatório de Evidências em Saúde
 
 As conversas podem ser usadas para desenvolver, discutir e revisar conteúdo, mas decisões persistentes devem ser consolidadas nos documentos do repositório.
 
+### Continuidade formal
+
+O STATE.md é um **painel vivo** e pode ser atualizado.
+
+A continuidade formal utiliza checkpoints imutáveis em:
+
+`archive/handoffs/oes/`
+
+Ponteiro vigente:
+
+`archive/handoffs/oes/README.md`
+
+Template canônico:
+
+`archive/continuity/OES_Template_Abertura_Continuidade.md`
+
 ## 2. Documentos consolidados até o momento
 
 ### Governança / fundamentos
@@ -94,7 +110,13 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 8. Checkpoint atual
 
-**Checkpoint OES-CP-001**
+**CP01 — 2026-10-03**
+
+Arquivo canônico do checkpoint:
+
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP01.md`
+
+O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
 Cobertura:
 
