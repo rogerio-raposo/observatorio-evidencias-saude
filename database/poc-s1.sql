@@ -44,13 +44,15 @@ CREATE TABLE core.entity_version (
     ),
     valid_from timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     valid_to timestamptz,
-    supersedes_version_uuid uuid REFERENCES core.entity_version(version_uuid),
+    supersedes_version_uuid uuid,
     created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by text,
     change_type text NOT NULL,
     change_note text,
     UNIQUE (entity_uuid, version_no),
     UNIQUE (version_uuid, entity_uuid),
+    FOREIGN KEY (supersedes_version_uuid, entity_uuid)
+        REFERENCES core.entity_version(version_uuid, entity_uuid),
     CHECK (valid_to IS NULL OR valid_to >= valid_from),
     CHECK (supersedes_version_uuid IS NULL OR supersedes_version_uuid <> version_uuid)
 );
@@ -61,6 +63,35 @@ CREATE UNIQUE INDEX ux_entity_version_current
 
 CREATE INDEX ix_entity_type ON core.entity(entity_type);
 CREATE INDEX ix_entity_version_entity ON core.entity_version(entity_uuid);
+
+
+-- Enforce that a typed subtype table points to a registry entity
+-- with the expected entity_type.
+CREATE OR REPLACE FUNCTION core.assert_entity_type()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $
+DECLARE
+    actual_type text;
+BEGIN
+    SELECT e.entity_type
+      INTO actual_type
+      FROM core.entity e
+     WHERE e.entity_uuid = NEW.entity_uuid;
+
+    IF actual_type IS NULL THEN
+        RAISE EXCEPTION 'Entity % does not exist in core.entity', NEW.entity_uuid;
+    END IF;
+
+    IF actual_type <> TG_ARGV[0] THEN
+        RAISE EXCEPTION
+            'Entity % has type %, expected %',
+            NEW.entity_uuid, actual_type, TG_ARGV[0];
+    END IF;
+
+    RETURN NEW;
+END;
+$;
 
 -- ---------------------------------------------------------------------------
 -- ARTIFACT METADATA
