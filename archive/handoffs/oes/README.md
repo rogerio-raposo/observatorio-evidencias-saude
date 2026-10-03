@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP11 — 2026-10-03**
+**CP12 — 2026-10-03**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP11.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP12.md`
 
 Checkpoint anterior:
 
-`CP10`
+`CP11`
 
 Status:
 
@@ -72,3 +72,4 @@ em **Modo Continuidade**.
 - **CP09 — 2026-10-03:** consolida a validação arquitetural, a checagem de integridade e o GATE F2-A; registra como ponto de retomada as alternativas arquiteturais e o primeiro desenho físico candidato.
 - **CP10 — 2026-10-03:** consolida OES-H1 e OES-P1; registra como ponto de retomada a PoC-S1 do schema mínimo.
 - **CP11 — 2026-10-03:** consolida a PoC-S1 e sua validação estática; mantém F2-B pendente e registra como ponto de retomada a Trilha B documental.
+- **CP12 — 2026-10-03:** consolida o plano F2-B, identidade/versionamento, provenance/lineage e o hardening da PoC-S1; retoma em migrações e PoC-S2.
