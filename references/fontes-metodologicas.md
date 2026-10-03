@@ -144,3 +144,30 @@ Sempre que uma ferramenta metodológica for atualizada, a versão vigente dever�
 
 - JBI Manual for Evidence Synthesis  
   https://synthesismanual.jbi.global/
+
+
+## Síntese de evidências
+
+- Cochrane Handbook — Chapter 10: Analysing data and undertaking meta-analyses  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-10
+
+- Cochrane Handbook — Chapter 11: Undertaking network meta-analyses  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11
+
+- Cochrane Handbook — Chapter 12: Synthesizing and presenting findings using other methods  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-12
+
+- Cochrane Handbook — Chapter 13: Missing evidence in meta-analysis  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-13
+
+- SWiM reporting guideline  
+  https://www.bmj.com/content/368/bmj.l6890
+
+- Cochrane Handbook for Systematic Reviews of Diagnostic Test Accuracy  
+  https://www.cochrane.org/authors/handbooks-and-manuals/handbook-systematic-reviews-diagnostic-test-accuracy
+
+- Cochrane Handbook for Systematic Reviews of Prognosis Research and Prediction Models  
+  https://www.cochrane.org/authors/handbooks-and-manuals/cochrane-handbook-systematic-reviews-prognosis-research-and-prediction-models
+
+- JBI Manual for Evidence Synthesis  
+  https://synthesismanual.jbi.global/
