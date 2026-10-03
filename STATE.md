@@ -47,6 +47,7 @@ Template canônico:
 ### Arquitetura e dados
 
 - 20 — Modelo Conceitual de Dados do OES
+- 21 — Modelo Lógico de Dados do OES
 
 ### Estrutura operacional
 
@@ -84,16 +85,16 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**Desenvolvimento do modelo lógico de dados.**
+**Validação arquitetural por casos de uso.**
 
 Próximo trabalho:
 
-- validar entidades e cardinalidades do Documento 20;
-- definir atributos mínimos e chaves;
-- formalizar entidades associativas;
-- modelar versionamento e estados;
-- definir regras de identidade e deduplicação;
-- manter independência de SGBD e stack tecnológica nesta etapa.
+- testar o modelo lógico em cenários representativos;
+- verificar cardinalidades e entidades ausentes;
+- testar proveniência, deduplicação e versionamento;
+- testar atualizações da Ficha de Evidência;
+- testar síntese qualitativa, NMA e documentos não convencionais;
+- corrigir o modelo antes de qualquer desenho físico.
 
 ## 5. Estado das fases
 
@@ -124,11 +125,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 8. Checkpoint atual
 
-**CP07 — 2026-10-03**
+**CP08 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP07.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP08.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -145,8 +146,9 @@ Cobertura:
 - síntese de evidências;
 - avaliação da certeza/confiança no corpo de evidências;
 - modelo conceitual de dados;
+- modelo lógico de dados;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**Modelo lógico de dados.**
+**Validação arquitetural por casos de uso.**
