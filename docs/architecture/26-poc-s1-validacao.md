@@ -62,14 +62,18 @@ A checagem estrutural do arquivo `poc-s1.sql` encontrou:
 
 - **32 tabelas**;
 - **5 views**;
-- **63 referências FK/REFERENCES**;
+- **64 referências FK/REFERENCES**;
 - **0 referências a tabelas inexistentes**;
 - **0 tabelas CREATE duplicadas**;
 - balanço de parênteses: **válido**;
 - bloco transacional BEGIN/COMMIT: **presente**;
 - unique index para versão `current`: **presente**;
 - ProvenanceRecord: **presente**;
-- DependencyEdge: **presente**.
+- DependencyEdge: **presente**;
+- **9 triggers de subtipo**: presentes;
+- supersessão de versão restrita à mesma entity por FK composta: presente;
+- provenance append-only com supersessão/invalidação explícita: presente;
+- delimitador da função PL/pgSQL validado estaticamente: presente.
 
 ## Interpretação
 
