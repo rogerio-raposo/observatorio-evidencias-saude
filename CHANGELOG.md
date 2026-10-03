@@ -294,3 +294,37 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 
 - checagem de integridade entre Documentos 20–22 e fechamento do modelo lógico candidato.
 
+## 2026-10-03 — Documento 23: Checagem de Integridade do Modelo de Dados
+
+### Adicionado
+
+- `docs/architecture/23-checagem-integridade-modelo-dados.md`.
+
+### Resultado
+
+- Documentos 20–22 verificados contra os protocolos metodológicos 13–15;
+- separações Study/Report/Result, Risk of Bias/Certainty e Synthesis/Product preservadas;
+- proveniência e versionamento considerados suficientes para evolução arquitetural;
+- métodos especializados de NMA, diagnóstico, predição e qualitativos cobertos após refinamentos;
+- `ApplicabilityAssessment — OES-AP` reservado no modelo lógico sem impor categorias ou score antes da formalização metodológica.
+
+### Gate
+
+- **GATE F2-A — Modelo Lógico Candidato: APROVADO**.
+
+### Autorizado
+
+- elaboração de primeiro desenho físico candidato;
+- comparação de alternativas relacionais, documentais, grafo e híbridas.
+
+### Ainda não autorizado
+
+- schema definitivo;
+- stack tecnológica definitiva;
+- automação ampla;
+- cristalização de aplicabilidade, produtos ou monitoramento ainda não formalizados.
+
+### Próxima etapa
+
+- alternativas arquiteturais e primeiro desenho físico candidato.
+
