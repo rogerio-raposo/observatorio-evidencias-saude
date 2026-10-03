@@ -52,6 +52,7 @@ Template canônico:
 - 23 — Checagem de Integridade do Modelo de Dados
 - 24 — Alternativas Arquiteturais de Persistência
 - 25 — Primeiro Desenho Físico Candidato
+- 26 — PoC-S1: Validação do Schema Mínimo
 
 ### Estrutura operacional
 
@@ -89,15 +90,16 @@ Template canônico:
 
 ## 4. Próxima etapa
 
-**PoC-S1 — prova de conceito do schema mínimo de OES-P1.**
+**Trilha B enquanto o GATE F2-B aguarda execução PostgreSQL.**
 
 Próximo trabalho:
 
-- implementar registry de entidades/versões;
-- implementar núcleo Question/Investigation/Study/Report/Result/Synthesis/Certainty/Product;
-- implementar provenance e artifact metadata;
-- validar lineage e impacto de atualização/retração;
-- manter a PoC isolada de qualquer decisão de produção.
+- plano formal de testes do F2-B;
+- política de identidade e IDs;
+- política de versionamento;
+- política de proveniência;
+- desenho de migrações;
+- extensão controlada para Search/Screening/RiskAssessment.
 
 ## 5. Gate arquitetural
 
@@ -137,11 +139,11 @@ Ao retomar o projeto em nova conversa ou sessão:
 
 ## 9. Checkpoint atual
 
-**CP10 — 2026-10-03**
+**CP11 — 2026-10-03**
 
 Arquivo canônico do checkpoint:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP10.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP11.md`
 
 O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
 
@@ -162,8 +164,10 @@ Cobertura:
 - validação arquitetural e gate F2-A;
 - alternativas de persistência OES-H1;
 - desenho físico candidato OES-P1;
+- PoC-S1 criada e estaticamente validada;
+- GATE F2-B pendente;
 - estrutura inicial do repositório.
 
 Próximo ponto de trabalho:
 
-**PoC-S1 — schema mínimo de OES-P1.**
+**Trilha B documental enquanto F2-B permanece pendente.**
