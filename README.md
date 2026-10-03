@@ -6,7 +6,7 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 ## Estado do projeto
 
-**Fase atual:** concepção e fundamentos metodológicos.
+**Fase atual:** Fase 2 — Modelo de Dados da Evidência.
 
 **Painel de estado vivo:** [STATE.md](STATE.md)
 
@@ -34,6 +34,10 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [14 — Protocolo de Síntese de Evidências](docs/methodology/14-sintese-evidencias.md)
 - [15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências](docs/methodology/15-certeza-evidencia.md)
 
+### Arquitetura e dados
+
+- [20 — Modelo Conceitual de Dados do OES](docs/architecture/20-modelo-conceitual-dados.md)
+
 ## Arquitetura documental prevista
 
 ```text
@@ -55,6 +59,7 @@ observatorio-evidencias-saude/
 │   │   └── 15-certeza-evidencia.md
 │   ├── products/
 │   └── architecture/
+│       └── 20-modelo-conceitual-dados.md
 ├── templates/
 └── references/
 ```
@@ -108,7 +113,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-**Consolidar o modelo conceitual de dados e aprofundar a arquitetura tecnológica**, usando como base os Documentos 00–15.
+**Desenvolver o modelo lógico de dados**, usando o Documento 20 como base e preservando proveniência, versionamento e as entidades metodológicas dos Documentos 00–15.
 
 ---
 
