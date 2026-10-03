@@ -128,6 +128,10 @@ CREATE TABLE investigation.question (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
 
+CREATE TRIGGER tr_question_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON investigation.question
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Question');
+
 CREATE TABLE investigation.question_version (
     version_uuid uuid PRIMARY KEY,
     entity_uuid uuid NOT NULL REFERENCES investigation.question(entity_uuid),
@@ -145,6 +149,10 @@ CREATE TABLE investigation.question_version (
 CREATE TABLE investigation.investigation (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
+
+CREATE TRIGGER tr_investigation_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON investigation.investigation
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Investigation');
 
 CREATE TABLE investigation.investigation_version (
     version_uuid uuid PRIMARY KEY,
@@ -180,6 +188,10 @@ CREATE TABLE evidence.study (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
 
+CREATE TRIGGER tr_study_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON evidence.study
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Study');
+
 CREATE TABLE evidence.study_version (
     version_uuid uuid PRIMARY KEY,
     entity_uuid uuid NOT NULL REFERENCES evidence.study(entity_uuid),
@@ -199,6 +211,10 @@ CREATE TABLE evidence.study_version (
 CREATE TABLE evidence.report (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
+
+CREATE TRIGGER tr_report_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON evidence.report
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Report');
 
 CREATE TABLE evidence.report_version (
     version_uuid uuid PRIMARY KEY,
@@ -244,6 +260,10 @@ CREATE TABLE evidence.outcome (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
 
+CREATE TRIGGER tr_outcome_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON evidence.outcome
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Outcome');
+
 CREATE TABLE evidence.outcome_version (
     version_uuid uuid PRIMARY KEY,
     entity_uuid uuid NOT NULL REFERENCES evidence.outcome(entity_uuid),
@@ -261,6 +281,10 @@ CREATE TABLE evidence.result (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid),
     study_entity_uuid uuid NOT NULL REFERENCES evidence.study(entity_uuid)
 );
+
+CREATE TRIGGER tr_result_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON evidence.result
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Result');
 
 CREATE TABLE evidence.result_version (
     version_uuid uuid PRIMARY KEY,
@@ -317,6 +341,10 @@ CREATE TABLE synthesis.synthesis (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
 
+CREATE TRIGGER tr_synthesis_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON synthesis.synthesis
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Synthesis');
+
 CREATE TABLE synthesis.synthesis_version (
     version_uuid uuid PRIMARY KEY,
     entity_uuid uuid NOT NULL REFERENCES synthesis.synthesis(entity_uuid),
@@ -368,6 +396,10 @@ CREATE TABLE appraisal.certainty_assessment (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
 
+CREATE TRIGGER tr_certainty_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON appraisal.certainty_assessment
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('CertaintyAssessment');
+
 CREATE TABLE appraisal.certainty_assessment_version (
     version_uuid uuid PRIMARY KEY,
     entity_uuid uuid NOT NULL REFERENCES appraisal.certainty_assessment(entity_uuid),
@@ -411,6 +443,10 @@ CREATE TABLE appraisal.certainty_domain (
 CREATE TABLE product.product (
     entity_uuid uuid PRIMARY KEY REFERENCES core.entity(entity_uuid)
 );
+
+CREATE TRIGGER tr_product_entity_type
+BEFORE INSERT OR UPDATE OF entity_uuid ON product.product
+FOR EACH ROW EXECUTE FUNCTION core.assert_entity_type('Product');
 
 CREATE TABLE product.product_version (
     version_uuid uuid PRIMARY KEY,
