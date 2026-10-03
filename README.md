@@ -40,6 +40,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [21 — Modelo Lógico de Dados do OES](docs/architecture/21-modelo-logico-dados.md)
 - [22 — Validação Arquitetural por Casos de Uso](docs/architecture/22-validacao-arquitetural-casos-uso.md)
 - [23 — Checagem de Integridade do Modelo de Dados](docs/architecture/23-checagem-integridade-modelo-dados.md)
+- [24 — Alternativas Arquiteturais de Persistência](docs/architecture/24-alternativas-arquiteturais-persistencia.md)
+- [25 — Primeiro Desenho Físico Candidato](docs/architecture/25-primeiro-desenho-fisico-candidato.md)
 
 ## Arquitetura documental prevista
 
@@ -65,7 +67,9 @@ observatorio-evidencias-saude/
 │       ├── 20-modelo-conceitual-dados.md
 │       ├── 21-modelo-logico-dados.md
 │       ├── 22-validacao-arquitetural-casos-uso.md
-│       └── 23-checagem-integridade-modelo-dados.md
+│       ├── 23-checagem-integridade-modelo-dados.md
+│       ├── 24-alternativas-arquiteturais-persistencia.md
+│       └── 25-primeiro-desenho-fisico-candidato.md
 ├── templates/
 └── references/
 ```
@@ -121,9 +125,13 @@ Alterações metodológicas relevantes devem:
 
 **GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas explícitas para aplicabilidade, produtos, monitoramento e vocabulários.
 
+## Arquitetura candidata
+
+**OES-H1** foi selecionada para prova arquitetural e **OES-P1** é o primeiro desenho físico candidato. Nenhuma stack de produção foi escolhida.
+
 ## Próxima etapa
 
-**Elaborar o primeiro desenho físico candidato e comparar alternativas arquiteturais**, preservando reversibilidade e sem selecionar stack definitiva nesta etapa.
+**PoC-S1 — prova de conceito do schema mínimo**, destinada a validar identidade, versões, relações, proveniência e lineage antes de qualquer implementação ampla.
 
 ---
 
