@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP01 — 2026-10-03**
+**CP02 — 2026-10-03**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP01.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP02.md`
 
 Checkpoint anterior:
 
-**nenhum — checkpoint inaugural**
+`CP01`
 
 Status:
 
@@ -61,3 +61,4 @@ em **Modo Continuidade**.
 ## Histórico
 
 - **CP01 — 2026-10-03:** checkpoint inaugural. Consolida a criação do repositório, os documentos 00–03 e 10, os templates operacionais iniciais e registra como ponto de retomada o documento 11 — Elegibilidade, Triagem e Seleção.
+- **CP02 — 2026-10-03:** consolida o Documento 11, o Screening Record e registra como ponto de retomada o Documento 12 — Avaliação de Risco de Viés e Qualidade Metodológica.
