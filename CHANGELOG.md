@@ -170,3 +170,36 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - Documento 15 — Avaliação da Certeza/Confiança no Corpo de Evidências.
+
+## 2026-10-03 — Documento 15: Certeza/Confiança no Corpo de Evidências
+
+### Adicionado
+
+- `docs/methodology/15-certeza-evidencia.md`.
+- `templates/certainty-assessment-record.md`.
+
+### Decisões metodológicas
+
+- certeza será avaliada no corpo de evidências e, em regra, por desfecho/comparação/timepoint/estimando;
+- GRADE será a referência central para evidência quantitativa quando aplicável;
+- versão/fonte operacional do GRADE deverá ser registrada;
+- não haverá score numérico universal de certeza;
+- risco de viés, inconsistência, indirectness, imprecisão e missing evidence/publication bias serão julgados explicitamente;
+- I² e significância estatística não serão regras automáticas de downgrade;
+- ausência de evidência não será classificada automaticamente como certeza muito baixa;
+- fatores de elevação serão aplicados apenas quando cabíveis e justificados;
+- dupla penalização da mesma limitação entre domínios deverá ser evitada;
+- aplicabilidade ao Brasil permanecerá separada da indirectness quando a pergunta-alvo não for especificamente brasileira;
+- diagnóstico, prognóstico, predição, prevalência/incidência e exposição usarão orientação específica quando necessária;
+- NMA poderá usar abordagem GRADE específica ou CINeMA, com avaliação de evidência direta/indireta e incoerência;
+- GRADE-CERQual será o framework preferencial para confiança em achados qualitativos;
+- GRADE quantitativo e CERQual não serão convertidos automaticamente um no outro;
+- Summary of Findings será utilizado quando apropriado;
+- N3 exigirá verificação independente dos julgamentos materiais e N4, pelo menos dois avaliadores independentes;
+- IA poderá auxiliar, mas não produzirá autonomamente certeza final em N2–N4;
+- certeza permanecerá separada de recomendação.
+
+### Próxima etapa
+
+- Consolidar o modelo conceitual de dados e aprofundar a arquitetura tecnológica do OES.
+
