@@ -653,3 +653,36 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - especificação individual da **Ficha de Evidência**.
+
+
+## 2026-10-04 — Fase 3: especificação da Ficha de Evidência
+
+### Adicionado
+
+- `docs/products/41-especificacao-ficha-evidencia.md`.
+
+### Decisões consolidadas
+
+- Ficha de Evidência confirmada como unidade persistente central preferencial para perguntas focais reutilizáveis;
+- Ficha permanece `Product subtype`, sem duplicar entidades científicas;
+- uma Investigation principal é obrigatória;
+- Syntheses e Certainty Assessments utilizados devem ser vinculados por versão concreta;
+- certainty não será agregada artificialmente no nível global da Ficha;
+- conclusão deverá ser calibrada à magnitude, incerteza e certainty;
+- segurança/danos permanecem separados quando aplicáveis;
+- aplicabilidade permanece descritiva até formalização metodológica própria;
+- Ficha não produz recomendação normativa;
+- publicação exige gate científico mínimo;
+- versão publicada não é sobrescrita silenciosamente.
+
+### Lacunas físicas identificadas
+
+- estado de atualidade separado do estado editorial;
+- múltiplas classes de mudança por ProductVersion;
+- relações explícitas Product → Product;
+- ApplicabilityAssessment ainda não operacionalizado;
+- registro específico do gate de revisão/publicação.
+
+### Próxima etapa
+
+Definir o **Contrato de Dados da Ficha de Evidência** e decidir quais lacunas exigem migration antes do template operacional.
