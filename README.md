@@ -42,6 +42,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [43 — Resultado da Validação do Contrato da Ficha](docs/products/43-resultado-validacao-contrato-ficha.md)
 - [44 — EvidenceSheetView: Contrato de Renderização da Ficha](docs/products/44-evidence-sheet-view.md)
 - [45 — Resultado da Validação do EvidenceSheetView](docs/products/45-resultado-validacao-evidence-sheet-view.md)
+- [46 — Especificação do Template Operacional da Ficha de Evidência](docs/products/46-especificacao-template-ficha-evidencia.md)
+- [47 — Resultado da Validação do Template Operacional da Ficha](docs/products/47-resultado-validacao-template-ficha.md)
 
 ### Arquitetura e dados
 
@@ -165,7 +167,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. A próxima etapa é a **Especificação do Template Operacional da Ficha de Evidência**.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. A próxima etapa é a **validação científica ponta a ponta da Ficha com um caso real**.
 
 ---
 
