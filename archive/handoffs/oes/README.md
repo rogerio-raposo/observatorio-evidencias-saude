@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP19 — 2026-10-04**
+**CP20 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP19.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP20.md`
 
 Checkpoint anterior:
 
-`CP18`
+`CP19`
 
 Status:
 
@@ -78,3 +78,7 @@ em **Modo Continuidade**.
 - **CP15 — 2026-10-04:** consolida a **PoC-S4 = PASS**, atualiza a matriz para 11/1/3 e registra como ponto de retomada a PoC-S5 — Métodos Especializados Mínimos.
 - **CP16 — 2026-10-04:** consolida a **PoC-S5 = PASS**, a matriz 15/15, promove OES-P1 a baseline arquitetural, encerra a Fase 2 e registra como ponto de retomada a Fase 3 — Produtos do Observatório.
 - **CP17 — 2026-10-04:** consolida o Documento 40 — Taxonomia e Arquitetura dos Produtos, formaliza a Ficha de Evidência como unidade persistente central preferencial e registra como ponto de retomada sua especificação individual.
+
+- **CP18 — 2026-10-04:** consolida a especificação científica/funcional da Ficha de Evidência e registra como ponto de retomada o Contrato de Dados da Ficha.
+- **CP19 — 2026-10-04:** consolida o contrato de dados, migration 006 e publication gate da Ficha com PASS; registra como ponto de retomada o EvidenceSheetView.
+- **CP20 — 2026-10-04:** consolida o EvidenceSheetView e sua validação com PASS; registra como ponto de retomada a especificação do Template Operacional da Ficha de Evidência.
