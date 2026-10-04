@@ -154,12 +154,13 @@ jobs:
           fi
           echo "F3-TEMPLATE PASS — EvidenceSheetView rendered to validated Markdown" | tee -a s5-artifacts/F3-TEMPLATE-validation.log
 
-      - name: EvidenceSheetView latest migration idempotent re-apply
+      - name: EvidenceSheetView latest migrations idempotent re-apply
         shell: bash
         run: |
           set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_provenance_references.sql 2>&1 | tee s5-artifacts/F3-PROV-reapply.log
           psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
-          echo "F3-VIEW migration reapply PASS — projection migration 009 is idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
+          echo "F3 projection migrations reapply PASS — migrations 008/009 are idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
 
       - name: F3-FE-T17 — migration 006 double-apply detection
         shell: bash
