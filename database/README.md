@@ -13,6 +13,8 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `005_poc_s5_specialized_methods.sql` — StudyGroup/NMA, PredictionModel e ReviewFinding/CERQual;
 - `006_product_evidence_sheet_contract.sql` — contrato físico da Ficha de Evidência, atualidade, classes de mudança, revisão humana e publication gate;
 - `007_evidence_sheet_view.sql` — projeção JSONB determinística para renderização da Ficha;
+- `008_evidence_sheet_provenance_references.sql` — referências da Ficha derivadas também de provenance/dependency graph;
+- `009_evidence_sheet_view_evidence_counts.sql` — discriminação das unidades de evidência por `study_type`;
 - `poc-s1-smoke.sql` — smoke inicial;
 - `f2b-fixtures.sql` — fixtures determinísticas do gate;
 - `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
@@ -200,3 +202,23 @@ A função de referência é:
 A migration 007 é idempotente por desenho, pois utiliza `CREATE OR REPLACE FUNCTION`.
 
 Próxima etapa: especificação e construção do template operacional da Ficha.
+
+
+## Fase 3 — Reconciliação real-case / EvidenceSheetView hardening
+
+**PASS — 4 de outubro de 2026.**
+
+- GitHub Actions run: **37212250256**
+- F3-PROV-T01–T06: PASS
+- F3-VIEW-T17: PASS
+- F3-TEMPLATE: PASS
+- regressões F2-B/S4/S5/Ficha/View: PASS
+- rebuild até migration 009: PASS
+- artifact: **11306779147**
+- digest: `sha256:c0347d27ab8e42ca2e4eaf79db33c1bc234e831d31f53e79cd1f5d44a3ed0aca`
+
+Sequência canônica:
+
+`007 → 008 provenance-aware references → 009 study-type counts`.
+
+Próximo passo: materializar o Caso Real 01 como Ficha `under_review`.
