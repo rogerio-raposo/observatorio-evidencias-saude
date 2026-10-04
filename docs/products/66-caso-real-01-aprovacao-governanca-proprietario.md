@@ -245,7 +245,7 @@ Uma resposta genérica anterior como “OK”, “prossiga” ou concordância c
 
 > **não será interpretada retroativamente como owner approval deste produto.**
 
-A decisão do Documento 65 deve ser explícita.
+A decisão do Documento 66 deve ser explícita.
 
 ---
 
