@@ -16,6 +16,8 @@ BEGIN
      OR jsonb_array_length(v->'priority_results') <> 3
      OR v#>>'{priority_results,0,synthesis,result_summary,reported_study_count}' <> '10'
      OR v#>>'{priority_results,1,certainty,final_level}' <> 'moderate'
+     OR v#>>'{audit,assurance_level}' <> 'A0'
+     OR v#>>'{audit,expert_independent_reviewed}' <> 'false'
      OR ok
   THEN
       RAISE EXCEPTION 'RC01-T10 FAIL: rebuilt real-case preview contract invalid';
