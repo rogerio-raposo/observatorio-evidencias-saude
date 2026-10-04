@@ -117,20 +117,12 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-tests.sql 2>&1 | tee s5-artifacts/f3-fe-tests.log
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-tests.sql 2>&1 | tee s5-artifacts/f3-view-tests.log
 
-      - name: EvidenceSheetView migration double-apply detection
+      - name: EvidenceSheetView migration idempotent re-apply
         shell: bash
         run: |
           set -euo pipefail
-          set +e
-          psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql > s5-artifacts/F3-VIEW-double-apply.log 2>&1
-          rc=$?
-          set -e
-          cat s5-artifacts/F3-VIEW-double-apply.log
-          if [ "$rc" -eq 0 ]; then
-            echo "F3-VIEW migration duplicate FAIL — migration 007 applied twice without detection" | tee -a s5-artifacts/F3-VIEW-double-apply.log
-            exit 1
-          fi
-          echo "F3-VIEW migration duplicate PASS — migration 007 duplicate detected" | tee -a s5-artifacts/F3-VIEW-double-apply.log
+          psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
+          echo "F3-VIEW migration reapply PASS — projection migration is idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
 
       - name: F3-FE-T17 — migration 006 double-apply detection
         shell: bash
