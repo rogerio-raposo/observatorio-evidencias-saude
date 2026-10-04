@@ -1,0 +1,156 @@
+name: OES PoC-S5 PostgreSQL Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'database/005_poc_s5_specialized_methods.sql'
+      - 'database/s5-fixtures.sql'
+      - 'database/s5-tests.sql'
+      - 'database/s5-rebuild-check.sql'
+      - '.github/workflows/validate-s5.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-s5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: oes_s5
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_s5"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: oes_s5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare evidence directory
+        run: mkdir -p s5-artifacts
+
+      - name: Ensure PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee s5-artifacts/psql-client-version.txt
+
+      - name: Capture environment and SQL hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s5-artifacts/postgresql-server-version.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             | tee s5-artifacts/sql-sha256.txt
+
+      - name: S5-T01 — install baseline through migration 005
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/poc-s1.sql 2>&1 | tee s5-artifacts/S5-T01-baseline.log
+          psql -v ON_ERROR_STOP=1 -f database/002_poc_s2_search_screening_risk.sql 2>&1 | tee s5-artifacts/S5-T01-002.log
+          psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql 2>&1 | tee s5-artifacts/S5-T01-003.log
+          psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql 2>&1 | tee s5-artifacts/S5-T01-004.log
+          psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql 2>&1 | tee s5-artifacts/S5-T01-005.log
+
+      - name: Load F2-B fixtures and run regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql 2>&1 | tee s5-artifacts/base-fixtures.log
+          psql -v ON_ERROR_STOP=1 -f database/f2b-tests.sql 2>&1 | tee s5-artifacts/regression-f2b.log
+
+      - name: Load S4 fixtures and run regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql 2>&1 | tee s5-artifacts/s4-fixtures.log
+          psql -v ON_ERROR_STOP=1 -f database/s4-tests.sql 2>&1 | tee s5-artifacts/regression-s4.log
+
+      - name: Load S5 fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql 2>&1 | tee s5-artifacts/s5-fixtures.log
+
+      - name: S5-T02–T15 — specialized runtime tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/s5-tests.sql 2>&1 | tee s5-artifacts/S5-T02-T15.log
+
+      - name: S5-T17 — migration double-apply detection
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql             > s5-artifacts/S5-T17-double-apply.log 2>&1
+          rc=$?
+          set -e
+          cat s5-artifacts/S5-T17-double-apply.log
+          if [ "$rc" -eq 0 ]; then
+            echo "S5-T17 FAIL — migration 005 applied twice without detection" | tee -a s5-artifacts/S5-T17-double-apply.log
+            exit 1
+          fi
+          echo "S5-T17 PASS — duplicate application detected" | tee -a s5-artifacts/S5-T17-double-apply.log
+
+      - name: S5-T16 — rebuild from zero
+        shell: bash
+        run: |
+          set -euo pipefail
+          createdb oes_s5_rebuild
+          {
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/poc-s1.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/002_poc_s2_search_screening_risk.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-rebuild-check.sql
+          } 2>&1 | tee s5-artifacts/S5-T16-rebuild.log
+
+      - name: Final S5 status
+        shell: bash
+        run: |
+          {
+            echo "PoC-S5 runtime suite PASS"
+            echo "F2-B regression PASS"
+            echo "S4 regression PASS"
+            echo "S5-T01–T17 PASS"
+            echo "NMA PASS"
+            echo "PredictionModel PASS"
+            echo "Qualitative/CERQual PASS"
+            echo "Candidate promotion matrix may now be re-evaluated."
+          } | tee s5-artifacts/S5-summary.txt
+
+      - name: Upload S5 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oes-s5-evidence-${{ github.run_id }}
+          path: s5-artifacts/
+          if-no-files-found: warn
+          retention-days: 30
