@@ -119,6 +119,8 @@ Documento 47 — **Resultado da Validação do Template Operacional da Ficha**: 
 
 Template `oes.evidence_sheet.template/0.1` validado contra `oes.evidence_sheet_view/0.1`.
 
+Documento 48 — **Caso Real 01: dCBT-I — Protocolo Inicial N2** aberto para validação científica ponta a ponta.
+
 Taxonomia:
 
 - Evidence Scan;
@@ -135,21 +137,19 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Validação científica ponta a ponta da Ficha de Evidência com um caso real.**
+**Caso Real 01 — execução formal da busca N2 e triagem.**
 
-Objetivos:
+Pergunta: dCBT-I totalmente automatizada versus educação digital sobre sono/higiene do sono em adultos com insônia, com gravidade da insônia pós-tratamento como desfecho principal.
 
-- selecionar uma pergunta real adequada a N2;
-- executar busca e triagem reais;
-- avaliar risco de viés/qualidade conforme o desenho;
-- extrair Results;
-- produzir Synthesis;
-- avaliar certainty quando aplicável;
-- construir ProductVersion;
-- executar publication gate;
-- gerar EvidenceSheetView;
-- renderizar a Ficha;
-- revisar clareza científica/editorial e identificar ajustes necessários.
+Próximos passos:
+
+- testar sensibilidade da estratégia contra estudos-semente;
+- executar busca de sínteses;
+- executar busca de RCTs;
+- consultar BVS/LILACS;
+- verificar ClinicalTrials.gov;
+- deduplicar;
+- iniciar triagem e documentar decisões.
 
 ## 10. Checkpoint vigente
 
