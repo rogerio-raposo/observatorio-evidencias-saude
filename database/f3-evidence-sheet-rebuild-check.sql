@@ -4,6 +4,8 @@ DECLARE
     currency_n integer;
     change_n integer;
     review_n integer;
+    assurance_n integer;
+    assurance_level text;
     ok boolean;
 BEGIN
     SELECT count(*) INTO currency_n
@@ -20,18 +22,28 @@ BEGIN
        AND status='active'
        AND decision='approved';
 
+    SELECT count(*) INTO assurance_n
+      FROM product.assurance_record
+     WHERE product_version_uuid='71000000-0000-0000-0000-000000000001'
+       AND status='active';
+
+    SELECT product.evidence_sheet_assurance_level(
+        '71000000-0000-0000-0000-000000000001'
+    ) INTO assurance_level;
+
     SELECT product.evidence_sheet_is_publishable(
         '71000000-0000-0000-0000-000000000001'
     ) INTO ok;
 
-    IF currency_n<>1 OR change_n<>2 OR review_n<>1 OR NOT ok THEN
+    IF currency_n<>1 OR change_n<>2 OR review_n<>1
+       OR assurance_n<>2 OR assurance_level<>'A2' OR NOT ok THEN
         RAISE EXCEPTION
-            'F3-FE-T16 FAIL: currency %, changes %, approved reviews %, publishable %',
-            currency_n,change_n,review_n,ok;
+            'F3-FE-T16 FAIL: currency %, changes %, legacy reviews %, assurances %, level %, publishable %',
+            currency_n,change_n,review_n,assurance_n,assurance_level,ok;
     END IF;
 
     RAISE NOTICE
-        'F3-FE-T16 PASS — rebuild currency %, changes %, approved reviews %, publishable %',
-        currency_n,change_n,review_n,ok;
+        'F3-FE-T16 PASS — rebuild currency %, changes %, legacy reviews %, assurances %, level %, publishable %',
+        currency_n,change_n,review_n,assurance_n,assurance_level,ok;
 END
 $f3rebuild$;
