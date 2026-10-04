@@ -101,6 +101,8 @@ Ainda não finalizados:
 
 ## 8. Fase 3 — estado atual
 
+Documento 04 — **Governança de Garantia Metodológica, Aprovação e Revisão**: vigente como regra transversal A0–A3 para distinguir verificação por IA, aprovação do proprietário e revisão especializada independente.
+
 Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES** consolidado como base inicial.
 
 Documento 41 — **Especificação Científica e Funcional da Ficha de Evidência** consolidado.
@@ -131,13 +133,23 @@ Documento 57 — validação da reconciliação: PASS.
 
 Documento 58 — **Resultado da Validação Ponta a Ponta do Caso Real 01**: PASS em pré-publicação.
 
-Documento 59 — **Pacote de Revisão Humana do Caso Real 01**: preparado; revisão humana ainda não realizada.
+Documento 59 — **Pacote de Revisão Especializada Independente do Caso Real 01**: preservado; expert review não realizado.
 
-Documento 60 — **Validação Técnica do Gate de Revisão Humana**: HRG-T01–T06 PASS; nenhuma revisão sintética persistida.
+Documento 60 — **Validação Técnica do antigo Gate de Revisão Humana**: permanece como evidência histórica; HRG-T01–T06 PASS.
 
-Migrations canônicas da camada de renderização: 007 → 008 provenance → 009 study-type counts.
+Documento 61 — **Redesenho do Modelo de Garantia e Aprovação**: aplicado ao Caso Real 01.
 
-Caso Real 01 materializado no baseline como Ficha `under_review`; RC01-T01–T10 PASS; preview Markdown validado; publication gate bloqueado como esperado.
+Documento 62 — **Validação Técnica do Modelo A0–A3**: PASS.
+
+Documento 63 — **Primeira Verificação Metodológica Adversarial**: REVISE; identificou e corrigiu premissa incorreta sobre Hwang/Somzz.
+
+Documento 64 — **Segunda Verificação Metodológica Adversarial**: PASSED.
+
+Documento 65 — **Aprovação de Governança do Proprietário**: formulário preparado; decisão ainda não registrada.
+
+Migrations canônicas da camada da Ficha: 007 EvidenceSheetView → 008 provenance → 009 study-type counts → 010 assurance governance → 011 assurance-aware view.
+
+Caso Real 01 materializado como Ficha `under_review`, assurance **A1**, `publishable=false`; RC01-T01–T10, AG-T01–T07 e AV-T01–T02 PASS.
 
 Taxonomia:
 
@@ -155,13 +167,13 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Revisão humana real do Caso Real 01.**
+**Decisão explícita do proprietário no Documento 65.**
 
-O pacote de revisão já está pronto no Documento 59.
+O proprietário deverá avaliar somente governança, clareza, transparência e escopo de uso — não ROBIS, RoB 2, GRADE ou bioestatística.
 
-A próxima transição deste ProductVersion depende de um revisor humano real, que deverá registrar decisão APPROVED, REVISE ou REJECTED com justificativas.
+Se a decisão for `APPROVED`, o Caso Real 01 poderá avançar de A1 para **A2**. A revisão especializada independente continuará não realizada e deverá permanecer explicitamente declarada.
 
-Até lá, a Ficha permanece `under_review` e `publishable=false`.
+Até a decisão, a Ficha permanece `under_review`, assurance **A1** e `publishable=false`.
 
 ## 10. Checkpoint vigente
 
@@ -173,4 +185,4 @@ Arquivo:
 
 Ponto exato de retomada:
 
-**Fase 3 — Revisão humana real do Caso Real 01.**
+**Fase 3 — owner governance approval do Caso Real 01 (Documento 65).**
