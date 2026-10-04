@@ -46,6 +46,8 @@ Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 - [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](architecture/31-poc-s2-validacao.md)
 - [32 — Resultado do GATE F2-B e Decisão Pós-PoC](architecture/32-resultado-gate-f2b.md)
 - [33 — Revisão de Promoção Arquitetural Pós-F2-B](architecture/33-revisao-promocao-pos-f2b.md)
+- [34 — Plano e Desenho da PoC-S4](architecture/34-plano-poc-s4.md)
+- [35 — Resultado da PoC-S4](architecture/35-resultado-poc-s4.md)
 - [F2-B Test Run — 2026-10-04 — Run 37187885839](architecture/F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Regra editorial
