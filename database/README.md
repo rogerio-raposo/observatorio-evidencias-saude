@@ -11,6 +11,7 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `003_poc_s3_provenance_guard.sql` — proteção history-preserving de provenance;
 - `004_poc_s4_report_relation_impact.sql` — ReportRelation e traversal derivado de impacto;
 - `005_poc_s5_specialized_methods.sql` — StudyGroup/NMA, PredictionModel e ReviewFinding/CERQual;
+- `006_product_evidence_sheet_contract.sql` — contrato físico da Ficha de Evidência, atualidade, classes de mudança, revisão humana e publication gate;
 - `poc-s1-smoke.sql` — smoke inicial;
 - `f2b-fixtures.sql` — fixtures determinísticas do gate;
 - `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
@@ -151,3 +152,29 @@ Os SQLs permanecem experimentais e não constituem schema de produção congelad
 
 A arquitetura de dados deixa de ser o foco principal. O projeto transita para **Fase 3 — Produtos do Observatório**.
 
+
+
+## Fase 3 — Contrato físico da Ficha de Evidência
+
+**PASS — 4 de outubro de 2026.**
+
+- GitHub Actions run: **37191456703**
+- PostgreSQL server: **18.6**
+- F3-FE-T01–T17: **PASS**
+- regressão F2-B: PASS
+- regressão S4: PASS
+- regressão S5: PASS
+- rebuild: PASS
+- artifact: **11299032774**
+- digest: `sha256:2e3508b0d876e13e2f6efb367da8e8b308c943560e3d5e978fa293a8a4f851c1`
+
+O baseline passa a incluir, para a camada de produtos:
+
+- `limitations_summary`;
+- `product.currency_state`;
+- `product.version_change_class`;
+- `product.review_record`;
+- uma Investigation primary por ProductVersion;
+- funções de publication issues/publishability da Ficha.
+
+Próximo passo: EvidenceSheetView e template operacional.
