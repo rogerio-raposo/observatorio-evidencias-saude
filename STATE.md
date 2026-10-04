@@ -1,174 +1,134 @@
 # STATE — Estado Atual do Projeto OES
 
 **Última atualização:** 4 de outubro de 2026  
-**Fase:** Fase 2 — Modelo de Dados da Evidência  
+**Fase atual:** Fase 3 — Produtos do Observatório  
 **Status geral:** em desenvolvimento
 
 ## 1. Fonte canônica e continuidade
 
 Este repositório é a fonte canônica do Observatório de Evidências em Saúde — OES.
 
-As conversas podem desenvolver e revisar conteúdo, mas decisões persistentes devem ser consolidadas no repositório.
-
-O `STATE.md` é um painel vivo.
-
 Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP15 — 2026-10-04**.
+- checkpoint vigente: **CP16 — 2026-10-04**.
 
-## 2. Documentação consolidada
-
-### Governança / fundamentos
-
-- 00 — Documento de Concepção
-- 01 — Escopo Científico e Taxonomia das Perguntas
-- 02 — Arquitetura de Níveis de Investigação e Produtos
-- 03 — Entrada, Triagem e Roteamento Metodológico
-
-### Metodologia
-
-- 10 — Busca e Recuperação
-- 11 — Elegibilidade, Triagem e Seleção
-- 12 — Risco de Viés e Qualidade Metodológica
-- 13 — Extração e Estruturação de Dados
-- 14 — Síntese de Evidências
-- 15 — Certeza/Confiança no Corpo de Evidências
-
-### Arquitetura e dados
-
-- 20 — Modelo Conceitual
-- 21 — Modelo Lógico
-- 22 — Validação por Casos de Uso
-- 23 — Checagem de Integridade
-- 24 — Alternativas de Persistência
-- 25 — Primeiro Desenho Físico Candidato
-- 26 — PoC-S1
-- 27 — Plano Formal de Testes F2-B
-- 28 — Identidade e Versionamento
-- 29 — Proveniência e Lineage
-- 30 — Política de Migrações
-- 31 — PoC-S2 Search/Screening/RiskAssessment
-- 32 — Resultado do GATE F2-B e Decisão Pós-PoC
-- 33 — Revisão de Promoção Arquitetural Pós-F2-B
-- 34 — Plano e Desenho da PoC-S4
-- 35 — Resultado da PoC-S4
-- F2B Test Run 2026-10-04 / run 37187885839
-
-## 3. Gates
-
-### GATE F2-A
-
-**APROVADO.**
-
-Modelo lógico candidato autorizado para prova física, com reservas metodológicas já documentadas.
-
-### GATE F2-B
-
-**PASS — 4 de outubro de 2026.**
-
-Execução final:
-
-- GitHub Actions run: **37187885839**
-- commit: `de168908d8fe311e64c07937dc70df36af39d910`
-- PostgreSQL server: **18.6**
-- T01–T19: **PASS**
-- rebuild do zero: **PASS**
-- artifact: **11297272424**
-- digest: `sha256:5381605d34064f95a2d4444e34d275b8c89ceb28a19cc915db104da9362c1d7c`
-
-## 4. Arquitetura candidata
-
-### OES-H1
-
-**Status:** arquitetura candidata preservada.
-
-### OES-P1
-
-**Status:** candidato físico **validado no escopo do F2-B**.
-
-O PASS do F2-B não promove OES-P1 a schema definitivo.
-
-### PostgreSQL
-
-**Status:** referência de implementação validada para PoC; nenhuma decisão definitiva de stack de produção.
-
-## 5. Invariantes arquiteturais já confirmadas
-
-- identidade estável separada de versão;
-- no máximo uma versão `current` por entidade;
-- supersessão dentro da mesma identidade;
-- integridade de subtipos e FKs;
-- Study/Report/Result separados;
-- raw/source value separado de derived value;
-- provenance como dado de primeira classe;
-- correção de provenance history-preserving;
-- dependency edge como projeção derivada;
-- SearchHit preservado após deduplicação;
-- Screening target tipado;
-- RiskAssessment target tipado;
-- cadeia Search → Product reconstruível;
-- rebuild a partir de artefatos versionados;
-- rollback transacional validado.
-
-## 6. Fases
+## 2. Estado das fases
 
 - Fase 0 — Concepção e fundamentos: base inicial consolidada;
 - Fase 1 — Manual Metodológico: base inicial dos Documentos 10–15 consolidada;
-- Fase 2 — Modelo de Dados da Evidência: **em desenvolvimento, F2-A e F2-B aprovados**;
-- Fases 3–7: ainda não iniciadas formalmente.
+- Fase 2 — Modelo de Dados da Evidência: **concluída no nível de baseline arquitetural**;
+- Fase 3 — Produtos do Observatório: **iniciando**;
+- Fases 4–7: ainda não iniciadas formalmente.
 
-## 7. Limites atuais
+## 3. Arquitetura
 
-Ainda não constituem decisões finais:
+### OES-H1
 
-- schema definitivo;
-- stack tecnológica de produção;
-- fechamento da Fase 2;
-- NMA física completa;
-- PredictionModel completo;
-- qualitativa/CERQual física completa;
-- ApplicabilityAssessment;
-- monitoramento operacional;
+**Arquitetura de referência.**
+
+Núcleo relacional canônico + estruturas documentais controladas + object storage + projeções derivadas.
+
+### OES-P1
+
+**Baseline arquitetural da Fase 2.**
+
+Foi promovido após:
+
+- GATE F2-A PASS;
+- GATE F2-B PASS;
+- PoC-S4 PASS;
+- PoC-S5 PASS;
+- 15/15 critérios de promoção validados.
+
+### PostgreSQL
+
+**Implementação de referência validada para desenvolvimento/PoC.**
+
+Não constitui escolha definitiva de stack de produção.
+
+## 4. Evidência técnica principal
+
+### F2-B
+
+- run 37187885839;
+- T01–T19 PASS.
+
+### PoC-S4
+
+- run 37188934837;
+- S4-T01–T15 PASS.
+
+### PoC-S5
+
+- run 37189646452;
+- regressão F2-B PASS;
+- regressão S4 PASS;
+- S5-T01–T17 PASS;
+- artifact 11297653844;
+- digest `sha256:ba8aed9373dfde8c5ee14c67f91084b2158c3b76bc98560fbc5a22555b133719`.
+
+## 5. Matriz de promoção do Documento 25
+
+> **15 VALIDADO / 0 PARCIAL / 0 NÃO VALIDADO**
+
+## 6. Decisão de fechamento da Fase 2
+
+Documento:
+
+`docs/architecture/38-decisao-promocao-fechamento-fase2.md`
+
+Decisão:
+
+- OES-P1 promovido a baseline arquitetural;
+- Fase 2 concluída;
+- schema de produção não congelado;
+- stack de produção não escolhida;
+- evolução futura deve ocorrer por migrations controladas.
+
+## 7. Reservas metodológicas/operacionais
+
+Ainda não finalizados:
+
+- taxonomia definitiva dos produtos;
+- templates individuais dos produtos;
+- ApplicabilityAssessment operacional;
+- protocolo de atualização/monitoramento;
+- automação e IA;
+- infraestrutura de produção;
 - autenticação/autorização;
-- backup/HA;
-- migration ledger de ambiente persistente;
-- política de CI/concurrency definitiva.
+- backup/HA.
 
 ## 8. Próxima etapa
 
-**PoC-S5 — Métodos Especializados Mínimos.**
+**Fase 3 — Produtos do Observatório.**
 
-Após PoC-S4:
+Primeira tarefa:
 
-- 11 critérios validados;
-- 1 parcialmente validado;
-- 3 não validados.
+> definir a taxonomia oficial e a arquitetura dos produtos OES antes de criar templates individuais.
 
-PoC-S5 deverá cobrir:
+O documento deverá estabelecer:
 
-- NMA;
-- PredictionModel;
-- Qualitativa/CERQual;
-- remanescente do lineage completo.
-
-Evitar implementação de motores completos; validar representação, versionamento, provenance e lineage.
+- finalidade;
+- público/necessidade;
+- níveis N0–N4 e M0–M3;
+- requisitos metodológicos mínimos;
+- entidades persistentes obrigatórias;
+- campos mínimos de saída;
+- linguagem de certeza e limitações;
+- fronteira evidência/recomendação;
+- critérios de escolha entre produtos;
+- política de versionamento.
 
 ## 9. Checkpoint vigente
 
-**CP15 — 2026-10-04**
+**CP16 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP15.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP16.md`
 
-Cobertura principal:
+Ponto exato de retomada:
 
-- GATE F2-B PASS;
-- PoC-S4 PASS;
-- critérios 4, 5, 7 e 14 promovidos a VALIDADO;
-- matriz 11 VALIDADO / 1 PARCIAL / 3 NÃO VALIDADO;
-- OES-P1 mantido como candidato físico validado e não promovido;
-- ponto de retomada no plano da PoC-S5.
-
+**Fase 3 — taxonomia e arquitetura dos produtos do Observatório.**
