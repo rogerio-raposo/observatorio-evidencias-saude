@@ -873,3 +873,36 @@ Pergunta N2 focal sobre dCBT-I totalmente automatizada em adultos com insônia, 
 ### Próxima etapa
 
 Gate de Revisão Humana do Caso Real 01.
+
+
+## 2026-10-04 — Caso Real 01: materialização end-to-end e pacote de revisão humana
+
+### Adicionado
+
+- `database/f3-real-case-01-dcbti.sql`;
+- `database/f3-real-case-01-tests.sql`;
+- `database/f3-real-case-01-rebuild-check.sql`;
+- `docs/products/58-caso-real-01-resultado-materializacao-preview.md`;
+- `docs/products/59-caso-real-01-pacote-revisao-humana.md`.
+
+### Validação
+
+- GitHub Actions run **37213165321**;
+- PostgreSQL **18.6**;
+- RC01-T01–T10 PASS;
+- preview real `under_review`: PASS;
+- publication gate bloqueado por ausência de revisão humana e publication_date: PASS;
+- F2-B/S4/S5/F3-FE/F3-VIEW/F3-PROV/F3-TEMPLATE: PASS;
+- rebuild through migration 009: PASS;
+- artifact **11307386757**;
+- digest `sha256:78b143a5def1b79d280736fb9b8415464621082c41b5964381db5ed143617fa5`.
+
+### Decisões
+
+- o Caso Real 01 pode ser representado sem nova migration;
+- meta-análise externa adotada permanece explicitamente não recalculada pelo OES;
+- atualização OES permanece narrativa e não pooled;
+- GRADE permanece provisório/moderado;
+- Ficha permanece `under_review`;
+- publication gate deve continuar bloqueado até revisão humana real;
+- pacote de revisão humana preparado no Documento 59.
