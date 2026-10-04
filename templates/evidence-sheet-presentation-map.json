@@ -1,0 +1,69 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicada",
+    "superseded": "Substituída",
+    "archived": "Arquivada"
+  },
+  "identity.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizada",
+    "archived": "Arquivada"
+  },
+  "currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizada",
+    "archived": "Arquivada"
+  },
+  "certainty.final_level": {
+    "high": "alta",
+    "moderate": "moderada",
+    "low": "baixa",
+    "very_low": "muito baixa"
+  },
+  "final_level": {
+    "high": "alta",
+    "moderate": "moderada",
+    "low": "baixa",
+    "very_low": "muito baixa"
+  },
+  "certainty.evidence_state": {
+    "evidence_available": "evidência disponível",
+    "no_evidence": "sem evidência elegível"
+  },
+  "evidence_state": {
+    "evidence_available": "evidência disponível",
+    "no_evidence": "sem evidência elegível"
+  },
+  "change_class": {
+    "editorial": "alteração editorial",
+    "new_evidence": "nova evidência",
+    "scientific_correction": "correção científica",
+    "quantitative_change": "alteração quantitativa",
+    "certainty_change": "mudança de certeza/confiança",
+    "applicability_change": "mudança de aplicabilidade",
+    "conclusion_change": "mudança de conclusão"
+  },
+  "decision": {
+    "approved": "aprovada",
+    "revise": "revisar",
+    "rejected": "rejeitada"
+  },
+  "record_status": {
+    "active": "ativo",
+    "superseded": "substituído"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.lineage_available": {
+    "true": "sim",
+    "false": "não"
+  }
+}
