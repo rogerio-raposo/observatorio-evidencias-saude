@@ -179,7 +179,7 @@ BEGIN
 END
 $t06$;
 
--- RC01-T07 — risk assessments are present and remain draft/review-required.
+-- RC01-T07 — risk assessments are present and remain pending OES methodological verification.
 DO $t07$
 DECLARE n integer;
 BEGIN
@@ -195,12 +195,12 @@ BEGIN
       SELECT 1
       FROM appraisal.risk_assessment_version
       WHERE investigation_version_uuid='81000000-0000-0000-0000-000000000002'
-        AND verification_status <> 'requires_human_review'
+        AND verification_status <> 'requires_methodological_verification'
   ) THEN
-      RAISE EXCEPTION 'RC01-T07 FAIL: a draft appraisal is not marked for human review';
+      RAISE EXCEPTION 'RC01-T07 FAIL: a draft appraisal is not marked for methodological verification';
   END IF;
 
-  RAISE NOTICE 'RC01-T07 PASS — ROBIS/RoB2 appraisals represented and review status explicit';
+  RAISE NOTICE 'RC01-T07 PASS — ROBIS/RoB2 appraisals represented and methodological-verification status explicit';
 END
 $t07$;
 
