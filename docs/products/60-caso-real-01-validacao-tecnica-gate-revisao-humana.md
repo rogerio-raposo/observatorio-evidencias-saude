@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 3 — Produtos do Observatório  
 **Caso:** Real 01 — dCBT-I totalmente automatizada  
-**Status:** PASS técnico; revisão humana real ainda pendente  
+**Status:** PASS histórico do gate inicial; sem expert review real. A semântica de publicação N2 foi posteriormente substituída pelo modelo de garantia do Documento 04.  
 **Data:** 4 de outubro de 2026  
 **GitHub Actions run:** 37213717492  
 **Commit testado:** `876f7b1deac0909e8475c1fb6f15902edf83bb0b`
@@ -224,9 +224,17 @@ No mesmo run:
 
 ---
 
-# 7. Implicação arquitetural
+# 7. Implicação arquitetural — atualização de governança
 
-O contrato atual de `product.review_record` é suficiente para o primeiro fluxo N2 de revisão humana da Ficha.
+Este documento validou corretamente a **mecânica do gate inicial baseado em `product.review_record`**.
+
+Posteriormente, identificou-se que o único humano do projeto não possui qualificação metodológica para funcionar como revisor especializado. Por isso, o Documento 04 substituiu a premissa operacional do gate N2 por:
+
+- AI methodological verification;
+- owner governance approval;
+- expert independent review opcional/condicional.
+
+Os testes HRG-T01–T06 permanecem evidência histórica válida da semântica do gate inicial, mas não definem mais sozinhos o gate vigente.
 
 Campos atuais suportam:
 
