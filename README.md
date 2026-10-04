@@ -6,7 +6,7 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 ## Estado do projeto
 
-**Fase atual:** Fase 2 — Modelo de Dados da Evidência.
+**Fase atual:** Fase 3 — Produtos do Observatório.
 
 **Painel de estado vivo:** [STATE.md](STATE.md)
 
@@ -52,6 +52,9 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [33 — Revisão de Promoção Arquitetural Pós-F2-B](docs/architecture/33-revisao-promocao-pos-f2b.md)
 - [34 — Plano e Desenho da PoC-S4](docs/architecture/34-plano-poc-s4.md)
 - [35 — Resultado da PoC-S4](docs/architecture/35-resultado-poc-s4.md)
+- [36 — Plano e Desenho da PoC-S5](docs/architecture/36-plano-poc-s5.md)
+- [37 — Resultado da PoC-S5](docs/architecture/37-resultado-poc-s5.md)
+- [38 — Decisão de Promoção do Baseline e Fechamento da Fase 2](docs/architecture/38-decisao-promocao-fechamento-fase2.md)
 - [F2-B Test Run — 2026-10-04 — Run 37187885839](docs/architecture/F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Arquitetura documental prevista
@@ -145,15 +148,15 @@ Alterações metodológicas relevantes devem:
 
 ## Arquitetura candidata
 
-**OES-H1** foi selecionada para prova arquitetural e **OES-P1** é o primeiro desenho físico candidato. Nenhuma stack de produção foi escolhida.
+**OES-H1** é a arquitetura de referência e **OES-P1** é o baseline arquitetural da Fase 2. Nenhuma stack de produção foi escolhida definitivamente.
 
 ## Gate físico
 
-**GATE F2-B — Execução física da PoC em PostgreSQL: PASS.** A bateria T01–T19 foi executada com sucesso em PostgreSQL 18.6 no GitHub Actions (run 37187885839), incluindo rebuild do zero, versionamento, provenance, lineage, rollback, Search/Screening/Dedup/RiskAssessment e cadeia end-to-end.
+**GATE F2-B — PASS.** PoC-S4 — PASS. PoC-S5 — PASS. Os 15 critérios de promoção do Documento 25 foram validados.
 
 ## Próxima etapa
 
-A PoC-S4 recebeu **PASS**. A matriz de promoção está em **11 validados, 1 parcialmente validado e 3 não validados**. OES-P1 permanece candidato físico validado. O próximo passo é a **PoC-S5 — Métodos Especializados Mínimos (NMA, PredictionModel e Qualitativa/CERQual)**.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. O próximo trabalho pertence à **Fase 3 — Produtos do Observatório**.
 
 ---
 
