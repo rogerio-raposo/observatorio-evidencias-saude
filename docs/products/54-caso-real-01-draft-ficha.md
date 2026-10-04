@@ -87,7 +87,7 @@ Braço totalmente automatizado vs patient education:
 - remission 45% vs 12%;
 - response 57% vs 22%.
 
-Somzz não é contado como atualização independente da meta-análise até confirmação de sua relação com o pooling Hwang.
+Somzz é tratado como RCT de atualização pós-cutoff. A verificação adversarial confirmou que ele não aparece na Tabela 1 dos 29 estudos incluídos por Hwang.
 
 ---
 
@@ -156,15 +156,15 @@ A revisão Hwang recebeu:
 
 > **ROBIS global: unclear risk of bias**
 
-principalmente por inconsistência temporal não explicada no processo de identificação/seleção.
+por incertezas residuais em identificação/missing evidence e interpretação do subgrupo; a justificativa anterior baseada em inclusão pós-cutoff foi retirada.
 
 ---
 
 # 7. Principais limitações
 
-1. a síntese-base apresenta discrepância entre cutoff declarado e publicação posterior citada;
+1. a síntese-base apresenta incertezas residuais de ROBIS em identificação/missing evidence;
 2. o subgrupo focal mantém I²=68%;
-3. RoB específico dos dez estudos do subgrupo não pôde ser reconstruído integralmente;
+3. RoB específico dos dez estudos/efeitos do subgrupo não pôde ser reconstruído integralmente;
 4. a maioria do conjunto de estudos da revisão não foi low risk;
 5. novos estudos apresentam magnitude variável;
 6. não foi realizada nova meta-análise OES;
@@ -280,7 +280,7 @@ Hwang 2025:
 - Sweetman 2024;
 - SleepioRx 2025;
 - SHUTi OASIS 2025;
-- Somzz 2024 — elegível, mas contribuição incremental em relação a Hwang ainda não definida.
+- Somzz 2024 — RCT de atualização pós-cutoff, não incluído entre os 29 estudos da Tabela 1 de Hwang.
 
 ## Triangulação
 
