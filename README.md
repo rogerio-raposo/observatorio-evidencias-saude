@@ -6,7 +6,7 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 ## Estado do projeto
 
-**Fase atual:** Fase 3 — Produtos do Observatório.
+**Fase atual:** Fase 3 — Produtos do Observatório. A taxonomia e arquitetura comum dos produtos foi consolidada no Documento 40.
 
 **Painel de estado vivo:** [STATE.md](STATE.md)
 
@@ -33,6 +33,10 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [13 — Protocolo de Extração e Estruturação de Dados](docs/methodology/13-extracao-dados.md)
 - [14 — Protocolo de Síntese de Evidências](docs/methodology/14-sintese-evidencias.md)
 - [15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências](docs/methodology/15-certeza-evidencia.md)
+
+### Produtos
+
+- [40 — Taxonomia e Arquitetura dos Produtos do OES](docs/products/40-taxonomia-arquitetura-produtos.md)
 
 ### Arquitetura e dados
 
