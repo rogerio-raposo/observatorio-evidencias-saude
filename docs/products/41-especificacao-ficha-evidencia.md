@@ -824,7 +824,7 @@ Uma Ficha somente poderá atingir estado `published` quando:
 14. limitações estiverem registradas;
 15. aplicabilidade estiver avaliada ou marcada como não aplicável/não formalizada;
 16. conclusão estiver sustentada pelas evidências vinculadas;
-17. revisão humana dos julgamentos materiais estiver concluída;
+17. o nível de garantia exigido para a finalidade do produto estiver satisfeito; para N2 padrão, no mínimo A2 conforme Documento 04;
 18. nenhuma fonte essencial estiver invalidada/retratada sem reavaliação documentada;
 19. provenance e lineage permitirem reconstrução;
 20. não houver conflito não resolvido entre conclusão e certainty.
@@ -1184,11 +1184,25 @@ poderá exigir relação explícita futura.
 
 A interface lógica foi reservada, mas ainda não operacionalizada metodologicamente/fisicamente.
 
-## 27.5 Registro de revisão editorial/científica
+## 27.5 Garantia metodológica, aprovação e revisão especializada
 
-A Ficha requer evidência de revisão humana dos julgamentos materiais antes de `published`.
+A Ficha deverá distinguir:
 
-A estrutura física específica desse gate ainda poderá exigir extensão.
+- verificação metodológica assistida por IA;
+- aprovação de governança do proprietário;
+- revisão especializada independente, quando existente.
+
+Para N2 padrão, publicação poderá ocorrer com garantia A2 conforme Documento 04:
+
+- AI methodological verification = passed;
+- owner governance approval = approved;
+- disclosure explícito de ausência de expert review quando A3 não estiver presente.
+
+Revisão especializada independente não será simulada nem substituída por owner approval.
+
+Produtos de maior criticidade ou finalidade externa poderão exigir A3.
+
+A estrutura física desse gate será implementada por registros de garantia auditáveis.
 
 ## Regra
 
