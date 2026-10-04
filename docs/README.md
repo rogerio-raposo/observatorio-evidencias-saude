@@ -46,8 +46,9 @@ Arquitetura e especificações dos produtos do OES.
 - [55 — Caso Real 01: Decisão Arquitetural para Síntese Adotada + Atualização OES](products/55-caso-real-01-decisao-arquitetural-sintese-adotada.md)
 - [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](products/56-caso-real-01-reconciliacao-hardening-view.md)
 - [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](products/57-resultado-reconciliacao-evidence-sheet-view.md)
+- [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
 
-Próxima etapa: materializar o Caso Real 01 no baseline OES como Ficha `under_review`.
+Próxima etapa: Gate de Revisão Humana do Caso Real 01.
 
 ### architecture/
 
