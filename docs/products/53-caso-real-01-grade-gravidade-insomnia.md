@@ -390,66 +390,64 @@ Pontos a considerar posteriormente:
 
 ---
 
-# 15. Estado de revisão
+# 15. Estado de garantia
 
-Esta avaliação foi produzida como:
+Esta avaliação foi produzida como julgamento metodológico assistido por IA dentro do fluxo OES.
 
-> **julgamento metodológico assistido por IA dentro do fluxo de desenvolvimento do OES.**
+Após a primeira verificação adversarial (`REVISE`) e correção do erro identificado, a segunda verificação metodológica adversarial resultou em:
 
-Conforme o Manual Metodológico N2:
+> **PASSED**
 
-> **a certeza final não poderá ser publicada sem revisão humana dos julgamentos materiais.**
+Documento de referência:
+
+`64-caso-real-01-verificacao-metodologica-adversarial-02.md`
 
 Portanto:
 
-- nível provisório: **moderada**;
-- estado editorial: **under_review**;
-- publication gate científico: **bloqueado até revisão humana**.
+- certainty OES: **moderada**;
+- verificação metodológica OES: concluída;
+- assurance: **A1**;
+- expert independent review: **não realizado**;
+- owner governance approval: **pendente**;
+- publicação: **ainda bloqueada**.
+
+O proprietário não deverá revisar tecnicamente os domínios GRADE.
 
 ---
 
-# 16. Questões específicas para revisão humana
+# 16. Pontos preservados para transparência
 
-O revisor deverá confirmar ou contestar:
+Mesmo com `PASSED`, permanecem registrados:
 
 1. downgrade de 1 nível por risk of bias;
-2. decisão de não rebaixar por inconsistency;
+2. decisão de não rebaixar por inconsistency para a afirmação direcional;
 3. ausência de downgrade por indirectness;
 4. ausência de downgrade por imprecision;
 5. ausência de downgrade por publication bias;
-6. linguagem final de magnitude.
+6. incerteza maior sobre a magnitude exata do que sobre a direção;
+7. ausência de revisão especializada independente.
 
-A revisão deve registrar:
-
-- revisor;
-- data;
-- decisão;
-- justificativa de qualquer mudança.
+Esses pontos poderão ser reavaliados futuramente se houver A3 ou mudança material da evidência.
 
 ---
 
 # 17. Próxima etapa
 
-Preparar o **Draft científico da Ficha Real 01** com:
+A próxima etapa não é uma revisão técnica pelo proprietário.
 
-- pergunta;
-- método;
-- síntese;
-- resultado principal;
-- certainty provisória moderada;
-- limitações;
-- aplicabilidade;
-- segurança;
-- estado `under_review`.
+É:
 
-Em seguida:
+> **owner governance approval**
 
-1. estruturar os dados no baseline OES;
-2. executar publication gate;
-3. gerar EvidenceSheetView;
-4. renderizar preview Markdown;
-5. submeter os julgamentos materiais à revisão humana.
+O proprietário deverá avaliar somente:
+
+- se a pergunta corresponde ao objetivo;
+- se a conclusão é compreensível;
+- se as limitações/incertezas estão visíveis;
+- se a ausência de expert review está explícita;
+- se não há recomendação normativa indevida;
+- se autoriza publicação interna no OES sob assurance A2.
 
 ---
 
-**GRADE provisório do desfecho principal:** **MODERADA**, pendente de revisão humana.
+**GRADE OES do desfecho principal:** **MODERADA — metodologicamente verificada pelo processo OES assistido por IA; sem expert review independente.**
