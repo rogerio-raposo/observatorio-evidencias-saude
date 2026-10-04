@@ -12,6 +12,7 @@ Fundamentos conceituais, escopo, taxonomia e regras de orquestração metodológ
 2. [01 — Escopo Científico e Taxonomia das Perguntas](governance/01-taxonomia-perguntas.md)
 3. [02 — Arquitetura de Níveis de Investigação e Produtos](governance/02-niveis-investigacao-produtos.md)
 4. [03 — Protocolo de Entrada, Triagem e Roteamento Metodológico](governance/03-roteamento-metodologico.md)
+5. [04 — Governança de Garantia Metodológica, Aprovação e Revisão](governance/04-governanca-garantia-revisao.md)
 
 ### methodology/
 
@@ -49,8 +50,13 @@ Arquitetura e especificações dos produtos do OES.
 - [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
 - [59 — Caso Real 01: Pacote de Revisão Humana](products/59-caso-real-01-pacote-revisao-humana.md)
 - [60 — Caso Real 01: Validação Técnica do Gate de Revisão Humana](products/60-caso-real-01-validacao-tecnica-gate-revisao-humana.md)
+- [61 — Caso Real 01: Redesenho do Modelo de Garantia e Aprovação](products/61-caso-real-01-redesenho-garantia-aprovacao.md)
+- [62 — Resultado da Validação Técnica do Modelo de Garantia A0–A3](products/62-resultado-validacao-modelo-garantia-a0-a3.md)
+- [63 — Caso Real 01: Primeira Verificação Metodológica Adversarial](products/63-caso-real-01-verificacao-metodologica-adversarial-01.md)
+- [64 — Caso Real 01: Segunda Verificação Metodológica Adversarial](products/64-caso-real-01-verificacao-metodologica-adversarial-02.md)
+- [65 — Caso Real 01: Aprovação de Governança do Proprietário](products/65-caso-real-01-aprovacao-governanca-proprietario.md)
 
-Próxima etapa: Gate de Revisão Humana do Caso Real 01.
+Próxima etapa: decisão explícita do proprietário no Documento 65 para eventual avanço A1 → A2.
 
 ### architecture/
 
