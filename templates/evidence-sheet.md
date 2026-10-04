@@ -57,7 +57,7 @@ IMPORTANT: this template renders evidence; it is not a scientific source and mus
 | Desfecho / achado | Resultado | Estudos | Certeza / confiança |
 |---|---|---:|---|
 {{#each priority_results}}
-| {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} | {{synthesis.result_summary}} | {{contributing_studies}} | {{#if certainty.formal_assessment}}{{certainty.final_level}} ({{certainty.framework}}){{else}}{{certainty.display}}{{/if}} |
+| {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} | {{#if synthesis.result_summary.effect_display}}{{synthesis.result_summary.effect_display}}{{else}}{{#if synthesis.result_summary.summary_text}}{{synthesis.result_summary.summary_text}}{{else}}{{synthesis.result_summary}}{{/if}}{{/if}} | {{contributing_studies}} | {{#if certainty.formal_assessment}}{{certainty.final_level}} ({{certainty.framework}}){{else}}{{certainty.display}}{{/if}} |
 {{/each}}
 {{else}}
 Nenhum resultado ou achado prioritário foi registrado para esta versão.
@@ -81,8 +81,17 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 **Estimando:** {{synthesis.estimand}}  
 {{/if}}
 
-**Resultado:** {{synthesis.result_summary}}  
-**Studies contribuintes:** {{contributing_studies}}  
+**Resultado:** {{#if synthesis.result_summary.effect_display}}{{synthesis.result_summary.effect_display}}{{else}}{{#if synthesis.result_summary.summary_text}}{{synthesis.result_summary.summary_text}}{{else}}{{synthesis.result_summary}}{{/if}}{{/if}}  
+{{#if synthesis.result_summary.interpretation}}
+**Interpretação:** {{synthesis.result_summary.interpretation}}  
+{{/if}}
+{{#if synthesis.result_summary.reported_study_count}}
+**k reportado pela síntese-base:** {{synthesis.result_summary.reported_study_count}}  
+{{/if}}
+{{#if synthesis.result_summary.analysis_note}}
+**Nota analítica:** {{synthesis.result_summary.analysis_note}}  
+{{/if}}
+**Studies diretamente modelados no OES nesta Synthesis:** {{contributing_studies}}  
 **Results contribuintes:** {{contributing_results}}
 
 {{#if certainty.formal_assessment}}
@@ -195,7 +204,7 @@ Aplicabilidade não descrita para esta versão.
 {{/if}}
 
 {{#if evidence_base.included_studies}}
-### Studies incluídos
+### Studies diretamente modelados
 
 | Study | Desenho | Amostra | Identificação |
 |---|---|---:|---|
