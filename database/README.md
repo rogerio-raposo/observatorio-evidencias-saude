@@ -9,6 +9,7 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `poc-s1.sql` — baseline experimental;
 - `002_poc_s2_search_screening_risk.sql` — Search, SearchHit, DedupCluster, ScreeningDecision e RiskAssessment;
 - `003_poc_s3_provenance_guard.sql` — proteção history-preserving de provenance;
+- `004_poc_s4_report_relation_impact.sql` — ReportRelation e traversal derivado de impacto;
 - `poc-s1-smoke.sql` — smoke inicial;
 - `f2b-fixtures.sql` — fixtures determinísticas do gate;
 - `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
@@ -105,7 +106,27 @@ Extensões deverão preferir migrations incrementais versionadas conforme:
 
 `docs/architecture/30-politica-migracoes.md`
 
+## PoC-S4
+
+**PASS — 4 de outubro de 2026.**
+
+- GitHub Actions run: **37188934837**
+- PostgreSQL server: **18.6**
+- S4-T01–T15: **PASS**
+- artifact: **11298153474**
+- digest: `sha256:c37a2a57bc6b039461324576b06aa4c88f401773ca83dddfa5f9d3cae583cab5`
+
+A PoC-S4 validou:
+
+- Study com múltiplos Reports;
+- Report com múltiplos Studies;
+- síntese multiestudo;
+- ReportRelation;
+- correção/retração;
+- impact traversal;
+- coexistência de lineage histórico e pós-retração.
+
 ## Próxima etapa
 
-Realizar a **Revisão de Promoção Arquitetural Pós-F2-B**, identificando quais dos 15 critérios de promoção de OES-P1 já foram validados e quais exigem PoCs adicionais.
+Desenvolver a **PoC-S5 — Métodos Especializados Mínimos**, limitada a NMA, PredictionModel e Qualitativa/CERQual.
 
