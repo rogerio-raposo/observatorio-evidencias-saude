@@ -4,7 +4,7 @@
 **Fase:** 3 — Produtos do Observatório  
 **Caso:** Real 01 — dCBT-I totalmente automatizada  
 **Tipo de garantia:** `owner_governance_approval`  
-**Status atual:** **A1 — aguardando decisão do proprietário**  
+**Status atual:** **APPROVED — A2 autorizado pelo proprietário**  
 **Data de preparação:** 4 de outubro de 2026  
 **Não é:** revisão metodológica especializada  
 **Dependências:** Documentos 04, 54, 61–64
@@ -184,7 +184,7 @@ Considerando apenas sua função de governança — e não de especialista cient
 
 # 10. Observações do proprietário
 
-> 
+> Decisão global **APPROVED** registrada explicitamente pelo proprietário em 4 de outubro de 2026. A aprovação é de governança, clareza, transparência, escopo de uso e autorização de publicação sob A2; não constitui validação técnica de ROBIS, RoB 2, GRADE ou meta-análise. Não houve respostas item a item separadas; a decisão global é a autoridade para esta transição.
 
 ---
 
@@ -192,7 +192,7 @@ Considerando apenas sua função de governança — e não de especialista cient
 
 Escolher uma:
 
-- [ ] **APPROVED** — autorizo o produto a avançar sob garantia A2, mantendo explícita a ausência de revisão especializada independente.
+- [x] **APPROVED** — autorizo o produto a avançar sob garantia A2, mantendo explícita a ausência de revisão especializada independente.
 - [ ] **REVISE** — solicito ajustes antes da aprovação.
 - [ ] **REJECTED** — não autorizo publicação na forma atual.
 
@@ -249,4 +249,4 @@ A decisão do Documento 66 deve ser explícita.
 
 ---
 
-**Estado atual:** formulário pronto; decisão do proprietário ainda não registrada.
+**Estado atual:** decisão **APPROVED** registrada; transição A1 → A2 autorizada. A publicação depende da validação técnica do gate após materialização do owner approval e da `publication_date`.

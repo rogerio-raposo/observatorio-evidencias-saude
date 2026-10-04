@@ -618,7 +618,7 @@ INSERT INTO core.entity_version(
  '81000000-0000-0000-0000-000000000701',
  '80000000-0000-0000-0000-000000000701',
  1,'current','real-case-01','initial',
- 'Real case 01 Evidence Sheet under human review'
+ 'Real case 01 Evidence Sheet initial publication under assurance A2'
 );
 
 INSERT INTO product.product(entity_uuid)
@@ -635,8 +635,8 @@ INSERT INTO product.product_version(
  'dCBT-I totalmente automatizada versus educação digital sobre sono para redução da gravidade da insônia em adultos',
  'technical_and_evidence_users',
  DATE '2026-10-04',
- NULL,
- 'under_review',
+ DATE '2026-10-04',
+ 'published',
  'A evidência indica provavelmente que a dCBT-I totalmente automatizada reduz a gravidade da insônia no pós-tratamento em comparação com educação digital sobre sono/higiene do sono. A direção do benefício é consistente, mas a magnitude varia entre estudos.',
  'A evidência é diretamente aplicável a adultos com insônia em contextos digitais. Para o Brasil, a transferência do efeito é plausível, mas disponibilidade, idioma, regulação, integração assistencial, acesso digital e implementação no SUS não foram formalmente avaliados.',
  'A síntese-base apresenta preocupação ROBIS; o subgrupo focal tem I2=68%; a magnitude varia entre estudos; não houve nova meta-análise OES; a busca é N2 e não reivindica exaustividade N4; segurança é menos sistematicamente caracterizada; não foi identificado RCT brasileiro diretamente aderente.'
@@ -709,11 +709,24 @@ INSERT INTO product.assurance_record(
     'Second adversarial verification passed after correcting ROBIS and Somzz update status.',
     '{"document":"64-caso-real-01-verificacao-metodologica-adversarial-02.md","result":"passed","independent_review":false,"expert_review":false}'::jsonb,
     'active'
+),
+(
+    '83000000-0000-0000-0000-000000000703',
+    '81000000-0000-0000-0000-000000000701',
+    'owner_governance_approval',
+    'OES_PROJECT_OWNER',
+    'owner',
+    false,
+    'approved',
+    TIMESTAMPTZ '2026-10-04 16:24:00-03',
+    'Explicit owner governance approval for publication under assurance A2. This is not expert methodological review.',
+    '{"document":"66-caso-real-01-aprovacao-governanca-proprietario.md","result":"approved","methodological_review":false,"expert_review":false,"publication_scope":"OES standard N2"}'::jsonb,
+    'active'
 );
 
--- Deliberately no owner_governance_approval, no approved expert review,
--- no approved product.review_record, and no publication_date.
--- The publication gate must therefore block external publication.
+-- Owner governance approval is explicitly recorded. Expert independent review
+-- remains absent by design for A2 and must be disclosed as a warning, not hidden.
+-- Publication date is assigned and the publication gate is expected to pass.
 
 -- ---------------------------------------------------------------------------
 -- PROVENANCE AND DEPENDENCIES

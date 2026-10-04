@@ -108,16 +108,19 @@ BEGIN
 END
 $t04$;
 
--- RC01-T05 — publication gate must block external publication.
+-- RC01-T05 — owner-approved real case reaches A2 and passes the N2 publication gate.
 DO $t05$
-DECLARE ok boolean;
 BEGIN
-  SELECT product.evidence_sheet_is_publishable(
+  IF NOT product.evidence_sheet_is_publishable(
       '81000000-0000-0000-0000-000000000701'
-  ) INTO ok;
+  ) THEN
+      RAISE EXCEPTION 'RC01-T05 FAIL: A2 published product unexpectedly blocked';
+  END IF;
 
-  IF ok THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: under-review product unexpectedly publishable';
+  IF product.evidence_sheet_assurance_level(
+      '81000000-0000-0000-0000-000000000701'
+  ) <> 'A2' THEN
+      RAISE EXCEPTION 'RC01-T05 FAIL: expected A2 after owner governance approval';
   END IF;
 
   IF EXISTS (
@@ -125,19 +128,9 @@ BEGIN
       FROM product.evidence_sheet_publication_issues(
           '81000000-0000-0000-0000-000000000701'
       )
-      WHERE issue_code IN (
-          'MISSING_AI_METHODOLOGICAL_VERIFICATION',
-          'ACTIVE_AI_METHOD_REVISE',
-          'ACTIVE_AI_METHOD_FAILURE'
-      )
+      WHERE severity='error'
   ) THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: passed AI verification still produces AI blocking issue';
-  END IF;
-
-  IF product.evidence_sheet_assurance_level(
-      '81000000-0000-0000-0000-000000000701'
-  ) <> 'A1' THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: expected A1 after passed AI verification';
+      RAISE EXCEPTION 'RC01-T05 FAIL: A2 published product still has blocking publication issues';
   END IF;
 
   IF NOT EXISTS (
@@ -145,22 +138,22 @@ BEGIN
       FROM product.evidence_sheet_publication_issues(
           '81000000-0000-0000-0000-000000000701'
       )
-      WHERE issue_code='MISSING_OWNER_APPROVAL' AND severity='error'
+      WHERE issue_code='NO_EXPERT_INDEPENDENT_REVIEW' AND severity='warning'
   ) THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: owner governance approval block missing';
+      RAISE EXCEPTION 'RC01-T05 FAIL: no-expert disclosure warning missing at A2';
   END IF;
 
-  IF NOT EXISTS (
-      SELECT 1
-      FROM product.evidence_sheet_publication_issues(
-          '81000000-0000-0000-0000-000000000701'
-      )
-      WHERE issue_code='MISSING_PUBLICATION_DATE' AND severity='error'
-  ) THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: unpublished-state block missing';
+  IF (SELECT status FROM product.product_version
+      WHERE version_uuid='81000000-0000-0000-0000-000000000701') <> 'published' THEN
+      RAISE EXCEPTION 'RC01-T05 FAIL: product editorial status is not published';
   END IF;
 
-  RAISE NOTICE 'RC01-T05 PASS — A1 established; publication correctly blocked pending owner approval and publication date';
+  IF (SELECT publication_date FROM product.product_version
+      WHERE version_uuid='81000000-0000-0000-0000-000000000701') IS NULL THEN
+      RAISE EXCEPTION 'RC01-T05 FAIL: publication_date missing';
+  END IF;
+
+  RAISE NOTICE 'RC01-T05 PASS — A2 established; publication gate passes with explicit no-expert warning';
 END
 $t05$;
 

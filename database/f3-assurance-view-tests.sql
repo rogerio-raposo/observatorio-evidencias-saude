@@ -44,7 +44,7 @@ BEGIN
 END
 $v01$;
 
--- A1 real case after AI methodological verification remains explicit.
+-- A2 real case after owner governance approval remains explicit and transparent.
 DO $v02$
 DECLARE v jsonb;
 BEGIN
@@ -57,19 +57,32 @@ BEGIN
         RETURN;
     END IF;
 
-    IF v#>>'{audit,assurance_level}' <> 'A1' THEN
-        RAISE EXCEPTION 'AV-T02 FAIL: AI-verified real case should be A1';
+    IF v#>>'{audit,assurance_level}' <> 'A2' THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: owner-approved real case should be A2';
     END IF;
 
     IF v#>>'{audit,expert_independent_reviewed}' <> 'false' THEN
-        RAISE EXCEPTION 'AV-T02 FAIL: unverified real case claims expert review';
+        RAISE EXCEPTION 'AV-T02 FAIL: A2 real case incorrectly claims expert review';
     END IF;
 
-    IF jsonb_array_length(v#>'{audit,assurance_records}') <> 2 THEN
-        RAISE EXCEPTION 'AV-T02 FAIL: expected superseded REVISE + active PASSED assurance records';
+    IF jsonb_array_length(v#>'{audit,assurance_records}') <> 3 THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: expected superseded REVISE + active PASSED + owner APPROVED assurance records';
     END IF;
 
-    RAISE NOTICE 'AV-T02 PASS — real case renders A1 with adversarial verification history';
+    IF v#>>'{audit,publishable}' <> 'true' THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: A2 real case should be publishable';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM jsonb_array_elements(v#>'{audit,publication_issues}') i
+        WHERE i->>'issue_code'='NO_EXPERT_INDEPENDENT_REVIEW'
+          AND i->>'severity'='warning'
+    ) THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: no-expert warning missing from A2 view';
+    END IF;
+
+    RAISE NOTICE 'AV-T02 PASS — real case renders A2, publishable, with explicit no-expert disclosure';
 END
 $v02$;
 

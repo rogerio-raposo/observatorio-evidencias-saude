@@ -299,7 +299,7 @@ jobs:
             echo "AG-T01–T07 PASS"
             echo "AV-T01–T02 PASS"
             echo "Assurance A0–A3 governance PASS"
-            echo "Real N2 Evidence Sheet blocked preview PASS"
+            echo "Real N2 Evidence Sheet A2 publication gate PASS"
             echo "Publication gate PASS"
             echo "Rebuild through migration 011 PASS"
           } | tee s5-artifacts/S5-summary.txt
