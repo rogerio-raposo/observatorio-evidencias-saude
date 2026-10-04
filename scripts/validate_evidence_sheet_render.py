@@ -73,7 +73,7 @@ def main() -> None:
 
     if audit.get("publishable"):
         require(
-            "Gate de publicação: aprovado" in rendered,
+            "**Gate de publicação:** aprovado" in rendered,
             "Publishable product must show approved gate",
         )
         require(
