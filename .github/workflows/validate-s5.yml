@@ -182,15 +182,23 @@ jobs:
             --input s5-artifacts/rc01-evidence-sheet-view.json \
             --rendered s5-artifacts/rc01-evidence-sheet-preview.md \
             | tee s5-artifacts/RC01-template-validation.log
-          if ! grep -q 'PREVIEW — NÃO PUBLICÁVEL' s5-artifacts/rc01-evidence-sheet-preview.md; then
-            echo "RC01 FAIL — real case preview is not visibly blocked"
+          if grep -q 'PREVIEW — NÃO PUBLICÁVEL' s5-artifacts/rc01-evidence-sheet-preview.md; then
+            echo "RC01 FAIL — A2 published product is still rendered as a blocked preview"
+            exit 1
+          fi
+          if ! grep -q 'Gate de publicação:\*\* aprovado' s5-artifacts/rc01-evidence-sheet-preview.md; then
+            echo "RC01 FAIL — approved publication gate is not visible in rendered Evidence Sheet"
+            exit 1
+          fi
+          if ! grep -q 'NO_EXPERT_INDEPENDENT_REVIEW' s5-artifacts/rc01-evidence-sheet-preview.md; then
+            echo "RC01 FAIL — no-expert disclosure warning missing in published Evidence Sheet"
             exit 1
           fi
           if ! grep -q 'Meta-análise publicada adotada criticamente; não recalculada pelo OES.' s5-artifacts/rc01-evidence-sheet-preview.md; then
-            echo "RC01 FAIL — adopted synthesis provenance note missing in preview"
+            echo "RC01 FAIL — adopted synthesis provenance note missing in published Evidence Sheet"
             exit 1
           fi
-          echo "RC01 PASS — real N2 Evidence Sheet rendered as blocked preview" | tee -a s5-artifacts/RC01-template-validation.log
+          echo "RC01 PASS — real N2 Evidence Sheet rendered as publishable A2 with explicit no-expert warning" | tee -a s5-artifacts/RC01-template-validation.log
 
       - name: EvidenceSheetView projection migrations idempotent re-apply
         shell: bash
