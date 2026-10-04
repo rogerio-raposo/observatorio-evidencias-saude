@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP23 — 2026-10-04**.
+- checkpoint vigente: **CP24 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -131,6 +131,8 @@ Documento 57 — validação da reconciliação: PASS.
 
 Documento 58 — **Resultado da Validação Ponta a Ponta do Caso Real 01**: PASS em pré-publicação.
 
+Documento 59 — **Pacote de Revisão Humana do Caso Real 01**: preparado; revisão humana ainda não realizada.
+
 Migrations canônicas da camada de renderização: 007 → 008 provenance → 009 study-type counts.
 
 Caso Real 01 materializado no baseline como Ficha `under_review`; RC01-T01–T10 PASS; preview Markdown validado; publication gate bloqueado como esperado.
@@ -151,31 +153,22 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Gate de Revisão Humana do Caso Real 01.**
+**Revisão humana real do Caso Real 01.**
 
-Objetivos:
+O pacote de revisão já está pronto no Documento 59.
 
-- preparar pacote de revisão dos julgamentos materiais;
-- revisar ROBIS;
-- revisar RoB 2;
-- revisar GRADE provisório;
-- revisar interpretação da heterogeneidade;
-- revisar conclusão;
-- revisar aplicabilidade ao Brasil;
-- revisar linguagem de segurança;
-- revisar clareza do preview;
-- registrar decisão humana somente após revisão real.
+A próxima transição deste ProductVersion depende de um revisor humano real, que deverá registrar decisão APPROVED, REVISE ou REJECTED com justificativas.
 
 Até lá, a Ficha permanece `under_review` e `publishable=false`.
 
 ## 10. Checkpoint vigente
 
-**CP23 — 2026-10-04**
+**CP24 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP23.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP24.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Gate de Revisão Humana do Caso Real 01.**
+**Fase 3 — Revisão humana real do Caso Real 01.**
