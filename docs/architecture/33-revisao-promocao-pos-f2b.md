@@ -60,25 +60,25 @@ Critério não necessário para decisão de baseline arquitetural neste momento.
 | 1 | criação de Question/Investigation | **VALIDADO** | fixtures F2-B criam Question, Investigation e vínculo versionado; cadeia executada em PostgreSQL |
 | 2 | ingestão de SearchHits | **VALIDADO** | PoC-S2 + fixtures + T18/T19 |
 | 3 | deduplicação | **VALIDADO** | DedupCluster preserva dois SearchHits/raw payloads; T18 PASS |
-| 4 | Study com múltiplos Reports | **PARCIALMENTE VALIDADO** | `study_report_link` é many-to-many, mas runtime F2-B não exercitou um Study com múltiplos Reports |
-| 5 | Report com múltiplos Studies | **PARCIALMENTE VALIDADO** | estrutura many-to-many suporta o caso, mas não houve fixture/teste runtime específico |
+| 4 | Study com múltiplos Reports | **VALIDADO** | PoC-S4: Study A ligado a 2 Reports; S4-T02 PASS |
+| 5 | Report com múltiplos Studies | **VALIDADO** | PoC-S4: Report X ligado a 2 Studies; S4-T03 PASS |
 | 6 | Result com proveniência | **VALIDADO** | ResultSource + provenance.record + T11/T12 |
-| 7 | síntese quantitativa | **PARCIALMENTE VALIDADO** | Synthesis/Contribution executados, porém a fixture usa um único Result; não valida combinação multiestudo real |
+| 7 | síntese quantitativa | **VALIDADO** | PoC-S4: Synthesis v1 combinou Results de 2 Studies distintos; S4-T04 PASS |
 | 8 | NMA | **NÃO VALIDADO** | entidades especializadas previstas no modelo lógico não estão implementadas na PoC física atual |
 | 9 | predição | **NÃO VALIDADO** | PredictionModel e estruturas associadas não estão implementados na PoC física atual |
 | 10 | qualitativa/CERQual | **NÃO VALIDADO** | ReviewFinding/FindingContribution/CERQual especializado não estão implementados na PoC física atual |
 | 11 | certainty | **VALIDADO** | CertaintyAssessment + CertaintyDomain executados; regra `no_evidence` testada em T09 |
 | 12 | Product/Ficha | **VALIDADO** | ProductVersion + links a Investigation/Synthesis/Certainty executados |
 | 13 | nova versão por atualização | **VALIDADO** | T10 valida cadeia v1→v2 Result/Synthesis/Certainty/Product preservando histórico |
-| 14 | retração e impact analysis | **PARCIALMENTE VALIDADO** | lineage/dependency e supersessão são funcionais, mas ReportRelation/retraction + propagação de impacto não foram exercitados |
+| 14 | retração e impact analysis | **VALIDADO** | PoC-S4: ReportRelation, versões corrected/retracted e impact traversal até Product; S4-T07–T13 PASS |
 | 15 | reconstrução completa de lineage | **PARCIALMENTE VALIDADO** | T12/T19 reconstroem cadeia core até Product; faltam métodos especializados e cenários de retração/multiplicidade |
 
 ## 5. Resultado quantitativo da revisão
 
 Dos 15 critérios:
 
-- **7 VALIDADO**;
-- **5 PARCIALMENTE VALIDADO**;
+- **11 VALIDADO**;
+- **1 PARCIALMENTE VALIDADO**;
 - **3 NÃO VALIDADO**;
 - **0 FORA DO ESCOPO IMEDIATO**.
 
@@ -110,7 +110,7 @@ Isso justifica tratar OES-P1 como:
 
 ## 7. O que ainda impede promoção
 
-A promoção integral é impedida por dois grupos de lacunas.
+A promoção integral passa a depender apenas do Grupo B de lacunas. O Grupo A foi fechado pela PoC-S4.
 
 ### Grupo A — Relações e propagação
 
@@ -329,3 +329,19 @@ Nenhuma funcionalidade de interface, automação ampla ou infraestrutura de prod
 ---
 
 **Decisão:** OES-P1 permanece candidato; duas PoCs controladas são suficientes, em princípio, para completar a avaliação de promoção arquitetural.
+
+
+## 17. Atualização pós-PoC-S4
+
+A PoC-S4 foi executada no GitHub Actions run **37188934837** e recebeu **PASS** em S4-T01–T15.
+
+Registro:
+
+`docs/architecture/35-resultado-poc-s4.md`
+
+Consequência:
+
+- critérios 4, 5, 7 e 14 promovidos para **VALIDADO**;
+- critério 15 permanece **PARCIALMENTE VALIDADO**;
+- critérios 8, 9 e 10 permanecem **NÃO VALIDADO**;
+- próxima etapa exclusiva: **PoC-S5 — Métodos Especializados Mínimos**.
