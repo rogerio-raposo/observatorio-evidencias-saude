@@ -54,8 +54,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [55 — Caso Real 01: Decisão Arquitetural para Síntese Adotada + Atualização OES](docs/products/55-caso-real-01-decisao-arquitetural-sintese-adotada.md)
 - [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](docs/products/56-caso-real-01-reconciliacao-hardening-view.md)
 - [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](docs/products/57-resultado-reconciliacao-evidence-sheet-view.md)
-- [58 — Caso Real 01: Resultado da Materialização e Preview End-to-End](docs/products/58-caso-real-01-resultado-materializacao-preview.md)
 - [59 — Caso Real 01: Pacote de Revisão Humana](docs/products/59-caso-real-01-pacote-revisao-humana.md)
+- [60 — Caso Real 01: Validação Técnica do Gate de Revisão Humana](docs/products/60-caso-real-01-validacao-tecnica-gate-revisao-humana.md)
 - [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](docs/products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
 
 ### Arquitetura e dados
