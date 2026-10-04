@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP27 — 2026-10-04**.
+- checkpoint vigente: **CP28 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -119,7 +119,7 @@ Documento 46 — **Especificação do Template Operacional da Ficha de Evidênci
 
 Documento 47 — **Resultado da Validação do Template Operacional da Ficha**: PASS estrutural/operacional.
 
-Template `oes.evidence_sheet.template/0.1` validado contra `oes.evidence_sheet_view/0.1`.
+Template `oes.evidence_sheet.template/0.2` validado contra `oes.evidence_sheet_view/0.1`, com disclosure de assurance A0–A3.
 
 Documento 48 — protocolo do Caso Real 01.
 
@@ -147,11 +147,13 @@ Documento 64 — **Segunda Verificação Metodológica Adversarial**: PASSED.
 
 Documento 65 — **Resultado da Validação do Estado A1**: PASS; verificação metodológica adversarial ativa em `passed`.
 
-Documento 66 — **Aprovação de Governança do Proprietário**: formulário preparado; decisão ainda não registrada.
+Documento 66 — **Aprovação de Governança do Proprietário**: **APPROVED**; owner governance approval explicitamente registrada.
+
+Documento 67 — **Resultado da Validação A2 e Publicação**: **PASS**; run 37229070210.
 
 Migrations canônicas da camada da Ficha: 007 EvidenceSheetView → 008 provenance → 009 study-type counts → 010 assurance governance → 011 assurance-aware view.
 
-Caso Real 01 materializado como Ficha `under_review`, assurance **A1**, `publishable=false`; RC01-T01–T10, AG-T01–T07 e AV-T01–T02 PASS.
+Caso Real 01 materializado como Ficha `published`, assurance **A2**, `publication_date=2026-10-04`, `publishable=true`; ausência de expert review preservada como warning explícito; RC01-T01–T10, AG-T01–T07 e AV-T01–T02 PASS.
 
 Taxonomia:
 
@@ -169,22 +171,22 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Decisão explícita do proprietário no Documento 66.**
+**Especificação científica e funcional da Resposta de Evidência — N1.**
 
-O proprietário deverá avaliar somente governança, clareza, transparência e escopo de uso — não ROBIS, RoB 2, GRADE ou bioestatística.
+O Documento 40 estabelece a Resposta de Evidência como o próximo produto a ser formalizado após a Ficha de Evidência.
 
-Se a decisão for `APPROVED`, o Caso Real 01 poderá avançar de A1 para **A2**. A revisão especializada independente continuará não realizada e deverá permanecer explicitamente declarada.
+A retomada deverá começar pela definição de função, fronteiras e contrato científico/funcional, comparando explicitamente N1 com Evidence Scan N0 e Ficha de Evidência N2 para evitar sobreposição.
 
-Até a decisão, a Ficha permanece `under_review`, assurance **A1** e `publishable=false`.
+Não iniciar pelo template ou pela automação.
 
 ## 10. Checkpoint vigente
 
-**CP27 — 2026-10-04**
+**CP28 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP27.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP28.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — owner governance approval do Caso Real 01 (Documento 66).**
+**Fase 3 — especificação científica e funcional da Resposta de Evidência (N1).**
