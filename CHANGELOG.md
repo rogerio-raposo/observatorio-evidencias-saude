@@ -784,3 +784,23 @@ Definir o **Contrato de Dados da Ficha de Evidência** e decidir quais lacunas e
 - renderer Python é implementação de referência, não escolha de engine de produção;
 - o template não calcula nem decide ciência;
 - próxima etapa: validação científica ponta a ponta da Ficha com caso real.
+
+
+## 2026-10-04 — Fase 3: início da validação científica com caso real
+
+### Adicionado
+
+- `docs/products/48-caso-real-01-dcbti-protocolo-n2.md`.
+
+### Caso selecionado
+
+Pergunta N2 focal sobre dCBT-I totalmente automatizada em adultos com insônia, comparada a educação digital sobre sono/higiene do sono, com gravidade da insônia pós-tratamento como desfecho principal.
+
+### Decisões
+
+- primeiro caso real deve validar a cadeia científica completa da Ficha;
+- desenho principal: RCTs;
+- sínteses recentes poderão ser adotadas criticamente quando aderentes;
+- comparador será aplicado principalmente na elegibilidade para preservar sensibilidade da busca;
+- data de corte: 4 de outubro de 2026;
+- próxima etapa: execução formal da busca N2 e início da triagem.
