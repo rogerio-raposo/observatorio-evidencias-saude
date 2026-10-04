@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP21 — 2026-10-04**.
+- checkpoint vigente: **CP22 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -119,7 +119,17 @@ Documento 47 — **Resultado da Validação do Template Operacional da Ficha**: 
 
 Template `oes.evidence_sheet.template/0.1` validado contra `oes.evidence_sheet_view/0.1`.
 
-Documento 48 — **Caso Real 01: dCBT-I — Protocolo Inicial N2** aberto para validação científica ponta a ponta.
+Documento 48 — protocolo do Caso Real 01.
+
+Documentos 49–54 — busca, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico concluídos.
+
+Documento 55 — representação canônica de síntese externa adotada + atualização OES.
+
+Documento 56 — reconciliação de continuidade/hardening.
+
+Documento 57 — validação da reconciliação: PASS.
+
+Migrations canônicas da camada de renderização: 007 → 008 provenance → 009 study-type counts.
 
 Taxonomia:
 
@@ -137,28 +147,30 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Caso Real 01 — execução formal da busca N2 e triagem.**
-
-Pergunta: dCBT-I totalmente automatizada versus educação digital sobre sono/higiene do sono em adultos com insônia, com gravidade da insônia pós-tratamento como desfecho principal.
+**Caso Real 01 — materialização no OES-P1 e preview real.**
 
 Próximos passos:
 
-- testar sensibilidade da estratégia contra estudos-semente;
-- executar busca de sínteses;
-- executar busca de RCTs;
-- consultar BVS/LILACS;
-- verificar ClinicalTrials.gov;
-- deduplicar;
-- iniciar triagem e documentar decisões.
+- criar Question/Investigation N2;
+- registrar Search;
+- materializar Hwang e RCTs decisivos;
+- registrar ROBIS/RoB 2;
+- criar Synthesis adopted_external;
+- criar Synthesis oes_update;
+- criar GRADE provisório;
+- criar ProductVersion under_review;
+- manter ausência de review_record approved;
+- executar publication gate;
+- gerar EvidenceSheetView e preview Markdown.
 
 ## 10. Checkpoint vigente
 
-**CP21 — 2026-10-04**
+**CP22 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP21.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP22.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Validação científica ponta a ponta da Ficha com caso real.**
+**Fase 3 — Materialização do Caso Real 01 e preview under_review.**
