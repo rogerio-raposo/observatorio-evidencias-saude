@@ -1,10 +1,10 @@
-# 59 — Caso Real 01: Pacote de Revisão Humana
+# 59 — Caso Real 01: Pacote de Revisão Especializada Independente
 
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 3 — Produtos do Observatório  
 **Caso:** Real 01 — dCBT-I totalmente automatizada  
-**Finalidade:** revisão humana pré-publicação  
-**Status:** pronto para revisão; revisão ainda não realizada  
+**Finalidade:** revisão especializada independente opcional para N2 padrão; obrigatória apenas se a finalidade/criticidade exigir A3  
+**Status:** pacote preservado; revisão especializada ainda não realizada  
 **Data de preparação:** 4 de outubro de 2026  
 **Dependências:** Documentos 48–58
 
@@ -12,19 +12,18 @@
 
 # 1. Finalidade
 
-Este pacote organiza os julgamentos materiais que precisam ser avaliados por um revisor humano antes de a Ficha do Caso Real 01 poder mudar de:
+Este pacote organiza os julgamentos materiais para uma eventual **revisão especializada independente**.
 
-`under_review`
+Após a decisão de governança do Documento 04:
 
-para eventual:
-
-`published`.
+- este pacote **não é destinado ao proprietário do projeto**;
+- o proprietário não será solicitado a validar tecnicamente ROBIS, RoB 2 ou GRADE;
+- uma Ficha N2 padrão poderá atingir A2 por verificação metodológica assistida por IA + owner governance approval;
+- este documento será utilizado quando houver especialista qualificado ou quando a finalidade/criticidade exigir A3.
 
 A existência deste documento:
 
-> **não constitui aprovação humana.**
-
-O publication gate deve permanecer bloqueado até que uma revisão válida seja registrada.
+> **não constitui expert review, aprovação metodológica ou owner approval.**
 
 ---
 
@@ -497,13 +496,14 @@ Se a decisão for `REJECTED`:
 
 # 18. Regra de independência
 
-Para esta primeira validação do OES, recomenda-se que ao menos um revisor dos julgamentos materiais:
+Este pacote só poderá gerar assurance A3 se o revisor:
 
-- não seja o agente que produziu os julgamentos iniciais;
-- possua competência em avaliação crítica/revisão sistemática/GRADE compatível com o escopo;
-- declare conflitos de interesse.
+- não for o agente que produziu os julgamentos iniciais;
+- possuir competência em avaliação crítica/revisão sistemática/GRADE compatível com o escopo;
+- declarar conflitos de interesse;
+- tiver sua qualificação registrada.
 
-A definição normativa de requisitos de independência institucional poderá ser refinada posteriormente.
+O proprietário não especialista não deverá preencher este pacote como substituto de expert review.
 
 ---
 
