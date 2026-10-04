@@ -804,3 +804,42 @@ Pergunta N2 focal sobre dCBT-I totalmente automatizada em adultos com insônia, 
 - comparador será aplicado principalmente na elegibilidade para preservar sensibilidade da busca;
 - data de corte: 4 de outubro de 2026;
 - próxima etapa: execução formal da busca N2 e início da triagem.
+
+
+## 2026-10-04 — Caso Real 01: appraisal, síntese e reconciliação arquitetural
+
+### Adicionado
+
+- Documentos 49–57 do Caso Real 01;
+- `database/008_evidence_sheet_provenance_references.sql`;
+- `database/009_evidence_sheet_view_evidence_counts.sql`;
+- `database/f3-provenance-reference-tests.sql`;
+- `database/f3-provenance-reference-rebuild-check.sql`.
+
+### Científico
+
+- Hwang 2025 selecionada como síntese-base comparador-específica;
+- ROBIS global OES: unclear risk of bias;
+- quatro RCTs decisivos avaliados por RoB 2: algumas preocupações;
+- atualização N2 mantém direção favorável, com magnitude variável;
+- nova meta-análise OES não executada;
+- GRADE provisório do desfecho principal: moderada;
+- publicação bloqueada até revisão humana.
+
+### Arquitetural
+
+- síntese externa adotada separada da atualização narrativa OES;
+- referências da Ficha passam a ser provenance-aware;
+- EvidenceSheetView expõe contagens por `study_type`;
+- conflito de duas migrations 008 e dois Documentos 55 foi reconciliado;
+- sequência canônica passa a 007 → 008 provenance → 009 counts.
+
+### Validação
+
+- run **37212250256**: PASS;
+- F3-PROV-T01–T06 PASS;
+- F3-VIEW-T17 PASS;
+- F3-TEMPLATE PASS;
+- rebuild até migration 009 PASS;
+- artifact **11306779147**;
+- digest `sha256:c0347d27ab8e42ca2e4eaf79db33c1bc234e831d31f53e79cd1f5d44a3ed0aca`.
