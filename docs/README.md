@@ -47,6 +47,8 @@ Arquitetura e especificações dos produtos do OES.
 - [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](products/56-caso-real-01-reconciliacao-hardening-view.md)
 - [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](products/57-resultado-reconciliacao-evidence-sheet-view.md)
 - [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
+- [59 — Caso Real 01: Pacote de Revisão Humana](products/59-caso-real-01-pacote-revisao-humana.md)
+- [60 — Caso Real 01: Validação Técnica do Gate de Revisão Humana](products/60-caso-real-01-validacao-tecnica-gate-revisao-humana.md)
 
 Próxima etapa: Gate de Revisão Humana do Caso Real 01.
 
