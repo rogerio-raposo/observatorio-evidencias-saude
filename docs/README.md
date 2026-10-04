@@ -30,8 +30,10 @@ Arquitetura e especificações dos produtos do OES.
 
 - [40 — Taxonomia e Arquitetura dos Produtos do OES](products/40-taxonomia-arquitetura-produtos.md)
 - [41 — Especificação Científica e Funcional da Ficha de Evidência](products/41-especificacao-ficha-evidencia.md)
+- [42 — Contrato de Dados da Ficha de Evidência](products/42-contrato-dados-ficha-evidencia.md)
+- [43 — Resultado da Validação do Contrato da Ficha](products/43-resultado-validacao-contrato-ficha.md)
 
-Próxima etapa: Contrato de Dados da Ficha de Evidência.
+Próxima etapa: EvidenceSheetView — contrato de renderização da Ficha.
 
 ### architecture/
 
