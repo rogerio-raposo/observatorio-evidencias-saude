@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP18 — 2026-10-04**.
+- checkpoint vigente: **CP19 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -103,7 +103,11 @@ Ainda não finalizados:
 
 Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES** consolidado como base inicial.
 
-Documento 41 — **Especificação Científica e Funcional da Ficha de Evidência** consolidado como base inicial do primeiro produto individual.
+Documento 41 — **Especificação Científica e Funcional da Ficha de Evidência** consolidado.
+
+Documento 42 — **Contrato de Dados da Ficha de Evidência** consolidado.
+
+Documento 43 — **Resultado da Validação do Contrato da Ficha**: PASS.
 
 Taxonomia:
 
@@ -121,25 +125,26 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Contrato de Dados da Ficha de Evidência.**
+**EvidenceSheetView — contrato de renderização da Ficha.**
 
 Objetivos:
 
-- mapear cada campo científico da Ficha ao OES-P1;
-- separar dados armazenados, derivados e renderizados;
-- decidir as extensões físicas mínimas necessárias;
-- formalizar invariantes de ProductVersion;
-- preservar a regra de não duplicação;
-- preparar o gate para futura criação do template operacional.
+- definir o objeto derivado que alimentará o template;
+- mapear propriedades para o OES-P1;
+- ordenar resultados/achados;
+- representar certainty/no-evidence;
+- incluir atualidade/versionamento;
+- preservar audit links;
+- validar o objeto contra a fixture já aprovada.
 
 ## 10. Checkpoint vigente
 
-**CP18 — 2026-10-04**
+**CP19 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP18.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP19.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Contrato de Dados da Ficha de Evidência.**
+**Fase 3 — EvidenceSheetView.**
