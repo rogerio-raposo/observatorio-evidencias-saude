@@ -49,6 +49,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [30 — Política de Migrações do Modelo de Dados](docs/architecture/30-politica-migracoes.md)
 - [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](docs/architecture/31-poc-s2-validacao.md)
 - [32 — Resultado do GATE F2-B e Decisão Pós-PoC](docs/architecture/32-resultado-gate-f2b.md)
+- [33 — Revisão de Promoção Arquitetural Pós-F2-B](docs/architecture/33-revisao-promocao-pos-f2b.md)
 - [F2-B Test Run — 2026-10-04 — Run 37187885839](docs/architecture/F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Arquitetura documental prevista
@@ -150,7 +151,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-OES-P1 permanece **candidato físico validado**, não schema definitivo. O próximo passo é a **Revisão de Promoção Arquitetural Pós-F2-B**, confrontando os 15 critérios de promoção do Documento 25 com as evidências já produzidas e definindo o menor conjunto de PoCs ainda necessário.
+A Revisão de Promoção Pós-F2-B classificou os 15 critérios do Documento 25 em **7 validados, 5 parcialmente validados e 3 não validados**. OES-P1 permanece candidato físico validado. O próximo passo é a **PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis**.
 
 ---
 
