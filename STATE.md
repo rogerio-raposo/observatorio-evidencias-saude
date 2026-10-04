@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP25 — 2026-10-04**.
+- checkpoint vigente: **CP26 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -179,11 +179,11 @@ Até a decisão, a Ficha permanece `under_review`, assurance **A1** e `publishab
 
 ## 10. Checkpoint vigente
 
-**CP25 — 2026-10-04**
+**CP26 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP25.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP26.md`
 
 Ponto exato de retomada:
 
