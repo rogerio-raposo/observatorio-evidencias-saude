@@ -52,7 +52,9 @@
   "decision": {
     "approved": "aprovada",
     "revise": "revisar",
-    "rejected": "rejeitada"
+    "rejected": "rejeitada",
+    "passed": "aprovada",
+    "failed": "falhou"
   },
   "record_status": {
     "active": "ativo",
@@ -74,5 +76,25 @@
     "prognostic_study": "estudos prognósticos",
     "prediction_model_study": "estudos de modelo de predição",
     "other": "outros"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.expert_independent_reviewed": {
+    "true": "sim",
+    "false": "não"
+  },
+  "assurance_type": {
+    "ai_methodological_verification": "verificação metodológica assistida por IA",
+    "owner_governance_approval": "aprovação de governança do proprietário",
+    "expert_independent_review": "revisão especializada independente"
+  },
+  "actor_type": {
+    "ai_system": "sistema de IA",
+    "owner": "proprietário",
+    "human_expert": "especialista humano"
   }
 }
