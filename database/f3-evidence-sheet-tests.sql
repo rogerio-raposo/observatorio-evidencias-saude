@@ -128,21 +128,34 @@ BEGIN
 END
 $t06$;
 
--- F3-FE-T07 — approved human review persists.
+-- F3-FE-T07 — A2 assurance persists; legacy review remains audit-only.
 DO $t07$
 BEGIN
-    IF NOT EXISTS (
-        SELECT 1
-          FROM product.review_record
-         WHERE product_version_uuid='71000000-0000-0000-0000-000000000001'
-           AND status='active'
-           AND decision='approved'
-           AND independent_flag=true
-    ) THEN
-        RAISE EXCEPTION 'F3-FE-T07 FAIL: approved review missing';
+    IF product.evidence_sheet_assurance_level(
+        '71000000-0000-0000-0000-000000000001'
+    ) <> 'A2' THEN
+        RAISE EXCEPTION 'F3-FE-T07 FAIL: expected assurance A2';
     END IF;
 
-    RAISE NOTICE 'F3-FE-T07 PASS — approved review persisted';
+    IF NOT EXISTS (
+        SELECT 1
+          FROM product.assurance_record
+         WHERE product_version_uuid='71000000-0000-0000-0000-000000000001'
+           AND status='active'
+           AND assurance_type='ai_methodological_verification'
+           AND decision='passed'
+    ) OR NOT EXISTS (
+        SELECT 1
+          FROM product.assurance_record
+         WHERE product_version_uuid='71000000-0000-0000-0000-000000000001'
+           AND status='active'
+           AND assurance_type='owner_governance_approval'
+           AND decision='approved'
+    ) THEN
+        RAISE EXCEPTION 'F3-FE-T07 FAIL: A2 assurance records missing';
+    END IF;
+
+    RAISE NOTICE 'F3-FE-T07 PASS — A2 assurance persisted without expert review';
 END
 $t07$;
 
@@ -243,10 +256,10 @@ BEGIN
           FROM product.evidence_sheet_publication_issues(
               '71000000-0000-0000-0000-000000000001'
           )
-         WHERE issue_code='ACTIVE_REJECTION'
+         WHERE issue_code='LEGACY_ACTIVE_REJECTION'
            AND severity='error'
     ) THEN
-        RAISE EXCEPTION 'F3-FE-T11 FAIL: ACTIVE_REJECTION issue missing';
+        RAISE EXCEPTION 'F3-FE-T11 FAIL: LEGACY_ACTIVE_REJECTION issue missing';
     END IF;
 
     RAISE NOTICE 'F3-FE-T11a PASS — active rejection blocks publication';
