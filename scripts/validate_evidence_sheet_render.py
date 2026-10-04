@@ -20,12 +20,23 @@ def validate_render(template: str, payload: dict, rendered: str) -> None:
     require("{{#unless" not in template, "Engine-specific unless helper remains")
     require("{{" not in rendered and "}}" not in rendered, "Unresolved token remains")
     require(
-        "template_version: oes.evidence_sheet.template/0.1" in template,
-        "Template version header missing",
+        "template_version: oes.evidence_sheet.template/0.2" in template,
+        "Assurance-aware template version header missing",
     )
     require(
         payload.get("schema_version") == "oes.evidence_sheet_view/0.1",
         "Unexpected EvidenceSheetView schema version",
+    )
+
+    audit = payload.get("audit") or {}
+    assurance_level = audit.get("assurance_level")
+    require(
+        assurance_level in {"A0", "A1", "A2", "A3"},
+        f"Invalid or missing assurance level: {assurance_level!r}",
+    )
+    require(
+        audit.get("assurance_disclosure"),
+        "Assurance disclosure missing from EvidenceSheetView",
     )
 
     identity = payload["identity"]
@@ -68,6 +79,27 @@ def validate_render(template: str, payload: dict, rendered: str) -> None:
                 certainty.get("framework") in rendered,
                 "Formal certainty framework missing from render",
             )
+
+    require(
+        "Nível de garantia:" in rendered,
+        "Rendered Evidence Sheet must expose assurance level",
+    )
+    require(
+        audit.get("assurance_disclosure") in rendered,
+        "Rendered Evidence Sheet must expose assurance disclosure verbatim",
+    )
+
+    if assurance_level == "A2":
+        require(
+            "revisão especializada independente não realizada" in rendered.lower(),
+            "A2 render must disclose absence of expert independent review",
+        )
+
+    if assurance_level == "A3":
+        require(
+            audit.get("expert_independent_reviewed") is True,
+            "A3 requires expert_independent_reviewed=true",
+        )
 
     if audit.get("publishable"):
         require(
