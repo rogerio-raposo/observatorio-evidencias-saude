@@ -415,20 +415,21 @@ O julgamento de certainty será feito no nível do corpo de evidências.
 
 ---
 
-# 9. Decisão sobre Somzz e dupla contagem
+# 9. Decisão sobre Somzz e relação com Hwang
 
 Somzz é diretamente aderente ao PICO.
 
-Entretanto, como Hwang 2025 o cita apesar de cutoff anterior à publicação, o OES não o classificará automaticamente como “novo estudo pós-Hwang” até estabelecer se:
+A verificação adversarial confirmou que:
 
-- foi efetivamente incluído no meta-analysis;
-- foi apenas citado como contexto;
-- entrou por uma atualização não descrita;
-- havia versão pré-publicação identificada.
+- Hwang cita Shin/Somzz na bibliografia;
+- Shin/Somzz não aparece na Tabela 1 dos 29 estudos incluídos;
+- não há, no material verificado, evidência de que Somzz tenha integrado o pooling de Hwang.
 
-Até essa resolução:
+Decisão revisada:
 
-> **Somzz será avaliado como estudo elegível, mas não será somado como evidência incremental independente sobre a estimativa Hwang.**
+> **Somzz será tratado como RCT de atualização pós-cutoff e como evidência incremental narrativa.**
+
+O OES continuará sem recalcular o pooling porque isso exigiria reconstrução integral do subgrupo comparador-específico, não por risco de dupla contagem de Somzz.
 
 ---
 
