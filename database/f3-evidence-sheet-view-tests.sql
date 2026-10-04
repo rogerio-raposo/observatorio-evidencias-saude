@@ -244,4 +244,25 @@ BEGIN
 END
 $t15$;
 
+-- F3-VIEW-T17 — evidence units are broken down by Study type.
+DO $t17$
+DECLARE v jsonb;
+BEGIN
+    SELECT product.evidence_sheet_view(
+        '71000000-0000-0000-0000-000000000001'
+    ) INTO v;
+
+    IF jsonb_array_length(v#>'{evidence_base,study_type_counts}') <> 1
+       OR v#>>'{evidence_base,study_type_counts,0,study_type}' <> 'primary_study'
+       OR (v#>>'{evidence_base,study_type_counts,0,count}')::integer <> 1
+    THEN
+        RAISE EXCEPTION
+            'F3-VIEW-T17 FAIL: Study type counts incorrect %',
+            v#>'{evidence_base,study_type_counts}';
+    END IF;
+
+    RAISE NOTICE 'F3-VIEW-T17 PASS — Study type counts exposed';
+END
+$t17$;
+
 ROLLBACK;
