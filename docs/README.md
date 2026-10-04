@@ -48,6 +48,9 @@ Modelo conceitual, modelo lógico e, futuramente, arquitetura computacional.
 - [33 — Revisão de Promoção Arquitetural Pós-F2-B](architecture/33-revisao-promocao-pos-f2b.md)
 - [34 — Plano e Desenho da PoC-S4](architecture/34-plano-poc-s4.md)
 - [35 — Resultado da PoC-S4](architecture/35-resultado-poc-s4.md)
+- [36 — Plano e Desenho da PoC-S5](architecture/36-plano-poc-s5.md)
+- [37 — Resultado da PoC-S5](architecture/37-resultado-poc-s5.md)
+- [38 — Decisão de Promoção e Fechamento da Fase 2](architecture/38-decisao-promocao-fechamento-fase2.md)
 - [F2-B Test Run — 2026-10-04 — Run 37187885839](architecture/F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Regra editorial
