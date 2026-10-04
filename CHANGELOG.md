@@ -750,3 +750,37 @@ Definir o **Contrato de Dados da Ficha de Evidência** e decidir quais lacunas e
 - projeção é determinística;
 - migration 007 é idempotente por desenho;
 - próxima etapa: especificação do template operacional da Ficha.
+
+
+## 2026-10-04 — Fase 3: Template Operacional da Ficha de Evidência
+
+### Adicionado
+
+- `docs/products/46-especificacao-template-ficha-evidencia.md`;
+- `templates/evidence-sheet.md`;
+- `templates/evidence-sheet-presentation-map.json`;
+- `scripts/render_evidence_sheet_reference.py`;
+- `scripts/validate_evidence_sheet_render.py`;
+- `docs/products/47-resultado-validacao-template-ficha.md`.
+
+### Validação
+
+- run final **37196822297**;
+- PostgreSQL **18.6**;
+- EvidenceSheetView exportado diretamente do banco;
+- render Markdown de referência: PASS;
+- F3-TEMPLATE: PASS;
+- regressões F2-B/S4/S5/Ficha/View: PASS;
+- rebuild até migration 007: PASS;
+- artifact **11300953823**;
+- digest `sha256:99a1c851678ab5ba005517f793518e13ac708bfea32f756c668135a19b47d09b`.
+
+### Decisões
+
+- template inicial aceito como `oes.evidence_sheet.template/0.1`;
+- input científico exclusivo: `oes.evidence_sheet_view/0.1`;
+- campos artificiais `display.*` foram removidos;
+- traduções de enums foram desacopladas em mapa de apresentação;
+- renderer Python é implementação de referência, não escolha de engine de produção;
+- o template não calcula nem decide ciência;
+- próxima etapa: validação científica ponta a ponta da Ficha com caso real.
