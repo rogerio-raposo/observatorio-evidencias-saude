@@ -160,7 +160,7 @@ INSERT INTO core.entity_version(
 ) VALUES (
     '90000000-0000-0000-0000-000000000902',
     '00000000-0000-0000-0000-000000000008',
-    2,'draft','f2b','test'
+    99,'draft','f2b','test'
 );
 
 DO $t09$
