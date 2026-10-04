@@ -177,8 +177,15 @@ Aplicabilidade não descrita para esta versão.
 
 ## Base de evidências
 
-**Studies:** {{evidence_base.study_count}}  
+**Unidades de evidência no OES:** {{evidence_base.study_count}}  
 **Reports:** {{evidence_base.report_count}}
+
+{{#if evidence_base.study_type_counts}}
+**Tipos de Study:**
+{{#each evidence_base.study_type_counts}}
+- {{study_type}}: {{count}}
+{{/each}}
+{{/if}}
 
 {{#if evidence_base.study_designs}}
 **Desenhos identificados:**
