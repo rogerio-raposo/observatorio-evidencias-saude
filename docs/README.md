@@ -54,9 +54,10 @@ Arquitetura e especificações dos produtos do OES.
 - [62 — Resultado da Validação Técnica do Modelo de Garantia A0–A3](products/62-resultado-validacao-modelo-garantia-a0-a3.md)
 - [63 — Caso Real 01: Primeira Verificação Metodológica Adversarial](products/63-caso-real-01-verificacao-metodologica-adversarial-01.md)
 - [64 — Caso Real 01: Segunda Verificação Metodológica Adversarial](products/64-caso-real-01-verificacao-metodologica-adversarial-02.md)
-- [65 — Caso Real 01: Aprovação de Governança do Proprietário](products/65-caso-real-01-aprovacao-governanca-proprietario.md)
+- [65 — Caso Real 01: Resultado da Validação do Estado A1](products/65-caso-real-01-resultado-validacao-a1.md)
+- [66 — Caso Real 01: Aprovação de Governança do Proprietário](products/66-caso-real-01-aprovacao-governanca-proprietario.md)
 
-Próxima etapa: decisão explícita do proprietário no Documento 65 para eventual avanço A1 → A2.
+Próxima etapa: decisão explícita do proprietário no Documento 66 para eventual avanço A1 → A2.
 
 ### architecture/
 
