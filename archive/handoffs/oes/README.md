@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP27 — 2026-10-04**
+**CP28 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP27.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP28.md`
 
 Checkpoint anterior:
 
-`CP26`
+`CP27`
 
 Status:
 
@@ -60,35 +60,31 @@ em **Modo Continuidade**.
 
 ## Histórico
 
-- **CP01 — 2026-10-03:** checkpoint inaugural. Consolida a criação do repositório, os documentos 00–03 e 10, os templates operacionais iniciais e registra como ponto de retomada o documento 11 — Elegibilidade, Triagem e Seleção.
-- **CP02 — 2026-10-03:** consolida o Documento 11, o Screening Record e registra como ponto de retomada o Documento 12 — Avaliação de Risco de Viés e Qualidade Metodológica.
-- **CP03 — 2026-10-03:** consolida o Documento 12, o Risk of Bias / Critical Appraisal Record e registra como ponto de retomada o Documento 13 — Extração e Estruturação de Dados.
-
-- **CP04 — 2026-10-03:** consolida o Documento 13, o Data Extraction Record e registra como ponto de retomada o Documento 14 — Síntese de Evidências.
-- **CP05 — 2026-10-03:** consolida o Documento 14, o Synthesis Record e registra como ponto de retomada o Documento 15 — Avaliação da Certeza/Confiança no Corpo de Evidências.
-- **CP06 — 2026-10-03:** consolida o Documento 15, o Certainty Assessment Record e registra como ponto de retomada a consolidação do modelo conceitual de dados e o aprofundamento da arquitetura tecnológica.
-- **CP07 — 2026-10-03:** consolida o Documento 20 — Modelo Conceitual de Dados, formaliza a transição para a Fase 2 e registra como ponto de retomada o desenvolvimento do modelo lógico de dados.
-- **CP08 — 2026-10-03:** consolida o Documento 21 — Modelo Lógico de Dados e registra como ponto de retomada a validação arquitetural por casos de uso.
-- **CP09 — 2026-10-03:** consolida a validação arquitetural, a checagem de integridade e o GATE F2-A; registra como ponto de retomada as alternativas arquiteturais e o primeiro desenho físico candidato.
-- **CP10 — 2026-10-03:** consolida OES-H1 e OES-P1; registra como ponto de retomada a PoC-S1 do schema mínimo.
-- **CP11 — 2026-10-03:** consolida a PoC-S1 e sua validação estática; mantém F2-B pendente e registra como ponto de retomada a Trilha B documental.
-- **CP12 — 2026-10-03:** consolida o plano F2-B, identidade/versionamento, provenance/lineage e o hardening da PoC-S1; retoma em migrações e PoC-S2.
-- **CP13 — 2026-10-04:** consolida PoC-S2/PoC-S3 e o **GATE F2-B = PASS** em PostgreSQL 18.6; mantém OES-P1 como candidato físico validado e registra como ponto de retomada a Revisão de Promoção Arquitetural Pós-F2-B.
-- **CP14 — 2026-10-04:** consolida a revisão dos 15 critérios de promoção, mantém OES-P1 não promovido e registra como ponto de retomada a PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis.
-- **CP15 — 2026-10-04:** consolida a **PoC-S4 = PASS**, atualiza a matriz para 11/1/3 e registra como ponto de retomada a PoC-S5 — Métodos Especializados Mínimos.
-- **CP16 — 2026-10-04:** consolida a **PoC-S5 = PASS**, a matriz 15/15, promove OES-P1 a baseline arquitetural, encerra a Fase 2 e registra como ponto de retomada a Fase 3 — Produtos do Observatório.
-- **CP17 — 2026-10-04:** consolida o Documento 40 — Taxonomia e Arquitetura dos Produtos, formaliza a Ficha de Evidência como unidade persistente central preferencial e registra como ponto de retomada sua especificação individual.
-
-- **CP18 — 2026-10-04:** consolida a especificação científica/funcional da Ficha de Evidência e registra como ponto de retomada o Contrato de Dados da Ficha.
-- **CP19 — 2026-10-04:** consolida o contrato de dados, migration 006 e publication gate da Ficha com PASS; registra como ponto de retomada o EvidenceSheetView.
-- **CP20 — 2026-10-04:** consolida o EvidenceSheetView e sua validação com PASS; registra como ponto de retomada a especificação do Template Operacional da Ficha de Evidência.
-- **CP21 — 2026-10-04:** consolida o Template Operacional inicial da Ficha de Evidência com PASS estrutural/operacional e registra como ponto de retomada a validação científica ponta a ponta com um caso real N2.
-- **CP22 — 2026-10-04:** consolida a reconciliação 008/009/Documento 55, o hardening provenance-aware do EvidenceSheetView e registra como ponto de retomada a materialização do Caso Real 01 como Ficha under_review.
-- **CP23 — 2026-10-04:** consolida o PASS ponta a ponta do Caso Real 01 em pré-publicação, mantém a Ficha under_review e registra como ponto de retomada o Gate de Revisão Humana.
-- **CP24 — 2026-10-04:** consolida o pacote de revisão humana do Caso Real 01 e registra como ponto de retomada a revisão humana real, mantendo a Ficha under_review e não publicável até decisão explícita de revisor.
-
-- **CP25 — 2026-10-04:** consolida o pacote de revisão humana e a validação técnica HRG-T01–T06; mantém a Ficha under_review e registra como ponto exato de retomada a revisão humana real do Caso Real 01.
-
-- **CP26 — 2026-10-04:** consolida o modelo A0–A3, a verificação metodológica adversarial concluída em A1 e registra como ponto de retomada a decisão explícita do proprietário no Documento 65.
-
-- **CP27 — 2026-10-04:** reconcilia a numeração dos Documentos 65–66, preserva o estado A1 do Caso Real 01 e registra como ponto exato de retomada a decisão explícita do proprietário no Documento 66.
+- **CP01 — 2026-10-03:** checkpoint inaugural; documentos 00–03 e 10; retomada no Documento 11.
+- **CP02 — 2026-10-03:** consolida Documento 11; retomada no Documento 12.
+- **CP03 — 2026-10-03:** consolida Documento 12; retomada no Documento 13.
+- **CP04 — 2026-10-03:** consolida Documento 13; retomada no Documento 14.
+- **CP05 — 2026-10-03:** consolida Documento 14; retomada no Documento 15.
+- **CP06 — 2026-10-03:** consolida Documento 15; retomada no modelo conceitual de dados.
+- **CP07 — 2026-10-03:** consolida Documento 20; transição para Fase 2.
+- **CP08 — 2026-10-03:** consolida Documento 21; retomada na validação arquitetural.
+- **CP09 — 2026-10-03:** consolida validação arquitetural, integridade e GATE F2-A.
+- **CP10 — 2026-10-03:** consolida OES-H1/OES-P1; retomada na PoC-S1.
+- **CP11 — 2026-10-03:** consolida PoC-S1; F2-B pendente.
+- **CP12 — 2026-10-03:** consolida plano F2-B, versionamento, provenance e hardening.
+- **CP13 — 2026-10-04:** GATE F2-B PASS; retomada na revisão de promoção.
+- **CP14 — 2026-10-04:** revisão dos 15 critérios; retomada na PoC-S4.
+- **CP15 — 2026-10-04:** PoC-S4 PASS; retomada na PoC-S5.
+- **CP16 — 2026-10-04:** PoC-S5 PASS, matriz 15/15, OES-P1 promovido; Fase 2 encerrada.
+- **CP17 — 2026-10-04:** Documento 40; retomada na Ficha de Evidência.
+- **CP18 — 2026-10-04:** especificação da Ficha; retomada no contrato de dados.
+- **CP19 — 2026-10-04:** contrato de dados/migration 006 PASS; retomada no EvidenceSheetView.
+- **CP20 — 2026-10-04:** EvidenceSheetView PASS; retomada no template operacional.
+- **CP21 — 2026-10-04:** template inicial PASS; retomada no caso real N2.
+- **CP22 — 2026-10-04:** reconciliação 008/009/Documento 55 e hardening; retomada na materialização do Caso Real 01.
+- **CP23 — 2026-10-04:** PASS ponta a ponta em pré-publicação; retomada no gate de revisão.
+- **CP24 — 2026-10-04:** pacote de revisão preparado; revisão humana real pendente.
+- **CP25 — 2026-10-04:** HRG-T01–T06 PASS; revisão humana real ainda pendente.
+- **CP26 — 2026-10-04:** modelo A0–A3 e verificação metodológica adversarial; Caso Real 01 em A1.
+- **CP27 — 2026-10-04:** reconcilia Documentos 65–66; owner approval pendente.
+- **CP28 — 2026-10-04:** consolida owner approval explícita, Caso Real 01 em **A2/published**, PASS do run 37229070210 e retoma na especificação científica e funcional da **Resposta de Evidência — N1**.
