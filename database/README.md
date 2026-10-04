@@ -18,7 +18,8 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `poc-s1-smoke.sql` — smoke inicial;
 - `f2b-fixtures.sql` — fixtures determinísticas do gate;
 - `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
-- `f2b-rebuild-check.sql` — verificação do rebuild do zero.
+- `f2b-rebuild-check.sql` — verificação do rebuild do zero;
+- `f3-human-review-gate-tests.sql` — testes transacionais da semântica `approved` / `revise` / `rejected` do Gate de Revisão Humana, sempre com `ROLLBACK`.
 
 A cadeia mínima validada inclui:
 
@@ -245,3 +246,26 @@ GitHub Actions:
 - digest: `sha256:78b143a5def1b79d280736fb9b8415464621082c41b5964381db5ed143617fa5`
 
 O produto permanece `under_review`; nenhum `review_record approved` foi criado.
+
+
+## Caso Real 01 — Gate de Revisão Humana
+
+**PASS técnico — 4 de outubro de 2026.**
+
+- GitHub Actions run: **37213717492**
+- HRG-T01–T06: **PASS**
+- RC01-T01–T10: PASS
+- rebuild: PASS
+- artifact: **11306934256**
+- digest: `sha256:81578896ae97f582bd3029c4f276303e0208067b0cdcf053b0bb46f764b3a51f`
+
+Semântica validada:
+
+- `revise` mantém publicação bloqueada;
+- `rejected` adiciona bloqueio explícito;
+- `approved` não sobrepõe rejeição ativa;
+- `approved` sem `publication_date` não libera publicação;
+- somente o conjunto completo de requisitos pode tornar a Ficha elegível;
+- todos os review records dos testes são sintéticos e revertidos por `ROLLBACK`.
+
+O Caso Real 01 permanece sem revisão humana real e continua `under_review`.
