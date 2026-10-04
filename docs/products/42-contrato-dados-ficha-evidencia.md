@@ -228,58 +228,76 @@ Não sobrecarregar `change_type` com lista múltipla.
 
 ---
 
-# 7. Registro de revisão humana
+# 7. Garantia metodológica, aprovação e revisão
 
-## 7.1 Nova estrutura
+## 7.1 Estruturas distintas
 
-Criar:
+A versão inicial criou:
 
 `product.review_record`
 
-Campos:
+para revisão humana.
 
-- review_uuid;
+A governança do Documento 04 exige separar três funções:
+
+1. `ai_methodological_verification`;
+2. `owner_governance_approval`;
+3. `expert_independent_review`.
+
+Será criada:
+
+`product.assurance_record`
+
+para registrar as duas primeiras funções e, quando conveniente, o estado de garantia de expert review.
+
+`product.review_record` permanece disponível para revisão humana/especializada detalhada e compatibilidade histórica.
+
+## 7.2 assurance_record
+
+Campos mínimos:
+
+- assurance_uuid;
 - product_version_uuid;
-- reviewer;
-- role;
+- assurance_type;
+- actor;
+- actor_type;
 - independent_flag;
 - decision;
-- reviewed_at;
+- performed_at;
 - notes;
+- evidence_payload;
 - status.
 
-Vocabulário mínimo de `decision`:
+Tipos:
 
-- approved;
-- revise;
-- rejected.
+- ai_methodological_verification;
+- owner_governance_approval;
+- expert_independent_review.
 
-`status`:
+Decisões:
 
-- active;
-- superseded.
+- AI verification: passed / revise / failed;
+- owner approval: approved / revise / rejected;
+- expert review: approved / revise / rejected.
 
-## 7.2 Finalidade
+## 7.3 Finalidade
 
-Registrar evidência auditável de que:
+Registrar de forma auditável **que tipo de garantia realmente ocorreu**, evitando equivalência falsa entre:
 
-- julgamento material foi revisado;
-- certainty foi revisada quando aplicável;
-- conclusão foi conferida;
-- gate de publicação foi satisfeito.
+- IA;
+- proprietário não especialista;
+- especialista independente.
 
-## 7.3 Papel
+## 7.4 Assurance level derivado
 
-`role` permanece inicialmente textual controlado por aplicação.
+O nível A0–A3 não será digitado manualmente como verdade paralela.
 
-Papéis candidatos:
+Será derivado dos registros ativos:
 
-- scientific_reviewer;
-- methodological_reviewer;
-- certainty_reviewer;
-- editor.
-
-A taxonomia final de papéis poderá ser expandida posteriormente.
+- A0 — unverified;
+- A1 — ai_methodological_reviewed;
+- A2 — owner_approved;
+- A3 — expert_independent_reviewed.
 
 ---
 
@@ -562,13 +580,17 @@ Uma Ficha em `published` deverá satisfazer:
 8. conclusion_text não vazio;
 9. limitations_summary não vazio;
 10. CurrencyState ativo existente;
-11. ao menos um review_record ativo com `decision='approved'`;
-12. nenhuma revisão ativa com `decision='rejected'`;
-13. Syntheses citadas vinculadas;
-14. Certainty formal citada vinculada;
-15. nenhuma dependência crítica invalidada sem reavaliação;
-16. ProductVersion associada à EntityVersion current;
-17. provenance/lineage reconstruível.
+11. garantia mínima exigida para a finalidade satisfeita;
+12. para N2 padrão, AI methodological verification ativa em `passed`;
+13. para N2 padrão, owner governance approval ativa em `approved`;
+14. nenhuma AI verification ativa em `revise` ou `failed`;
+15. nenhuma owner approval ativa em `revise` ou `rejected`;
+16. se houver expert review ativa, nenhuma decisão `revise` ou `rejected` poderá permanecer não resolvida;
+17. Syntheses citadas vinculadas;
+18. Certainty formal citada vinculada;
+19. nenhuma dependência crítica invalidada sem reavaliação;
+20. ProductVersion associada à EntityVersion current;
+21. provenance/lineage reconstruível.
 
 Algumas verificações exigirão função de gate, não apenas constraints locais.
 
@@ -617,8 +639,14 @@ A transição para `published` continuará sendo ação explícita.
 - MISSING_CONCLUSION
 - MISSING_LIMITATIONS
 - MISSING_CURRENCY_STATE
-- MISSING_APPROVED_REVIEW
-- ACTIVE_REJECTION
+- MISSING_AI_METHODOLOGICAL_VERIFICATION
+- ACTIVE_AI_METHOD_REVISE
+- ACTIVE_AI_METHOD_FAILURE
+- MISSING_OWNER_APPROVAL
+- ACTIVE_OWNER_REVISE
+- ACTIVE_OWNER_REJECTION
+- ACTIVE_EXPERT_REVISE
+- ACTIVE_EXPERT_REJECTION
 - INVALIDATED_DEPENDENCY
 - NOT_CURRENT_ENTITY_VERSION
 - UNLINKED_SYNTHESIS
@@ -776,16 +804,17 @@ Esse objeto é uma **view de aplicação/renderização**, não nova fonte canô
 2. Limitations summary será armazenado.
 3. Atualidade terá histórico próprio.
 4. Classes de mudança terão relação N:M com ProductVersion.
-5. Revisão humana terá registro próprio.
-6. N/M serão derivados da Investigation.
-7. Question será derivada da Investigation.
-8. Results/Synthesis/Certainty não serão duplicados.
-9. ApplicabilityAssessment formal será adiado.
-10. ProductRelation será adiada até caso de uso concreto.
-11. Uma Investigation primary por ProductVersion será invariant.
-12. Publicação será validada por função de gate.
-13. Migration 006 é necessária antes do template.
-14. Nenhum novo campo científico será criado apenas por conveniência visual.
+5. Garantia metodológica, owner approval e expert review serão funções explicitamente distintas.
+6. `product.assurance_record` registrará a garantia aplicável e `product.review_record` permanecerá para revisão humana detalhada/compatibilidade histórica.
+7. N/M serão derivados da Investigation.
+8. Question será derivada da Investigation.
+9. Results/Synthesis/Certainty não serão duplicados.
+10. ApplicabilityAssessment formal será adiado.
+11. ProductRelation será adiada até caso de uso concreto.
+12. Uma Investigation primary por ProductVersion será invariant.
+13. Publicação será validada por função de gate.
+14. Migration 006 estabeleceu o contrato inicial; a governança de garantia será evoluída por migration controlada posterior.
+15. Nenhum novo campo científico será criado apenas por conveniência visual.
 
 ---
 
