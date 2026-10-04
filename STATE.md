@@ -1,177 +1,168 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 3 de outubro de 2026  
+**Última atualização:** 4 de outubro de 2026  
 **Fase:** Fase 2 — Modelo de Dados da Evidência  
 **Status geral:** em desenvolvimento
 
-## 1. Fonte canônica
+## 1. Fonte canônica e continuidade
 
 Este repositório é a fonte canônica do Observatório de Evidências em Saúde — OES.
 
-As conversas podem ser usadas para desenvolver, discutir e revisar conteúdo, mas decisões persistentes devem ser consolidadas nos documentos do repositório.
+As conversas podem desenvolver e revisar conteúdo, mas decisões persistentes devem ser consolidadas no repositório.
 
-### Continuidade formal
+O `STATE.md` é um painel vivo.
 
-O STATE.md é um **painel vivo** e pode ser atualizado.
+Continuidade formal:
 
-A continuidade formal utiliza checkpoints imutáveis em:
+- ponteiro: `archive/handoffs/oes/README.md`;
+- template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
+- checkpoint vigente: **CP13 — 2026-10-04**.
 
-`archive/handoffs/oes/`
-
-Ponteiro vigente:
-
-`archive/handoffs/oes/README.md`
-
-Template canônico:
-
-`archive/continuity/OES_Template_Abertura_Continuidade.md`
-
-## 2. Documentos consolidados até o momento
+## 2. Documentação consolidada
 
 ### Governança / fundamentos
 
 - 00 — Documento de Concepção
 - 01 — Escopo Científico e Taxonomia das Perguntas
 - 02 — Arquitetura de Níveis de Investigação e Produtos
-- 03 — Protocolo de Entrada, Triagem e Roteamento Metodológico
+- 03 — Entrada, Triagem e Roteamento Metodológico
 
 ### Metodologia
 
-- 10 — Protocolo de Busca e Recuperação de Evidências
-- 11 — Protocolo de Elegibilidade, Triagem e Seleção de Evidências
-- 12 — Protocolo de Avaliação de Risco de Viés e Qualidade Metodológica
-- 13 — Protocolo de Extração e Estruturação de Dados
-- 14 — Protocolo de Síntese de Evidências
-- 15 — Protocolo de Avaliação da Certeza/Confiança no Corpo de Evidências
+- 10 — Busca e Recuperação
+- 11 — Elegibilidade, Triagem e Seleção
+- 12 — Risco de Viés e Qualidade Metodológica
+- 13 — Extração e Estruturação de Dados
+- 14 — Síntese de Evidências
+- 15 — Certeza/Confiança no Corpo de Evidências
 
 ### Arquitetura e dados
 
-- 20 — Modelo Conceitual de Dados do OES
-- 21 — Modelo Lógico de Dados do OES
-- 22 — Validação Arquitetural por Casos de Uso
-- 23 — Checagem de Integridade do Modelo de Dados
-- 24 — Alternativas Arquiteturais de Persistência
+- 20 — Modelo Conceitual
+- 21 — Modelo Lógico
+- 22 — Validação por Casos de Uso
+- 23 — Checagem de Integridade
+- 24 — Alternativas de Persistência
 - 25 — Primeiro Desenho Físico Candidato
-- 26 — PoC-S1: Validação do Schema Mínimo
-- 27 — Plano Formal de Testes do GATE F2-B
-- 28 — Política de Identidade e Versionamento
-- 29 — Política de Proveniência e Lineage
+- 26 — PoC-S1
+- 27 — Plano Formal de Testes F2-B
+- 28 — Identidade e Versionamento
+- 29 — Proveniência e Lineage
+- 30 — Política de Migrações
+- 31 — PoC-S2 Search/Screening/RiskAssessment
+- 32 — Resultado do GATE F2-B e Decisão Pós-PoC
+- F2B Test Run 2026-10-04 / run 37187885839
 
-### Estrutura operacional
+## 3. Gates
 
-- Question Record
-- Routing Record
-- Search Record
-- Screening Record
-- Risk of Bias / Critical Appraisal Record
-- Data Extraction Record
-- Synthesis Record
-- Certainty Assessment Record
-- Índice de fontes metodológicas
+### GATE F2-A
 
-## 3. Decisões arquiteturais já firmadas
+**APROVADO.**
 
-- metodologia antes da automação;
-- pergunta formalizada antes da busca definitiva;
-- nenhuma pirâmide universal de evidência;
-- risco de viés e certeza do corpo de evidências são processos distintos;
-- profundidade N0–N4 e manutenção M0–M3 são dimensões independentes;
-- Ficha de Evidência é candidata à unidade persistente central;
-- roteamento sem score numérico nesta fase;
-- toda decisão de roteamento exige justificativa textual;
-- estudo e publicação são entidades distintas;
-- Study, Report e Result são entidades distintas na extração;
-- valor originalmente relatado e valor derivado devem permanecer separados;
-- dados críticos devem manter proveniência rastreável;
-- busca científica deverá ser auditável;
-- certeza do corpo de evidências será avaliada de forma explícita e rastreável;
-- GRADE será a referência central quando aplicável, com CERQual separado para achados qualitativos;
-- aplicabilidade ao Brasil não será confundida automaticamente com indirectness;
-- certeza permanecerá separada de recomendação;
-- IA apoia, mas não é fonte de evidência científica;
-- o repositório, e não a memória da conversa, é o registro persistente do projeto.
+Modelo lógico candidato autorizado para prova física, com reservas metodológicas já documentadas.
 
-## 4. Próxima etapa
+### GATE F2-B
 
-**Migrações e PoC-S2 enquanto o GATE F2-B permanece pendente.**
+**PASS — 4 de outubro de 2026.**
 
-Próximo trabalho:
+Execução final:
 
-- formalizar política de migrações;
-- estender a PoC para Search/SearchHit/DedupCluster;
-- adicionar ScreeningDecision;
-- adicionar RiskAssessment/RiskAssessmentDomain;
-- validar novas invariantes e incorporar testes ao F2-B.
+- GitHub Actions run: **37187885839**
+- commit: `de168908d8fe311e64c07937dc70df36af39d910`
+- PostgreSQL server: **18.6**
+- T01–T19: **PASS**
+- rebuild do zero: **PASS**
+- artifact: **11297272424**
+- digest: `sha256:5381605d34064f95a2d4444e34d275b8c89ceb28a19cc915db104da9362c1d7c`
 
-## 5. Gate arquitetural
+## 4. Arquitetura candidata
 
-**GATE F2-A — Modelo Lógico Candidato: APROVADO**, com reservas metodológicas explícitas.
+### OES-H1
 
-Arquiteturas candidatas:
+**Status:** arquitetura candidata preservada.
 
-- **OES-H1** — persistência híbrida com núcleo relacional canônico;
-- **OES-P1** — primeiro desenho físico candidato.
+### OES-P1
 
-## 6. Estado das fases
+**Status:** candidato físico **validado no escopo do F2-B**.
 
-- Fase 0 — Concepção e fundamentos: base inicial consolidada como documentação viva;
+O PASS do F2-B não promove OES-P1 a schema definitivo.
+
+### PostgreSQL
+
+**Status:** referência de implementação validada para PoC; nenhuma decisão definitiva de stack de produção.
+
+## 5. Invariantes arquiteturais já confirmadas
+
+- identidade estável separada de versão;
+- no máximo uma versão `current` por entidade;
+- supersessão dentro da mesma identidade;
+- integridade de subtipos e FKs;
+- Study/Report/Result separados;
+- raw/source value separado de derived value;
+- provenance como dado de primeira classe;
+- correção de provenance history-preserving;
+- dependency edge como projeção derivada;
+- SearchHit preservado após deduplicação;
+- Screening target tipado;
+- RiskAssessment target tipado;
+- cadeia Search → Product reconstruível;
+- rebuild a partir de artefatos versionados;
+- rollback transacional validado.
+
+## 6. Fases
+
+- Fase 0 — Concepção e fundamentos: base inicial consolidada;
 - Fase 1 — Manual Metodológico: base inicial dos Documentos 10–15 consolidada;
-- Fase 2 — Modelo de Dados da Evidência: em desenvolvimento;
+- Fase 2 — Modelo de Dados da Evidência: **em desenvolvimento, F2-A e F2-B aprovados**;
 - Fases 3–7: ainda não iniciadas formalmente.
 
-## 7. Questões ainda provisórias
+## 7. Limites atuais
 
-- nomenclatura final dos produtos;
-- critérios operacionais precisos para descritores baixa/moderada/alta no roteamento;
-- instrumentos específicos para prevalência/incidência e pesquisa qualitativa;
-- regras finais para avaliação de revisões sistemáticas existentes;
-- gatilhos quantitativos/operacionais de atualização;
-- especificação definitiva da Ficha de Evidência;
-- política formal de versionamento dos produtos.
+Ainda não constituem decisões finais:
 
-## 8. Regra de retomada
+- schema definitivo;
+- stack tecnológica de produção;
+- fechamento da Fase 2;
+- NMA física completa;
+- PredictionModel completo;
+- qualitativa/CERQual física completa;
+- ApplicabilityAssessment;
+- monitoramento operacional;
+- autenticação/autorização;
+- backup/HA;
+- migration ledger de ambiente persistente;
+- política de CI/concurrency definitiva.
 
-Ao retomar o projeto em nova conversa ou sessão:
+## 8. Próxima etapa
 
-1. consultar README.md;
-2. consultar este STATE.md;
-3. consultar o documento metodológico diretamente relacionado à próxima tarefa;
-4. verificar CHANGELOG.md quando houver dúvida sobre decisões anteriores;
-5. atualizar este arquivo ao encerrar um novo marco metodológico.
+**Revisão de Promoção Arquitetural Pós-F2-B.**
 
-## 9. Checkpoint atual
+Objetivos:
 
-**CP12 — 2026-10-03**
+1. mapear os 15 critérios de promoção do Documento 25;
+2. classificar cada um como validado, parcialmente validado, não validado ou fora do escopo imediato;
+3. vincular evidências concretas;
+4. identificar o menor conjunto de PoCs adicionais;
+5. separar critérios de baseline arquitetural de requisitos de produção;
+6. definir caminho para fechamento da Fase 2.
 
-Arquivo canônico do checkpoint:
+Até essa revisão, evitar expansão do schema sem vínculo explícito com uma lacuna de promoção.
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-03_CP12.md`
+## 9. Checkpoint vigente
 
-O checkpoint é imutável e operacional; este STATE.md permanece atualizável.
+**CP13 — 2026-10-04**
 
-Cobertura:
+Arquivo:
 
-- concepção;
-- taxonomia;
-- níveis e produtos;
-- roteamento;
-- busca e recuperação;
-- elegibilidade, triagem e seleção;
-- avaliação de risco de viés e qualidade metodológica;
-- extração e estruturação de dados;
-- síntese de evidências;
-- avaliação da certeza/confiança no corpo de evidências;
-- modelo conceitual de dados;
-- modelo lógico de dados;
-- validação arquitetural e gate F2-A;
-- alternativas de persistência OES-H1;
-- desenho físico candidato OES-P1;
-- PoC-S1 criada e estaticamente validada;
-- GATE F2-B pendente;
-- plano F2-B formalizado;
-- políticas de identidade/versionamento e provenance formalizadas;
-- estrutura inicial do repositório.
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP13.md`
 
-Próximo ponto de trabalho:
+Cobertura principal:
 
-**Política de migrações e PoC-S2.**
+- PoC-S2;
+- migration PoC-S3 de provenance;
+- execução real do F2-B;
+- T01–T19 PASS;
+- rebuild PASS;
+- decisão de manter OES-P1 como candidato físico validado;
+- ponto de retomada na revisão de promoção pós-F2-B.
+
