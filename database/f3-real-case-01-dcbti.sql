@@ -427,7 +427,7 @@ INSERT INTO appraisal.risk_assessment_version(
  '81000000-0000-0000-0000-000000000402','80000000-0000-0000-0000-000000000402',
  '81000000-0000-0000-0000-000000000002','RoB 2','current',
  '80000000-0000-0000-0000-000000000103','80000000-0000-0000-0000-000000000003',
- 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_human_review',
+ 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_methodological_verification',
  '{"key_issues":["allocation concealment insufficiently described","missing outcome data","self-reported outcome in open-label trial"]}'::jsonb,'draft'
 ),
 (
@@ -456,7 +456,7 @@ INSERT INTO appraisal.risk_assessment_domain(
  risk_assessment_version_uuid,domain_code,judgement,rationale,sequence_no
 ) VALUES
 ('81000000-0000-0000-0000-000000000401','eligibility','low_concern','Eligibility criteria are explicit and relevant to the OES question.',1),
-('81000000-0000-0000-0000-000000000401','identification_selection','high_concern','The declared search cutoff is not temporally consistent with a later-published trial cited by the review.',2),
+('81000000-0000-0000-0000-000000000401','identification_selection','unclear_concern','Four major databases including CENTRAL and dual screening were used. Trial registries, broader grey literature/citation chasing and language policy are not clearly documented in the main report. Shin/Somzz is cited but not listed among the 29 included studies, so the prior post-cutoff inclusion concern is withdrawn.',2),
 ('81000000-0000-0000-0000-000000000401','data_collection_appraisal','unclear_concern','Dual extraction and RoB 2 were used, but the impact of exclusions for unavailable data is insufficiently clear.',3),
 ('81000000-0000-0000-0000-000000000401','synthesis_findings','unclear_concern','Comparator-specific synthesis is useful but retains I2=68% and lacks formal certainty assessment.',4),
 
@@ -546,7 +546,7 @@ INSERT INTO synthesis.synthesis_version(
  'narrative_update','oes_update',
  'Directed narrative update of the adopted synthesis using newly identified RCTs; no new statistical pooling.',
  NULL,
- '{"summary_type":"narrative_update","direction":"favors_intervention","newly_modelled_studies":4,"pooled_by_oes":false,"summary_text":"Os RCTs recentes mantêm direção favorável à dCBT-I, com magnitude variável; nenhum estudo diretamente aderente identificado reverteu a direção do efeito.","interpretation":"Maior confiança na direção do benefício do que na magnitude exata.","analysis_note":"Atualização narrativa OES; nenhum novo pooling foi calculado. Somzz é modelado como elegível, mas não é contado como incremento independente da meta-análise Hwang até esclarecer sua relação com o pooling publicado."}'::jsonb,
+ '{"summary_type":"narrative_update","direction":"favors_intervention","newly_modelled_studies":4,"pooled_by_oes":false,"summary_text":"Os RCTs recentes mantêm direção favorável à dCBT-I, com magnitude variável; nenhum estudo diretamente aderente identificado reverteu a direção do efeito.","interpretation":"Maior confiança na direção do benefício do que na magnitude exata.","analysis_note":"Atualização narrativa OES; nenhum novo pooling foi calculado. Somzz é tratado como RCT pós-cutoff e evidência incremental narrativa; não aparece na Tabela 1 dos 29 estudos incluídos por Hwang."}'::jsonb,
  'active',TIMESTAMPTZ '2026-10-04 12:07:00-03'
 );
 
@@ -559,7 +559,7 @@ INSERT INTO synthesis.contribution(
 ('81000000-0000-0000-0000-000000000503','81000000-0000-0000-0000-000000000303','update_evidence',false,false,'New RCT used for directional/magnitude update only.'),
 ('81000000-0000-0000-0000-000000000503','81000000-0000-0000-0000-000000000304','update_evidence',false,false,'New RCT used for directional/magnitude update only.'),
 ('81000000-0000-0000-0000-000000000503','81000000-0000-0000-0000-000000000305','update_evidence',false,false,'Older-adult RCT used as direct but population-specific update evidence.'),
-('81000000-0000-0000-0000-000000000503','81000000-0000-0000-0000-000000000306','update_evidence_possible_overlap',false,false,'Eligible RCT; relation to Hwang pooling remains chronologically unclear, so it is not treated as independent pooled evidence.');
+('81000000-0000-0000-0000-000000000503','81000000-0000-0000-0000-000000000306','update_evidence',false,false,'Post-cutoff RCT used as independent narrative update evidence; no OES repooling performed.');
 
 -- ---------------------------------------------------------------------------
 -- CERTAINTY
@@ -674,7 +674,7 @@ INSERT INTO product.currency_state(
  'current',
  TIMESTAMPTZ '2026-10-04 12:07:00-03',
  'OES',
- 'Search update completed through the evidence cutoff; scientific judgments remain under human review.',
+ 'Search update completed through the evidence cutoff; scientific judgments remain under OES methodological verification.',
  'active'
 );
 
@@ -752,7 +752,7 @@ INSERT INTO provenance.record(
  'Abstract',
  '{"isi_intervention":9.0,"isi_control":12.8}'::jsonb,
  'narrative_update',
- '{"pooled_by_oes":false,"possible_overlap_with_adopted_synthesis":true}'::jsonb,
+ '{"pooled_by_oes":false,"included_in_hwang_table1":false,"update_status":"post_cutoff_incremental"}'::jsonb,
  'OES','active'
 );
 
