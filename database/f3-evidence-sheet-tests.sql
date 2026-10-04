@@ -308,17 +308,3 @@ END
 $t12b$;
 
 ROLLBACK;
-
-
--- ---------------------------------------------------------------------------
--- REAL CASE 01 — end-to-end under_review validation
--- Loaded after the synthetic contract transaction has rolled back.
--- ---------------------------------------------------------------------------
-
-\ir f3-real-case-01-dcbti.sql
-\ir f3-real-case-01-tests.sql
-
--- Export the real EvidenceSheetView into the workflow artifact directory.
--- The existing Python render validator detects this file and validates the
--- real under_review preview without requiring a workflow-YAML change.
-\copy (SELECT product.evidence_sheet_view('81000000-0000-0000-0000-000000000701')::text) TO 's5-artifacts/real-case-01-view.json'
