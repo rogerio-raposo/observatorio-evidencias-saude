@@ -542,3 +542,42 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - PoC-S4, limitada aos critérios 4, 5, 7, 14 e 15.
+
+
+## 2026-10-04 — PoC-S4: multiplicidade, síntese multiestudo e retração
+
+### Adicionado
+
+- `docs/architecture/34-plano-poc-s4.md`;
+- `database/004_poc_s4_report_relation_impact.sql`;
+- `database/s4-fixtures.sql`;
+- `database/s4-tests.sql`;
+- `database/s4-rebuild-check.sql`;
+- `.github/workflows/validate-s4.yml`;
+- `docs/architecture/35-resultado-poc-s4.md`.
+
+### Execução
+
+- GitHub Actions run **37188934837**;
+- PostgreSQL **18.6**;
+- **S4-T01–T15 PASS**;
+- rebuild do zero aprovado;
+- artifact **11298153474**;
+- digest `sha256:c37a2a57bc6b039461324576b06aa4c88f401773ca83dddfa5f9d3cae583cab5`.
+
+### Critérios promovidos
+
+- 4 — Study com múltiplos Reports: VALIDADO;
+- 5 — Report com múltiplos Studies: VALIDADO;
+- 7 — síntese quantitativa: VALIDADO;
+- 14 — retração e impact analysis: VALIDADO.
+
+### Matriz atual
+
+- 11 VALIDADO;
+- 1 PARCIALMENTE VALIDADO;
+- 3 NÃO VALIDADO.
+
+### Próxima etapa
+
+- PoC-S5 — NMA, PredictionModel e Qualitativa/CERQual.
