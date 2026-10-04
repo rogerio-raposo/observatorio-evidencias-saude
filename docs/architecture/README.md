@@ -17,6 +17,7 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [30 — Política de Migrações do Modelo de Dados](30-politica-migracoes.md)
 - [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](31-poc-s2-validacao.md)
 - [32 — Resultado do GATE F2-B e Decisão Pós-PoC](32-resultado-gate-f2b.md)
+- [33 — Revisão de Promoção Arquitetural Pós-F2-B](33-revisao-promocao-pos-f2b.md)
 - [F2-B Test Run — 2026-10-04 — Run 37187885839](F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Entidades conceituais centrais
@@ -72,4 +73,4 @@ PoC-S1 + migrations PoC-S2/PoC-S3 foram executadas em PostgreSQL 18.6. A bateria
 
 ## Próxima etapa
 
-Executar a **Revisão de Promoção Arquitetural Pós-F2-B** e mapear os 15 critérios de promoção do Documento 25 antes de ampliar o schema sem necessidade demonstrada.
+Desenvolver a **PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis**, cobrindo os critérios 4, 5, 7, 14 e 15 do Documento 25.
