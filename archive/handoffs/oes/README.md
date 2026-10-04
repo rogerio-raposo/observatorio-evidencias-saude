@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP25 — 2026-10-04**
+**CP26 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP25.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP26.md`
 
 Checkpoint anterior:
 
-`CP24`
+`CP25`
 
 Status:
 
@@ -88,3 +88,5 @@ em **Modo Continuidade**.
 - **CP24 — 2026-10-04:** consolida o pacote de revisão humana do Caso Real 01 e registra como ponto de retomada a revisão humana real, mantendo a Ficha under_review e não publicável até decisão explícita de revisor.
 
 - **CP25 — 2026-10-04:** consolida o pacote de revisão humana e a validação técnica HRG-T01–T06; mantém a Ficha under_review e registra como ponto exato de retomada a revisão humana real do Caso Real 01.
+
+- **CP26 — 2026-10-04:** consolida o modelo A0–A3, a verificação metodológica adversarial concluída em A1 e registra como ponto de retomada a decisão explícita do proprietário no Documento 65.
