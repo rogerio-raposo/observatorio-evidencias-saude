@@ -133,6 +133,8 @@ Documento 58 — **Resultado da Validação Ponta a Ponta do Caso Real 01**: PAS
 
 Documento 59 — **Pacote de Revisão Humana do Caso Real 01**: preparado; revisão humana ainda não realizada.
 
+Documento 60 — **Validação Técnica do Gate de Revisão Humana**: HRG-T01–T06 PASS; nenhuma revisão sintética persistida.
+
 Migrations canônicas da camada de renderização: 007 → 008 provenance → 009 study-type counts.
 
 Caso Real 01 materializado no baseline como Ficha `under_review`; RC01-T01–T10 PASS; preview Markdown validado; publication gate bloqueado como esperado.
