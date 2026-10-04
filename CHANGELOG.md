@@ -627,3 +627,29 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - PostgreSQL permanece implementação de referência validada, não stack definitiva de produção;
 - **Fase 2 encerrada no nível de baseline arquitetural**;
 - transição autorizada para **Fase 3 — Produtos do Observatório**.
+
+
+## 2026-10-04 — Fase 3: taxonomia e arquitetura dos produtos
+
+### Adicionado
+
+- `docs/products/40-taxonomia-arquitetura-produtos.md`.
+
+### Decisões estruturais
+
+- taxonomia inicial com nove produtos;
+- Evidence Scan, Resposta, Ficha, Síntese Rápida e Revisão vinculados a N0–N4;
+- Mapa e Overview como produtos analíticos transversais;
+- Monitor e Alerta como produtos de manutenção, sem criação de N5;
+- Ficha de Evidência definida como unidade persistente central preferencial para perguntas focais reutilizáveis;
+- separação entre estado editorial, atualidade da evidência e estado científico;
+- data de corte obrigatória para produtos com conclusão científica;
+- certainty não será simulada quando não formalmente avaliada;
+- ausência de evidência permanece distinta de certeza muito baixa;
+- evidência, interpretação, aplicabilidade e eventual recomendação permanecem separadas;
+- alterações materiais geram ProductVersion sem sobrescrita histórica;
+- templates individuais serão criados somente após a especificação do produto.
+
+### Próxima etapa
+
+- especificação individual da **Ficha de Evidência**.
