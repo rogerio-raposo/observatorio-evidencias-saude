@@ -125,9 +125,19 @@ BEGIN
       FROM product.evidence_sheet_publication_issues(
           '81000000-0000-0000-0000-000000000701'
       )
-      WHERE issue_code='MISSING_APPROVED_REVIEW' AND severity='error'
+      WHERE issue_code='MISSING_AI_METHODOLOGICAL_VERIFICATION' AND severity='error'
   ) THEN
-      RAISE EXCEPTION 'RC01-T05 FAIL: human-review block missing';
+      RAISE EXCEPTION 'RC01-T05 FAIL: AI methodological verification block missing';
+  END IF;
+
+  IF NOT EXISTS (
+      SELECT 1
+      FROM product.evidence_sheet_publication_issues(
+          '81000000-0000-0000-0000-000000000701'
+      )
+      WHERE issue_code='MISSING_OWNER_APPROVAL' AND severity='error'
+  ) THEN
+      RAISE EXCEPTION 'RC01-T05 FAIL: owner governance approval block missing';
   END IF;
 
   IF NOT EXISTS (
@@ -140,7 +150,7 @@ BEGIN
       RAISE EXCEPTION 'RC01-T05 FAIL: unpublished-state block missing';
   END IF;
 
-  RAISE NOTICE 'RC01-T05 PASS — publication correctly blocked pending human review and publication date';
+  RAISE NOTICE 'RC01-T05 PASS — publication correctly blocked pending A2 assurance and publication date';
 END
 $t05$;
 
