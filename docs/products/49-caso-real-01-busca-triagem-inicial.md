@@ -146,11 +146,13 @@ A busca dirigida pós-corte da síntese Hwang recuperou os seguintes estudos mat
 - efeito moderado a grande;
 - comparador diretamente aderente.
 
-Observação:
+Observação após verificação adversarial:
 
-o estudo aparece nas referências da revisão Hwang apesar de sua publicação eletrônica ocorrer em julho de 2024, posterior ao corte declarado de 31/03/2024.
+o artigo Hwang cita Shin/Somzz em sua bibliografia, mas **Shin não aparece na Tabela 1 dos 29 estudos incluídos**. A simples presença na lista de referências não demonstra inclusão na meta-análise.
 
-**Status:** elegível; verificar cronologia na appraisal da revisão.
+Como a publicação eletrônica de Somzz ocorreu em julho de 2024, após o cutoff Hwang de 31/03/2024, o estudo será tratado pelo OES como **evidência de atualização pós-corte**, e não como possível duplicação da síntese-base.
+
+**Status:** elegível como RCT de atualização.
 
 ---
 
