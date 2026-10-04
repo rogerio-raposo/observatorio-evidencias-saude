@@ -7,6 +7,7 @@ on:
       - 'database/005_poc_s5_specialized_methods.sql'
       - 'database/006_product_evidence_sheet_contract.sql'
       - 'database/007_evidence_sheet_view.sql'
+      - 'database/008_evidence_sheet_view_evidence_counts.sql'
       - 'database/s5-fixtures.sql'
       - 'database/s5-tests.sql'
       - 'database/s5-rebuild-check.sql'
@@ -73,9 +74,9 @@ jobs:
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s5-artifacts/postgresql-server-version.txt
-          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             | tee s5-artifacts/sql-sha256.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/008_evidence_sheet_view_evidence_counts.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             | tee s5-artifacts/sql-sha256.txt
 
-      - name: Install baseline through migration 007
+      - name: Install baseline through migration 008
         shell: bash
         run: |
           set -euo pipefail
@@ -86,6 +87,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql 2>&1 | tee s5-artifacts/S5-T01-005.log
           psql -v ON_ERROR_STOP=1 -f database/006_product_evidence_sheet_contract.sql 2>&1 | tee s5-artifacts/F3-FE-T01-006.log
           psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql 2>&1 | tee s5-artifacts/F3-VIEW-T01-007.log
+          psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-T17-008.log
 
       - name: Load F2-B fixtures and run regression
         shell: bash
@@ -142,12 +144,12 @@ jobs:
           fi
           echo "F3-TEMPLATE PASS — EvidenceSheetView rendered to validated Markdown" | tee -a s5-artifacts/F3-TEMPLATE-validation.log
 
-      - name: EvidenceSheetView migration idempotent re-apply
+      - name: EvidenceSheetView latest migration idempotent re-apply
         shell: bash
         run: |
           set -euo pipefail
-          psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
-          echo "F3-VIEW migration reapply PASS — projection migration is idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
+          psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
+          echo "F3-VIEW migration reapply PASS — projection migration 008 is idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
 
       - name: F3-FE-T17 — migration 006 double-apply detection
         shell: bash
@@ -192,6 +194,7 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/006_product_evidence_sheet_contract.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_view_evidence_counts.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
@@ -216,11 +219,11 @@ jobs:
             echo "Evidence Sheet contract PASS"
             echo "F3-FE-T01–T17 PASS"
             echo "EvidenceSheetView PASS"
-            echo "F3-VIEW-T01–T16 PASS"
+            echo "F3-VIEW-T01–T17 PASS"
             echo "F3-TEMPLATE PASS"
             echo "Reference Markdown render PASS"
             echo "Publication gate PASS"
-            echo "Rebuild through migration 007 PASS"
+            echo "Rebuild through migration 008 PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
