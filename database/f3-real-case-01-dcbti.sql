@@ -420,35 +420,35 @@ INSERT INTO appraisal.risk_assessment_version(
  '81000000-0000-0000-0000-000000000401','80000000-0000-0000-0000-000000000401',
  '81000000-0000-0000-0000-000000000002','ROBIS','2016',
  '80000000-0000-0000-0000-000000000101','80000000-0000-0000-0000-000000000003',
- 'unclear','OES AI-assisted draft',DATE '2026-10-04','requires_human_review',
+ 'unclear','OES AI-assisted draft',DATE '2026-10-04','ai_methodologically_verified',
  '{"key_issue":"declared search cutoff is inconsistent with a later-published study cited by the review"}'::jsonb,'draft'
 ),
 (
  '81000000-0000-0000-0000-000000000402','80000000-0000-0000-0000-000000000402',
  '81000000-0000-0000-0000-000000000002','RoB 2','current',
  '80000000-0000-0000-0000-000000000103','80000000-0000-0000-0000-000000000003',
- 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_methodological_verification',
+ 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','ai_methodologically_verified',
  '{"key_issues":["allocation concealment insufficiently described","missing outcome data","self-reported outcome in open-label trial"]}'::jsonb,'draft'
 ),
 (
  '81000000-0000-0000-0000-000000000403','80000000-0000-0000-0000-000000000403',
  '81000000-0000-0000-0000-000000000002','RoB 2','current',
  '80000000-0000-0000-0000-000000000104','80000000-0000-0000-0000-000000000003',
- 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_human_review',
+ 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','ai_methodologically_verified',
  '{"key_issue":"slightly differential missing outcome data"}'::jsonb,'draft'
 ),
 (
  '81000000-0000-0000-0000-000000000404','80000000-0000-0000-0000-000000000404',
  '81000000-0000-0000-0000-000000000002','RoB 2','current',
  '80000000-0000-0000-0000-000000000105','80000000-0000-0000-0000-000000000003',
- 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_human_review',
+ 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','ai_methodologically_verified',
  '{"key_issue":"allocation concealment description leaves residual uncertainty"}'::jsonb,'draft'
 ),
 (
  '81000000-0000-0000-0000-000000000405','80000000-0000-0000-0000-000000000405',
  '81000000-0000-0000-0000-000000000002','RoB 2','current',
  '80000000-0000-0000-0000-000000000106','80000000-0000-0000-0000-000000000003',
- 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','requires_human_review',
+ 'some_concerns','OES AI-assisted draft',DATE '2026-10-04','ai_methodologically_verified',
  '{"key_issue":"LOCF used for missing outcome data"}'::jsonb,'draft'
 );
 
@@ -678,7 +678,41 @@ INSERT INTO product.currency_state(
  'active'
 );
 
--- Deliberately no approved product.review_record and no publication_date.
+-- Assurance history: first adversarial pass required revision; second pass passed.
+INSERT INTO product.assurance_record(
+    assurance_uuid, product_version_uuid, assurance_type,
+    actor, actor_type, independent_flag, decision,
+    performed_at, notes, evidence_payload, status
+) VALUES
+(
+    '83000000-0000-0000-0000-000000000701',
+    '81000000-0000-0000-0000-000000000701',
+    'ai_methodological_verification',
+    'OES_AI_METHOD_VERIFICATION_PASS_1',
+    'ai_system',
+    false,
+    'revise',
+    TIMESTAMPTZ '2026-10-04 15:00:00-03',
+    'First adversarial verification identified an incorrect ROBIS premise regarding Somzz/Hwang inclusion.',
+    '{"document":"63-caso-real-01-verificacao-metodologica-adversarial-01.md","material_issue":"Somzz cited but not included in Hwang Table 1","result":"revise"}'::jsonb,
+    'superseded'
+),
+(
+    '83000000-0000-0000-0000-000000000702',
+    '81000000-0000-0000-0000-000000000701',
+    'ai_methodological_verification',
+    'OES_AI_METHOD_VERIFICATION_PASS_2',
+    'ai_system',
+    false,
+    'passed',
+    TIMESTAMPTZ '2026-10-04 15:30:00-03',
+    'Second adversarial verification passed after correcting ROBIS and Somzz update status.',
+    '{"document":"64-caso-real-01-verificacao-metodologica-adversarial-02.md","result":"passed","independent_review":false,"expert_review":false}'::jsonb,
+    'active'
+);
+
+-- Deliberately no owner_governance_approval, no approved expert review,
+-- no approved product.review_record, and no publication_date.
 -- The publication gate must therefore block external publication.
 
 -- ---------------------------------------------------------------------------
