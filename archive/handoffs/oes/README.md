@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP14 — 2026-10-04**
+**CP15 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP14.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP15.md`
 
 Checkpoint anterior:
 
-`CP13`
+`CP14`
 
 Status:
 
@@ -75,3 +75,4 @@ em **Modo Continuidade**.
 - **CP12 — 2026-10-03:** consolida o plano F2-B, identidade/versionamento, provenance/lineage e o hardening da PoC-S1; retoma em migrações e PoC-S2.
 - **CP13 — 2026-10-04:** consolida PoC-S2/PoC-S3 e o **GATE F2-B = PASS** em PostgreSQL 18.6; mantém OES-P1 como candidato físico validado e registra como ponto de retomada a Revisão de Promoção Arquitetural Pós-F2-B.
 - **CP14 — 2026-10-04:** consolida a revisão dos 15 critérios de promoção, mantém OES-P1 não promovido e registra como ponto de retomada a PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis.
+- **CP15 — 2026-10-04:** consolida a **PoC-S4 = PASS**, atualiza a matriz para 11/1/3 e registra como ponto de retomada a PoC-S5 — Métodos Especializados Mínimos.
