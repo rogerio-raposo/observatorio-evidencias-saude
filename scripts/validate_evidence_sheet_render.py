@@ -86,6 +86,13 @@ def main() -> None:
             "Non-publishable product must be marked as preview",
         )
 
+    study_type_counts = payload.get("evidence_base", {}).get("study_type_counts", [])
+    require(study_type_counts, "EvidenceSheetView study_type_counts missing")
+    require(
+        "Tipos de Study:" in rendered,
+        "Study type breakdown missing from rendered evidence base",
+    )
+
     require(
         "## Auditoria e rastreabilidade" in rendered,
         "Audit section missing",
