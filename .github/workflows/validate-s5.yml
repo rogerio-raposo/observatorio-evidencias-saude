@@ -11,6 +11,9 @@ on:
       - 'database/009_evidence_sheet_view_evidence_counts.sql'
       - 'database/f3-provenance-reference-tests.sql'
       - 'database/f3-provenance-reference-rebuild-check.sql'
+      - 'database/f3-real-case-01-dcbti.sql'
+      - 'database/f3-real-case-01-tests.sql'
+      - 'database/f3-real-case-01-rebuild-check.sql'
       - 'database/s5-fixtures.sql'
       - 'database/s5-tests.sql'
       - 'database/s5-rebuild-check.sql'
@@ -77,7 +80,7 @@ jobs:
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s5-artifacts/postgresql-server-version.txt
-          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/008_evidence_sheet_provenance_references.sql             database/009_evidence_sheet_view_evidence_counts.sql             database/f3-provenance-reference-tests.sql             database/f3-provenance-reference-rebuild-check.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             | tee s5-artifacts/sql-sha256.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/008_evidence_sheet_provenance_references.sql             database/009_evidence_sheet_view_evidence_counts.sql             database/f3-provenance-reference-tests.sql             database/f3-provenance-reference-rebuild-check.sql             database/f3-real-case-01-dcbti.sql             database/f3-real-case-01-tests.sql             database/f3-real-case-01-rebuild-check.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             | tee s5-artifacts/sql-sha256.txt
 
       - name: Install baseline through migration 009
         shell: bash
@@ -154,6 +157,33 @@ jobs:
           fi
           echo "F3-TEMPLATE PASS — EvidenceSheetView rendered to validated Markdown" | tee -a s5-artifacts/F3-TEMPLATE-validation.log
 
+      - name: RC01 — load real case, test and render preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql 2>&1 | tee s5-artifacts/rc01-load.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-tests.sql 2>&1 | tee s5-artifacts/rc01-tests.log
+          psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_sheet_view('81000000-0000-0000-0000-000000000701')::text;" > s5-artifacts/rc01-evidence-sheet-view.json
+          python3 scripts/render_evidence_sheet_reference.py \
+            --template templates/evidence-sheet.md \
+            --input s5-artifacts/rc01-evidence-sheet-view.json \
+            --presentation-map templates/evidence-sheet-presentation-map.json \
+            --output s5-artifacts/rc01-evidence-sheet-preview.md
+          python3 scripts/validate_evidence_sheet_render.py \
+            --template templates/evidence-sheet.md \
+            --input s5-artifacts/rc01-evidence-sheet-view.json \
+            --rendered s5-artifacts/rc01-evidence-sheet-preview.md \
+            | tee s5-artifacts/RC01-template-validation.log
+          if ! grep -q 'PREVIEW — NÃO PUBLICÁVEL' s5-artifacts/rc01-evidence-sheet-preview.md; then
+            echo "RC01 FAIL — real case preview is not visibly blocked"
+            exit 1
+          fi
+          if ! grep -q 'Meta-análise publicada adotada criticamente; não recalculada pelo OES.' s5-artifacts/rc01-evidence-sheet-preview.md; then
+            echo "RC01 FAIL — adopted synthesis provenance note missing in preview"
+            exit 1
+          fi
+          echo "RC01 PASS — real N2 Evidence Sheet rendered as blocked preview" | tee -a s5-artifacts/RC01-template-validation.log
+
       - name: EvidenceSheetView latest migrations idempotent re-apply
         shell: bash
         run: |
@@ -216,6 +246,8 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-provenance-reference-rebuild-check.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-rebuild-check.sql
           } 2>&1 | tee s5-artifacts/S5-T16-rebuild.log
 
       - name: Final S5 status
