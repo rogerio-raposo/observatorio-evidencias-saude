@@ -10,6 +10,7 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `002_poc_s2_search_screening_risk.sql` — Search, SearchHit, DedupCluster, ScreeningDecision e RiskAssessment;
 - `003_poc_s3_provenance_guard.sql` — proteção history-preserving de provenance;
 - `004_poc_s4_report_relation_impact.sql` — ReportRelation e traversal derivado de impacto;
+- `005_poc_s5_specialized_methods.sql` — StudyGroup/NMA, PredictionModel e ReviewFinding/CERQual;
 - `poc-s1-smoke.sql` — smoke inicial;
 - `f2b-fixtures.sql` — fixtures determinísticas do gate;
 - `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
@@ -126,7 +127,27 @@ A PoC-S4 validou:
 - impact traversal;
 - coexistência de lineage histórico e pós-retração.
 
+## PoC-S5
+
+**PASS — 4 de outubro de 2026.**
+
+- GitHub Actions run: **37189646452**
+- PostgreSQL server: **18.6**
+- regressão F2-B: PASS
+- regressão S4: PASS
+- S5-T01–T17: **PASS**
+- artifact: **11297653844**
+- digest: `sha256:ba8aed9373dfde8c5ee14c67f91084b2158c3b76bc98560fbc5a22555b133719`
+
+A PoC-S5 validou NMA, PredictionModel, Qualitativa/CERQual e lineage especializado.
+
+## Estado arquitetural
+
+**OES-P1 foi promovido a baseline arquitetural da Fase 2.**
+
+Os SQLs permanecem experimentais e não constituem schema de produção congelado. Mudanças futuras deverão ocorrer por migrations controladas.
+
 ## Próxima etapa
 
-Desenvolver a **PoC-S5 — Métodos Especializados Mínimos**, limitada a NMA, PredictionModel e Qualitativa/CERQual.
+A arquitetura de dados deixa de ser o foco principal. O projeto transita para **Fase 3 — Produtos do Observatório**.
 
