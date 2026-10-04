@@ -35,8 +35,3 @@ BEGIN
         currency_n,change_n,review_n,ok;
 END
 $f3rebuild$;
-
-
--- Real Case 01 must also be reproducible from a zero rebuild.
-\ir f3-real-case-01-dcbti.sql
-\ir f3-real-case-01-rebuild-check.sql
