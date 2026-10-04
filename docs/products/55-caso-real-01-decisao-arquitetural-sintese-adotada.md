@@ -30,9 +30,16 @@ A arquitetura deve representar isso sem sugerir falsamente que:
 
 # 2. Decisão
 
-> **Nenhuma nova migration é necessária para o Caso Real 01.**
+> **Nenhuma alteração do schema científico canônico é necessária para o Caso Real 01.**
 
-O baseline atual possui estruturas suficientes.
+O baseline atual possui entidades e relações científicas suficientes.
+
+Durante a validação do caso real, contudo, foram necessárias duas **migrations compatíveis da camada de projeção**, sem criação de nova entidade canônica:
+
+- migration 008 — referências do EvidenceSheetView conscientes de provenance/lineage;
+- migration 009 — contagens de unidades de evidência por `study_type`.
+
+Essas migrations corrigem rastreabilidade e apresentação do EvidenceSheetView; não alteram a decisão de que a meta-análise externa e a atualização OES podem ser representadas pelo modelo canônico existente.
 
 ---
 
@@ -221,9 +228,9 @@ O template deverá:
 4. exibir `recalculated_by_oes=false` de forma legível:
    > “Meta-análise não recalculada pelo OES.”
 
-Esse ajuste é de apresentação.
+Esses ajustes são de projeção/apresentação.
 
-Não exige nova entidade ou migration.
+Não exigem nova entidade científica nem mudança do schema canônico. As migrations 008/009 formalizam apenas a projeção necessária para representar corretamente referências por provenance e tipos de unidades de evidência.
 
 ---
 
@@ -290,4 +297,4 @@ A arquitetura preservará:
 
 ---
 
-**Decisão:** nenhuma migration adicional necessária neste ponto.
+**Decisão consolidada:** nenhuma migration do schema científico canônico foi necessária. As migrations 008/009 são hardening compatível da projeção EvidenceSheetView e foram validadas por regressão e rebuild.
