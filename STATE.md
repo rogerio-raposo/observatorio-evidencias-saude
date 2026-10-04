@@ -12,14 +12,14 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP16 — 2026-10-04**.
+- checkpoint vigente: **CP17 — 2026-10-04**.
 
 ## 2. Estado das fases
 
 - Fase 0 — Concepção e fundamentos: base inicial consolidada;
 - Fase 1 — Manual Metodológico: base inicial dos Documentos 10–15 consolidada;
 - Fase 2 — Modelo de Dados da Evidência: **concluída no nível de baseline arquitetural**;
-- Fase 3 — Produtos do Observatório: **iniciando**;
+- Fase 3 — Produtos do Observatório: **em desenvolvimento**;
 - Fases 4–7: ainda não iniciadas formalmente.
 
 ## 3. Arquitetura
@@ -91,7 +91,6 @@ Decisão:
 
 Ainda não finalizados:
 
-- taxonomia definitiva dos produtos;
 - templates individuais dos produtos;
 - ApplicabilityAssessment operacional;
 - protocolo de atualização/monitoramento;
@@ -100,35 +99,36 @@ Ainda não finalizados:
 - autenticação/autorização;
 - backup/HA.
 
-## 8. Próxima etapa
+## 8. Fase 3 — estado atual
 
-**Fase 3 — Produtos do Observatório.**
+Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES** consolidado como base inicial.
 
-Primeira tarefa:
+Taxonomia:
 
-> definir a taxonomia oficial e a arquitetura dos produtos OES antes de criar templates individuais.
+- Evidence Scan;
+- Resposta de Evidência;
+- Ficha de Evidência;
+- Síntese Rápida;
+- Revisão de Evidências;
+- Mapa de Evidências;
+- Overview de Revisões;
+- Monitor de Evidências;
+- Alerta de Evidência.
 
-O documento deverá estabelecer:
+A **Ficha de Evidência** é a unidade persistente central preferencial para perguntas focais reutilizáveis.
 
-- finalidade;
-- público/necessidade;
-- níveis N0–N4 e M0–M3;
-- requisitos metodológicos mínimos;
-- entidades persistentes obrigatórias;
-- campos mínimos de saída;
-- linguagem de certeza e limitações;
-- fronteira evidência/recomendação;
-- critérios de escolha entre produtos;
-- política de versionamento.
+## 9. Próxima etapa
 
-## 9. Checkpoint vigente
+**Especificação individual da Ficha de Evidência**, antes da criação de seu template.
 
-**CP16 — 2026-10-04**
+## 10. Checkpoint vigente
+
+**CP17 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP16.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP17.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — taxonomia e arquitetura dos produtos do Observatório.**
+**Fase 3 — especificação individual da Ficha de Evidência.**
