@@ -168,6 +168,39 @@ INSERT INTO product.review_record(
     'active'
 );
 
+-- Assurance model fixture: A2 without expert independent review.
+INSERT INTO product.assurance_record(
+    assurance_uuid, product_version_uuid, assurance_type,
+    actor, actor_type, independent_flag, decision,
+    performed_at, notes, evidence_payload, status
+) VALUES
+(
+    '73100000-0000-0000-0000-000000000001',
+    '71000000-0000-0000-0000-000000000001',
+    'ai_methodological_verification',
+    'TEST_AI_VERIFIER',
+    'ai_system',
+    false,
+    'passed',
+    TIMESTAMPTZ '2026-10-04 12:00:00-03',
+    'Synthetic fixture AI methodological verification',
+    '{"test_fixture":true,"independent_review":false}'::jsonb,
+    'active'
+),
+(
+    '73100000-0000-0000-0000-000000000002',
+    '71000000-0000-0000-0000-000000000001',
+    'owner_governance_approval',
+    'TEST_OWNER',
+    'owner',
+    false,
+    'approved',
+    TIMESTAMPTZ '2026-10-04 12:01:00-03',
+    'Synthetic fixture owner governance approval',
+    '{"test_fixture":true,"methodological_review":false}'::jsonb,
+    'active'
+);
+
 INSERT INTO provenance.dependency_edge(
     source_version_uuid, target_version_uuid,
     dependency_type, derivation_rule
