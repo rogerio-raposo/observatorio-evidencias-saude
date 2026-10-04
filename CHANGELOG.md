@@ -882,7 +882,6 @@ Gate de Revisão Humana do Caso Real 01.
 - `database/f3-real-case-01-dcbti.sql`;
 - `database/f3-real-case-01-tests.sql`;
 - `database/f3-real-case-01-rebuild-check.sql`;
-- `docs/products/58-caso-real-01-resultado-materializacao-preview.md`;
 - `docs/products/59-caso-real-01-pacote-revisao-humana.md`.
 
 ### Validação
@@ -906,3 +905,37 @@ Gate de Revisão Humana do Caso Real 01.
 - Ficha permanece `under_review`;
 - publication gate deve continuar bloqueado até revisão humana real;
 - pacote de revisão humana preparado no Documento 59.
+
+
+## 2026-10-04 — Caso Real 01: validação técnica do Gate de Revisão Humana
+
+### Adicionado
+
+- `docs/products/60-caso-real-01-validacao-tecnica-gate-revisao-humana.md`;
+- `database/f3-human-review-gate-tests.sql`.
+
+### Validação
+
+- GitHub Actions run **37213717492**: PASS;
+- HRG-T01–T06: PASS;
+- RC01-T01–T10: PASS;
+- F3-FE/F3-VIEW/F3-PROV/F3-TEMPLATE: PASS;
+- rebuild through migration 009: PASS;
+- artifact **11306934256**;
+- digest `sha256:81578896ae97f582bd3029c4f276303e0208067b0cdcf053b0bb46f764b3a51f`.
+
+### Semântica validada
+
+- `revise` não satisfaz a exigência de aprovação;
+- `rejected` cria bloqueio explícito;
+- aprovação concorrente não supera rejeição ativa;
+- `approved` sem `publication_date` permanece não publicável;
+- somente após resolução dos bloqueios e preenchimento dos demais requisitos o gate pode retornar `publishable=true`;
+- todos os review records sintéticos foram executados em transação com `ROLLBACK`.
+
+### Estado real
+
+- nenhuma revisão humana real foi registrada;
+- a Ficha continua `under_review`;
+- `publishable=false`;
+- próxima dependência: revisão humana real usando o Documento 59.
