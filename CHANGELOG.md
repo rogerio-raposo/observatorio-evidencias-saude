@@ -843,3 +843,33 @@ Pergunta N2 focal sobre dCBT-I totalmente automatizada em adultos com insônia, 
 - rebuild até migration 009 PASS;
 - artifact **11306779147**;
 - digest `sha256:c0347d27ab8e42ca2e4eaf79db33c1bc234e831d31f53e79cd1f5d44a3ed0aca`.
+
+
+## 2026-10-04 — Caso Real 01: validação ponta a ponta em pré-publicação
+
+### Adicionado
+
+- `database/f3-real-case-01-dcbti.sql`;
+- `database/f3-real-case-01-tests.sql`;
+- `database/f3-real-case-01-rebuild-check.sql`;
+- `docs/products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md`.
+
+### Resultado
+
+- run **37213165321**: PASS;
+- RC01-T01–T10 PASS;
+- preview Markdown real: PASS;
+- GRADE provisório moderado preservado;
+- Syntheses source/primary/corroborative preservadas;
+- meta-análise externa explicitamente não recalculada pelo OES;
+- publication gate corretamente bloqueado;
+- `MISSING_APPROVED_REVIEW` preservado;
+- ausência de publication_date preservada;
+- nenhum review humano aprovado foi fabricado;
+- rebuild through migration 009: PASS;
+- artifact **11307386757**;
+- digest `sha256:78b143a5def1b79d280736fb9b8415464621082c41b5964381db5ed143617fa5`.
+
+### Próxima etapa
+
+Gate de Revisão Humana do Caso Real 01.
