@@ -16,6 +16,8 @@ Este diretório abriga o modelo conceitual, o futuro modelo lógico de dados e, 
 - [29 — Política de Proveniência e Lineage](29-politica-proveniencia-lineage.md)
 - [30 — Política de Migrações do Modelo de Dados](30-politica-migracoes.md)
 - [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](31-poc-s2-validacao.md)
+- [32 — Resultado do GATE F2-B e Decisão Pós-PoC](32-resultado-gate-f2b.md)
+- [F2-B Test Run — 2026-10-04 — Run 37187885839](F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Entidades conceituais centrais
 
@@ -62,12 +64,12 @@ O modelo separa:
 ## Gates
 
 - **F2-A — Modelo Lógico Candidato:** aprovado.
-- **F2-B — Execução da PoC-S1 em PostgreSQL:** pendente.
+- **F2-B — Execução física da PoC em PostgreSQL:** **PASS**.
 
 ## Estado de execução
 
-PoC-S1 + migration PoC-S2 estão documental e estaticamente preparadas. **F2-B continua pendente de execução real em PostgreSQL.**
+PoC-S1 + migrations PoC-S2/PoC-S3 foram executadas em PostgreSQL 18.6. A bateria T01–T19, incluindo rebuild do zero, foi aprovada no run 37187885839. **OES-P1 permanece candidato físico validado, não schema definitivo.**
 
 ## Próxima etapa
 
-Executar F2-B quando houver ambiente PostgreSQL descartável. Evitar expansão relevante adicional do schema antes dessa execução.
+Executar a **Revisão de Promoção Arquitetural Pós-F2-B** e mapear os 15 critérios de promoção do Documento 25 antes de ampliar o schema sem necessidade demonstrada.
