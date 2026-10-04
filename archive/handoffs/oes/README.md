@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP20 — 2026-10-04**
+**CP21 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP20.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP21.md`
 
 Checkpoint anterior:
 
-`CP19`
+`CP20`
 
 Status:
 
@@ -82,3 +82,4 @@ em **Modo Continuidade**.
 - **CP18 — 2026-10-04:** consolida a especificação científica/funcional da Ficha de Evidência e registra como ponto de retomada o Contrato de Dados da Ficha.
 - **CP19 — 2026-10-04:** consolida o contrato de dados, migration 006 e publication gate da Ficha com PASS; registra como ponto de retomada o EvidenceSheetView.
 - **CP20 — 2026-10-04:** consolida o EvidenceSheetView e sua validação com PASS; registra como ponto de retomada a especificação do Template Operacional da Ficha de Evidência.
+- **CP21 — 2026-10-04:** consolida o Template Operacional inicial da Ficha de Evidência com PASS estrutural/operacional e registra como ponto de retomada a validação científica ponta a ponta com um caso real N2.
