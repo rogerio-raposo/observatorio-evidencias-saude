@@ -570,7 +570,7 @@ O histórico deverá permitir responder:
 
 ---
 
-# PARTE XII — REVISÃO HUMANA
+# PARTE XII — GARANTIA E REVISÃO
 
 ## 48. N0
 
@@ -592,8 +592,14 @@ Pode adotar avaliação de certeza existente de revisão confiável, desde que:
 Quando houver avaliação formal nova:
 
 - utilizar registro estruturado;
-- permitir um avaliador principal;
-- exigir revisão dos julgamentos materiais antes de publicação do produto.
+- executar uma avaliação inicial rastreável;
+- executar verificação metodológica assistida por IA em passagem separada;
+- registrar decisão da verificação;
+- exigir aprovação de governança do proprietário para publicação padrão OES;
+- declarar explicitamente quando não houver revisão especializada independente;
+- exigir A3 ou elevar o nível quando criticidade/finalidade tornar A2 insuficiente.
+
+O proprietário não será solicitado a validar tecnicamente os domínios GRADE/CERQual.
 
 ## 51. N3
 
@@ -631,9 +637,11 @@ IA poderá auxiliar em:
 
 ## 54. Restrições
 
-IA não poderá autonomamente:
+IA não poderá:
 
-- atribuir certeza final em N2–N4 sem revisão humana;
+- atribuir certeza em N2 sem justificativa verificável, segunda passagem de verificação e disclosure do nível de garantia;
+- atribuir certeza final em N3–N4 sem revisão humana qualificada;
+- apresentar uma verificação interna por IA como revisão independente;
 - rebaixar/elevar sem justificativa verificável;
 - inventar limiares clínicos;
 - inferir publicação ausente sem evidência;
