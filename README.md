@@ -42,6 +42,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 
 - [40 — Taxonomia e Arquitetura dos Produtos do OES](docs/products/40-taxonomia-arquitetura-produtos.md)
 - [41 — Especificação Científica e Funcional da Ficha de Evidência](docs/products/41-especificacao-ficha-evidencia.md)
+- [42 — Contrato de Dados da Ficha de Evidência](docs/products/42-contrato-dados-ficha-evidencia.md)
+- [43 — Resultado da Validação do Contrato da Ficha](docs/products/43-resultado-validacao-contrato-ficha.md)
 
 ### Arquitetura e dados
 
@@ -165,7 +167,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. A próxima etapa é definir seu **Contrato de Dados de Produto** e avaliar as extensões mínimas necessárias do baseline OES-P1 antes de criar o template operacional.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. A próxima etapa é definir o **EvidenceSheetView**, contrato de renderização que alimentará o template operacional.
 
 ---
 
