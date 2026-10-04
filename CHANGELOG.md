@@ -939,3 +939,60 @@ Gate de Revisão Humana do Caso Real 01.
 - a Ficha continua `under_review`;
 - `publishable=false`;
 - próxima dependência: revisão humana real usando o Documento 59.
+
+
+## 2026-10-04 — Modelo de garantia A0–A3 e avanço do Caso Real 01 para A1
+
+### Governança
+
+- criado `docs/governance/04-governanca-garantia-revisao.md`;
+- separadas três funções:
+  - AI methodological verification;
+  - owner governance approval;
+  - expert independent review;
+- definido assurance derivado A0–A3;
+- N2 padrão pode publicar em A2 com disclosure explícito de ausência de expert review;
+- N3/N4 preservam requisitos de expertise qualificada.
+
+### Arquitetura
+
+- migration 010: `product.assurance_record` e publication gate A2/A3;
+- migration 011: EvidenceSheetView consciente de assurance;
+- template da Ficha evoluído para `oes.evidence_sheet.template/0.2`;
+- adicionados `templates/ai-methodological-verification.md` e `templates/owner-governance-approval.md`.
+
+### Validação do modelo
+
+Documento 62:
+
+- run **37225407890**: PASS;
+- AG-T01–T07: PASS;
+- AV-T01–T02: PASS na baseline de validação;
+- rebuild through migration 011: PASS.
+
+### Caso Real 01
+
+- Documento 63: primeira verificação adversarial = **REVISE**;
+- corrigida premissa incorreta de que Somzz havia sido incluído no pooling Hwang apenas por constar nas referências;
+- ROBIS Domain 2 corrigido;
+- Somzz tratado como estudo de atualização pós-cutoff;
+- Documentos/dataset dependentes corrigidos;
+- Documento 64: segunda verificação adversarial = **PASSED**;
+- assurance record histórico REVISE preservado como superseded;
+- assurance record PASSED ativo;
+- Caso Real 01 avançou para **A1**.
+
+### Evidência de execução A1
+
+- run **37226199396**: PASS;
+- RC01-T01–T10: PASS;
+- AG-T01–T07: PASS;
+- AV-T01–T02: PASS;
+- F3-TEMPLATE: PASS;
+- rebuild through migration 011: PASS;
+- artifact **11311923205**;
+- digest `sha256:4450a1eb9cd4e46012b8fecf55fa132a7b13e80af0472a10eaf8d859d12aeeb6`.
+
+### Próxima etapa
+
+Documento 65 preparado para decisão de governança do proprietário. Nenhuma owner approval foi inferida de mensagens anteriores.
