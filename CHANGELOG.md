@@ -469,3 +469,45 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - próxima etapa prioritária: execução real em PostgreSQL descartável;
 - expansões relevantes adicionais do schema ficam suspensas até essa execução.
 
+
+
+## 2026-10-04 — GATE F2-B: execução física integral
+
+### Adicionado
+
+- `database/003_poc_s3_provenance_guard.sql`;
+- `database/f2b-fixtures.sql`;
+- `database/f2b-tests.sql`;
+- `database/f2b-rebuild-check.sql`;
+- `docs/architecture/F2B_Test_Run_2026-10-04_37187885839.md`;
+- `docs/architecture/32-resultado-gate-f2b.md`.
+
+### Execução
+
+- GitHub Actions run **37187885839**;
+- commit testado `de168908d8fe311e64c07937dc70df36af39d910`;
+- PostgreSQL **18.6**;
+- 39 tabelas e 5 views confirmadas;
+- **T01–T19 PASS**;
+- rebuild do zero aprovado;
+- reaplicação acidental de migration detectada;
+- artifact **11297272424**;
+- artifact digest `sha256:5381605d34064f95a2d4444e34d275b8c89ceb28a19cc915db104da9362c1d7c`.
+
+### Hardening adicional
+
+- mutations materiais de `provenance.record` passaram a ser bloqueadas;
+- correções de provenance são history-preserving por supersessão;
+- harness T09 foi corrigido para evitar colisão artificial de `version_no`;
+- bloqueio de CI causado por concurrency foi removido para permitir a execução final independente.
+
+### Gate
+
+> **GATE F2-B — PASS**
+
+### Decisão arquitetural
+
+- OES-P1 é mantido como **candidato físico validado no escopo do F2-B**;
+- PostgreSQL permanece referência validada de PoC, não stack definitiva;
+- não ocorre promoção automática para schema final;
+- próxima etapa: **Revisão de Promoção Arquitetural Pós-F2-B** frente aos 15 critérios do Documento 25.
