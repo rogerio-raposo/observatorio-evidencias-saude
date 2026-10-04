@@ -44,7 +44,7 @@ Gao et al. 2026:
 - Sweetman 2024;
 - SleepioRx / Prather 2025;
 - SHUTi OASIS / Ritterband 2025;
-- Somzz / Shin 2024, com status de contribuição à revisão Hwang ainda incerto.
+- Somzz / Shin 2024, confirmado como atualização pós-cutoff no material verificado.
 
 ---
 
@@ -269,7 +269,7 @@ a precisão sobre um **valor exato de magnitude** é menor que a precisão sobre
 ## Limitações
 
 - teste de assimetria global não prova ausência de publication bias no subgrupo específico;
-- busca Hwang apresenta discrepância temporal;
+- a busca Hwang não documenta no texto principal todas as fontes complementares possíveis para missing evidence; a alegação anterior de discrepância temporal foi retirada;
 - busca OES N2 não reivindica exaustividade N4;
 - não foi executado ROB-ME formal.
 
