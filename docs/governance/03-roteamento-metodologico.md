@@ -420,13 +420,21 @@ A IA poderá:
 
 A pergunta original, transformações e justificativa deverão permanecer auditáveis.
 
-## 29. Controle humano
+## 29. Garantia, controle humano e limite de competência
 
-Necessidade de validação humana cresce com:
+A exigência de garantia cresce com:
 
 **criticidade + profundidade + complexidade + incerteza.**
 
-N3 e N4 terão controles humanos reforçados em etapas críticas.
+A presença de um humano não será tratada como revisão especializada se não houver competência metodológica correspondente.
+
+Para N2, poderá ser utilizado o modelo A2 do Documento 04:
+
+- verificação metodológica assistida por IA;
+- aprovação de governança do proprietário;
+- disclosure explícito de ausência de revisão especializada independente.
+
+N3 e N4 mantêm controles humanos qualificados reforçados em etapas críticas. Na ausência de revisores qualificados, esses produtos deverão permanecer draft/experimental ou ser rerroteados.
 
 ## 30. Gatilhos preliminares de atualização
 
