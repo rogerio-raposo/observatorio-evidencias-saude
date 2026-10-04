@@ -16,13 +16,19 @@ BEGIN
      OR jsonb_array_length(v->'priority_results') <> 3
      OR v#>>'{priority_results,0,synthesis,result_summary,reported_study_count}' <> '10'
      OR v#>>'{priority_results,1,certainty,final_level}' <> 'moderate'
-     OR v#>>'{audit,assurance_level}' <> 'A1'
+     OR v#>>'{audit,assurance_level}' <> 'A2'
      OR v#>>'{audit,expert_independent_reviewed}' <> 'false'
-     OR ok
+     OR NOT ok
+     OR NOT EXISTS (
+         SELECT 1
+         FROM jsonb_array_elements(v#>'{audit,publication_issues}') i
+         WHERE i->>'issue_code'='NO_EXPERT_INDEPENDENT_REVIEW'
+           AND i->>'severity'='warning'
+     )
   THEN
-      RAISE EXCEPTION 'RC01-T10 FAIL: rebuilt real-case preview contract invalid';
+      RAISE EXCEPTION 'RC01-T10 FAIL: rebuilt A2 real-case publication contract invalid';
   END IF;
 
-  RAISE NOTICE 'RC01-T10 PASS — rebuild produced non-publishable real-case EvidenceSheetView preview';
+  RAISE NOTICE 'RC01-T10 PASS — rebuild produced publishable A2 real-case EvidenceSheetView with explicit no-expert warning';
 END
 $rc01rebuild$;
