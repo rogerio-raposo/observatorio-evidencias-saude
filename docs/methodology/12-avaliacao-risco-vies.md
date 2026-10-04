@@ -887,10 +887,19 @@ IA poderá auxiliar em:
 
 ## 44. Funções não autorizadas como padrão
 
-Em N2–N4, IA não deverá:
+Em N3–N4, IA não deverá:
 
-- produzir julgamento final sem supervisão humana;
+- produzir julgamento final sem supervisão humana qualificada;
 - sobrescrever decisão de avaliador;
+
+Em N2, a IA poderá produzir o julgamento OES após uma **verificação metodológica assistida por IA separada e documentada**, conforme Documento 04, desde que:
+
+- o nível de garantia seja explicitado;
+- não seja alegada revisão especializada independente;
+- o proprietário não seja tratado como revisor metodológico;
+- produto de criticidade incompatível com A2 seja elevado de garantia/nível ou permaneça não publicado.
+
+Em qualquer nível, IA não deverá:
 - ocultar incerteza;
 - inventar informação metodológica ausente;
 - inferir randomização, cegamento ou pré-especificação sem evidência;
@@ -909,8 +918,9 @@ Quando IA tiver papel material, registrar:
 - função;
 - documentos fornecidos;
 - saída utilizada;
-- avaliador que verificou;
-- alterações humanas ao julgamento.
+- instância/agente que realizou a verificação;
+- tipo de garantia aplicável;
+- alterações humanas ao julgamento, quando houver.
 
 A saída da IA deverá permanecer subordinada à documentação fonte e à ferramenta metodológica.
 
@@ -1226,13 +1236,14 @@ Ficam estabelecidas:
 14. AMSTAR 2 poderá complementar a avaliação metodológica de revisões e não será transformado em score;
 15. conflitos de interesse serão registrados separadamente;
 16. informação ausente não será inventada nem tratada automaticamente como método adequado;
-17. N3 usará avaliação por um revisor com verificação de todos os julgamentos por segundo revisor como padrão rápido;
-18. N4 exigirá avaliações independentes por pelo menos dois revisores;
-19. IA poderá extrair, localizar e sugerir, mas não produzirá julgamento final autônomo em N2–N4;
-20. alto risco de viés não implica exclusão automática;
-21. risco de viés deverá ser incorporado à interpretação e síntese;
-22. risco de viés individual não será convertido mecanicamente em certeza do corpo de evidências;
-23. aplicabilidade ao Brasil será avaliada separadamente da validade interna.
+17. N2 poderá concluir julgamentos OES sob garantia A2, com verificação metodológica assistida por IA separada e disclosure de ausência de expert review quando aplicável;
+18. N3 usará avaliação por um revisor qualificado com verificação de todos os julgamentos por segundo revisor como padrão rápido;
+19. N4 exigirá avaliações independentes por pelo menos dois revisores qualificados;
+20. IA poderá extrair, localizar, sugerir e executar verificação metodológica em N2 segundo o Documento 04, mas não substituirá os revisores qualificados exigidos em N3–N4;
+21. alto risco de viés não implica exclusão automática;
+22. risco de viés deverá ser incorporado à interpretação e síntese;
+23. risco de viés individual não será convertido mecanicamente em certeza do corpo de evidências;
+24. aplicabilidade ao Brasil será avaliada separadamente da validade interna.
 
 ---
 
