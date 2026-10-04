@@ -45,6 +45,15 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [46 — Especificação do Template Operacional da Ficha de Evidência](docs/products/46-especificacao-template-ficha-evidencia.md)
 - [47 — Resultado da Validação do Template Operacional da Ficha](docs/products/47-resultado-validacao-template-ficha.md)
 - [48 — Caso Real 01: dCBT-I — Protocolo Inicial N2](docs/products/48-caso-real-01-dcbti-protocolo-n2.md)
+- [49 — Caso Real 01: Registro de Busca N2 e Triagem Inicial](docs/products/49-caso-real-01-busca-triagem-inicial.md)
+- [50 — Caso Real 01: Appraisal ROBIS de Hwang 2025](docs/products/50-caso-real-01-appraisal-robis-hwang.md)
+- [51 — Caso Real 01: RoB 2 dos RCTs de Atualização](docs/products/51-caso-real-01-rob2-rcts-atualizacao.md)
+- [52 — Caso Real 01: Síntese Atualizada](docs/products/52-caso-real-01-sintese-atualizada.md)
+- [53 — Caso Real 01: GRADE do Desfecho Principal](docs/products/53-caso-real-01-grade-gravidade-insomnia.md)
+- [54 — Caso Real 01: Draft Científico da Ficha](docs/products/54-caso-real-01-draft-ficha.md)
+- [55 — Caso Real 01: Decisão Arquitetural para Síntese Adotada + Atualização OES](docs/products/55-caso-real-01-decisao-arquitetural-sintese-adotada.md)
+- [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](docs/products/56-caso-real-01-reconciliacao-hardening-view.md)
+- [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](docs/products/57-resultado-reconciliacao-evidence-sheet-view.md)
 
 ### Arquitetura e dados
 
@@ -168,7 +177,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. A validação científica ponta a ponta foi iniciada com o **Caso Real 01 — dCBT-I totalmente automatizada em adultos com insônia**. A próxima etapa é executar e registrar a busca N2 com corte em 4 de outubro de 2026.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. O **Caso Real 01** já possui busca N2, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico. Após reconciliação da atividade paralela, migrations 008–009 e EvidenceSheetView hardening receberam PASS. A próxima etapa é materializar o caso real no OES-P1 como ProductVersion `under_review` e gerar o preview real da Ficha.
 
 ---
 
