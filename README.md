@@ -24,6 +24,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [01 — Escopo Científico e Taxonomia das Perguntas](docs/governance/01-taxonomia-perguntas.md)
 - [02 — Arquitetura de Níveis de Investigação e Produtos](docs/governance/02-niveis-investigacao-produtos.md)
 - [03 — Protocolo de Entrada, Triagem e Roteamento Metodológico](docs/governance/03-roteamento-metodologico.md)
+- [04 — Governança de Garantia Metodológica, Aprovação e Revisão](docs/governance/04-governanca-garantia-revisao.md)
 
 ### Metodologia
 
@@ -54,8 +55,14 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [55 — Caso Real 01: Decisão Arquitetural para Síntese Adotada + Atualização OES](docs/products/55-caso-real-01-decisao-arquitetural-sintese-adotada.md)
 - [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](docs/products/56-caso-real-01-reconciliacao-hardening-view.md)
 - [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](docs/products/57-resultado-reconciliacao-evidence-sheet-view.md)
-- [59 — Caso Real 01: Pacote de Revisão Humana](docs/products/59-caso-real-01-pacote-revisao-humana.md)
+- [59 — Caso Real 01: Pacote de Revisão Especializada Independente](docs/products/59-caso-real-01-pacote-revisao-humana.md)
 - [60 — Caso Real 01: Validação Técnica do Gate de Revisão Humana](docs/products/60-caso-real-01-validacao-tecnica-gate-revisao-humana.md)
+- [61 — Caso Real 01: Redesenho do Modelo de Garantia e Aprovação](docs/products/61-caso-real-01-redesenho-garantia-aprovacao.md)
+- [62 — Resultado da Validação Técnica do Modelo de Garantia A0–A3](docs/products/62-resultado-validacao-modelo-garantia-a0-a3.md)
+- [63 — Caso Real 01: Primeira Verificação Metodológica Adversarial](docs/products/63-caso-real-01-verificacao-metodologica-adversarial-01.md)
+- [64 — Caso Real 01: Segunda Verificação Metodológica Adversarial](docs/products/64-caso-real-01-verificacao-metodologica-adversarial-02.md)
+- [65 — Caso Real 01: Resultado da Validação do Estado A1](docs/products/65-caso-real-01-resultado-validacao-a1.md)
+- [66 — Caso Real 01: Aprovação de Governança do Proprietário](docs/products/66-caso-real-01-aprovacao-governanca-proprietario.md)
 - [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](docs/products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
 
 ### Arquitetura e dados
@@ -180,7 +187,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. O **Caso Real 01** já possui busca N2, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico. Após reconciliação da atividade paralela, migrations 008–009 e EvidenceSheetView hardening receberam PASS. O Caso Real 01 foi materializado e validado ponta a ponta como Ficha `under_review`, com preview real e publication gate corretamente bloqueado. O modelo de garantia A0–A3 foi implementado e validado. O Caso Real 01 passou por duas verificações metodológicas adversariais: a primeira resultou em REVISE e levou a correções; a segunda resultou em PASSED. O produto encontra-se em **A1**, `under_review` e não publicável. A próxima etapa é a **aprovação de governança do proprietário**, preparada no Documento 65. A revisão especializada independente permanece opcional para N2 padrão e obrigatória apenas quando a finalidade/criticidade exigir A3.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. O **Caso Real 01** já possui busca N2, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico. Após reconciliação da atividade paralela, migrations 008–009 e EvidenceSheetView hardening receberam PASS. O Caso Real 01 foi materializado e validado ponta a ponta como Ficha `under_review`, com preview real e publication gate corretamente bloqueado. O modelo de garantia A0–A3 foi implementado e validado. O Caso Real 01 passou por duas verificações metodológicas adversariais: a primeira resultou em REVISE e levou a correções; a segunda resultou em PASSED. O produto encontra-se em **A1**, `under_review` e não publicável. A próxima etapa é a **aprovação de governança do proprietário**, preparada no Documento 66. A revisão especializada independente permanece opcional para N2 padrão e obrigatória apenas quando a finalidade/criticidade exigir A3.
 
 ---
 
