@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP22 — 2026-10-04**.
+- checkpoint vigente: **CP23 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -129,7 +129,11 @@ Documento 56 — reconciliação de continuidade/hardening.
 
 Documento 57 — validação da reconciliação: PASS.
 
+Documento 58 — **Resultado da Validação Ponta a Ponta do Caso Real 01**: PASS em pré-publicação.
+
 Migrations canônicas da camada de renderização: 007 → 008 provenance → 009 study-type counts.
+
+Caso Real 01 materializado no baseline como Ficha `under_review`; RC01-T01–T10 PASS; preview Markdown validado; publication gate bloqueado como esperado.
 
 Taxonomia:
 
@@ -147,30 +151,31 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Caso Real 01 — materialização no OES-P1 e preview real.**
+**Gate de Revisão Humana do Caso Real 01.**
 
-Próximos passos:
+Objetivos:
 
-- criar Question/Investigation N2;
-- registrar Search;
-- materializar Hwang e RCTs decisivos;
-- registrar ROBIS/RoB 2;
-- criar Synthesis adopted_external;
-- criar Synthesis oes_update;
-- criar GRADE provisório;
-- criar ProductVersion under_review;
-- manter ausência de review_record approved;
-- executar publication gate;
-- gerar EvidenceSheetView e preview Markdown.
+- preparar pacote de revisão dos julgamentos materiais;
+- revisar ROBIS;
+- revisar RoB 2;
+- revisar GRADE provisório;
+- revisar interpretação da heterogeneidade;
+- revisar conclusão;
+- revisar aplicabilidade ao Brasil;
+- revisar linguagem de segurança;
+- revisar clareza do preview;
+- registrar decisão humana somente após revisão real.
+
+Até lá, a Ficha permanece `under_review` e `publishable=false`.
 
 ## 10. Checkpoint vigente
 
-**CP22 — 2026-10-04**
+**CP23 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP22.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP23.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Materialização do Caso Real 01 e preview under_review.**
+**Fase 3 — Gate de Revisão Humana do Caso Real 01.**
