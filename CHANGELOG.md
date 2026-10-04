@@ -996,3 +996,48 @@ Documento 62:
 ### Próxima etapa
 
 Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a decisão explícita de governança do proprietário. Nenhuma owner approval foi inferida de mensagens anteriores.
+
+## 2026-10-04 — Caso Real 01: aprovação do proprietário, A2 e publicação
+
+### Decisão de governança
+
+- Documento 66: decisão explícita do proprietário = **APPROVED**;
+- owner approval registrado separadamente de qualquer julgamento metodológico especializado;
+- ausência de expert independent review preservada;
+- A2 não é apresentado como A3.
+
+### Materialização
+
+- `owner_governance_approval = approved`;
+- assurance derivado: **A2**;
+- `publication_date = 2026-10-04`;
+- estado editorial: `published`;
+- `publishable=true`;
+- `NO_EXPERT_INDEPENDENT_REVIEW` permanece como warning explícito.
+
+### Auditoria da validação
+
+- run **37228886260**: FAIL por asserção antiga de renderização ainda vinculada a preview bloqueado;
+- run **37228948598**: FAIL por asserção antiga de rebuild ainda vinculada a A1;
+- as duas inconsistências de teste foram corrigidas sem relaxamento do publication gate;
+- run final **37229070210**: **PASS**.
+
+### Evidência final
+
+- commit validado `9c0257172ad916a13cbb66648bb68621c8b21b1f`;
+- regressões F2-B/S4/S5: PASS;
+- F3 Evidence Sheet / provenance / template: PASS;
+- RC01-T01–T10: PASS;
+- AG-T01–T07: PASS;
+- AV-T01–T02: PASS;
+- idempotência e rebuild through migration 011: PASS;
+- artifact **11313491459**;
+- digest `sha256:81529675c16d85fe28991f7abe3b9594bdc1e99cbcbc3226cb8e3dc0f3b3c1a6`.
+
+### Documento de fechamento
+
+- `docs/products/67-caso-real-01-resultado-validacao-a2-publicacao.md`.
+
+### Próxima etapa
+
+- iniciar a especificação científica e funcional da **Resposta de Evidência — N1**, conforme ordem recomendada no Documento 40.
