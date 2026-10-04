@@ -34,8 +34,10 @@ Arquitetura e especificações dos produtos do OES.
 - [43 — Resultado da Validação do Contrato da Ficha](products/43-resultado-validacao-contrato-ficha.md)
 - [44 — EvidenceSheetView: Contrato de Renderização da Ficha](products/44-evidence-sheet-view.md)
 - [45 — Resultado da Validação do EvidenceSheetView](products/45-resultado-validacao-evidence-sheet-view.md)
+- [46 — Especificação do Template Operacional da Ficha de Evidência](products/46-especificacao-template-ficha-evidencia.md)
+- [47 — Resultado da Validação do Template Operacional da Ficha](products/47-resultado-validacao-template-ficha.md)
 
-Próxima etapa: Especificação do Template Operacional da Ficha de Evidência.
+Próxima etapa: validação científica ponta a ponta da Ficha de Evidência com um caso real.
 
 ### architecture/
 
