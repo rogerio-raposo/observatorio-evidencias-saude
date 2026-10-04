@@ -24,7 +24,9 @@ IMPORTANT: this template renders evidence; it is not a scientific source and mus
 **Manutenção:** {{routing.maintenance_level}}  
 **Estado editorial:** {{identity.editorial_status}}  
 **Atualidade:** {{identity.currency_status}}  
-**Evidência considerada até:** {{identity.evidence_cutoff_date}}
+**Evidência considerada até:** {{identity.evidence_cutoff_date}}  
+**Nível de garantia:** {{audit.assurance_level}}  
+**Garantia metodológica:** {{audit.assurance_disclosure}}
 {{#if identity.publication_date}}  
 **Publicação:** {{identity.publication_date}}
 {{/if}}
@@ -340,8 +342,23 @@ Nenhuma referência derivada foi localizada no EvidenceSheetView.
 Nenhuma issue registrada pelo gate.
 {{/if}}
 
+### Garantia metodológica
+
+**Nível derivado:** {{audit.assurance_level}}  
+**Revisão especializada independente:** {{audit.expert_independent_reviewed}}
+
+{{audit.assurance_disclosure}}
+
+{{#if audit.assurance_records}}
+| Tipo | Ator | Tipo de ator | Independente | Decisão | Data | Estado |
+|---|---|---|---|---|---|---|
+{{#each audit.assurance_records}}
+| {{assurance_type}} | {{actor}} | {{actor_type}} | {{independent}} | {{decision}} | {{performed_at}} | {{status}} |
+{{/each}}
+{{/if}}
+
 {{#if audit.reviews}}
-### Revisões humanas
+### Revisões humanas/especializadas registradas
 
 | Papel | Revisor | Independente | Decisão | Data | Estado |
 |---|---|---|---|---|---|
