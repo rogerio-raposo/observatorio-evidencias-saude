@@ -4,6 +4,7 @@ template_version: oes.evidence_sheet.template/0.1
 input_contract: oes.evidence_sheet_view/0.1
 status: provisional-operational
 canonical_scientific_source: EvidenceSheetView + linked OES entities
+presentation_rule: placeholders reference only fields present in EvidenceSheetView 0.1; label translation belongs to the renderer
 IMPORTANT: this template renders evidence; it is not a scientific source and must not make scientific decisions.
 -->
 
@@ -22,7 +23,7 @@ IMPORTANT: this template renders evidence; it is not a scientific source and mus
 **Profundidade:** {{routing.depth_level}}  
 **Manutenção:** {{routing.maintenance_level}}  
 **Estado editorial:** {{identity.editorial_status}}  
-**Atualidade:** {{display.currency_status}}  
+**Atualidade:** {{identity.currency_status}}  
 **Evidência considerada até:** {{identity.evidence_cutoff_date}}
 {{#if identity.publication_date}}  
 **Publicação:** {{identity.publication_date}}
@@ -56,7 +57,7 @@ IMPORTANT: this template renders evidence; it is not a scientific source and mus
 | Desfecho / achado | Resultado | Estudos | Certeza / confiança |
 |---|---|---:|---|
 {{#each priority_results}}
-| {{display.outcome_or_finding}} | {{display.result}} | {{contributing_studies}} | {{display.certainty}} |
+| {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} | {{synthesis.result_summary}} | {{contributing_studies}} | {{#if certainty.formal_assessment}}{{certainty.final_level}} ({{certainty.framework}}){{else}}{{certainty.display}}{{/if}} |
 {{/each}}
 {{else}}
 Nenhum resultado ou achado prioritário foi registrado para esta versão.
@@ -65,7 +66,7 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 ### Detalhamento
 
 {{#each priority_results}}
-#### {{display.outcome_or_finding}}
+#### {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}}
 
 {{#if synthesis.population}}
 **População:** {{synthesis.population}}  
@@ -80,15 +81,16 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 **Estimando:** {{synthesis.estimand}}  
 {{/if}}
 
-**Resultado:** {{display.result}}  
+**Resultado:** {{synthesis.result_summary}}  
 **Studies contribuintes:** {{contributing_studies}}  
 **Results contribuintes:** {{contributing_results}}
 
 {{#if certainty.formal_assessment}}
-{{#if certainty.is_no_evidence}}
-> **Não foram identificadas evidências elegíveis para esta unidade.**
+**Estado da evidência:** {{certainty.evidence_state}}
+{{#if certainty.final_level}}
+**Certeza/confiança:** {{certainty.final_level}} ({{certainty.framework}})
 {{else}}
-**Certeza/confiança:** {{certainty.display_level}} ({{certainty.framework}})
+**Nível final:** não aplicável / não estimado
 {{/if}}
 
 {{#if certainty.domains}}
@@ -135,7 +137,7 @@ Aplicabilidade não descrita para esta versão.
 {{#each safety}}
 ### {{role}}
 
-{{display.result}}
+{{result_summary}}
 {{/each}}
 
 ---
@@ -164,7 +166,10 @@ Aplicabilidade não descrita para esta versão.
 {{/if}}
 
 {{#if method.certainty_frameworks}}
-**Frameworks de certeza/confiança:** {{display.certainty_frameworks}}
+**Frameworks de certeza/confiança:**
+{{#each method.certainty_frameworks}}
+- {{this}}
+{{/each}}
 {{/if}}
 
 ---
@@ -175,7 +180,10 @@ Aplicabilidade não descrita para esta versão.
 **Reports:** {{evidence_base.report_count}}
 
 {{#if evidence_base.study_designs}}
-**Desenhos identificados:** {{display.study_designs}}
+**Desenhos identificados:**
+{{#each evidence_base.study_designs}}
+- {{this}}
+{{/each}}
 {{/if}}
 
 {{#if evidence_base.included_studies}}
@@ -194,8 +202,15 @@ Aplicabilidade não descrita para esta versão.
 ## Risco de viés / qualidade metodológica
 
 **Avaliações:** {{risk_of_bias.assessment_count}}  
-**Frameworks:** {{display.risk_frameworks}}  
-**Julgamentos identificados:** {{display.risk_judgements}}
+**Frameworks:**
+{{#each risk_of_bias.frameworks}}
+- {{this}}
+{{/each}}
+
+**Julgamentos identificados:**
+{{#each risk_of_bias.overall_judgements}}
+- {{this}}
+{{/each}}
 
 {{#if risk_of_bias.assessments}}
 ### Avaliações registradas
@@ -241,7 +256,7 @@ Aplicabilidade não descrita para esta versão.
 
 ## Atualidade e histórico
 
-**Estado atual:** {{display.currency_status}}  
+**Estado atual:** {{identity.currency_status}}  
 **Última avaliação de atualidade:** {{identity.currency_assessed_at}}  
 **Versão atual:** {{update_history.current_version_no}}
 
@@ -255,7 +270,7 @@ Aplicabilidade não descrita para esta versão.
 ### Classes de mudança
 
 {{#each update_history.change_classes}}
-- {{display.change_class}}{{#if rationale}} — {{rationale}}{{/if}}
+- {{change_class}}{{#if rationale}} — {{rationale}}{{/if}}
 {{/each}}
 {{/if}}
 
@@ -265,7 +280,7 @@ Aplicabilidade não descrita para esta versão.
 | Estado | Avaliado em | Responsável | Situação do registro | Justificativa |
 |---|---|---|---|---|
 {{#each update_history.currency_history}}
-| {{display.currency_status}} | {{assessed_at}} | {{assessed_by}} | {{record_status}} | {{rationale}} |
+| {{identity.currency_status}} | {{assessed_at}} | {{assessed_by}} | {{record_status}} | {{rationale}} |
 {{/each}}
 {{/if}}
 
@@ -277,7 +292,10 @@ Aplicabilidade não descrita para esta versão.
 {{#each references}}
 - **{{report_id}}** — {{title}}{{#if publication_date}} ({{publication_date}}){{/if}}{{#if publication_status}} — {{publication_status}}{{/if}}
   {{#if source_locations}}
-  - Localização(ões) utilizada(s): {{display.source_locations}}
+  - Localização(ões) utilizada(s):
+    {{#each source_locations}}
+    - {{this}}
+    {{/each}}
   {{/if}}
 {{/each}}
 {{else}}
@@ -288,7 +306,11 @@ Nenhuma referência derivada foi localizada no EvidenceSheetView.
 
 ## Auditoria e rastreabilidade
 
-**Gate de publicação:** {{display.publication_gate}}  
+{{#if audit.publishable}}
+**Gate de publicação:** aprovado
+{{else}}
+**Gate de publicação:** não aprovado
+{{/if}}  
 **Lineage disponível:** {{audit.lineage_available}}
 
 {{#if audit.publication_issues}}
