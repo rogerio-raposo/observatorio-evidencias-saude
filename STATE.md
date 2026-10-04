@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP20 — 2026-10-04**.
+- checkpoint vigente: **CP21 — 2026-10-04**.
 
 ## 2. Estado das fases
 
@@ -113,6 +113,12 @@ Documento 44 — **EvidenceSheetView: Contrato de Renderização da Ficha** cons
 
 Documento 45 — **Resultado da Validação do EvidenceSheetView**: PASS.
 
+Documento 46 — **Especificação do Template Operacional da Ficha de Evidência** consolidado.
+
+Documento 47 — **Resultado da Validação do Template Operacional da Ficha**: PASS estrutural/operacional.
+
+Template `oes.evidence_sheet.template/0.1` validado contra `oes.evidence_sheet_view/0.1`.
+
 Taxonomia:
 
 - Evidence Scan;
@@ -129,27 +135,30 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Especificação do Template Operacional da Ficha de Evidência.**
+**Validação científica ponta a ponta da Ficha de Evidência com um caso real.**
 
 Objetivos:
 
-- definir hierarquia de informação;
-- separar leitura rápida e auditabilidade;
-- definir apresentação de resultados e certainty;
-- definir regras de ausência/no-evidence/NA;
-- definir atualidade, histórico, referências e audit links;
-- usar Markdown como primeira saída operacional;
-- preservar equivalência futura para HTML/PDF/DOCX;
-- validar o template contra a fixture antes de caso real.
+- selecionar uma pergunta real adequada a N2;
+- executar busca e triagem reais;
+- avaliar risco de viés/qualidade conforme o desenho;
+- extrair Results;
+- produzir Synthesis;
+- avaliar certainty quando aplicável;
+- construir ProductVersion;
+- executar publication gate;
+- gerar EvidenceSheetView;
+- renderizar a Ficha;
+- revisar clareza científica/editorial e identificar ajustes necessários.
 
 ## 10. Checkpoint vigente
 
-**CP20 — 2026-10-04**
+**CP21 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP20.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP21.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Especificação do Template Operacional da Ficha.**
+**Fase 3 — Validação científica ponta a ponta da Ficha com caso real.**
