@@ -1,6 +1,6 @@
 <!--
 OES Evidence Sheet Template
-template_version: oes.evidence_sheet.template/0.1
+template_version: oes.evidence_sheet.template/0.2
 input_contract: oes.evidence_sheet_view/0.1
 status: provisional-operational
 canonical_scientific_source: EvidenceSheetView + linked OES entities
