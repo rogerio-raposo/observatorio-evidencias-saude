@@ -167,51 +167,32 @@ Fluxo:
 
 ## Limitações
 
-Não há descrição no texto principal de:
+No texto principal recuperado, não foi identificada descrição explícita de:
 
 - busca em registros de ensaios;
 - literatura cinzenta ampla;
 - citation chasing sistemático;
-- restrição ou ausência de restrição linguística suficientemente clara.
+- política linguística suficientemente clara.
 
-## Inconsistência temporal material
+## Correção após verificação adversarial
 
-A revisão declara corte em **31/03/2024**.
+A versão anterior deste appraisal inferiu que Shin et al. 2024 havia sido **incluído** apesar de publicação posterior ao cutoff.
 
-Entretanto, sua lista de referências inclui:
+A rechecagem mostrou:
 
-Shin et al.  
-**Efficacy of Mobile App-Based Cognitive Behavioral Therapy for Insomnia**  
-JMIR 2024;26:e50555.
+- Shin é citado na lista de referências;
+- Shin **não aparece na Tabela 1 dos 29 estudos incluídos**;
+- portanto, a presença da citação não sustenta a alegação de inclusão pós-cutoff.
 
-Dados bibliográficos verificáveis:
+A justificativa anterior de “inconsistência temporal material” é retirada.
 
-- aceito em 22/05/2024;
-- publicado em 26/07/2024;
-- PMID 39058549.
+### Julgamento revisado
 
-A publicação, portanto, é posterior ao corte declarado.
+> **UNCLEAR CONCERN**
 
-Possibilidades incluem:
+Motivo:
 
-- atualização não documentada da busca;
-- identificação por outra via;
-- erro de data no artigo;
-- inclusão a partir de informação pré-publicação.
-
-Nenhuma dessas explicações foi identificada no texto recuperado.
-
-### Consequência
-
-A discrepância impede reconstruir integralmente o universo temporal da busca a partir do método publicado.
-
-### Julgamento
-
-> **HIGH CONCERN**
-
-Motivo principal:
-
-> inconsistência não explicada entre cutoff declarado e estudo incluído posterior.
+> a busca em quatro bases, CENTRAL e seleção independente são fortes; permanece incerteza sobre fontes adicionais para missing evidence, trial registries, literatura cinzenta/citation chasing e política linguística, mas não há evidência verificada de inclusão de estudo posterior ao cutoff.
 
 ---
 
@@ -348,32 +329,34 @@ A estimativa é informativa, porém heterogeneidade, RoB dos estudos e ausência
 A revisão possui vários elementos metodológicos robustos:
 
 - protocolo registrado;
-- múltiplas bases;
+- múltiplas bases relevantes;
 - dupla seleção;
 - dupla extração;
 - RoB 2;
 - síntese estratificada;
 - sensitivity/meta-regression.
 
-Porém existe uma inconsistência material não explicada:
+A verificação adversarial retirou a justificativa anterior de “estudo pós-cutoff incluído”, pois Shin/Somzz não aparece na tabela dos estudos incluídos.
 
-> estudo publicado depois do cutoff declarado aparece como incluído/referenciado na revisão.
+Permanecem, contudo:
 
-Além disso:
+- incerteza sobre estratégias adicionais para missing evidence além das bases bibliográficas;
+- exclusão possível de estudos quando dados não eram obtidos após contato;
+- I²=68% no subgrupo focal;
+- distribuição de RoB dos dez efeitos/estudos do subgrupo não reconstruída separadamente pelo OES;
+- ausência de certainty formal reportada pela revisão.
 
-- o subgrupo focal mantém I²=68%;
-- a maioria dos estudos da revisão apresenta some concerns/high risk;
-- não há certainty formal reportada.
+### Julgamento global OES revisado
 
-### Julgamento global OES
+> **UNCLEAR RISK OF BIAS**
 
-> **UNCLEAR RISK OF BIAS — NÃO CLASSIFICAR COMO LOW RISK**
+A revisão não é classificada como high risk com base em discrepância temporal.
 
-OES não classifica a revisão como definitivamente high risk global porque a discrepância temporal pode ter explicação documental fora do texto recuperado.
+Também não é promovida automaticamente a low risk porque permanecem incertezas em identificação/missing evidence e na interpretação do subgrupo focal.
 
-Entretanto:
+A revisão continuará sendo utilizada como:
 
-> a revisão não será adotada como representação única e autossuficiente do corpo de evidências.
+> **síntese-base comparador-específica, sujeita a atualização e triangulação.**
 
 ---
 
@@ -394,13 +377,14 @@ Não será utilizada para:
 
 # 10. Atualização pós-revisão
 
-A busca OES identificou novos RCTs diretamente aderentes após o período declarado da síntese, incluindo:
+A busca OES identificou RCTs diretamente aderentes posteriores ao cutoff da busca Hwang, incluindo:
 
+- Somzz / Shin et al. 2024;
 - Sweetman et al. 2024;
 - SleepioRx / EUA 2025;
 - SHUTi OASIS 2025.
 
-Somzz 2024 requer atenção específica porque já aparece na revisão apesar da inconsistência de data.
+Somzz é tratado como estudo de atualização porque não aparece na Tabela 1 dos 29 estudos incluídos por Hwang.
 
 Essa evidência pós-corte:
 
@@ -410,36 +394,32 @@ Essa evidência pós-corte:
 
 # 11. Decisão sobre nova meta-análise
 
-Neste momento:
+Neste N2:
 
-> **NÃO EXECUTAR AINDA.**
+> **NÃO EXECUTAR NOVA META-ANÁLISE.**
 
-Primeiro:
+Justificativas:
 
-1. avaliar RoB 2 dos novos RCTs decisivos;
-2. extrair dados de ISI e medida de efeito;
-3. verificar compatibilidade de timepoints;
-4. verificar se Hwang disponibiliza informação suficiente para atualização incremental;
-5. comparar direção/magnitude dos novos estudos.
+1. existe estimativa comparador-específica publicada;
+2. estudos posteriores reportam resultados em formatos/estimandos distintos;
+3. atualização narrativa é suficiente para testar estabilidade de direção;
+4. reconstrução quantitativa integral do subgrupo aproximaria o trabalho de N3/N4;
+5. o OES não deve produzir pooling parcial que sugira precisão indevida.
 
-Se a atualização qualitativa demonstrar consistência e a recomputação não for tecnicamente defensável com os dados disponíveis, N2 poderá:
-
-- manter a estimativa publicada de Hwang;
-- apresentar os novos RCTs como atualização consistente;
-- declarar que não foi recalculada uma meta-análise.
+O risco de dupla contagem de Somzz deixa de fazer parte da justificativa.
 
 ---
 
 # 12. Próxima etapa
 
-Avaliar por RoB 2, prioritariamente:
+Avaliar e integrar por RoB 2 os RCTs de atualização, incluindo:
 
-1. Sweetman et al. 2024;
-2. SleepioRx 2025;
-3. SHUTi OASIS 2025.
-
-Somzz 2024 será verificado para estabelecer se já compunha efetivamente a síntese-base e evitar dupla contagem na atualização.
+1. Somzz 2024;
+2. Sweetman 2024;
+3. SleepioRx 2025;
+4. SHUTi OASIS 2025.
 
 ---
 
-**Conclusão da appraisal:** revisão relevante e útil, mas não suficientemente livre de preocupações para ser adotada sem atualização e triangulação.
+**Conclusão revisada da appraisal:** revisão relevante e útil; ROBIS global permanece **unclear**, mas a justificativa anterior baseada em inclusão pós-cutoff foi retirada após verificação adversarial.
+
