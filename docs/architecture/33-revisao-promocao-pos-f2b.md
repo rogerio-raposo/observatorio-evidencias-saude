@@ -64,22 +64,22 @@ Critério não necessário para decisão de baseline arquitetural neste momento.
 | 5 | Report com múltiplos Studies | **VALIDADO** | PoC-S4: Report X ligado a 2 Studies; S4-T03 PASS |
 | 6 | Result com proveniência | **VALIDADO** | ResultSource + provenance.record + T11/T12 |
 | 7 | síntese quantitativa | **VALIDADO** | PoC-S4: Synthesis v1 combinou Results de 2 Studies distintos; S4-T04 PASS |
-| 8 | NMA | **NÃO VALIDADO** | entidades especializadas previstas no modelo lógico não estão implementadas na PoC física atual |
-| 9 | predição | **NÃO VALIDADO** | PredictionModel e estruturas associadas não estão implementados na PoC física atual |
-| 10 | qualitativa/CERQual | **NÃO VALIDADO** | ReviewFinding/FindingContribution/CERQual especializado não estão implementados na PoC física atual |
+| 8 | NMA | **VALIDADO** | PoC-S5: StudyGroup, Nodes, NodeMappings, Contrasts, 2 Studies contribuintes e lineage até Product; S5-T02–T06 PASS |
+| 9 | predição | **VALIDADO** | PoC-S5: PredictionModel versionado, roles, Results de performance em 2 Studies e lineage até Product; S5-T07–T10 PASS |
+| 10 | qualitativa/CERQual | **VALIDADO** | PoC-S5: ReviewFinding, 2 FindingContributions, 4 domínios CERQual e lineage até Product; S5-T11–T14 PASS |
 | 11 | certainty | **VALIDADO** | CertaintyAssessment + CertaintyDomain executados; regra `no_evidence` testada em T09 |
 | 12 | Product/Ficha | **VALIDADO** | ProductVersion + links a Investigation/Synthesis/Certainty executados |
 | 13 | nova versão por atualização | **VALIDADO** | T10 valida cadeia v1→v2 Result/Synthesis/Certainty/Product preservando histórico |
 | 14 | retração e impact analysis | **VALIDADO** | PoC-S4: ReportRelation, versões corrected/retracted e impact traversal até Product; S4-T07–T13 PASS |
-| 15 | reconstrução completa de lineage | **PARCIALMENTE VALIDADO** | T12/T19 reconstroem cadeia core até Product; faltam métodos especializados e cenários de retração/multiplicidade |
+| 15 | reconstrução completa de lineage | **VALIDADO** | F2-B + S4 + S5 demonstram lineage no núcleo, retração/impacto, NMA, predição e Qualitativa/CERQual |
 
 ## 5. Resultado quantitativo da revisão
 
 Dos 15 critérios:
 
-- **11 VALIDADO**;
-- **1 PARCIALMENTE VALIDADO**;
-- **3 NÃO VALIDADO**;
+- **15 VALIDADO**;
+- **0 PARCIALMENTE VALIDADO**;
+- **0 NÃO VALIDADO**;
 - **0 FORA DO ESCOPO IMEDIATO**.
 
 A categoria “fora do escopo imediato” não foi usada porque todos os 15 itens foram explicitamente definidos como critérios de promoção pelo Documento 25.
@@ -345,3 +345,24 @@ Consequência:
 - critério 15 permanece **PARCIALMENTE VALIDADO**;
 - critérios 8, 9 e 10 permanecem **NÃO VALIDADO**;
 - próxima etapa exclusiva: **PoC-S5 — Métodos Especializados Mínimos**.
+
+
+## 18. Atualização pós-PoC-S5
+
+A PoC-S5 foi executada no GitHub Actions run **37189646452** e recebeu **PASS** em S5-T01–T17, com regressões F2-B e S4 também aprovadas.
+
+Registro:
+
+`docs/architecture/37-resultado-poc-s5.md`
+
+Decisão subsequente:
+
+`docs/architecture/38-decisao-promocao-fechamento-fase2.md`
+
+Consequência:
+
+- critérios 8, 9, 10 e 15 promovidos para **VALIDADO**;
+- matriz final: **15/15 VALIDADO**;
+- OES-P1 promovido a **baseline arquitetural da Fase 2**;
+- Fase 2 encerrada no nível de baseline arquitetural;
+- transição autorizada para Fase 3 — Produtos do Observatório.
