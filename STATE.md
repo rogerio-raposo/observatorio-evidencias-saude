@@ -145,7 +145,9 @@ Documento 63 — **Primeira Verificação Metodológica Adversarial**: REVISE; i
 
 Documento 64 — **Segunda Verificação Metodológica Adversarial**: PASSED.
 
-Documento 65 — **Aprovação de Governança do Proprietário**: formulário preparado; decisão ainda não registrada.
+Documento 65 — **Resultado da Validação do Estado A1**: PASS; verificação metodológica adversarial ativa em `passed`.
+
+Documento 66 — **Aprovação de Governança do Proprietário**: formulário preparado; decisão ainda não registrada.
 
 Migrations canônicas da camada da Ficha: 007 EvidenceSheetView → 008 provenance → 009 study-type counts → 010 assurance governance → 011 assurance-aware view.
 
@@ -167,7 +169,7 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Decisão explícita do proprietário no Documento 65.**
+**Decisão explícita do proprietário no Documento 66.**
 
 O proprietário deverá avaliar somente governança, clareza, transparência e escopo de uso — não ROBIS, RoB 2, GRADE ou bioestatística.
 
@@ -185,4 +187,4 @@ Arquivo:
 
 Ponto exato de retomada:
 
-**Fase 3 — owner governance approval do Caso Real 01 (Documento 65).**
+**Fase 3 — owner governance approval do Caso Real 01 (Documento 66).**
