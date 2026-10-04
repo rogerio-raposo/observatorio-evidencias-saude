@@ -65,5 +65,14 @@
   "audit.lineage_available": {
     "true": "sim",
     "false": "não"
+  },
+  "study_type": {
+    "primary_study": "estudos primários",
+    "systematic_review": "revisões sistemáticas",
+    "qualitative_study": "estudos qualitativos",
+    "diagnostic_study": "estudos diagnósticos",
+    "prognostic_study": "estudos prognósticos",
+    "prediction_model_study": "estudos de modelo de predição",
+    "other": "outros"
   }
 }
