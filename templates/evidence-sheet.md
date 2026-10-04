@@ -122,9 +122,10 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 {{#if applicability.summary}}
 {{applicability.summary}}
 
-{{#unless applicability.formal_assessment}}
+{{#if applicability.formal_assessment}}
+{{else}}
 _Avaliação formal de aplicabilidade ainda não implementada; análise descritiva._
-{{/unless}}
+{{/if}}
 {{else}}
 Aplicabilidade não descrita para esta versão.
 {{/if}}
