@@ -511,3 +511,34 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 - PostgreSQL permanece referência validada de PoC, não stack definitiva;
 - não ocorre promoção automática para schema final;
 - próxima etapa: **Revisão de Promoção Arquitetural Pós-F2-B** frente aos 15 critérios do Documento 25.
+
+
+## 2026-10-04 — Revisão de promoção arquitetural pós-F2-B
+
+### Adicionado
+
+- `docs/architecture/33-revisao-promocao-pos-f2b.md`.
+
+### Avaliação dos 15 critérios do Documento 25
+
+- **7 VALIDADO**;
+- **5 PARCIALMENTE VALIDADO**;
+- **3 NÃO VALIDADO**;
+- **0 FORA DO ESCOPO IMEDIATO**.
+
+### Decisão
+
+- OES-P1 **não é promovido** a schema definitivo;
+- OES-P1 permanece candidato físico validado;
+- OES-H1 permanece arquitetura candidata preferencial;
+- PostgreSQL permanece referência de implementação validada para PoC;
+- requisitos de produção são mantidos separados dos critérios de adequação arquitetural.
+
+### Plano mínimo restante
+
+- **PoC-S4:** multiplicidade Study/Report, síntese multiestudo e retração/impact analysis;
+- **PoC-S5:** NMA, predição e qualitativa/CERQual.
+
+### Próxima etapa
+
+- PoC-S4, limitada aos critérios 4, 5, 7, 14 e 15.
