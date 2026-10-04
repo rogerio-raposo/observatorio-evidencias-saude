@@ -352,37 +352,55 @@ até a Fase 4 definir periodicidade/gatilhos definitivos.
 - elegibilidade;
 - síntese-base;
 - atualização;
-- ROBIS;
+- ROBIS corrigido após verificação adversarial;
 - RoB 2;
 - síntese;
-- GRADE provisório;
+- GRADE moderado;
 - limitações;
 - aplicabilidade;
 - conclusão draft;
-- cutoff.
+- cutoff;
+- AI methodological verification = `passed`.
+
+Assurance atual:
+
+> **A1**
+
+Expert independent review:
+
+> **não realizado.**
 
 ## Bloqueante
 
-> **revisão humana dos julgamentos materiais de GRADE e da conclusão.**
+Para eventual publicação N2 padrão ainda faltam:
+
+1. `owner_governance_approval = approved`;
+2. `publication_date` somente após fechamento final do conteúdo.
 
 Portanto:
 
-- ProductVersion alvo: `under_review`;
-- publishable: **false** até revisão;
+- ProductVersion: `under_review`;
+- publishable: **false**;
 - preview interno: permitido.
 
 ---
 
 # 16. Próxima etapa
 
-Estruturar este caso no baseline OES-P1 e verificar:
+Apresentar ao proprietário o formulário:
 
-1. se Hwang como síntese-base externa pode ser representada sem distorção;
-2. como os RCTs atualizados entram em EvidenceBase;
-3. como registrar a Synthesis OES “adopted + updated narrative”;
-4. como vincular certainty provisória;
-5. como o publication gate reage à ausência deliberada de aprovação humana;
-6. como EvidenceSheetView renderiza o preview real.
+`templates/owner-governance-approval.md`
+
+O proprietário avaliará apenas governança, clareza e transparência.
+
+Se `APPROVED`:
+
+1. registrar owner assurance;
+2. atingir A2;
+3. fechar conteúdo final;
+4. atribuir publication_date;
+5. executar publication gate;
+6. renderizar a versão final, mantendo disclosure de ausência de expert review.
 
 ---
 
