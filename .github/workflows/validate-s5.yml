@@ -157,10 +157,12 @@ jobs:
           fi
           echo "F3-TEMPLATE PASS — EvidenceSheetView rendered to validated Markdown" | tee -a s5-artifacts/F3-TEMPLATE-validation.log
 
-      - name: RC01 — render and validate real-case preview
+      - name: RC01 — load, test, render and validate real-case preview
         shell: bash
         run: |
           set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql 2>&1 | tee s5-artifacts/rc01-load.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-tests.sql 2>&1 | tee s5-artifacts/rc01-tests.log
           psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_sheet_view('81000000-0000-0000-0000-000000000701')::text;" > s5-artifacts/rc01-evidence-sheet-view.json
           python3 scripts/render_evidence_sheet_reference.py \
             --template templates/evidence-sheet.md \
