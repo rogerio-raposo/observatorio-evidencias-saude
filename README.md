@@ -38,6 +38,11 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 
 - [40 — Taxonomia e Arquitetura dos Produtos do OES](docs/products/40-taxonomia-arquitetura-produtos.md)
 
+### Produtos
+
+- [40 — Taxonomia e Arquitetura dos Produtos do OES](docs/products/40-taxonomia-arquitetura-produtos.md)
+- [41 — Especificação Científica e Funcional da Ficha de Evidência](docs/products/41-especificacao-ficha-evidencia.md)
+
 ### Arquitetura e dados
 
 - [20 — Modelo Conceitual de Dados do OES](docs/architecture/20-modelo-conceitual-dados.md)
@@ -160,7 +165,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. O próximo trabalho pertence à **Fase 3 — Produtos do Observatório**.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. A próxima etapa é definir seu **Contrato de Dados de Produto** e avaliar as extensões mínimas necessárias do baseline OES-P1 antes de criar o template operacional.
 
 ---
 
