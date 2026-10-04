@@ -36,8 +36,9 @@ Arquitetura e especificações dos produtos do OES.
 - [45 — Resultado da Validação do EvidenceSheetView](products/45-resultado-validacao-evidence-sheet-view.md)
 - [46 — Especificação do Template Operacional da Ficha de Evidência](products/46-especificacao-template-ficha-evidencia.md)
 - [47 — Resultado da Validação do Template Operacional da Ficha](products/47-resultado-validacao-template-ficha.md)
+- [48 — Caso Real 01: dCBT-I — Protocolo Inicial N2](products/48-caso-real-01-dcbti-protocolo-n2.md)
 
-Próxima etapa: validação científica ponta a ponta da Ficha de Evidência com um caso real.
+Próxima etapa: executar e registrar a busca N2 do Caso Real 01.
 
 ### architecture/
 
