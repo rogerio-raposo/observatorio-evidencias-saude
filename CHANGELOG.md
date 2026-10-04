@@ -718,3 +718,35 @@ Definir o **Contrato de Dados da Ficha de Evidência** e decidir quais lacunas e
 - ProductRelation permanece adiada;
 - ApplicabilityAssessment formal permanece adiado;
 - próxima etapa: EvidenceSheetView.
+
+
+## 2026-10-04 — Fase 3: EvidenceSheetView
+
+### Adicionado
+
+- `docs/products/44-evidence-sheet-view.md`;
+- `database/007_evidence_sheet_view.sql`;
+- `database/f3-evidence-sheet-view-tests.sql`;
+- `database/f3-evidence-sheet-view-rebuild-check.sql`;
+- `docs/products/45-resultado-validacao-evidence-sheet-view.md`.
+
+### Validação
+
+- run **37191973078**;
+- PostgreSQL **18.6**;
+- F3-VIEW-T01–T16 PASS;
+- regressões F2-B/S4/S5/Ficha PASS;
+- rebuild PASS;
+- artifact **11298729618**;
+- digest `sha256:d3e53b35bccf3a89e5ee8621ff2d3fc5501d56b56e4a22b5aa8993e9897cbef9`.
+
+### Decisões
+
+- EvidenceSheetView é projeção JSONB derivada, não fonte canônica;
+- schema de renderização inicial: `oes.evidence_sheet_view/0.1`;
+- a função respeita versões concretas vinculadas ao ProductVersion;
+- não recalcula ciência, certainty, Risk of Bias ou recomendação;
+- referências são derivadas de ResultSource;
+- projeção é determinística;
+- migration 007 é idempotente por desenho;
+- próxima etapa: especificação do template operacional da Ficha.
