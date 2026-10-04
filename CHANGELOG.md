@@ -686,3 +686,35 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 Definir o **Contrato de Dados da Ficha de Evidência** e decidir quais lacunas exigem migration antes do template operacional.
+
+
+## 2026-10-04 — Fase 3: contrato de dados e gate físico da Ficha
+
+### Adicionado
+
+- `docs/products/42-contrato-dados-ficha-evidencia.md`;
+- `database/006_product_evidence_sheet_contract.sql`;
+- `database/f3-evidence-sheet-fixtures.sql`;
+- `database/f3-evidence-sheet-tests.sql`;
+- `database/f3-evidence-sheet-rebuild-check.sql`;
+- `docs/products/43-resultado-validacao-contrato-ficha.md`.
+
+### Validação
+
+- run **37191456703**;
+- PostgreSQL **18.6**;
+- F3-FE-T01–T17 PASS;
+- regressões F2-B/S4/S5 PASS;
+- rebuild PASS;
+- artifact **11299032774**;
+- digest `sha256:2e3508b0d876e13e2f6efb367da8e8b308c943560e3d5e978fa293a8a4f851c1`.
+
+### Decisões
+
+- atualidade possui histórico próprio;
+- classes de mudança são múltiplas;
+- revisão humana é auditável;
+- publication gate é avaliativo e explícito;
+- ProductRelation permanece adiada;
+- ApplicabilityAssessment formal permanece adiado;
+- próxima etapa: EvidenceSheetView.
