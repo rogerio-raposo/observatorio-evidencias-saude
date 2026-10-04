@@ -581,3 +581,49 @@ Checkpoints são artefatos operacionais e não normativos. A documentação can�
 ### Próxima etapa
 
 - PoC-S5 — NMA, PredictionModel e Qualitativa/CERQual.
+
+
+## 2026-10-04 — PoC-S5 e fechamento da Fase 2
+
+### Adicionado
+
+- `docs/architecture/36-plano-poc-s5.md`;
+- `database/005_poc_s5_specialized_methods.sql`;
+- `database/s5-fixtures.sql`;
+- `database/s5-tests.sql`;
+- `database/s5-rebuild-check.sql`;
+- `.github/workflows/validate-s5.yml`;
+- `docs/architecture/37-resultado-poc-s5.md`;
+- `docs/architecture/38-decisao-promocao-fechamento-fase2.md`.
+
+### Execução
+
+- GitHub Actions run **37189646452**;
+- PostgreSQL **18.6**;
+- regressão F2-B: PASS;
+- regressão S4: PASS;
+- **S5-T01–T17 PASS**;
+- rebuild do zero: PASS;
+- artifact **11297653844**;
+- digest `sha256:ba8aed9373dfde8c5ee14c67f91084b2158c3b76bc98560fbc5a22555b133719`.
+
+### Critérios promovidos
+
+- 8 — NMA: VALIDADO;
+- 9 — predição: VALIDADO;
+- 10 — qualitativa/CERQual: VALIDADO;
+- 15 — lineage completo: VALIDADO.
+
+### Matriz final
+
+- **15 VALIDADO**;
+- **0 PARCIALMENTE VALIDADO**;
+- **0 NÃO VALIDADO**.
+
+### Decisão
+
+- OES-P1 promovido a **baseline arquitetural da Fase 2**;
+- OES-H1 preservado como arquitetura de referência;
+- PostgreSQL permanece implementação de referência validada, não stack definitiva de produção;
+- **Fase 2 encerrada no nível de baseline arquitetural**;
+- transição autorizada para **Fase 3 — Produtos do Observatório**.
