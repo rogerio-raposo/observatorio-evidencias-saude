@@ -265,13 +265,17 @@ A Ficha organiza e comunica, de forma versionada, uma visão auditável do estad
 - estado de atualidade;
 - histórico/versionamento.
 
-## 7.5 Certeza
+## 7.5 Certeza e garantia
 
 Quando houver nova avaliação formal:
 
 - utilizar registro estruturado;
 - preservar unidade de avaliação;
-- exigir revisão dos julgamentos materiais antes da publicação.
+- aplicar o nível de garantia definido no Documento 04;
+- para N2 padrão, exigir ao menos A2 antes de publicação;
+- declarar explicitamente a ausência de revisão especializada independente quando A3 não estiver presente.
+
+A aprovação do proprietário não deverá ser tratada como validação técnica de GRADE/CERQual.
 
 ## 7.6 Manutenção
 
@@ -1005,6 +1009,8 @@ IA não poderá:
 - omitir limitações relevantes;
 - atribuir recomendação automaticamente;
 - esconder o nível de garantia metodológica;
+- apresentar A2 como se fosse revisão especializada independente;
+- omitir a ausência de A3 quando ela for material para a interpretação do produto;
 - omitir a ausência de revisão especializada independente quando ela não tiver ocorrido;
 - apresentar owner approval como validação metodológica especializada.
 
