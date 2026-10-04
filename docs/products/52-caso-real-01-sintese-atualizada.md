@@ -70,7 +70,7 @@ O valor deverá ser apresentado como:
 A estimativa não deverá ser interpretada isoladamente porque:
 
 - o ROBIS OES classificou a revisão global como **unclear risk of bias**;
-- há inconsistência temporal entre cutoff declarado e uma publicação posterior citada pela revisão;
+- o ROBIS permanece com incerteza em identificação/missing evidence, mas a alegação anterior de inclusão pós-cutoff foi retirada após verificação adversarial;
 - I²=68% indica heterogeneidade relevante;
 - a maioria dos estudos da revisão total não foi classificada como low risk no RoB 2;
 - não há certainty GRADE formal identificada na revisão;
@@ -197,9 +197,15 @@ RoB 2 OES:
 
 > algumas preocupações, principalmente pelo uso de LOCF.
 
-### Regra de dupla contagem
+### Relação com a síntese-base
 
-Somzz não será tratado como evidência incremental independente sobre Hwang até ficar esclarecido se o estudo entrou efetivamente no pooling do subgrupo.
+A verificação adversarial mostrou que Somzz não aparece na Tabela 1 dos 29 estudos incluídos por Hwang.
+
+Decisão:
+
+> **Somzz é tratado como evidência incremental narrativa pós-cutoff.**
+
+O estudo não é incorporado a um novo pooling OES; sua direção e magnitude são usadas na atualização narrativa.
 
 ---
 
@@ -292,8 +298,8 @@ Justificativa:
 - o efeito principal já possui meta-análise comparador-específica;
 - a atualização é direcionalmente consistente;
 - dados novos não estão uniformemente disponíveis no mesmo estimando;
-- Somzz tem status incerto em relação ao pooling Hwang;
-- pooling incompleto poderia criar dupla contagem;
+- os estudos novos não estão disponíveis de forma uniforme no mesmo estimando;
+- pooling parcial poderia criar falsa precisão sem reconstrução integral do subgrupo;
 - uma recomputação defensável exigiria reconstrução de todos os estudos do subgrupo, aproximando o trabalho de N3/N4.
 
 ---
