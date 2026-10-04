@@ -29,8 +29,9 @@ Protocolos que definem como a evidência é localizada, selecionada, avaliada, e
 Arquitetura e especificações dos produtos do OES.
 
 - [40 — Taxonomia e Arquitetura dos Produtos do OES](products/40-taxonomia-arquitetura-produtos.md)
+- [41 — Especificação Científica e Funcional da Ficha de Evidência](products/41-especificacao-ficha-evidencia.md)
 
-Próxima especificação: Ficha de Evidência.
+Próxima etapa: Contrato de Dados da Ficha de Evidência.
 
 ### architecture/
 
