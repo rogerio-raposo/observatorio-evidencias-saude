@@ -48,6 +48,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [29 — Política de Proveniência e Lineage](docs/architecture/29-politica-proveniencia-lineage.md)
 - [30 — Política de Migrações do Modelo de Dados](docs/architecture/30-politica-migracoes.md)
 - [31 — PoC-S2: Validação de Search, Screening e Risk Assessment](docs/architecture/31-poc-s2-validacao.md)
+- [32 — Resultado do GATE F2-B e Decisão Pós-PoC](docs/architecture/32-resultado-gate-f2b.md)
+- [F2-B Test Run — 2026-10-04 — Run 37187885839](docs/architecture/F2B_Test_Run_2026-10-04_37187885839.md)
 
 ## Arquitetura documental prevista
 
@@ -81,7 +83,8 @@ observatorio-evidencias-saude/
 │       ├── 28-politica-identidade-versionamento.md
 │       ├── 29-politica-proveniencia-lineage.md
 │       ├── 30-politica-migracoes.md
-│       └── 31-poc-s2-validacao.md
+│       ├── 31-poc-s2-validacao.md
+│       └── 32-resultado-gate-f2b.md
 ├── templates/
 └── references/
 ```
@@ -143,11 +146,11 @@ Alterações metodológicas relevantes devem:
 
 ## Gate físico
 
-**GATE F2-B — Execução da PoC-S1 em PostgreSQL: PENDENTE.** A validação estática foi concluída, mas não existe servidor PostgreSQL disponível no ambiente desta etapa.
+**GATE F2-B — Execução física da PoC em PostgreSQL: PASS.** A bateria T01–T19 foi executada com sucesso em PostgreSQL 18.6 no GitHub Actions (run 37187885839), incluindo rebuild do zero, versionamento, provenance, lineage, rollback, Search/Screening/Dedup/RiskAssessment e cadeia end-to-end.
 
 ## Próxima etapa
 
-A política de migrações e a PoC-S2 já estão formalizadas. **O próximo passo prioritário é executar o GATE F2-B em PostgreSQL descartável.** Até essa execução, expansões relevantes adicionais do schema ficam suspensas.
+OES-P1 permanece **candidato físico validado**, não schema definitivo. O próximo passo é a **Revisão de Promoção Arquitetural Pós-F2-B**, confrontando os 15 critérios de promoção do Documento 25 com as evidências já produzidas e definindo o menor conjunto de PoCs ainda necessário.
 
 ---
 
