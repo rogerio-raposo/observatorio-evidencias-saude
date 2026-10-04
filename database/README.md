@@ -2,77 +2,110 @@
 
 Este diretório contém artefatos experimentais do modelo físico do OES.
 
-## PoC-S1
+## Escopo atual
 
-Arquivos:
+O candidato físico **OES-P1** foi implementado incrementalmente para prova arquitetural por meio de:
 
-- `poc-s1.sql` — schema mínimo;
-- `poc-s1-smoke.sql` — cadeia mínima e consultas de validação;
-- `002_poc_s2_search_screening_risk.sql` — migração experimental Search/Screening/RiskAssessment.
+- `poc-s1.sql` — baseline experimental;
+- `002_poc_s2_search_screening_risk.sql` — Search, SearchHit, DedupCluster, ScreeningDecision e RiskAssessment;
+- `003_poc_s3_provenance_guard.sql` — proteção history-preserving de provenance;
+- `poc-s1-smoke.sql` — smoke inicial;
+- `f2b-fixtures.sql` — fixtures determinísticas do gate;
+- `f2b-tests.sql` — bateria runtime T03–T13 e T16–T19;
+- `f2b-rebuild-check.sql` — verificação do rebuild do zero.
 
-Objetivo:
+A cadeia mínima validada inclui:
 
-validar o candidato **OES-P1** no menor conjunto de tabelas capaz de reconstruir a cadeia:
+`Search → Screening → Study/Report → Result → Synthesis → Certainty → Product`
 
-`Question → Investigation → Study/Report → Result → Synthesis → Certainty → Product`
-
-com:
+com suporte a:
 
 - identidade estável;
-- versões;
+- versionamento;
 - provenance;
+- deduplicação;
+- RiskAssessment;
 - artifact metadata;
 - dependency lineage.
 
 ## Status
 
-**Experimental — não produção.**
+**Experimental — candidato validado em PoC; não produção.**
 
-A existência deste DDL não representa escolha definitiva de PostgreSQL nem autorização para iniciar automação ampla.
+A execução bem-sucedida não representa escolha definitiva de PostgreSQL, schema final ou autorização para automação ampla.
 
-## Limitações desta primeira PoC
+## GATE F2-B
 
-Ainda não implementa:
+**PASS — 4 de outubro de 2026.**
 
-- Search/SearchHit;
-- triagem;
-- deduplicação;
-- RiskAssessment;
+Execução:
+
+- GitHub Actions run: **37187885839**
+- commit: `de168908d8fe311e64c07937dc70df36af39d910`
+- PostgreSQL server: **18.6**
+- T01–T19: **PASS**
+- rebuild do zero: **PASS**
+- artifact: **11297272424**
+- artifact digest: `sha256:5381605d34064f95a2d4444e34d275b8c89ceb28a19cc915db104da9362c1d7c`
+
+Registros:
+
+- `docs/architecture/27-plano-testes-gate-f2b.md`
+- `docs/architecture/F2B_Test_Run_2026-10-04_37187885839.md`
+- `docs/architecture/32-resultado-gate-f2b.md`
+
+## Invariantes validadas
+
+A bateria demonstrou, no escopo da PoC:
+
+1. instalação limpa do baseline e migrations;
+2. smoke end-to-end;
+3. unicidade da versão corrente;
+4. supersessão restrita à mesma entidade;
+5. integridade de subtipos;
+6. integridade de FKs;
+7. invariantes de Result;
+8. intervalos coerentes;
+9. estado `no_evidence` incompatível com certainty final;
+10. cadeia de versionamento v1→v2 preservando histórico;
+11. provenance material imutável e correção por supersessão;
+12. lineage canônico + dependency projection;
+13. rollback de operação multi-step;
+14. rebuild do zero;
+15. reaplicação acidental de migration detectável;
+16. regras de ScreeningDecision;
+17. integridade de RiskAssessment;
+18. preservação de SearchHits após deduplicação;
+19. cadeia Search-to-Product reconstruível.
+
+## Limitações atuais
+
+Ainda não constituem validação completa do candidato para promoção definitiva:
+
 - NMA completa;
 - diagnóstico especializado;
 - PredictionModel;
-- CERQual/ReviewFinding;
+- síntese qualitativa/CERQual;
 - ApplicabilityAssessment;
+- cenários ampliados de ReportRelation/retração/impact analysis;
 - monitoramento;
-- IA;
+- IA operacional;
 - autenticação/autorização;
-- políticas de backup/HA;
+- backup/HA;
+- migration ledger para ambiente persistente;
 - migrações de produção.
 
-## Gate
+Esses itens deverão ser avaliados conforme sua relevância para os critérios de promoção do Documento 25.
 
-O schema deverá ser executado contra uma instância PostgreSQL compatível antes de qualquer promoção.
+## Política de migração
 
-Além da execução do DDL, a validação deverá incluir smoke tests de:
+O baseline não deve ser reescrito silenciosamente para acomodar novas funcionalidades.
 
-1. criação de uma cadeia completa;
-2. bloqueio de segunda versão `current`;
-3. reconstrução de lineage;
-4. nova versão de Result/Synthesis/Certainty/Product;
-5. impacto de Report corrigido/retratado;
-6. integridade das FKs;
-7. rollback transacional.
+Extensões deverão preferir migrations incrementais versionadas conforme:
 
+`docs/architecture/30-politica-migracoes.md`
 
-## Registro de validação
+## Próxima etapa
 
-Consulte:
+Realizar a **Revisão de Promoção Arquitetural Pós-F2-B**, identificando quais dos 15 critérios de promoção de OES-P1 já foram validados e quais exigem PoCs adicionais.
 
-- `docs/architecture/26-poc-s1-validacao.md`
-
-**GATE F2-B:** pendente de execução real em PostgreSQL.
-
-
-## PoC-S2
-
-A migration `OES-DBM-2026-0002` estende o baseline sem reescrevê-lo. Sua validação está documentada em `docs/architecture/31-poc-s2-validacao.md`.
