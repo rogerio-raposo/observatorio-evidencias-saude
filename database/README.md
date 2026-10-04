@@ -222,3 +222,26 @@ Sequência canônica:
 `007 → 008 provenance-aware references → 009 study-type counts`.
 
 Próximo passo: materializar o Caso Real 01 como Ficha `under_review`.
+
+
+## Caso Real 01 — dCBT-I
+
+**PASS de pré-publicação — 4 de outubro de 2026.**
+
+Arquivos canônicos:
+
+- `f3-real-case-01-dcbti.sql`;
+- `f3-real-case-01-tests.sql`;
+- `f3-real-case-01-rebuild-check.sql`.
+
+GitHub Actions:
+
+- run: **37213165321**
+- RC01-T01–T10: PASS
+- preview Markdown: PASS
+- publication gate: bloqueado como esperado
+- rebuild: PASS
+- artifact: **11307386757**
+- digest: `sha256:78b143a5def1b79d280736fb9b8415464621082c41b5964381db5ed143617fa5`
+
+O produto permanece `under_review`; nenhum `review_record approved` foi criado.
