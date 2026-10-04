@@ -26,7 +26,11 @@ Protocolos que definem como a evidência é localizada, selecionada, avaliada, e
 
 ### products/
 
-Especificações dos produtos do OES. Ainda não formalizadas.
+Arquitetura e especificações dos produtos do OES.
+
+- [40 — Taxonomia e Arquitetura dos Produtos do OES](products/40-taxonomia-arquitetura-produtos.md)
+
+Próxima especificação: Ficha de Evidência.
 
 ### architecture/
 
