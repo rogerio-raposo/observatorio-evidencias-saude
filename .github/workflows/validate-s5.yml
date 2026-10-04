@@ -5,9 +5,13 @@ on:
   push:
     paths:
       - 'database/005_poc_s5_specialized_methods.sql'
+      - 'database/006_product_evidence_sheet_contract.sql'
       - 'database/s5-fixtures.sql'
       - 'database/s5-tests.sql'
       - 'database/s5-rebuild-check.sql'
+      - 'database/f3-evidence-sheet-fixtures.sql'
+      - 'database/f3-evidence-sheet-tests.sql'
+      - 'database/f3-evidence-sheet-rebuild-check.sql'
       - '.github/workflows/validate-s5.yml'
 
 permissions:
@@ -62,9 +66,9 @@ jobs:
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s5-artifacts/postgresql-server-version.txt
-          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             | tee s5-artifacts/sql-sha256.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             | tee s5-artifacts/sql-sha256.txt
 
-      - name: S5-T01 — install baseline through migration 005
+      - name: Install baseline through migration 006
         shell: bash
         run: |
           set -euo pipefail
@@ -73,6 +77,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql 2>&1 | tee s5-artifacts/S5-T01-003.log
           psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql 2>&1 | tee s5-artifacts/S5-T01-004.log
           psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql 2>&1 | tee s5-artifacts/S5-T01-005.log
+          psql -v ON_ERROR_STOP=1 -f database/006_product_evidence_sheet_contract.sql 2>&1 | tee s5-artifacts/F3-FE-T01-006.log
 
       - name: Load F2-B fixtures and run regression
         shell: bash
@@ -100,6 +105,28 @@ jobs:
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/s5-tests.sql 2>&1 | tee s5-artifacts/S5-T02-T15.log
 
+      - name: Load Evidence Sheet fixture and run F3 contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-fixtures.sql 2>&1 | tee s5-artifacts/f3-fe-fixtures.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-tests.sql 2>&1 | tee s5-artifacts/f3-fe-tests.log
+
+      - name: F3-FE-T17 — migration 006 double-apply detection
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/006_product_evidence_sheet_contract.sql > s5-artifacts/F3-FE-T17-double-apply.log 2>&1
+          rc=$?
+          set -e
+          cat s5-artifacts/F3-FE-T17-double-apply.log
+          if [ "$rc" -eq 0 ]; then
+            echo "F3-FE-T17 FAIL — migration 006 applied twice without detection" | tee -a s5-artifacts/F3-FE-T17-double-apply.log
+            exit 1
+          fi
+          echo "F3-FE-T17 PASS — duplicate migration 006 detected" | tee -a s5-artifacts/F3-FE-T17-double-apply.log
+
       - name: S5-T17 — migration double-apply detection
         shell: bash
         run: |
@@ -126,10 +153,14 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/005_poc_s5_specialized_methods.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/006_product_evidence_sheet_contract.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-rebuild-check.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-rebuild-check.sql
           } 2>&1 | tee s5-artifacts/S5-T16-rebuild.log
 
       - name: Final S5 status
@@ -143,7 +174,10 @@ jobs:
             echo "NMA PASS"
             echo "PredictionModel PASS"
             echo "Qualitative/CERQual PASS"
-            echo "Candidate promotion matrix may now be re-evaluated."
+            echo "Evidence Sheet contract PASS"
+            echo "F3-FE-T01–T17 PASS"
+            echo "Publication gate PASS"
+            echo "Rebuild through migration 006 PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
