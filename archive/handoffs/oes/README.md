@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP17 — 2026-10-04**
+**CP18 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP17.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP18.md`
 
 Checkpoint anterior:
 
-`CP16`
+`CP17`
 
 Status:
 
