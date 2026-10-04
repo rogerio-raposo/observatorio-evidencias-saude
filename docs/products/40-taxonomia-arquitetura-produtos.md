@@ -1004,7 +1004,9 @@ IA não poderá:
 - alterar certainty sem processo metodológico;
 - omitir limitações relevantes;
 - atribuir recomendação automaticamente;
-- esconder a ausência de revisão humana quando exigida pelo nível.
+- esconder o nível de garantia metodológica;
+- omitir a ausência de revisão especializada independente quando ela não tiver ocorrido;
+- apresentar owner approval como validação metodológica especializada.
 
 ---
 
