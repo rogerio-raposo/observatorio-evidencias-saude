@@ -44,7 +44,7 @@ BEGIN
 END
 $v01$;
 
--- A0 real case before assurance remains explicit.
+-- A1 real case after AI methodological verification remains explicit.
 DO $v02$
 DECLARE v jsonb;
 BEGIN
@@ -57,15 +57,19 @@ BEGIN
         RETURN;
     END IF;
 
-    IF v#>>'{audit,assurance_level}' <> 'A0' THEN
-        RAISE EXCEPTION 'AV-T02 FAIL: unverified real case should be A0';
+    IF v#>>'{audit,assurance_level}' <> 'A1' THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: AI-verified real case should be A1';
     END IF;
 
     IF v#>>'{audit,expert_independent_reviewed}' <> 'false' THEN
         RAISE EXCEPTION 'AV-T02 FAIL: unverified real case claims expert review';
     END IF;
 
-    RAISE NOTICE 'AV-T02 PASS — unverified real case renders A0 explicitly';
+    IF jsonb_array_length(v#>'{audit,assurance_records}') <> 2 THEN
+        RAISE EXCEPTION 'AV-T02 FAIL: expected superseded REVISE + active PASSED assurance records';
+    END IF;
+
+    RAISE NOTICE 'AV-T02 PASS — real case renders A1 with adversarial verification history';
 END
 $v02$;
 
