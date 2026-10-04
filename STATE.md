@@ -16,7 +16,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP14 — 2026-10-04**.
+- checkpoint vigente: **CP15 — 2026-10-04**.
 
 ## 2. Documentação consolidada
 
@@ -52,6 +52,8 @@ Continuidade formal:
 - 31 — PoC-S2 Search/Screening/RiskAssessment
 - 32 — Resultado do GATE F2-B e Decisão Pós-PoC
 - 33 — Revisão de Promoção Arquitetural Pós-F2-B
+- 34 — Plano e Desenho da PoC-S4
+- 35 — Resultado da PoC-S4
 - F2B Test Run 2026-10-04 / run 37187885839
 
 ## 3. Gates
@@ -136,35 +138,37 @@ Ainda não constituem decisões finais:
 
 ## 8. Próxima etapa
 
-**PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis.**
+**PoC-S5 — Métodos Especializados Mínimos.**
 
-A revisão dos 15 critérios de promoção foi concluída:
+Após PoC-S4:
 
-- 7 validados;
-- 5 parcialmente validados;
+- 11 critérios validados;
+- 1 parcialmente validado;
 - 3 não validados.
 
-PoC-S4 deve cobrir critérios 4, 5, 7, 14 e parte do 15. Depois, PoC-S5 deverá cobrir NMA, predição e qualitativa/CERQual.
+PoC-S5 deverá cobrir:
 
-Evitar expansão do schema fora dessas lacunas demonstradas.
+- NMA;
+- PredictionModel;
+- Qualitativa/CERQual;
+- remanescente do lineage completo.
+
+Evitar implementação de motores completos; validar representação, versionamento, provenance e lineage.
 
 ## 9. Checkpoint vigente
 
-**CP14 — 2026-10-04**
+**CP15 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP14.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP15.md`
 
 Cobertura principal:
 
-- PoC-S2;
-- migration PoC-S3 de provenance;
-- execução real do F2-B;
-- T01–T19 PASS;
-- rebuild PASS;
-- revisão dos 15 critérios de promoção;
-- decisão de manter OES-P1 como candidato físico validado e não promovido;
-- plano mínimo PoC-S4 + PoC-S5;
-- ponto de retomada no design da PoC-S4.
+- GATE F2-B PASS;
+- PoC-S4 PASS;
+- critérios 4, 5, 7 e 14 promovidos a VALIDADO;
+- matriz 11 VALIDADO / 1 PARCIAL / 3 NÃO VALIDADO;
+- OES-P1 mantido como candidato físico validado e não promovido;
+- ponto de retomada no plano da PoC-S5.
 
