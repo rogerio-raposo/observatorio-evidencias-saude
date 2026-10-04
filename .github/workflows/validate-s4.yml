@@ -1,0 +1,140 @@
+name: OES PoC-S4 PostgreSQL Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'database/004_poc_s4_report_relation_impact.sql'
+      - 'database/s4-fixtures.sql'
+      - 'database/s4-tests.sql'
+      - 'database/s4-rebuild-check.sql'
+      - '.github/workflows/validate-s4.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-s4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: oes_s4
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_s4"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: oes_s4
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare evidence directory
+        shell: bash
+        run: mkdir -p s4-artifacts
+
+      - name: Ensure PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee s4-artifacts/psql-client-version.txt
+
+      - name: Capture server version and SQL hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s4-artifacts/postgresql-server-version.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s4-tests.sql             database/s4-rebuild-check.sql             | tee s4-artifacts/sql-sha256.txt
+
+      - name: S4-T01 — clean install through migration 004
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/poc-s1.sql 2>&1 | tee s4-artifacts/S4-T01-baseline.log
+          psql -v ON_ERROR_STOP=1 -f database/002_poc_s2_search_screening_risk.sql 2>&1 | tee s4-artifacts/S4-T01-002.log
+          psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql 2>&1 | tee s4-artifacts/S4-T01-003.log
+          psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql 2>&1 | tee s4-artifacts/S4-T01-004.log
+
+      - name: Load base and S4 fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql 2>&1 | tee s4-artifacts/base-fixtures.log
+          psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql 2>&1 | tee s4-artifacts/s4-fixtures.log
+
+      - name: S4-T02–T13 — runtime tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/s4-tests.sql 2>&1 | tee s4-artifacts/S4-T02-T13.log
+
+      - name: S4-T15 — migration double-apply detection
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql             > s4-artifacts/S4-T15-double-apply.log 2>&1
+          rc=$?
+          set -e
+          cat s4-artifacts/S4-T15-double-apply.log
+          if [ "$rc" -eq 0 ]; then
+            echo "S4-T15 FAIL — migration 004 applied twice without detection" | tee -a s4-artifacts/S4-T15-double-apply.log
+            exit 1
+          fi
+          echo "S4-T15 PASS — duplicate application detected" | tee -a s4-artifacts/S4-T15-double-apply.log
+
+      - name: S4-T14 — rebuild from zero
+        shell: bash
+        run: |
+          set -euo pipefail
+          createdb oes_s4_rebuild
+          {
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/poc-s1.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/002_poc_s2_search_screening_risk.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/003_poc_s3_provenance_guard.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/004_poc_s4_report_relation_impact.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
+            PGDATABASE=oes_s4_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-rebuild-check.sql
+          } 2>&1 | tee s4-artifacts/S4-T14-rebuild.log
+
+      - name: Final S4 status
+        shell: bash
+        run: |
+          {
+            echo "PoC-S4 runtime suite PASS"
+            echo "S4-T01 PASS — clean install"
+            echo "S4-T02–T13 PASS — multiplicity, multi-study synthesis, retraction, impact and lineage"
+            echo "S4-T14 PASS — rebuild from zero"
+            echo "S4-T15 PASS — duplicate migration detected"
+            echo "PostgreSQL service: postgres:18"
+            echo "OES-P1 remains candidate pending PoC-S5."
+          } | tee s4-artifacts/S4-summary.txt
+
+      - name: Upload S4 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oes-s4-evidence-${{ github.run_id }}
+          path: s4-artifacts/
+          if-no-files-found: warn
+          retention-days: 30
