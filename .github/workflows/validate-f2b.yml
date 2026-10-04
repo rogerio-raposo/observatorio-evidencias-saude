@@ -10,10 +10,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: oes-f2b-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   postgres-poc:
     runs-on: ubuntu-latest
