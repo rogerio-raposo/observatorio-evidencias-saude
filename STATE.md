@@ -16,7 +16,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP13 — 2026-10-04**.
+- checkpoint vigente: **CP14 — 2026-10-04**.
 
 ## 2. Documentação consolidada
 
@@ -51,6 +51,7 @@ Continuidade formal:
 - 30 — Política de Migrações
 - 31 — PoC-S2 Search/Screening/RiskAssessment
 - 32 — Resultado do GATE F2-B e Decisão Pós-PoC
+- 33 — Revisão de Promoção Arquitetural Pós-F2-B
 - F2B Test Run 2026-10-04 / run 37187885839
 
 ## 3. Gates
@@ -135,26 +136,25 @@ Ainda não constituem decisões finais:
 
 ## 8. Próxima etapa
 
-**Revisão de Promoção Arquitetural Pós-F2-B.**
+**PoC-S4 — Multiplicidade Study/Report, Síntese Multiestudo e Retração/Impact Analysis.**
 
-Objetivos:
+A revisão dos 15 critérios de promoção foi concluída:
 
-1. mapear os 15 critérios de promoção do Documento 25;
-2. classificar cada um como validado, parcialmente validado, não validado ou fora do escopo imediato;
-3. vincular evidências concretas;
-4. identificar o menor conjunto de PoCs adicionais;
-5. separar critérios de baseline arquitetural de requisitos de produção;
-6. definir caminho para fechamento da Fase 2.
+- 7 validados;
+- 5 parcialmente validados;
+- 3 não validados.
 
-Até essa revisão, evitar expansão do schema sem vínculo explícito com uma lacuna de promoção.
+PoC-S4 deve cobrir critérios 4, 5, 7, 14 e parte do 15. Depois, PoC-S5 deverá cobrir NMA, predição e qualitativa/CERQual.
+
+Evitar expansão do schema fora dessas lacunas demonstradas.
 
 ## 9. Checkpoint vigente
 
-**CP13 — 2026-10-04**
+**CP14 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP13.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP14.md`
 
 Cobertura principal:
 
@@ -163,6 +163,8 @@ Cobertura principal:
 - execução real do F2-B;
 - T01–T19 PASS;
 - rebuild PASS;
-- decisão de manter OES-P1 como candidato físico validado;
-- ponto de retomada na revisão de promoção pós-F2-B.
+- revisão dos 15 critérios de promoção;
+- decisão de manter OES-P1 como candidato físico validado e não promovido;
+- plano mínimo PoC-S4 + PoC-S5;
+- ponto de retomada no design da PoC-S4.
 
