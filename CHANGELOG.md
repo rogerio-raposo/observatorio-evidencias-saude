@@ -995,4 +995,4 @@ Documento 62:
 
 ### Próxima etapa
 
-Documento 65 preparado para decisão de governança do proprietário. Nenhuma owner approval foi inferida de mensagens anteriores.
+Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a decisão explícita de governança do proprietário. Nenhuma owner approval foi inferida de mensagens anteriores.
