@@ -13,6 +13,10 @@ O candidato físico **OES-P1** foi implementado incrementalmente para prova arqu
 - `005_poc_s5_specialized_methods.sql` — StudyGroup/NMA, PredictionModel e ReviewFinding/CERQual;
 - `006_product_evidence_sheet_contract.sql` — contrato físico da Ficha de Evidência, atualidade, classes de mudança, revisão humana e publication gate;
 - `007_evidence_sheet_view.sql` — projeção JSONB determinística para renderização da Ficha;
+- `008_evidence_sheet_provenance_references.sql` — referências da Ficha conscientes de provenance/lineage;
+- `009_evidence_sheet_view_evidence_counts.sql` — contagens de unidades de evidência por `study_type`;
+- `010_product_assurance_governance.sql` — registros de assurance A0–A3 e publication gate baseado em AI verification, owner approval e expert review;
+- `011_evidence_sheet_assurance_view.sql` — projeção de assurance no EvidenceSheetView.
 - `008_evidence_sheet_provenance_references.sql` — referências da Ficha derivadas também de provenance/dependency graph;
 - `009_evidence_sheet_view_evidence_counts.sql` — discriminação das unidades de evidência por `study_type`;
 - `poc-s1-smoke.sql` — smoke inicial;
@@ -269,3 +273,25 @@ Semântica validada:
 - todos os review records dos testes são sintéticos e revertidos por `ROLLBACK`.
 
 O Caso Real 01 permanece sem revisão humana real e continua `under_review`.
+
+
+## Caso Real 01 — assurance A1
+
+**PASS — 4 de outubro de 2026.**
+
+- run: **37226199396**
+- RC01-T01–T10: PASS
+- AG-T01–T07: PASS
+- AV-T01–T02: PASS
+- F3-TEMPLATE: PASS
+- rebuild through migration 011: PASS
+- artifact: **11311923205**
+- digest: `sha256:4450a1eb9cd4e46012b8fecf55fa132a7b13e80af0472a10eaf8d859d12aeeb6`
+
+Estado do Caso Real 01:
+
+- assurance: **A1**;
+- AI methodological verification ativa: `passed`;
+- owner governance approval: ausente;
+- expert independent review: ausente;
+- `publishable=false`.
