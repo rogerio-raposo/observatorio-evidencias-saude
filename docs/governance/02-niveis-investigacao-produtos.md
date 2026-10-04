@@ -280,7 +280,11 @@ A IA pode aumentar eficiência em todos os níveis:
 - N3: triagem, deduplicação, extração e síntese preliminar;
 - N4: apoio dentro de protocolo formal.
 
-Quanto maior a criticidade e a profundidade, maior deverá ser a supervisão humana qualificada.
+Quanto maior a criticidade e a profundidade, maior deverá ser o nível de garantia exigido.
+
+Para N2, aplica-se o modelo do Documento 04: verificação metodológica assistida por IA + aprovação de governança do proprietário podem constituir garantia A2, com declaração explícita de ausência de revisão especializada independente quando A3 não existir.
+
+N3 e N4 mantêm exigências de supervisão humana qualificada. Na ausência dessa expertise, o produto poderá ser desenvolvido/testado, mas não deverá ser apresentado como produto formal N3/N4 concluído.
 
 ## 15. Nomenclatura preliminar
 
