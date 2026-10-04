@@ -54,6 +54,7 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [55 — Caso Real 01: Decisão Arquitetural para Síntese Adotada + Atualização OES](docs/products/55-caso-real-01-decisao-arquitetural-sintese-adotada.md)
 - [56 — Caso Real 01: Reconciliação e Hardening do EvidenceSheetView](docs/products/56-caso-real-01-reconciliacao-hardening-view.md)
 - [57 — Resultado da Reconciliação e Hardening do EvidenceSheetView](docs/products/57-resultado-reconciliacao-evidence-sheet-view.md)
+- [58 — Resultado da Validação Ponta a Ponta do Caso Real 01](docs/products/58-resultado-validacao-ponta-a-ponta-caso-real-01.md)
 
 ### Arquitetura e dados
 
@@ -177,7 +178,7 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. O **Caso Real 01** já possui busca N2, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico. Após reconciliação da atividade paralela, migrations 008–009 e EvidenceSheetView hardening receberam PASS. A próxima etapa é materializar o caso real no OES-P1 como ProductVersion `under_review` e gerar o preview real da Ficha.
+A PoC-S5 recebeu **PASS**, com regressões F2-B e S4 também aprovadas. A matriz de promoção atingiu **15/15 critérios validados**. OES-P1 foi promovido a **baseline arquitetural da Fase 2**, que está concluída. A Fase 3 está em desenvolvimento. O Documento 41 consolidou a especificação científica da **Ficha de Evidência**. O contrato científico e físico da Ficha foi validado em PostgreSQL 18.6, com regressões F2-B/S4/S5 verdes. O **EvidenceSheetView** foi validado em PostgreSQL 18.6 com F3-VIEW-T01–T16 PASS e regressões anteriores verdes. O Template Operacional inicial da Ficha de Evidência foi validado estruturalmente contra o EvidenceSheetView real da fixture. O **Caso Real 01** já possui busca N2, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico. Após reconciliação da atividade paralela, migrations 008–009 e EvidenceSheetView hardening receberam PASS. O Caso Real 01 foi materializado e validado ponta a ponta como Ficha `under_review`, com preview real e publication gate corretamente bloqueado. A próxima etapa é o **Gate de Revisão Humana do Caso Real 01**.
 
 ---
 
