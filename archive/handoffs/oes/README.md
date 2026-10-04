@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP23 — 2026-10-04**
+**CP24 — 2026-10-04**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP23.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP24.md`
 
 Checkpoint anterior:
 
-`CP22`
+`CP23`
 
 Status:
 
@@ -85,3 +85,4 @@ em **Modo Continuidade**.
 - **CP21 — 2026-10-04:** consolida o Template Operacional inicial da Ficha de Evidência com PASS estrutural/operacional e registra como ponto de retomada a validação científica ponta a ponta com um caso real N2.
 - **CP22 — 2026-10-04:** consolida a reconciliação 008/009/Documento 55, o hardening provenance-aware do EvidenceSheetView e registra como ponto de retomada a materialização do Caso Real 01 como Ficha under_review.
 - **CP23 — 2026-10-04:** consolida o PASS ponta a ponta do Caso Real 01 em pré-publicação, mantém a Ficha under_review e registra como ponto de retomada o Gate de Revisão Humana.
+- **CP24 — 2026-10-04:** consolida o pacote de revisão humana do Caso Real 01 e registra como ponto de retomada a revisão humana real, mantendo a Ficha under_review e não publicável até decisão explícita de revisor.
