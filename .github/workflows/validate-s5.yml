@@ -9,12 +9,15 @@ on:
       - 'database/007_evidence_sheet_view.sql'
       - 'database/008_evidence_sheet_provenance_references.sql'
       - 'database/009_evidence_sheet_view_evidence_counts.sql'
+      - 'database/010_product_assurance_governance.sql'
+      - 'database/011_evidence_sheet_assurance_view.sql'
       - 'database/f3-provenance-reference-tests.sql'
       - 'database/f3-provenance-reference-rebuild-check.sql'
       - 'database/f3-real-case-01-dcbti.sql'
       - 'database/f3-real-case-01-tests.sql'
       - 'database/f3-real-case-01-rebuild-check.sql'
-      - 'database/f3-human-review-gate-tests.sql'
+      - 'database/f3-assurance-gate-tests.sql'
+      - 'database/f3-assurance-view-tests.sql'
       - 'database/s5-fixtures.sql'
       - 'database/s5-tests.sql'
       - 'database/s5-rebuild-check.sql'
@@ -81,9 +84,9 @@ jobs:
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -Atc "SELECT version();" | tee s5-artifacts/postgresql-server-version.txt
-          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/008_evidence_sheet_provenance_references.sql             database/009_evidence_sheet_view_evidence_counts.sql             database/f3-provenance-reference-tests.sql             database/f3-provenance-reference-rebuild-check.sql             database/f3-real-case-01-dcbti.sql             database/f3-real-case-01-tests.sql             database/f3-real-case-01-rebuild-check.sql             database/f3-human-review-gate-tests.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             | tee s5-artifacts/sql-sha256.txt
+          sha256sum             database/poc-s1.sql             database/002_poc_s2_search_screening_risk.sql             database/003_poc_s3_provenance_guard.sql             database/004_poc_s4_report_relation_impact.sql             database/005_poc_s5_specialized_methods.sql             database/006_product_evidence_sheet_contract.sql             database/007_evidence_sheet_view.sql             database/008_evidence_sheet_provenance_references.sql             database/009_evidence_sheet_view_evidence_counts.sql             database/010_product_assurance_governance.sql             database/011_evidence_sheet_assurance_view.sql             database/f3-provenance-reference-tests.sql             database/f3-provenance-reference-rebuild-check.sql             database/f3-real-case-01-dcbti.sql             database/f3-real-case-01-tests.sql             database/f3-real-case-01-rebuild-check.sql             database/f3-assurance-gate-tests.sql             database/f3-assurance-view-tests.sql             database/f2b-fixtures.sql             database/s4-fixtures.sql             database/s5-fixtures.sql             database/f2b-tests.sql             database/s4-tests.sql             database/s5-tests.sql             database/s5-rebuild-check.sql             database/f3-evidence-sheet-fixtures.sql             database/f3-evidence-sheet-tests.sql             database/f3-evidence-sheet-rebuild-check.sql             database/f3-evidence-sheet-view-tests.sql             database/f3-evidence-sheet-view-rebuild-check.sql             templates/evidence-sheet.md             templates/evidence-sheet-presentation-map.json             scripts/render_evidence_sheet_reference.py             scripts/validate_evidence_sheet_render.py             templates/ai-methodological-verification.md             templates/owner-governance-approval.md             | tee s5-artifacts/sql-sha256.txt
 
-      - name: Install baseline through migration 009
+      - name: Install baseline through migration 011
         shell: bash
         run: |
           set -euo pipefail
@@ -96,6 +99,8 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql 2>&1 | tee s5-artifacts/F3-VIEW-T01-007.log
           psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_provenance_references.sql 2>&1 | tee s5-artifacts/F3-PROV-008.log
           psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-T17-009.log
+          psql -v ON_ERROR_STOP=1 -f database/010_product_assurance_governance.sql 2>&1 | tee s5-artifacts/F3-ASSURANCE-010.log
+          psql -v ON_ERROR_STOP=1 -f database/011_evidence_sheet_assurance_view.sql 2>&1 | tee s5-artifacts/F3-ASSURANCE-VIEW-011.log
 
       - name: Load F2-B fixtures and run regression
         shell: bash
@@ -130,6 +135,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-fixtures.sql 2>&1 | tee s5-artifacts/f3-fe-fixtures.log
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-tests.sql 2>&1 | tee s5-artifacts/f3-fe-tests.log
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-tests.sql 2>&1 | tee s5-artifacts/f3-view-tests.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-assurance-gate-tests.sql 2>&1 | tee s5-artifacts/f3-assurance-gate-tests.log
 
       - name: F3-PROV-T01–T05 — provenance-aware reference tests
         shell: bash
@@ -164,7 +170,7 @@ jobs:
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql 2>&1 | tee s5-artifacts/rc01-load.log
           psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-tests.sql 2>&1 | tee s5-artifacts/rc01-tests.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-human-review-gate-tests.sql 2>&1 | tee s5-artifacts/human-review-gate-tests.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-assurance-view-tests.sql 2>&1 | tee s5-artifacts/f3-assurance-view-tests.log
           psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_sheet_view('81000000-0000-0000-0000-000000000701')::text;" > s5-artifacts/rc01-evidence-sheet-view.json
           python3 scripts/render_evidence_sheet_reference.py \
             --template templates/evidence-sheet.md \
@@ -186,13 +192,29 @@ jobs:
           fi
           echo "RC01 PASS — real N2 Evidence Sheet rendered as blocked preview" | tee -a s5-artifacts/RC01-template-validation.log
 
-      - name: EvidenceSheetView latest migrations idempotent re-apply
+      - name: EvidenceSheetView projection migrations idempotent re-apply
         shell: bash
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_provenance_references.sql 2>&1 | tee s5-artifacts/F3-PROV-reapply.log
           psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
-          echo "F3 projection migrations reapply PASS — migrations 008/009 are idempotent by design" | tee -a s5-artifacts/F3-VIEW-reapply.log
+          psql -v ON_ERROR_STOP=1 -f database/011_evidence_sheet_assurance_view.sql 2>&1 | tee s5-artifacts/F3-ASSURANCE-VIEW-reapply.log
+          echo "F3 projection migrations reapply PASS — migrations 008/009/011 are idempotent by design" | tee -a s5-artifacts/F3-ASSURANCE-VIEW-reapply.log
+
+      - name: F3-ASSURANCE-T08 — migration 010 double-apply detection
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/010_product_assurance_governance.sql > s5-artifacts/F3-ASSURANCE-T08-double-apply.log 2>&1
+          rc=$?
+          set -e
+          cat s5-artifacts/F3-ASSURANCE-T08-double-apply.log
+          if [ "$rc" -eq 0 ]; then
+            echo "F3-ASSURANCE-T08 FAIL — migration 010 applied twice without detection" | tee -a s5-artifacts/F3-ASSURANCE-T08-double-apply.log
+            exit 1
+          fi
+          echo "F3-ASSURANCE-T08 PASS — duplicate migration 010 detected" | tee -a s5-artifacts/F3-ASSURANCE-T08-double-apply.log
 
       - name: F3-FE-T17 — migration 006 double-apply detection
         shell: bash
@@ -239,6 +261,8 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/007_evidence_sheet_view.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_provenance_references.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/010_product_assurance_governance.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/011_evidence_sheet_assurance_view.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
@@ -247,6 +271,7 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-rebuild-check.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-assurance-gate-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-provenance-reference-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-rebuild-check.sql
@@ -271,11 +296,12 @@ jobs:
             echo "F3-TEMPLATE PASS"
             echo "Reference Markdown render PASS"
             echo "RC01-T01–T10 PASS"
-            echo "HRG-T01–T06 PASS"
-            echo "Human Review Gate semantics PASS"
+            echo "AG-T01–T07 PASS"
+            echo "AV-T01–T02 PASS"
+            echo "Assurance A0–A3 governance PASS"
             echo "Real N2 Evidence Sheet blocked preview PASS"
             echo "Publication gate PASS"
-            echo "Rebuild through migration 009 PASS"
+            echo "Rebuild through migration 011 PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
