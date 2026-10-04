@@ -170,7 +170,7 @@ BEGIN
 END
 $t11$;
 
--- F3-VIEW-T12 — audit/review/publishability.
+-- F3-VIEW-T12 — audit/assurance/review/publishability.
 DO $t12$
 DECLARE v jsonb;
 BEGIN
@@ -179,13 +179,16 @@ BEGIN
     ) INTO v;
 
     IF v#>>'{audit,publishable}' <> 'true'
+       OR v#>>'{audit,assurance_level}' <> 'A2'
+       OR v#>>'{audit,expert_independent_reviewed}' <> 'false'
+       OR jsonb_array_length(v#>'{audit,assurance_records}') <> 2
        OR jsonb_array_length(v#>'{audit,reviews}') <> 1
        OR v#>>'{audit,lineage_available}' <> 'true'
     THEN
         RAISE EXCEPTION 'F3-VIEW-T12 FAIL: audit projection incorrect %',v->'audit';
     END IF;
 
-    RAISE NOTICE 'F3-VIEW-T12 PASS — review, lineage and publishability exposed';
+    RAISE NOTICE 'F3-VIEW-T12 PASS — assurance, legacy review, lineage and publishability exposed';
 END
 $t12$;
 
