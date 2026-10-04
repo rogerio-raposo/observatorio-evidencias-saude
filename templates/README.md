@@ -11,6 +11,8 @@ Arquivos atuais:
 - risk-of-bias-record.md — registro estruturado de risco de viés/critical appraisal, versão do instrumento, justificativas e adjudicação;
 - data-extraction-record.md — registro estruturado de características, resultados, proveniência, transformações, discrepâncias e verificação da extração;
 - synthesis-record.md — registro estruturado da unidade de síntese, combinabilidade, método, heterogeneidade, sensibilidade, software e resultados;
-- certainty-assessment-record.md — registro estruturado da avaliação GRADE/CERQual ou framework equivalente, julgamentos por domínio, certeza final, revisão e proveniência.
+- certainty-assessment-record.md — registro estruturado da avaliação GRADE/CERQual ou framework equivalente, julgamentos por domínio, certeza final, revisão e proveniência;
+- evidence-sheet.md — template operacional inicial da Ficha de Evidência, entrada `oes.evidence_sheet_view/0.1`, versão `oes.evidence_sheet.template/0.1`;
+- evidence-sheet-presentation-map.json — mapa de apresentação de enums, sem alterar valores canônicos.
 
-Os templates permanecerão provisórios até a consolidação do modelo de dados.
+O modelo de dados da Fase 2 está consolidado como baseline arquitetural. O template da Ficha foi validado estruturalmente no run 37196822297. Os demais templates continuam sujeitos à evolução metodológica e aos respectivos contratos de produto.
