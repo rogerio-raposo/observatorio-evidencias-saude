@@ -23,15 +23,29 @@ Este diretório contém a documentação canônica do Observatório de Evidênci
 
 A arquitetura comum dos produtos está no [Documento 40](products/40-taxonomia-arquitetura-produtos.md).
 
-A trilha da Ficha de Evidência N2 está registrada nos Documentos 41–67, culminando em:
+### Ficha de Evidência — N2
+
+A trilha N2 está registrada nos Documentos 41–67 e culmina em:
 
 - [65 — Resultado da Validação do Estado A1](products/65-caso-real-01-resultado-validacao-a1.md)
 - [66 — Aprovação de Governança do Proprietário](products/66-caso-real-01-aprovacao-governanca-proprietario.md)
 - [67 — Resultado da Validação A2 e Publicação](products/67-caso-real-01-resultado-validacao-a2-publicacao.md)
 
-**Estado atual:** Caso Real 01 em A2, `published`, `publishable=true`, sem revisão especializada independente e com disclosure explícito dessa ausência.
+Estado: **A2 / published / publishable=true**, sem expert independent review e com disclosure explícito.
 
-**Próxima etapa:** especificação científica e funcional da **Resposta de Evidência — N1**, conforme Documento 40.
+### Resposta de Evidência — N1
+
+A trilha N1 está registrada nos Documentos 68–85 e culmina em:
+
+- [83 — Resultado da Validação do Estado A1](products/83-caso-real-n1-resultado-validacao-a1.md)
+- [84 — Aprovação de Governança do Proprietário](products/84-caso-real-n1-aprovacao-governanca-proprietario.md)
+- [85 — Resultado da Validação A2 e Publicação](products/85-caso-real-n1-resultado-validacao-a2-publicacao.md)
+
+Estado: **A2 / published / publishable=true**, `publication_date=2026-10-05`, sem expert independent review e com disclosure explícito.
+
+Validação final: run **37362554094** — PASS.
+
+**Próxima etapa:** especificação científica e funcional do **Evidence Scan — N0**.
 
 ## Architecture
 
