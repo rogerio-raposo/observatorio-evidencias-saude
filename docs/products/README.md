@@ -88,8 +88,27 @@ Caso Real N0-01:
 
 A validação final ocorreu no run **37382201584**, com RN0-T01–T13, RN0-A1-T01–T08, renderização A0/A1 e rebuild em PASS.
 
+## Síntese Rápida de Evidências — N3
+
+A camada científica, arquitetural e de dados inicial da **Síntese Rápida — N3** está validada tecnicamente.
+
+Documentos principais:
+
+- [99 — Especificação Científica e Funcional](99-especificacao-sintese-rapida-n3.md)
+- [100 — Revisão de Coerência e Arquitetura](100-sintese-rapida-n3-revisao-coerencia-arquitetura.md)
+- [101 — Contrato de Dados](101-contrato-dados-sintese-rapida-n3.md)
+- [102 — Resultado da Validação do Contrato](102-resultado-validacao-contrato-sintese-rapida-n3.md)
+
+Estado:
+
+- migration 014 validada;
+- RS-T01–T15 PASS;
+- fixture experimental A2 permanece não publicável sem qualified human controls/A3;
+- caminho formal A3 comprovado em teste transacional;
+- configuração atual do OES não autoriza publicação formal N3.
+
 ## Próxima especificação
 
-**Síntese Rápida de Evidências — N3.**
+**Contrato de Renderização da Síntese Rápida — N3.**
 
-A especificação científica e funcional deve preceder contrato de dados, view, template ou automação específica desse produto.
+A apresentação deverá manter visíveis rapid restrictions, protocol deviations, quality controls, missing controls e bloqueios formais.
