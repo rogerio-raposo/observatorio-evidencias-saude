@@ -597,7 +597,7 @@ INSERT INTO product.synthesis_link(
     product_version_uuid,synthesis_version_uuid,role,sequence_no
 ) VALUES (
     'd1000000-0000-0000-0000-000000000601',
-    'd1000000-0000-0000-000000000501',
+    'd1000000-0000-0000-0000-000000000501',
     'primary',1
 );
 
@@ -605,7 +605,7 @@ INSERT INTO product.certainty_link(
     product_version_uuid,certainty_assessment_version_uuid,role,sequence_no
 ) VALUES (
     'd1000000-0000-0000-0000-000000000601',
-    'd1000000-0000-0000-000000000502',
+    'd1000000-0000-0000-0000-000000000502',
     'primary',1
 );
 
@@ -627,7 +627,7 @@ INSERT INTO product.assurance_record(
 ) VALUES
 (
     'd8000000-0000-0000-0000-000000000601',
-    'd1000000-0000-0000-000000000601',
+    'd1000000-0000-0000-0000-000000000601',
     'ai_methodological_verification','N3_FIXTURE_AI','ai_system',
     false,'passed',TIMESTAMPTZ '2026-10-05 19:51:00-03',
     'Synthetic AI verification for gate testing.',
