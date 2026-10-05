@@ -100,37 +100,37 @@ INSERT INTO evidence.report_version(
 (
  'a1000000-0000-0000-0000-000000000202','a0000000-0000-0000-0000-000000000202','systematic_review',
  'Effect of music intervention on anxiety in surgical patients: Systematic review and meta-analysis of randomized controlled trials',
- DATE '2026-01-01','General Hospital Psychiatry','en','published','indexed',
+ DATE '2026-03-01','General Hospital Psychiatry','en','published','indexed',
  '{"authors":"Yu Y et al.","pmid":"41547232","doi":"10.1016/j.genhosppsych.2026.01.008","search_cutoff":"2025-07"}'::jsonb,'active'
 ),
 (
  'a1000000-0000-0000-0000-000000000203','a0000000-0000-0000-0000-000000000203','umbrella_review',
  'Music intervention as a strategy to reduce preoperative anxiety: an umbrella review',
- DATE '2025-08-21','BMC Anesthesiology','en','published','available',
+ DATE '2025-08-20','BMC Anesthesiology','en','published','available',
  '{"authors":"Yang KL et al.","pmid":"40836211","pmcid":"PMC12366122","doi":"10.1186/s12871-025-03120-z","search_cutoff":"2024-08-22"}'::jsonb,'active'
 ),
 (
  'a1000000-0000-0000-0000-000000000204','a0000000-0000-0000-0000-000000000204','systematic_review',
  'Music interventions in patients undergoing surgery: A systematic review using strict inclusion criteria',
- DATE '2025-01-01','Complementary Therapies in Medicine','en','published','indexed',
+ DATE '2025-09-01','Complementary Therapies in Medicine','en','published','indexed',
  '{"authors":"Geensen R et al.","pmid":"40409738","doi":"10.1016/j.ctim.2025.103195","search_cutoff":"2024-07-05"}'::jsonb,'active'
 ),
 (
  'a1000000-0000-0000-0000-000000000205','a0000000-0000-0000-0000-000000000205','randomized_trial',
  'Effects of traditional vocal and instrumental music on preoperative anxiety in candidates for general surgery',
- DATE '2025-01-01','BMC Complementary Medicine and Therapies','en','published','indexed',
+ DATE '2025-10-09','BMC Complementary Medicine and Therapies','en','published','indexed',
  '{"authors":"Nouri et al.","pmid":"41068753","doi":"10.1186/s12906-025-05124-1"}'::jsonb,'active'
 ),
 (
  'a1000000-0000-0000-0000-000000000206','a0000000-0000-0000-0000-000000000206','randomized_trial',
  'Effectiveness of Music Intervention on Perioperative Anxiety and Physiological Indicators in Orthopedic Surgery Patients: A Pilot Randomized Controlled Trial',
- DATE '2026-01-01','Journal of PeriAnesthesia Nursing','en','published','indexed',
+ DATE '2026-02-01','Journal of PeriAnesthesia Nursing','en','published','indexed',
  '{"authors":"Hsieh et al.","pmid":"40838926","doi":"10.1016/j.jopan.2025.05.177"}'::jsonb,'active'
 ),
 (
  'a1000000-0000-0000-0000-000000000207','a0000000-0000-0000-0000-000000000207','randomized_trial',
  'Effects of Music Therapy on Perioperative Anxiety, Physiological Stress, and Postoperative Recovery in Patients Undergoing Knee Arthroscopy: A Randomized Controlled Trial',
- DATE '2026-01-01','Journal of PeriAnesthesia Nursing','en','published','indexed',
+ DATE '2026-06-01','Journal of PeriAnesthesia Nursing','en','published','indexed',
  '{"authors":"Li et al.","pmid":"41591321","doi":"10.1016/j.jopan.2025.10.008"}'::jsonb,'active'
 );
 
