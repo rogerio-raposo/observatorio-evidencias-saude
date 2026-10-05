@@ -4,7 +4,7 @@
 **Fase:** 3 — Produtos do Observatório  
 **Caso:** N1-01 — música gravada e ansiedade perioperatória  
 **Tipo de garantia:** `owner_governance_approval`  
-**Status atual:** **PENDENTE — A1 validado**  
+**Status atual:** **APPROVED — A2 autorizado pelo proprietário**  
 **Data de preparação:** 5 de outubro de 2026  
 **Não é:** revisão metodológica especializada  
 **Dependências:** Documentos 04, 75–83
@@ -195,7 +195,7 @@ Essa separação está adequada?
 
 Escolher uma:
 
-- [ ] **APPROVED** — autorizo o produto a avançar sob garantia A2, mantendo explícita a ausência de revisão especializada independente.
+- [x] **APPROVED** — autorizo o produto a avançar sob garantia A2, mantendo explícita a ausência de revisão especializada independente.
 - [ ] **REVISE** — solicito ajustes antes da aprovação.
 - [ ] **REJECTED** — não autorizo publicação na forma atual.
 
@@ -248,4 +248,19 @@ A decisão deve ser explicitamente vinculada a este produto.
 
 ---
 
-**Estado atual:** A1 validado; decisão do proprietário pendente.
+**Estado atual:** decisão global explícita **APPROVED** registrada pelo proprietário; transição A1 → A2 autorizada, sujeita ao fechamento editorial, atribuição de `publication_date` e nova execução do publication gate.
+
+
+## 13. Registro da decisão
+
+Em 5 de outubro de 2026, o proprietário respondeu explicitamente **“Approved”** ao documento de governança do Caso Real N1-01.
+
+Essa decisão autoriza:
+
+- registro de `owner_governance_approval = approved`;
+- transição do assurance derivado de A1 para A2;
+- fechamento editorial;
+- atribuição de `publication_date`;
+- reexecução do publication gate.
+
+A decisão não constitui revisão metodológica especializada e não altera a ausência de expert independent review.
