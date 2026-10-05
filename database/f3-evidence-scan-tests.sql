@@ -1,5 +1,6 @@
 -- OES Fase 3 — Evidence Scan N0 contract tests
 -- Requires f3-evidence-scan-fixtures.sql loaded after migration 013.
+-- Integrated with validate-s5.yml after migration 013.
 
 -- ES-T01 — formal N0 fixture is A2 and publishable.
 DO $t01$
