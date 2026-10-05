@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP33 — 2026-10-05**
+**CP34 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP33.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP34.md`
 
 Checkpoint anterior:
 
-`CP32`
+`CP33`
 
 Status:
 
@@ -93,3 +93,4 @@ em **Modo Continuidade**.
 - **CP31 — 2026-10-05:** fecha a trilha inicial da **Resposta de Evidência N1** com Caso Real N1-01 em **A2/published**, run final 37362554094 PASS; retomada na especificação científica e funcional do **Evidence Scan N0**.
 - **CP32 — 2026-10-05:** consolida Documentos 86–89, migration 013, EvidenceScanView e ES-T01–T15 em PASS; retomada no **contrato de renderização do Evidence Scan N0**.
 - **CP33 — 2026-10-05:** fecha a trilha inicial do **Evidence Scan N0** com Caso Real N0-01 em **A1 interno**, run final 37382201584 PASS; retomada na especificação científica e funcional da **Síntese Rápida de Evidências — N3**.
+- **CP34 — 2026-10-05:** consolida Documentos 99–102, migration 014, RapidEvidenceSynthesisView e RS-T01–T15 em PASS; retomada no **contrato de renderização da Síntese Rápida N3**.
