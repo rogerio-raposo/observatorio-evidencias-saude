@@ -38,17 +38,31 @@ Referência de fechamento: [Documento 67](67-caso-real-01-resultado-validacao-a2
 
 ## Resposta de Evidência — N1
 
-A trilha inicial de especificação e contrato N1 está registrada em:
+A trilha inicial da **Resposta de Evidência — N1** foi especificada, implementada e validada ponta a ponta.
 
-- [68 — Especificação Científica e Funcional da Resposta de Evidência](68-especificacao-resposta-evidencia.md)
-- [69 — Revisão de Coerência e Decisão Arquitetural Inicial](69-resposta-evidencia-revisao-coerencia-arquitetura.md)
-- [70 — Contrato de Dados da Resposta de Evidência](70-contrato-dados-resposta-evidencia.md)
-- [71 — Resultado da Validação do Contrato da Resposta de Evidência](71-resultado-validacao-contrato-resposta-evidencia.md)
+Documentos principais:
 
-O contrato N1 passou tecnicamente sem exigir nova tabela ou coluna e sem tornar Synthesis/Certainty obrigatórios.
+- [68 — Especificação Científica e Funcional](68-especificacao-resposta-evidencia.md)
+- [70 — Contrato de Dados](70-contrato-dados-resposta-evidencia.md)
+- [72 — EvidenceResponseView](72-evidence-response-view.md)
+- [73 — Especificação do Template Operacional](73-especificacao-template-resposta-evidencia.md)
+- [83 — Resultado da Validação A1](83-caso-real-n1-resultado-validacao-a1.md)
+- [84 — Aprovação de Governança do Proprietário](84-caso-real-n1-aprovacao-governanca-proprietario.md)
+- [85 — Resultado da Validação A2 e Publicação](85-caso-real-n1-resultado-validacao-a2-publicacao.md)
+
+Caso Real N1-01:
+
+- Product `OES-P-2026-000501`;
+- assurance **A2**;
+- estado `published`;
+- `publication_date=2026-10-05`;
+- `publishable=true`;
+- expert independent review não realizada e explicitamente declarada.
+
+A validação final ocorreu no run **37362554094**, com regressões e rebuild em PASS.
 
 ## Próxima especificação
 
-**Contrato de renderização EvidenceResponseView.**
+**Evidence Scan — N0.**
 
-O template operacional N1 somente será criado após a formalização dessa projeção.
+A especificação científica e funcional deve preceder contrato de dados, template ou automação específica desse produto.
