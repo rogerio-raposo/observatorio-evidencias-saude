@@ -323,8 +323,8 @@ def main() -> None:
             real_response_rendered,
         )
         require(
-            real_response_payload["audit"]["assurance_level"] == "A0",
-            "Real N1-01 must remain A0 before methodological verification",
+            real_response_payload["audit"]["assurance_level"] == "A1",
+            "Real N1-01 must be A1 after methodological verification and before owner approval",
         )
         require(
             real_response_payload["audit"]["publishable"] is False,
@@ -338,7 +338,7 @@ def main() -> None:
             "MISSING_OWNER_APPROVAL" in real_response_rendered,
             "Real N1-01 owner-approval block missing",
         )
-        print("RN1-TEMPLATE-A0 validation PASS")
+        print("RN1-TEMPLATE-A1 validation PASS")
 
 
 if __name__ == "__main__":
