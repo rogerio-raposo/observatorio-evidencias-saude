@@ -1,0 +1,108 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicado",
+    "superseded": "Substituído",
+    "archived": "Arquivado"
+  },
+  "identity.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificado",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.expert_independent_reviewed": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.lineage_available": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.traceable_basis_type": {
+    "reports": "fontes documentais rastreáveis",
+    "mixed": "fontes documentais + sinais de busca",
+    "search_only_insufficient": "apenas buscas registradas — campo insuficiente",
+    "none": "nenhuma base rastreável válida"
+  },
+  "maturity.category": {
+    "well_synthesized": "bem sintetizado",
+    "partially_synthesized": "parcialmente sintetizado",
+    "fragmented": "fragmentado",
+    "emerging": "emergente",
+    "saturated": "saturado",
+    "insufficient": "insuficiente"
+  },
+  "routing_recommendation.recommendation.target": {
+    "stop_after_scan": "encerrar após o scan",
+    "repeat_n0": "repetir N0",
+    "N1": "N1 — Resposta de Evidência",
+    "N2": "N2 — Ficha de Evidência",
+    "N3": "N3 — Síntese Rápida",
+    "N4": "N4 — Revisão de Evidências",
+    "evidence_map": "Mapa de Evidências",
+    "overview": "Overview de Revisões",
+    "other": "outra rota"
+  },
+  "routing_recommendation.recommendation.requires_question_reformulation": {
+    "true": "sim",
+    "false": "não"
+  },
+  "role": {
+    "preferred": "preferencial",
+    "synonym": "sinônimo",
+    "legacy": "legado",
+    "emerging": "emergente",
+    "ambiguous": "ambíguo"
+  },
+  "component.role": {
+    "field_overview": "visão geral do campo",
+    "recent_synthesis": "síntese recente",
+    "guideline": "diretriz",
+    "map": "mapa de evidências",
+    "seminal": "fonte seminal",
+    "contextual": "contextual"
+  },
+  "priority": {
+    "high": "alta",
+    "medium": "média",
+    "low": "baixa",
+    "unspecified": "não especificada"
+  },
+  "signal": {
+    "none": "nenhum",
+    "few": "poucos",
+    "multiple": "múltiplos",
+    "many": "muitos",
+    "unknown": "desconhecido"
+  },
+  "assurance_type": {
+    "ai_methodological_verification": "verificação metodológica assistida por IA",
+    "owner_governance_approval": "aprovação de governança do proprietário",
+    "expert_independent_review": "revisão especializada independente"
+  },
+  "actor_type": {
+    "ai_system": "sistema de IA",
+    "owner": "proprietário",
+    "human_expert": "especialista humano"
+  },
+  "decision": {
+    "approved": "aprovada",
+    "passed": "aprovada",
+    "revise": "revisar",
+    "failed": "falhou",
+    "rejected": "rejeitada"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  }
+}
