@@ -344,6 +344,51 @@ def main() -> None:
         )
         print("RN1-TEMPLATE-A2 validation PASS")
 
+    # Cross-product validation: Evidence Scan N0 fixture/view/template.
+    scan_snapshot = Path("s5-artifacts/evidence-scan-view.json")
+    scan_template_path = Path("templates/evidence-scan.md")
+    scan_map_path = Path("templates/evidence-scan-presentation-map.json")
+    if (
+        scan_snapshot.exists()
+        and scan_template_path.exists()
+        and scan_map_path.exists()
+    ):
+        from validate_evidence_scan_render import (
+            validate_a1_preview as validate_scan_a1_preview,
+            validate_insufficient_without_report as validate_scan_insufficient,
+            validate_render as validate_scan_render,
+        )
+
+        scan_payload = json.loads(scan_snapshot.read_text(encoding="utf-8"))
+        scan_template = scan_template_path.read_text(encoding="utf-8")
+        scan_presentation = json.loads(
+            scan_map_path.read_text(encoding="utf-8")
+        )
+        scan_rendered = render(
+            scan_template,
+            scan_payload,
+            scan_presentation,
+        )
+        scan_output = Path("s5-artifacts/evidence-scan-fixture.md")
+        scan_output.write_text(scan_rendered, encoding="utf-8")
+
+        validate_scan_render(
+            scan_template,
+            scan_payload,
+            scan_rendered,
+        )
+        validate_scan_a1_preview(
+            scan_template,
+            scan_payload,
+            scan_presentation,
+        )
+        validate_scan_insufficient(
+            scan_template,
+            scan_payload,
+            scan_presentation,
+        )
+        print("F3-ES-TEMPLATE validation PASS")
+
 
 if __name__ == "__main__":
     main()
