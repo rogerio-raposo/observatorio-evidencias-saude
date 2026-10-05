@@ -188,11 +188,20 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A trilha inicial da **Ficha de Evidência N2** foi consolidada ponta a ponta. O Caso Real 01 recebeu aprovação explícita de governança do proprietário, avançou para **A2**, recebeu `publication_date=2026-10-04`, estado editorial `published` e `publishable=true`. A ausência de revisão especializada independente permanece explicitamente declarada e não é confundida com A3.
+A Fase 3 já possui duas trilhas de produto consolidadas ponta a ponta:
 
-A validação final ocorreu no GitHub Actions run **37229070210**, com regressões, RC01, assurance, template, idempotência e rebuild-from-zero em PASS.
+1. **Ficha de Evidência — N2**: Caso Real 01 publicado em **A2**, `publication_date=2026-10-04`, `publishable=true`.
+2. **Resposta de Evidência — N1**: Caso Real N1-01 publicado em **A2**, `publication_date=2026-10-05`, `publishable=true`.
 
-Conforme a ordem estabelecida no Documento 40, a próxima etapa da Fase 3 é a **especificação científica e funcional da Resposta de Evidência — N1**, antes de qualquer template ou automação específica.
+Na Resposta N1, a primeira verificação adversarial retornou **REVISE**, as correções foram preservadas em nova ProductVersion, a segunda passagem foi **PASSED** e a aprovação explícita do proprietário autorizou A2. A ausência de revisão especializada independente permanece declarada.
+
+Validação final N1: GitHub Actions run **37362554094** — **PASS**.
+
+Conforme a ordem recomendada do Documento 40, a próxima etapa da Fase 3 é:
+
+> **especificação científica e funcional do Evidence Scan — N0**
+
+antes de qualquer contrato de dados, template ou automação específica.
 
 ---
 
