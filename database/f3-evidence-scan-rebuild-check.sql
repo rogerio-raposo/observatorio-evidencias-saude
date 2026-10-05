@@ -35,3 +35,7 @@ $esrebuild$;
 -- ---------------------------------------------------------------------------
 \ir f3-real-case-n0-genai-mental-health.sql
 \ir f3-real-case-n0-rebuild-check.sql
+
+-- REAL N0-01 — A1 rebuild state
+\ir f3-real-case-n0-ai-verification.sql
+\ir f3-real-case-n0-a1-rebuild-check.sql
