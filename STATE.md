@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP31 — 2026-10-05**.
+- checkpoint vigente: **CP32 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -109,85 +109,80 @@ Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES**: consolidado.
 
 Documentos 41–67: trilha inicial especificada, implementada e validada ponta a ponta.
 
-Caso Real 01:
+Estado do Caso Real 01:
 
 - Product `OES-P-2026-000401`;
 - assurance **A2**;
 - `publication_date=2026-10-04`;
-- estado `published`;
+- `published`;
 - `publishable=true`;
 - expert independent review não realizada;
-- ausência de expert review preservada como warning explícito;
 - run final **37229070210** = PASS.
 
 ### Resposta de Evidência — N1
 
-Documentos 68–74:
+Documentos 68–85: trilha inicial especificada, implementada e validada ponta a ponta.
 
-- especificação científica/funcional;
-- decisão arquitetural;
-- contrato de dados;
-- migration 012;
-- EvidenceResponseView;
-- template operacional;
-- renderer;
-- validator;
-- contrato e template em PASS técnico.
-
-Caso Real N1-01 — música gravada e ansiedade perioperatória:
-
-Documentos 75–85:
-
-- 75 — protocolo/routing;
-- 76 — busca seletiva/seleção;
-- 77 — ROBIS de Stoop et al. 2026;
-- 78 — síntese;
-- 79 — draft inicial;
-- 80 — primeira verificação adversarial = **REVISE**;
-- 81 — draft corrigido / ProductVersion 2;
-- 82 — segunda verificação adversarial = **PASSED**;
-- 83 — estado A1 = **PASS**;
-- 84 — owner governance approval = **APPROVED**;
-- 85 — estado A2/publicação = **PASS**.
-
-Estado materializado do Caso Real N1-01:
+Estado do Caso Real N1-01:
 
 - Product `OES-P-2026-000501`;
-- ProductVersion atual = **2**;
-- primeira ProductVersion preservada como `superseded`;
-- AI methodological verification = `passed`;
-- owner governance approval = `approved`;
-- expert independent review = ausente;
-- assurance = **A2**;
+- ProductVersion atual = 2;
+- assurance **A2**;
 - `publication_date=2026-10-05`;
-- estado editorial = `published`;
+- `published`;
 - `publishable=true`;
-- `NO_EXPERT_INDEPENDENT_REVIEW` permanece warning explícito;
-- certainty formal OES não realizada;
-- Synthesis/CertaintyAssessment continuam não obrigatórios para N1.
+- expert independent review ausente;
+- primeira verificação adversarial = REVISE;
+- segunda verificação = PASSED;
+- run final **37362554094** = PASS.
 
-Validação final N1:
+### Evidence Scan — N0
 
-- run **37362554094** = **success**;
-- commit validado `c00f4ec6dd7542074bd6c690db01bc752f0ccf6d`;
-- artifact **11366543917**;
-- digest `sha256:77c6c96c72e6d66a2412ffba999c6c7aa451b835396d3c175a3b850b0516dada`;
-- RN1-T01–T12 PASS;
-- RN1-R1-T01–T09 PASS;
-- RN1-A1-T01–T09 PASS;
-- RN1-A2-T01–T09 PASS;
-- RN1-TEMPLATE-A2 PASS;
-- regressões F2-B/S4/S5/N2 PASS;
-- rebuild through migration 012 PASS.
+Documentos 86–89:
+
+- 86 — especificação científica e funcional;
+- 87 — revisão de coerência e decisão arquitetural;
+- 88 — contrato de dados;
+- 89 — resultado da validação técnica: **PASS**.
+
+Implementação validada:
+
+- migration 013;
+- EvidenceScanView `oes.evidence_scan_view/0.1`;
+- publication gate N0;
+- fixture e testes sintéticos;
+- ES-T01–T15 PASS;
+- migration 013 idempotente;
+- rebuild through migration 013 PASS.
+
+Run final N0:
+
+- **37366556793**, attempt 2 = **success**;
+- commit validado `a1aa98eec809f25add578ebf15ba6b40739d54ca`;
+- artifact **11368729267**;
+- digest `sha256:f734fceca49c384cf5671b81919d2991d54b2a167b03a420b2c4f19db42f4a3c`.
+
+Decisões consolidadas N0:
+
+- nenhuma nova tabela ou coluna;
+- reutilização de OES-P1;
+- scan formal persistente exige A2;
+- scan interno pode encerrar em A1;
+- Synthesis/Certainty/RiskAssessment não são obrigatórios;
+- exceção controlada `insufficient` sem Report central validada;
+- provenance permanece append-preserving.
 
 Produtos com trilha inicial ponta a ponta concluída:
 
 1. **Ficha de Evidência — N2**;
 2. **Resposta de Evidência — N1**.
 
+Produto com contrato técnico validado e renderização/caso real pendentes:
+
+3. **Evidence Scan — N0**.
+
 Taxonomia restante da Fase 3:
 
-- Evidence Scan — N0;
 - Síntese Rápida de Evidências — N3;
 - Revisão de Evidências — N4;
 - Mapa de Evidências;
@@ -197,24 +192,18 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Evidence Scan — N0: especificação científica e funcional.**
+**Evidence Scan — N0: contrato de renderização.**
 
-A próxima etapa deverá:
-
-1. recuperar função e fronteiras do Documento 40;
-2. comparar N0 com N1/N2 para evitar sobreposição;
-3. definir contrato científico/funcional;
-4. definir requisitos mínimos de busca, seleção, incerteza e publicação;
-5. somente depois avaliar contrato de dados/view/template.
+Definir conteúdo, ordem semântica, representação de não exaustividade, maturidade, controvérsias, lacunas, routing, assurance e o estado `insufficient` antes de criar template operacional.
 
 ## 10. Checkpoint vigente
 
-**CP31 — 2026-10-05**
+**CP32 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP31.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP32.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — iniciar a especificação científica e funcional do Evidence Scan — N0.**
+> **Fase 3 — formalizar o contrato de renderização do Evidence Scan — N0.**
