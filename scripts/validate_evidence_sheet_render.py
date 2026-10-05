@@ -323,22 +323,26 @@ def main() -> None:
             real_response_rendered,
         )
         require(
-            real_response_payload["audit"]["assurance_level"] == "A1",
-            "Real N1-01 must be A1 after methodological verification and before owner approval",
+            real_response_payload["audit"]["assurance_level"] == "A2",
+            "Real N1-01 must be A2 after explicit owner governance approval",
         )
         require(
-            real_response_payload["audit"]["publishable"] is False,
-            "Real N1-01 must remain non-publishable before verification/owner approval",
+            real_response_payload["audit"]["publishable"] is True,
+            "Real N1-01 must be publishable after A2 approval and editorial closure",
         )
         require(
-            "PREVIEW — NÃO PUBLICÁVEL" in real_response_rendered,
-            "Real N1-01 preview marker missing",
+            "PREVIEW — NÃO PUBLICÁVEL" not in real_response_rendered,
+            "Real N1-01 published A2 render must not contain preview marker",
         )
         require(
-            "MISSING_OWNER_APPROVAL" in real_response_rendered,
-            "Real N1-01 owner-approval block missing",
+            "MISSING_OWNER_APPROVAL" not in real_response_rendered,
+            "Real N1-01 published A2 render must not retain owner-approval blocker",
         )
-        print("RN1-TEMPLATE-A1 validation PASS")
+        require(
+            "NO_EXPERT_INDEPENDENT_REVIEW" in real_response_rendered,
+            "Real N1-01 A2 render must disclose absence of expert review",
+        )
+        print("RN1-TEMPLATE-A2 validation PASS")
 
 
 if __name__ == "__main__":
