@@ -1,0 +1,57 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicada",
+    "superseded": "Substituída",
+    "archived": "Arquivada"
+  },
+  "identity.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizada",
+    "archived": "Arquivada"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.expert_independent_reviewed": {
+    "true": "sim",
+    "false": "não"
+  },
+  "assurance_type": {
+    "ai_methodological_verification": "verificação metodológica assistida por IA",
+    "owner_governance_approval": "aprovação de governança do proprietário",
+    "expert_independent_review": "revisão especializada independente"
+  },
+  "actor_type": {
+    "ai_system": "sistema de IA",
+    "owner": "proprietário",
+    "human_expert": "especialista humano"
+  },
+  "decision": {
+    "approved": "aprovada",
+    "passed": "aprovada",
+    "revise": "revisar",
+    "failed": "falhou",
+    "rejected": "rejeitada"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.lineage_available": {
+    "true": "sim",
+    "false": "não"
+  },
+  "this": {
+    "decisive": "decisiva",
+    "supporting": "suporte",
+    "contextual": "contextual",
+    "linked_evidence": "evidência vinculada"
+  }
+}
