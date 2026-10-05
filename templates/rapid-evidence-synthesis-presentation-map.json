@@ -1,0 +1,129 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicada",
+    "superseded": "Substituída",
+    "archived": "Arquivada"
+  },
+  "identity.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizada",
+    "archived": "Arquivada"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.expert_independent_reviewed": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.qualified_controls_satisfied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.protocol_deviations_open": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.lineage_available": {
+    "true": "sim",
+    "false": "não"
+  },
+  "qualified": {
+    "true": "sim — humano qualificado",
+    "false": "não"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  },
+  "planned": {
+    "true": "sim",
+    "false": "não"
+  },
+  "applicability.formal_assessment": {
+    "true": "sim",
+    "false": "não"
+  },
+  "formal_assessment": {
+    "true": "sim",
+    "false": "não"
+  },
+  "actor_type": {
+    "ai_system": "sistema de IA",
+    "owner": "proprietário",
+    "human_reviewer": "revisor humano",
+    "human_expert": "especialista humano"
+  },
+  "assurance_type": {
+    "ai_methodological_verification": "verificação metodológica assistida por IA",
+    "owner_governance_approval": "aprovação de governança do proprietário",
+    "expert_independent_review": "revisão especializada independente"
+  },
+  "decision": {
+    "approved": "aprovada",
+    "passed": "aprovado",
+    "revise": "revisar",
+    "failed": "falhou",
+    "rejected": "rejeitada",
+    "not_applicable": "não aplicável"
+  },
+  "stage": {
+    "question": "pergunta",
+    "search": "busca",
+    "screening": "seleção",
+    "extraction": "extração",
+    "appraisal": "avaliação crítica",
+    "synthesis": "síntese",
+    "certainty": "certeza/confiança",
+    "reporting": "relato",
+    "cross_cutting": "transversal"
+  },
+  "control_type": {
+    "search_strategy_verification": "verificação da estratégia de busca",
+    "search_strategy_peer_review": "revisão da estratégia de busca",
+    "screening_pilot": "piloto/calibração de seleção",
+    "screening_secondary_verification": "verificação secundária da seleção",
+    "critical_data_verification": "verificação de dados críticos",
+    "risk_of_bias_verification": "verificação do risco de viés",
+    "synthesis_statistical_review": "revisão estatística da síntese",
+    "certainty_verification": "verificação da certeza/confiança",
+    "reporting_verification": "verificação do relato",
+    "other": "outro"
+  },
+  "resolution_status": {
+    "open": "aberto",
+    "accepted": "aceito",
+    "mitigated": "mitigado",
+    "resolved": "resolvido",
+    "rerouted": "rerroteado",
+    "rejected": "rejeitado"
+  },
+  "final_level": {
+    "high": "alta",
+    "moderate": "moderada",
+    "low": "baixa",
+    "very_low": "muito baixa"
+  },
+  "initial_level": {
+    "high": "alta",
+    "moderate": "moderada",
+    "low": "baixa",
+    "very_low": "muito baixa"
+  },
+  "evidence_state": {
+    "evidence_available": "evidência disponível",
+    "no_evidence": "nenhuma evidência elegível localizada"
+  },
+  "overall_judgement": {
+    "low": "baixo risco",
+    "some_concerns": "algumas preocupações",
+    "high": "alto risco"
+  }
+}
