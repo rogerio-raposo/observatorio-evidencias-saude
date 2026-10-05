@@ -142,6 +142,15 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-tests.sql 2>&1 | tee s5-artifacts/f3-view-tests.log
           psql -v ON_ERROR_STOP=1 -f database/f3-assurance-gate-tests.sql 2>&1 | tee s5-artifacts/f3-assurance-gate-tests.log
 
+      - name: Evidence Response N1 — load fixture and run contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-response-fixtures.sql 2>&1 | tee s5-artifacts/f3-er-fixtures.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-response-tests.sql 2>&1 | tee s5-artifacts/f3-er-tests.log
+          psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_response_view('91000000-0000-0000-0000-000000000301')::text;" > s5-artifacts/evidence-response-view.json
+          echo "F3-ER-T01–T13 PASS — N1 contract validated without mandatory Synthesis/Certainty" | tee -a s5-artifacts/f3-er-tests.log
+
       - name: F3-PROV-T01–T05 — provenance-aware reference tests
         shell: bash
         run: |
