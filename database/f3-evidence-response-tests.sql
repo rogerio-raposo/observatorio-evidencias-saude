@@ -269,3 +269,12 @@ $t13$;
 
 -- Current renderer snapshot after methodological verification: A1, still blocked.
 \copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000702')::text) TO 's5-artifacts/real-n1-01-view.json'
+
+-- ---------------------------------------------------------------------------
+-- REAL N1-01 — owner governance approval / A2 publication
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n1-owner-approval.sql
+\ir f3-real-case-n1-a2-tests.sql
+
+-- Current renderer snapshot after explicit owner approval: A2/published.
+\copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000702')::text) TO 's5-artifacts/real-n1-01-view.json'
