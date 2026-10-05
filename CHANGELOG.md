@@ -1137,3 +1137,47 @@ Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a dec
 
 - CP31 criado;
 - próxima etapa: especificação científica e funcional do **Evidence Scan — N0**.
+
+## 2026-10-05 — Evidence Scan N0: contrato técnico validado
+
+### Especificação e arquitetura
+
+- Documento 86 — especificação científica e funcional;
+- Documento 87 — decisão arquitetural: reutilizar OES-P1;
+- Documento 88 — contrato de dados;
+- Documento 89 — validação técnica = **PASS**;
+- Documento 90 — contrato de renderização.
+
+### Implementação
+
+- migration 013;
+- EvidenceScanView `oes.evidence_scan_view/0.1`;
+- publication gate N0;
+- fixture sintética;
+- testes ES-T01–T15.
+
+### Decisões
+
+- nenhuma nova tabela ou coluna;
+- N0 permanece exploratório e não exaustivo;
+- scan interno pode encerrar em A1;
+- scan formal persistente exige A2;
+- Synthesis/Certainty/RiskAssessment não são obrigatórios;
+- exceção `insufficient` sem Report central é válida somente com Search rastreável;
+- provenance permanece append-preserving.
+
+### Validação final
+
+- run **37366556793**, attempt 2: **success**;
+- commit validado `a1aa98eec809f25add578ebf15ba6b40739d54ca`;
+- artifact **11368729267**;
+- digest `sha256:f734fceca49c384cf5671b81919d2991d54b2a167b03a420b2c4f19db42f4a3c`;
+- ES-T01–T15 PASS;
+- migration 013 idempotente;
+- regressões F2-B/S4/S5/N1/N2 PASS;
+- rebuild through migration 013 PASS.
+
+### Continuidade
+
+- CP32 criado;
+- próxima etapa: template operacional do Evidence Scan N0.
