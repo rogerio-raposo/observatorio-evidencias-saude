@@ -389,6 +389,67 @@ def main() -> None:
         )
         print("F3-ES-TEMPLATE validation PASS")
 
+    # Real N0-01 validation: A0/under_review preview with N2 routing.
+    real_scan_snapshot = Path("s5-artifacts/real-n0-01-view.json")
+    if (
+        real_scan_snapshot.exists()
+        and scan_template_path.exists()
+        and scan_map_path.exists()
+    ):
+        from validate_evidence_scan_render import (
+            validate_render as validate_real_scan_render,
+        )
+
+        real_scan_payload = json.loads(
+            real_scan_snapshot.read_text(encoding="utf-8")
+        )
+        real_scan_rendered = render(
+            scan_template,
+            real_scan_payload,
+            scan_presentation,
+        )
+        real_scan_output = Path("s5-artifacts/real-n0-01-preview.md")
+        real_scan_output.write_text(real_scan_rendered, encoding="utf-8")
+
+        validate_real_scan_render(
+            scan_template,
+            real_scan_payload,
+            real_scan_rendered,
+        )
+        require(
+            real_scan_payload["audit"]["assurance_level"] == "A0",
+            "Real N0-01 must remain A0 before methodological verification",
+        )
+        require(
+            real_scan_payload["audit"]["publishable"] is False,
+            "Real N0-01 must remain non-publishable at A0",
+        )
+        require(
+            real_scan_payload["maturity"]["category"] == "partially_synthesized",
+            "Real N0-01 maturity must remain partially_synthesized",
+        )
+        require(
+            real_scan_payload["routing_recommendation"]["recommendation"]["target"] == "N2",
+            "Real N0-01 must route to N2",
+        )
+        require(
+            real_scan_payload["routing_recommendation"]["recommendation"]["requires_question_reformulation"] is True,
+            "Real N0-01 must require question reformulation",
+        )
+        require(
+            "PREVIEW — NÃO PUBLICÁVEL" in real_scan_rendered,
+            "Real N0-01 A0 render must show preview marker",
+        )
+        require(
+            "MISSING_AI_METHODOLOGICAL_VERIFICATION" in real_scan_rendered,
+            "Real N0-01 A0 render must show AI verification blocker",
+        )
+        require(
+            "MISSING_OWNER_APPROVAL" in real_scan_rendered,
+            "Real N0-01 A0 render must show owner approval blocker",
+        )
+        print("RN0-TEMPLATE-A0 validation PASS")
+
 
 if __name__ == "__main__":
     main()
