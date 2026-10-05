@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP33 — 2026-10-05**.
+- checkpoint vigente: **CP34 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -203,9 +203,45 @@ Produtos com trilha inicial consolidada:
 2. **Resposta de Evidência — N1** — caso real A2/published;
 3. **Evidence Scan — N0** — caso real A1/interno, não publicado.
 
+### Síntese Rápida de Evidências — N3
+
+Documentos 99–102:
+
+- 99 — especificação científica e funcional;
+- 100 — revisão de coerência e decisão arquitetural;
+- 101 — contrato de dados;
+- 102 — resultado da validação técnica: **PASS**.
+
+Implementação validada:
+
+- migration 014;
+- `investigation.method_decision`;
+- `investigation.quality_control_record`;
+- RapidEvidenceSynthesisView `oes.rapid_evidence_synthesis_view/0.1`;
+- publication gate N3;
+- fixture experimental;
+- RS-T01–T15 PASS;
+- F3-RS-T16 duplicate migration detection PASS;
+- rebuild through migration 014 PASS.
+
+Governança validada:
+
+- N3 formal exige A3;
+- A3 não substitui controles qualificados de etapa;
+- controles por IA são transparentes, mas não satisfazem human-qualified controls;
+- fixture A2 estruturalmente completa permanece `publishable=false`;
+- RS-T11 demonstra que gate abre somente com qualified human controls + A3;
+- configuração atual do OES permite desenvolvimento/validação N3, mas não publicação formal.
+
+Run final:
+
+- **37384225722** = **success**;
+- commit validado `44d50afa11d385ef26f56f860676859fb40d4f3c`;
+- artifact **11375884187**;
+- digest `sha256:1d880f2490142ba5fb4c0a815741a7aee01f74bb06b0b969fb352d6883443e78`.
+
 Taxonomia restante da Fase 3:
 
-- Síntese Rápida de Evidências — N3;
 - Revisão de Evidências — N4;
 - Mapa de Evidências;
 - Overview de Revisões;
@@ -214,26 +250,18 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Síntese Rápida de Evidências — N3: especificação científica e funcional.**
+**Síntese Rápida de Evidências — N3: contrato de renderização.**
 
-A próxima etapa deverá:
-
-1. recuperar função e fronteiras do Documento 40;
-2. distinguir N3 de N1/N2/N4;
-3. definir critérios de elegibilidade e criticidade;
-4. definir busca estruturada proporcional;
-5. definir appraisal, síntese e certainty requeridos;
-6. definir assurance/publication requirements;
-7. somente depois revisar arquitetura/dados.
+Definir estrutura de apresentação, rapid restrictions, protocol deviations, quality controls, missing controls, Synthesis/Certainty, assurance e o estado experimental bloqueado antes de criar o template operacional.
 
 ## 10. Checkpoint vigente
 
-**CP33 — 2026-10-05**
+**CP34 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP33.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP34.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — iniciar a especificação científica e funcional da Síntese Rápida de Evidências — N3.**
+> **Fase 3 — formalizar o contrato de renderização da Síntese Rápida de Evidências — N3.**
