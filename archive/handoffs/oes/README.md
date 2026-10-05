@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP28 — 2026-10-04**
+**CP29 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP28.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP29.md`
 
 Checkpoint anterior:
 
-`CP27`
+`CP28`
 
 Status:
 
@@ -88,3 +88,4 @@ em **Modo Continuidade**.
 - **CP26 — 2026-10-04:** modelo A0–A3 e verificação metodológica adversarial; Caso Real 01 em A1.
 - **CP27 — 2026-10-04:** reconcilia Documentos 65–66; owner approval pendente.
 - **CP28 — 2026-10-04:** consolida owner approval explícita, Caso Real 01 em **A2/published**, PASS do run 37229070210 e retoma na especificação científica e funcional da **Resposta de Evidência — N1**.
+- **CP29 — 2026-10-05:** consolida Documentos 68–71, migration 012, EvidenceResponseView candidata e ER-T01–T14 em PASS; retomada na formalização do contrato de renderização **EvidenceResponseView**.
