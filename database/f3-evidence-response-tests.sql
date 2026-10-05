@@ -253,6 +253,7 @@ $t13$;
 
 -- ---------------------------------------------------------------------------
 -- REAL N1-01 — adversarial revision 01 / ProductVersion 2
+-- Version lifecycle timestamps are generated at runtime to preserve temporal invariants.
 -- ---------------------------------------------------------------------------
 \ir f3-real-case-n1-revision-01.sql
 \ir f3-real-case-n1-revision-01-tests.sql
