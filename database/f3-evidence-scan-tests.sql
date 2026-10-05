@@ -225,32 +225,53 @@ ROLLBACK;
 
 -- ES-T12 — search-only insufficient-field exception is valid.
 BEGIN;
+
+-- Provenance is append-preserving: supersede source-bearing rows instead of mutating them.
 UPDATE provenance.record
-   SET source_report_version_uuid=NULL,
-       process_type='search_signal',
-       process_record_uuid='b2000000-0000-0000-0000-000000000001'
+   SET status='superseded'
  WHERE target_version_uuid='b1000000-0000-0000-0000-000000000301'
-   AND field_path='scan.field_description';
+   AND source_report_version_uuid IS NOT NULL
+   AND status='active';
 
 UPDATE provenance.record
    SET status='superseded'
  WHERE target_version_uuid='b1000000-0000-0000-0000-000000000301'
-   AND source_report_version_uuid IS NOT NULL;
+   AND field_path='scan.maturity'
+   AND status='active';
 
-UPDATE provenance.record
-   SET source_value=jsonb_set(
-       jsonb_set(
-           source_value,
-           '{category}',
-           '"insufficient"'::jsonb
-       ),
-       '{rationale}',
-       '"No central report was located in the recorded exploratory searches."'::jsonb
-   ),
-       process_type='oes_exploratory_judgement',
-       process_record_uuid='b2000000-0000-0000-0000-000000000001'
- WHERE target_version_uuid='b1000000-0000-0000-0000-000000000301'
-   AND field_path='scan.maturity';
+INSERT INTO provenance.record(
+ provenance_uuid,target_version_uuid,field_path,source_report_version_uuid,source_location,
+ source_value,process_type,process_record_uuid,transformation,actor,
+ supersedes_provenance_uuid,status
+) VALUES
+(
+ 'b5000000-0000-0000-0000-000000000321',
+ 'b1000000-0000-0000-0000-000000000301',
+ 'scan.field_description',
+ NULL,
+ 'Recorded exploratory searches',
+ '{"text":"No central ReportVersion was located in the recorded exploratory searches.","scope_qualifier":"exploratory_non_exhaustive"}'::jsonb,
+ 'search_signal',
+ 'b2000000-0000-0000-0000-000000000001',
+ '{"rationale":"Search-only field description for the controlled insufficient-field exception."}'::jsonb,
+ 'OES',
+ 'b5000000-0000-0000-0000-000000000301',
+ 'active'
+),
+(
+ 'b5000000-0000-0000-0000-000000000322',
+ 'b1000000-0000-0000-0000-000000000301',
+ 'scan.maturity',
+ NULL,
+ 'OES exploratory judgement from recorded searches',
+ '{"category":"insufficient","rationale":"No central report was located in the recorded exploratory searches.","confidence_qualifier":"preliminary"}'::jsonb,
+ 'oes_exploratory_judgement',
+ 'b2000000-0000-0000-0000-000000000001',
+ '{"inputs":["recorded exploratory searches"],"limitation":"Does not establish definitive absence of evidence."}'::jsonb,
+ 'OES',
+ 'b5000000-0000-0000-0000-000000000310',
+ 'active'
+);
 
 DO $t12$
 DECLARE v jsonb;
@@ -286,17 +307,34 @@ ROLLBACK;
 
 -- ES-T13 — zero Reports without insufficient maturity is invalid.
 BEGIN;
-UPDATE provenance.record
-   SET source_report_version_uuid=NULL,
-       process_type='search_signal',
-       process_record_uuid='b2000000-0000-0000-0000-000000000001'
- WHERE target_version_uuid='b1000000-0000-0000-0000-000000000301'
-   AND field_path='scan.field_description';
 
+-- Again preserve history: source-bearing provenance is superseded and a new
+-- search-based field description is appended. The original well_synthesized
+-- maturity judgement remains active, so the insufficient exception must fail.
 UPDATE provenance.record
    SET status='superseded'
  WHERE target_version_uuid='b1000000-0000-0000-0000-000000000301'
-   AND source_report_version_uuid IS NOT NULL;
+   AND source_report_version_uuid IS NOT NULL
+   AND status='active';
+
+INSERT INTO provenance.record(
+ provenance_uuid,target_version_uuid,field_path,source_report_version_uuid,source_location,
+ source_value,process_type,process_record_uuid,transformation,actor,
+ supersedes_provenance_uuid,status
+) VALUES (
+ 'b5000000-0000-0000-0000-000000000331',
+ 'b1000000-0000-0000-0000-000000000301',
+ 'scan.field_description',
+ NULL,
+ 'Recorded exploratory searches',
+ '{"text":"Search-only field description used to test invalid use of the insufficient exception.","scope_qualifier":"exploratory_non_exhaustive"}'::jsonb,
+ 'search_signal',
+ 'b2000000-0000-0000-0000-000000000001',
+ '{"rationale":"No central ReportVersion remains active, while maturity is still well_synthesized."}'::jsonb,
+ 'OES',
+ 'b5000000-0000-0000-0000-000000000301',
+ 'active'
+);
 
 DO $t13$
 BEGIN
