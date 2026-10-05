@@ -241,3 +241,12 @@ BEGIN
   RAISE NOTICE 'ER-T13 PASS — audit state and disclosure projected';
 END
 $t13$;
+
+-- ---------------------------------------------------------------------------
+-- REAL N1-01 — initial A0/under_review integration
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n1-music-anxiety.sql
+\ir f3-real-case-n1-tests.sql
+
+-- Export the real EvidenceResponseView for the existing renderer validation step.
+\copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000701')::text) TO 's5-artifacts/real-n1-01-view.json'
