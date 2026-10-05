@@ -250,3 +250,12 @@ $t13$;
 
 -- Export the real EvidenceResponseView for the existing renderer validation step.
 \copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000701')::text) TO 's5-artifacts/real-n1-01-view.json'
+
+-- ---------------------------------------------------------------------------
+-- REAL N1-01 — adversarial revision 01 / ProductVersion 2
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n1-revision-01.sql
+\ir f3-real-case-n1-revision-01-tests.sql
+
+-- Replace the renderer snapshot with the current corrected ProductVersion.
+\copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000702')::text) TO 's5-artifacts/real-n1-01-view.json'
