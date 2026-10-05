@@ -293,6 +293,53 @@ def main() -> None:
         )
         print("F3-ER-TEMPLATE validation PASS")
 
+    real_response_snapshot = Path("s5-artifacts/real-n1-01-view.json")
+    if (
+        real_response_snapshot.exists()
+        and response_template_path.exists()
+        and response_map_path.exists()
+    ):
+        from validate_evidence_response_render import (
+            validate_render as validate_real_response_render,
+        )
+
+        real_response_payload = json.loads(
+            real_response_snapshot.read_text(encoding="utf-8")
+        )
+        real_response_rendered = render(
+            response_template,
+            real_response_payload,
+            response_presentation,
+        )
+        real_response_output = Path("s5-artifacts/real-n1-01-preview.md")
+        real_response_output.write_text(
+            real_response_rendered,
+            encoding="utf-8",
+        )
+
+        validate_real_response_render(
+            response_template,
+            real_response_payload,
+            real_response_rendered,
+        )
+        require(
+            real_response_payload["audit"]["assurance_level"] == "A0",
+            "Real N1-01 must remain A0 before methodological verification",
+        )
+        require(
+            real_response_payload["audit"]["publishable"] is False,
+            "Real N1-01 must remain non-publishable before verification/owner approval",
+        )
+        require(
+            "PREVIEW — NÃO PUBLICÁVEL" in real_response_rendered,
+            "Real N1-01 preview marker missing",
+        )
+        require(
+            "MISSING_OWNER_APPROVAL" in real_response_rendered,
+            "Real N1-01 owner-approval block missing",
+        )
+        print("RN1-TEMPLATE-A0 validation PASS")
+
 
 if __name__ == "__main__":
     main()
