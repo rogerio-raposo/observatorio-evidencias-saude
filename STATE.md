@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP29 — 2026-10-05**.
+- checkpoint vigente: **CP30 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -159,6 +159,14 @@ Documento 70 — **Contrato de Dados da Resposta de Evidência — N1**: consoli
 
 Documento 71 — **Resultado da Validação do Contrato da Resposta de Evidência — N1**: **PASS**; run 37356428107.
 
+Documento 72 — **EvidenceResponseView**: contrato de renderização N1 formalizado.
+
+Documento 73 — **Especificação do Template Operacional da Resposta de Evidência — N1**: consolidado.
+
+Documento 74 — **Resultado da Validação do Template Operacional da Resposta de Evidência — N1**: **PASS**; run 37357423887.
+
+Template `oes.evidence_response.template/0.1` validado contra `oes.evidence_response_view/0.1`, incluindo estado A2/publicável e comportamento preview/não publicável.
+
 Migration 012 — **Evidence Response N1 contract**: PASS. Nenhuma nova tabela ou coluna; funções/projeções específicas N1 sobre OES-P1.
 
 Resposta de Evidência N1 validada com fixture sem Synthesis link e sem Certainty link obrigatórios; provenance direta ProductVersion → ReportVersion, assurance A2, publication gate próprio e `EvidenceResponseView` candidata em PASS técnico. ER-T01–T14 PASS; regressões N2 preservadas.
@@ -183,11 +191,11 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Formalização do contrato de renderização EvidenceResponseView — Resposta de Evidência N1.**
+**Caso Real N1 — validação ponta a ponta da Resposta de Evidência.**
 
-A projeção candidata já foi implementada e validada tecnicamente pela migration 012. A próxima etapa deverá documentar formalmente seu contrato, distinguindo dados canônicos, dados derivados e elementos de apresentação.
+A trilha técnica N1 está completa: especificação, contrato de dados, publication gate, EvidenceResponseView, template, renderer e validator passaram tecnicamente.
 
-Somente após essa formalização deverá ser criado o template operacional N1 e, em seguida, executada validação com caso real.
+A próxima etapa deverá selecionar uma pergunta focal de criticidade compatível com N1, executar busca estruturada seletiva em fontes reais, realizar appraisal proporcional, construir provenance real e validar a saída pelo template N1 antes de qualquer owner governance approval.
 
 ## 10. Checkpoint vigente
 
@@ -195,8 +203,8 @@ Somente após essa formalização deverá ser criado o template operacional N1 e
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP29.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP30.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — formalização do contrato de renderização EvidenceResponseView (N1).**
+**Fase 3 — Caso Real N1: seleção, busca, appraisal proporcional e validação ponta a ponta.**
