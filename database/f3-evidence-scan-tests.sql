@@ -373,3 +373,11 @@ BEGIN
   RAISE NOTICE 'ES-T14 PASS — A2 audit and mixed provenance basis projected';
 END
 $t14$;
+
+-- ---------------------------------------------------------------------------
+-- REAL N0-01 — GenAI/LLM mental-health Evidence Scan
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n0-genai-mental-health.sql
+\ir f3-real-case-n0-tests.sql
+
+\copy (SELECT product.evidence_scan_view('c1000000-0000-0000-0000-000000000301')::text) TO 's5-artifacts/real-n0-01-view.json'
