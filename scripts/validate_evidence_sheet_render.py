@@ -450,6 +450,74 @@ def main() -> None:
         )
         print("RN0-TEMPLATE-A0 validation PASS")
 
+    # Real N0-01 current state after methodological verification: A1/internal.
+    real_scan_a1_snapshot = Path("s5-artifacts/real-n0-01-a1-view.json")
+    if (
+        real_scan_a1_snapshot.exists()
+        and scan_template_path.exists()
+        and scan_map_path.exists()
+    ):
+        from validate_evidence_scan_render import (
+            validate_render as validate_real_scan_a1_render,
+        )
+
+        real_scan_a1_payload = json.loads(
+            real_scan_a1_snapshot.read_text(encoding="utf-8")
+        )
+        real_scan_a1_rendered = render(
+            scan_template,
+            real_scan_a1_payload,
+            scan_presentation,
+        )
+        real_scan_a1_output = Path("s5-artifacts/real-n0-01-a1-preview.md")
+        real_scan_a1_output.write_text(
+            real_scan_a1_rendered,
+            encoding="utf-8",
+        )
+
+        validate_real_scan_a1_render(
+            scan_template,
+            real_scan_a1_payload,
+            real_scan_a1_rendered,
+        )
+        require(
+            real_scan_a1_payload["audit"]["assurance_level"] == "A1",
+            "Real N0-01 must derive A1 after AI methodological verification",
+        )
+        require(
+            real_scan_a1_payload["audit"]["publishable"] is False,
+            "Real N0-01 A1 internal scan must remain non-publishable",
+        )
+        require(
+            real_scan_a1_payload["identity"]["editorial_status"] == "under_review",
+            "Real N0-01 A1 must remain under_review",
+        )
+        require(
+            real_scan_a1_payload["maturity"]["category"] == "partially_synthesized",
+            "Real N0-01 A1 maturity must remain partially_synthesized",
+        )
+        require(
+            real_scan_a1_payload["routing_recommendation"]["recommendation"]["target"] == "N2",
+            "Real N0-01 A1 must preserve N2 routing",
+        )
+        require(
+            "PREVIEW — NÃO PUBLICÁVEL" in real_scan_a1_rendered,
+            "Real N0-01 A1 render must show preview marker",
+        )
+        require(
+            "MISSING_AI_METHODOLOGICAL_VERIFICATION" not in real_scan_a1_rendered,
+            "Real N0-01 A1 render must not retain AI verification blocker",
+        )
+        require(
+            "MISSING_OWNER_APPROVAL" in real_scan_a1_rendered,
+            "Real N0-01 A1 render must retain owner approval blocker",
+        )
+        require(
+            "MISSING_PUBLICATION_DATE" in real_scan_a1_rendered,
+            "Real N0-01 A1 render must retain publication-date blocker",
+        )
+        print("RN0-TEMPLATE-A1 validation PASS")
+
 
 if __name__ == "__main__":
     main()
