@@ -23,7 +23,7 @@ UPDATE product.product_version
 
 UPDATE core.entity_version
    SET version_status='superseded',
-       valid_to=TIMESTAMPTZ '2026-10-05 15:25:00-03'
+       valid_to=CURRENT_TIMESTAMP
  WHERE version_uuid='a1000000-0000-0000-0000-000000000701';
 
 -- ProductVersion 2.
@@ -32,7 +32,7 @@ INSERT INTO core.entity_version(
 ) VALUES (
  'a1000000-0000-0000-0000-000000000702',
  'a0000000-0000-0000-0000-000000000701',
- 2,'current',TIMESTAMPTZ '2026-10-05 15:25:00-03',
+ 2,'current',CURRENT_TIMESTAMP,
  'a1000000-0000-0000-0000-000000000701',
  'real-n1-01','scientific_correction',
  'Corrects quantitative communication and explicitly qualifies the post-cutoff update as selective after adversarial verification pass 1'
