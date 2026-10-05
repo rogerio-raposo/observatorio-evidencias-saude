@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 4 de outubro de 2026  
+**Última atualização:** 5 de outubro de 2026  
 **Fase atual:** Fase 3 — Produtos do Observatório  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP30 — 2026-10-05**.
+- checkpoint vigente: **CP31 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -101,110 +101,120 @@ Ainda não finalizados:
 
 ## 8. Fase 3 — estado atual
 
-Documento 04 — **Governança de Garantia Metodológica, Aprovação e Revisão**: vigente como regra transversal A0–A3 para distinguir verificação por IA, aprovação do proprietário e revisão especializada independente.
+Documento 04 — **Governança de Garantia Metodológica, Aprovação e Revisão**: vigente como regra transversal A0–A3.
 
-Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES** consolidado como base inicial.
+Documento 40 — **Taxonomia e Arquitetura dos Produtos do OES**: consolidado.
 
-Documento 41 — **Especificação Científica e Funcional da Ficha de Evidência** consolidado.
+### Ficha de Evidência — N2
 
-Documento 42 — **Contrato de Dados da Ficha de Evidência** consolidado.
+Documentos 41–67: trilha inicial especificada, implementada e validada ponta a ponta.
 
-Documento 43 — **Resultado da Validação do Contrato da Ficha**: PASS.
+Caso Real 01:
 
-Documento 44 — **EvidenceSheetView: Contrato de Renderização da Ficha** consolidado.
+- Product `OES-P-2026-000401`;
+- assurance **A2**;
+- `publication_date=2026-10-04`;
+- estado `published`;
+- `publishable=true`;
+- expert independent review não realizada;
+- ausência de expert review preservada como warning explícito;
+- run final **37229070210** = PASS.
 
-Documento 45 — **Resultado da Validação do EvidenceSheetView**: PASS.
+### Resposta de Evidência — N1
 
-Documento 46 — **Especificação do Template Operacional da Ficha de Evidência** consolidado.
+Documentos 68–74:
 
-Documento 47 — **Resultado da Validação do Template Operacional da Ficha**: PASS estrutural/operacional.
+- especificação científica/funcional;
+- decisão arquitetural;
+- contrato de dados;
+- migration 012;
+- EvidenceResponseView;
+- template operacional;
+- renderer;
+- validator;
+- contrato e template em PASS técnico.
 
-Template `oes.evidence_sheet.template/0.2` validado contra `oes.evidence_sheet_view/0.1`, com disclosure de assurance A0–A3.
+Caso Real N1-01 — música gravada e ansiedade perioperatória:
 
-Documento 48 — protocolo do Caso Real 01.
+Documentos 75–85:
 
-Documentos 49–54 — busca, ROBIS, RoB 2, síntese atualizada, GRADE provisório e draft científico concluídos.
+- 75 — protocolo/routing;
+- 76 — busca seletiva/seleção;
+- 77 — ROBIS de Stoop et al. 2026;
+- 78 — síntese;
+- 79 — draft inicial;
+- 80 — primeira verificação adversarial = **REVISE**;
+- 81 — draft corrigido / ProductVersion 2;
+- 82 — segunda verificação adversarial = **PASSED**;
+- 83 — estado A1 = **PASS**;
+- 84 — owner governance approval = **APPROVED**;
+- 85 — estado A2/publicação = **PASS**.
 
-Documento 55 — representação canônica de síntese externa adotada + atualização OES.
+Estado materializado do Caso Real N1-01:
 
-Documento 56 — reconciliação de continuidade/hardening.
+- Product `OES-P-2026-000501`;
+- ProductVersion atual = **2**;
+- primeira ProductVersion preservada como `superseded`;
+- AI methodological verification = `passed`;
+- owner governance approval = `approved`;
+- expert independent review = ausente;
+- assurance = **A2**;
+- `publication_date=2026-10-05`;
+- estado editorial = `published`;
+- `publishable=true`;
+- `NO_EXPERT_INDEPENDENT_REVIEW` permanece warning explícito;
+- certainty formal OES não realizada;
+- Synthesis/CertaintyAssessment continuam não obrigatórios para N1.
 
-Documento 57 — validação da reconciliação: PASS.
+Validação final N1:
 
-Documento 58 — **Resultado da Validação Ponta a Ponta do Caso Real 01**: PASS em pré-publicação.
+- run **37362554094** = **success**;
+- commit validado `c00f4ec6dd7542074bd6c690db01bc752f0ccf6d`;
+- artifact **11366543917**;
+- digest `sha256:77c6c96c72e6d66a2412ffba999c6c7aa451b835396d3c175a3b850b0516dada`;
+- RN1-T01–T12 PASS;
+- RN1-R1-T01–T09 PASS;
+- RN1-A1-T01–T09 PASS;
+- RN1-A2-T01–T09 PASS;
+- RN1-TEMPLATE-A2 PASS;
+- regressões F2-B/S4/S5/N2 PASS;
+- rebuild through migration 012 PASS.
 
-Documento 59 — **Pacote de Revisão Especializada Independente do Caso Real 01**: preservado; expert review não realizado.
+Produtos com trilha inicial ponta a ponta concluída:
 
-Documento 60 — **Validação Técnica do antigo Gate de Revisão Humana**: permanece como evidência histórica; HRG-T01–T06 PASS.
+1. **Ficha de Evidência — N2**;
+2. **Resposta de Evidência — N1**.
 
-Documento 61 — **Redesenho do Modelo de Garantia e Aprovação**: aplicado ao Caso Real 01.
+Taxonomia restante da Fase 3:
 
-Documento 62 — **Validação Técnica do Modelo A0–A3**: PASS.
-
-Documento 63 — **Primeira Verificação Metodológica Adversarial**: REVISE; identificou e corrigiu premissa incorreta sobre Hwang/Somzz.
-
-Documento 64 — **Segunda Verificação Metodológica Adversarial**: PASSED.
-
-Documento 65 — **Resultado da Validação do Estado A1**: PASS; verificação metodológica adversarial ativa em `passed`.
-
-Documento 66 — **Aprovação de Governança do Proprietário**: **APPROVED**; owner governance approval explicitamente registrada.
-
-Documento 67 — **Resultado da Validação A2 e Publicação**: **PASS**; run 37229070210.
-
-Documento 68 — **Especificação Científica e Funcional da Resposta de Evidência**: consolidado.
-
-Documento 69 — **Resposta de Evidência N1: Revisão de Coerência e Decisão Arquitetural Inicial**: consolidado.
-
-Documento 70 — **Contrato de Dados da Resposta de Evidência — N1**: consolidado.
-
-Documento 71 — **Resultado da Validação do Contrato da Resposta de Evidência — N1**: **PASS**; run 37356428107.
-
-Documento 72 — **EvidenceResponseView**: contrato de renderização N1 formalizado.
-
-Documento 73 — **Especificação do Template Operacional da Resposta de Evidência — N1**: consolidado.
-
-Documento 74 — **Resultado da Validação do Template Operacional da Resposta de Evidência — N1**: **PASS**; run 37357423887.
-
-Template `oes.evidence_response.template/0.1` validado contra `oes.evidence_response_view/0.1`, incluindo estado A2/publicável e comportamento preview/não publicável.
-
-Migration 012 — **Evidence Response N1 contract**: PASS. Nenhuma nova tabela ou coluna; funções/projeções específicas N1 sobre OES-P1.
-
-Resposta de Evidência N1 validada com fixture sem Synthesis link e sem Certainty link obrigatórios; provenance direta ProductVersion → ReportVersion, assurance A2, publication gate próprio e `EvidenceResponseView` candidata em PASS técnico. ER-T01–T14 PASS; regressões N2 preservadas.
-
-Migrations canônicas da camada da Ficha: 007 EvidenceSheetView → 008 provenance → 009 study-type counts → 010 assurance governance → 011 assurance-aware view.
-
-Caso Real 01 materializado como Ficha `published`, assurance **A2**, `publication_date=2026-10-04`, `publishable=true`; ausência de expert review preservada como warning explícito; RC01-T01–T10, AG-T01–T07 e AV-T01–T02 PASS.
-
-Taxonomia:
-
-- Evidence Scan;
-- Resposta de Evidência;
-- Ficha de Evidência;
-- Síntese Rápida;
-- Revisão de Evidências;
+- Evidence Scan — N0;
+- Síntese Rápida de Evidências — N3;
+- Revisão de Evidências — N4;
 - Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
 - Alerta de Evidência.
 
-A **Ficha de Evidência** é a unidade persistente central preferencial para perguntas focais reutilizáveis.
-
 ## 9. Próxima etapa
 
-**Caso Real N1 — validação ponta a ponta da Resposta de Evidência.**
+**Evidence Scan — N0: especificação científica e funcional.**
 
-A trilha técnica N1 está completa: especificação, contrato de dados, publication gate, EvidenceResponseView, template, renderer e validator passaram tecnicamente.
+A próxima etapa deverá:
 
-A próxima etapa deverá selecionar uma pergunta focal de criticidade compatível com N1, executar busca estruturada seletiva em fontes reais, realizar appraisal proporcional, construir provenance real e validar a saída pelo template N1 antes de qualquer owner governance approval.
+1. recuperar função e fronteiras do Documento 40;
+2. comparar N0 com N1/N2 para evitar sobreposição;
+3. definir contrato científico/funcional;
+4. definir requisitos mínimos de busca, seleção, incerteza e publicação;
+5. somente depois avaliar contrato de dados/view/template.
 
 ## 10. Checkpoint vigente
 
-**CP28 — 2026-10-04**
+**CP31 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP30.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP31.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — Caso Real N1: seleção, busca, appraisal proporcional e validação ponta a ponta.**
+> **Fase 3 — iniciar a especificação científica e funcional do Evidence Scan — N0.**
