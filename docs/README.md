@@ -47,6 +47,20 @@ Validação final: run **37362554094** — PASS.
 
 **Próxima etapa:** especificação científica e funcional do **Evidence Scan — N0**.
 
+### Evidence Scan — N0
+
+A trilha N0 está registrada nos Documentos 86–98 e culmina em:
+
+- [92 — Resultado da Validação do Template](products/92-resultado-validacao-template-evidence-scan.md)
+- [97 — Verificação Metodológica Adversarial](products/97-caso-real-n0-verificacao-metodologica-adversarial.md)
+- [98 — Resultado da Validação A1 e Fechamento](products/98-caso-real-n0-resultado-validacao-a1.md)
+
+Estado do Caso Real N0-01: **A1 / under_review / publishable=false**, encerrado deliberadamente como artefato interno de roteamento, sem owner approval e sem expert review.
+
+Validação final: run **37382201584** — PASS.
+
+**Próxima etapa:** especificação científica e funcional da **Síntese Rápida de Evidências — N3**.
+
 ## Architecture
 
 Os Documentos 20–38 registram o modelo conceitual/lógico, os gates F2-A/F2-B, as PoCs S1–S5 e a promoção de OES-P1 a baseline arquitetural da Fase 2.
