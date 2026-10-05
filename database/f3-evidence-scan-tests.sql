@@ -381,3 +381,11 @@ $t14$;
 \ir f3-real-case-n0-tests.sql
 
 \copy (SELECT product.evidence_scan_view('c1000000-0000-0000-0000-000000000301')::text) TO 's5-artifacts/real-n0-01-view.json'
+
+-- ---------------------------------------------------------------------------
+-- REAL N0-01 — A1 methodological verification
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n0-ai-verification.sql
+\ir f3-real-case-n0-a1-tests.sql
+
+\copy (SELECT product.evidence_scan_view('c1000000-0000-0000-0000-000000000301')::text) TO 's5-artifacts/real-n0-01-a1-view.json'
