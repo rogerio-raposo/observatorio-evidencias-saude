@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP32 — 2026-10-05**.
+- checkpoint vigente: **CP33 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -138,48 +138,70 @@ Estado do Caso Real N1-01:
 
 ### Evidence Scan — N0
 
-Documentos 86–89:
+Documentos 86–98: trilha inicial especificada, implementada e validada ponta a ponta.
 
-- 86 — especificação científica e funcional;
-- 87 — revisão de coerência e decisão arquitetural;
-- 88 — contrato de dados;
-- 89 — resultado da validação técnica: **PASS**.
-
-Implementação validada:
+Arquitetura/contrato:
 
 - migration 013;
 - EvidenceScanView `oes.evidence_scan_view/0.1`;
 - publication gate N0;
-- fixture e testes sintéticos;
+- template Markdown próprio;
+- presentation map;
+- renderer/validator;
+- nenhuma nova tabela/coluna;
+- Synthesis/Certainty/RiskAssessment não obrigatórios;
+- scan formal persistente exige A2;
+- scan interno pode encerrar em A1.
+
+Validação técnica do contrato/template:
+
 - ES-T01–T15 PASS;
+- F3-ES-TEMPLATE PASS;
 - migration 013 idempotente;
 - rebuild through migration 013 PASS.
 
-Run final N0:
+Caso Real N0-01 — GenAI/LLMs e apoio à saúde mental:
 
-- **37366556793**, attempt 2 = **success**;
-- commit validado `a1aa98eec809f25add578ebf15ba6b40739d54ca`;
-- artifact **11368729267**;
-- digest `sha256:f734fceca49c384cf5671b81919d2991d54b2a167b03a420b2c4f19db42f4a3c`.
+- Question `OES-Q-2026-000601`;
+- Investigation `OES-I-2026-000601`;
+- Product `OES-P-2026-000601`;
+- ProductVersion 1;
+- depth `N0`;
+- maintenance `M0`;
+- maturity `partially_synthesized`;
+- seis fontes centrais;
+- duas buscas exploratórias;
+- três controvérsias;
+- três gaps aparentes;
+- três candidate questions;
+- routing `N2`;
+- `requires_question_reformulation=true`;
+- AI methodological verification = `passed`;
+- owner governance approval = ausente;
+- expert independent review = ausente;
+- assurance final = **A1**;
+- editorial status = `under_review`;
+- publication_date = NULL;
+- publishable = `false`;
+- uso = artefato interno de roteamento.
 
-Decisões consolidadas N0:
+Validação final do caso real N0:
 
-- nenhuma nova tabela ou coluna;
-- reutilização de OES-P1;
-- scan formal persistente exige A2;
-- scan interno pode encerrar em A1;
-- Synthesis/Certainty/RiskAssessment não são obrigatórios;
-- exceção controlada `insufficient` sem Report central validada;
-- provenance permanece append-preserving.
+- run **37382201584** = **success**;
+- commit validado `eb503c571557b5b7078b6f148e9ca9c0651da2a4`;
+- artifact **11374937122**;
+- digest `sha256:be56277103192065dedf555423191d3d2f8fca149f7f568a6c8f54c0b67b8b18`;
+- RN0-T01–T13 PASS;
+- RN0-A1-T01–T08 PASS;
+- RN0-TEMPLATE-A0 PASS;
+- RN0-TEMPLATE-A1 PASS;
+- rebuild A1 PASS.
 
-Produtos com trilha inicial ponta a ponta concluída:
+Produtos com trilha inicial consolidada:
 
-1. **Ficha de Evidência — N2**;
-2. **Resposta de Evidência — N1**.
-
-Produto com contrato técnico validado e renderização/caso real pendentes:
-
-3. **Evidence Scan — N0**.
+1. **Ficha de Evidência — N2** — caso real A2/published;
+2. **Resposta de Evidência — N1** — caso real A2/published;
+3. **Evidence Scan — N0** — caso real A1/interno, não publicado.
 
 Taxonomia restante da Fase 3:
 
@@ -192,18 +214,26 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Evidence Scan — N0: contrato de renderização.**
+**Síntese Rápida de Evidências — N3: especificação científica e funcional.**
 
-Definir conteúdo, ordem semântica, representação de não exaustividade, maturidade, controvérsias, lacunas, routing, assurance e o estado `insufficient` antes de criar template operacional.
+A próxima etapa deverá:
+
+1. recuperar função e fronteiras do Documento 40;
+2. distinguir N3 de N1/N2/N4;
+3. definir critérios de elegibilidade e criticidade;
+4. definir busca estruturada proporcional;
+5. definir appraisal, síntese e certainty requeridos;
+6. definir assurance/publication requirements;
+7. somente depois revisar arquitetura/dados.
 
 ## 10. Checkpoint vigente
 
-**CP32 — 2026-10-05**
+**CP33 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP32.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP33.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — formalizar o contrato de renderização do Evidence Scan — N0.**
+> **Fase 3 — iniciar a especificação científica e funcional da Síntese Rápida de Evidências — N3.**
