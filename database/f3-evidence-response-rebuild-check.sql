@@ -28,3 +28,7 @@ BEGIN
   RAISE NOTICE 'ER-T14 PASS — rebuild produced publishable A2 N1 EvidenceResponseView';
 END
 $errebuild$;
+
+-- Real N1-01 must also rebuild from zero in its intended A0/under_review state.
+\ir f3-real-case-n1-music-anxiety.sql
+\ir f3-real-case-n1-rebuild-check.sql
