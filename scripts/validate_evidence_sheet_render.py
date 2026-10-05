@@ -255,6 +255,44 @@ def main() -> None:
         )
         validate_real_case(template, presentation, real_case_snapshot)
 
+    # Cross-product validation: the N1 fixture is loaded before this workflow
+    # step. Validate its own template without coupling N1 to EvidenceSheetView.
+    response_snapshot = Path("s5-artifacts/evidence-response-view.json")
+    response_template_path = Path("templates/evidence-response.md")
+    response_map_path = Path("templates/evidence-response-presentation-map.json")
+    if response_snapshot.exists() and response_template_path.exists() and response_map_path.exists():
+        from validate_evidence_response_render import (
+            validate_preview_behavior as validate_response_preview,
+            validate_render as validate_response_render,
+        )
+
+        response_payload = json.loads(
+            response_snapshot.read_text(encoding="utf-8")
+        )
+        response_template = response_template_path.read_text(encoding="utf-8")
+        response_presentation = json.loads(
+            response_map_path.read_text(encoding="utf-8")
+        )
+        response_rendered = render(
+            response_template,
+            response_payload,
+            response_presentation,
+        )
+        response_output = Path("s5-artifacts/evidence-response-fixture.md")
+        response_output.write_text(response_rendered, encoding="utf-8")
+
+        validate_response_render(
+            response_template,
+            response_payload,
+            response_rendered,
+        )
+        validate_response_preview(
+            response_template,
+            response_payload,
+            response_presentation,
+        )
+        print("F3-ER-TEMPLATE validation PASS")
+
 
 if __name__ == "__main__":
     main()
