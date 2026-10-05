@@ -1083,3 +1083,57 @@ Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a dec
 
 - formalizar o contrato de renderização **EvidenceResponseView**;
 - somente depois criar template operacional N1 e validar com caso real.
+
+## 2026-10-05 — Caso Real N1-01: A2 e publicação
+
+### Decisão de governança
+
+- Documento 84: decisão explícita do proprietário = **APPROVED**;
+- `owner_governance_approval = approved`;
+- owner approval permanece distinto de expert independent review;
+- ausência de expert review preservada;
+- A2 não é apresentado como A3.
+
+### Materialização
+
+- Product `OES-P-2026-000501`;
+- ProductVersion corrente = 2;
+- AI methodological verification = `passed`;
+- owner governance approval = `approved`;
+- `publication_date = 2026-10-05`;
+- estado editorial = `published`;
+- assurance = **A2**;
+- `publishable=true`;
+- `NO_EXPERT_INDEPENDENT_REVIEW` permanece warning explícito.
+
+### Histórico metodológico preservado
+
+- primeira verificação adversarial = **REVISE**;
+- ProductVersion 1 preservada como `superseded`;
+- ProductVersion 2 criada com correções materiais;
+- segunda verificação adversarial = **PASSED**;
+- certainty formal OES não foi criada;
+- Synthesis permaneceu opcional em N1.
+
+### Validação final
+
+- run **37362554094**: **PASS**;
+- commit validado `c00f4ec6dd7542074bd6c690db01bc752f0ccf6d`;
+- artifact **11366543917**;
+- digest `sha256:77c6c96c72e6d66a2412ffba999c6c7aa451b835396d3c175a3b850b0516dada`;
+- RN1-T01–T12: PASS;
+- RN1-R1-T01–T09: PASS;
+- RN1-A1-T01–T09: PASS;
+- RN1-A2-T01–T09: PASS;
+- RN1-TEMPLATE-A2: PASS;
+- regressões F2-B/S4/S5/N2: PASS;
+- rebuild through migration 012: PASS.
+
+### Documento de fechamento
+
+- `docs/products/85-caso-real-n1-resultado-validacao-a2-publicacao.md`.
+
+### Continuidade
+
+- CP31 criado;
+- próxima etapa: especificação científica e funcional do **Evidence Scan — N0**.
