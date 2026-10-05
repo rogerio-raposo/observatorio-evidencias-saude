@@ -1181,3 +1181,55 @@ Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a dec
 
 - CP32 criado;
 - próxima etapa: template operacional do Evidence Scan N0.
+
+## 2026-10-05 — Evidence Scan N0: caso real A1 e fechamento
+
+### Renderização e template
+
+- Documento 90 — contrato de renderização do EvidenceScanView;
+- Documento 91 — especificação do template operacional;
+- Documento 92 — validação do template = **PASS**;
+- `templates/evidence-scan.md`;
+- presentation map, renderer e validator específicos de N0;
+- estados A2 formal, A1 interno e `search_only_insufficient` validados.
+
+### Caso Real N0-01
+
+Tema: chatbots GenAI/LLM para apoio à saúde mental.
+
+- Documento 93 — protocolo;
+- Documento 94 — busca exploratória e seleção;
+- Documento 95 — síntese exploratória, maturity e routing;
+- Documento 96 — validação A0 = **PASS**;
+- Documento 97 — verificação metodológica adversarial = **PASSED**;
+- Documento 98 — validação A1 e fechamento operacional = **PASS**.
+
+Estado final:
+
+- Product `OES-P-2026-000601`;
+- assurance **A1**;
+- `under_review`;
+- `publication_date=NULL`;
+- `publishable=false`;
+- owner governance approval não realizada;
+- expert independent review não realizada;
+- maturity `partially_synthesized`;
+- routing `N2`;
+- reformulação da pergunta requerida;
+- encerrado deliberadamente como artefato interno de roteamento.
+
+### Validação final
+
+- run **37382201584** = **success**;
+- commit validado `eb503c571557b5b7078b6f148e9ca9c0651da2a4`;
+- artifact **11374937122**;
+- digest `sha256:be56277103192065dedf555423191d3d2f8fca149f7f568a6c8f54c0b67b8b18`;
+- RN0-T01–T13 PASS;
+- RN0-A1-T01–T08 PASS;
+- RN0-TEMPLATE-A0/A1 PASS;
+- regressões e rebuild PASS.
+
+### Continuidade
+
+- CP33 criado;
+- próxima etapa: **Síntese Rápida de Evidências — N3**.
