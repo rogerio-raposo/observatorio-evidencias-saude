@@ -518,6 +518,45 @@ def main() -> None:
         )
         print("RN0-TEMPLATE-A1 validation PASS")
 
+    # Cross-product validation: Rapid Evidence Synthesis N3 fixture/view/template.
+    rs_snapshot = Path("s5-artifacts/rapid-evidence-synthesis-view.json")
+    rs_template_path = Path("templates/rapid-evidence-synthesis.md")
+    rs_map_path = Path("templates/rapid-evidence-synthesis-presentation-map.json")
+    if (
+        rs_snapshot.exists()
+        and rs_template_path.exists()
+        and rs_map_path.exists()
+    ):
+        from validate_rapid_evidence_synthesis_render import (
+            validate_experimental as validate_rs_experimental,
+            validate_formal_presentation as validate_rs_formal,
+        )
+
+        rs_payload = json.loads(rs_snapshot.read_text(encoding="utf-8"))
+        rs_template = rs_template_path.read_text(encoding="utf-8")
+        rs_presentation = json.loads(
+            rs_map_path.read_text(encoding="utf-8")
+        )
+        rs_rendered = render(
+            rs_template,
+            rs_payload,
+            rs_presentation,
+        )
+        rs_output = Path("s5-artifacts/rapid-evidence-synthesis-fixture.md")
+        rs_output.write_text(rs_rendered, encoding="utf-8")
+
+        validate_rs_experimental(
+            rs_template,
+            rs_payload,
+            rs_rendered,
+        )
+        validate_rs_formal(
+            rs_template,
+            rs_payload,
+            rs_presentation,
+        )
+        print("F3-RS-TEMPLATE validation PASS")
+
 
 if __name__ == "__main__":
     main()
