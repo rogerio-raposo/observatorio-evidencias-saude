@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP30 — 2026-10-05**
+**CP31 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP30.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP31.md`
 
 Checkpoint anterior:
 
-`CP29`
+`CP30`
 
 Status:
 
@@ -90,3 +90,4 @@ em **Modo Continuidade**.
 - **CP28 — 2026-10-04:** consolida owner approval explícita, Caso Real 01 em **A2/published**, PASS do run 37229070210 e retoma na especificação científica e funcional da **Resposta de Evidência — N1**.
 - **CP29 — 2026-10-05:** consolida Documentos 68–71, migration 012, EvidenceResponseView candidata e ER-T01–T14 em PASS; retomada na formalização do contrato de renderização **EvidenceResponseView**.
 - **CP30 — 2026-10-05:** consolida Documentos 72–74, EvidenceResponseView formalizada, template N1 v0.1 em PASS no run 37357423887; retomada no **Caso Real N1**.
+- **CP31 — 2026-10-05:** fecha a trilha inicial da **Resposta de Evidência N1** com Caso Real N1-01 em **A2/published**, run final 37362554094 PASS; retomada na especificação científica e funcional do **Evidence Scan N0**.
