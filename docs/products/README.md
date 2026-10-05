@@ -36,8 +36,19 @@ A trilha inicial da **Ficha de Evidência — N2** foi especificada, implementad
 
 Referência de fechamento: [Documento 67](67-caso-real-01-resultado-validacao-a2-publicacao.md).
 
+## Resposta de Evidência — N1
+
+A trilha inicial de especificação e contrato N1 está registrada em:
+
+- [68 — Especificação Científica e Funcional da Resposta de Evidência](68-especificacao-resposta-evidencia.md)
+- [69 — Revisão de Coerência e Decisão Arquitetural Inicial](69-resposta-evidencia-revisao-coerencia-arquitetura.md)
+- [70 — Contrato de Dados da Resposta de Evidência](70-contrato-dados-resposta-evidencia.md)
+- [71 — Resultado da Validação do Contrato da Resposta de Evidência](71-resultado-validacao-contrato-resposta-evidencia.md)
+
+O contrato N1 passou tecnicamente sem exigir nova tabela ou coluna e sem tornar Synthesis/Certainty obrigatórios.
+
 ## Próxima especificação
 
-**Resposta de Evidência — N1.**
+**Contrato de renderização EvidenceResponseView.**
 
-Templates individuais somente serão criados após a respectiva especificação científica e funcional.
+O template operacional N1 somente será criado após a formalização dessa projeção.
