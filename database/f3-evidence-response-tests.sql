@@ -260,3 +260,12 @@ $t13$;
 
 -- Replace the renderer snapshot with the current corrected ProductVersion.
 \copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000702')::text) TO 's5-artifacts/real-n1-01-view.json'
+
+-- ---------------------------------------------------------------------------
+-- REAL N1-01 — second adversarial pass / A1
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n1-ai-verification.sql
+\ir f3-real-case-n1-a1-tests.sql
+
+-- Current renderer snapshot after methodological verification: A1, still blocked.
+\copy (SELECT product.evidence_response_view('a1000000-0000-0000-0000-000000000702')::text) TO 's5-artifacts/real-n1-01-view.json'
