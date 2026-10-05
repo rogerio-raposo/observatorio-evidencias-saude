@@ -61,8 +61,35 @@ Caso Real N1-01:
 
 A validação final ocorreu no run **37362554094**, com regressões e rebuild em PASS.
 
+## Evidence Scan — N0
+
+A trilha inicial do **Evidence Scan — N0** foi especificada, implementada e validada ponta a ponta.
+
+Documentos principais:
+
+- [86 — Especificação Científica e Funcional](86-especificacao-evidence-scan.md)
+- [88 — Contrato de Dados](88-contrato-dados-evidence-scan.md)
+- [90 — Contrato de Renderização](90-evidence-scan-view-contrato-renderizacao.md)
+- [91 — Especificação do Template Operacional](91-especificacao-template-evidence-scan.md)
+- [92 — Resultado da Validação do Template](92-resultado-validacao-template-evidence-scan.md)
+- [97 — Verificação Metodológica Adversarial do Caso Real](97-caso-real-n0-verificacao-metodologica-adversarial.md)
+- [98 — Resultado da Validação A1 e Fechamento](98-caso-real-n0-resultado-validacao-a1.md)
+
+Caso Real N0-01:
+
+- Product `OES-P-2026-000601`;
+- assurance **A1**;
+- estado `under_review`;
+- `publication_date=NULL`;
+- `publishable=false`;
+- uso: **artefato interno de roteamento**;
+- maturity `partially_synthesized`;
+- routing `N2` com reformulação da pergunta.
+
+A validação final ocorreu no run **37382201584**, com RN0-T01–T13, RN0-A1-T01–T08, renderização A0/A1 e rebuild em PASS.
+
 ## Próxima especificação
 
-**Evidence Scan — N0.**
+**Síntese Rápida de Evidências — N3.**
 
-A especificação científica e funcional deve preceder contrato de dados, template ou automação específica desse produto.
+A especificação científica e funcional deve preceder contrato de dados, view, template ou automação específica desse produto.
