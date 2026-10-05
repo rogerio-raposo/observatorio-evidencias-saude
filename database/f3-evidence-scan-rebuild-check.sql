@@ -29,3 +29,9 @@ BEGIN
   RAISE NOTICE 'ES-T15 PASS — rebuild produced publishable A2 N0 EvidenceScanView';
 END
 $esrebuild$;
+
+-- ---------------------------------------------------------------------------
+-- REAL N0-01 — rebuild from zero
+-- ---------------------------------------------------------------------------
+\ir f3-real-case-n0-genai-mental-health.sql
+\ir f3-real-case-n0-rebuild-check.sql
