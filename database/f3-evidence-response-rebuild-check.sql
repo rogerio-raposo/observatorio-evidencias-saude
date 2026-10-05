@@ -40,3 +40,7 @@ $errebuild$;
 -- Apply the second adversarial PASS and verify the resulting A1 state.
 \ir f3-real-case-n1-ai-verification.sql
 \ir f3-real-case-n1-a1-rebuild-check.sql
+
+-- Apply explicit owner approval and verify final published A2 state.
+\ir f3-real-case-n1-owner-approval.sql
+\ir f3-real-case-n1-a2-rebuild-check.sql
