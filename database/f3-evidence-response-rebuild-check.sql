@@ -36,3 +36,7 @@ $errebuild$;
 -- Apply the first adversarial revision and verify ProductVersion 2.
 \ir f3-real-case-n1-revision-01.sql
 \ir f3-real-case-n1-revision-01-rebuild-check.sql
+
+-- Apply the second adversarial PASS and verify the resulting A1 state.
+\ir f3-real-case-n1-ai-verification.sql
+\ir f3-real-case-n1-a1-rebuild-check.sql
