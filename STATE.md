@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP28 — 2026-10-04**.
+- checkpoint vigente: **CP29 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -151,6 +151,18 @@ Documento 66 — **Aprovação de Governança do Proprietário**: **APPROVED**; 
 
 Documento 67 — **Resultado da Validação A2 e Publicação**: **PASS**; run 37229070210.
 
+Documento 68 — **Especificação Científica e Funcional da Resposta de Evidência**: consolidado.
+
+Documento 69 — **Resposta de Evidência N1: Revisão de Coerência e Decisão Arquitetural Inicial**: consolidado.
+
+Documento 70 — **Contrato de Dados da Resposta de Evidência — N1**: consolidado.
+
+Documento 71 — **Resultado da Validação do Contrato da Resposta de Evidência — N1**: **PASS**; run 37356428107.
+
+Migration 012 — **Evidence Response N1 contract**: PASS. Nenhuma nova tabela ou coluna; funções/projeções específicas N1 sobre OES-P1.
+
+Resposta de Evidência N1 validada com fixture sem Synthesis link e sem Certainty link obrigatórios; provenance direta ProductVersion → ReportVersion, assurance A2, publication gate próprio e `EvidenceResponseView` candidata em PASS técnico. ER-T01–T14 PASS; regressões N2 preservadas.
+
 Migrations canônicas da camada da Ficha: 007 EvidenceSheetView → 008 provenance → 009 study-type counts → 010 assurance governance → 011 assurance-aware view.
 
 Caso Real 01 materializado como Ficha `published`, assurance **A2**, `publication_date=2026-10-04`, `publishable=true`; ausência de expert review preservada como warning explícito; RC01-T01–T10, AG-T01–T07 e AV-T01–T02 PASS.
@@ -171,13 +183,11 @@ A **Ficha de Evidência** é a unidade persistente central preferencial para per
 
 ## 9. Próxima etapa
 
-**Especificação científica e funcional da Resposta de Evidência — N1.**
+**Formalização do contrato de renderização EvidenceResponseView — Resposta de Evidência N1.**
 
-O Documento 40 estabelece a Resposta de Evidência como o próximo produto a ser formalizado após a Ficha de Evidência.
+A projeção candidata já foi implementada e validada tecnicamente pela migration 012. A próxima etapa deverá documentar formalmente seu contrato, distinguindo dados canônicos, dados derivados e elementos de apresentação.
 
-A retomada deverá começar pela definição de função, fronteiras e contrato científico/funcional, comparando explicitamente N1 com Evidence Scan N0 e Ficha de Evidência N2 para evitar sobreposição.
-
-Não iniciar pelo template ou pela automação.
+Somente após essa formalização deverá ser criado o template operacional N1 e, em seguida, executada validação com caso real.
 
 ## 10. Checkpoint vigente
 
@@ -185,8 +195,8 @@ Não iniciar pelo template ou pela automação.
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-04_CP28.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP29.md`
 
 Ponto exato de retomada:
 
-**Fase 3 — especificação científica e funcional da Resposta de Evidência (N1).**
+**Fase 3 — formalização do contrato de renderização EvidenceResponseView (N1).**
