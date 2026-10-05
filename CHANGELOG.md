@@ -1041,3 +1041,45 @@ Documento 65 registra o PASS do estado A1. Documento 66 foi preparado para a dec
 ### Próxima etapa
 
 - iniciar a especificação científica e funcional da **Resposta de Evidência — N1**, conforme ordem recomendada no Documento 40.
+
+## 2026-10-05 — Resposta de Evidência N1: contrato e validação técnica
+
+### Documentação
+
+- Documento 68: especificação científica e funcional da Resposta de Evidência N1;
+- Documento 69: revisão de coerência e decisão arquitetural inicial;
+- Documento 70: contrato de dados N1;
+- Documento 71: resultado da validação técnica = **PASS**.
+
+### Arquitetura
+
+- Resposta de Evidência modelada como Product subtype sobre OES-P1;
+- nenhuma nova tabela ou coluna necessária;
+- Synthesis e CertaintyAssessment permanecem condicionais;
+- provenance direta ProductVersion → ReportVersion validada para fonte decisiva;
+- publication gate N1 específico;
+- EvidenceResponseView própria;
+- assurance A0–A3 generalizado por função transversal, com wrapper compatível para Evidence Sheet.
+
+### Implementação
+
+- migration `012_evidence_response_contract.sql`;
+- fixture `f3-evidence-response-fixtures.sql`;
+- testes `f3-evidence-response-tests.sql`;
+- rebuild check `f3-evidence-response-rebuild-check.sql`.
+
+### Validação
+
+- run **37356428107**: **PASS**;
+- commit validado `a8f9042e41177b670c15c7f0782465e2b6c73bb4`;
+- artifact **11364184531**;
+- ER-T01–T14: PASS;
+- F2-B/S4/S5: PASS;
+- trilha F3 Evidence Sheet/N2: PASS;
+- Caso Real 01: PASS;
+- rebuild through migration 012: PASS.
+
+### Próxima etapa
+
+- formalizar o contrato de renderização **EvidenceResponseView**;
+- somente depois criar template operacional N1 e validar com caso real.
