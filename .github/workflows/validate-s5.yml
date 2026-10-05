@@ -221,7 +221,8 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/008_evidence_sheet_provenance_references.sql 2>&1 | tee s5-artifacts/F3-PROV-reapply.log
           psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql 2>&1 | tee s5-artifacts/F3-VIEW-reapply.log
           psql -v ON_ERROR_STOP=1 -f database/011_evidence_sheet_assurance_view.sql 2>&1 | tee s5-artifacts/F3-ASSURANCE-VIEW-reapply.log
-          echo "F3 projection migrations reapply PASS — migrations 008/009/011 are idempotent by design" | tee -a s5-artifacts/F3-ASSURANCE-VIEW-reapply.log
+          psql -v ON_ERROR_STOP=1 -f database/012_evidence_response_contract.sql 2>&1 | tee s5-artifacts/F3-ER-012-reapply.log
+          echo "F3 projection migrations reapply PASS — migrations 008/009/011/012 are idempotent by design" | tee -a s5-artifacts/F3-ER-012-reapply.log
 
       - name: F3-ASSURANCE-T08 — migration 010 double-apply detection
         shell: bash
@@ -285,14 +286,17 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/009_evidence_sheet_view_evidence_counts.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/010_product_assurance_governance.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/011_evidence_sheet_assurance_view.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/012_evidence_response_contract.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-response-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-sheet-view-rebuild-check.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-evidence-response-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-assurance-gate-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-provenance-reference-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-dcbti.sql
@@ -314,6 +318,9 @@ jobs:
             echo "F3-FE-T01–T17 PASS"
             echo "EvidenceSheetView PASS"
             echo "F3-VIEW-T01–T17 PASS"
+            echo "Evidence Response N1 contract PASS"
+            echo "EvidenceResponseView PASS"
+            echo "ER-T01–T14 PASS"
             echo "F3-PROV-T01–T06 PASS"
             echo "F3-TEMPLATE PASS"
             echo "Reference Markdown render PASS"
@@ -323,7 +330,7 @@ jobs:
             echo "Assurance A0–A3 governance PASS"
             echo "Real N2 Evidence Sheet A2 publication gate PASS"
             echo "Publication gate PASS"
-            echo "Rebuild through migration 011 PASS"
+            echo "Rebuild through migration 012 PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
