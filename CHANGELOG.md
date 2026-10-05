@@ -1233,3 +1233,44 @@ Estado final:
 
 - CP33 criado;
 - próxima etapa: **Síntese Rápida de Evidências — N3**.
+
+## 2026-10-05 — Síntese Rápida N3: contrato técnico validado
+
+### Metodologia
+
+- Documento 99 — especificação científica e funcional;
+- Documento 100 — decisão arquitetural;
+- Documento 101 — contrato de dados;
+- Documento 102 — validação técnica = **PASS**.
+
+### Arquitetura
+
+- migration 014;
+- `investigation.method_decision`;
+- `investigation.quality_control_record`;
+- RapidEvidenceSynthesisView `oes.rapid_evidence_synthesis_view/0.1`;
+- publication gate N3.
+
+### Governança
+
+- N3 formal exige A3;
+- A3 não substitui controles qualificados de etapa;
+- IA não satisfaz human-qualified secondary verification;
+- fixture A2 completa permanece não publicável;
+- RS-T11 prova abertura do gate somente com qualified human controls + A3.
+
+### Validação
+
+- run **37384225722** = **success**;
+- commit `44d50afa11d385ef26f56f860676859fb40d4f3c`;
+- artifact **11375884187**;
+- digest `sha256:1d880f2490142ba5fb4c0a815741a7aee01f74bb06b0b969fb352d6883443e78`;
+- RS-T01–T15 PASS;
+- F3-RS-T16 PASS;
+- rebuild through migration 014 PASS;
+- regressões N0/N1/N2/F2-B/S4/S5 PASS.
+
+### Continuidade
+
+- CP34 criado;
+- próxima etapa: contrato de renderização N3.
