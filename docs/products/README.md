@@ -202,6 +202,7 @@ Documentos principais:
 - [133 — MAP-01: Inventário do Corpus e MapItems](133-caso-real-map01-inventario-corpus-mapitems.md)
 - [134 — MAP-01: Codebook v0.1](134-caso-real-map01-codebook-v01.md)
 - [135 — MAP-01: Correção Arquitetural de Source Corpus](135-map01-correcao-arquitetural-source-corpus.md)
+- [136 — Resultado da Validação de Source Corpus](136-resultado-validacao-source-corpus-mapa.md)
 
 Implementação validada:
 
@@ -248,6 +249,8 @@ Pré-persistência concluída:
 - N3-01 será ligada como `source_corpus`;
 - Search/Screening não serão duplicados.
 
-Próximo passo: migration 018 de suporte a `source_corpus`, seguida da persistência do MAP-01.
+Migration 018 validada em PASS no Documento 136.
+
+Próximo passo: persistir o MAP-01 com Question/Investigation próprias e N3-01 como `source_corpus`.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
