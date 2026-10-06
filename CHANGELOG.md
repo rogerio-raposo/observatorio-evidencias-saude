@@ -1312,3 +1312,66 @@ Estado final:
 
 - CP35 criado;
 - próxima etapa: **Caso Real N3 experimental**.
+
+## 2026-10-06 — Caso Real N3-01: encerramento experimental em A0
+
+### Caso real
+
+Tema: ambient AI scribes e carga de documentação clínica.
+
+Documentos:
+
+- 106 — protocolo;
+- 107 — busca/seleção inicial;
+- 108 — appraisal;
+- 109 — síntese narrativa, GRADE experimental e SoF;
+- 110 — validação técnica A0;
+- 111 — primeira verificação adversarial = **REVISE**;
+- 112 — busca suplementar corretiva;
+- 113 — segunda verificação adversarial = **REVISE**;
+- 114 — encerramento experimental controlado.
+
+### ProductVersion 1
+
+- A0 / under_review / non-publishable;
+- RN3-T01–T16 PASS;
+- primeira adversarial review = REVISE por coverage insuficiente.
+
+### ProductVersion 2
+
+- correção de search coverage;
+- 3 Search records;
+- 20 hits materializados;
+- 34 screening decisions;
+- 13 referências;
+- conjunto causal, appraisals, syntheses e GRADE preservados;
+- segunda adversarial review = REVISE.
+
+### Bloqueio metodológico
+
+- Documento 99 exige busca sistemática, reproduzível, documentada e proporcionalmente abrangente;
+- padrão inicial N3 = pelo menos duas bases bibliográficas relevantes, salvo exceção defensável;
+- PubMed foi executável;
+- Europe PMC e OpenAlex direto não foram executáveis no runtime;
+- buscas suplementares não equivaleram a segunda base;
+- novos estudos elegíveis continuaram sendo localizados após a correção;
+- ProductVersion 2 permanece **A0**;
+- não criar ProductVersion 3 sem segunda base bibliográfica reproduzível.
+
+### Validação final
+
+- run **37413884319** = **success**;
+- commit validado `f2ba21eaaa2d3c43a95ceb908dd0b097b8e9a1b4`;
+- artifact **11389784878**;
+- digest `sha256:c4b53864e60be656a1e3de9039b8480746bbeff8f9fcf5b76257989a47a73b58`;
+- RN3-T01–T16 PASS;
+- RN3-R1-T01–T10 PASS;
+- RN3-ADV2-T01–T06 PASS;
+- RN3-TEMPLATE-A0 PASS;
+- rebuild through migration 014 PASS;
+- regressões N0–N2/F2-B/S4/S5 PASS.
+
+### Continuidade
+
+- CP36 criado;
+- próxima etapa: **Revisão de Evidências — N4**.
