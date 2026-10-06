@@ -1262,6 +1262,33 @@ SELECT jsonb_build_object(
            AND md.decision_type IN ('method_change','protocol_deviation')
     ),'[]'::jsonb),
 
+    'method', jsonb_build_object(
+        'quality_controls', COALESCE((
+            SELECT jsonb_agg(
+                jsonb_build_object(
+                    'quality_control_uuid',q.quality_control_uuid,
+                    'stage',q.stage,
+                    'control_type',q.control_type,
+                    'actor',q.actor,
+                    'actor_type',q.actor_type,
+                    'independent',q.independent_flag,
+                    'decision',q.decision,
+                    'scope',q.scope_payload,
+                    'agreement',q.agreement_payload,
+                    'discrepancy',q.discrepancy_payload,
+                    'resolution',q.resolution_payload,
+                    'performed_at',q.performed_at,
+                    'evidence_artifact_uuid',q.evidence_artifact_uuid
+                )
+                ORDER BY q.performed_at,q.quality_control_uuid
+            )
+              FROM investigation.quality_control_record q
+              JOIN primary_inv pi
+                ON pi.investigation_version_uuid=q.investigation_version_uuid
+             WHERE q.record_status='active'
+        ),'[]'::jsonb)
+    ),
+
     'reviewer_assignments', COALESCE((
         SELECT jsonb_agg(
             jsonb_build_object(
@@ -1283,6 +1310,28 @@ SELECT jsonb_build_object(
           JOIN primary_inv pi
             ON pi.investigation_version_uuid=ra.investigation_version_uuid
          WHERE ra.record_status='active'
+    ),'[]'::jsonb),
+
+    'search_peer_review', COALESCE((
+        SELECT jsonb_agg(
+            jsonb_build_object(
+                'quality_control_uuid',q.quality_control_uuid,
+                'actor',q.actor,
+                'actor_type',q.actor_type,
+                'qualified',q.qualification_payload,
+                'independent',q.independent_flag,
+                'decision',q.decision,
+                'scope',q.scope_payload,
+                'performed_at',q.performed_at,
+                'evidence_artifact_uuid',q.evidence_artifact_uuid
+            )
+            ORDER BY q.performed_at,q.quality_control_uuid
+        )
+          FROM investigation.quality_control_record q
+          JOIN primary_inv pi
+            ON pi.investigation_version_uuid=q.investigation_version_uuid
+         WHERE q.record_status='active'
+           AND q.control_type='search_strategy_peer_review'
     ),'[]'::jsonb),
 
     'searches', COALESCE((
@@ -1378,6 +1427,100 @@ SELECT jsonb_build_object(
         )
     ),
 
+    'excluded_full_text', COALESCE((
+        SELECT jsonb_agg(
+            jsonb_build_object(
+                'screening_uuid',sd.screening_uuid,
+                'target_entity_uuid',sd.target_entity_uuid,
+                'reviewer',sd.reviewer,
+                'decision',sd.decision,
+                'exclusion_reason',sd.exclusion_reason,
+                'adjudication',sd.adjudication_flag,
+                'decided_at',sd.decided_at
+            )
+            ORDER BY sd.target_entity_uuid,sd.decided_at,sd.screening_uuid
+        )
+          FROM investigation.screening_decision sd
+          JOIN primary_inv pi
+            ON pi.investigation_version_uuid=sd.investigation_version_uuid
+         WHERE lower(sd.stage) IN ('full_text','full text')
+           AND sd.decision='exclude'
+    ),'[]'::jsonb),
+
+    'extraction_controls', jsonb_build_object(
+        'independent_extractions', COALESCE((
+            SELECT jsonb_agg(
+                jsonb_build_object(
+                    'provenance_uuid',pr.provenance_uuid,
+                    'target_version_uuid',pr.target_version_uuid,
+                    'source_report_version_uuid',pr.source_report_version_uuid,
+                    'source_location',pr.source_location,
+                    'actor',pr.actor,
+                    'created_at',pr.created_at
+                )
+                ORDER BY pr.target_version_uuid,pr.actor,pr.created_at
+            )
+              FROM provenance.record pr
+             WHERE pr.status='active'
+               AND pr.process_type='n4_independent_extraction'
+               AND EXISTS (
+                    SELECT 1
+                      FROM product.synthesis_link sl
+                      JOIN synthesis.contribution sc
+                        ON sc.synthesis_version_uuid=sl.synthesis_version_uuid
+                     WHERE sl.product_version_uuid=p_product_version_uuid
+                       AND sc.result_version_uuid=pr.target_version_uuid
+               )
+        ),'[]'::jsonb),
+        'verification_controls', COALESCE((
+            SELECT jsonb_agg(
+                jsonb_build_object(
+                    'quality_control_uuid',q.quality_control_uuid,
+                    'actor',q.actor,
+                    'decision',q.decision,
+                    'scope',q.scope_payload,
+                    'performed_at',q.performed_at
+                )
+                ORDER BY q.performed_at,q.quality_control_uuid
+            )
+              FROM investigation.quality_control_record q
+              JOIN primary_inv pi
+                ON pi.investigation_version_uuid=q.investigation_version_uuid
+             WHERE q.record_status='active'
+               AND q.control_type='critical_data_verification'
+        ),'[]'::jsonb)
+    ),
+
+    'study_characteristics', COALESCE((
+        SELECT jsonb_agg(DISTINCT jsonb_build_object(
+            'study_id',se.oes_id,
+            'study_entity_uuid',st.entity_uuid,
+            'study_version_uuid',sv.version_uuid,
+            'study_type',sv.study_type,
+            'design',sv.design,
+            'title_or_label',sv.title_or_label,
+            'sample_size',sv.sample_size,
+            'status',sv.status
+        ))
+          FROM product.synthesis_link psl
+          JOIN synthesis.contribution sc
+            ON sc.synthesis_version_uuid=psl.synthesis_version_uuid
+          JOIN evidence.result_version rv
+            ON rv.version_uuid=sc.result_version_uuid
+          JOIN evidence.result er
+            ON er.entity_uuid=rv.entity_uuid
+          JOIN evidence.study st
+            ON st.entity_uuid=er.study_entity_uuid
+          JOIN core.entity_version cev
+            ON cev.entity_uuid=st.entity_uuid
+           AND cev.version_status='current'
+          JOIN evidence.study_version sv
+            ON sv.version_uuid=cev.version_uuid
+          JOIN core.entity se
+            ON se.entity_uuid=st.entity_uuid
+         WHERE psl.product_version_uuid=p_product_version_uuid
+    ),'[]'::jsonb),
+
     'risk_of_bias', COALESCE((
         SELECT jsonb_agg(
             jsonb_build_object(
@@ -1451,6 +1594,44 @@ SELECT jsonb_build_object(
           JOIN core.entity se
             ON se.entity_uuid=sv.entity_uuid
          WHERE sl.product_version_uuid=p_product_version_uuid
+    ),'[]'::jsonb),
+
+    'heterogeneity', COALESCE((
+        SELECT jsonb_agg(
+            jsonb_build_object(
+                'synthesis_version_uuid',sv.version_uuid,
+                'i2_percent',sv.result_summary->'i2_percent',
+                'tau2',sv.result_summary->'tau2',
+                'prediction_interval',sv.result_summary->'prediction_interval'
+            )
+            ORDER BY sv.version_uuid
+        )
+          FROM product.synthesis_link sl
+          JOIN synthesis.synthesis_version sv
+            ON sv.version_uuid=sl.synthesis_version_uuid
+         WHERE sl.product_version_uuid=p_product_version_uuid
+           AND (
+                sv.result_summary ? 'i2_percent'
+                OR sv.result_summary ? 'tau2'
+                OR sv.result_summary ? 'prediction_interval'
+           )
+    ),'[]'::jsonb),
+
+    'sensitivity_analyses', COALESCE((
+        SELECT jsonb_agg(
+            jsonb_build_object(
+                'synthesis_version_uuid',sc.synthesis_version_uuid,
+                'result_version_uuid',sc.result_version_uuid,
+                'included_sensitivity',sc.included_sensitivity,
+                'notes',sc.notes
+            )
+            ORDER BY sc.synthesis_version_uuid,sc.result_version_uuid
+        )
+          FROM product.synthesis_link sl
+          JOIN synthesis.contribution sc
+            ON sc.synthesis_version_uuid=sl.synthesis_version_uuid
+         WHERE sl.product_version_uuid=p_product_version_uuid
+           AND sc.included_sensitivity=true
     ),'[]'::jsonb),
 
     'missing_evidence', COALESCE((
@@ -1535,6 +1716,45 @@ SELECT jsonb_build_object(
          WHERE pv.version_uuid=p_product_version_uuid
     ),
 
+    'reproducibility', jsonb_build_object(
+        'analysis_artifacts', COALESCE((
+            SELECT jsonb_agg(
+                jsonb_build_object(
+                    'synthesis_version_uuid',sv.version_uuid,
+                    'code_artifact_uuid',sv.code_artifact_uuid,
+                    'analysis_dataset_artifact_uuid',sv.analysis_dataset_artifact_uuid,
+                    'software',sv.software,
+                    'software_version',sv.software_version
+                )
+                ORDER BY sv.version_uuid
+            )
+              FROM product.synthesis_link sl
+              JOIN synthesis.synthesis_version sv
+                ON sv.version_uuid=sl.synthesis_version_uuid
+             WHERE sl.product_version_uuid=p_product_version_uuid
+               AND (
+                    sv.code_artifact_uuid IS NOT NULL
+                    OR sv.analysis_dataset_artifact_uuid IS NOT NULL
+               )
+        ),'[]'::jsonb),
+        'product_artifacts', COALESCE((
+            SELECT jsonb_agg(
+                jsonb_build_object(
+                    'role',ael.role,
+                    'artifact_uuid',a.artifact_uuid,
+                    'artifact_type',a.artifact_type,
+                    'storage_key',a.storage_key,
+                    'content_hash',a.content_hash
+                )
+                ORDER BY ael.role,ael.sequence_no NULLS LAST,a.artifact_uuid
+            )
+              FROM artifact.entity_link ael
+              JOIN artifact.artifact a
+                ON a.artifact_uuid=ael.artifact_uuid
+             WHERE ael.entity_version_uuid=p_product_version_uuid
+        ),'[]'::jsonb)
+    ),
+
     'references', COALESCE((
         SELECT jsonb_agg(
             jsonb_build_object(
@@ -1576,6 +1796,35 @@ SELECT jsonb_build_object(
                 ON pi.investigation_version_uuid=
                    ra.investigation_version_uuid
              WHERE ra.record_status='active'
+        ),
+        'qualified_stage_controls_satisfied', NOT EXISTS (
+            SELECT 1
+              FROM issues i
+             WHERE i.severity='error'
+               AND i.issue_code IN (
+                    'MISSING_SEARCH_PEER_REVIEW',
+                    'MISSING_DUPLICATE_TITLE_ABSTRACT_SCREENING',
+                    'MISSING_DUPLICATE_FULL_TEXT_SCREENING',
+                    'UNRESOLVED_SCREENING_DISAGREEMENT',
+                    'MISSING_SCREENING_PILOT',
+                    'MISSING_CRITICAL_RESULT_DUPLICATE_EXTRACTION',
+                    'MISSING_QUALIFIED_DATA_VERIFICATION',
+                    'MISSING_RISK_ASSESSMENT',
+                    'MISSING_DUPLICATE_RISK_OF_BIAS_ASSESSMENT',
+                    'MISSING_QUALIFIED_RISK_OF_BIAS_VERIFICATION',
+                    'MISSING_STATISTICAL_REVIEW',
+                    'MISSING_MISSING_EVIDENCE_ASSESSMENT',
+                    'MISSING_DUPLICATE_CERTAINTY_ASSESSMENT',
+                    'MISSING_QUALIFIED_CERTAINTY_VERIFICATION'
+               )
+        ),
+        'lineage_available', EXISTS (
+            SELECT 1 FROM refs
+        ),
+        'invalidated_dependencies', EXISTS (
+            SELECT 1 FROM issues i
+             WHERE i.issue_code='INVALIDATED_DEPENDENCY'
+               AND i.severity='error'
         ),
         'protocol_deviations_open', EXISTS (
             SELECT 1
