@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP48 — 2026-10-06**
+**CP49 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP48.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP49.md`
 
 Checkpoint anterior:
 
-`CP47`
+`CP48`
 
 Status:
 
@@ -98,4 +98,4 @@ em **Modo Continuidade**.
 - **CP36 — 2026-10-06:** fecha o **Caso Real N3-01** em A0 experimental após dois adversariais `REVISE`, com bloqueio metodológico por cobertura bibliográfica insuficiente; retomada na **Revisão de Evidências — N4**.
 - **CP37 — 2026-10-06:** consolida Documentos 115–118, migration 015, EvidenceReviewView e ER4-T01–T25 em PASS; retomada no **contrato de renderização/template da Revisão de Evidências N4**.
 - **CP38 — 2026-10-06:** fecha a trilha técnica inicial da **Revisão de Evidências N4** com template/renderização em PASS; retomada no **Infrastructure Readiness Gate de um Caso Real N4 experimental**.
-- **CP39 — 2026-10-06:** registra **N4 Infrastructure Readiness Gate = NOT_READY**, sem abertura de Caso Real N4; retomada na **especificação científica e funcional do Mapa de Evidências**.\n- **CP40 — 2026-10-06:** consolida os Documentos 123–125 do **Mapa de Evidências**, registra a camada `mapping` e o contrato de dados v0.1; retomada na **migration 016 + fixture + testes + rebuild + S5**, antes de qualquer template.\n- **CP41 — 2026-10-06:** registra **PASS técnico do contrato do Mapa de Evidências**, Documento 126, run 37464023391 e rebuild through migration 016; retomada no **Documento 127 — contrato de renderização do EvidenceMapView**.\n- **CP42 — 2026-10-06:** registra o Documento 127 e **Projection Readiness Gate = NOT_READY para template**; retomada na migration aditiva da EvidenceMapView 0.1.\n- **CP43 — 2026-10-06:** registra **Projection Readiness Gate = READY**, migration 017, EMV-T01–T11 e rebuild through migration 017; retomada na **Especificação do Template Operacional do Mapa de Evidências**.\n- **CP44 — 2026-10-06:** registra **PASS da camada de apresentação do Mapa**, Documento 130 e run 37467388595; retomada no **Readiness Gate pré-Caso Real**, separando rota exploratória da rota formal.\n- **CP45 — 2026-10-06:** registra **rota exploratória READY_WITH_DOCUMENTED_CONDITIONS / rota formal NOT_READY** e autoriza o **MAP-01**; retomada no protocolo do caso.\n- **CP46 — 2026-10-06:** fecha protocolo, inventário e codebook do **MAP-01** antes da persistência; retomada na criação controlada do caso no banco.\n- **CP47 — 2026-10-06:** corrige a identidade arquitetural do MAP-01: Question/Investigation próprias + N3-01 como `source_corpus`; retomada na migration 018.\n- **CP48 — 2026-10-06:** registra **PASS do suporte a source_corpus**, migration 018, EMVSC-T01–T05 e rebuild through migration 018; retomada na persistência real do MAP-01.
+- **CP39 — 2026-10-06:** registra **N4 Infrastructure Readiness Gate = NOT_READY**, sem abertura de Caso Real N4; retomada na **especificação científica e funcional do Mapa de Evidências**.\n- **CP40 — 2026-10-06:** consolida os Documentos 123–125 do **Mapa de Evidências**, registra a camada `mapping` e o contrato de dados v0.1; retomada na **migration 016 + fixture + testes + rebuild + S5**, antes de qualquer template.\n- **CP41 — 2026-10-06:** registra **PASS técnico do contrato do Mapa de Evidências**, Documento 126, run 37464023391 e rebuild through migration 016; retomada no **Documento 127 — contrato de renderização do EvidenceMapView**.\n- **CP42 — 2026-10-06:** registra o Documento 127 e **Projection Readiness Gate = NOT_READY para template**; retomada na migration aditiva da EvidenceMapView 0.1.\n- **CP43 — 2026-10-06:** registra **Projection Readiness Gate = READY**, migration 017, EMV-T01–T11 e rebuild through migration 017; retomada na **Especificação do Template Operacional do Mapa de Evidências**.\n- **CP44 — 2026-10-06:** registra **PASS da camada de apresentação do Mapa**, Documento 130 e run 37467388595; retomada no **Readiness Gate pré-Caso Real**, separando rota exploratória da rota formal.\n- **CP45 — 2026-10-06:** registra **rota exploratória READY_WITH_DOCUMENTED_CONDITIONS / rota formal NOT_READY** e autoriza o **MAP-01**; retomada no protocolo do caso.\n- **CP46 — 2026-10-06:** fecha protocolo, inventário e codebook do **MAP-01** antes da persistência; retomada na criação controlada do caso no banco.\n- **CP47 — 2026-10-06:** corrige a identidade arquitetural do MAP-01: Question/Investigation próprias + N3-01 como `source_corpus`; retomada na migration 018.\n- **CP48 — 2026-10-06:** registra **PASS do suporte a source_corpus**, migration 018, EMVSC-T01–T05 e rebuild through migration 018; retomada na persistência real do MAP-01.\n- **CP49 — 2026-10-06:** encerra o **MAP-01 em A1 interno / não publicável**, com render e rebuild em PASS; retomada na **Especificação Científica e Funcional do Overview de Revisões**.
