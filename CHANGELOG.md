@@ -2204,3 +2204,21 @@ Documentos:
 - C12 = PASS_WITH_DOCUMENTED_LIMITATION;
 - C2 permanece o único blocker explícito das condições C1–C12;
 - retomada movida para gate pré-persistência consolidado, sem bypass.
+
+
+## 2026-10-06 — OVR-01 consolidated pre-persistence gate
+
+- Documento 159 criado;
+- gate = **READY_WITH_AMENDMENT_REQUIRED**;
+- C2 Gao last-search date permanece BLOCKED / NOT_VERIFIED;
+- migration 019 permite currentness unclear, mas mantém MISSING_LAST_SEARCH_DATE como publication error;
+- nenhum bypass foi autorizado;
+- próxima etapa obrigatória: Emenda 01 ao protocolo developmental.
+
+
+## 2026-10-06 — CP69
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP69.md`;
+- gate consolidado registrado;
+- nenhuma entidade real OVR-01 criada;
+- retomada movida para Emenda 01 + micro-gate de autorização de persistência.
