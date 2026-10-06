@@ -267,6 +267,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [139 — Revisão de Coerência e Decisão Arquitetural](139-overview-revisoes-revisao-coerencia-arquitetura.md)
 - [140 — Contrato de Dados v0.1](140-contrato-dados-overview-revisoes.md)
 - [141 — Resultado da Validação Técnica do Contrato](141-resultado-validacao-contrato-overview-revisoes.md)
+- [142 — Contrato de Renderização e Projection Readiness](142-overview-view-contrato-renderizacao.md)
 
 ### Estado
 
@@ -303,8 +304,16 @@ O Documento 141 registra:
 - artifact **11430003081**;
 - digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
 
+### Projection Readiness
+
+O Documento 142 definiu o contrato de renderização e concluiu:
+
+> **Projection Readiness Gate = NOT_READY para template.**
+
+Faltam projeções auditáveis de method decisions completos, conflicts, quality controls, search exports, selection/exclusions, Review Report lineage, OutcomeEvidence provenance e dependency/invalidation detail.
+
 ### Próxima etapa
 
-**Contrato de renderização da `OverviewOfReviewsView`.**
+**Migration 020 — `OverviewOfReviewsView` rendering readiness.**
 
-O template continua não criado; primeiro deve ser formalizado o contrato de apresentação.
+O template continua proibido até OVR-T01–T12 e novo fechamento do Projection Readiness Gate.
