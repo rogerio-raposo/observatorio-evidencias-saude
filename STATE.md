@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–146:
+Documentos 138–147:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -571,7 +571,8 @@ Documentos 138–146:
 - 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**;
 - 144 — especificação do Template Operacional concluída;
 - 145 — validação da camada de apresentação = **PASS**;
-- 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**.
+- 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**;
+- 147 — qualificação do subconjunto secundário N3-01 = **UNSUITABLE para OVR-01**.
 
 Arquitetura/escopo vigentes:
 
@@ -653,27 +654,37 @@ Readiness pré-caso real:
 - N3-01 pode ser examinado apenas como candidato;
 - nenhum Product/Investigation OVR-01 deve ser criado antes da qualificação do corpus.
 
+Qualificação do primeiro candidato:
+
+- Report 206 = systematic review elegível em princípio;
+- Report 211 = rapid review, não reclassificada como systematic review;
+- Reports 210/220 = scoping/narrative, não elegíveis;
+- 206/211 não estão materializados como Review Study/StudyVersion;
+- não existe membership Review × primary Study;
+- não existem Review-level Results/Syntheses/ROBIS/certainty materializados;
+- requisito mínimo de duas systematic reviews = FAIL;
+- decisão = **UNSUITABLE**.
+
 Próxima etapa:
 
-> **qualificar o subconjunto secundário do N3-01 como candidato a corpus do OVR-01, sem abrir Caso Real.**
+> **selecionar e qualificar um novo corpus candidato especificamente adequado a Overview, sem criar OVR-01 até decisão suitable/suitable_with_conditions.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: qualificação de corpus candidato.**
+**Overview de Revisões: seleção de novo corpus candidato.**
 
-Examinar o subconjunto secundário do N3-01 e registrar:
+Critérios iniciais:
 
-1. systematic reviews candidatas;
-2. Reports/updates;
-3. comparabilidade;
-4. last search dates;
-5. possibilidade de membership Review × primary Study;
-6. Results/Syntheses disponíveis;
-7. certainty;
-8. limitações;
-9. decisão suitable / suitable_with_conditions / unsuitable.
+1. pelo menos duas systematic reviews claramente identificáveis;
+2. full text acessível;
+3. listas de primary studies recuperáveis;
+4. escopo/outcomes comparáveis;
+5. last search dates disponíveis;
+6. possibilidade de materialização de Review Study/StudyVersion;
+7. Review-level Results/Synthesis rastreáveis;
+8. sem necessidade de alterar o contrato apenas para acomodar o caso.
 
-Nenhum OVR-01 será criado antes dessa decisão.
+Nenhum OVR-01 será criado antes de nova qualificação.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
