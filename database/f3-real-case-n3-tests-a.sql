@@ -131,7 +131,7 @@ BEGIN
   IF NOT EXISTS (
     SELECT 1
     FROM jsonb_array_elements(v#>'{rapid_method,deviations}') d
-    WHERE d->>'decision_code'='EUROPE_PMC_RUNTIME_ACCESS_FAILURE'
+    WHERE d->>'code'='EUROPE_PMC_RUNTIME_ACCESS_FAILURE'
       AND d->>'resolution_status'='mitigated'
   ) THEN
     RAISE EXCEPTION 'RN3-T05 FAIL: Europe PMC deviation not projected as mitigated';
