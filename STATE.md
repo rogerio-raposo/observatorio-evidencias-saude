@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–152:
+Documentos 138–153:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -707,10 +707,10 @@ C5–C6 preparatórios:
 - unidade = primary Study/trial;
 - multiple Reports não contam como Studies distintas;
 - GoodNight colapsado conceitualmente em uma Study;
-- Eigl/Hinterberger = provável same Study, confirmação final pendente;
-- Lorenz 2018/2019 = provável alias bibliográfico;
-- matriz preliminar criada;
-- overlaps triplos confirmados/prováveis identificados;
+- Eigl 2023 e Hinterberger 2024 = Studies distintas; hipótese preliminar de same Study superseded pelo Documento 153;
+- Lorenz 2018/2019, Glozier 2018/2019, Hagatun 2017/2019 e Maurer 2024/2025 = aliases bibliográficos resolvidos;
+- matriz preliminar corrigida;
+- pelo menos cinco overlaps triplos confirmados identificados;
 - CCA ainda proibido.
 
 Estado:
@@ -727,10 +727,10 @@ Próxima etapa:
 
 **Overview de Revisões: fechar C5–C6.**
 
-1. resolver aliases Lorenz, Glozier, Hagatun e Maurer;
-2. confirmar Eigl/Hinterberger por registry/coorte;
-3. expandir listas Hwang e Nazari para Study-level canonical candidates;
-4. fechar matriz Review × primary Study;
+1. expandir listas Hwang e Nazari para Study-level canonical candidates;
+2. reconciliar multiple Reports remanescentes;
+3. fechar C5;
+4. completar C6;
 5. classificar C7 membership completeness;
 6. somente então avaliar C8/CCA readiness.
 
