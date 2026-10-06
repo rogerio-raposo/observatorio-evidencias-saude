@@ -2028,3 +2028,12 @@ Documentos:
 - global certainty, indirect comparison e nova meta-analysis permanecem proibidos;
 - C1–C12 definidos como condições pré-persistência;
 - próxima etapa: fechar C1–C4.
+
+
+## 2026-10-06 — CP61
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP61.md`;
+- protocolo developmental OVR-01 dCBT-I consolidado;
+- C1–C12 permanecem condições pré-persistência;
+- nenhum Product/Investigation/ReviewItem/membership OVR-01 foi criado;
+- retomada movida para fechamento de C1–C4.
