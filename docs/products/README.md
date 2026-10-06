@@ -269,6 +269,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [141 — Resultado da Validação Técnica do Contrato](141-resultado-validacao-contrato-overview-revisoes.md)
 - [142 — Contrato de Renderização e Projection Readiness](142-overview-view-contrato-renderizacao.md)
 - [143 — Resultado do Projection Readiness Gate](143-resultado-projection-readiness-overview-revisoes.md)
+- [144 — Especificação do Template Operacional](144-especificacao-template-overview-revisoes.md)
 
 ### Estado
 
@@ -320,8 +321,10 @@ Validação:
 - artifact **11430083884**;
 - digest `sha256:f599426adb3afd5cc28066c00eb0de73c6d18dd734f622d58e9f0f5f9be418a5`.
 
+### Template Operacional
+
+O Documento 144 definiu a ordem canônica, regras epistemológicas, presentation map, renderer, validator e cenários adversariais.
+
 ### Próxima etapa
 
-**Especificar o Template Operacional do Overview de Revisões.**
-
-A especificação deverá preceder a criação do template, presentation map, renderer e validator.
+**Implementar o template, presentation map, renderer e validator do Overview de Revisões e integrar ao S5.**
