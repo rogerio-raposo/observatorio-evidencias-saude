@@ -263,6 +263,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 
 - [138 — Especificação Científica e Funcional](138-especificacao-overview-revisoes.md)
 - [139 — Revisão de Coerência e Decisão Arquitetural](139-overview-revisoes-revisao-coerencia-arquitetura.md)
+- [140 — Contrato de Dados v0.1](140-contrato-dados-overview-revisoes.md)
 
 ### Estado
 
@@ -287,4 +288,17 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 
 ### Próxima etapa
 
-**Contrato de Dados v0.1 do Overview de Revisões.**
+**Implementar a migration 019 do Overview de Revisões.**
+
+O Documento 140 fechou:
+
+- sete estruturas especializadas;
+- guards;
+- membership Review × primary Study;
+- CCA/pairwise overlap derivados;
+- publication gate formal;
+- `OverviewOfReviewsView`;
+- fixture/testes OV-T01–T33;
+- embargo de template até PASS técnico.
+
+Próximo passo: `database/019_overview_of_reviews_contract.sql`, fixture sintética formal e testes, sem template antes do PASS.
