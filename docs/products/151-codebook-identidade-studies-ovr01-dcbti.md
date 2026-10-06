@@ -51,18 +51,19 @@ Confidence: **high**.
 
 Os três Reports contam como **uma Study** para membership/overlap.
 
-### NUKKUAA/Salzburg
+### Eigl 2023 versus Hinterberger 2024 — CORRIGIDO
 
-Reports candidatos:
+A verificação em fonte primária demonstrou que são Studies distintos.
 
-- Eigl et al. 2023;
-- Hinterberger et al. 2024.
+**Eigl 2023:** DOI 10.3390/clockssleep5040039; n=53; online CBT-I program; active psychoeducation/sleep-hygiene control.
 
-Hinterberger descreve o trabalho de Eigl como estudo anterior da mesma aplicação/coorte com foco analítico diferente.
+**Hinterberger 2024:** DOI 10.1111/jsr.14136; n=57; smartphone app + heart-rate monitoring; randomização própria.
 
-Regra provisória: LIKELY_MULTIPLE_REPORTS_SAME_TRIAL.
+Regra: SPLIT_DISTINCT_RANDOMIZATIONS.
 
-Confidence provisória: **medium**, até confirmação final por registry/amostra.
+Confidence: **high**.
+
+A hipótese preliminar de same Study fica **SUPERSEDED pelo Documento 153**.
 
 ## 6. Alias Lorenz
 
