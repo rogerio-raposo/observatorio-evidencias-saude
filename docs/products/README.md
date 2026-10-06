@@ -257,3 +257,23 @@ O Documento 137 encerrou o MAP-01 como **A1 interno / não publicável**, após 
 Próximo passo: iniciar a **Especificação Científica e Funcional do Overview de Revisões**.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
+
+
+## Overview de Revisões
+
+- [138 — Especificação Científica e Funcional](138-especificacao-overview-revisoes.md)
+
+### Estado
+
+- unidade principal = systematic review;
+- v0.1 formal limitado a reviews quantitativas de intervenções;
+- ROBIS como default de risk of bias da review;
+- overlap deve ser representado em nível de Study;
+- CCA e métricas de overlap serão derivadas;
+- double counting é proibido;
+- supplemental primary studies ficam fora do corpus analítico formal v0.1;
+- formal Overview exige A3 + controles humanos qualificados.
+
+### Próxima etapa
+
+**Revisão de Coerência e Decisão Arquitetural do Overview de Revisões.**
