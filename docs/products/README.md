@@ -404,6 +404,25 @@ O Documento 150 registra:
 - corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
 - nenhum OVR-01 real criado.
 
+### C5–C6 preparatórios
+
+Os Documentos 151–152 estabeleceram:
+
+- unidade de overlap = primary Study/trial, não Report;
+- codebook de merge/split/aliases;
+- GoodNight = uma Study com múltiplos Reports;
+- Eigl/Hinterberger = provável same Study, ainda pendente de confirmação;
+- Lorenz 2018/2019 = provável alias bibliográfico;
+- matriz preliminar Hwang × Gao × Nazari;
+- overlaps triplos confirmados e prováveis;
+- CCA permanece proibido até a matriz completa.
+
+Estado:
+
+- C2 = **BLOCKED / NOT_VERIFIED**;
+- C5 = **IN_PROGRESS**;
+- C6 = **IN_PROGRESS**.
+
 ### Próxima etapa
 
-**Resolver C2 e iniciar C5–C6 em modo preparatório:** obter last-search date verificável de Gao e reconciliar Study identities/matriz Review × primary Study sem persistir membership.
+**Resolver aliases/multiple Reports e expandir a matriz até Study-level completeness suficiente para fechar C5–C6; depois classificar C7/C8.**
