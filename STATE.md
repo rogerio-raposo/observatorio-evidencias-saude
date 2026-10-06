@@ -601,12 +601,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP49 — 2026-10-06**
+**CP50 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP49.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP50.md`
 
 Ponto exato de retomada:
 
-> **Iniciar a Especificação Científica e Funcional do Overview de Revisões.**
+> **Criar o Contrato de Dados v0.1 do Overview de Revisões, fechando DDL lógico, guards, overlap derivado, publication gate e OverviewOfReviewsView antes de qualquer template.**
