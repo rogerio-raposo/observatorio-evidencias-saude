@@ -2012,3 +2012,19 @@ Documentos:
 - corpus dCBT-I consolidado como **SUITABLE_WITH_CONDITIONS** para OVR-01 developmental;
 - autorização limitada à preparação do protocolo;
 - ReviewItems/membership permanecem bloqueados até fechamento das condições pré-persistência.
+
+
+## 2026-10-06 — OVR-01 developmental protocol
+
+- Documento 149 criado;
+- pergunta review-level e eligibility definidas;
+- discovery pré-persistência estruturado como não exaustivo;
+- cutoff inicial = 2026-10-06;
+- currentness definida por last-search date;
+- overlap strategy inicial = `include_all_separate_estimates`;
+- CCA/pairwise somente após membership reconciliada;
+- Hwang/Gao permanecem com estimates separados por comparador;
+- Nazari deverá ser screened prospectivamente;
+- global certainty, indirect comparison e nova meta-analysis permanecem proibidos;
+- C1–C12 definidos como condições pré-persistência;
+- próxima etapa: fechar C1–C4.
