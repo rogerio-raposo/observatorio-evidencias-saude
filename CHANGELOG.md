@@ -1872,3 +1872,21 @@ Documentos:
 - migration 019 permanece fechada;
 - retomada movida para migration 020 + OVR-T01–T12;
 - template permanece proibido.
+
+
+## 2026-10-06 — Overview projection readiness READY
+
+- migration `020_overview_of_reviews_view_rendering_readiness.sql` implementada de forma aditiva;
+- fixture do Overview ampliada com protocol deviation, audit lineage e Result provenance;
+- `f3-overview-view-rendering-readiness-tests.sql` criado;
+- OVR-T01–T12 = PASS;
+- migration 020 idempotent reapply = PASS;
+- rebuild through migration 020 = PASS;
+- regressões N0–N4 + Evidence Map + MAP-01 + Overview technical contract = PASS;
+- run **37503751486** = success;
+- artifact **11430083884**;
+- digest `sha256:f599426adb3afd5cc28066c00eb0de73c6d18dd734f622d58e9f0f5f9be418a5`;
+- Documento 143 criado;
+- Projection Readiness alterado de **NOT_READY** para **READY para especificação do template operacional**;
+- migration 019 permanece fechada;
+- próxima etapa: especificação formal do Template Operacional do Overview.
