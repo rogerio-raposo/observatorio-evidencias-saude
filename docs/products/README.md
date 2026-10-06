@@ -266,6 +266,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [138 — Especificação Científica e Funcional](138-especificacao-overview-revisoes.md)
 - [139 — Revisão de Coerência e Decisão Arquitetural](139-overview-revisoes-revisao-coerencia-arquitetura.md)
 - [140 — Contrato de Dados v0.1](140-contrato-dados-overview-revisoes.md)
+- [141 — Resultado da Validação Técnica do Contrato](141-resultado-validacao-contrato-overview-revisoes.md)
 
 ### Estado
 
@@ -288,19 +289,22 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - formal Overview = Investigation depth N4 + A3 + qualified human controls;
 - nenhum template antes de PASS técnico do contrato/view.
 
+### Estado técnico
+
+O Documento 141 registra:
+
+- migration 019 = PASS;
+- fixture formal sintética A3 = PASS;
+- CCA esperado 0,4 = PASS;
+- OV-T01–T33 = PASS;
+- `OverviewOfReviewsView` = PASS;
+- rebuild/regressões = PASS;
+- run **37502184404** = success;
+- artifact **11430003081**;
+- digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
+
 ### Próxima etapa
 
-**Implementar a migration 019 do Overview de Revisões.**
+**Contrato de renderização da `OverviewOfReviewsView`.**
 
-O Documento 140 fechou:
-
-- sete estruturas especializadas;
-- guards;
-- membership Review × primary Study;
-- CCA/pairwise overlap derivados;
-- publication gate formal;
-- `OverviewOfReviewsView`;
-- fixture/testes OV-T01–T33;
-- embargo de template até PASS técnico.
-
-Próximo passo: `database/019_overview_of_reviews_contract.sql`, fixture sintética formal e testes, sem template antes do PASS.
+O template continua não criado; primeiro deve ser formalizado o contrato de apresentação.
