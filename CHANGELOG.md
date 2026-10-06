@@ -1650,3 +1650,11 @@ Documentos:
 - 20 células previstas: 18 in_scope, 1 excluded_by_framework, 1 not_applicable;
 - decisão arquitetural: reutilizar InvestigationVersion N3-01 como primary Investigation do Mapa;
 - Search/Screening do N3 permanecem fontes canônicas e não serão duplicados.
+
+
+## 2026-10-06 — CP46
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP46.md`;
+- MAP-01 pré-especificado por protocolo, inventário e codebook;
+- persistência ainda não iniciada no checkpoint;
+- retomada na criação controlada do MAP-01.
