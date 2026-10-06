@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP62 — 2026-10-06**
+**CP63 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP62.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP63.md`
 
 Checkpoint anterior:
 
-`CP61`
+`CP62`
 
 Status:
 
@@ -146,3 +146,6 @@ em **Modo Continuidade**.
 
 
 - **CP62 — 2026-10-06:** C1 PASS / C2 BLOCKED / C3 PASS / C4 PASS para OVR-01 dCBT-I; retomada em C2 + C5–C6 preparatórios, sem persistir membership.
+
+
+- **CP63 — 2026-10-06:** codebook Study/Report + matriz preliminar de membership persistidos; C5/C6 IN_PROGRESS, CCA ainda proibido; retomada na resolução de aliases e fechamento da matriz.
