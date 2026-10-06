@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP39 — 2026-10-06**
+**CP40 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP39.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP40.md`
 
 Checkpoint anterior:
 
-`CP38`
+`CP39`
 
 Status:
 
@@ -98,4 +98,4 @@ em **Modo Continuidade**.
 - **CP36 — 2026-10-06:** fecha o **Caso Real N3-01** em A0 experimental após dois adversariais `REVISE`, com bloqueio metodológico por cobertura bibliográfica insuficiente; retomada na **Revisão de Evidências — N4**.
 - **CP37 — 2026-10-06:** consolida Documentos 115–118, migration 015, EvidenceReviewView e ER4-T01–T25 em PASS; retomada no **contrato de renderização/template da Revisão de Evidências N4**.
 - **CP38 — 2026-10-06:** fecha a trilha técnica inicial da **Revisão de Evidências N4** com template/renderização em PASS; retomada no **Infrastructure Readiness Gate de um Caso Real N4 experimental**.
-- **CP39 — 2026-10-06:** registra **N4 Infrastructure Readiness Gate = NOT_READY**, sem abertura de Caso Real N4; retomada na **especificação científica e funcional do Mapa de Evidências**.
+- **CP39 — 2026-10-06:** registra **N4 Infrastructure Readiness Gate = NOT_READY**, sem abertura de Caso Real N4; retomada na **especificação científica e funcional do Mapa de Evidências**.\n- **CP40 — 2026-10-06:** consolida os Documentos 123–125 do **Mapa de Evidências**, registra a camada `mapping` e o contrato de dados v0.1; retomada na **migration 016 + fixture + testes + rebuild + S5**, antes de qualquer template.
