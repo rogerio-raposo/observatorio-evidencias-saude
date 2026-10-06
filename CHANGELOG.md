@@ -2105,3 +2105,17 @@ Documentos:
 - C2 permanece bloqueado;
 - C5/C6 continuam em progresso;
 - CCA permanece não autorizado.
+
+
+## 2026-10-06 — OVR-01 article-list reconciliation
+
+- Documento 154 criado;
+- Hwang = 29 artigos;
+- GoodNight colapsa Christensen 2016 + Batterham 2017 + Batterham 2024 em uma Study;
+- Hwang = 27 Study candidates provisórios;
+- Nazari = 49 linhas de artigo;
+- clusters confirmados em Nazari: GoodNight, REST, DIALS, SPREAD e Ritterband/Shaffer;
+- Nazari = máximo provisório de 44 Study candidates após esses clusters;
+- pelo menos 17 overlaps Hwang × Nazari confirmados;
+- Chan 2023 (Hwang) e Chan 2024 (Nazari) confirmados como Studies distintas;
+- C2 bloqueado; C5/C6 em progresso; CCA não autorizado.
