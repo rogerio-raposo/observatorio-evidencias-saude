@@ -114,7 +114,7 @@ Nenhuma decisão metodológica foi projetada.
 | Search | Fonte | Plataforma | Classe | Executada | Resultados | Versão | Export | Storage key | Hash | Algoritmo | Estado |
 |---|---|---|---|---|---:|---|---|---|---|---|---|
 {{#each searches}}
-| {{oes_search_id}} | {{source_name}} | {{platform}} | {{source_class}} | {{executed_at}} | {{result_count}} | {{strategy_version}} | {{export_artifact_uuid}} | {{export_artifact.storage_key}} | {{export_artifact.content_hash}} | {{export_artifact.hash_algorithm}} | {{status}} |
+| {{oes_search_id}} | {{source_name}} | {{platform}} | {{source_class}} | {{executed_at}} | {{result_count}} | {{strategy_version}} | {{export_artifact_uuid}} | {{#if export_artifact}}{{export_artifact.storage_key}} | {{export_artifact.content_hash}} | {{export_artifact.hash_algorithm}}{{else}}— | — | —{{/if}} | {{status}} |
 {{/each}}
 {{else}}
 Nenhuma Search foi projetada.
