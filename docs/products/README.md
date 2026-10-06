@@ -197,6 +197,7 @@ Documentos principais:
 - [128 — Resultado da Validação do Projection Readiness](128-resultado-validacao-evidence-map-view-readiness.md)
 - [129 — Especificação do Template Operacional](129-especificacao-template-mapa-evidencias.md)
 - [130 — Resultado da Validação do Template/Renderização](130-resultado-validacao-template-mapa-evidencias.md)
+- [131 — Readiness Gate Pré-Caso Real](131-mapa-evidencias-readiness-gate-pre-caso-real.md)
 
 Implementação validada:
 
@@ -224,12 +225,15 @@ Limite:
 
 ## Próxima etapa
 
-**Mapa de Evidências: Readiness Gate pré-Caso Real.**
+**Caso Real MAP-01 — ambient AI scribes: mapa exploratório do corpus N3-01.**
 
-A camada de apresentação foi validada no run **37467388595**, incluindo cenário formal, A3 bloqueado e apparent gap, com regressões e rebuild em PASS.
+O Documento 131 concluiu:
 
-O próximo passo é distinguir a viabilidade operacional de:
-- rota exploratória/structured non-exhaustive;
-- rota formal systematic map/EGM.
+- rota exploratória/structured non-exhaustive = **READY_WITH_DOCUMENTED_CONDITIONS**;
+- rota formal systematic map/EGM = **NOT_READY**.
 
-O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
+Fica autorizado apenas o MAP-01 interno A1, com `descriptive_mapping_review + structured_non_exhaustive + apparent_only`, reutilizando o corpus N3-01 sem reabrir ou elevar a assurance do produto N3.
+
+Primeiro passo: protocolo do MAP-01, antes da persistência do caso.
+
+O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
