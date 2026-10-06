@@ -478,36 +478,54 @@ BEGIN
         )
         SELECT 1
           FROM targets t
-         WHERE NOT EXISTS (
+         WHERE (
+            SELECT count(DISTINCT sd.reviewer)
+              FROM investigation.screening_decision sd
+             WHERE sd.investigation_version_uuid = inv_uuid
+               AND sd.target_entity_uuid = t.target_entity_uuid
+               AND lower(sd.stage) IN (
+                   'title_abstract','title/abstract','abstract'
+               )
+               AND sd.adjudication_flag = false
+               AND (
+                   investigation.has_valid_reviewer_assignment(
+                       inv_uuid,sd.reviewer,'screening',
+                       'primary_reviewer',sd.decided_at,true
+                   )
+                   OR
+                   investigation.has_valid_reviewer_assignment(
+                       inv_uuid,sd.reviewer,'screening',
+                       'secondary_reviewer',sd.decided_at,true
+                   )
+               )
+         ) < 2
+         OR NOT EXISTS (
             SELECT 1
-              FROM (
-                SELECT sd.target_entity_uuid
-                  FROM investigation.screening_decision sd
-                 WHERE sd.investigation_version_uuid = inv_uuid
-                   AND sd.target_entity_uuid = t.target_entity_uuid
-                   AND lower(sd.stage) IN (
-                       'title_abstract','title/abstract','abstract'
-                   )
-                   AND sd.adjudication_flag = false
-                   AND investigation.has_valid_reviewer_assignment(
-                       inv_uuid,
-                       sd.reviewer,
-                       'screening',
-                       CASE
-                           WHEN row_number() OVER (
-                               PARTITION BY sd.target_entity_uuid
-                               ORDER BY sd.decided_at, sd.screening_uuid
-                           ) = 1
-                           THEN 'primary_reviewer'
-                           ELSE 'secondary_reviewer'
-                       END,
-                       sd.decided_at,
-                       true
-                   )
-                 GROUP BY sd.target_entity_uuid
-                HAVING count(DISTINCT sd.reviewer) >= 2
-              ) ok
-             WHERE ok.target_entity_uuid = t.target_entity_uuid
+              FROM investigation.screening_decision sd
+             WHERE sd.investigation_version_uuid = inv_uuid
+               AND sd.target_entity_uuid = t.target_entity_uuid
+               AND lower(sd.stage) IN (
+                   'title_abstract','title/abstract','abstract'
+               )
+               AND sd.adjudication_flag = false
+               AND investigation.has_valid_reviewer_assignment(
+                   inv_uuid,sd.reviewer,'screening',
+                   'primary_reviewer',sd.decided_at,true
+               )
+         )
+         OR NOT EXISTS (
+            SELECT 1
+              FROM investigation.screening_decision sd
+             WHERE sd.investigation_version_uuid = inv_uuid
+               AND sd.target_entity_uuid = t.target_entity_uuid
+               AND lower(sd.stage) IN (
+                   'title_abstract','title/abstract','abstract'
+               )
+               AND sd.adjudication_flag = false
+               AND investigation.has_valid_reviewer_assignment(
+                   inv_uuid,sd.reviewer,'screening',
+                   'secondary_reviewer',sd.decided_at,true
+               )
          )
     ) THEN
         RETURN QUERY SELECT
@@ -646,12 +664,8 @@ BEGIN
               FROM product.synthesis_link sl
               JOIN synthesis.contribution sc
                 ON sc.synthesis_version_uuid = sl.synthesis_version_uuid
-              JOIN evidence.result rv
-                ON rv.entity_uuid = (
-                    SELECT rv2.entity_uuid
-                      FROM evidence.result_version rv2
-                     WHERE rv2.version_uuid = sc.result_version_uuid
-                )
+              JOIN evidence.result_version rv
+                ON rv.version_uuid = sc.result_version_uuid
               JOIN evidence.result r
                 ON r.entity_uuid = rv.entity_uuid
              WHERE sl.product_version_uuid = p_product_version_uuid
@@ -677,7 +691,6 @@ BEGIN
           FROM appraisal.risk_assessment_version rav
          WHERE rav.investigation_version_uuid = inv_uuid
            AND rav.status = 'active'
-           AND upper(rav.framework) <> 'ROB-ME'
            AND (
                 SELECT count(DISTINCT pr.actor)
                   FROM provenance.record pr
