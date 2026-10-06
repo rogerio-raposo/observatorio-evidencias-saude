@@ -508,7 +508,7 @@ Produtos exercitados até aqui:
 
 Taxonomia restante da Fase 3:
 
-- concluir camada de apresentação do Mapa de Evidências;
+- concluir o Caso Real MAP-01 do Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
 - Alerta de Evidência.
