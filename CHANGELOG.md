@@ -1577,3 +1577,17 @@ Documentos:
 - contrato de renderização do Mapa consolidado no Documento 127;
 - Projection Readiness Gate registrado como NOT_READY para template;
 - retomada definida na migration aditiva da EvidenceMapView 0.1.
+
+
+## 2026-10-06 — EvidenceMapView projection readiness PASS
+
+- adicionada migration 017 — `017_evidence_map_view_rendering_readiness.sql`;
+- criada `product.evidence_map_reference_reports()`;
+- EvidenceMapView 0.1 ampliada com synthetic fixture, conclusão, protocolo/codebook, reviewer assignments, method controls, lineage/invalidation e references via Study–Report linkage;
+- EMV-T01–T11 PASS;
+- run **37466183355** = success;
+- artifact **11414726018**;
+- digest `sha256:44ee38666b3d502bae5936adb388cdd49660b0f763990eb23b00b2a01bd420c6`;
+- rebuild through migration 017 PASS;
+- Documento 128 criado;
+- Projection Readiness Gate = **READY**.
