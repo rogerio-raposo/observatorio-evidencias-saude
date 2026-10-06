@@ -561,11 +561,12 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–140:
+Documentos 138–141:
 
 - 138 — especificação científica e funcional inicial concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
 - 140 — contrato de dados v0.1 concluído;
+- 141 — validação técnica do contrato = **PASS**;
 - unidade principal = systematic review;
 - escopo formal v0.1 = systematic reviews quantitativas de intervenções;
 - OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
@@ -593,19 +594,23 @@ Contrato v0.1:
 - OV-T01–T33 definidos;
 - template permanece embargado até PASS técnico.
 
-Migration 019:
+Contrato técnico do Overview:
 
-- implementada;
-- instalação through migration 019 = PASS;
+- migration 019 = PASS;
+- fixture formal sintética A3 = PASS;
+- 3 Reviews / 5 primary Studies / 9 memberships;
+- CCA derivado = 0,4;
+- OV-T01–T33 = PASS;
+- `OverviewOfReviewsView` = PASS;
 - regressões N0–N4 + Evidence Map + MAP-01 = PASS;
-- rebuild do zero through migration 019 = PASS;
-- run **37500255586** = success;
-- artifact **11429895618**;
-- digest `sha256:385e4457936aa3dc435ee8d6b92c21382f4e9b80025cff5404c235c39e8508f6`.
+- rebuild com fixture = PASS;
+- run **37502184404** = success;
+- artifact **11430003081**;
+- digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
 
 Próxima etapa:
 
-> **criar fixture formal sintética do Overview e executar OV-T01–T33; ainda não criar template.**
+> **definir o contrato de renderização da `OverviewOfReviewsView` antes de criar template operacional.**
 
 ## 9. Próxima etapa
 
@@ -615,13 +620,12 @@ Documentos 138–140 fecharam especificação científica, arquitetura e contrat
 
 Sequência seguinte:
 
-1. fixture formal sintética;
-2. OV-T01–T33;
-3. validar `OverviewOfReviewsView`;
-4. rebuild/regressões com fixture;
-5. Documento de resultado técnico;
-6. somente após PASS: contrato de renderização/template;
-7. readiness pré-caso real.
+1. contrato de renderização da `OverviewOfReviewsView`;
+2. Projection Readiness Gate;
+3. somente se READY: especificação do template operacional;
+4. renderizador/validator;
+5. validação da camada de apresentação;
+6. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
