@@ -1464,3 +1464,31 @@ Documentos:
 - próxima etapa: **Caso Real N4 experimental — executar exclusivamente o Infrastructure Readiness Gate**;
 - não iniciar busca N4 real se readiness for `not_ready`.
 
+## 2026-10-06 — N4 Infrastructure Readiness Gate = NOT_READY
+
+### Documento
+
+- Documento 122 — Infrastructure Readiness Gate pré-caso real.
+
+### Resultado
+
+- cobertura bibliográfica = `not_ready`;
+- equipe metodológica = `not_ready`;
+- estatística = `ready_with_documented_conditions`;
+- ferramentas/artefatos = `ready`;
+- governança/A3 = `not_ready`;
+- resultado agregado = **NOT_READY**.
+
+### Decisão
+
+- nenhum Caso Real N4 formal foi aberto;
+- nenhuma busca definitiva N4 foi iniciada;
+- IA não será usada para preencher papéis humanos ausentes;
+- requisitos N4 não serão reduzidos para contornar limitações de infraestrutura;
+- N4 permanece tecnicamente validado e operacionalmente deferido.
+
+### Continuidade
+
+- CP39 criado;
+- próxima etapa: **especificação científica e funcional do Mapa de Evidências**.
+
