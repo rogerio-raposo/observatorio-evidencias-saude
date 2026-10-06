@@ -1967,3 +1967,17 @@ Documentos:
 - rota formal = NOT_READY;
 - nenhum OVR-01 aberto;
 - retomada movida para qualificação do subconjunto secundário N3-01 como corpus candidato.
+
+
+## 2026-10-06 — N3-01 corpus candidate rejected for OVR-01
+
+- Documento 147 criado;
+- Report 206 confirmado como systematic review elegível em princípio;
+- Report 211 confirmado como rapid review e não reclassificado artificialmente;
+- Reports 210/220 permanecem scoping/narrative e não elegíveis;
+- somente uma systematic review inequivocamente compatível com o contrato v0.1;
+- Review Studies, membership, review-level Results/Syntheses, ROBIS e certainty não estão materializados para 206/211;
+- decisão do candidato = **UNSUITABLE**;
+- nenhum OVR-01 criado;
+- N3-01 permanece inalterado;
+- próxima etapa: selecionar novo corpus candidato.
