@@ -147,6 +147,7 @@ Documentos principais:
 - [119 — Contrato de Renderização](119-evidence-review-view-contrato-renderizacao.md)
 - [120 — Especificação do Template Operacional](120-especificacao-template-revisao-evidencias-n4.md)
 - [121 — Resultado da Validação do Template/Renderização](121-resultado-validacao-template-revisao-evidencias-n4.md)
+- [122 — Infrastructure Readiness Gate Pré-Caso Real](122-n4-infrastructure-readiness-gate-pre-caso-real.md)
 
 Implementação:
 
@@ -173,8 +174,17 @@ Limite operacional:
 
 O PASS é técnico/arquitetural e utiliza atores humanos explicitamente sintéticos para provar o contrato.
 
+Infrastructure Readiness Gate real:
+
+- resultado agregado **NOT_READY**;
+- cobertura bibliográfica = not_ready;
+- equipe metodológica = not_ready;
+- governança/A3 = not_ready;
+- nenhuma Investigation N4 real foi aberta;
+- nenhum Caso Real N4 formal foi iniciado.
+
 ## Próxima etapa
 
-**Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
+**Mapa de Evidências: especificação científica e funcional.**
 
-Nenhuma busca definitiva N4 deverá ser iniciada antes do readiness. Se o estado for `not_ready`, o bloqueio deve ser registrado e o caso deferido/rerroteado, sem reduzir silenciosamente os requisitos metodológicos.
+O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
