@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–145:
+Documentos 138–146:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -570,7 +570,8 @@ Documentos 138–145:
 - 142 — contrato de renderização definido; Projection Readiness inicialmente = **NOT_READY**;
 - 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**;
 - 144 — especificação do Template Operacional concluída;
-- 145 — validação da camada de apresentação = **PASS**.
+- 145 — validação da camada de apresentação = **PASS**;
+- 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**.
 
 Arquitetura/escopo vigentes:
 
@@ -643,26 +644,36 @@ Camada de apresentação:
 - artifact **11431539311**;
 - digest `sha256:4ddfff2d14f9b8892611199cdade932f7825d2615f76610518a63499c2a58770`.
 
+Readiness pré-caso real:
+
+- infraestrutura técnica = READY;
+- rota developmental interna A0/A1 = READY_WITH_DOCUMENTED_CONDITIONS;
+- rota formal publicável A3 = NOT_READY;
+- nenhum corpus real foi ainda qualificado;
+- N3-01 pode ser examinado apenas como candidato;
+- nenhum Product/Investigation OVR-01 deve ser criado antes da qualificação do corpus.
+
 Próxima etapa:
 
-> **executar readiness pré-caso real do Overview; nenhum Caso Real deverá ser aberto antes desse gate.**
+> **qualificar o subconjunto secundário do N3-01 como candidato a corpus do OVR-01, sem abrir Caso Real.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: readiness pré-caso real.**
+**Overview de Revisões: qualificação de corpus candidato.**
 
-Avaliar antes de qualquer Caso Real:
+Examinar o subconjunto secundário do N3-01 e registrar:
 
-1. disponibilidade de corpus real de revisões;
-2. cobertura de fontes;
-3. capacidade de reconstruir membership Review × primary Study;
-4. controles humanos qualificados reais;
-5. ROBIS real;
-6. overlap verificável;
-7. OutcomeEvidence e certainty reportada;
-8. currentness;
-9. assurance/governança;
-10. risco de double counting e update identity.
+1. systematic reviews candidatas;
+2. Reports/updates;
+3. comparabilidade;
+4. last search dates;
+5. possibilidade de membership Review × primary Study;
+6. Results/Syntheses disponíveis;
+7. certainty;
+8. limitações;
+9. decisão suitable / suitable_with_conditions / unsuitable.
+
+Nenhum OVR-01 será criado antes dessa decisão.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
