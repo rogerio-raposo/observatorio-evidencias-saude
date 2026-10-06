@@ -336,17 +336,23 @@ Preservar julgamentos independentes e reconciliação via:
 
 Nenhuma nova entidade é necessária.
 
-`appraisal.risk_assessment` já possui `target_entity_uuid` genérico.
+`appraisal.risk_assessment` possui `target_entity_uuid` genérico, porém o guard da baseline 002 aceita originalmente apenas `Study`, `Result` e `Report`.
 
-Portanto, ROB-ME poderá ser representado como:
+Para N4, a migration 015 deverá estender esse guard para aceitar também:
+
+> **`Synthesis`**
+
+A extensão é necessária porque ROB-ME avalia missing evidence em nível de síntese e não deve ser artificialmente atribuído a um Study/Result individual.
+
+Representação:
 
 - framework = ROB-ME;
-- target = Synthesis entity/version correspondente;
+- target = Synthesis entity correspondente;
 - outcome quando aplicável;
 - instrument payload/domains;
 - dois reviewer assignments + controle de verificação.
 
-Esta reutilização deve ser formalizada no contrato de dados.
+A extensão não cria nova tabela e preserva todos os alvos anteriormente válidos.
 
 ---
 
