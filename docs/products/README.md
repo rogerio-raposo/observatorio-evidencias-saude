@@ -426,3 +426,19 @@ Estado:
 ### Próxima etapa
 
 **Resolver aliases/multiple Reports e expandir a matriz até Study-level completeness suficiente para fechar C5–C6; depois classificar C7/C8.**
+
+
+### Listas completas Hwang/Nazari
+
+O Documento 154 registra:
+
+- Hwang = 29 artigos;
+- GoodNight colapsa três Reports em uma Study;
+- Hwang = 27 Study candidates provisórios;
+- Nazari = 49 linhas de artigo;
+- cinco multiple-report clusters confirmados em Nazari;
+- Nazari = máximo provisório de 44 Study candidates após esses clusters;
+- pelo menos 17 overlaps Study-level Hwang × Nazari confirmados;
+- Chan 2023 (Hwang) e Chan 2024 (Nazari) = Studies distintas.
+
+C5/C6 permanecem em progresso; CCA continua bloqueado.
