@@ -183,8 +183,43 @@ Infrastructure Readiness Gate real:
 - nenhuma Investigation N4 real foi aberta;
 - nenhum Caso Real N4 formal foi iniciado.
 
+## Mapa de Evidências
+
+A especificação científica, a decisão arquitetural, o contrato de dados v0.1 e a implementação técnica inicial do **Mapa de Evidências** foram consolidados e validados.
+
+Documentos principais:
+
+- [123 — Especificação Científica e Funcional](123-especificacao-mapa-evidencias.md)
+- [124 — Revisão de Coerência e Decisão Arquitetural Inicial](124-mapa-evidencias-revisao-coerencia-arquitetura.md)
+- [125 — Contrato de Dados](125-contrato-dados-mapa-evidencias.md)
+- [126 — Resultado da Validação Técnica](126-resultado-validacao-contrato-mapa-evidencias.md)
+
+Implementação validada:
+
+- migration 016;
+- schema `mapping`;
+- sete estruturas especializadas;
+- `mapping.evidence_map_cells()`;
+- publication gate do Mapa;
+- EvidenceMapView `oes.evidence_map_view/0.1`;
+- fixture formal sintética A3;
+- EM-T01–T22 PASS;
+- rebuild through migration 016 PASS;
+- regressões N0–N4 PASS.
+
+Validação:
+
+- run **37464023391** = success;
+- commit validado `9403f1a36bbcc2c486afa393146b528f72b7a08f`;
+- artifact **11413512318**;
+- digest `sha256:a531328905b4dba42fc249c92eaa8f2331e975ed9dfa418779e7523ae45f8d3a`.
+
+Limite:
+
+> **o PASS é técnico e sintético; nenhum Caso Real do Mapa foi iniciado e nenhum formal gap claim real foi autorizado.**
+
 ## Próxima etapa
 
-**Mapa de Evidências: especificação científica e funcional.**
+**Mapa de Evidências: contrato de renderização do EvidenceMapView.**
 
 O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
