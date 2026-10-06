@@ -747,12 +747,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP67 — 2026-10-06**
+**CP68 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP67.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP68.md`
 
 Ponto exato de retomada:
 
-> **Fechar C9–C12: comparator stratification, ROBIS draft AI-only de Gao, OutcomeEvidence source provenance e certainty provenance; em paralelo continuar tentativa legítima de resolver C2. Depois executar gate pré-persistência consolidado.**
+> **Executar o gate pré-persistência consolidado do OVR-01. C2 Gao last-search date deve ser tratado explicitamente, sem bypass silencioso, e o gate deve decidir READY_TO_PERSIST / READY_WITH_AMENDMENT / NOT_READY_TO_PERSIST.**
