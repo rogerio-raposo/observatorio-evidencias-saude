@@ -262,6 +262,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 ## Overview de Revisões
 
 - [138 — Especificação Científica e Funcional](138-especificacao-overview-revisoes.md)
+- [139 — Revisão de Coerência e Decisão Arquitetural](139-overview-revisoes-revisao-coerencia-arquitetura.md)
 
 ### Estado
 
@@ -274,6 +275,16 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - supplemental primary studies ficam fora do corpus analítico formal v0.1;
 - formal Overview exige A3 + controles humanos qualificados.
 
+### Arquitetura
+
+- OES-P1 reutiliza Study/StudyVersion para systematic reviews;
+- Reports/updates usam StudyReportLink + ReportRelation;
+- Results, ROBIS, Synthesis, Certainty, Search/Screening e assurance permanecem canônicos;
+- schema especializado `overview` terá sete estruturas para corpus, membership, overlap e concordância;
+- CCA/pairwise overlap permanecem derivados;
+- formal Overview = Investigation depth N4 + A3 + qualified human controls;
+- nenhum template antes de PASS técnico do contrato/view.
+
 ### Próxima etapa
 
-**Revisão de Coerência e Decisão Arquitetural do Overview de Revisões.**
+**Contrato de Dados v0.1 do Overview de Revisões.**
