@@ -631,12 +631,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP52 — 2026-10-06**
+**CP53 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP52.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP53.md`
 
 Ponto exato de retomada:
 
-> **Criar a fixture formal sintética do Overview, com 3 systematic reviews, 5 primary Studies, 9 memberships, CCA esperado 0,4, overlap policy `prioritize_review`, ROBIS, human controls e A3; depois executar OV-T01–T33.**
+> **Definir o contrato de renderização da `OverviewOfReviewsView`, avaliando se a projeção v0.1 contém todos os elementos necessários à apresentação correta antes de qualquer template.**
