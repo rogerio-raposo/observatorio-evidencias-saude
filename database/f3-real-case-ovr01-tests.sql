@@ -238,5 +238,51 @@ BEGIN
 END;
 $test$;
 
-SELECT 'OVR01-T01–T14 PASS — real developmental Overview persisted at A0; overlap/CCA database-derived; formal blockers preserved'
+-- OVR01-T15 — persisted Question remains faithful to the prospective protocol.
+DO $test$
+DECLARE q text; nq text;
+BEGIN
+  SELECT original_text,normalized_text INTO q,nq
+    FROM investigation.question_version
+   WHERE version_uuid='d9100000-0000-0000-0000-000000000001';
+
+  IF q<>'Como systematic reviews recentes caracterizam o efeito da dCBT-I totalmente automatizada sobre a gravidade da insônia em adultos no pós-tratamento, considerando diferenças de comparador, overlap de estudos primários, currentness, ROBIS e certainty reportada?'
+     OR nq NOT ILIKE '%pós-tratamento%'
+     OR nq NOT ILIKE '%overlap%'
+     OR nq NOT ILIKE '%currentness%'
+     OR nq NOT ILIKE '%ROBIS%'
+     OR nq NOT ILIKE '%certainty reportada%'
+  THEN RAISE EXCEPTION 'OVR01-T15 FAIL — persisted Question drifted from Document 149'; END IF;
+END;
+$test$;
+
+-- OVR01-T16 — documentary discovery is not converted into fabricated Search execution.
+DO $test$
+DECLARE p jsonb;
+BEGIN
+  SELECT impact_payload INTO p
+    FROM investigation.method_decision
+   WHERE investigation_version_uuid='d9100000-0000-0000-0000-000000000002'
+     AND decision_code='overview_search_coverage_policy'
+     AND record_status='active';
+
+  IF p IS NULL
+     OR p->>'coverage_claim'<>'structured_non_exhaustive'
+     OR p->>'search_execution_materialized'<>'false'
+     OR p->>'inventory_document'<>'docs/products/150-inventario-reviews-c1-c4-ovr01-dcbti.md'
+     OR jsonb_array_length(p->'discovery_sources')<>4
+     OR p ? 'minimum_bibliographic_sources'
+     OR EXISTS (
+       SELECT 1 FROM investigation.search
+        WHERE investigation_version_uuid='d9100000-0000-0000-0000-000000000002'
+     )
+     OR EXISTS (
+       SELECT 1 FROM investigation.screening_decision
+        WHERE investigation_version_uuid='d9100000-0000-0000-0000-000000000002'
+     )
+  THEN RAISE EXCEPTION 'OVR01-T16 FAIL — unsupported Search execution/policy claim detected: %',p; END IF;
+END;
+$test$;
+
+SELECT 'OVR01-T01–T16 PASS — real developmental Overview A0 corrected after adversarial REVISE; overlap/CCA database-derived; unsupported Search execution absent; formal blockers preserved'
 AS ovr01_initial_status;
