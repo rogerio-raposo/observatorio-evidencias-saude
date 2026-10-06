@@ -491,3 +491,16 @@ Documentos 157–158:
 - C2 Gao last-search date continua **BLOCKED / NOT_VERIFIED**.
 
 Próxima etapa: gate pré-persistência consolidado do OVR-01.
+
+
+### Gate pré-persistência consolidado
+
+O Documento 159 concluiu:
+
+> **READY_WITH_AMENDMENT_REQUIRED**
+
+C2 permanece sem last-search date verificável para Gao. A migration 019 permite representar `last_search_date=NULL` e `currentness_status='unclear'`, mas mantém `MISSING_LAST_SEARCH_DATE` como error do publication gate.
+
+Ainda não persistir OVR-01.
+
+Próxima etapa: **Emenda 01 ao protocolo developmental**, limitada à rota interna A0/A1.
