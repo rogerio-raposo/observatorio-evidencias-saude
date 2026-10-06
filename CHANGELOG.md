@@ -1640,3 +1640,13 @@ Documentos:
 - readiness formal systematic map/EGM = NOT_READY;
 - MAP-01 autorizado como caso exploratório interno;
 - retomada movida para o protocolo MAP-01.
+
+
+## 2026-10-06 — MAP-01 pre-persistence design
+
+- Documento 132 — protocolo MAP-01;
+- Documento 133 — inventário formal: 5 Studies + 8 contextual Reports + 4 Syntheses = 17 MapItems;
+- Documento 134 — codebook v0.1;
+- 20 células previstas: 18 in_scope, 1 excluded_by_framework, 1 not_applicable;
+- decisão arquitetural: reutilizar InvestigationVersion N3-01 como primary Investigation do Mapa;
+- Search/Screening do N3 permanecem fontes canônicas e não serão duplicados.
