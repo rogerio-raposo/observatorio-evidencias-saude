@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP65 — 2026-10-06**
+**CP66 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP65.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP66.md`
 
 Checkpoint anterior:
 
-`CP64`
+`CP65`
 
 Status:
 
