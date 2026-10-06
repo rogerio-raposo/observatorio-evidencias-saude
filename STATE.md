@@ -556,6 +556,27 @@ Taxonomia restante da Fase 3:
 - Monitor de Evidências;
 - Alerta de Evidência.
 
+
+### Overview de Revisões
+
+Documento 138:
+
+- especificação científica e funcional inicial concluída;
+- unidade principal = systematic review;
+- escopo formal v0.1 = systematic reviews quantitativas de intervenções;
+- OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
+- overlap exige membership Review × primary Study;
+- CCA/pairwise overlap são derivados;
+- double counting é proibido;
+- ROBIS = default de risk of bias da review;
+- supplemental primary studies ficam fora do corpus analítico formal v0.1;
+- formal Overview exige A3 + qualified human controls;
+- implementação física ainda não iniciada.
+
+Próxima etapa:
+
+> **Revisão de Coerência e Decisão Arquitetural do Overview de Revisões.**
+
 ## 9. Próxima etapa
 
 **Overview de Revisões: Especificação Científica e Funcional.**
