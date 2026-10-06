@@ -298,7 +298,7 @@ BEGIN
        OR NOT EXISTS (
             SELECT 1
               FROM jsonb_array_elements(
-                   v#>'{methodology,quality_controls}'
+                   v#>'{method,quality_controls}'
               ) q
              WHERE q->>'control_code'=
                    'ovr01_ai_methodological_second_pass'
