@@ -195,6 +195,8 @@ Documentos principais:
 - [126 — Resultado da Validação Técnica](126-resultado-validacao-contrato-mapa-evidencias.md)
 - [127 — EvidenceMapView: Contrato de Renderização](127-evidence-map-view-contrato-renderizacao.md)
 - [128 — Resultado da Validação do Projection Readiness](128-resultado-validacao-evidence-map-view-readiness.md)
+- [129 — Especificação do Template Operacional](129-especificacao-template-mapa-evidencias.md)
+- [130 — Resultado da Validação do Template/Renderização](130-resultado-validacao-template-mapa-evidencias.md)
 
 Implementação validada:
 
@@ -222,10 +224,12 @@ Limite:
 
 ## Próxima etapa
 
-**Mapa de Evidências: Especificação do Template Operacional.**
+**Mapa de Evidências: Readiness Gate pré-Caso Real.**
 
-O Documento 128 registrou **Projection Readiness Gate = READY** após a migration 017, EMV-T01–T11, regressões N0–N4 e rebuild through migration 017.
+A camada de apresentação foi validada no run **37467388595**, incluindo cenário formal, A3 bloqueado e apparent gap, com regressões e rebuild em PASS.
 
-O template deverá consumir exclusivamente `oes.evidence_map_view/0.1` e implementar o contrato do Documento 127.
+O próximo passo é distinguir a viabilidade operacional de:
+- rota exploratória/structured non-exhaustive;
+- rota formal systematic map/EGM.
 
 O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
