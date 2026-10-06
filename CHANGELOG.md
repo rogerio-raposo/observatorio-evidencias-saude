@@ -1784,3 +1784,11 @@ Documentos:
 - OV-T01–T33 definidos;
 - template permanece proibido até PASS técnico;
 - próxima etapa: migration 019 + fixture/testes.
+
+
+## 2026-10-06 — CP51
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP51.md`;
+- Contrato de Dados v0.1 do Overview consolidado;
+- template segue embargado até PASS técnico;
+- retomada movida para migration 019 + fixture + OV-T01–T33.
