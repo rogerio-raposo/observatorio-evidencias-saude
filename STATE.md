@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–158:
+Documentos 138–159:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -734,25 +734,29 @@ Próxima etapa:
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: gate pré-persistência consolidado.**
+**Overview de Revisões: Emenda 01 ao protocolo developmental.**
 
-1. revisar C1–C12;
-2. tratar C2 como blocker explícito;
-3. decidir READY_TO_PERSIST / READY_WITH_AMENDMENT / NOT_READY_TO_PERSIST;
-4. não criar entidades reais antes dessa decisão.
+A Emenda 01 deverá:
 
-C2 Gao last-search date permanece bloqueado.
+1. permitir `last_search_date=NULL` para Gao somente na rota developmental;
+2. exigir `currentness_status='unclear'`;
+3. exigir rationale explícita;
+4. preservar `MISSING_LAST_SEARCH_DATE` como error do publication gate;
+5. proibir publicação enquanto C2 permanecer sem verificação;
+6. não alterar a rota formal.
 
-O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
+Depois da Emenda 01, executar micro-gate de autorização de persistência.
+
+Ainda não persistir entidades reais do OVR-01.
 
 ## 10. Checkpoint vigente
 
-**CP68 — 2026-10-06**
+**CP69 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP68.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP69.md`
 
 Ponto exato de retomada:
 
-> **Executar o gate pré-persistência consolidado do OVR-01. C2 Gao last-search date deve ser tratado explicitamente, sem bypass silencioso, e o gate deve decidir READY_TO_PERSIST / READY_WITH_AMENDMENT / NOT_READY_TO_PERSIST.**
+> **Criar a Emenda 01 ao Protocolo Developmental OVR-01 para tratamento de last-search date não verificável; somente depois executar micro-gate de autorização de persistência.**
