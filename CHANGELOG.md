@@ -2119,3 +2119,13 @@ Documentos:
 - pelo menos 17 overlaps Hwang × Nazari confirmados;
 - Chan 2023 (Hwang) e Chan 2024 (Nazari) confirmados como Studies distintas;
 - C2 bloqueado; C5/C6 em progresso; CCA não autorizado.
+
+
+## 2026-10-06 — CP65
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP65.md`;
+- listas Hwang/Nazari completas em nível de artigo consolidadas;
+- cinco multiple-report clusters confirmados em Nazari;
+- pelo menos 17 overlaps Hwang × Nazari confirmados;
+- C2 bloqueado; C5/C6 em progresso; CCA não autorizado;
+- retomada movida para fechamento Study-level de Hwang/Nazari e cruzamento Gao.
