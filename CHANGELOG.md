@@ -2037,3 +2037,16 @@ Documentos:
 - C1–C12 permanecem condições pré-persistência;
 - nenhum Product/Investigation/ReviewItem/membership OVR-01 foi criado;
 - retomada movida para fechamento de C1–C4.
+
+
+## 2026-10-06 — OVR-01 C1–C4 review inventory
+
+- Documento 150 criado;
+- C1 — Gao study list = PASS;
+- C2 — Gao last-search date = BLOCKED / NOT_VERIFIED;
+- C3 — Nazari 2025 = ELIGIBLE;
+- C4 — inventário definitivo de Reviews = PASS;
+- corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
+- Zhong 2026 / older-adult review / Leite 2025 / Zettor 2025 classificados fora do núcleo analítico por scope/outcome;
+- nenhum OVR-01 real criado;
+- próxima etapa: resolver C2 e iniciar C5–C6 preparatórios sem persistir membership.
