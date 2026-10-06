@@ -2222,3 +2222,35 @@ Documentos:
 - gate consolidado registrado;
 - nenhuma entidade real OVR-01 criada;
 - retomada movida para Emenda 01 + micro-gate de autorização de persistência.
+
+
+## 2026-10-06 — OVR-01 Amendment 01
+
+- Documento 160 criado;
+- Emenda 01 aplicada prospectivamente ao Documento 149;
+- C2 Gao last-search date permanece **BLOCKED / NOT_VERIFIED**;
+- para a rota developmental A0/A1, `last_search_date=NULL` passa a ser permitido com `currentness_status='unclear'` e rationale explícita;
+- nenhuma data é inferida;
+- `MISSING_LAST_SEARCH_DATE` permanece **error** do publication gate;
+- publicação continua proibida;
+- rota formal permanece **NOT_READY**;
+- nenhuma entidade real OVR-01 criada nesta etapa.
+
+
+## 2026-10-06 — OVR-01 persistence micro-gate
+
+- Documento 161 criado;
+- migration 019 conferida diretamente: last_search_date nullable, currentness `unclear` suportada e rationale exigida;
+- publication blocker preservado;
+- C1–C12 reavaliados sem reclassificar C2;
+- micro-gate = **READY_TO_PERSIST_DEVELOPMENTAL_A0**;
+- autorização limitada à persistência interna A0;
+- próxima etapa: persistência real controlada + testes/rebuild/render + verificação metodológica adversarial antes de eventual A1.
+
+
+## 2026-10-06 — CP70
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP70.md`;
+- Emenda 01 e micro-gate consolidados;
+- nenhuma entidade real OVR-01 existe ainda;
+- retomada movida para a persistência controlada do OVR-01 em A0 e validação pós-persistência.
