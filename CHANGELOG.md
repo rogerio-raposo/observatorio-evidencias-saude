@@ -1591,3 +1591,10 @@ Documentos:
 - rebuild through migration 017 PASS;
 - Documento 128 criado;
 - Projection Readiness Gate = **READY**.
+
+
+## 2026-10-06 — CP43
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP43.md`;
+- Projection Readiness Gate da EvidenceMapView consolidado como READY;
+- retomada movida para a Especificação do Template Operacional do Mapa de Evidências.
