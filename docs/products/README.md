@@ -254,7 +254,9 @@ Migration 018 validada em PASS no Documento 136.
 
 O Documento 137 encerrou o MAP-01 como **A1 interno / não publicável**, após persistência real, verificação metodológica por IA, renderização e rebuild em PASS.
 
-Próximo passo: iniciar a **Especificação Científica e Funcional do Overview de Revisões**.
+Próximo passo naquele marco histórico: iniciar a **Especificação Científica e Funcional do Overview de Revisões**.
+
+Essa etapa foi posteriormente concluída nos Documentos 138–140; a próxima etapa vigente é a **migration 019**.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
 
