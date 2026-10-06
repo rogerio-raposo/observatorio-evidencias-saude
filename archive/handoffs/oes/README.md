@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP58 — 2026-10-06**
+**CP59 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP58.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP59.md`
 
 Checkpoint anterior:
 
-`CP57`
+`CP58`
 
 Status:
 
@@ -134,3 +134,6 @@ em **Modo Continuidade**.
 
 
 - **CP58 — 2026-10-06:** readiness pré-caso real do Overview fechado; developmental = READY_WITH_DOCUMENTED_CONDITIONS, formal = NOT_READY; retomada na qualificação do subconjunto secundário N3-01 como corpus candidato.
+
+
+- **CP59 — 2026-10-06:** subconjunto secundário N3-01 rejeitado como UNSUITABLE para OVR-01; retomada na seleção/qualificação de novo corpus candidato.
