@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP70 — 2026-10-06**.
+- checkpoint vigente: **CP71 — 2026-10-06**.
 
 ## 2. Estado das fases
 
@@ -748,34 +748,86 @@ Estado vigente:
 
 A migration 019 foi conferida diretamente e suporta essa representação sem alteração de schema.
 
-## 10. Próxima etapa
+## 10. Persistência real OVR-01 A0 e validação pós-persistência
 
-**Persistência real controlada do OVR-01 dCBT-I em A0.**
+Estado vigente do OVR-01 dCBT-I:
 
-Ordem obrigatória:
+- Product = `OES-P-2026-001601`;
+- rota = developmental interna;
+- assurance = **A0**;
+- status editorial = `under_review`;
+- publicação = bloqueada;
+- Question/Investigation/Product próprios persistidos;
+- Nazari materializada de forma rastreável;
+- ReviewItems Hwang/Gao/Nazari persistidos;
+- memberships = **27 / 15 / 44**;
+- occurrences = **86**;
+- unique primary Study candidates = **59**;
+- pairwise overlap derivado pelo banco = **6 / 17 / 9**;
+- CCA = exclusivamente derivado por `overview.overlap_metrics`; nenhum valor foi calculado/persistido manualmente;
+- Gao = `last_search_date=NULL`, `currentness_status='unclear'`, sem inferência;
+- Nazari = precisão de busca disponível somente em nível mensal; nenhum dia foi inventado;
+- Hwang/Gao/Nazari estimates permanecem separados;
+- nenhuma nova meta-analysis OES;
+- certainty review-level não foi inventada nem reutilizada do N2;
+- ROBIS e memberships permanecem AI-assisted/unverified;
+- nenhum reviewer humano, owner approval ou expert review foi fabricado;
+- nenhuma assurance A1/A2/A3 foi criada.
 
-1. criar Question/Investigation/Product/ProductVersion próprios;
-2. materializar Nazari de forma rastreável;
-3. criar ReviewItems Hwang/Gao/Nazari;
-4. persistir memberships a partir da matriz canônica;
-5. manter identity verification AI-assisted/unverified quando aplicável;
-6. deixar overlap/CCA exclusivamente para derivação pelo banco;
-7. executar testes específicos + rebuild/regressões;
-8. validar 86 occurrences / 59 Study candidates como controle;
-9. confirmar `MISSING_LAST_SEARCH_DATE` para Gao;
-10. renderizar via `OverviewOfReviewsView`;
-11. somente então executar verificação metodológica adversarial antes de eventual A1.
+Arquivos:
 
-Continuam proibidos: publicação, A2/A3, owner approval automático, expert review fictícia, CCA manual, nova meta-analysis e inferência da data de busca de Gao.
+- `database/f3-real-case-ovr01-dcbti.sql`;
+- `database/f3-real-case-ovr01-tests.sql`.
 
-## 11. Checkpoint vigente
+Validação:
 
-**CP70 — 2026-10-06**
+- OVR01-T01–T14 = **PASS**;
+- render via `OverviewOfReviewsView` = **PASS**;
+- regressões/idempotência = **PASS**;
+- rebuild-from-zero = **PASS**;
+- run final = **37542350632**;
+- HEAD validado = `7da4b8b9e90ae86858728b35a97c49cb7979cbab`;
+- artifact = **11449631263**;
+- digest = `sha256:138fb9fe28432124dc6e70031bd0a99c1c11a40647ba8ff73687f3fd3cecdb93`.
+
+Publication blockers confirmados incluem:
+
+- `MISSING_LAST_SEARCH_DATE`;
+- `MISSING_APPRAISAL_CONTROL`;
+- `UNVERIFIED_REVIEW_APPRAISAL`;
+- `UNVERIFIED_MEMBERSHIP`;
+- `MISSING_OVERLAP_CONTROL`;
+- `UNVERIFIED_OUTCOME_EVIDENCE`.
+
+Marco:
+
+> **OVR-01 = PERSISTED_DEVELOPMENTAL_A0_VALIDATED**
+
+## 11. Próxima etapa
+
+**Verificação metodológica adversarial pós-persistência do OVR-01.**
+
+A verificação deve confrontar o estado persistido e a `OverviewOfReviewsView` com:
+
+- Documento 149;
+- Emenda 01 / Documento 160;
+- micro-gate / Documento 161;
+- matriz canônica e fechamentos C5–C12;
+- publication blockers;
+- separação developmental × formal.
+
+Somente se o adversarial concluir PASS metodológico poderá ser considerada uma promoção interna para A1.
+
+Continuam proibidos: publicação, A2/A3, owner approval automático, expert review fictícia, CCA manual, nova meta-analysis, colapso indevido de comparadores e inferência da data de busca de Gao.
+
+## 12. Checkpoint vigente
+
+**CP71 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP70.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`
 
 Ponto exato de retomada:
 
-> **Persistir de forma controlada o OVR-01 dCBT-I em A0; depois executar testes/rebuild/render, validar overlap derivado e publication issues e só então considerar A1 após verificação metodológica adversarial.**
+> **Executar verificação metodológica adversarial pós-persistência; reconciliar qualquer achado material; somente depois considerar A1 interno.**
