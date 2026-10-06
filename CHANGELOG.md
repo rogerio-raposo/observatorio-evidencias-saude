@@ -1598,3 +1598,18 @@ Documentos:
 - criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP43.md`;
 - Projection Readiness Gate da EvidenceMapView consolidado como READY;
 - retomada movida para a Especificação do Template Operacional do Mapa de Evidências.
+
+
+## 2026-10-06 — Evidence Map presentation PASS
+
+- criado Documento 129 — Especificação do Template Operacional;
+- implementados template Markdown, presentation map, renderer e validator;
+- primeiro run 37467276979 falhou apenas por asserção textual do validator sobre Markdown;
+- validator corrigido sem alteração científica;
+- run final **37467388595** = success;
+- artifact **11415721992**;
+- digest `sha256:889f31280259bf1f90439957d12652567d0a3542a465c379623d3810840b7afe`;
+- formal fixture, A3-blocked e apparent-gap presentation PASS;
+- rebuild through migration 017 PASS;
+- Documento 130 criado;
+- camada de apresentação do Mapa = **PASS**.
