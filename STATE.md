@@ -668,12 +668,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP56 — 2026-10-06**
+**CP57 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP56.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP57.md`
 
 Ponto exato de retomada:
 
-> **Implementar os quatro arquivos da camada de apresentação do Overview, integrar ao S5 e validar os cenários definidos no Documento 144.**
+> **Executar readiness pré-caso real do Overview de Revisões e decidir READY / READY_WITH_DOCUMENTED_CONDITIONS / NOT_READY antes de selecionar ou persistir qualquer Caso Real.**
