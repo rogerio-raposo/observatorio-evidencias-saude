@@ -1839,3 +1839,12 @@ Documentos:
 - dois erros iniciais da fixture (UUID e rationale omitido) foram corrigidos sem alteração do contrato;
 - embargo técnico de template encerrado;
 - próxima etapa: contrato de renderização da `OverviewOfReviewsView`.
+
+
+## 2026-10-06 — CP53
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP53.md`;
+- contrato técnico do Overview consolidado em PASS;
+- OV-T01–T33 + rebuild/regressões registrados;
+- template ainda não criado;
+- retomada movida para contrato de renderização e Projection Readiness Gate.
