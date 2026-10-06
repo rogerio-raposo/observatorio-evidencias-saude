@@ -500,12 +500,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP43 — 2026-10-06**
+**CP44 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP43.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP44.md`
 
 Ponto exato de retomada:
 
-> **Criar a Especificação do Template Operacional do Mapa de Evidências, consumindo exclusivamente `oes.evidence_map_view/0.1` e implementando o Documento 127.**
+> **Executar Readiness Gate pré-Caso Real do Mapa de Evidências, distinguindo rota exploratória/structured non-exhaustive de rota formal systematic map/EGM.**
