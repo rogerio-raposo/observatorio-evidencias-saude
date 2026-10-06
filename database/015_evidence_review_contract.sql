@@ -1956,6 +1956,11 @@ SELECT jsonb_build_object(
     ),'[]'::jsonb),
 
     'audit', jsonb_build_object(
+        'synthetic_fixture', (
+            SELECT pv.intended_audience = 'architecture_validation'
+              FROM product.product_version pv
+             WHERE pv.version_uuid = p_product_version_uuid
+        ),
         'assurance_level',
             product.assurance_level(p_product_version_uuid),
         'publishable',
