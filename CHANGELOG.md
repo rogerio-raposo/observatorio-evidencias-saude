@@ -1736,3 +1736,16 @@ Documentos:
 - MAP-01 consolidado como **A1 interno / não publicável**;
 - run 37487017809 e rebuild completos em PASS;
 - retomada movida para a Especificação Científica e Funcional do Overview de Revisões.
+
+
+## 2026-10-06 — Overview of Reviews scientific specification
+
+- criado Documento 138 — Especificação Científica e Funcional do Overview de Revisões;
+- unidade analítica principal definida como systematic review;
+- formal v0.1 limitado a reviews quantitativas de intervenções;
+- ROBIS definido como default de risk of bias da review;
+- overlap Study-level e política explícita de double counting tornados obrigatórios;
+- CCA/pairwise overlap definidos como derivados, não verdades persistidas;
+- supplemental primary studies excluídos do corpus analítico formal v0.1;
+- formal Overview exige A3 + qualified human controls;
+- próxima etapa: revisão de coerência e decisão arquitetural.
