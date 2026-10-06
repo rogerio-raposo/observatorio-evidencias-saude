@@ -741,6 +741,21 @@ INSERT INTO product.certainty_link(
     'f1000000-0000-0000-0000-000000000601','primary',1
 );
 
+INSERT INTO provenance.dependency_edge(
+    source_version_uuid,target_version_uuid,dependency_type,
+    derivation_rule,status
+) VALUES
+(
+ 'f1000000-0000-0000-0000-000000000501',
+ 'f1000000-0000-0000-0000-000000000701',
+ 'synthesis_informs_evidence_review','product.synthesis_link','active'
+),
+(
+ 'f1000000-0000-0000-0000-000000000601',
+ 'f1000000-0000-0000-0000-000000000701',
+ 'certainty_informs_evidence_review','product.certainty_link','active'
+);
+
 INSERT INTO product.currency_state(
     currency_state_uuid,product_version_uuid,currency_status,
     assessed_at,assessed_by,rationale,record_status
