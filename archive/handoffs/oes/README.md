@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP53 — 2026-10-06**
+**CP54 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP53.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP54.md`
 
 Checkpoint anterior:
 
-`CP52`
+`CP53`
 
 Status:
 
@@ -119,3 +119,6 @@ em **Modo Continuidade**.
 
 
 - **CP53 — 2026-10-06:** registra PASS técnico do contrato do Overview de Revisões, OV-T01–T33 e rebuild/regressões; retomada no contrato de renderização da `OverviewOfReviewsView`.
+
+
+- **CP54 — 2026-10-06:** define contrato de renderização do Overview e Projection Readiness **NOT_READY**; retomada na migration 020 + OVR-T01–T12.
