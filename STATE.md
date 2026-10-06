@@ -593,9 +593,19 @@ Contrato v0.1:
 - OV-T01–T33 definidos;
 - template permanece embargado até PASS técnico.
 
+Migration 019:
+
+- implementada;
+- instalação through migration 019 = PASS;
+- regressões N0–N4 + Evidence Map + MAP-01 = PASS;
+- rebuild do zero through migration 019 = PASS;
+- run **37500255586** = success;
+- artifact **11429895618**;
+- digest `sha256:385e4457936aa3dc435ee8d6b92c21382f4e9b80025cff5404c235c39e8508f6`.
+
 Próxima etapa:
 
-> **implementar `database/019_overview_of_reviews_contract.sql`, fixture sintética e testes, sem criar template antes do PASS técnico.**
+> **criar fixture formal sintética do Overview e executar OV-T01–T33; ainda não criar template.**
 
 ## 9. Próxima etapa
 
@@ -605,25 +615,24 @@ Documentos 138–140 fecharam especificação científica, arquitetura e contrat
 
 Sequência seguinte:
 
-1. migration 019;
-2. fixture formal sintética;
-3. OV-T01–T33;
-4. `OverviewOfReviewsView`;
-5. rebuild/regressões;
-6. Documento de resultado técnico;
-7. somente após PASS: contrato de renderização/template;
-8. readiness pré-caso real.
+1. fixture formal sintética;
+2. OV-T01–T33;
+3. validar `OverviewOfReviewsView`;
+4. rebuild/regressões com fixture;
+5. Documento de resultado técnico;
+6. somente após PASS: contrato de renderização/template;
+7. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP51 — 2026-10-06**
+**CP52 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP51.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP52.md`
 
 Ponto exato de retomada:
 
-> **Implementar `database/019_overview_of_reviews_contract.sql`, fixture formal sintética e testes OV-T01–T33, sem criar template.**
+> **Criar a fixture formal sintética do Overview, com 3 systematic reviews, 5 primary Studies, 9 memberships, CCA esperado 0,4, overlap policy `prioritize_review`, ROBIS, human controls e A3; depois executar OV-T01–T33.**
