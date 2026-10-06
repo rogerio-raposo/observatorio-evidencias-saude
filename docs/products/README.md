@@ -411,8 +411,8 @@ Os Documentos 151–152 estabeleceram:
 - unidade de overlap = primary Study/trial, não Report;
 - codebook de merge/split/aliases;
 - GoodNight = uma Study com múltiplos Reports;
-- Eigl/Hinterberger = provável same Study, ainda pendente de confirmação;
-- Lorenz 2018/2019 = provável alias bibliográfico;
+- Eigl 2023 e Hinterberger 2024 = **Studies distintas**; hipótese de same Study superseded;
+- Lorenz 2018/2019, Glozier 2018/2019, Hagatun 2017/2019 e Maurer 2024/2025 = aliases bibliográficos resolvidos;
 - matriz preliminar Hwang × Gao × Nazari;
 - overlaps triplos confirmados e prováveis;
 - CCA permanece proibido até a matriz completa.
