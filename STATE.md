@@ -732,31 +732,50 @@ Próxima etapa:
 
 > **investigar multiple-report clusters remanescentes em Nazari, consolidar contagens Study-level finais de Hwang/Nazari, cruzar Gao e fechar C5–C6 antes de classificar C7/C8.**
 
-## 9. Próxima etapa
+## 9. Emenda 01 e micro-gate
 
-**Overview de Revisões: Emenda 01 ao protocolo developmental.**
+Documentos 160–161 concluídos.
 
-A Emenda 01 deverá:
+Estado vigente:
 
-1. permitir `last_search_date=NULL` para Gao somente na rota developmental;
-2. exigir `currentness_status='unclear'`;
-3. exigir rationale explícita;
-4. preservar `MISSING_LAST_SEARCH_DATE` como error do publication gate;
-5. proibir publicação enquanto C2 permanecer sem verificação;
-6. não alterar a rota formal.
+- Emenda 01 = **APROVADA para uso prospectivo no OVR-01 developmental**;
+- C2 Gao last-search date = **BLOCKED / NOT_VERIFIED**;
+- Gao será representado, somente na rota developmental, com `last_search_date=NULL`, `currentness_status='unclear'` e rationale explícita;
+- `MISSING_LAST_SEARCH_DATE` permanece **error** do publication gate;
+- rota formal = **NOT_READY**;
+- micro-gate = **READY_TO_PERSIST_DEVELOPMENTAL_A0**;
+- nenhuma entidade real OVR-01 foi criada até o CP70.
 
-Depois da Emenda 01, executar micro-gate de autorização de persistência.
+A migration 019 foi conferida diretamente e suporta essa representação sem alteração de schema.
 
-Ainda não persistir entidades reais do OVR-01.
+## 10. Próxima etapa
 
-## 10. Checkpoint vigente
+**Persistência real controlada do OVR-01 dCBT-I em A0.**
 
-**CP69 — 2026-10-06**
+Ordem obrigatória:
+
+1. criar Question/Investigation/Product/ProductVersion próprios;
+2. materializar Nazari de forma rastreável;
+3. criar ReviewItems Hwang/Gao/Nazari;
+4. persistir memberships a partir da matriz canônica;
+5. manter identity verification AI-assisted/unverified quando aplicável;
+6. deixar overlap/CCA exclusivamente para derivação pelo banco;
+7. executar testes específicos + rebuild/regressões;
+8. validar 86 occurrences / 59 Study candidates como controle;
+9. confirmar `MISSING_LAST_SEARCH_DATE` para Gao;
+10. renderizar via `OverviewOfReviewsView`;
+11. somente então executar verificação metodológica adversarial antes de eventual A1.
+
+Continuam proibidos: publicação, A2/A3, owner approval automático, expert review fictícia, CCA manual, nova meta-analysis e inferência da data de busca de Gao.
+
+## 11. Checkpoint vigente
+
+**CP70 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP69.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP70.md`
 
 Ponto exato de retomada:
 
-> **Criar a Emenda 01 ao Protocolo Developmental OVR-01 para tratamento de last-search date não verificável; somente depois executar micro-gate de autorização de persistência.**
+> **Persistir de forma controlada o OVR-01 dCBT-I em A0; depois executar testes/rebuild/render, validar overlap derivado e publication issues e só então considerar A1 após verificação metodológica adversarial.**
