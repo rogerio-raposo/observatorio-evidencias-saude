@@ -1771,3 +1771,16 @@ Documentos:
 - especificação científica e arquitetura do Overview de Revisões consolidadas;
 - nenhuma migration/template do Overview criada antes do contrato;
 - retomada movida para o Contrato de Dados v0.1.
+
+
+## 2026-10-06 — Overview data contract v0.1
+
+- criado Documento 140 — Contrato de Dados v0.1 do Overview de Revisões;
+- definidas sete estruturas especializadas no schema `overview`;
+- Review × primary Study membership definida como verdade persistida;
+- CCA/pairwise overlap mantidos como derivados;
+- `include_all_deduplicate_outcomes` bloqueado para publicação formal v0.1;
+- publication gate e `OverviewOfReviewsView` especificados;
+- OV-T01–T33 definidos;
+- template permanece proibido até PASS técnico;
+- próxima etapa: migration 019 + fixture/testes.
