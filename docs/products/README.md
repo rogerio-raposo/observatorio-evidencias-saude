@@ -272,6 +272,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [144 — Especificação do Template Operacional](144-especificacao-template-overview-revisoes.md)
 - [145 — Resultado da Validação do Template Operacional](145-resultado-validacao-template-overview-revisoes.md)
 - [146 — Readiness Gate Pré-Caso Real](146-overview-readiness-gate-pre-caso-real.md)
+- [147 — Qualificação do Corpus Candidato OVR-01 / N3-01](147-qualificacao-corpus-candidato-ovr01-n3.md)
 
 ### Estado
 
@@ -346,6 +347,16 @@ O Documento 146 concluiu:
 - nenhum OVR-01 está autorizado ainda;
 - o corpus candidato deve ser qualificado antes de criar Product/Investigation.
 
+### Qualificação do primeiro corpus candidato
+
+O Documento 147 concluiu:
+
+> **subconjunto secundário do N3-01 = UNSUITABLE para OVR-01.**
+
+Motivo determinante: apenas uma systematic review inequivocamente elegível sob o contrato v0.1; a segunda candidata é uma rapid review e não deve ser reclassificada artificialmente.
+
+Nenhum Product/Investigation OVR-01 foi criado e o N3-01 permanece inalterado.
+
 ### Próxima etapa
 
-**Qualificação de Corpus Candidato para OVR-01**, começando pelo subconjunto de evidência secundária do N3-01 sem presumir elegibilidade.
+**Selecionar e qualificar um novo corpus candidato especificamente adequado a Overview**, antes de abrir OVR-01.
