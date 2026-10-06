@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP61 — 2026-10-06**
+**CP62 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP61.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP62.md`
 
 Checkpoint anterior:
 
-`CP60`
+`CP61`
 
 Status:
 
@@ -143,3 +143,6 @@ em **Modo Continuidade**.
 
 
 - **CP61 — 2026-10-06:** protocolo developmental OVR-01 dCBT-I concluído; retomada em C1–C4 sem criar ainda entidades reais do Overview.
+
+
+- **CP62 — 2026-10-06:** C1 PASS / C2 BLOCKED / C3 PASS / C4 PASS para OVR-01 dCBT-I; retomada em C2 + C5–C6 preparatórios, sem persistir membership.
