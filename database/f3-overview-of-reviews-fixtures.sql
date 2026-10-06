@@ -175,7 +175,7 @@ INSERT INTO evidence.study_version(
 ('f9310000-0000-0000-0000-000000000201','f9300000-0000-0000-0000-000000000201','randomized_trial','parallel RCT','Primary Study 1',500,'active'),
 ('f9310000-0000-0000-0000-000000000202','f9300000-0000-0000-0000-000000000202','randomized_trial','parallel RCT','Primary Study 2',600,'active'),
 ('f9310000-0000-0000-0000-000000000203','f9300000-0000-0000-0000-000000000203','randomized_trial','parallel RCT','Primary Study 3',700,'active'),
-('f9310000-0000-0000-0000-000000000204','f9300000-0000-0000-000000000204','randomized_trial','parallel RCT','Primary Study 4',800,'active'),
+('f9310000-0000-0000-0000-000000000204','f9300000-0000-0000-0000-000000000204','randomized_trial','parallel RCT','Primary Study 4',800,'active'),
 ('f9310000-0000-0000-0000-000000000205','f9300000-0000-0000-0000-000000000205','randomized_trial','parallel RCT','Primary Study 5',900,'active');
 
 INSERT INTO evidence.outcome(entity_uuid)
