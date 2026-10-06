@@ -559,9 +559,10 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documento 138:
+Documentos 138–139:
 
-- especificação científica e funcional inicial concluída;
+- 138 — especificação científica e funcional inicial concluída;
+- 139 — revisão de coerência e decisão arquitetural concluída;
 - unidade principal = systematic review;
 - escopo formal v0.1 = systematic reviews quantitativas de intervenções;
 - OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
@@ -571,11 +572,15 @@ Documento 138:
 - ROBIS = default de risk of bias da review;
 - supplemental primary studies ficam fora do corpus analítico formal v0.1;
 - formal Overview exige A3 + qualified human controls;
-- implementação física ainda não iniciada.
+- implementação física ainda não iniciada;
+- camada especializada aprovada com sete estruturas: review_item, primary_study_membership, review_cluster, cluster_membership, overlap_resolution, outcome_evidence e concordance_assessment;
+- CCA/pairwise overlap permanecerão derivados;
+- formal Overview usará Investigation depth N4, A3 e qualified human controls;
+- nenhuma nova entidade Review/Overview paralela será criada.
 
 Próxima etapa:
 
-> **Revisão de Coerência e Decisão Arquitetural do Overview de Revisões.**
+> **criar o Contrato de Dados v0.1 do Overview de Revisões.**
 
 ## 9. Próxima etapa
 
