@@ -1375,3 +1375,49 @@ Documentos:
 
 - CP36 criado;
 - próxima etapa: **Revisão de Evidências — N4**.
+
+## 2026-10-06 — Revisão de Evidências N4: contrato técnico validado
+
+### Documentos
+
+- Documento 115 — Especificação Científica e Funcional;
+- Documento 116 — Revisão de Coerência e Decisão Arquitetural;
+- Documento 117 — Contrato de Dados;
+- Documento 118 — Resultado da Validação Técnica = **PASS**.
+
+### Arquitetura
+
+- migration 015;
+- nova tabela `investigation.reviewer_assignment`;
+- extensão de `appraisal.assert_risk_target_type()` para aceitar `Synthesis` em appraisal ROB-ME;
+- EvidenceReviewView `oes.evidence_review_view/0.1`;
+- publication gate N4;
+- Infrastructure Readiness Gate.
+
+### Governança
+
+- N4 formal exige A3 e controles humanos qualificados específicos do protocolo;
+- A3 não substitui stage controls;
+- IA não pode satisfazer reviewer assignment humano;
+- uma única base bibliográfica não é suficiente para N4 formal;
+- protocolo prospectivo obrigatório;
+- search peer review, dupla seleção, dupla extração, dupla appraisal e dupla certainty são verificáveis pelo contrato;
+- meta-analysis exige code/dataset + statistical review;
+- Caso Real N4 formal permanece bloqueado na configuração atual do OES.
+
+### Validação
+
+- fixture formal sintética A3;
+- ER4-T01–T25 PASS;
+- rebuild through migration 015 PASS;
+- regressões F2-B/S4/S5/N0/N1/N2/N3 PASS;
+- run **37417796591** = **success**;
+- commit validado `a255bf2a33b1cfba1214c7d9daaca234a7f6987e`;
+- artifact **11391167525**;
+- digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
+
+### Continuidade
+
+- CP37 criado;
+- próxima etapa: **contrato de renderização e template operacional da Revisão de Evidências N4**.
+
