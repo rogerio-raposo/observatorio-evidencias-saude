@@ -654,12 +654,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP55 — 2026-10-06**
+**CP56 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP55.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP56.md`
 
 Ponto exato de retomada:
 
-> **Especificar formalmente o Template Operacional do Overview de Revisões antes de criar qualquer template, presentation map, renderer ou validator.**
+> **Implementar os quatro arquivos da camada de apresentação do Overview, integrar ao S5 e validar os cenários definidos no Documento 144.**
