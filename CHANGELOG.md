@@ -2176,3 +2176,20 @@ Documentos:
 - C8 = READY_WITH_DOCUMENTED_CONDITIONS;
 - CCA permanece não calculado;
 - retomada movida para C9–C12 + tentativa legítima de resolver C2.
+
+
+## 2026-10-06 — OVR-01 C9–C12 closed
+
+- Documento 157 criado — C9, C11 e C12;
+- Documento 158 criado — C10 ROBIS;
+- C9 = PASS;
+- C10 = PASS_WITH_DOCUMENTED_LIMITATIONS;
+- C11 = PASS_WITH_PREPARED_NAZARI_MATERIALIZATION;
+- C12 = PASS_WITH_DOCUMENTED_LIMITATION;
+- Hwang ROBIS = unclear;
+- Gao ROBIS = unclear;
+- Nazari ROBIS = high;
+- certainty review-level não é inventada;
+- GRADE da Evidence Sheet N2 não será reutilizado;
+- C2 Gao last-search date permanece BLOCKED / NOT_VERIFIED;
+- próxima etapa: gate pré-persistência consolidado.
