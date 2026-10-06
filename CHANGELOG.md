@@ -1665,3 +1665,14 @@ Documentos:
 - corrigida referência residual em `STATE.md` que ainda indicava a camada de apresentação do Mapa como pendente;
 - taxonomia atualizada para refletir corretamente que a próxima pendência da trilha do Mapa é concluir o Caso Real MAP-01;
 - nenhuma decisão metodológica ou ponto de retomada foi alterado.
+
+
+## 2026-10-06 — MAP-01 source-corpus architecture correction
+
+- criado Documento 135;
+- identificada incompatibilidade semântica em reutilizar diretamente a Investigation N3-01 como primary Investigation do MAP-01;
+- decisão do CP46 sobre primary Investigation foi superada;
+- MAP-01 terá Question/Investigation próprias;
+- N3-01 será ligada como `source_corpus`;
+- Search/Screening permanecerão canônicos na N3-01, sem duplicação;
+- próxima etapa: migration 018 de suporte à herança de corpus na EvidenceMapView/publication gate.
