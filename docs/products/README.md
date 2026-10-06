@@ -271,6 +271,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [143 — Resultado do Projection Readiness Gate](143-resultado-projection-readiness-overview-revisoes.md)
 - [144 — Especificação do Template Operacional](144-especificacao-template-overview-revisoes.md)
 - [145 — Resultado da Validação do Template Operacional](145-resultado-validacao-template-overview-revisoes.md)
+- [146 — Readiness Gate Pré-Caso Real](146-overview-readiness-gate-pre-caso-real.md)
 
 ### Estado
 
@@ -336,8 +337,15 @@ Validação:
 - artifact **11431539311**;
 - digest `sha256:4ddfff2d14f9b8892611199cdade932f7825d2615f76610518a63499c2a58770`.
 
+### Readiness pré-caso real
+
+O Documento 146 concluiu:
+
+- rota developmental interna A0/A1 = **READY_WITH_DOCUMENTED_CONDITIONS**;
+- rota formal publicável A3 = **NOT_READY**;
+- nenhum OVR-01 está autorizado ainda;
+- o corpus candidato deve ser qualificado antes de criar Product/Investigation.
+
 ### Próxima etapa
 
-**Readiness pré-caso real do Overview de Revisões.**
-
-Nenhum Caso Real deverá ser aberto antes desse gate.
+**Qualificação de Corpus Candidato para OVR-01**, começando pelo subconjunto de evidência secundária do N3-01 sem presumir elegibilidade.
