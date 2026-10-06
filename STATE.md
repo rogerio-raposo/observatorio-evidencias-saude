@@ -371,7 +371,7 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–130:
+Documentos 123–131:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
@@ -380,7 +380,8 @@ Documentos 123–130:
 - 127 — EvidenceMapView: Contrato de Renderização;
 - 128 — Resultado da Validação do Projection Readiness: **READY**;
 - 129 — Especificação do Template Operacional;
-- 130 — Resultado da Validação do Template/Renderização: **PASS**.
+- 130 — Resultado da Validação do Template/Renderização: **PASS**;
+- 131 — Readiness Gate Pré-Caso Real: **exploratório READY_WITH_DOCUMENTED_CONDITIONS / formal NOT_READY**.
 
 Implementação validada:
 
@@ -463,9 +464,21 @@ Validação final da apresentação:
 - artifact **11415721992**;
 - digest `sha256:889f31280259bf1f90439957d12652567d0a3542a465c379623d3810840b7afe`.
 
+Readiness pré-Caso Real:
+
+- rota A — exploratória / structured non-exhaustive = **READY_WITH_DOCUMENTED_CONDITIONS**;
+- rota B — systematic map / EGM formal = **NOT_READY**;
+- candidato autorizado: MAP-01 — ambient AI scribes, reutilizando o corpus N3-01;
+- MAP-01 deve ser novo Product interno A1;
+- subtype `descriptive_mapping_review`;
+- coverage `structured_non_exhaustive`;
+- gaps `apparent_only`;
+- sem novos ReviewerAssignments humanos;
+- sem alteração do N3-01.
+
 Próxima etapa:
 
-> **executar Readiness Gate pré-Caso Real do Mapa, separando rota exploratória/non-exhaustive de rota formal systematic map/EGM.**
+> **criar o protocolo do Caso Real MAP-01 antes de persistir o novo Product/Framework.**
 
 Produtos exercitados até aqui:
 
@@ -484,17 +497,19 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Mapa de Evidências: Readiness Gate pré-Caso Real.**
+**Caso Real MAP-01: protocolo.**
 
-A camada de apresentação foi fechada em PASS no Documento 130.
+O Documento 131 autorizou somente a rota exploratória controlada.
 
 Sequência seguinte:
 
-1. avaliar readiness da rota exploratória/structured non-exhaustive;
-2. avaliar readiness da rota formal systematic map/EGM;
-3. definir se algum Caso Real pode ser aberto sem reduzir o padrão metodológico;
-4. se viável, abrir apenas a rota autorizada;
-5. caso contrário, deferir e seguir para o próximo produto da Fase 3.
+1. protocolo do MAP-01;
+2. inventário do corpus herdado N3-01;
+3. framework/codebook;
+4. persistência do novo Map Product;
+5. classificação rastreável;
+6. validação técnica e adversarial;
+7. encerramento em assurance real compatível com os controles existentes.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
