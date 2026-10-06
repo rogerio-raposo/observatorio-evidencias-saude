@@ -1631,3 +1631,12 @@ Documentos:
 - definido `descriptive_mapping_review + structured_non_exhaustive + apparent_only`;
 - proibida alteração da assurance/conclusão do N3-01 ou fabricação de controles humanos;
 - próxima etapa: protocolo MAP-01.
+
+
+## 2026-10-06 — CP45
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP45.md`;
+- readiness exploratório do Mapa = READY_WITH_DOCUMENTED_CONDITIONS;
+- readiness formal systematic map/EGM = NOT_READY;
+- MAP-01 autorizado como caso exploratório interno;
+- retomada movida para o protocolo MAP-01.
