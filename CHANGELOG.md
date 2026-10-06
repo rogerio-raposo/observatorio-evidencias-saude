@@ -1763,3 +1763,11 @@ Documentos:
 - formal Overview = Investigation N4 + A3 + qualified human controls;
 - rejeitadas entidades/tabelas paralelas de Review, Overview, ROBIS, GRADE, Search, Screening e métricas derivadas;
 - próxima etapa: contrato de dados v0.1.
+
+
+## 2026-10-06 — CP50
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP50.md`;
+- especificação científica e arquitetura do Overview de Revisões consolidadas;
+- nenhuma migration/template do Overview criada antes do contrato;
+- retomada movida para o Contrato de Dados v0.1.
