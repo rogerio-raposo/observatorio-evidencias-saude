@@ -1274,3 +1274,41 @@ Estado final:
 
 - CP34 criado;
 - próxima etapa: contrato de renderização N3.
+
+## 2026-10-05 — Síntese Rápida N3: renderização/template validados
+
+### Documentos
+
+- Documento 103 — contrato de renderização;
+- Documento 104 — especificação do template operacional;
+- Documento 105 — resultado da validação do template = **PASS**.
+
+### Artefatos
+
+- `templates/rapid-evidence-synthesis.md`;
+- `templates/rapid-evidence-synthesis-presentation-map.json`;
+- `scripts/render_rapid_evidence_synthesis_reference.py`;
+- `scripts/validate_rapid_evidence_synthesis_render.py`.
+
+### Validação
+
+- run **37384841089** = **success**;
+- commit validado `da3a4a3d8d18d9ac951ab028fc4249d95e898989`;
+- artifact **11378245039**;
+- digest `sha256:b94c8b1d4a2428233c01ba7ea40d4b7e720fb1a7e5dc76863a406d2e9959247c`;
+- F3-RS-TEMPLATE PASS;
+- RS-T01–T15 PASS;
+- N3 qualified-human-control gate PASS;
+- rebuild through migration 014 PASS;
+- regressões N0–N2/F2-B/S4/S5 PASS.
+
+### Limite operacional
+
+- publicação formal N3 continua proibida sem qualified human controls reais + A3;
+- A3 simulado no validator é somente teste visual em memória;
+- nenhum A3 falso foi persistido.
+
+### Continuidade
+
+- CP35 criado;
+- próxima etapa: **Caso Real N3 experimental**.
