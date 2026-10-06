@@ -482,6 +482,7 @@ INSERT INTO overview.concordance_assessment(
     '{"label":"longest follow-up"}'::jsonb,
     'magnitude_discordant',
     '{"direction":"mostly concordant benefit","magnitude":"Review C attenuated","certainty":"A/B reported, C absent"}'::jsonb,
+    'Review-level estimates point in a similar direction, but Review C shows materially attenuated magnitude and lacks linked certainty.',
     'SYN_OV_R1','human_reviewer','human_consensus',
     'SYN_OV_DATA_VERIFIER','human_reviewer',
     TIMESTAMPTZ '2026-10-06 12:25:00-03',
