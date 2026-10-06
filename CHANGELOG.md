@@ -1699,3 +1699,11 @@ Documentos:
 - digest `sha256:c7dc99be7781200e0ad603b0d03f9e90e3022ed7eafabd32be5138f41c29024b`;
 - rebuild through migration 018 PASS;
 - Documento 136 criado.
+
+
+## 2026-10-06 — CP48
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP48.md`;
+- suporte a `source_corpus` consolidado como PASS;
+- migration 018 + EMVSC-T01–T05 + rebuild validados;
+- retomada movida para a persistência real do MAP-01.
