@@ -413,6 +413,22 @@ INSERT INTO provenance.record(
 -- N4 RISK OF BIAS + ROB-ME
 -- ---------------------------------------------------------------------------
 
+-- Pre-create the synthesis entity/version identity so ROB-ME can target it.
+INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
+VALUES (
+ 'f0000000-0000-0000-0000-000000000501',
+ 'OES-SY-2026-001201','Synthesis','n4-fixture'
+);
+
+INSERT INTO core.entity_version(
+    version_uuid,entity_uuid,version_no,version_status,
+    created_by,change_type,change_note
+) VALUES (
+ 'f1000000-0000-0000-0000-000000000501',
+ 'f0000000-0000-0000-0000-000000000501',
+ 1,'current','n4-fixture','initial','Synthetic N4 pairwise meta-analysis'
+);
+
 INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
 VALUES
 ('f0000000-0000-0000-0000-000000000401','OES-RA-2026-001201','RiskAssessment','n4-fixture'),
@@ -487,21 +503,6 @@ INSERT INTO provenance.record(
 -- ---------------------------------------------------------------------------
 -- META-ANALYSIS SYNTHESIS — REUSE N3 RESULT VERSIONS
 -- ---------------------------------------------------------------------------
-
-INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
-VALUES (
- 'f0000000-0000-0000-0000-000000000501',
- 'OES-SY-2026-001201','Synthesis','n4-fixture'
-);
-
-INSERT INTO core.entity_version(
-    version_uuid,entity_uuid,version_no,version_status,
-    created_by,change_type,change_note
-) VALUES (
- 'f1000000-0000-0000-0000-000000000501',
- 'f0000000-0000-0000-0000-000000000501',
- 1,'current','n4-fixture','initial','Synthetic N4 pairwise meta-analysis'
-);
 
 INSERT INTO synthesis.synthesis(entity_uuid)
 VALUES ('f0000000-0000-0000-0000-000000000501');
