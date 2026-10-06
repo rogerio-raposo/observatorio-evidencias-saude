@@ -712,12 +712,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP60 — 2026-10-06**
+**CP61 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP60.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP61.md`
 
 Ponto exato de retomada:
 
-> **Preparar protocolo developmental do OVR-01 dCBT-I, definindo pergunta review-level, eligibility, comparadores, overlap, currentness, ROBIS, OutcomeEvidence, certainty e plano de fechamento das condições pré-persistência.**
+> **Fechar C1–C4: recuperar study list e last-search date de Gao, screenar Nazari segundo o Documento 149 e produzir o inventário definitivo das Reviews do OVR-01.**
