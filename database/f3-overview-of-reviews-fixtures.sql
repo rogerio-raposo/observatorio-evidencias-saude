@@ -95,7 +95,8 @@ INSERT INTO investigation.method_decision(
 ('f9200000-0000-0000-0000-000000000003','f9100000-0000-0000-0000-000000000002','other','cross_cutting','overview_overlap_policy',true,'Use Study-level membership and prioritize one review in overlapping cluster.',NULL,NULL,'{"strategy":"prioritize_review","criteria":["question_fit","ROBIS","currentness","coverage"]}'::jsonb,'accepted','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:07:00-03','active'),
 ('f9200000-0000-0000-0000-000000000004','f9100000-0000-0000-0000-000000000002','other','cross_cutting','overview_currentness_policy',true,'Synthetic currentness uses review last-search date and protocol thresholds.',NULL,NULL,'{"current_after":"2024-01-01","possibly_outdated_after":"2022-01-01"}'::jsonb,'accepted','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:08:00-03','active'),
 ('f9200000-0000-0000-0000-000000000005','f9100000-0000-0000-0000-000000000002','other','certainty','overview_certainty_policy',true,'Collect review-reported certainty where available; do not create global Overview certainty.',NULL,NULL,'{"global_overview_certainty":false}'::jsonb,'accepted','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:09:00-03','active'),
-('f9200000-0000-0000-0000-000000000006','f9100000-0000-0000-0000-000000000002','other','synthesis','overview_reanalysis_policy',true,'No new quantitative reanalysis in formal fixture.',NULL,NULL,'{"new_meta_analysis":false,"review_level_estimates":"separate"}'::jsonb,'accepted','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:10:00-03','active');
+('f9200000-0000-0000-0000-000000000006','f9100000-0000-0000-0000-000000000002','other','synthesis','overview_reanalysis_policy',true,'No new quantitative reanalysis in formal fixture.',NULL,NULL,'{"new_meta_analysis":false,"review_level_estimates":"separate"}'::jsonb,'accepted','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:10:00-03','active'),
+('f9200000-0000-0000-0000-000000000007','f9100000-0000-0000-0000-000000000002','protocol_deviation','search','synthetic_resolved_search_deviation',false,'Synthetic non-material deviation retained to validate render-time audit projection.','{"risk":"fixture-only"}'::jsonb,'{"mitigation":"resolved before final synthesis"}'::jsonb,'{"material_effect":false}'::jsonb,'resolved','SYN_OV_LEAD',TIMESTAMPTZ '2026-10-06 08:11:00-03','active');
 
 -- ---------------------------------------------------------------------------
 -- QUALIFIED HUMAN ASSIGNMENTS / CONTROLS
@@ -488,6 +489,21 @@ INSERT INTO overview.concordance_assessment(
     TIMESTAMPTZ '2026-10-06 12:25:00-03',
     TIMESTAMPTZ '2026-10-06 12:24:00-03','active'
 );
+
+-- ---------------------------------------------------------------------------
+-- DEPENDENCY LINEAGE FOR RENDERING AUDIT
+-- ---------------------------------------------------------------------------
+
+INSERT INTO provenance.dependency_edge(
+    source_version_uuid,target_version_uuid,dependency_type,
+    derivation_rule,status
+) VALUES
+('f9310000-0000-0000-0000-000000000101','f9100000-0000-0000-0000-000000000020','review_evidence_informs_overview','Synthetic Review A informs Overview','active'),
+('f9310000-0000-0000-0000-000000000102','f9100000-0000-0000-0000-000000000020','review_evidence_informs_overview','Synthetic Review B informs Overview','active'),
+('f9310000-0000-0000-0000-000000000103','f9100000-0000-0000-0000-000000000020','review_evidence_informs_overview','Synthetic Review C informs Overview','active'),
+('f9310000-0000-0000-0000-000000000501','f9100000-0000-0000-0000-000000000020','outcome_evidence_informs_overview','Review A Result informs Overview','active'),
+('f9310000-0000-0000-0000-000000000502','f9100000-0000-0000-0000-000000000020','outcome_evidence_informs_overview','Review B Result informs Overview','active'),
+('f9310000-0000-0000-0000-000000000503','f9100000-0000-0000-0000-000000000020','outcome_evidence_informs_overview','Review C Result informs Overview','active');
 
 -- ---------------------------------------------------------------------------
 -- PRODUCT / ASSURANCE
