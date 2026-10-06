@@ -40,6 +40,7 @@ BEGIN
      OR v#>>'{investigation,depth_level}' <> 'N4'
      OR v->>'subtype' <> 'systematic_review_intervention'
      OR v#>>'{infrastructure_readiness,state}' <> 'ready'
+     OR v#>>'{audit,synthetic_fixture}' <> 'true'
      OR v#>>'{audit,assurance_level}' <> 'A3'
      OR v#>>'{audit,publishable}' <> 'true'
      OR v#>>'{audit,qualified_stage_controls_satisfied}' <> 'true'
