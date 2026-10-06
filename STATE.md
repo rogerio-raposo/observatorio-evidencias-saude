@@ -749,12 +749,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP66 — 2026-10-06**
+**CP67 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP66.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP67.md`
 
 Ponto exato de retomada:
 
-> **Classificar C7 membership completeness separadamente de identity verification e avaliar C8/CCA readiness sem calcular ou persistir CCA; C2 Gao last-search date permanece blocker independente.**
+> **Fechar C9–C12: comparator stratification, ROBIS draft AI-only de Gao, OutcomeEvidence source provenance e certainty provenance; em paralelo continuar tentativa legítima de resolver C2. Depois executar gate pré-persistência consolidado.**
