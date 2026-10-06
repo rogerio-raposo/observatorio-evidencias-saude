@@ -1824,6 +1824,7 @@ SELECT jsonb_build_object(
                 'risk_assessment_version_uuid',rav.version_uuid,
                 'framework',rav.framework,
                 'target_entity_uuid',rav.target_entity_uuid,
+                'outcome_entity_uuid',rav.outcome_entity_uuid,
                 'overall_judgement',rav.overall_judgement,
                 'assessor',rav.assessor,
                 'verification_status',rav.verification_status,
