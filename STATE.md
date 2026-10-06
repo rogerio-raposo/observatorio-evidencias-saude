@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–155:
+Documentos 138–156:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -734,13 +734,14 @@ Próxima etapa:
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: C7–C8.**
+**Overview de Revisões: fechar C9–C12.**
 
-1. classificar membership completeness de Hwang, Gao e Nazari;
-2. manter identity confidence/verification como dimensão separada;
-3. avaliar se a matriz está pronta para derivação futura de CCA pela função canônica;
-4. não calcular ou persistir CCA nesta etapa;
-5. manter C2 Gao last-search date como blocker independente.
+1. estratificar comparadores por Review/OutcomeEvidence;
+2. produzir ROBIS draft AI-only de Gao;
+3. confirmar ResultSource/provenance de Hwang, Gao e Nazari;
+4. confirmar certainty provenance, sem reutilizar certainty da Evidence Sheet;
+5. continuar tentativa de resolver C2 Gao last-search date;
+6. executar gate pré-persistência consolidado.
 
 Ainda não persistir entidades reais do OVR-01.
 
