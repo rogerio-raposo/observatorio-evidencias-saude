@@ -504,3 +504,17 @@ C2 permanece sem last-search date verificável para Gao. A migration 019 permite
 Ainda não persistir OVR-01.
 
 Próxima etapa: **Emenda 01 ao protocolo developmental**, limitada à rota interna A0/A1.
+
+
+### Emenda 01 e micro-gate do OVR-01
+
+Os Documentos 160–161 fecham a exceção controlada de currentness e o micro-gate pré-persistência:
+
+- Documento 160 — Emenda 01 ao Protocolo Developmental;
+- C2 permanece **BLOCKED / NOT_VERIFIED**;
+- para Gao, somente na rota developmental A0/A1, fica autorizada a representação `last_search_date=NULL` + `currentness_status='unclear'` + rationale explícita;
+- `MISSING_LAST_SEARCH_DATE` permanece **error** do publication gate;
+- rota formal permanece **NOT_READY**;
+- Documento 161 — micro-gate = **READY_TO_PERSIST_DEVELOPMENTAL_A0**;
+- nenhuma entidade real OVR-01 foi criada até o fechamento do micro-gate;
+- próxima etapa: persistência controlada do OVR-01 A0 + testes/rebuild/render + verificação metodológica adversarial antes de eventual A1.
