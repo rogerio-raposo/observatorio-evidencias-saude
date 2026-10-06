@@ -2167,3 +2167,12 @@ Documentos:
 - CCA não calculado;
 - C2 permanece bloqueado;
 - próxima etapa: C9–C12 + tentativa de resolução de C2.
+
+
+## 2026-10-06 — CP67
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP67.md`;
+- C7 = PASS;
+- C8 = READY_WITH_DOCUMENTED_CONDITIONS;
+- CCA permanece não calculado;
+- retomada movida para C9–C12 + tentativa legítima de resolver C2.
