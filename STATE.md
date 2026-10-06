@@ -643,12 +643,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP53 — 2026-10-06**
+**CP54 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP53.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP54.md`
 
 Ponto exato de retomada:
 
-> **Definir o contrato de renderização da `OverviewOfReviewsView`, avaliando se a projeção v0.1 contém todos os elementos necessários à apresentação correta antes de qualquer template.**
+> **Implementar migration 020, executar OVR-T01–T12 e fechar novamente o Projection Readiness Gate antes de qualquer template.**
