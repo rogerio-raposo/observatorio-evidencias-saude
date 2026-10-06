@@ -679,12 +679,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP57 — 2026-10-06**
+**CP58 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP57.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP58.md`
 
 Ponto exato de retomada:
 
-> **Executar readiness pré-caso real do Overview de Revisões e decidir READY / READY_WITH_DOCUMENTED_CONDITIONS / NOT_READY antes de selecionar ou persistir qualquer Caso Real.**
+> **Qualificar o subconjunto secundário do N3-01 para OVR-01 e decidir suitable / suitable_with_conditions / unsuitable sem abrir Caso Real.**
