@@ -2254,3 +2254,41 @@ Documentos:
 - Emenda 01 e micro-gate consolidados;
 - nenhuma entidade real OVR-01 existe ainda;
 - retomada movida para a persistência controlada do OVR-01 em A0 e validação pós-persistência.
+
+## 2026-10-06 — OVR-01 real developmental A0 persisted and validated
+
+- criado `database/f3-real-case-ovr01-dcbti.sql`;
+- criado `database/f3-real-case-ovr01-tests.sql`;
+- Question/Investigation/Product próprios materializados para o OVR-01;
+- Nazari materializada de forma rastreável;
+- ReviewItems Hwang/Gao/Nazari persistidos;
+- memberships = 27 / 15 / 44;
+- occurrences = 86;
+- unique primary Study candidates = 59;
+- pairwise overlap derivado pelo banco = 6 / 17 / 9;
+- CCA permanece exclusivamente derivado pelo banco; nenhum valor foi calculado manualmente;
+- Gao mantém `last_search_date=NULL` e `currentness_status='unclear'`, sem inferência;
+- comparadores permanecem separados;
+- nenhuma nova meta-analysis foi criada;
+- certainty review-level não foi inventada nem reutilizada do N2;
+- ROBIS e memberships permanecem AI-assisted/unverified;
+- nenhuma verificação humana, owner approval ou expert review foi fabricada;
+- assurance permanece A0;
+- publication blockers permanecem abertos;
+- OVR01-T01–T14 = PASS;
+- render real A0 via `OverviewOfReviewsView` = PASS;
+- regressões/idempotência = PASS;
+- rebuild-from-zero = PASS;
+- run final 37542350632 = success;
+- artifact 11449631263;
+- digest `sha256:138fb9fe28432124dc6e70031bd0a99c1c11a40647ba8ff73687f3fd3cecdb93`;
+- próxima etapa: verificação metodológica adversarial pós-persistência antes de eventual A1.
+
+
+## 2026-10-06 — CP71
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`;
+- OVR-01 = **PERSISTED_DEVELOPMENTAL_A0_VALIDATED**;
+- ponteiro de continuidade movido para CP71;
+- retomada movida para verificação metodológica adversarial pós-persistência;
+- nenhuma promoção A1/A2/A3 ou publicação foi realizada neste checkpoint.
