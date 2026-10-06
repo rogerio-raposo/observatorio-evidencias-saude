@@ -1899,3 +1899,17 @@ Documentos:
 - migration 020 + OVR-T01–T12 + rebuild/regressões registrados;
 - próxima etapa movida para especificação formal do Template Operacional;
 - nenhum template/renderer/validator criado antes desse marco.
+
+
+## 2026-10-06 — Overview operational template specification
+
+- criado Documento 144 — Especificação do Template Operacional do Overview de Revisões;
+- ordem canônica de apresentação definida;
+- renderer permanece read-only sobre `OverviewOfReviewsView`;
+- Review ≠ Report e eligibility ≠ overlap disposition preservados;
+- CCA/pairwise não serão recalculados;
+- ROBIS, certainty e currentness permanecem dimensões separadas;
+- global Overview certainty e indirect comparison informal permanecem proibidos;
+- presentation map, renderer e validator especificados;
+- cenários adversariais definidos;
+- próxima etapa: implementação da camada de apresentação e integração S5.
