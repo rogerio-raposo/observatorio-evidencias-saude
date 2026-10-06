@@ -194,6 +194,7 @@ Documentos principais:
 - [125 — Contrato de Dados](125-contrato-dados-mapa-evidencias.md)
 - [126 — Resultado da Validação Técnica](126-resultado-validacao-contrato-mapa-evidencias.md)
 - [127 — EvidenceMapView: Contrato de Renderização](127-evidence-map-view-contrato-renderizacao.md)
+- [128 — Resultado da Validação do Projection Readiness](128-resultado-validacao-evidence-map-view-readiness.md)
 
 Implementação validada:
 
@@ -221,10 +222,10 @@ Limite:
 
 ## Próxima etapa
 
-**Mapa de Evidências: fechar o Projection Readiness Gate da EvidenceMapView.**
+**Mapa de Evidências: Especificação do Template Operacional.**
 
-O Documento 127 definiu o contrato de renderização e identificou extensões aditivas necessárias antes do template: synthetic fixture, conclusão canônica, metadados de protocolo/codebook, reviewer/method controls, lineage/invalidation e referências alcançáveis por Study MapItems.
+O Documento 128 registrou **Projection Readiness Gate = READY** após a migration 017, EMV-T01–T11, regressões N0–N4 e rebuild through migration 017.
 
-Não reabrir a migration 016. Implementar migration aditiva subsequente e validar a projeção ampliada antes da especificação do template operacional.
+O template deverá consumir exclusivamente `oes.evidence_map_view/0.1` e implementar o contrato do Documento 127.
 
 O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
