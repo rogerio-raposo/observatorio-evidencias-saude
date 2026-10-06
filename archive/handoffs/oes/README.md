@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP56 — 2026-10-06**
+**CP57 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP56.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP57.md`
 
 Checkpoint anterior:
 
-`CP55`
+`CP56`
 
 Status:
 
@@ -128,3 +128,6 @@ em **Modo Continuidade**.
 
 
 - **CP56 — 2026-10-06:** especificação do Template Operacional do Overview concluída; retomada na implementação dos quatro arquivos da camada de apresentação e integração S5.
+
+
+- **CP57 — 2026-10-06:** camada de apresentação do Overview v0.1 validada em PASS; retomada no readiness pré-caso real, sem abertura de Caso Real antes do gate.
