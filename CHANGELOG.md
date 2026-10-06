@@ -2095,3 +2095,13 @@ Documentos:
 - GoodNight permanece uma Study com múltiplos Reports.
 - Documentos 151–152 atualizados.
 - C2 bloqueado; C5/C6 em progresso; CCA ainda não autorizado.
+
+
+## 2026-10-06 — CP64
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP64.md`;
+- identidade de Eigl/Hinterberger corrigida;
+- aliases de ano prioritários resolvidos;
+- C2 permanece bloqueado;
+- C5/C6 continuam em progresso;
+- CCA permanece não autorizado.
