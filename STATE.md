@@ -575,12 +575,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP48 — 2026-10-06**
+**CP49 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP48.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP49.md`
 
 Ponto exato de retomada:
 
-> **Persistir o Caso Real MAP-01 com Question/Investigation próprias e N3-01 como source_corpus, usando os Documentos 132–134 como protocolo, inventário e codebook.**
+> **Iniciar a Especificação Científica e Funcional do Overview de Revisões.**
