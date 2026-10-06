@@ -561,13 +561,17 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–142:
+Documentos 138–143:
 
-- 138 — especificação científica e funcional inicial concluída;
+- 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
 - 140 — contrato de dados v0.1 concluído;
 - 141 — validação técnica do contrato = **PASS**;
-- 142 — contrato de renderização definido; Projection Readiness = **NOT_READY**;
+- 142 — contrato de renderização definido; Projection Readiness inicialmente = **NOT_READY**;
+- 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**.
+
+Arquitetura/escopo vigentes:
+
 - unidade principal = systematic review;
 - escopo formal v0.1 = systematic reviews quantitativas de intervenções;
 - OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
@@ -576,26 +580,10 @@ Documentos 138–142:
 - double counting é proibido;
 - ROBIS = default de risk of bias da review;
 - supplemental primary studies ficam fora do corpus analítico formal v0.1;
-- formal Overview exige A3 + qualified human controls;
-- implementação física ainda não iniciada;
-- camada especializada aprovada com sete estruturas: review_item, primary_study_membership, review_cluster, cluster_membership, overlap_resolution, outcome_evidence e concordance_assessment;
-- CCA/pairwise overlap permanecerão derivados;
-- formal Overview usará Investigation depth N4, A3 e qualified human controls;
-- nenhuma nova entidade Review/Overview paralela será criada.
+- formal Overview exige Investigation N4 + A3 + qualified human controls;
+- nenhuma entidade Review/Overview paralela foi criada.
 
-Contrato v0.1:
-
-- sete estruturas `overview` definidas;
-- ReviewItem = StudyVersion de systematic review;
-- primary-study membership persistida;
-- CCA/pairwise overlap derivados;
-- deduplicate-outcomes bloqueado para publicação formal v0.1;
-- publication gate formal especificado;
-- `OverviewOfReviewsView` especificada;
-- OV-T01–T33 definidos;
-- template permanece embargado até PASS técnico.
-
-Contrato técnico do Overview:
+Contrato técnico:
 
 - migration 019 = PASS;
 - fixture formal sintética A3 = PASS;
@@ -603,41 +591,52 @@ Contrato técnico do Overview:
 - CCA derivado = 0,4;
 - OV-T01–T33 = PASS;
 - `OverviewOfReviewsView` = PASS;
-- regressões N0–N4 + Evidence Map + MAP-01 = PASS;
-- rebuild com fixture = PASS;
+- rebuild/regressões = PASS;
 - run **37502184404** = success;
 - artifact **11430003081**;
 - digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
 
-Contrato de renderização:
+Projection Readiness:
 
-- renderer deverá consumir exclusivamente a `OverviewOfReviewsView`;
-- não recalcular CCA/pairwise overlap;
+- migration 020 = PASS;
+- OVR-T01–T12 = PASS;
+- schema `oes.overview_of_reviews_view/0.1` preservado;
+- method decisions, conflicts, QC payloads, search-export metadata, selection/exclusions, Report lineage, OutcomeEvidence provenance e dependency/invalidation detail projetados;
+- migration 020 idempotente = PASS;
+- rebuild/regressões through migration 020 = PASS;
+- run **37503751486** = success;
+- artifact **11430083884**;
+- digest `sha256:f599426adb3afd5cc28066c00eb0de73c6d18dd734f622d58e9f0f5f9be418a5`;
+- Projection Readiness = **READY para especificação do template operacional**.
+
+Contrato de renderização permanece vinculante:
+
+- renderer consome exclusivamente a `OverviewOfReviewsView`;
+- não recalcula CCA/pairwise overlap;
 - eligibility e overlap disposition permanecem distintas;
-- ROBIS e certainty permanecem distintas;
+- ROBIS e certainty/currentness permanecem distintas;
 - nenhum global Overview certainty;
 - nenhuma comparação indireta informal;
-- Projection Readiness = **NOT_READY** por lacunas auditáveis aditivas.
+- renderer não cria reanalysis ou assurance.
 
 Próxima etapa:
 
-> **implementar `database/020_overview_of_reviews_view_rendering_readiness.sql` e OVR-T01–T12; template continua proibido.**
+> **especificar formalmente o Template Operacional do Overview antes de criar template, presentation map, renderer ou validator.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: implementação do contrato de dados.**
-
-Documentos 138–140 fecharam especificação científica, arquitetura e contrato lógico.
+**Overview de Revisões: especificação do Template Operacional.**
 
 Sequência seguinte:
 
-1. migration 020 de Projection Readiness;
-2. OVR-T01–T12;
-3. novo Projection Readiness Gate;
-4. somente se READY: especificação do template operacional;
-5. renderizador/validator;
-6. validação da camada de apresentação;
-7. readiness pré-caso real.
+1. especificação formal do template;
+2. presentation map;
+3. renderer;
+4. validator;
+5. fixture renderizada;
+6. testes da camada de apresentação;
+7. resultado da validação de apresentação;
+8. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
