@@ -749,12 +749,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP64 — 2026-10-06**
+**CP65 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP64.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP65.md`
 
 Ponto exato de retomada:
 
-> **Expandir Hwang e Nazari para Study-level canonical candidates, reconciliar multiple Reports remanescentes e fechar C5–C6; depois classificar C7 e somente então avaliar C8/CCA readiness. C2 Gao last-search date permanece bloqueado.**
+> **Investigar multiple-report clusters remanescentes em Nazari, consolidar as contagens Study-level finais de Hwang/Nazari, cruzar Gao 15 × Hwang × Nazari e fechar C5–C6; somente depois classificar C7 e avaliar C8/CCA readiness. C2 continua bloqueado.**
