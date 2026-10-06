@@ -274,6 +274,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [146 — Readiness Gate Pré-Caso Real](146-overview-readiness-gate-pre-caso-real.md)
 - [147 — Qualificação do Corpus Candidato OVR-01 / N3-01](147-qualificacao-corpus-candidato-ovr01-n3.md)
 - [148 — Qualificação do Corpus Candidato OVR-01 / dCBT-I](148-qualificacao-corpus-candidato-ovr01-dcbti.md)
+- [149 — Protocolo Developmental OVR-01 / dCBT-I](149-protocolo-developmental-ovr01-dcbti.md)
 
 ### Estado
 
@@ -377,6 +378,21 @@ Condições obrigatórias antes da persistência de ReviewItems/membership:
 - ROBIS de Gao;
 - nenhuma nova meta-analysis.
 
+### Protocolo developmental OVR-01
+
+O Documento 149 definiu:
+
+- pergunta review-level própria;
+- eligibility de Reviews;
+- discovery não exaustivo anti-cherry-picking;
+- currentness;
+- membership/overlap;
+- famílias de comparadores;
+- estratégia inicial `include_all_separate_estimates`;
+- ROBIS/OutcomeEvidence/certainty;
+- política prospectiva para Nazari;
+- C1–C12 como condições pré-persistência.
+
 ### Próxima etapa
 
-**Preparar o protocolo developmental de OVR-01**, sem persistir ReviewItems/membership até fechar as condições.
+**Fechar C1–C4:** recuperar study list e last-search date de Gao, aplicar eligibility à Review Nazari e produzir o inventário definitivo de Reviews.
