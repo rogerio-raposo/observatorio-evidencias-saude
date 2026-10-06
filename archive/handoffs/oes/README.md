@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP52 — 2026-10-06**
+**CP53 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP52.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP53.md`
 
 Checkpoint anterior:
 
-`CP51`
+`CP52`
 
 Status:
 
@@ -116,3 +116,6 @@ em **Modo Continuidade**.
 
 
 - **CP52 — 2026-10-06:** registra migration 019 estruturalmente validada, regressões/rebuild em PASS; retomada na fixture formal do Overview + OV-T01–T33.
+
+
+- **CP53 — 2026-10-06:** registra PASS técnico do contrato do Overview de Revisões, OV-T01–T33 e rebuild/regressões; retomada no contrato de renderização da `OverviewOfReviewsView`.
