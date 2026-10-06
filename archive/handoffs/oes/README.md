@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP54 — 2026-10-06**
+**CP55 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP54.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP55.md`
 
 Checkpoint anterior:
 
-`CP53`
+`CP54`
 
 Status:
 
@@ -122,3 +122,6 @@ em **Modo Continuidade**.
 
 
 - **CP54 — 2026-10-06:** define contrato de renderização do Overview e Projection Readiness **NOT_READY**; retomada na migration 020 + OVR-T01–T12.
+
+
+- **CP55 — 2026-10-06:** Projection Readiness do Overview = READY após migration 020 + OVR-T01–T12; retomada na especificação formal do Template Operacional.
