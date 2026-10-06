@@ -371,12 +371,13 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–126:
+Documentos 123–127:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
 - 125 — Contrato de Dados v0.1;
-- 126 — Resultado da Validação Técnica: **PASS**.
+- 126 — Resultado da Validação Técnica: **PASS**;
+- 127 — EvidenceMapView: Contrato de Renderização.
 
 Implementação validada:
 
@@ -414,9 +415,23 @@ Estado técnico:
 
 > **Contrato de dados e EvidenceMapView = PASS técnico.**
 
+Estado de apresentação:
+
+> **Contrato de renderização definido; Projection Readiness Gate = NOT_READY para template.**
+
+Campos aditivos requeridos antes do template:
+
+- `audit.synthetic_fixture`;
+- `conclusion.text`;
+- metadados de protocolo/codebook;
+- reviewer assignments;
+- method controls de search/screening/classification;
+- lineage/invalidation;
+- referências alcançáveis via Study–Report linkage.
+
 Próxima etapa:
 
-> **definir o contrato de renderização do EvidenceMapView; template somente depois do contrato de renderização.**
+> **implementar migration aditiva da EvidenceMapView 0.1 e validar a projeção ampliada; não reabrir migration 016.**
 
 Produtos exercitados até aqui:
 
@@ -435,17 +450,19 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Mapa de Evidências: contrato de renderização do EvidenceMapView.**
+**Mapa de Evidências: fechar o Projection Readiness Gate da EvidenceMapView.**
 
-O contrato técnico foi validado no run **37464023391**. A proibição de template antes do PASS foi satisfeita sem violação: nenhum template do Mapa foi criado durante a implementação do contrato.
+O Documento 127 definiu o contrato de renderização. A análise da projeção real revelou campos aditivos necessários para a apresentação segura.
 
 Sequência seguinte:
 
-1. contrato de renderização do EvidenceMapView;
-2. especificação do template operacional;
-3. implementação do template/presentation map/renderer/validator;
-4. validação adversarial da apresentação;
-5. somente então decidir readiness para eventual Caso Real do Mapa.
+1. migration aditiva da EvidenceMapView 0.1;
+2. testes da projeção ampliada e rebuild;
+3. obter Projection Readiness Gate = READY;
+4. especificação do template operacional;
+5. implementação do template/presentation map/renderer/validator;
+6. validação adversarial da apresentação;
+7. somente então decidir readiness para eventual Caso Real do Mapa.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
