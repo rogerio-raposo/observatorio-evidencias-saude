@@ -58,11 +58,11 @@ def main() -> None:
 
     require(len(payload["rapid_method"]["restrictions"]) == 5, "Expected five rapid restrictions")
     require(len(payload["rapid_method"]["deviations"]) == 1, "Expected one protocol deviation")
-    require(len(payload["searches"]) == 2, "Expected two recorded search channels")
-    require(payload["selection_flow"]["search_hits_materialized"] == 10, "Expected 10 materialized hits")
-    require(payload["selection_flow"]["screening_decisions"] == 17, "Expected 17 screening decisions")
-    require(len(payload["included_evidence"]) == 6, "Expected six used/contextual reports")
-    require(len(payload["references"]) == 6, "Expected six references")
+    require(len(payload["searches"]) == 3, "Expected three recorded search channels after correction")
+    require(payload["selection_flow"]["search_hits_materialized"] == 20, "Expected 20 materialized hits after correction")
+    require(payload["selection_flow"]["screening_decisions"] == 34, "Expected 34 screening decisions after correction")
+    require(len(payload["included_evidence"]) == 13, "Expected 13 used/contextual reports after correction")
+    require(len(payload["references"]) == 13, "Expected 13 references after correction")
     require(len(payload["results"]) == 11, "Expected 11 structured results")
     require(len(payload["risk_of_bias"]) == 10, "Expected 10 appraisal records")
     require(len(payload["syntheses"]) == 4, "Expected four narrative syntheses")
@@ -101,6 +101,7 @@ def main() -> None:
         "Controles qualificados ainda ausentes",
         "A2 ou nível inferior não autoriza publicação N3 formal",
         "EUROPE_PMC_RUNTIME_ACCESS_FAILURE",
+        "Real-World Evidence Synthesis of Digital Scribes",
         "MISSING_AI_METHODOLOGICAL_VERIFICATION",
         "MISSING_OWNER_APPROVAL",
         "MISSING_EXPERT_INDEPENDENT_REVIEW",
