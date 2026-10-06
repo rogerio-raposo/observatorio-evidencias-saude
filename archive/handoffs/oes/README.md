@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP70 — 2026-10-06**
+**CP71 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP70.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`
 
 Checkpoint anterior:
 
-`CP69`
+`CP70`
 
 Status:
 
@@ -157,3 +157,4 @@ em **Modo Continuidade**.
 - **CP68 — 2026-10-06:** fecha C9–C12; C2 permanece blocker explícito; retomada no gate consolidado.
 - **CP69 — 2026-10-06:** gate pré-persistência = READY_WITH_AMENDMENT_REQUIRED; retomada na Emenda 01.
 - **CP70 — 2026-10-06:** Emenda 01 + micro-gate concluídos; OVR-01 = **READY_TO_PERSIST_DEVELOPMENTAL_A0**; retomada na persistência real controlada e validação pós-persistência.
+- **CP71 — 2026-10-06:** OVR-01 persistido e validado em **A0 developmental**, OVR01-T01–T14/render/rebuild em PASS; retomada na verificação metodológica adversarial antes de eventual A1.
