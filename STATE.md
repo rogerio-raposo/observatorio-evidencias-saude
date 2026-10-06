@@ -559,10 +559,11 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–139:
+Documentos 138–140:
 
 - 138 — especificação científica e funcional inicial concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
+- 140 — contrato de dados v0.1 concluído;
 - unidade principal = systematic review;
 - escopo formal v0.1 = systematic reviews quantitativas de intervenções;
 - OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
@@ -578,24 +579,38 @@ Documentos 138–139:
 - formal Overview usará Investigation depth N4, A3 e qualified human controls;
 - nenhuma nova entidade Review/Overview paralela será criada.
 
+Contrato v0.1:
+
+- sete estruturas `overview` definidas;
+- ReviewItem = StudyVersion de systematic review;
+- primary-study membership persistida;
+- CCA/pairwise overlap derivados;
+- deduplicate-outcomes bloqueado para publicação formal v0.1;
+- publication gate formal especificado;
+- `OverviewOfReviewsView` especificada;
+- OV-T01–T33 definidos;
+- template permanece embargado até PASS técnico.
+
 Próxima etapa:
 
-> **criar o Contrato de Dados v0.1 do Overview de Revisões.**
+> **implementar `database/019_overview_of_reviews_contract.sql`, fixture sintética e testes, sem criar template antes do PASS técnico.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: Especificação Científica e Funcional.**
+**Overview de Revisões: implementação do contrato de dados.**
 
-O MAP-01 foi encerrado em A1 interno no Documento 137.
+Documentos 138–140 fecharam especificação científica, arquitetura e contrato lógico.
 
 Sequência seguinte:
 
-1. especificação científica e funcional do Overview de Revisões;
-2. revisão de coerência e decisão arquitetural;
-3. contrato de dados;
-4. fixture/testes;
-5. view/renderização;
-6. readiness pré-caso real.
+1. migration 019;
+2. fixture formal sintética;
+3. OV-T01–T33;
+4. `OverviewOfReviewsView`;
+5. rebuild/regressões;
+6. Documento de resultado técnico;
+7. somente após PASS: contrato de renderização/template;
+8. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
