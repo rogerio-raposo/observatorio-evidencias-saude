@@ -1913,3 +1913,11 @@ Documentos:
 - presentation map, renderer e validator especificados;
 - cenários adversariais definidos;
 - próxima etapa: implementação da camada de apresentação e integração S5.
+
+
+## 2026-10-06 — CP56
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP56.md`;
+- especificação do Template Operacional do Overview consolidada;
+- implementação ainda não iniciada no checkpoint;
+- retomada movida para template + presentation map + renderer + validator + integração S5.
