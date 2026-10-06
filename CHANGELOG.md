@@ -1938,3 +1938,11 @@ Documentos:
 - rebuild through migration 020 + Overview fixture = PASS;
 - próxima etapa: readiness pré-caso real do Overview;
 - Caso Real permanece bloqueado até esse gate.
+
+
+## 2026-10-06 — CP57
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP57.md`;
+- camada de apresentação do Overview v0.1 consolidada em PASS;
+- Caso Real permanece bloqueado;
+- retomada movida para readiness pré-caso real do Overview.
