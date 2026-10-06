@@ -2050,3 +2050,12 @@ Documentos:
 - Zhong 2026 / older-adult review / Leite 2025 / Zettor 2025 classificados fora do núcleo analítico por scope/outcome;
 - nenhum OVR-01 real criado;
 - próxima etapa: resolver C2 e iniciar C5–C6 preparatórios sem persistir membership.
+
+
+## 2026-10-06 — CP62
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP62.md`;
+- fechamento C1–C4 consolidado;
+- C1 PASS / C2 BLOCKED-NOT_VERIFIED / C3 PASS / C4 PASS;
+- nenhum OVR-01 real criado;
+- retomada movida para resolução de C2 e preparação C5–C6 sem persistir membership.
