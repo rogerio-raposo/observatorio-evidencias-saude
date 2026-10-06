@@ -2155,3 +2155,15 @@ Documentos:
 - matriz preparatória = 59 Study candidates / 86 occurrences;
 - CCA não calculado;
 - retomada movida para C7 membership completeness e C8/CCA readiness.
+
+
+## 2026-10-06 — OVR-01 C7–C8 closed
+
+- Documento 156 criado;
+- C7 = PASS;
+- membership completeness estrutural = complete para Hwang, Gao e Nazari;
+- complete permanece separado de identity confidence/verification;
+- C8 = READY_WITH_DOCUMENTED_CONDITIONS;
+- CCA não calculado;
+- C2 permanece bloqueado;
+- próxima etapa: C9–C12 + tentativa de resolução de C2.
