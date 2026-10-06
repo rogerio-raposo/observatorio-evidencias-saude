@@ -1560,3 +1560,12 @@ Documentos:
 - criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP41.md`;
 - PASS técnico do Mapa de Evidências consolidado;
 - ponto de retomada movido para o Documento 127 — contrato de renderização do EvidenceMapView.
+
+
+## 2026-10-06 — EvidenceMapView rendering contract
+
+- criado Documento 127 — EvidenceMapView: Contrato de Renderização;
+- formalizadas regras de apresentação para coverage, gap modes, counting unit, CellScope, drill-down, concentrações, classifications, assurance e publication gate;
+- identificado **Projection Readiness Gate = NOT_READY para template**;
+- extensões aditivas necessárias: synthetic fixture, conclusão, protocolo/codebook, reviewer/method controls, lineage/invalidation e references via Study–Report linkage;
+- decisão: não reabrir migration 016; criar migration aditiva subsequente antes do template.
