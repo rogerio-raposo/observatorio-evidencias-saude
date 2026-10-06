@@ -191,11 +191,8 @@ BEGIN
      WHERE review_item_uuid='d9500000-0000-0000-0000-000000000103'
        AND primary_study_entity_uuid='80000000-0000-0000-0000-000000000103'
        AND status='active'
-  ) OR EXISTS (
-    SELECT 1 FROM evidence.study_version
-     WHERE entity_uuid LIKE 'd9600000-0000-0000-0000-%'::text::uuid
   ) THEN
-    NULL;
+    RAISE EXCEPTION 'OVR01-T12 FAIL — existing Sweetman Study identity was not reused';
   END IF;
   -- Explicit duplicate check by title, excluding the existing Sweetman entity.
   IF EXISTS (
