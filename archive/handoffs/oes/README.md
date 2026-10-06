@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP57 — 2026-10-06**
+**CP58 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP57.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP58.md`
 
 Checkpoint anterior:
 
-`CP56`
+`CP57`
 
 Status:
 
@@ -131,3 +131,6 @@ em **Modo Continuidade**.
 
 
 - **CP57 — 2026-10-06:** camada de apresentação do Overview v0.1 validada em PASS; retomada no readiness pré-caso real, sem abertura de Caso Real antes do gate.
+
+
+- **CP58 — 2026-10-06:** readiness pré-caso real do Overview fechado; developmental = READY_WITH_DOCUMENTED_CONDITIONS, formal = NOT_READY; retomada na qualificação do subconjunto secundário N3-01 como corpus candidato.
