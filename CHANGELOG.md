@@ -1658,3 +1658,10 @@ Documentos:
 - MAP-01 pré-especificado por protocolo, inventário e codebook;
 - persistência ainda não iniciada no checkpoint;
 - retomada na criação controlada do MAP-01.
+
+
+## 2026-10-06 — STATE taxonomy correction
+
+- corrigida referência residual em `STATE.md` que ainda indicava a camada de apresentação do Mapa como pendente;
+- taxonomia atualizada para refletir corretamente que a próxima pendência da trilha do Mapa é concluir o Caso Real MAP-01;
+- nenhuma decisão metodológica ou ponto de retomada foi alterado.
