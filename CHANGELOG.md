@@ -2085,3 +2085,13 @@ Documentos:
 - C6 = IN_PROGRESS;
 - nenhum CCA ou membership persistido;
 - retomada movida para resolução de aliases/multiple Reports e fechamento C5–C6.
+
+
+## 2026-10-06 — OVR-01 identity aliases corrected
+
+- Documento 153 criado.
+- Eigl 2023 e Hinterberger 2024 tratados como Studies distintos.
+- Lorenz, Glozier, Hagatun e Maurer tiveram aliases de ano resolvidos.
+- GoodNight permanece uma Study com múltiplos Reports.
+- Documentos 151–152 atualizados.
+- C2 bloqueado; C5/C6 em progresso; CCA ainda não autorizado.
