@@ -369,6 +369,37 @@ Readiness real N4:
 - nenhuma busca definitiva N4 foi iniciada;
 - Caso Real N4 permanece deferido até mudança real das condições humanas/infrastruturais.
 
+### Mapa de Evidências
+
+Documentos 123–125:
+
+- 123 — Especificação Científica e Funcional;
+- 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
+- 125 — Contrato de Dados v0.1.
+
+Decisão consolidada:
+
+- OES-P1 permanece como núcleo científico;
+- criar schema especializado `mapping` com framework, framework_version, dimension, category, map_item, assignment e cell_scope;
+- células, contagens, concentrações e gaps são derivados;
+- `EvidenceMapView` candidata: `oes.evidence_map_view/0.1`;
+- mapas exploratórios/non-exhaustive distinguem-se de systematic maps/EGMs formais;
+- formal gap claims dependem de `systematic_comprehensive`, CellScope explícito, controles de busca/classificação e assurance requerido;
+- IA pode auxiliar classificação, mas não produzir `human_verified`;
+- migration autorizada: `database/016_evidence_map_contract.sql`.
+
+Estado técnico:
+
+> **Contrato de dados v0.1 consolidado; implementação técnica ainda pendente.**
+
+Próxima cadeia técnica:
+
+> **migration 016 → fixture formal sintética → testes adversariais → rebuild/regressões → integração S5 → PASS técnico.**
+
+Regra:
+
+> **não criar template/renderização do Mapa antes do PASS técnico do contrato.**
+
 Produtos exercitados até aqui:
 
 1. **Ficha de Evidência — N2** — caso real A2/published;
@@ -377,27 +408,37 @@ Produtos exercitados até aqui:
 4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0;
 5. **Revisão de Evidências N4** — especificação, contrato, gate, view e template validados com fixture formal sintética A3; readiness real = **NOT_READY**, sem abertura de Caso Real formal.
 
-Taxonomia restante da Fase 3:
+Taxonomia restante da Fase 3 após o contrato do Mapa:
 
-- Mapa de Evidências;
+- concluir implementação técnica do Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
 - Alerta de Evidência.
 
 ## 9. Próxima etapa
 
-**Mapa de Evidências: especificação científica e funcional.**
+**Mapa de Evidências: implementar o contrato técnico v0.1.**
 
-O Caso Real N4 formal foi deferido por readiness `NOT_READY`. Não reabrir N4 sem mudança real das condições de equipe, cobertura bibliográfica e caminho A3.
+Executar, nesta ordem:
+
+1. `database/016_evidence_map_contract.sql`;
+2. fixture formal sintética;
+3. testes do contrato e cenários adversariais;
+4. rebuild completo e regressões N0–N4;
+5. integração/validação S5;
+6. obter PASS técnico;
+7. somente depois iniciar contrato de renderização/template.
+
+O Caso Real N4 formal continua deferido por readiness `NOT_READY`. Não reabrir N4 sem mudança real das condições de equipe, cobertura bibliográfica e caminho A3.
 
 ## 10. Checkpoint vigente
 
-**CP39 — 2026-10-06**
+**CP40 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP39.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP40.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — iniciar especificação científica e funcional do Mapa de Evidências.**
+> **Implementar migration 016, fixture formal sintética, testes adversariais e rebuild; integrar ao S5. Não criar template antes do PASS técnico.**
