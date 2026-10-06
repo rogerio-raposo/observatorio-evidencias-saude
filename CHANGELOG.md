@@ -2059,3 +2059,18 @@ Documentos:
 - C1 PASS / C2 BLOCKED-NOT_VERIFIED / C3 PASS / C4 PASS;
 - nenhum OVR-01 real criado;
 - retomada movida para resolução de C2 e preparação C5–C6 sem persistir membership.
+
+
+## 2026-10-06 — OVR-01 C5–C6 preliminary identity/membership work
+
+- Documento 151 criado — codebook de identidade Study/Report;
+- Documento 152 criado — matriz preliminar Review × primary Study;
+- unidade de overlap fixada como primary Study/trial;
+- GoodNight reconhecido como uma Study com múltiplos Reports;
+- Eigl/Hinterberger mantido como probable same Study até confirmação final;
+- Lorenz 2018/2019 mantido como probable bibliographic alias;
+- overlaps Hwang/Gao/Nazari demonstrados sem calcular CCA;
+- C2 permanece BLOCKED / NOT_VERIFIED;
+- C5 = IN_PROGRESS;
+- C6 = IN_PROGRESS;
+- nenhuma membership OVR-01 persistida.
