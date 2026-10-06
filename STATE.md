@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–148:
+Documentos 138–149:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -573,7 +573,8 @@ Documentos 138–148:
 - 145 — validação da camada de apresentação = **PASS**;
 - 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**;
 - 147 — qualificação do subconjunto secundário N3-01 = **UNSUITABLE para OVR-01**;
-- 148 — corpus dCBT-I = **SUITABLE_WITH_CONDITIONS para OVR-01 developmental**.
+- 148 — corpus dCBT-I = **SUITABLE_WITH_CONDITIONS para OVR-01 developmental**;
+- 149 — protocolo developmental OVR-01 dCBT-I definido.
 
 Arquitetura/escopo vigentes:
 
@@ -677,26 +678,33 @@ Segundo candidato qualificado:
 - comparadores diferem e não devem ser tratados como estimando idêntico;
 - decisão = **SUITABLE_WITH_CONDITIONS**.
 
+Protocolo developmental:
+
+- pergunta review-level própria definida;
+- eligibility de systematic reviews definida;
+- discovery pré-persistência não exaustivo definido;
+- cutoff = 2026-10-06;
+- currentness por last-search date;
+- strategy inicial = include_all_separate_estimates;
+- membership/CCA somente após reconciliação;
+- Hwang/Gao estimates permanecem separados por comparador;
+- Nazari deve ser screened prospectivamente;
+- nenhuma nova meta-analysis;
+- A0 inicial / A1 eventual;
+- C1–C12 definidos como condições pré-persistência.
+
 Próxima etapa:
 
-> **preparar o protocolo developmental de OVR-01 para dCBT-I, sem persistir ReviewItems/membership até resolver as condições pré-persistência.**
+> **fechar C1–C4: recuperar study list e last-search date de Gao, screenar Nazari e produzir inventário definitivo das Reviews.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: protocolo developmental do OVR-01 dCBT-I.**
+**Overview de Revisões: fechar condições C1–C4 do OVR-01 dCBT-I.**
 
-O protocolo deverá definir:
-
-1. pergunta review-level própria;
-2. eligibility de systematic reviews;
-3. escopo de comparadores;
-4. política de overlap;
-5. currentness;
-6. ROBIS;
-7. OutcomeEvidence;
-8. certainty reportada;
-9. política sobre a terceira review Nazari;
-10. condições pré-persistência de membership.
+1. recuperar study list completa de Gao;
+2. extrair last-search date de Gao;
+3. aplicar eligibility prospectiva à Review Nazari;
+4. fechar inventário definitivo das Reviews.
 
 Ainda não persistir ReviewItems/membership.
 
