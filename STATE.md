@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–156:
+Documentos 138–158:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -734,16 +734,14 @@ Próxima etapa:
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: fechar C9–C12.**
+**Overview de Revisões: gate pré-persistência consolidado.**
 
-1. estratificar comparadores por Review/OutcomeEvidence;
-2. produzir ROBIS draft AI-only de Gao;
-3. confirmar ResultSource/provenance de Hwang, Gao e Nazari;
-4. confirmar certainty provenance, sem reutilizar certainty da Evidence Sheet;
-5. continuar tentativa de resolver C2 Gao last-search date;
-6. executar gate pré-persistência consolidado.
+1. revisar C1–C12;
+2. tratar C2 como blocker explícito;
+3. decidir READY_TO_PERSIST / READY_WITH_AMENDMENT / NOT_READY_TO_PERSIST;
+4. não criar entidades reais antes dessa decisão.
 
-Ainda não persistir entidades reais do OVR-01.
+C2 Gao last-search date permanece bloqueado.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
