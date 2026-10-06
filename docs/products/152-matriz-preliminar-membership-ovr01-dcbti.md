@@ -26,12 +26,13 @@ Não calcular CCA nesta etapa.
 | Ritterband 2009 | Y-confirmed | Y-confirmed | Y-confirmed | confirmed triple | trial clássico SHUTi; distinguir de Ritterband 2011/2017 |
 | Ritterband 2017 | Y-confirmed | Y-confirmed | Y-confirmed | confirmed triple | JAMA Psychiatry 2017; Study distinta de Ritterband 2009 |
 | Vedaa 2020 | Y-confirmed | Y-confirmed | Y-confirmed | confirmed triple | large-scale RCT; label consistente |
-| Lorenz 2018/2019 | Y-probable | Y-probable | Y-probable | probable triple | mesmo título; online 2018 / issue 2019; DOI 10.1017/S1352465818000486 |
-| Hinterberger 2024 / Eigl 2023 | Y-probable | Y-probable | Y-probable | probable triple after collapse | Gao lista ambos; provável multiple-report cluster NUKKUAA/Salzburg |
+| Lorenz 2018/2019 | Y-confirmed | Y-confirmed | Y-confirmed | confirmed triple | mesmo artigo; online 2018 / issue 2019; DOI 10.1017/S1352465818000486 |
+| Hinterberger 2024 | Y-confirmed | Y-confirmed | Y-confirmed | confirmed triple | DOI 10.1111/jsr.14136; Study distinta de Eigl 2023 |
+| Eigl 2023 | N-list | Y-confirmed | N-list | Gao-only nesta passagem | DOI 10.3390/clockssleep5040039; randomização distinta de Hinterberger |
 | Horsch 2017 | Y-confirmed | Y-confirmed | ? | confirmed H-G | membership Nazari ainda não fechada |
 | Bernstein 2017 | N-list | Y-confirmed | Y-confirmed | confirmed G-N | não identificado entre os reports Hwang reconstruídos |
 | Behrendt 2020 | N-list | Y-confirmed | Y-confirmed | confirmed G-N | label consistente |
-| Maurer 2024/2025 | N-list | Y-probable | Y-probable | probable G-N | provável online-year/issue-year alias; confirmação DOI pendente |
+| Maurer 2024/2025 | N-list | Y-confirmed | Y-confirmed | confirmed G-N | mesmo artigo; online 2024 / issue 2025; DOI 10.1111/jsr.14255 |
 | Kallestad 2021 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | digital versus face-to-face trial |
 | Felder 2020 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | pregnancy insomnia trial |
 | Kalmbach 2020 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | pregnancy dCBT-I trial |
@@ -40,8 +41,8 @@ Não calcular CCA nesta etapa.
 | Freeman 2017 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | OASIS trial |
 | Zhou 2022 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | culturally tailored SHUTi trial |
 | GoodNight ACTRN12611000121965 | Y-confirmed | N-list | Y-confirmed | confirmed H-N Study; multiple Reports | Christensen 2016 + Batterham 2017 + Batterham 2024 contam como uma Study |
-| Glozier 2018/2019 | Y-probable | N-list | Y-probable | probable H-N | possível online/issue-year alias; bibliographic confirmation pendente |
-| Hagatun 2017/2019 | Y-probable | N-list | Y-probable | probable H-N | possível publication-year alias; confirmar DOI/report identity |
+| Glozier 2018/2019 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | mesmo artigo; Epub 2018 / issue 2019; DOI 10.1177/0004867418797432 |
+| Hagatun 2017/2019 | Y-confirmed | N-list | Y-confirmed | confirmed H-N | mesmo artigo; Epub 2017 / issue 2019; DOI 10.1080/15402002.2017.1301941 |
 
 ## 4. Gao-only candidates nesta passagem
 
@@ -51,9 +52,10 @@ Os seguintes labels aparecem na lista de Gao e ainda não foram confirmados como
 - Lopez 2019;
 - Zhang 2023;
 - Chan 2025;
-- Specht 2025.
+- Specht 2025;
+- Eigl 2023.
 
-Eigl 2023 não deve ser tratado como Gao-only enquanto o cluster Eigl/Hinterberger não estiver resolvido.
+Eigl 2023 é Study distinta de Hinterberger 2024 após verificação em fonte primária.
 
 ## 5. Hwang–Nazari overlap adicional provável
 
@@ -67,9 +69,9 @@ Esses registros serão expandidos somente após aplicar a regra Study-versus-Rep
 
 Christensen 2016, Batterham 2017 e Batterham 2024 devem ser colapsados em uma Study.
 
-### Eigl/Hinterberger
+### Eigl/Hinterberger — correção
 
-Não contar Eigl 2023 e Hinterberger 2024 como dois Studies até confirmação final. Estado atual: probable same Study.
+Contar Eigl 2023 e Hinterberger 2024 como **duas Studies distintas**. A hipótese preliminar de multiple Reports foi refutada e está superseded pelo Documento 153.
 
 ### Publication-year aliases
 
@@ -80,8 +82,7 @@ Lorenz 2018/2019, Glozier 2018/2019, Hagatun 2017/2019 e Maurer 2024/2025 exigem
 Sem produzir CCA, a matriz já demonstra:
 
 - overlap real entre as três Reviews;
-- pelo menos três overlaps triplos de identidade suficientemente forte: Ritterband 2009, Ritterband 2017 e Vedaa 2020;
-- overlaps triplos adicionais prováveis: Lorenz e NUKKUAA/Salzburg;
+- pelo menos cinco overlaps triplos de identidade suficientemente forte: Ritterband 2009, Ritterband 2017, Vedaa 2020, Lorenz e Hinterberger 2024;
 - overlap Hwang–Nazari substancial além do núcleo Gao;
 - overlap Gao–Nazari adicional em Bernstein, Behrendt e provavelmente Maurer.
 
@@ -93,10 +94,9 @@ Ainda faltam:
 
 1. lista completa Hwang convertida de Reports para Studies;
 2. lista completa Nazari convertida de Reports para Studies;
-3. aliases bibliográficos resolvidos;
-4. cluster Eigl/Hinterberger fechado;
-5. completeness de cada Review classificada;
-6. C2 Gao last-search date resolvida para o gate geral.
+3. demais aliases/Study identities fora do subconjunto-âncora reconciliados;
+4. completeness de cada Review classificada;
+5. C2 Gao last-search date resolvida para o gate geral.
 
 Portanto:
 
@@ -108,9 +108,9 @@ Portanto:
 
 Pendências principais:
 
-- aliases por ano;
-- multiple Reports;
-- expansão para todas as 29/15/49 entradas.
+- expansão para todas as 29/15/49 entradas;
+- reconciliação de multiple Reports além dos clusters já resolvidos;
+- confirmação de identities ainda não verificadas.
 
 ## 10. Estado de C6
 
@@ -128,11 +128,10 @@ Nenhuma data foi inferida.
 
 ## 12. Próxima etapa
 
-1. resolver aliases bibliográficos Lorenz, Glozier, Hagatun e Maurer;
-2. confirmar Eigl/Hinterberger por registry/coorte;
-3. expandir Hwang e Nazari para Study-level canonical candidates;
-4. fechar C5;
-5. completar C6;
-6. somente depois classificar C7 membership completeness e C8 overlap readiness.
+1. expandir Hwang e Nazari para Study-level canonical candidates;
+2. reconciliar multiple Reports remanescentes;
+3. fechar C5;
+4. completar C6;
+5. somente depois classificar C7 membership completeness e C8 overlap readiness.
 
 **Resultado:** matriz preliminar criada; nenhuma membership e nenhum CCA persistidos.
