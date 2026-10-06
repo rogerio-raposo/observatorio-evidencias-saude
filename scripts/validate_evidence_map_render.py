@@ -168,10 +168,6 @@ def validate_formal_synthetic(
         "Synthesis-gap wording missing",
     )
     require(
-        "| Intervention B | Outcome Z | não aplicável | não | 0 | 0 | 0",
-        "Internal validator literal setup failed",
-    )
-    require(
         "| Intervention B | Outcome Z | não aplicável | não | 0 | 0 | 0" in rendered,
         "Not-applicable cell is not visibly distinguished",
     )
@@ -277,11 +273,11 @@ def validate_apparent_gap_presentation(
     rendered = render(template, apparent, presentation)
 
     require(
-        "Cobertura: estruturada não exaustiva" in rendered,
+        "**Cobertura:** estruturada não exaustiva" in rendered,
         "Non-exhaustive coverage label missing",
     )
     require(
-        "Modo de gap: gaps apenas aparentes" in rendered,
+        "**Modo de gap:** gaps apenas aparentes" in rendered,
         "Apparent gap mode label missing",
     )
     require("**Gap aparente.**" in rendered, "Apparent-gap label missing")
