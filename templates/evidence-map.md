@@ -77,6 +77,18 @@ IMPORTANT: this template presents structure, counts, gaps, controls and assuranc
 - **Classification policy:** {{mapping_method.classification_policy}}
 - **Gap rules:** {{mapping_method.gap_rules}}
 
+{{#if source_investigations}}
+### Investigações-fonte do corpus
+
+| Investigation | Papel | Tipo | Profundidade | Cutoff | Estado |
+|---|---|---|---|---|---|
+{{#each source_investigations}}
+| {{investigation_id}} | {{product_role}} | {{investigation_type}} | {{depth_level}} | {{evidence_cutoff_date}} | {{status}} |
+{{/each}}
+
+> Investigações-fonte fornecem corpus e rastreabilidade. Elas não substituem a pergunta nem o método da Investigation primária do Mapa.
+{{/if}}
+
 ---
 
 ## Protocolo
