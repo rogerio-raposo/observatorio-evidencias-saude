@@ -7,6 +7,40 @@
 BEGIN;
 
 -- ---------------------------------------------------------------------------
+-- N4 EXTENSION — RISK ASSESSMENT MAY TARGET A SYNTHESIS
+-- ---------------------------------------------------------------------------
+-- Required for ROB-ME / synthesis-level missing-evidence appraisal.
+-- Preserves all previously valid Study/Result/Report targets.
+
+CREATE OR REPLACE FUNCTION appraisal.assert_risk_target_type()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $risk$
+DECLARE
+    actual_type text;
+BEGIN
+    SELECT e.entity_type
+      INTO actual_type
+      FROM core.entity e
+     WHERE e.entity_uuid = NEW.target_entity_uuid;
+
+    IF actual_type IS NULL THEN
+        RAISE EXCEPTION
+            'Risk assessment target % does not exist',
+            NEW.target_entity_uuid;
+    END IF;
+
+    IF actual_type NOT IN ('Study','Result','Report','Synthesis') THEN
+        RAISE EXCEPTION
+            'Risk assessment target % has invalid type %',
+            NEW.target_entity_uuid, actual_type;
+    END IF;
+
+    RETURN NEW;
+END;
+$risk$;
+
+-- ---------------------------------------------------------------------------
 -- REVIEWER ASSIGNMENT
 -- ---------------------------------------------------------------------------
 
