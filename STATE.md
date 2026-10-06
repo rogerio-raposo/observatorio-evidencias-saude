@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–150:
+Documentos 138–152:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -702,21 +702,39 @@ Fechamento C1–C4:
 - corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
 - nenhum OVR-01 real criado.
 
+C5–C6 preparatórios:
+
+- unidade = primary Study/trial;
+- multiple Reports não contam como Studies distintas;
+- GoodNight colapsado conceitualmente em uma Study;
+- Eigl/Hinterberger = provável same Study, confirmação final pendente;
+- Lorenz 2018/2019 = provável alias bibliográfico;
+- matriz preliminar criada;
+- overlaps triplos confirmados/prováveis identificados;
+- CCA ainda proibido.
+
+Estado:
+
+- C2 = BLOCKED / NOT_VERIFIED;
+- C5 = IN_PROGRESS;
+- C6 = IN_PROGRESS.
+
 Próxima etapa:
 
-> **resolver C2 e iniciar C5–C6 preparatórios: obter last-search date verificável de Gao e reconciliar Study identities/matriz Review × primary Study sem persistir membership.**
+> **resolver aliases/multiple Reports restantes e expandir Hwang/Gao/Nazari até matriz Study-level suficientemente completa para fechar C5–C6; depois classificar C7/C8.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: C2 + preparação de C5–C6.**
+**Overview de Revisões: fechar C5–C6.**
 
-1. obter last-search date verificável de Gao sem inferência;
-2. reconciliar identities dos primary Studies em Hwang/Gao/Nazari;
-3. construir matriz preliminar Review × primary Study;
-4. classificar ambiguidades e aliases;
-5. manter membership apenas em documento preparatório.
+1. resolver aliases Lorenz, Glozier, Hagatun e Maurer;
+2. confirmar Eigl/Hinterberger por registry/coorte;
+3. expandir listas Hwang e Nazari para Study-level canonical candidates;
+4. fechar matriz Review × primary Study;
+5. classificar C7 membership completeness;
+6. somente então avaliar C8/CCA readiness.
 
-Ainda não persistir Question/Investigation/Product/ReviewItems/membership.
+C2 Gao last-search date permanece bloqueado. Ainda não persistir entidades reais do OVR-01.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
