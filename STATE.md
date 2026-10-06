@@ -302,7 +302,7 @@ Validação técnica final:
 
 ### Revisão de Evidências — N4
 
-Documentos 115–121:
+Documentos 115–122:
 
 - 115 — especificação científica e funcional;
 - 116 — revisão de coerência e decisão arquitetural;
@@ -310,7 +310,8 @@ Documentos 115–121:
 - 118 — resultado da validação técnica do contrato: **PASS**;
 - 119 — contrato de renderização;
 - 120 — especificação do template operacional;
-- 121 — resultado da validação do template/renderização: **PASS**.
+- 121 — resultado da validação do template/renderização: **PASS**;
+- 122 — Infrastructure Readiness Gate pré-caso real: **NOT_READY**.
 
 Implementação validada:
 
@@ -356,13 +357,25 @@ Validação final do template/renderização:
 - cenário adversarial A3 + `publishable=false` corretamente renderizado como gate bloqueado;
 - regressões e rebuild PASS.
 
+Readiness real N4:
+
+- cobertura bibliográfica = `not_ready`;
+- equipe metodológica = `not_ready`;
+- estatística = `ready_with_documented_conditions`;
+- ferramentas/artefatos = `ready`;
+- governança/A3 = `not_ready`;
+- resultado agregado = **NOT_READY**;
+- nenhuma Investigation N4 real foi aberta;
+- nenhuma busca definitiva N4 foi iniciada;
+- Caso Real N4 permanece deferido até mudança real das condições humanas/infrastruturais.
+
 Produtos exercitados até aqui:
 
 1. **Ficha de Evidência — N2** — caso real A2/published;
 2. **Resposta de Evidência — N1** — caso real A2/published;
 3. **Evidence Scan — N0** — caso real A1/interno;
 4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0;
-5. **Revisão de Evidências N4** — especificação, contrato, gate, view e template validados com fixture formal sintética A3; nenhum caso real formal autorizado.
+5. **Revisão de Evidências N4** — especificação, contrato, gate, view e template validados com fixture formal sintética A3; readiness real = **NOT_READY**, sem abertura de Caso Real formal.
 
 Taxonomia restante da Fase 3:
 
@@ -373,20 +386,18 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
+**Mapa de Evidências: especificação científica e funcional.**
 
-Não iniciar protocolo, busca definitiva ou seleção N4 antes do readiness. Na configuração humana conhecida, `not_ready` é o resultado esperado enquanto faltarem revisores humanos qualificados, search peer reviewer, expert independent reviewer e infraestrutura bibliográfica suficiente.
-
-Se `not_ready`, registrar o bloqueio e avaliar rerroteamento/deferimento em vez de reduzir silenciosamente o método.
+O Caso Real N4 formal foi deferido por readiness `NOT_READY`. Não reabrir N4 sem mudança real das condições de equipe, cobertura bibliográfica e caminho A3.
 
 ## 10. Checkpoint vigente
 
-**CP38 — 2026-10-06**
+**CP39 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP38.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP39.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
+> **Fase 3 — iniciar especificação científica e funcional do Mapa de Evidências.**
