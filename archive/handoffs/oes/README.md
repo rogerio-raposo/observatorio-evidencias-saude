@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP55 — 2026-10-06**
+**CP56 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP55.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP56.md`
 
 Checkpoint anterior:
 
-`CP54`
+`CP55`
 
 Status:
 
@@ -125,3 +125,6 @@ em **Modo Continuidade**.
 
 
 - **CP55 — 2026-10-06:** Projection Readiness do Overview = READY após migration 020 + OVR-T01–T12; retomada na especificação formal do Template Operacional.
+
+
+- **CP56 — 2026-10-06:** especificação do Template Operacional do Overview concluída; retomada na implementação dos quatro arquivos da camada de apresentação e integração S5.
