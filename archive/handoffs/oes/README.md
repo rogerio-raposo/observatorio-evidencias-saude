@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP60 — 2026-10-06**
+**CP61 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP60.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP61.md`
 
 Checkpoint anterior:
 
-`CP59`
+`CP60`
 
 Status:
 
@@ -140,3 +140,6 @@ em **Modo Continuidade**.
 
 
 - **CP60 — 2026-10-06:** corpus dCBT-I qualificado como SUITABLE_WITH_CONDITIONS para OVR-01 developmental; retomada na preparação do protocolo, sem ReviewItems/membership ainda.
+
+
+- **CP61 — 2026-10-06:** protocolo developmental OVR-01 dCBT-I concluído; retomada em C1–C4 sem criar ainda entidades reais do Overview.
