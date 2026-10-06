@@ -1421,3 +1421,46 @@ Documentos:
 - CP37 criado;
 - próxima etapa: **contrato de renderização e template operacional da Revisão de Evidências N4**.
 
+## 2026-10-06 — Revisão de Evidências N4: template/renderização validados
+
+### Documentos
+
+- Documento 119 — Contrato de Renderização da EvidenceReviewView;
+- Documento 120 — Especificação do Template Operacional;
+- Documento 121 — Resultado da Validação do Template/Renderização = **PASS**.
+
+### Apresentação
+
+- template `templates/evidence-review.md`;
+- presentation map próprio;
+- renderer neutro;
+- validator positivo + cenário adversarial;
+- `audit.synthetic_fixture` explícito;
+- banner obrigatório de fixture sintética;
+- readiness, ReviewerAssignments e stage controls visíveis;
+- ROB-ME, reprodutibilidade e assurance visíveis.
+
+### Invariante validada
+
+- A3 não implica publication approval;
+- cenário adversarial mantém A3 e `publishable=false`;
+- render mostra gate N4 bloqueado e publication issue ativa;
+- nenhum controle ausente é ocultado por assurance.
+
+### Validação
+
+- run **37418624629** = **success**;
+- commit validado `4bd35271e94dfb05bf572fe76b49fa5c5af47bac`;
+- artifact **11391724857**;
+- digest `sha256:a2d0c3dc12758a14fc13a2ac4ca50a3868ac9ceeac615ec34c6b417ee37b44ba`;
+- F3-ER4-TEMPLATE PASS;
+- ER4-T01–T27 PASS;
+- rebuild through migration 015 PASS;
+- regressões N0–N3/F2-B/S4/S5 PASS.
+
+### Continuidade
+
+- CP38 criado;
+- próxima etapa: **Caso Real N4 experimental — executar exclusivamente o Infrastructure Readiness Gate**;
+- não iniciar busca N4 real se readiness for `not_ready`.
+
