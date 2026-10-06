@@ -1946,3 +1946,14 @@ Documentos:
 - camada de apresentação do Overview v0.1 consolidada em PASS;
 - Caso Real permanece bloqueado;
 - retomada movida para readiness pré-caso real do Overview.
+
+
+## 2026-10-06 — Overview pre-real-case readiness gate
+
+- Documento 146 criado;
+- infraestrutura técnica do Overview = READY;
+- rota developmental interna A0/A1 = READY_WITH_DOCUMENTED_CONDITIONS;
+- rota formal publicável A3 = NOT_READY;
+- nenhum OVR-01 autorizado ainda;
+- N3-01 poderá ser examinado apenas como corpus candidato;
+- próxima etapa: qualificação de corpus antes de Product/Investigation real.
