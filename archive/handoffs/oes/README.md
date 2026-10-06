@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP59 — 2026-10-06**
+**CP60 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP59.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP60.md`
 
 Checkpoint anterior:
 
-`CP58`
+`CP59`
 
 Status:
 
@@ -137,3 +137,6 @@ em **Modo Continuidade**.
 
 
 - **CP59 — 2026-10-06:** subconjunto secundário N3-01 rejeitado como UNSUITABLE para OVR-01; retomada na seleção/qualificação de novo corpus candidato.
+
+
+- **CP60 — 2026-10-06:** corpus dCBT-I qualificado como SUITABLE_WITH_CONDITIONS para OVR-01 developmental; retomada na preparação do protocolo, sem ReviewItems/membership ainda.
