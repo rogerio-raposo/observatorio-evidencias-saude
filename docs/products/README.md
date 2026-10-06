@@ -393,6 +393,17 @@ O Documento 149 definiu:
 - política prospectiva para Nazari;
 - C1–C12 como condições pré-persistência.
 
+### Fechamento C1–C4
+
+O Documento 150 registra:
+
+- C1 — Gao study list = **PASS**;
+- C2 — Gao last-search date = **BLOCKED / NOT_VERIFIED**;
+- C3 — Nazari screening = **PASS / ELIGIBLE**;
+- C4 — inventário definitivo = **PASS**;
+- corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
+- nenhum OVR-01 real criado.
+
 ### Próxima etapa
 
-**Fechar C1–C4:** recuperar study list e last-search date de Gao, aplicar eligibility à Review Nazari e produzir o inventário definitivo de Reviews.
+**Resolver C2 e iniciar C5–C6 em modo preparatório:** obter last-search date verificável de Gao e reconciliar Study identities/matriz Review × primary Study sem persistir membership.
