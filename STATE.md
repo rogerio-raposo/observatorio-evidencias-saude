@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–154:
+Documentos 138–155:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -734,16 +734,15 @@ Próxima etapa:
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: fechar C5–C6.**
+**Overview de Revisões: C7–C8.**
 
-1. expandir listas Hwang e Nazari para Study-level canonical candidates;
-2. reconciliar multiple Reports remanescentes;
-3. fechar C5;
-4. completar C6;
-5. classificar C7 membership completeness;
-6. somente então avaliar C8/CCA readiness.
+1. classificar membership completeness de Hwang, Gao e Nazari;
+2. manter identity confidence/verification como dimensão separada;
+3. avaliar se a matriz está pronta para derivação futura de CCA pela função canônica;
+4. não calcular ou persistir CCA nesta etapa;
+5. manter C2 Gao last-search date como blocker independente.
 
-C2 Gao last-search date permanece bloqueado. Ainda não persistir entidades reais do OVR-01.
+Ainda não persistir entidades reais do OVR-01.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
