@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 5 de outubro de 2026  
+**Última atualização:** 6 de outubro de 2026  
 **Fase atual:** Fase 3 — Produtos do Observatório  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP36 — 2026-10-06**.
+- checkpoint vigente: **CP70 — 2026-10-06**.
 
 ## 2. Estado das fases
 
