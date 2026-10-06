@@ -2145,3 +2145,13 @@ Documentos:
 - CCA não calculado;
 - C2 Gao last-search date permanece bloqueado;
 - próxima etapa: C7 membership completeness + C8/CCA readiness.
+
+
+## 2026-10-06 — CP66
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP66.md`;
+- C5 = PASS_WITH_DOCUMENTED_UNCERTAINTY;
+- C6 = PASS;
+- matriz preparatória = 59 Study candidates / 86 occurrences;
+- CCA não calculado;
+- retomada movida para C7 membership completeness e C8/CCA readiness.
