@@ -2074,3 +2074,14 @@ Documentos:
 - C5 = IN_PROGRESS;
 - C6 = IN_PROGRESS;
 - nenhuma membership OVR-01 persistida.
+
+
+## 2026-10-06 — CP63
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP63.md`;
+- codebook Study/Report e matriz preliminar de membership consolidados;
+- C2 = BLOCKED / NOT_VERIFIED;
+- C5 = IN_PROGRESS;
+- C6 = IN_PROGRESS;
+- nenhum CCA ou membership persistido;
+- retomada movida para resolução de aliases/multiple Reports e fechamento C5–C6.
