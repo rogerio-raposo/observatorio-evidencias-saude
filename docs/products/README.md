@@ -203,6 +203,7 @@ Documentos principais:
 - [134 — MAP-01: Codebook v0.1](134-caso-real-map01-codebook-v01.md)
 - [135 — MAP-01: Correção Arquitetural de Source Corpus](135-map01-correcao-arquitetural-source-corpus.md)
 - [136 — Resultado da Validação de Source Corpus](136-resultado-validacao-source-corpus-mapa.md)
+- [137 — MAP-01: Resultado e Encerramento](137-caso-real-map01-resultado-encerramento.md)
 
 Implementação validada:
 
@@ -251,6 +252,8 @@ Pré-persistência concluída:
 
 Migration 018 validada em PASS no Documento 136.
 
-Próximo passo: persistir o MAP-01 com Question/Investigation próprias e N3-01 como `source_corpus`.
+O Documento 137 encerrou o MAP-01 como **A1 interno / não publicável**, após persistência real, verificação metodológica por IA, renderização e rebuild em PASS.
+
+Próximo passo: iniciar a **Especificação Científica e Funcional do Overview de Revisões**.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
