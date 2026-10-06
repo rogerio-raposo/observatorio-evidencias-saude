@@ -193,6 +193,7 @@ Documentos principais:
 - [124 — Revisão de Coerência e Decisão Arquitetural Inicial](124-mapa-evidencias-revisao-coerencia-arquitetura.md)
 - [125 — Contrato de Dados](125-contrato-dados-mapa-evidencias.md)
 - [126 — Resultado da Validação Técnica](126-resultado-validacao-contrato-mapa-evidencias.md)
+- [127 — EvidenceMapView: Contrato de Renderização](127-evidence-map-view-contrato-renderizacao.md)
 
 Implementação validada:
 
@@ -220,6 +221,10 @@ Limite:
 
 ## Próxima etapa
 
-**Mapa de Evidências: contrato de renderização do EvidenceMapView.**
+**Mapa de Evidências: fechar o Projection Readiness Gate da EvidenceMapView.**
+
+O Documento 127 definiu o contrato de renderização e identificou extensões aditivas necessárias antes do template: synthetic fixture, conclusão canônica, metadados de protocolo/codebook, reviewer/method controls, lineage/invalidation e referências alcançáveis por Study MapItems.
+
+Não reabrir a migration 016. Implementar migration aditiva subsequente e validar a projeção ampliada antes da especificação do template operacional.
 
 O N4 permanece deferido até que o Infrastructure Readiness Gate possa retornar estado compatível com execução formal.
