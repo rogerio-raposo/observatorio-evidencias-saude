@@ -371,14 +371,16 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–128:
+Documentos 123–130:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
 - 125 — Contrato de Dados v0.1;
 - 126 — Resultado da Validação Técnica: **PASS**;
 - 127 — EvidenceMapView: Contrato de Renderização;
-- 128 — Resultado da Validação do Projection Readiness: **READY**.
+- 128 — Resultado da Validação do Projection Readiness: **READY**;
+- 129 — Especificação do Template Operacional;
+- 130 — Resultado da Validação do Template/Renderização: **PASS**.
 
 Implementação validada:
 
@@ -442,9 +444,28 @@ Validação:
 - artifact **11414726018**;
 - digest `sha256:44ee38666b3d502bae5936adb388cdd49660b0f763990eb23b00b2a01bd420c6`.
 
+Camada de apresentação:
+
+- `templates/evidence-map.md`;
+- `templates/evidence-map-presentation-map.json`;
+- `scripts/render_evidence_map_reference.py`;
+- `scripts/validate_evidence_map_render.py`;
+- fixture formal PASS;
+- cenário A3 + gate bloqueado PASS;
+- cenário apparent gap PASS;
+- F3-MAP-TEMPLATE PASS;
+- rebuild through migration 017 PASS.
+
+Validação final da apresentação:
+
+- run **37467388595** = success;
+- commit validado `5b3e7b30d8b0104501fb167e5ab0077fca6119d7`;
+- artifact **11415721992**;
+- digest `sha256:889f31280259bf1f90439957d12652567d0a3542a465c379623d3810840b7afe`.
+
 Próxima etapa:
 
-> **criar a Especificação do Template Operacional do Mapa de Evidências.**
+> **executar Readiness Gate pré-Caso Real do Mapa, separando rota exploratória/non-exhaustive de rota formal systematic map/EGM.**
 
 Produtos exercitados até aqui:
 
@@ -463,19 +484,17 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Mapa de Evidências: Especificação do Template Operacional.**
+**Mapa de Evidências: Readiness Gate pré-Caso Real.**
 
-O Projection Readiness Gate foi fechado como **READY** no Documento 128.
+A camada de apresentação foi fechada em PASS no Documento 130.
 
 Sequência seguinte:
 
-1. especificação do template operacional;
-2. implementação do template Markdown;
-3. presentation map;
-4. renderer/validator;
-5. validação adversarial da apresentação;
-6. checkpoint de fechamento da camada de apresentação;
-7. somente então decidir readiness para eventual Caso Real do Mapa.
+1. avaliar readiness da rota exploratória/structured non-exhaustive;
+2. avaliar readiness da rota formal systematic map/EGM;
+3. definir se algum Caso Real pode ser aberto sem reduzir o padrão metodológico;
+4. se viável, abrir apenas a rota autorizada;
+5. caso contrário, deferir e seguir para o próximo produto da Fase 3.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
