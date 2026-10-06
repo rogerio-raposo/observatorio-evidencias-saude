@@ -201,6 +201,7 @@ Documentos principais:
 - [132 — MAP-01: Protocolo](132-caso-real-map01-ambient-ai-scribes-protocolo.md)
 - [133 — MAP-01: Inventário do Corpus e MapItems](133-caso-real-map01-inventario-corpus-mapitems.md)
 - [134 — MAP-01: Codebook v0.1](134-caso-real-map01-codebook-v01.md)
+- [135 — MAP-01: Correção Arquitetural de Source Corpus](135-map01-correcao-arquitetural-source-corpus.md)
 
 Implementação validada:
 
@@ -242,8 +243,11 @@ Pré-persistência concluída:
 - protocolo MAP-01;
 - inventário formal = 17 MapItems;
 - codebook v0.1;
-- decisão arquitetural: reutilizar a InvestigationVersion N3-01 como investigação primária, sem duplicar Search/Screening.
+- decisão arquitetural inicial de reutilizar a InvestigationVersion N3-01 como primary foi **superada** pelo Documento 135;
+- MAP-01 terá Question/Investigation próprias;
+- N3-01 será ligada como `source_corpus`;
+- Search/Screening não serão duplicados.
 
-Próximo passo: persistir FrameworkVersion, MapItems, assignments, CellScope e Product do MAP-01, mantendo o caso interno e não publicado.
+Próximo passo: migration 018 de suporte a `source_corpus`, seguida da persistência do MAP-01.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
