@@ -445,6 +445,32 @@ BEGIN
 
     IF EXISTS (
         SELECT 1
+          FROM jsonb_array_elements_text(
+              COALESCE((
+                  SELECT md.impact_payload->'required_source_names'
+                    FROM investigation.method_decision md
+                   WHERE md.investigation_version_uuid = inv_uuid
+                     AND md.record_status='active'
+                     AND md.decision_code='N4_INFRASTRUCTURE_READINESS'
+                   ORDER BY md.decided_at DESC
+                   LIMIT 1
+              ), '[]'::jsonb)
+          ) req(source_name)
+         WHERE NOT EXISTS (
+            SELECT 1
+              FROM investigation.search s
+             WHERE s.investigation_version_uuid=inv_uuid
+               AND s.status='completed'
+               AND s.source_name=req.source_name
+         )
+    ) THEN
+        RETURN QUERY SELECT
+            'MISSING_REQUIRED_SEARCH_SOURCE','error',
+            'At least one bibliographic source declared required by readiness has not been executed';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
           FROM investigation.search s
          WHERE s.investigation_version_uuid = inv_uuid
            AND s.status = 'completed'
@@ -527,10 +553,19 @@ BEGIN
                    'secondary_reviewer',sd.decided_at,true
                )
          )
-    ) THEN
+    )
+       AND NOT EXISTS (
+            SELECT 1
+              FROM investigation.method_decision md
+             WHERE md.investigation_version_uuid=inv_uuid
+               AND md.record_status='active'
+               AND md.decision_code='N4_TITLE_ABSTRACT_SCREENING_EXCEPTION'
+               AND md.resolution_status IN ('accepted','mitigated')
+       )
+    THEN
         RETURN QUERY SELECT
             'MISSING_DUPLICATE_TITLE_ABSTRACT_SCREENING','error',
-            'At least two qualified independent title/abstract screening decisions are required for every materialized report target';
+            'At least two qualified independent title/abstract screening decisions are required unless an explicit accepted N4 exception exists';
     END IF;
 
     IF EXISTS (
@@ -647,6 +682,38 @@ BEGIN
             'Each critical Result requires two qualified independent extraction records';
     END IF;
 
+    IF EXISTS (
+        WITH critical_results AS (
+            SELECT DISTINCT sc.result_version_uuid
+              FROM product.synthesis_link sl
+              JOIN synthesis.contribution sc
+                ON sc.synthesis_version_uuid=sl.synthesis_version_uuid
+             WHERE sl.product_version_uuid=p_product_version_uuid
+               AND sl.role IN ('primary','critical')
+               AND sc.included_main_analysis=true
+        )
+        SELECT 1
+          FROM critical_results cr
+         WHERE (
+            SELECT count(DISTINCT pr.source_value::text)
+              FROM provenance.record pr
+             WHERE pr.target_version_uuid=cr.result_version_uuid
+               AND pr.status='active'
+               AND pr.process_type='n4_independent_extraction'
+         ) > 1
+           AND NOT EXISTS (
+                SELECT 1
+                  FROM provenance.record prc
+                 WHERE prc.target_version_uuid=cr.result_version_uuid
+                   AND prc.status='active'
+                   AND prc.process_type='n4_extraction_consensus'
+           )
+    ) THEN
+        RETURN QUERY SELECT
+            'UNRESOLVED_EXTRACTION_DISAGREEMENT','error',
+            'Conflicting independent critical-data extractions require an explicit consensus provenance record';
+    END IF;
+
     IF NOT investigation.has_n4_control_with_assignment(
         inv_uuid,
         'critical_data_verification',
@@ -707,6 +774,31 @@ BEGIN
         RETURN QUERY SELECT
             'MISSING_DUPLICATE_RISK_OF_BIAS_ASSESSMENT','error',
             'Each material N4 RiskAssessment requires two qualified independent appraisal judgements';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+          FROM appraisal.risk_assessment_version rav
+         WHERE rav.investigation_version_uuid=inv_uuid
+           AND rav.status='active'
+           AND (
+                SELECT count(DISTINCT pr.source_value::text)
+                  FROM provenance.record pr
+                 WHERE pr.target_version_uuid=rav.version_uuid
+                   AND pr.status='active'
+                   AND pr.process_type='n4_independent_appraisal_judgement'
+           ) > 1
+           AND NOT EXISTS (
+                SELECT 1
+                  FROM provenance.record prc
+                 WHERE prc.target_version_uuid=rav.version_uuid
+                   AND prc.status='active'
+                   AND prc.process_type='n4_appraisal_consensus'
+           )
+    ) THEN
+        RETURN QUERY SELECT
+            'UNRESOLVED_APPRAISAL_DISAGREEMENT','error',
+            'Conflicting independent appraisal judgements require an explicit consensus provenance record';
     END IF;
 
     IF NOT investigation.has_n4_control_with_assignment(
@@ -826,6 +918,32 @@ BEGIN
         RETURN QUERY SELECT
             'MISSING_DUPLICATE_CERTAINTY_ASSESSMENT','error',
             'Each material CertaintyAssessment requires two qualified independent certainty judgements';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+          FROM product.certainty_link cl
+          JOIN appraisal.certainty_assessment_version cav
+            ON cav.version_uuid=cl.certainty_assessment_version_uuid
+         WHERE cl.product_version_uuid=p_product_version_uuid
+           AND (
+                SELECT count(DISTINCT pr.source_value::text)
+                  FROM provenance.record pr
+                 WHERE pr.target_version_uuid=cav.version_uuid
+                   AND pr.status='active'
+                   AND pr.process_type='n4_independent_certainty_judgement'
+           ) > 1
+           AND NOT EXISTS (
+                SELECT 1
+                  FROM provenance.record prc
+                 WHERE prc.target_version_uuid=cav.version_uuid
+                   AND prc.status='active'
+                   AND prc.process_type='n4_certainty_consensus'
+           )
+    ) THEN
+        RETURN QUERY SELECT
+            'UNRESOLVED_CERTAINTY_DISAGREEMENT','error',
+            'Conflicting independent certainty judgements require an explicit consensus provenance record';
     END IF;
 
     IF NOT investigation.has_n4_control_with_assignment(
