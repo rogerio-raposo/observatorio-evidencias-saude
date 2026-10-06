@@ -90,7 +90,7 @@ A validação final ocorreu no run **37382201584**, com RN0-T01–T13, RN0-A1-T0
 
 ## Síntese Rápida de Evidências — N3
 
-A camada científica, arquitetural, de dados e de apresentação inicial da **Síntese Rápida — N3** está validada tecnicamente.
+A camada científica, arquitetural, de dados e de apresentação da **Síntese Rápida — N3** foi validada tecnicamente. O primeiro caso real também validou o comportamento de bloqueio metodológico, sem fabricar assurance.
 
 Documentos principais:
 
@@ -101,18 +101,41 @@ Documentos principais:
 - [103 — Contrato de Renderização](103-rapid-evidence-synthesis-view-contrato-renderizacao.md)
 - [104 — Especificação do Template Operacional](104-especificacao-template-sintese-rapida-n3.md)
 - [105 — Resultado da Validação do Template](105-resultado-validacao-template-sintese-rapida-n3.md)
+- [111 — Primeira Verificação Metodológica Adversarial do Caso Real](111-caso-real-n3-verificacao-metodologica-adversarial-01.md)
+- [113 — Segunda Verificação Metodológica Adversarial](113-caso-real-n3-verificacao-metodologica-adversarial-02.md)
+- [114 — Encerramento Experimental do Caso Real](114-caso-real-n3-encerramento-experimental.md)
 
-Estado:
+Caso Real N3-01:
 
-- migration 014 validada;
-- RS-T01–T15 PASS;
-- F3-RS-TEMPLATE PASS;
-- fixture experimental A2 permanece não publicável sem qualified human controls/A3;
-- caminho formal A3 comprovado em teste transacional;
-- configuração atual do OES não autoriza publicação formal N3.
+- tema: ambient AI scribes e carga de documentação clínica;
+- Product `OES-P-2026-000701`;
+- ProductVersion atual = 2;
+- assurance **A0**;
+- estado `under_review`;
+- `publication_date=NULL`;
+- `publishable=false`;
+- primeira adversarial review = **REVISE**;
+- segunda adversarial review = **REVISE**;
+- bloqueio final: cobertura bibliográfica insuficiente para o padrão N3;
+- controles humanos qualificados e A3 ausentes.
+
+O caso demonstrou que technical PASS, appraisal/synthesis completos e uma conclusão cientificamente plausível não autorizam elevação de assurance quando o método de busca não satisfaz o padrão canônico.
+
+Validação final:
+
+- run **37413884319** = success;
+- RN3-T01–T16 PASS;
+- RN3-R1-T01–T10 PASS;
+- RN3-ADV2-T01–T06 PASS;
+- RN3-TEMPLATE-A0 PASS;
+- rebuild PASS.
+
+Condição de reabertura:
+
+> executar uma segunda base bibliográfica relevante e reproduzível antes de nova tentativa de elevação de assurance.
 
 ## Próxima etapa
 
-**Caso Real N3 experimental.**
+**Revisão de Evidências — N4: especificação científica e funcional.**
 
-O caso deverá testar protocolo, rapid restrictions, busca/seleção, appraisal, Synthesis, CertaintyAssessment, quality controls e blockers de publicação sem fabricar controles humanos qualificados.
+As lições do N3 sobre cobertura de bases, protocolo/emendas, qualified human controls, A3 e separação entre gate estrutural e verificação metodológica deverão informar a especificação N4.
