@@ -1990,3 +1990,17 @@ Documentos:
 - nenhum Product/Investigation OVR-01 criado;
 - N3-01 permanece inalterado;
 - retomada movida para seleção e qualificação de novo corpus candidato.
+
+
+## 2026-10-06 — dCBT-I corpus suitable with conditions for OVR-01
+
+- Documento 148 criado;
+- Hwang 2025 e Gao 2026 confirmadas como duas systematic reviews já materializadas no OES;
+- Review-level ResultVersions e Syntheses externas distintas já existem;
+- Hwang possui ROBIS AI-assisted draft;
+- membership/overlap Hwang × Gao ainda não materializados;
+- last-search date de Gao ainda não persistida;
+- comparadores não são idênticos e não serão tratados como estimates intercambiáveis;
+- corpus classificado **SUITABLE_WITH_CONDITIONS**;
+- autorização limitada à preparação do protocolo developmental;
+- ReviewItems/membership ainda bloqueados até fechamento das condições pré-persistência.
