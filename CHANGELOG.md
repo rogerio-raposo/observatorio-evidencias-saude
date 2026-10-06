@@ -1801,3 +1801,22 @@ Documentos:
 - nenhuma decisão metodológica, estado técnico ou ponto de retomada foi alterado;
 - CP51 continua vigente;
 - próxima etapa permanece: migration 019 + fixture formal + OV-T01–T33.
+
+
+## 2026-10-06 — Overview migration 019 structural validation
+
+- criada `database/019_overview_of_reviews_contract.sql`;
+- migration 019 integrada ao baseline/rebuild S5;
+- run **37500255586** = success;
+- artifact **11429895618**;
+- digest `sha256:385e4457936aa3dc435ee8d6b92c21382f4e9b80025cff5404c235c39e8508f6`;
+- regressões N0–N4 + Evidence Map + MAP-01 = PASS;
+- rebuild through migration 019 = PASS;
+- ainda não constitui PASS técnico completo do Overview;
+- template continua embargado.
+
+## 2026-10-06 — CP52
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP52.md`;
+- migration 019 consolidada como estruturalmente compatível;
+- retomada movida para fixture formal + OV-T01–T33.
