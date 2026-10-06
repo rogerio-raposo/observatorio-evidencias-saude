@@ -436,36 +436,44 @@ jobs:
           fi
           echo "RC01 PASS — real N2 Evidence Sheet rendered as publishable A2 with explicit no-expert warning" | tee -a s5-artifacts/RC01-template-validation.log
 
-      - name: OVR01 — load, test and render developmental A0
+      - name: OVR01 — load A0, promote A1, test and render
         shell: bash
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-dcbti.sql 2>&1 | tee s5-artifacts/ovr01-load.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-tests.sql 2>&1 | tee s5-artifacts/ovr01-tests.log
-          psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.overview_of_reviews_view('d9100000-0000-0000-0000-000000000020')::text;" > s5-artifacts/ovr01-view-a0.json
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-tests.sql 2>&1 | tee s5-artifacts/ovr01-tests-a0.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-assurance-a1.sql 2>&1 | tee s5-artifacts/ovr01-assurance-a1.log
+          psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-a1-tests.sql 2>&1 | tee s5-artifacts/ovr01-tests-a1.log
+          psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.overview_of_reviews_view('d9100000-0000-0000-0000-000000000020')::text;" > s5-artifacts/ovr01-view-a1.json
           python3 scripts/render_overview_of_reviews_reference.py \
             --template templates/overview-of-reviews.md \
-            --input s5-artifacts/ovr01-view-a0.json \
+            --input s5-artifacts/ovr01-view-a1.json \
             --presentation-map templates/overview-of-reviews-presentation-map.json \
-            --output s5-artifacts/ovr01-preview-a0.md
+            --output s5-artifacts/ovr01-preview-a1.md
           python3 - <<'PY'
           import json
           from pathlib import Path
 
-          payload = json.loads(Path("s5-artifacts/ovr01-view-a0.json").read_text())
-          rendered = Path("s5-artifacts/ovr01-preview-a0.md").read_text()
+          payload = json.loads(Path("s5-artifacts/ovr01-view-a1.json").read_text())
+          rendered = Path("s5-artifacts/ovr01-preview-a1.md").read_text()
 
           assert payload["schema_version"] == "oes.overview_of_reviews_view/0.1"
           assert payload["identity"]["product_id"] == "OES-P-2026-001601"
-          assert payload["audit"]["assurance_level"] == "A0"
+          assert payload["identity"]["editorial_status"] == "under_review"
+          assert payload["identity"]["publication_date"] is None
+          assert payload["audit"]["assurance_level"] == "A1"
           assert payload["audit"]["publishable"] is False
           assert payload["audit"]["review_count"] == 3
           assert len(payload["review_items"]) == 3
           assert len(payload["primary_study_membership"]) == 86
-          assert any(x["code"] == "MISSING_LAST_SEARCH_DATE" for x in payload["audit"]["publication_issues"])
+          codes = {x["code"] for x in payload["audit"]["publication_issues"]}
+          assert "MISSING_LAST_SEARCH_DATE" in codes
+          assert "MISSING_OWNER_APPROVAL" in codes
+          assert "MISSING_EXPERT_INDEPENDENT_REVIEW" in codes
+          assert "ASSURANCE_BELOW_REQUIRED_LEVEL" in codes
           assert "{{" not in rendered
           assert "OVR-01" in rendered
-          print("OVR01-RENDER PASS — real OverviewOfReviewsView rendered at blocked A0")
+          print("OVR01-RENDER-A1 PASS — real OverviewOfReviewsView rendered at blocked internal A1")
           PY
 
       - name: EvidenceSheetView projection migrations idempotent re-apply
@@ -669,6 +677,8 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-01-rebuild-check.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-dcbti.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-tests.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-assurance-a1.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-ovr01-a1-tests.sql
           } 2>&1 | tee s5-artifacts/S5-T16-rebuild.log
 
       - name: Final S5 status
@@ -740,10 +750,12 @@ jobs:
             echo "AV-T01–T02 PASS"
             echo "Assurance A0–A3 governance PASS"
             echo "Real N2 Evidence Sheet A2 publication gate PASS"
-            echo "OVR01-T01–T16 PASS — real developmental Overview A0 corrected after adversarial REVISE"
-            echo "OVR01-RENDER PASS — blocked A0 OverviewOfReviewsView render"
+            echo "OVR01-T01–T16 PASS — corrected developmental A0 baseline"
+            echo "OVR01-A1-T01–T09 PASS — AI methodological verification establishes internal A1 only"
+            echo "OVR01-RENDER-A1 PASS — blocked internal A1 OverviewOfReviewsView render"
+            echo "OVR01 formal publication blockers preserved"
             echo "Publication gate PASS"
-            echo "Rebuild through migration 020 + Overview fixture + MAP-01 A1 regressions PASS"
+            echo "Rebuild through migration 020 + Overview fixture + MAP-01 A1 + OVR-01 A1 regressions PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
