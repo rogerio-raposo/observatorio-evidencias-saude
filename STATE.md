@@ -541,12 +541,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP46 — 2026-10-06**
+**CP47 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP46.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP47.md`
 
 Ponto exato de retomada:
 
-> **Persistir o MAP-01 usando protocolo, inventário e codebook como artifacts, sem duplicar Search/Screening e sem alterar o N3-01.**
+> **Implementar e validar migration 018 de suporte a source_corpus antes de persistir o MAP-01.**
