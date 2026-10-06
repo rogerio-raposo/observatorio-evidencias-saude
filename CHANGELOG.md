@@ -1957,3 +1957,13 @@ Documentos:
 - nenhum OVR-01 autorizado ainda;
 - N3-01 poderá ser examinado apenas como corpus candidato;
 - próxima etapa: qualificação de corpus antes de Product/Investigation real.
+
+
+## 2026-10-06 — CP58
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP58.md`;
+- readiness pré-caso real do Overview consolidado;
+- rota developmental = READY_WITH_DOCUMENTED_CONDITIONS;
+- rota formal = NOT_READY;
+- nenhum OVR-01 aberto;
+- retomada movida para qualificação do subconjunto secundário N3-01 como corpus candidato.
