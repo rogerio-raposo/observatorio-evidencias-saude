@@ -46,8 +46,8 @@ INSERT INTO investigation.question_version(
 ) VALUES (
     'd9100000-0000-0000-0000-000000000001',
     'd9000000-0000-0000-0000-000000000001',
-    'O que mostram revisões sistemáticas elegíveis sobre dCBT-I totalmente automatizada para gravidade da insônia em adultos?',
-    'Quais são as estimativas review-level de revisões sistemáticas elegíveis sobre dCBT-I totalmente automatizada versus controles elegíveis para gravidade da insônia em adultos, preservando comparadores, overlap de estudos primários, ROBIS, atualidade e proveniência?',
+    'Como systematic reviews recentes caracterizam o efeito da dCBT-I totalmente automatizada sobre a gravidade da insônia em adultos no pós-tratamento, considerando diferenças de comparador, overlap de estudos primários, currentness, ROBIS e certainty reportada?',
+    'Como revisões sistemáticas recentes caracterizam o efeito da dCBT-I totalmente automatizada sobre gravidade da insônia em adultos no pós-tratamento, preservando diferenças de comparador, overlap de estudos primários, currentness, ROBIS e certainty reportada?',
     'effectiveness','PICO',
     '{"population":"adults with insomnia","intervention":"fully automated dCBT-I","comparator":"eligible controls kept stratified","outcome":"insomnia severity","review_level":true,"route":"developmental"}'::jsonb,
     '{"evidence_cutoff":"2026-10-06"}'::jsonb
@@ -93,7 +93,7 @@ INSERT INTO investigation.method_decision(
     impact_payload,resolution_status,decided_by,decided_at,record_status
 ) VALUES
 ('d9200000-0000-0000-0000-000000000001','d9100000-0000-0000-0000-000000000002','other','screening','overview_systematic_review_definition',true,'Analytic ReviewItems must be systematic reviews aligned with the prospectively defined OVR-01 eligibility criteria.',NULL,NULL,'{"required_study_type":"systematic_review","route":"developmental"}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:10:00-03','active'),
-('d9200000-0000-0000-0000-000000000002','d9100000-0000-0000-0000-000000000002','other','search','overview_search_coverage_policy',true,'Developmental discovery is structured_non_exhaustive and remains distinct from a formal N4 Overview search.',NULL,NULL,'{"minimum_bibliographic_sources":2,"required_source_classes":["bibliographic_database"],"search_export_required":false,"grey_literature_required":false,"coverage_claim":"structured_non_exhaustive","formal_route_satisfied":false}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:11:00-03','active'),
+('d9200000-0000-0000-0000-000000000002','d9100000-0000-0000-0000-000000000002','other','search','overview_search_coverage_policy',true,'Developmental candidate-review discovery is documented in Documents 149-150; no exact Search execution is materialized because the canonical artifacts do not support an exact executed strategy, timestamp and result set.',NULL,NULL,'{"discovery_sources":["PubMed/MEDLINE","citation_chaining","known_OES_identifiers","full_text_or_supplementary_as_needed"],"inventory_document":"docs/products/150-inventario-reviews-c1-c4-ovr01-dcbti.md","coverage_claim":"structured_non_exhaustive","search_execution_materialized":false,"formal_route_satisfied":false}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:11:00-03','active'),
 ('d9200000-0000-0000-0000-000000000003','d9100000-0000-0000-0000-000000000002','other','cross_cutting','overview_overlap_policy',true,'Retain all three eligible analytic Reviews and keep review-level estimates separate; primary-study overlap is derived from Study-level membership.',NULL,NULL,'{"strategy":"include_all_separate_estimates","manual_cca":false,"membership_matrix":"Document 155"}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:12:00-03','active'),
 ('d9200000-0000-0000-0000-000000000004','d9100000-0000-0000-0000-000000000002','other','cross_cutting','overview_currentness_policy',true,'Currentness preserves known search timing without inferring unavailable exact dates.',NULL,NULL,'{"hwang_last_search":"2024-03-31","gao_last_search":null,"gao_status":"unclear","nazari_search_coverage":"through January 2025","nazari_exact_day":null,"date_inference_prohibited":true}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:13:00-03','active'),
 ('d9200000-0000-0000-0000-000000000005','d9100000-0000-0000-0000-000000000002','other','certainty','overview_certainty_policy',true,'Do not reuse N2 OES GRADE as review-reported certainty; leave certainty absent when not explicitly reported by the Review.',NULL,NULL,'{"hwang":null,"gao":null,"nazari":null,"reuse_n2_grade":false}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:14:00-03','active'),
@@ -101,21 +101,11 @@ INSERT INTO investigation.method_decision(
 ('d9200000-0000-0000-0000-000000000007','d9100000-0000-0000-0000-000000000002','other','search','overview_developmental_amendment_01',false,'Amendment 01 permits Gao last_search_date=NULL only on the developmental route while preserving MISSING_LAST_SEARCH_DATE as a publication blocker.',NULL,'{"currentness_status":"unclear","explicit_rationale_required":true}'::jsonb,'{"formal_route_unchanged":true,"publication_blocker_preserved":true}'::jsonb,'accepted','OES_AI_ASSISTED',TIMESTAMPTZ '2026-10-06 19:16:00-03','active');
 
 -- ---------------------------------------------------------------------------
--- STRUCTURED NON-EXHAUSTIVE DISCOVERY TRACE + SCREENING DECISIONS
+-- DOCUMENTED STRUCTURED NON-EXHAUSTIVE DISCOVERY POLICY
+-- No investigation.search execution is materialized here: Documents 149-150
+-- support the discovery policy and candidate inventory, not an exact executed
+-- query/timestamp/result set. This avoids fabricating operational search data.
 -- ---------------------------------------------------------------------------
-
-INSERT INTO investigation.search(
-    search_uuid,oes_search_id,investigation_version_uuid,
-    source_name,platform,exact_strategy,filters_payload,executed_at,
-    result_count,strategy_version,operator,status
-) VALUES (
-    'd9400000-0000-0000-0000-000000000001','OES-SRCH-2026-001601',
-    'd9100000-0000-0000-0000-000000000002',
-    'PubMed/MEDLINE','PubMed',
-    '(insomnia[Title/Abstract]) AND ("digital cognitive behavioral therapy"[Title/Abstract] OR "digital cognitive behavioural therapy"[Title/Abstract] OR "internet cognitive behavioral therapy"[Title/Abstract] OR "internet cognitive behavioural therapy"[Title/Abstract] OR dCBT-I[Title/Abstract] OR "fully automated"[Title/Abstract]) AND (systematic review[Publication Type] OR meta-analysis[Publication Type] OR systematic review[Title/Abstract] OR meta-analysis[Title/Abstract])',
-    '{"purpose":"developmental review discovery","source_class":"bibliographic_database","coverage_claim":"structured_non_exhaustive"}'::jsonb,
-    TIMESTAMPTZ '2026-10-06 17:00:00-03',NULL,'developmental-v1','OES_AI_ASSISTED','completed'
-);
 
 -- ---------------------------------------------------------------------------
 -- NAZARI REVIEW MATERIALIZATION
@@ -223,22 +213,8 @@ INSERT INTO provenance.record(
     'OES_AI_ASSISTED','active'
 );
 
-INSERT INTO investigation.search_hit(
-    search_hit_uuid,oes_search_hit_id,search_uuid,report_entity_uuid,
-    source_record_id,raw_title,raw_year,raw_identifier,resolution_status
-) VALUES
-('d9410000-0000-0000-0000-000000000001','OES-HIT-2026-001601','d9400000-0000-0000-0000-000000000001','80000000-0000-0000-0000-000000000201','40075149','Systematic review and meta-analysis on fully automated digital cognitive behavioral therapy for insomnia',2025,'PMID:40075149','resolved'),
-('d9410000-0000-0000-0000-000000000002','OES-HIT-2026-001602','d9400000-0000-0000-0000-000000000001','80000000-0000-0000-0000-000000000202','42240717','Efficacy of fully automated digital cognitive behavioral therapy for insomnia in adults',2026,'PMID:42240717','resolved'),
-('d9410000-0000-0000-0000-000000000003','OES-HIT-2026-001603','d9400000-0000-0000-0000-000000000001','d9300000-0000-0000-0000-000000000401','41798736','Effectiveness of Digital Cognitive Behavioral Therapy for Insomnia: A Meta-Analysis of Randomized Controlled Trials',2025,'PMID:41798736','resolved');
-
-INSERT INTO investigation.screening_decision(
-    screening_uuid,oes_screening_id,investigation_version_uuid,
-    target_entity_uuid,stage,reviewer,decision,exclusion_reason,
-    decided_at,adjudication_flag
-) VALUES
-('d9420000-0000-0000-0000-000000000001','OES-SCR-2026-001601','d9100000-0000-0000-0000-000000000002','80000000-0000-0000-0000-000000000201','full_text','OES_AI_ASSISTED','include',NULL,TIMESTAMPTZ '2026-10-06 17:30:00-03',false),
-('d9420000-0000-0000-0000-000000000002','OES-SCR-2026-001602','d9100000-0000-0000-0000-000000000002','80000000-0000-0000-0000-000000000202','full_text','OES_AI_ASSISTED','include',NULL,TIMESTAMPTZ '2026-10-06 17:31:00-03',false),
-('d9420000-0000-0000-0000-000000000003','OES-SCR-2026-001603','d9100000-0000-0000-0000-000000000002','d9300000-0000-0000-0000-000000000401','full_text','OES_AI_ASSISTED','include',NULL,TIMESTAMPTZ '2026-10-06 17:32:00-03',false);
+-- Candidate-review eligibility and exclusions remain traceable in Document 150.
+-- No database screening_decision timestamps are invented for that documentary step.
 
 -- ---------------------------------------------------------------------------
 -- 58 NEW PRIMARY STUDY CANDIDATES + REUSE OF EXISTING SWEETMAN 2024
@@ -760,7 +736,7 @@ INSERT INTO product.product_version(
     DATE '2026-10-06',NULL,'under_review',
     'As três Reviews analíticas elegíveis reportam estimativas favoráveis à dCBT-I totalmente automatizada, mas os estimates não são combinados pelo OES. Comparadores e medidas permanecem separados, e o overlap de primary Studies deve ser interpretado a partir das métricas derivadas pelo banco.',
     'Produto developmental interno para validação metodológica e arquitetural; não constitui recomendação clínica nem produto publicável.',
-    'A0 sem assurance adicional; memberships e ROBIS são AI-assisted/unverified; não há controle humano independente; Gao não possui last-search date verificável; Nazari informa apenas cobertura até janeiro de 2025 sem dia exato; comparadores não são intercambiáveis; ROBIS Nazari tem preocupação alta de unidade de análise; nenhuma nova meta-análise OES foi criada.'
+    'A0 sem assurance adicional; memberships e ROBIS são AI-assisted/unverified; não há controle humano independente; discovery pré-persistência é documental/structured_non_exhaustive e nenhuma execução Search exata é fabricada no banco; Gao não possui last-search date verificável; Nazari informa apenas cobertura até janeiro de 2025 sem dia exato; comparadores não são intercambiáveis; ROBIS Nazari tem preocupação alta de unidade de análise; nenhuma nova meta-análise OES foi criada.'
 );
 
 INSERT INTO product.investigation_link(
