@@ -1685,3 +1685,17 @@ Documentos:
 - MAP-01 terá Question/Investigation próprias;
 - N3-01 será ligada como `source_corpus`;
 - retomada definida na migration 018.
+
+
+## 2026-10-06 — Evidence Map source-corpus PASS
+
+- migration 018 implementada;
+- EvidenceMapView passou a suportar `source_corpus` sem duplicação de Search/Screening;
+- mapa não sistemático pode herdar Search do corpus fonte;
+- systematic/formal map não pode usar `source_corpus` para contornar Search primária;
+- EMVSC-T01–T05 PASS;
+- run **37479566944** = success;
+- artifact **11420063123**;
+- digest `sha256:c7dc99be7781200e0ad603b0d03f9e90e3022ed7eafabd32be5138f41c29024b`;
+- rebuild through migration 018 PASS;
+- Documento 136 criado.
