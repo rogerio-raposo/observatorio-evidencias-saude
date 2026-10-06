@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP35 — 2026-10-05**.
+- checkpoint vigente: **CP36 — 2026-10-06**.
 
 ## 2. Estado das fases
 
@@ -205,7 +205,7 @@ Produtos com trilha inicial consolidada:
 
 ### Síntese Rápida de Evidências — N3
 
-Documentos 99–105:
+Documentos 99–114:
 
 - 99 — especificação científica e funcional;
 - 100 — revisão de coerência e decisão arquitetural;
@@ -213,7 +213,12 @@ Documentos 99–105:
 - 102 — resultado da validação técnica: **PASS**;
 - 103 — contrato de renderização;
 - 104 — especificação do template operacional;
-- 105 — resultado da validação do template: **PASS**.
+- 105 — resultado da validação do template: **PASS**;
+- 106–110 — Caso Real N3-01: protocolo, busca/seleção, appraisal, síntese/GRADE/SoF e validação técnica A0;
+- 111 — primeira verificação adversarial: **REVISE**;
+- 112 — busca suplementar corretiva;
+- 113 — segunda verificação adversarial: **REVISE**;
+- 114 — encerramento experimental controlado.
 
 Implementação validada:
 
@@ -222,39 +227,85 @@ Implementação validada:
 - `investigation.quality_control_record`;
 - RapidEvidenceSynthesisView `oes.rapid_evidence_synthesis_view/0.1`;
 - publication gate N3;
-- fixture experimental;
-- template Markdown próprio;
-- presentation map;
-- renderer/validator;
+- template/presentation map/renderer/validator;
+- validator dedicado do Caso Real N3;
 - RS-T01–T15 PASS;
 - F3-RS-TEMPLATE PASS;
-- F3-RS-T16 duplicate migration detection PASS;
 - rebuild through migration 014 PASS.
 
-Governança validada:
+Governança N3 consolidada:
 
 - N3 formal exige A3;
-- A3 não substitui controles qualificados de etapa;
-- controles por IA são transparentes, mas não satisfazem human-qualified controls;
-- fixture A2 estruturalmente completa permanece `publishable=false`;
-- RS-T11 demonstra que gate abre somente com qualified human controls + A3;
-- configuração atual do OES permite desenvolvimento/validação N3, mas não publicação formal.
+- A3 não substitui controles humanos qualificados de etapa;
+- AI quality controls são transparentes e não satisfazem qualified human controls;
+- technical PASS não equivale a methodological PASS;
+- adversarial `revise` não eleva assurance;
+- busca N3 deve ser sistemática, reproduzível, documentada e proporcionalmente abrangente;
+- padrão inicial: pelo menos duas bases bibliográficas relevantes, salvo exceção metodologicamente defensável.
 
-Validação final do template N3:
+### Caso Real N3-01 — ambient AI scribes
 
-- run **37384841089** = **success**;
-- commit validado `da3a4a3d8d18d9ac951ab028fc4249d95e898989`;
-- artifact **11378245039**;
-- digest `sha256:b94c8b1d4a2428233c01ba7ea40d4b7e720fb1a7e5dc76863a406d2e9959247c`;
-- `F3-RS-TEMPLATE validation PASS`;
-- regressões N0–N2/F2-B/S4/S5 PASS.
+Product:
 
-Estado atual N3:
+- `OES-P-2026-000701`;
+- ProductVersion 1 = superseded;
+- ProductVersion 2 = current;
+- depth `N3`;
+- maintenance `M1`;
+- editorial status `under_review`;
+- assurance **A0**;
+- `publishable=false`;
+- `publication_date=NULL`.
 
-- contrato técnico validado;
-- renderização/template validados;
-- Caso Real N3 ainda não iniciado;
-- publicação formal continuará bloqueada sem controles humanos qualificados reais + A3.
+Corpo experimental:
+
+- três estudos randomizados/comparativos principais;
+- 11 Results estruturados;
+- 10 appraisals;
+- quatro SynthesisVersion narrativas;
+- GRADE experimental: 3 LOW + 1 VERY LOW;
+- seis AI quality controls, todos `qualified=false`.
+
+Primeiro adversarial:
+
+- resultado **REVISE**;
+- motivo: cobertura insuficiente/não duplicação após falha do Europe PMC;
+- correção: ProductVersion 2 com terminologia ampliada, terceira Search, 20 hits, 34 screening decisions e 13 referências.
+
+Segundo adversarial:
+
+- resultado **REVISE**;
+- motivo: arquitetura de busca ainda insuficiente para N3;
+- PubMed foi a única base bibliográfica executada de forma reproduzível;
+- Europe PMC indisponível via API/interface;
+- OpenAlex direto indisponível;
+- publisher/DOI/citation chasing não equivale a segunda base bibliográfica;
+- nova busca adversarial continuou encontrando estudos elegíveis, tornando a exceção de uma base não defensável.
+
+Estado final:
+
+> **A0 experimental / metodologicamente bloqueado / não publicável.**
+
+Não criar ProductVersion 3 sem segunda base bibliográfica relevante e reproduzível.
+
+Validação técnica final:
+
+- run **37413884319** = **success**;
+- commit validado `f2ba21eaaa2d3c43a95ceb908dd0b097b8e9a1b4`;
+- artifact **11389784878**;
+- digest `sha256:c4b53864e60be656a1e3de9039b8480746bbeff8f9fcf5b76257989a47a73b58`;
+- RN3-T01–T16 PASS;
+- RN3-R1-T01–T10 PASS;
+- RN3-ADV2-T01–T06 PASS;
+- RN3-TEMPLATE-A0 PASS;
+- regressões e rebuild PASS.
+
+Produtos exercitados até aqui:
+
+1. **Ficha de Evidência — N2** — caso real A2/published;
+2. **Resposta de Evidência — N1** — caso real A2/published;
+3. **Evidence Scan — N0** — caso real A1/interno;
+4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0.
 
 Taxonomia restante da Fase 3:
 
@@ -266,17 +317,17 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Síntese Rápida de Evidências — N3: Caso Real experimental.**
+**Revisão de Evidências — N4: especificação científica e funcional.**
 
-Selecionar pergunta decisória adequada a N3, definir protocolo e rapid restrictions, executar busca/seleção/appraisal/síntese/certainty, registrar quality controls disponíveis e preservar blockers de qualified human controls/A3.
+Incorporar explicitamente as lições do Caso Real N3 sobre cobertura de bases, dependências bibliográficas, protocolo/emendas, qualified human controls, A3, rerroteamento e distinção entre validação estrutural e metodológica.
 ## 10. Checkpoint vigente
 
-**CP35 — 2026-10-05**
+**CP36 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP35.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP36.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — iniciar Caso Real N3 experimental.**
+> **Fase 3 — iniciar especificação científica e funcional da Revisão de Evidências — N4.**
