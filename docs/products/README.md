@@ -268,6 +268,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [140 — Contrato de Dados v0.1](140-contrato-dados-overview-revisoes.md)
 - [141 — Resultado da Validação Técnica do Contrato](141-resultado-validacao-contrato-overview-revisoes.md)
 - [142 — Contrato de Renderização e Projection Readiness](142-overview-view-contrato-renderizacao.md)
+- [143 — Resultado do Projection Readiness Gate](143-resultado-projection-readiness-overview-revisoes.md)
 
 ### Estado
 
@@ -306,14 +307,21 @@ O Documento 141 registra:
 
 ### Projection Readiness
 
-O Documento 142 definiu o contrato de renderização e concluiu:
+O Documento 142 identificou lacunas auditáveis na projeção inicial. A migration 020 as resolveu de forma aditiva e o Documento 143 registra:
 
-> **Projection Readiness Gate = NOT_READY para template.**
+> **Projection Readiness Gate = READY para especificação do template operacional.**
 
-Faltam projeções auditáveis de method decisions completos, conflicts, quality controls, search exports, selection/exclusions, Review Report lineage, OutcomeEvidence provenance e dependency/invalidation detail.
+Validação:
+
+- OVR-T01–T12 = PASS;
+- migration 020 idempotente = PASS;
+- rebuild/regressões = PASS;
+- run **37503751486** = success;
+- artifact **11430083884**;
+- digest `sha256:f599426adb3afd5cc28066c00eb0de73c6d18dd734f622d58e9f0f5f9be418a5`.
 
 ### Próxima etapa
 
-**Migration 020 — `OverviewOfReviewsView` rendering readiness.**
+**Especificar o Template Operacional do Overview de Revisões.**
 
-O template continua proibido até OVR-T01–T12 e novo fechamento do Projection Readiness Gate.
+A especificação deverá preceder a criação do template, presentation map, renderer e validator.
