@@ -538,9 +538,11 @@ Estado final:
 
 > **MAP-01 concluído — A1 interno / não publicável.**
 
-Próxima etapa:
+Próxima etapa naquele marco histórico:
 
 > **iniciar a Especificação Científica e Funcional do Overview de Revisões.**
+
+Essa etapa foi posteriormente concluída nos Documentos 138–140; o ponto vigente de retomada é o registrado no CP51.
 
 Produtos exercitados até aqui:
 
