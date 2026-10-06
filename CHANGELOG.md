@@ -1707,3 +1707,24 @@ Documentos:
 - suporte a `source_corpus` consolidado como PASS;
 - migration 018 + EMVSC-T01–T05 + rebuild validados;
 - retomada movida para a persistência real do MAP-01.
+
+
+## 2026-10-06 — MAP-01 controlled closure
+
+- persistido primeiro Caso Real do Mapa: `OES-P-2026-001401`;
+- 17 MapItems, 67 assignments, 20 CellScope e 13 references;
+- Question/Investigation próprias + N3-01 como `source_corpus`;
+- MAP01-T01–T15 PASS em A0;
+- AI methodological second pass = passed;
+- assurance final = **A1**;
+- nenhuma owner approval, expert review ou human verification fabricada;
+- MAP01-A1-T01–T07 PASS;
+- template ampliado com seção de investigações-fonte do corpus;
+- MAP01-RENDER-A1 PASS;
+- run **37487017809** = success;
+- artifact **11423951911**;
+- digest `sha256:ae81f09905853a395b0bf4ba03e5209938d1cb7e6175390531d117e49f0a46e8`;
+- rebuild through migration 018 + MAP-01 A1 PASS;
+- Documento 137 criado;
+- MAP-01 encerrado como **A1 interno / não publicável**;
+- próxima etapa da Fase 3: Overview de Revisões.
