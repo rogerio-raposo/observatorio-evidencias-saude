@@ -459,3 +459,17 @@ O Documento 155 registra:
 - C2 continua bloqueado.
 
 Próxima etapa: classificar C7 membership completeness e C8/CCA readiness sem persistir entidades reais.
+
+
+### C7–C8
+
+O Documento 156 concluiu:
+
+- C7 = **PASS**;
+- membership completeness estrutural = complete para Hwang, Gao e Nazari;
+- complete não significa human-verified;
+- C8 = **READY_WITH_DOCUMENTED_CONDITIONS**;
+- CCA permanece não calculado;
+- C2 continua bloqueado.
+
+Próxima etapa: fechar C9–C12 e reavaliar o gate pré-persistência.
