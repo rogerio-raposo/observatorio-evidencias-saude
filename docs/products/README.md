@@ -442,3 +442,20 @@ O Documento 154 registra:
 - Chan 2023 (Hwang) e Chan 2024 (Nazari) = Studies distintas.
 
 C5/C6 permanecem em progresso; CCA continua bloqueado.
+
+
+### Fechamento C5–C6
+
+O Documento 155 registra:
+
+- Hwang = 27 Study candidates;
+- Gao = 15;
+- Nazari = 44;
+- união = 59;
+- occurrences = 86;
+- C5 = **PASS_WITH_DOCUMENTED_UNCERTAINTY**;
+- C6 = **PASS**;
+- CCA não calculado;
+- C2 continua bloqueado.
+
+Próxima etapa: classificar C7 membership completeness e C8/CCA readiness sem persistir entidades reais.
