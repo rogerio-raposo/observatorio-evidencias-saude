@@ -1921,3 +1921,20 @@ Documentos:
 - especificação do Template Operacional do Overview consolidada;
 - implementação ainda não iniciada no checkpoint;
 - retomada movida para template + presentation map + renderer + validator + integração S5.
+
+
+## 2026-10-06 — Overview presentation layer PASS
+
+- Documento 145 criado;
+- `templates/overview-of-reviews.md` implementado;
+- presentation map implementado;
+- renderer read-only implementado;
+- validator positivo + cenários adversariais implementado;
+- integração S5 concluída;
+- `F3-OVERVIEW-TEMPLATE validation PASS`;
+- run **37506526884** = success;
+- artifact **11431539311**;
+- digest `sha256:4ddfff2d14f9b8892611199cdade932f7825d2615f76610518a63499c2a58770`;
+- rebuild through migration 020 + Overview fixture = PASS;
+- próxima etapa: readiness pré-caso real do Overview;
+- Caso Real permanece bloqueado até esse gate.
