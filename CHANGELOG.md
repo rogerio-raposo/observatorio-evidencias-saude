@@ -1848,3 +1848,17 @@ Documentos:
 - OV-T01–T33 + rebuild/regressões registrados;
 - template ainda não criado;
 - retomada movida para contrato de renderização e Projection Readiness Gate.
+
+
+## 2026-10-06 — Overview render contract / Projection NOT_READY
+
+- criado Documento 142 — contrato de renderização da `OverviewOfReviewsView`;
+- renderer definido como read-only sobre a View;
+- overlap/CCA/pairwise não podem ser recalculados pelo renderer;
+- eligibility e overlap disposition devem permanecer distintas;
+- ROBIS e certainty permanecem dimensões distintas;
+- Projection Readiness Gate = **NOT_READY**;
+- lacunas aditivas: method decisions completos, reviewer conflicts, QC payloads, search export metadata, selection/exclusions, Review Report lineage, OutcomeEvidence provenance e dependency/invalidation detail;
+- migration 019 permanece fechada e não será reaberta;
+- próxima etapa: migration 020 + OVR-T01–T12;
+- template permanece proibido até novo gate READY.
