@@ -1553,3 +1553,10 @@ Documentos:
 
 - contrato de renderização do EvidenceMapView;
 - nenhum template foi criado antes do PASS técnico.
+
+
+## 2026-10-06 — CP41
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP41.md`;
+- PASS técnico do Mapa de Evidências consolidado;
+- ponto de retomada movido para o Documento 127 — contrato de renderização do EvidenceMapView.
