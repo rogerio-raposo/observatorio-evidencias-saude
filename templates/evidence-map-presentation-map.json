@@ -1,0 +1,213 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicado",
+    "superseded": "Substituído",
+    "archived": "Arquivado"
+  },
+  "identity.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "update_state.currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.required_assurance_level": {
+    "A1": "A1",
+    "A2": "A2",
+    "A3": "A3"
+  },
+  "mapping_subtype": {
+    "scoping_evidence_map": "scoping evidence map",
+    "systematic_evidence_map": "systematic evidence map",
+    "evidence_gap_map": "evidence and gap map",
+    "descriptive_mapping_review": "descriptive mapping review",
+    "other_evidence_map": "other evidence map"
+  },
+  "coverage_claim": {
+    "exploratory": "exploratória",
+    "structured_non_exhaustive": "estruturada não exaustiva",
+    "systematic_comprehensive": "sistemática abrangente"
+  },
+  "gap_claim_mode": {
+    "none": "sem alegação de gap",
+    "apparent_only": "gaps apenas aparentes",
+    "formal_within_scope": "gaps formais dentro do escopo"
+  },
+  "counting_unit_policy": {
+    "study": "Study",
+    "report": "Report",
+    "synthesis": "Synthesis",
+    "mixed": "mista"
+  },
+  "role": {
+    "row_axis": "eixo de linha",
+    "column_axis": "eixo de coluna",
+    "filter": "filtro",
+    "descriptive": "descritiva",
+    "search_peer_reviewer": "revisor da estratégia de busca",
+    "primary_reviewer": "revisor primário",
+    "secondary_reviewer": "revisor secundário",
+    "data_extractor": "codificador/extrator",
+    "data_verifier": "verificador de codificação",
+    "expert_independent_reviewer": "revisor especialista independente"
+  },
+  "dimension_role": {
+    "row_axis": "eixo de linha",
+    "column_axis": "eixo de coluna",
+    "filter": "filtro",
+    "descriptive": "descritiva"
+  },
+  "scope_status": {
+    "in_scope": "no escopo",
+    "not_applicable": "não aplicável",
+    "excluded_by_framework": "excluída pelo framework"
+  },
+  "item_role": {
+    "primary_evidence": "evidência primária",
+    "synthesis": "síntese",
+    "contextual": "contextual",
+    "ongoing": "em andamento",
+    "other": "outro"
+  },
+  "decision_state": {
+    "candidate": "candidata",
+    "final": "final"
+  },
+  "actor_type": {
+    "ai_system": "sistema de IA",
+    "system": "sistema",
+    "owner": "proprietário",
+    "human_reviewer": "revisor humano",
+    "human_expert": "especialista humano"
+  },
+  "assignment_method": {
+    "manual": "manual",
+    "ai_assisted": "assistida por IA",
+    "rule_based": "baseada em regra",
+    "imported": "importada",
+    "consensus": "consenso"
+  },
+  "verification_status": {
+    "unverified": "não verificada",
+    "ai_verified": "verificada por IA",
+    "human_verified": "verificada por humano",
+    "human_consensus": "consenso humano"
+  },
+  "stage": {
+    "search": "busca",
+    "screening": "seleção",
+    "extraction": "classificação/extração",
+    "appraisal": "avaliação crítica",
+    "synthesis": "síntese",
+    "certainty": "certeza/confiança",
+    "reporting": "relato",
+    "cross_cutting": "transversal"
+  },
+  "control_type": {
+    "search_strategy_verification": "verificação da estratégia de busca",
+    "search_strategy_peer_review": "revisão da estratégia de busca",
+    "screening_pilot": "piloto/calibração da seleção",
+    "screening_secondary_verification": "verificação secundária da seleção",
+    "critical_data_verification": "verificação de dados críticos",
+    "risk_of_bias_verification": "verificação do risco de viés",
+    "synthesis_statistical_review": "revisão estatística",
+    "certainty_verification": "verificação da certeza/confiança",
+    "reporting_verification": "verificação do relato",
+    "other": "outro"
+  },
+  "decision": {
+    "approved": "aprovada",
+    "passed": "aprovado",
+    "revise": "revisar",
+    "failed": "falhou",
+    "rejected": "rejeitada",
+    "not_applicable": "não aplicável"
+  },
+  "severity": {
+    "error": "ERRO",
+    "warning": "AVISO"
+  },
+  "multi_valued": {
+    "true": "sim",
+    "false": "não"
+  },
+  "required": {
+    "true": "sim",
+    "false": "não"
+  },
+  "gap_eligible": {
+    "true": "sim",
+    "false": "não"
+  },
+  "empty_cell_gap": {
+    "true": "sim",
+    "false": "não"
+  },
+  "apparent_gap": {
+    "true": "sim",
+    "false": "não"
+  },
+  "primary_evidence_gap": {
+    "true": "sim",
+    "false": "não"
+  },
+  "synthesis_gap": {
+    "true": "sim",
+    "false": "não"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.synthetic_fixture": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.publishable": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.classification_complete": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.search_controls_satisfied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.classification_controls_satisfied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.formal_gap_eligible": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.expert_independent_reviewed": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.lineage_available": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.invalidated_dependencies": {
+    "true": "sim",
+    "false": "não"
+  }
+}
