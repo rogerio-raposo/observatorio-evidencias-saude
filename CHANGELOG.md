@@ -1728,3 +1728,11 @@ Documentos:
 - Documento 137 criado;
 - MAP-01 encerrado como **A1 interno / não publicável**;
 - próxima etapa da Fase 3: Overview de Revisões.
+
+
+## 2026-10-06 — CP49
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP49.md`;
+- MAP-01 consolidado como **A1 interno / não publicável**;
+- run 37487017809 e rebuild completos em PASS;
+- retomada movida para a Especificação Científica e Funcional do Overview de Revisões.
