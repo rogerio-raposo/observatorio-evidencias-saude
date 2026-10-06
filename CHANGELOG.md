@@ -2129,3 +2129,19 @@ Documentos:
 - pelo menos 17 overlaps Hwang × Nazari confirmados;
 - C2 bloqueado; C5/C6 em progresso; CCA não autorizado;
 - retomada movida para fechamento Study-level de Hwang/Nazari e cruzamento Gao.
+
+
+## 2026-10-06 — OVR-01 C5–C6 closed
+
+- Documento 155 criado;
+- Hwang = 27 Study candidates;
+- Gao = 15 Study candidates;
+- Nazari = 44 Study candidates;
+- união combinada = 59 Study candidates;
+- occurrences = 86;
+- C5 = PASS_WITH_DOCUMENTED_UNCERTAINTY;
+- C6 = PASS;
+- identidade permanece AI-assisted/unverified;
+- CCA não calculado;
+- C2 Gao last-search date permanece bloqueado;
+- próxima etapa: C7 membership completeness + C8/CCA readiness.
