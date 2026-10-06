@@ -371,34 +371,52 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–125:
+Documentos 123–126:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
-- 125 — Contrato de Dados v0.1.
+- 125 — Contrato de Dados v0.1;
+- 126 — Resultado da Validação Técnica: **PASS**.
 
-Decisão consolidada:
+Implementação validada:
+
+- migration 016;
+- schema `mapping`;
+- `framework`, `framework_version`, `dimension`, `category`, `map_item`, `assignment`, `cell_scope`;
+- `mapping.evidence_map_cells()` para derivação de células, contagens e gaps;
+- publication gate do Mapa;
+- EvidenceMapView `oes.evidence_map_view/0.1`;
+- fixture formal sintética `evidence_gap_map + systematic_comprehensive + formal_within_scope`;
+- dupla classificação humana sintética + consenso;
+- qualified search/screening/classification controls sintéticos;
+- assurance A3 sintético;
+- EM-T01–T22 PASS;
+- rebuild through migration 016 PASS;
+- regressões N0–N4 PASS.
+
+Validação técnica:
+
+- run **37464023391** = **success**;
+- commit validado `9403f1a36bbcc2c486afa393146b528f72b7a08f`;
+- artifact **11413512318**;
+- digest `sha256:a531328905b4dba42fc249c92eaa8f2331e975ed9dfa418779e7523ae45f8d3a`.
+
+Decisões preservadas:
 
 - OES-P1 permanece como núcleo científico;
-- criar schema especializado `mapping` com framework, framework_version, dimension, category, map_item, assignment e cell_scope;
 - células, contagens, concentrações e gaps são derivados;
-- `EvidenceMapView` candidata: `oes.evidence_map_view/0.1`;
-- mapas exploratórios/non-exhaustive distinguem-se de systematic maps/EGMs formais;
-- formal gap claims dependem de `systematic_comprehensive`, CellScope explícito, controles de busca/classificação e assurance requerido;
-- IA pode auxiliar classificação, mas não produzir `human_verified`;
-- migration autorizada: `database/016_evidence_map_contract.sql`.
+- gap formal exige coverage e CellScope compatíveis;
+- A3 não contorna controles metodológicos de etapa;
+- fixture sintética não constitui evidência real;
+- nenhum Caso Real do Mapa foi iniciado.
 
 Estado técnico:
 
-> **Contrato de dados v0.1 consolidado; implementação técnica ainda pendente.**
+> **Contrato de dados e EvidenceMapView = PASS técnico.**
 
-Próxima cadeia técnica:
+Próxima etapa:
 
-> **migration 016 → fixture formal sintética → testes adversariais → rebuild/regressões → integração S5 → PASS técnico.**
-
-Regra:
-
-> **não criar template/renderização do Mapa antes do PASS técnico do contrato.**
+> **definir o contrato de renderização do EvidenceMapView; template somente depois do contrato de renderização.**
 
 Produtos exercitados até aqui:
 
@@ -408,28 +426,28 @@ Produtos exercitados até aqui:
 4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0;
 5. **Revisão de Evidências N4** — especificação, contrato, gate, view e template validados com fixture formal sintética A3; readiness real = **NOT_READY**, sem abertura de Caso Real formal.
 
-Taxonomia restante da Fase 3 após o contrato do Mapa:
+Taxonomia restante da Fase 3:
 
-- concluir implementação técnica do Mapa de Evidências;
+- concluir camada de apresentação do Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
 - Alerta de Evidência.
 
 ## 9. Próxima etapa
 
-**Mapa de Evidências: implementar o contrato técnico v0.1.**
+**Mapa de Evidências: contrato de renderização do EvidenceMapView.**
 
-Executar, nesta ordem:
+O contrato técnico foi validado no run **37464023391**. A proibição de template antes do PASS foi satisfeita sem violação: nenhum template do Mapa foi criado durante a implementação do contrato.
 
-1. `database/016_evidence_map_contract.sql`;
-2. fixture formal sintética;
-3. testes do contrato e cenários adversariais;
-4. rebuild completo e regressões N0–N4;
-5. integração/validação S5;
-6. obter PASS técnico;
-7. somente depois iniciar contrato de renderização/template.
+Sequência seguinte:
 
-O Caso Real N4 formal continua deferido por readiness `NOT_READY`. Não reabrir N4 sem mudança real das condições de equipe, cobertura bibliográfica e caminho A3.
+1. contrato de renderização do EvidenceMapView;
+2. especificação do template operacional;
+3. implementação do template/presentation map/renderer/validator;
+4. validação adversarial da apresentação;
+5. somente então decidir readiness para eventual Caso Real do Mapa.
+
+O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
