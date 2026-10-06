@@ -740,7 +740,7 @@ jobs:
             echo "AV-T01–T02 PASS"
             echo "Assurance A0–A3 governance PASS"
             echo "Real N2 Evidence Sheet A2 publication gate PASS"
-            echo "OVR01-T01–T14 PASS — real developmental Overview A0"
+            echo "OVR01-T01–T16 PASS — real developmental Overview A0 corrected after adversarial REVISE"
             echo "OVR01-RENDER PASS — blocked A0 OverviewOfReviewsView render"
             echo "Publication gate PASS"
             echo "Rebuild through migration 020 + Overview fixture + MAP-01 A1 regressions PASS"
