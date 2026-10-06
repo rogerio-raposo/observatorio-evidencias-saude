@@ -1492,3 +1492,32 @@ Documentos:
 - CP39 criado;
 - próxima etapa: **especificação científica e funcional do Mapa de Evidências**.
 
+
+
+## 2026-10-06 — CP40: contrato do Mapa consolidado
+
+### Continuidade
+
+- Freshness Gate entre o commit de criação do CP39 (`2ea0b53455bfc7bd10ce78a223436e19b04b4437`) e o HEAD pré-CP40 (`284f08c710847891785e740b9a1edb2fa6cc1143`) confirmou **7 commits à frente e 0 atrás**;
+- Documentos 123–125 reconhecidos como avanço canônico pós-CP39;
+- CP40 criado para eliminar a defasagem entre o checkpoint formal e o estado real do repositório.
+
+### Mapa de Evidências
+
+- Documento 123 — especificação científica e funcional;
+- Documento 124 — revisão de coerência e decisão arquitetural inicial;
+- Documento 125 — contrato de dados v0.1;
+- schema especializado `mapping` definido com 7 estruturas;
+- células, contagens, gaps e concentrações permanecem derivados;
+- `database/016_evidence_map_contract.sql` autorizada;
+- template/renderização proibidos até PASS técnico do contrato.
+
+### Próxima etapa
+
+- migration 016;
+- fixture formal sintética;
+- testes adversariais;
+- rebuild/regressões;
+- integração S5;
+- PASS técnico;
+- somente então contrato de renderização/template do Mapa.
