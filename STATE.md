@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–147:
+Documentos 138–148:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -572,7 +572,8 @@ Documentos 138–147:
 - 144 — especificação do Template Operacional concluída;
 - 145 — validação da camada de apresentação = **PASS**;
 - 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**;
-- 147 — qualificação do subconjunto secundário N3-01 = **UNSUITABLE para OVR-01**.
+- 147 — qualificação do subconjunto secundário N3-01 = **UNSUITABLE para OVR-01**;
+- 148 — corpus dCBT-I = **SUITABLE_WITH_CONDITIONS para OVR-01 developmental**.
 
 Arquitetura/escopo vigentes:
 
@@ -665,26 +666,39 @@ Qualificação do primeiro candidato:
 - requisito mínimo de duas systematic reviews = FAIL;
 - decisão = **UNSUITABLE**.
 
+Segundo candidato qualificado:
+
+- Hwang 2025 = systematic review/meta-analysis já materializada;
+- Gao 2026 = systematic review/meta-analysis já materializada;
+- ambas possuem Reports, ResultVersions e Syntheses externas separadas;
+- Hwang possui ROBIS draft;
+- study membership Hwang × Gao ainda não reconciliada;
+- last-search date de Gao ainda não persistida;
+- comparadores diferem e não devem ser tratados como estimando idêntico;
+- decisão = **SUITABLE_WITH_CONDITIONS**.
+
 Próxima etapa:
 
-> **selecionar e qualificar um novo corpus candidato especificamente adequado a Overview, sem criar OVR-01 até decisão suitable/suitable_with_conditions.**
+> **preparar o protocolo developmental de OVR-01 para dCBT-I, sem persistir ReviewItems/membership até resolver as condições pré-persistência.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: seleção de novo corpus candidato.**
+**Overview de Revisões: protocolo developmental do OVR-01 dCBT-I.**
 
-Critérios iniciais:
+O protocolo deverá definir:
 
-1. pelo menos duas systematic reviews claramente identificáveis;
-2. full text acessível;
-3. listas de primary studies recuperáveis;
-4. escopo/outcomes comparáveis;
-5. last search dates disponíveis;
-6. possibilidade de materialização de Review Study/StudyVersion;
-7. Review-level Results/Synthesis rastreáveis;
-8. sem necessidade de alterar o contrato apenas para acomodar o caso.
+1. pergunta review-level própria;
+2. eligibility de systematic reviews;
+3. escopo de comparadores;
+4. política de overlap;
+5. currentness;
+6. ROBIS;
+7. OutcomeEvidence;
+8. certainty reportada;
+9. política sobre a terceira review Nazari;
+10. condições pré-persistência de membership.
 
-Nenhum OVR-01 será criado antes de nova qualificação.
+Ainda não persistir ReviewItems/membership.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
