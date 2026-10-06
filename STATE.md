@@ -371,7 +371,7 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–131:
+Documentos 123–134:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
@@ -381,7 +381,10 @@ Documentos 123–131:
 - 128 — Resultado da Validação do Projection Readiness: **READY**;
 - 129 — Especificação do Template Operacional;
 - 130 — Resultado da Validação do Template/Renderização: **PASS**;
-- 131 — Readiness Gate Pré-Caso Real: **exploratório READY_WITH_DOCUMENTED_CONDITIONS / formal NOT_READY**.
+- 131 — Readiness Gate Pré-Caso Real: **exploratório READY_WITH_DOCUMENTED_CONDITIONS / formal NOT_READY**;
+- 132 — MAP-01: protocolo pré-especificado;
+- 133 — MAP-01: inventário formal de 17 MapItems;
+- 134 — MAP-01: codebook v0.1.
 
 Implementação validada:
 
@@ -476,9 +479,24 @@ Readiness pré-Caso Real:
 - sem novos ReviewerAssignments humanos;
 - sem alteração do N3-01.
 
+Pré-persistência MAP-01:
+
+- protocolo concluído;
+- 5 StudyVersions elegíveis;
+- 8 ReportVersions contextuais elegíveis;
+- 4 SynthesisVersions elegíveis;
+- total = 17 MapItems;
+- 20 CellScope previstos;
+- codebook v0.1 fechado;
+- `descriptive_mapping_review`;
+- `structured_non_exhaustive`;
+- `apparent_only`;
+- counting unit = `study`;
+- InvestigationVersion N3-01 será reutilizada como investigação primária para preservar Search/Screening canônicos.
+
 Próxima etapa:
 
-> **criar o protocolo do Caso Real MAP-01 antes de persistir o novo Product/Framework.**
+> **persistir o Caso Real MAP-01 sem duplicar Search/Screening e sem alterar o N3-01.**
 
 Produtos exercitados até aqui:
 
@@ -497,19 +515,22 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Caso Real MAP-01: protocolo.**
+**Caso Real MAP-01: persistência controlada.**
 
-O Documento 131 autorizou somente a rota exploratória controlada.
+Documentos 132–134 fecharam protocolo, inventário e codebook.
 
 Sequência seguinte:
 
-1. protocolo do MAP-01;
-2. inventário do corpus herdado N3-01;
-3. framework/codebook;
-4. persistência do novo Map Product;
-5. classificação rastreável;
-6. validação técnica e adversarial;
-7. encerramento em assurance real compatível com os controles existentes.
+1. materializar artifacts de protocolo/codebook;
+2. criar Framework/FrameworkVersion;
+3. criar 17 MapItems;
+4. criar assignments finais IA/unverified conforme codebook;
+5. criar 20 CellScope;
+6. criar novo Product evidence_map interno;
+7. adicionar AI methodological verification somente após os testes iniciais;
+8. validar/renderizar;
+9. executar adversarial verification;
+10. encerrar com assurance derivada.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
