@@ -1820,3 +1820,22 @@ Documentos:
 - criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP52.md`;
 - migration 019 consolidada como estruturalmente compatível;
 - retomada movida para fixture formal + OV-T01–T33.
+
+
+## 2026-10-06 — Overview technical contract PASS
+
+- Documento 141 criado;
+- migration 019 = PASS;
+- fixture formal sintética A3 = PASS;
+- 3 Reviews, 5 primary Studies e 9 memberships;
+- CCA esperado 0,4 = PASS;
+- OV-T01–T33 = PASS;
+- `OverviewOfReviewsView` = PASS;
+- regressões N0–N4 + Evidence Map + MAP-01 = PASS;
+- rebuild com migration 019 + fixture = PASS;
+- run **37502184404** = success;
+- artifact **11430003081**;
+- digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`;
+- dois erros iniciais da fixture (UUID e rationale omitido) foram corrigidos sem alteração do contrato;
+- embargo técnico de template encerrado;
+- próxima etapa: contrato de renderização da `OverviewOfReviewsView`.
