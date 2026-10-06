@@ -144,6 +144,9 @@ Documentos principais:
 - [116 — Revisão de Coerência e Decisão Arquitetural](116-revisao-evidencias-n4-revisao-coerencia-arquitetura.md)
 - [117 — Contrato de Dados](117-contrato-dados-revisao-evidencias-n4.md)
 - [118 — Resultado da Validação Técnica](118-resultado-validacao-contrato-revisao-evidencias-n4.md)
+- [119 — Contrato de Renderização](119-evidence-review-view-contrato-renderizacao.md)
+- [120 — Especificação do Template Operacional](120-especificacao-template-revisao-evidencias-n4.md)
+- [121 — Resultado da Validação do Template/Renderização](121-resultado-validacao-template-revisao-evidencias-n4.md)
 
 Implementação:
 
@@ -154,10 +157,15 @@ Implementação:
 - publication gate N4;
 - suporte a ROB-ME em nível de Synthesis;
 - fixture formal sintética A3;
-- ER4-T01–T25 PASS;
+- template Markdown/presentation map/renderer/validator;
+- disclosure `audit.synthetic_fixture`;
+- ER4-T01–T27 PASS;
+- F3-ER4-TEMPLATE PASS;
 - rebuild PASS.
 
-A validação final ocorreu no run **37417796591**, com artifact **11391167525** e digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
+A validação do contrato ocorreu no run **37417796591**, com artifact **11391167525** e digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
+
+A validação da apresentação ocorreu no run **37418624629**, com artifact **11391724857** e digest `sha256:a2d0c3dc12758a14fc13a2ac4ca50a3868ac9ceeac615ec34c6b417ee37b44ba`.
 
 Limite operacional:
 
@@ -167,6 +175,6 @@ O PASS é técnico/arquitetural e utiliza atores humanos explicitamente sintéti
 
 ## Próxima etapa
 
-**Revisão de Evidências — N4: contrato de renderização e template operacional.**
+**Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
 
-A próxima trilha deverá criar presentation map, template Markdown, renderer/validator e validar tanto o estado formal sintético quanto estados bloqueados/experimentais.
+Nenhuma busca definitiva N4 deverá ser iniciada antes do readiness. Se o estado for `not_ready`, o bloqueio deve ser registrado e o caso deferido/rerroteado, sem reduzir silenciosamente os requisitos metodológicos.
