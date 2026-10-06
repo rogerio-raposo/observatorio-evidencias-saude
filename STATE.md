@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–144:
+Documentos 138–145:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -569,7 +569,8 @@ Documentos 138–144:
 - 141 — validação técnica do contrato = **PASS**;
 - 142 — contrato de renderização definido; Projection Readiness inicialmente = **NOT_READY**;
 - 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**;
-- 144 — especificação do Template Operacional concluída.
+- 144 — especificação do Template Operacional concluída;
+- 145 — validação da camada de apresentação = **PASS**.
 
 Arquitetura/escopo vigentes:
 
@@ -631,24 +632,37 @@ Template Operacional:
 - presentation map, renderer e validator especificados;
 - cenários adversariais de A3 bloqueado, membership incompleta, certainty ausente, not comparable e invalidated dependency definidos.
 
+Camada de apresentação:
+
+- template Markdown = PASS;
+- presentation map = PASS;
+- renderer read-only = PASS;
+- validator positivo + cinco cenários adversariais = PASS;
+- integração S5 = PASS;
+- run **37506526884** = success;
+- artifact **11431539311**;
+- digest `sha256:4ddfff2d14f9b8892611199cdade932f7825d2615f76610518a63499c2a58770`.
+
 Próxima etapa:
 
-> **implementar template, presentation map, renderer e validator do Overview e integrar ao S5.**
+> **executar readiness pré-caso real do Overview; nenhum Caso Real deverá ser aberto antes desse gate.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: implementação da camada de apresentação.**
+**Overview de Revisões: readiness pré-caso real.**
 
-Sequência seguinte:
+Avaliar antes de qualquer Caso Real:
 
-1. template Markdown;
-2. presentation map;
-3. renderer;
-4. validator;
-5. fixture renderizada;
-6. testes da camada de apresentação;
-7. resultado da validação de apresentação;
-8. readiness pré-caso real.
+1. disponibilidade de corpus real de revisões;
+2. cobertura de fontes;
+3. capacidade de reconstruir membership Review × primary Study;
+4. controles humanos qualificados reais;
+5. ROBIS real;
+6. overlap verificável;
+7. OutcomeEvidence e certainty reportada;
+8. currentness;
+9. assurance/governança;
+10. risco de double counting e update identity.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
