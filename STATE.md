@@ -561,12 +561,13 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–141:
+Documentos 138–142:
 
 - 138 — especificação científica e funcional inicial concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
 - 140 — contrato de dados v0.1 concluído;
 - 141 — validação técnica do contrato = **PASS**;
+- 142 — contrato de renderização definido; Projection Readiness = **NOT_READY**;
 - unidade principal = systematic review;
 - escopo formal v0.1 = systematic reviews quantitativas de intervenções;
 - OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
@@ -608,9 +609,19 @@ Contrato técnico do Overview:
 - artifact **11430003081**;
 - digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
 
+Contrato de renderização:
+
+- renderer deverá consumir exclusivamente a `OverviewOfReviewsView`;
+- não recalcular CCA/pairwise overlap;
+- eligibility e overlap disposition permanecem distintas;
+- ROBIS e certainty permanecem distintas;
+- nenhum global Overview certainty;
+- nenhuma comparação indireta informal;
+- Projection Readiness = **NOT_READY** por lacunas auditáveis aditivas.
+
 Próxima etapa:
 
-> **definir o contrato de renderização da `OverviewOfReviewsView` antes de criar template operacional.**
+> **implementar `database/020_overview_of_reviews_view_rendering_readiness.sql` e OVR-T01–T12; template continua proibido.**
 
 ## 9. Próxima etapa
 
@@ -620,12 +631,13 @@ Documentos 138–140 fecharam especificação científica, arquitetura e contrat
 
 Sequência seguinte:
 
-1. contrato de renderização da `OverviewOfReviewsView`;
-2. Projection Readiness Gate;
-3. somente se READY: especificação do template operacional;
-4. renderizador/validator;
-5. validação da camada de apresentação;
-6. readiness pré-caso real.
+1. migration 020 de Projection Readiness;
+2. OVR-T01–T12;
+3. novo Projection Readiness Gate;
+4. somente se READY: especificação do template operacional;
+5. renderizador/validator;
+6. validação da camada de apresentação;
+7. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
