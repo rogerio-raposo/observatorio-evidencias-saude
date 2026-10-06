@@ -9,6 +9,7 @@
 **Maturidade autorizada:** A0 inicial; eventual A1 somente após verificação metodológica por IA  
 **Publicação:** proibida nesta rota  
 **Dependências:** Documentos 138–148; CP60
+**Emenda vigente:** Documento 160 — Emenda 01 ao Protocolo Developmental OVR-01; aplica-se prospectivamente apenas à rota A0/A1 e permite `last_search_date=NULL` para Gao sob `currentness_status='unclear'`, preservando o blocker de publicação.
 
 ---
 
