@@ -371,7 +371,7 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–135:
+Documentos 123–136:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
@@ -385,7 +385,8 @@ Documentos 123–135:
 - 132 — MAP-01: protocolo pré-especificado;
 - 133 — MAP-01: inventário formal de 17 MapItems;
 - 134 — MAP-01: codebook v0.1;
-- 135 — MAP-01: correção arquitetural — Question/Investigation próprias + N3-01 como `source_corpus`.
+- 135 — MAP-01: correção arquitetural — Question/Investigation próprias + N3-01 como `source_corpus`;
+- 136 — source_corpus: validação técnica **PASS**.
 
 Implementação validada:
 
@@ -498,9 +499,21 @@ Pré-persistência MAP-01:
 - N3-01 será ligada ao Product com role `source_corpus`;
 - Search/Screening canônicos permanecerão na N3-01 e serão herdados pela EvidenceMapView sem duplicação.
 
+Source-corpus support:
+
+- migration 018 = PASS;
+- EvidenceMapView preserva pergunta da primary MAP Investigation;
+- Searches/Screening podem ser herdados via `source_corpus` em mapas não sistemáticos;
+- systematic/formal map continua exigindo Search na primary Investigation;
+- EMVSC-T01–T05 PASS;
+- rebuild through migration 018 PASS;
+- run **37479566944** = success;
+- artifact **11420063123**;
+- digest `sha256:c7dc99be7781200e0ad603b0d03f9e90e3022ed7eafabd32be5138f41c29024b`.
+
 Próxima etapa:
 
-> **implementar migration 018 de suporte a source_corpus e, após PASS, persistir o Caso Real MAP-01.**
+> **persistir o Caso Real MAP-01 com Question/Investigation próprias e N3-01 como source_corpus.**
 
 Produtos exercitados até aqui:
 
@@ -525,17 +538,16 @@ Documentos 132–134 fecharam protocolo, inventário e codebook.
 
 Sequência seguinte:
 
-1. implementar migration 018 de suporte a `source_corpus`;
-2. validar pergunta própria do MAP-01 + herança de Search/Screening sem duplicação;
-3. materializar artifacts de protocolo/codebook;
-4. criar Question/Investigation próprias do MAP-01;
-5. criar Framework/FrameworkVersion;
-6. criar 17 MapItems;
-7. criar assignments finais IA/unverified conforme codebook;
-8. criar 20 CellScope;
-9. criar novo Product evidence_map interno + link `source_corpus`;
-10. validar/renderizar e executar adversarial verification;
-11. encerrar com assurance derivada.
+1. materializar artifacts de protocolo/codebook;
+2. criar Question/Investigation próprias do MAP-01;
+3. criar Framework/FrameworkVersion;
+4. criar 17 MapItems;
+5. criar assignments finais IA/unverified conforme codebook;
+6. criar 20 CellScope;
+7. criar novo Product evidence_map interno + link `source_corpus`;
+8. validar/renderizar;
+9. executar adversarial verification;
+10. encerrar com assurance derivada.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
