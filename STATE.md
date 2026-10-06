@@ -561,14 +561,15 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–143:
+Documentos 138–144:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
 - 140 — contrato de dados v0.1 concluído;
 - 141 — validação técnica do contrato = **PASS**;
 - 142 — contrato de renderização definido; Projection Readiness inicialmente = **NOT_READY**;
-- 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**.
+- 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**;
+- 144 — especificação do Template Operacional concluída.
 
 Arquitetura/escopo vigentes:
 
@@ -619,17 +620,28 @@ Contrato de renderização permanece vinculante:
 - nenhuma comparação indireta informal;
 - renderer não cria reanalysis ou assurance.
 
+Template Operacional:
+
+- ordem canônica definida;
+- regras de Review ≠ Report e eligibility ≠ overlap disposition preservadas;
+- overlap/CCA/pairwise somente leitura;
+- ROBIS/certainty/currentness separados;
+- nenhum global Overview certainty;
+- nenhum indirect comparison informal;
+- presentation map, renderer e validator especificados;
+- cenários adversariais de A3 bloqueado, membership incompleta, certainty ausente, not comparable e invalidated dependency definidos.
+
 Próxima etapa:
 
-> **especificar formalmente o Template Operacional do Overview antes de criar template, presentation map, renderer ou validator.**
+> **implementar template, presentation map, renderer e validator do Overview e integrar ao S5.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: especificação do Template Operacional.**
+**Overview de Revisões: implementação da camada de apresentação.**
 
 Sequência seguinte:
 
-1. especificação formal do template;
+1. template Markdown;
 2. presentation map;
 3. renderer;
 4. validator;
