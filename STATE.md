@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–153:
+Documentos 138–154:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -719,9 +719,18 @@ Estado:
 - C5 = IN_PROGRESS;
 - C6 = IN_PROGRESS.
 
+Reconciliação adicional:
+
+- Hwang = 29 artigos; 27 Study candidates provisórios após GoodNight;
+- Nazari = 49 artigos; máximo provisório de 44 Study candidates após cinco clusters confirmados;
+- multiple-report clusters confirmados em Nazari: GoodNight, REST, DIALS, SPREAD e Ritterband/Shaffer;
+- pelo menos 17 overlaps Hwang × Nazari confirmados;
+- Chan 2023 e Chan 2024 = Studies distintas;
+- C2 continua BLOCKED / NOT_VERIFIED.
+
 Próxima etapa:
 
-> **resolver aliases/multiple Reports restantes e expandir Hwang/Gao/Nazari até matriz Study-level suficientemente completa para fechar C5–C6; depois classificar C7/C8.**
+> **investigar multiple-report clusters remanescentes em Nazari, consolidar contagens Study-level finais de Hwang/Nazari, cruzar Gao e fechar C5–C6 antes de classificar C7/C8.**
 
 ## 9. Próxima etapa
 
