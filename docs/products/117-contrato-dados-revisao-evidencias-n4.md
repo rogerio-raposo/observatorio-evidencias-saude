@@ -525,6 +525,10 @@ Quando aplicável, representar como RiskAssessment:
 - outcome_entity_uuid quando aplicável;
 - domains/instrument payload.
 
+Como a baseline 002 restringe originalmente o alvo de RiskAssessment a Study/Result/Report, a migration 015 deverá estender `appraisal.assert_risk_target_type()` para aceitar também `Synthesis`.
+
+Essa mudança é uma extensão semântica do guard existente, não uma nova entidade.
+
 Fixture formal de intervenção/meta-analysis deverá incluir ROB-ME sintético.
 
 ---
