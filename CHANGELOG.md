@@ -1620,3 +1620,14 @@ Documentos:
 - criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP44.md`;
 - camada de apresentação do Mapa consolidada como PASS;
 - retomada movida para o Readiness Gate pré-Caso Real, separando rota exploratória/non-exhaustive da rota formal systematic map/EGM.
+
+
+## 2026-10-06 — Evidence Map real-case readiness
+
+- criado Documento 131 — Readiness Gate Pré-Caso Real;
+- rota exploratória/structured non-exhaustive = **READY_WITH_DOCUMENTED_CONDITIONS**;
+- rota formal systematic map/EGM = **NOT_READY**;
+- autorizado MAP-01 interno A1 sobre ambient AI scribes, reutilizando corpus N3-01;
+- definido `descriptive_mapping_review + structured_non_exhaustive + apparent_only`;
+- proibida alteração da assurance/conclusão do N3-01 ou fabricação de controles humanos;
+- próxima etapa: protocolo MAP-01.
