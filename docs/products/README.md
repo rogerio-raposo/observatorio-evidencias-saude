@@ -90,7 +90,7 @@ A validação final ocorreu no run **37382201584**, com RN0-T01–T13, RN0-A1-T0
 
 ## Síntese Rápida de Evidências — N3
 
-A camada científica, arquitetural e de dados inicial da **Síntese Rápida — N3** está validada tecnicamente.
+A camada científica, arquitetural, de dados e de apresentação inicial da **Síntese Rápida — N3** está validada tecnicamente.
 
 Documentos principais:
 
@@ -98,17 +98,21 @@ Documentos principais:
 - [100 — Revisão de Coerência e Arquitetura](100-sintese-rapida-n3-revisao-coerencia-arquitetura.md)
 - [101 — Contrato de Dados](101-contrato-dados-sintese-rapida-n3.md)
 - [102 — Resultado da Validação do Contrato](102-resultado-validacao-contrato-sintese-rapida-n3.md)
+- [103 — Contrato de Renderização](103-rapid-evidence-synthesis-view-contrato-renderizacao.md)
+- [104 — Especificação do Template Operacional](104-especificacao-template-sintese-rapida-n3.md)
+- [105 — Resultado da Validação do Template](105-resultado-validacao-template-sintese-rapida-n3.md)
 
 Estado:
 
 - migration 014 validada;
 - RS-T01–T15 PASS;
+- F3-RS-TEMPLATE PASS;
 - fixture experimental A2 permanece não publicável sem qualified human controls/A3;
 - caminho formal A3 comprovado em teste transacional;
 - configuração atual do OES não autoriza publicação formal N3.
 
-## Próxima especificação
+## Próxima etapa
 
-**Contrato de Renderização da Síntese Rápida — N3.**
+**Caso Real N3 experimental.**
 
-A apresentação deverá manter visíveis rapid restrictions, protocol deviations, quality controls, missing controls e bloqueios formais.
+O caso deverá testar protocolo, rapid restrictions, busca/seleção, appraisal, Synthesis, CertaintyAssessment, quality controls e blockers de publicação sem fabricar controles humanos qualificados.
