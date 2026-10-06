@@ -78,6 +78,8 @@ on:
       - 'database/f3-real-case-01-dcbti.sql'
       - 'database/f3-real-case-ovr01-dcbti.sql'
       - 'database/f3-real-case-ovr01-tests.sql'
+      - 'database/f3-real-case-ovr01-assurance-a1.sql'
+      - 'database/f3-real-case-ovr01-a1-tests.sql'
       - 'database/f3-real-case-01-tests.sql'
       - 'database/f3-real-case-01-rebuild-check.sql'
       - 'database/f3-assurance-gate-tests.sql'
