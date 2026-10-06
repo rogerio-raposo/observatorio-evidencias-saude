@@ -451,12 +451,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP40 — 2026-10-06**
+**CP41 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP40.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP41.md`
 
 Ponto exato de retomada:
 
-> **Implementar migration 016, fixture formal sintética, testes adversariais e rebuild; integrar ao S5. Não criar template antes do PASS técnico.**
+> **Criar o Documento 127 — Contrato de Renderização do EvidenceMapView, usando `oes.evidence_map_view/0.1` como fonte canônica e preservando coverage, counting unit, CellScope, gaps, concentrações, assurance e provenance.**
