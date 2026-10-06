@@ -17,6 +17,7 @@ on:
       - 'database/015_evidence_review_contract.sql'
       - 'database/016_evidence_map_contract.sql'
       - 'database/017_evidence_map_view_rendering_readiness.sql'
+      - 'database/018_evidence_map_source_corpus_support.sql'
       - 'database/019_overview_of_reviews_contract.sql'
       - 'database/f3-overview-of-reviews-fixtures.sql'
       - 'database/f3-overview-of-reviews-tests-a.sql'
