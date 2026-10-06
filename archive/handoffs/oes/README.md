@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP69 — 2026-10-06**
+**CP70 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP69.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP70.md`
 
 Checkpoint anterior:
 
-`CP68`
+`CP69`
 
 Status:
 
@@ -149,3 +149,11 @@ em **Modo Continuidade**.
 
 
 - **CP63 — 2026-10-06:** codebook Study/Report + matriz preliminar de membership persistidos; C5/C6 IN_PROGRESS, CCA ainda proibido; retomada na resolução de aliases e fechamento da matriz.
+
+- **CP64 — 2026-10-06:** corrige identidade Eigl/Hinterberger e aliases prioritários; C5/C6 continuam em progresso.
+- **CP65 — 2026-10-06:** consolida listas Hwang/Nazari e multiple-report clusters; retomada no fechamento Study-level.
+- **CP66 — 2026-10-06:** fecha C5–C6; matriz = 59 Study candidates / 86 occurrences; retomada em C7–C8.
+- **CP67 — 2026-10-06:** fecha C7 e prepara C8; retomada em C9–C12.
+- **CP68 — 2026-10-06:** fecha C9–C12; C2 permanece blocker explícito; retomada no gate consolidado.
+- **CP69 — 2026-10-06:** gate pré-persistência = READY_WITH_AMENDMENT_REQUIRED; retomada na Emenda 01.
+- **CP70 — 2026-10-06:** Emenda 01 + micro-gate concluídos; OVR-01 = **READY_TO_PERSIST_DEVELOPMENTAL_A0**; retomada na persistência real controlada e validação pós-persistência.
