@@ -2004,3 +2004,11 @@ Documentos:
 - corpus classificado **SUITABLE_WITH_CONDITIONS**;
 - autorização limitada à preparação do protocolo developmental;
 - ReviewItems/membership ainda bloqueados até fechamento das condições pré-persistência.
+
+
+## 2026-10-06 — CP60
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP60.md`;
+- corpus dCBT-I consolidado como **SUITABLE_WITH_CONDITIONS** para OVR-01 developmental;
+- autorização limitada à preparação do protocolo;
+- ReviewItems/membership permanecem bloqueados até fechamento das condições pré-persistência.
