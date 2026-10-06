@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP34 — 2026-10-05**.
+- checkpoint vigente: **CP35 — 2026-10-05**.
 
 ## 2. Estado das fases
 
@@ -205,12 +205,15 @@ Produtos com trilha inicial consolidada:
 
 ### Síntese Rápida de Evidências — N3
 
-Documentos 99–102:
+Documentos 99–105:
 
 - 99 — especificação científica e funcional;
 - 100 — revisão de coerência e decisão arquitetural;
 - 101 — contrato de dados;
-- 102 — resultado da validação técnica: **PASS**.
+- 102 — resultado da validação técnica: **PASS**;
+- 103 — contrato de renderização;
+- 104 — especificação do template operacional;
+- 105 — resultado da validação do template: **PASS**.
 
 Implementação validada:
 
@@ -220,7 +223,11 @@ Implementação validada:
 - RapidEvidenceSynthesisView `oes.rapid_evidence_synthesis_view/0.1`;
 - publication gate N3;
 - fixture experimental;
+- template Markdown próprio;
+- presentation map;
+- renderer/validator;
 - RS-T01–T15 PASS;
+- F3-RS-TEMPLATE PASS;
 - F3-RS-T16 duplicate migration detection PASS;
 - rebuild through migration 014 PASS.
 
@@ -233,12 +240,21 @@ Governança validada:
 - RS-T11 demonstra que gate abre somente com qualified human controls + A3;
 - configuração atual do OES permite desenvolvimento/validação N3, mas não publicação formal.
 
-Run final:
+Validação final do template N3:
 
-- **37384225722** = **success**;
-- commit validado `44d50afa11d385ef26f56f860676859fb40d4f3c`;
-- artifact **11375884187**;
-- digest `sha256:1d880f2490142ba5fb4c0a815741a7aee01f74bb06b0b969fb352d6883443e78`.
+- run **37384841089** = **success**;
+- commit validado `da3a4a3d8d18d9ac951ab028fc4249d95e898989`;
+- artifact **11378245039**;
+- digest `sha256:b94c8b1d4a2428233c01ba7ea40d4b7e720fb1a7e5dc76863a406d2e9959247c`;
+- `F3-RS-TEMPLATE validation PASS`;
+- regressões N0–N2/F2-B/S4/S5 PASS.
+
+Estado atual N3:
+
+- contrato técnico validado;
+- renderização/template validados;
+- Caso Real N3 ainda não iniciado;
+- publicação formal continuará bloqueada sem controles humanos qualificados reais + A3.
 
 Taxonomia restante da Fase 3:
 
@@ -250,18 +266,17 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Síntese Rápida de Evidências — N3: contrato de renderização.**
+**Síntese Rápida de Evidências — N3: Caso Real experimental.**
 
-Definir estrutura de apresentação, rapid restrictions, protocol deviations, quality controls, missing controls, Synthesis/Certainty, assurance e o estado experimental bloqueado antes de criar o template operacional.
-
+Selecionar pergunta decisória adequada a N3, definir protocolo e rapid restrictions, executar busca/seleção/appraisal/síntese/certainty, registrar quality controls disponíveis e preservar blockers de qualified human controls/A3.
 ## 10. Checkpoint vigente
 
-**CP34 — 2026-10-05**
+**CP35 — 2026-10-05**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP34.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP35.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — formalizar o contrato de renderização da Síntese Rápida de Evidências — N3.**
+> **Fase 3 — iniciar Caso Real N3 experimental.**
