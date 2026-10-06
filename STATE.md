@@ -300,16 +300,54 @@ Validação técnica final:
 - RN3-TEMPLATE-A0 PASS;
 - regressões e rebuild PASS.
 
+### Revisão de Evidências — N4
+
+Documentos 115–118:
+
+- 115 — especificação científica e funcional;
+- 116 — revisão de coerência e decisão arquitetural;
+- 117 — contrato de dados;
+- 118 — resultado da validação técnica: **PASS**.
+
+Implementação validada:
+
+- migration 015;
+- `investigation.reviewer_assignment`;
+- extensão de `appraisal.assert_risk_target_type()` para alvo `Synthesis` em ROB-ME;
+- EvidenceReviewView `oes.evidence_review_view/0.1`;
+- publication gate N4;
+- Infrastructure Readiness Gate;
+- fixture formal sintética A3;
+- ER4-T01–T25 PASS;
+- rebuild through migration 015 PASS.
+
+Governança N4 consolidada:
+
+- N4 formal exige A3 + controles humanos qualificados específicos do protocolo;
+- A3 não substitui search peer review, dupla seleção, dupla extração, appraisal, certainty ou statistical review;
+- IA não satisfaz reviewer assignment humano;
+- uma única base bibliográfica não é suficiente para N4 formal;
+- protocolo prospectivo e reprodutibilidade são obrigatórios;
+- ROB-ME pode ser representado em nível de Synthesis;
+- Caso Real N4 formal permanece proibido na configuração humana atual.
+
+Validação técnica final do contrato:
+
+- run **37417796591** = **success**;
+- commit validado `a255bf2a33b1cfba1214c7d9daaca234a7f6987e`;
+- artifact **11391167525**;
+- digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
+
 Produtos exercitados até aqui:
 
 1. **Ficha de Evidência — N2** — caso real A2/published;
 2. **Resposta de Evidência — N1** — caso real A2/published;
 3. **Evidence Scan — N0** — caso real A1/interno;
-4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0.
+4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0;
+5. **Revisão de Evidências N4** — especificação/contrato validados com fixture formal sintética A3; nenhum caso real formal autorizado.
 
 Taxonomia restante da Fase 3:
 
-- Revisão de Evidências — N4;
 - Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
@@ -317,17 +355,18 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Revisão de Evidências — N4: especificação científica e funcional.**
+**Revisão de Evidências — N4: contrato de renderização e template operacional.**
 
-Incorporar explicitamente as lições do Caso Real N3 sobre cobertura de bases, dependências bibliográficas, protocolo/emendas, qualified human controls, A3, rerroteamento e distinção entre validação estrutural e metodológica.
+Sequência: contrato de renderização → presentation map → template Markdown → renderer/validator → validação sintética de estados formal/bloqueado.
+
 ## 10. Checkpoint vigente
 
-**CP36 — 2026-10-06**
+**CP37 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP36.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP37.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — iniciar especificação científica e funcional da Revisão de Evidências — N4.**
+> **Fase 3 — criar o contrato de renderização da EvidenceReviewView e o template operacional da Revisão de Evidências N4.**
