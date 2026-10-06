@@ -1521,3 +1521,35 @@ Documentos:
 - integração S5;
 - PASS técnico;
 - somente então contrato de renderização/template do Mapa.
+
+
+## 2026-10-06 — Evidence Map contract technical PASS
+
+### Implementação
+
+- adicionada migration `database/016_evidence_map_contract.sql`;
+- criado schema `mapping` com sete estruturas especializadas;
+- implementada derivação de células, contagens e gaps;
+- implementados publication gate e `EvidenceMapView`;
+- adicionada fixture formal sintética e testes positivos/adversariais;
+- integrada migration 016 ao S5 e ao rebuild do zero.
+
+### Validação
+
+- EM-T01–T22 PASS;
+- migration 016 duplicate detection PASS;
+- rebuild through migration 016 PASS;
+- regressões N0–N4 PASS;
+- workflow run **37464023391** = success;
+- commit validado `9403f1a36bbcc2c486afa393146b528f72b7a08f`;
+- artifact **11413512318**;
+- digest `sha256:a531328905b4dba42fc249c92eaa8f2331e975ed9dfa418779e7523ae45f8d3a`.
+
+### Documento
+
+- criado Documento 126 — Resultado da Validação Técnica do Contrato do Mapa de Evidências.
+
+### Próxima etapa
+
+- contrato de renderização do EvidenceMapView;
+- nenhum template foi criado antes do PASS técnico.
