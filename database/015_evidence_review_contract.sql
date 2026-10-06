@@ -1187,7 +1187,7 @@ AS $view$
 WITH
 primary_inv AS (
     SELECT
-        i.oes_investigation_id AS investigation_id,
+        ie.oes_id AS investigation_id,
         iv.entity_uuid AS investigation_entity_uuid,
         iv.version_uuid AS investigation_version_uuid,
         iv.investigation_type,
@@ -1200,15 +1200,15 @@ primary_inv AS (
       FROM product.investigation_link il
       JOIN investigation.investigation_version iv
         ON iv.version_uuid = il.investigation_version_uuid
-      JOIN investigation.investigation i
-        ON i.entity_uuid = iv.entity_uuid
+      JOIN core.entity ie
+        ON ie.entity_uuid = iv.entity_uuid
      WHERE il.product_version_uuid = p_product_version_uuid
        AND il.role = 'primary'
      LIMIT 1
 ),
 primary_q AS (
     SELECT
-        q.oes_question_id AS question_id,
+        qe.oes_id AS question_id,
         qv.entity_uuid AS question_entity_uuid,
         qv.version_uuid AS question_version_uuid,
         qv.original_text,
@@ -1223,8 +1223,8 @@ primary_q AS (
        AND iq.role = 'primary'
       JOIN investigation.question_version qv
         ON qv.version_uuid = iq.question_version_uuid
-      JOIN investigation.question q
-        ON q.entity_uuid = qv.entity_uuid
+      JOIN core.entity qe
+        ON qe.entity_uuid = qv.entity_uuid
      LIMIT 1
 ),
 refs AS (
