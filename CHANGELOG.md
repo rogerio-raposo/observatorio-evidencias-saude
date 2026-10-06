@@ -1749,3 +1749,17 @@ Documentos:
 - supplemental primary studies excluídos do corpus analítico formal v0.1;
 - formal Overview exige A3 + qualified human controls;
 - próxima etapa: revisão de coerência e decisão arquitetural.
+
+
+## 2026-10-06 — Overview architectural decision
+
+- criado Documento 139 — Revisão de Coerência e Decisão Arquitetural do Overview de Revisões;
+- systematic review permanece Study/StudyVersion no OES-P1;
+- aprovada camada especializada `overview` com sete estruturas;
+- Review×PrimaryStudy membership será verdade persistida de overlap;
+- CCA/pairwise overlap/heatmaps serão derivados;
+- eligibility e overlap disposition permanecerão separados;
+- OutcomeEvidence será link/context, sem copiar Results;
+- formal Overview = Investigation N4 + A3 + qualified human controls;
+- rejeitadas entidades/tabelas paralelas de Review, Overview, ROBIS, GRADE, Search, Screening e métricas derivadas;
+- próxima etapa: contrato de dados v0.1.
