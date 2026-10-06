@@ -302,12 +302,15 @@ Validação técnica final:
 
 ### Revisão de Evidências — N4
 
-Documentos 115–118:
+Documentos 115–121:
 
 - 115 — especificação científica e funcional;
 - 116 — revisão de coerência e decisão arquitetural;
 - 117 — contrato de dados;
-- 118 — resultado da validação técnica: **PASS**.
+- 118 — resultado da validação técnica do contrato: **PASS**;
+- 119 — contrato de renderização;
+- 120 — especificação do template operacional;
+- 121 — resultado da validação do template/renderização: **PASS**.
 
 Implementação validada:
 
@@ -318,7 +321,12 @@ Implementação validada:
 - publication gate N4;
 - Infrastructure Readiness Gate;
 - fixture formal sintética A3;
-- ER4-T01–T25 PASS;
+- template Markdown N4;
+- presentation map;
+- renderer/validator;
+- disclosure `audit.synthetic_fixture`;
+- ER4-T01–T27 PASS;
+- F3-ER4-TEMPLATE PASS;
 - rebuild through migration 015 PASS.
 
 Governança N4 consolidada:
@@ -338,13 +346,23 @@ Validação técnica final do contrato:
 - artifact **11391167525**;
 - digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
 
+Validação final do template/renderização:
+
+- run **37418624629** = **success**;
+- commit validado `4bd35271e94dfb05bf572fe76b49fa5c5af47bac`;
+- artifact **11391724857**;
+- digest `sha256:a2d0c3dc12758a14fc13a2ac4ca50a3868ac9ceeac615ec34c6b417ee37b44ba`;
+- F3-ER4-TEMPLATE validation PASS;
+- cenário adversarial A3 + `publishable=false` corretamente renderizado como gate bloqueado;
+- regressões e rebuild PASS.
+
 Produtos exercitados até aqui:
 
 1. **Ficha de Evidência — N2** — caso real A2/published;
 2. **Resposta de Evidência — N1** — caso real A2/published;
 3. **Evidence Scan — N0** — caso real A1/interno;
 4. **Síntese Rápida N3** — contrato/template validados; caso real experimental corretamente bloqueado em A0;
-5. **Revisão de Evidências N4** — especificação/contrato validados com fixture formal sintética A3; nenhum caso real formal autorizado.
+5. **Revisão de Evidências N4** — especificação, contrato, gate, view e template validados com fixture formal sintética A3; nenhum caso real formal autorizado.
 
 Taxonomia restante da Fase 3:
 
@@ -355,18 +373,20 @@ Taxonomia restante da Fase 3:
 
 ## 9. Próxima etapa
 
-**Revisão de Evidências — N4: contrato de renderização e template operacional.**
+**Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
 
-Sequência: contrato de renderização → presentation map → template Markdown → renderer/validator → validação sintética de estados formal/bloqueado.
+Não iniciar protocolo, busca definitiva ou seleção N4 antes do readiness. Na configuração humana conhecida, `not_ready` é o resultado esperado enquanto faltarem revisores humanos qualificados, search peer reviewer, expert independent reviewer e infraestrutura bibliográfica suficiente.
+
+Se `not_ready`, registrar o bloqueio e avaliar rerroteamento/deferimento em vez de reduzir silenciosamente o método.
 
 ## 10. Checkpoint vigente
 
-**CP37 — 2026-10-06**
+**CP38 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP37.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP38.md`
 
 Ponto exato de retomada:
 
-> **Fase 3 — criar o contrato de renderização da EvidenceReviewView e o template operacional da Revisão de Evidências N4.**
+> **Fase 3 — Caso Real N4 experimental: executar exclusivamente o Infrastructure Readiness Gate.**
