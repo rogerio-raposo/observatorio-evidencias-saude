@@ -481,12 +481,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP42 — 2026-10-06**
+**CP43 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP42.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP43.md`
 
 Ponto exato de retomada:
 
-> **Implementar migration aditiva da EvidenceMapView 0.1, testes da projeção ampliada e rebuild; obter Projection Readiness Gate = READY antes de especificar o template operacional.**
+> **Criar a Especificação do Template Operacional do Mapa de Evidências, consumindo exclusivamente `oes.evidence_map_view/0.1` e implementando o Documento 127.**
