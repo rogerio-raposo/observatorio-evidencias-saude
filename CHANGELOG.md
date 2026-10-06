@@ -2193,3 +2193,14 @@ Documentos:
 - GRADE da Evidence Sheet N2 não será reutilizado;
 - C2 Gao last-search date permanece BLOCKED / NOT_VERIFIED;
 - próxima etapa: gate pré-persistência consolidado.
+
+
+## 2026-10-06 — CP68
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP68.md`;
+- C9 = PASS;
+- C10 = PASS_WITH_DOCUMENTED_LIMITATIONS;
+- C11 = PASS_WITH_PREPARED_NAZARI_MATERIALIZATION;
+- C12 = PASS_WITH_DOCUMENTED_LIMITATION;
+- C2 permanece o único blocker explícito das condições C1–C12;
+- retomada movida para gate pré-persistência consolidado, sem bypass.
