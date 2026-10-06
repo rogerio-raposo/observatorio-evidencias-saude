@@ -750,11 +750,12 @@ INSERT INTO product.currency_state(
     'active'
 );
 
--- Direct contextual provenance for Bracken systematic review.
+-- Direct contextual provenance for non-effect references.
 INSERT INTO provenance.record(
     provenance_uuid,target_version_uuid,field_path,source_report_version_uuid,
     source_location,source_value,process_type,transformation,actor,status
-) VALUES (
+) VALUES
+(
     'e5000000-0000-0000-0000-000000000701',
     'e1000000-0000-0000-0000-000000000701',
     'context.baseline_review',
@@ -763,6 +764,17 @@ INSERT INTO provenance.record(
     '{"role":"context/non-duplication/citation chasing","adopted_as_effect_source":false}'::jsonb,
     'contextual_reference',
     '{"reason":"baseline systematic review predates key peer-reviewed randomized evidence and is not pooled as an independent effect unit"}'::jsonb,
+    'OES_REAL_N3_AI','active'
+),
+(
+    'e5000000-0000-0000-0000-000000000702',
+    'e1000000-0000-0000-0000-000000000701',
+    'context.implementation_study',
+    'e1000000-0000-0000-0000-000000000204',
+    'Whole report',
+    '{"role":"contextual implementation evidence","adopted_as_causal_effect_source":false}'::jsonb,
+    'contextual_reference',
+    '{"reason":"before-after/QI evidence supports implementation context but does not enter randomized causal synthesis"}'::jsonb,
     'OES_REAL_N3_AI','active'
 );
 
