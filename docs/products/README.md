@@ -134,8 +134,39 @@ Condição de reabertura:
 
 > executar uma segunda base bibliográfica relevante e reproduzível antes de nova tentativa de elevação de assurance.
 
+## Revisão de Evidências — N4
+
+A especificação científica, arquitetura inicial e contrato técnico da **Revisão de Evidências — N4** foram consolidados e validados.
+
+Documentos principais:
+
+- [115 — Especificação Científica e Funcional](115-especificacao-revisao-evidencias-n4.md)
+- [116 — Revisão de Coerência e Decisão Arquitetural](116-revisao-evidencias-n4-revisao-coerencia-arquitetura.md)
+- [117 — Contrato de Dados](117-contrato-dados-revisao-evidencias-n4.md)
+- [118 — Resultado da Validação Técnica](118-resultado-validacao-contrato-revisao-evidencias-n4.md)
+
+Implementação:
+
+- migration 015;
+- `investigation.reviewer_assignment`;
+- EvidenceReviewView `oes.evidence_review_view/0.1`;
+- Infrastructure Readiness Gate;
+- publication gate N4;
+- suporte a ROB-ME em nível de Synthesis;
+- fixture formal sintética A3;
+- ER4-T01–T25 PASS;
+- rebuild PASS.
+
+A validação final ocorreu no run **37417796591**, com artifact **11391167525** e digest `sha256:d96eb2f8b5807587395a80d7ac7a8ee5b0cfc231c1c794d5508acc3aa7c9f55a`.
+
+Limite operacional:
+
+> **nenhum Caso Real N4 formal está autorizado na configuração humana/infrastrutural atual.**
+
+O PASS é técnico/arquitetural e utiliza atores humanos explicitamente sintéticos para provar o contrato.
+
 ## Próxima etapa
 
-**Revisão de Evidências — N4: especificação científica e funcional.**
+**Revisão de Evidências — N4: contrato de renderização e template operacional.**
 
-As lições do N3 sobre cobertura de bases, protocolo/emendas, qualified human controls, A3 e separação entre gate estrutural e verificação metodológica deverão informar a especificação N4.
+A próxima trilha deverá criar presentation map, template Markdown, renderer/validator e validar tanto o estado formal sintético quanto estados bloqueados/experimentais.
