@@ -1569,3 +1569,11 @@ Documentos:
 - identificado **Projection Readiness Gate = NOT_READY para template**;
 - extensões aditivas necessárias: synthetic fixture, conclusão, protocolo/codebook, reviewer/method controls, lineage/invalidation e references via Study–Report linkage;
 - decisão: não reabrir migration 016; criar migration aditiva subsequente antes do template.
+
+
+## 2026-10-06 — CP42
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP42.md`;
+- contrato de renderização do Mapa consolidado no Documento 127;
+- Projection Readiness Gate registrado como NOT_READY para template;
+- retomada definida na migration aditiva da EvidenceMapView 0.1.
