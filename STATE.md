@@ -690,12 +690,12 @@ O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
 ## 10. Checkpoint vigente
 
-**CP58 — 2026-10-06**
+**CP59 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP58.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP59.md`
 
 Ponto exato de retomada:
 
-> **Qualificar o subconjunto secundário do N3-01 para OVR-01 e decidir suitable / suitable_with_conditions / unsuitable sem abrir Caso Real.**
+> **Selecionar e qualificar novo corpus candidato especificamente adequado a Overview, exigindo duas ou mais systematic reviews claramente identificáveis, full text acessível, study lists recuperáveis e escopo comparável, antes de qualquer OVR-01.**
