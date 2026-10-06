@@ -1676,3 +1676,12 @@ Documentos:
 - N3-01 será ligada como `source_corpus`;
 - Search/Screening permanecerão canônicos na N3-01, sem duplicação;
 - próxima etapa: migration 018 de suporte à herança de corpus na EvidenceMapView/publication gate.
+
+
+## 2026-10-06 — CP47
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP47.md`;
+- decisão do CP46 sobre primary Investigation do MAP-01 formalmente superada;
+- MAP-01 terá Question/Investigation próprias;
+- N3-01 será ligada como `source_corpus`;
+- retomada definida na migration 018.
