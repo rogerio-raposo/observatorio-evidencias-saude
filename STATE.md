@@ -561,7 +561,7 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–149:
+Documentos 138–150:
 
 - 138 — especificação científica e funcional concluída;
 - 139 — revisão de coerência e decisão arquitetural concluída;
@@ -693,20 +693,30 @@ Protocolo developmental:
 - A0 inicial / A1 eventual;
 - C1–C12 definidos como condições pré-persistência.
 
+Fechamento C1–C4:
+
+- C1 Gao study list = PASS;
+- C2 Gao last-search date = BLOCKED / NOT_VERIFIED;
+- C3 Nazari = ELIGIBLE;
+- C4 inventário definitivo = PASS;
+- corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
+- nenhum OVR-01 real criado.
+
 Próxima etapa:
 
-> **fechar C1–C4: recuperar study list e last-search date de Gao, screenar Nazari e produzir inventário definitivo das Reviews.**
+> **resolver C2 e iniciar C5–C6 preparatórios: obter last-search date verificável de Gao e reconciliar Study identities/matriz Review × primary Study sem persistir membership.**
 
 ## 9. Próxima etapa
 
-**Overview de Revisões: fechar condições C1–C4 do OVR-01 dCBT-I.**
+**Overview de Revisões: C2 + preparação de C5–C6.**
 
-1. recuperar study list completa de Gao;
-2. extrair last-search date de Gao;
-3. aplicar eligibility prospectiva à Review Nazari;
-4. fechar inventário definitivo das Reviews.
+1. obter last-search date verificável de Gao sem inferência;
+2. reconciliar identities dos primary Studies em Hwang/Gao/Nazari;
+3. construir matriz preliminar Review × primary Study;
+4. classificar ambiguidades e aliases;
+5. manter membership apenas em documento preparatório.
 
-Ainda não persistir ReviewItems/membership.
+Ainda não persistir Question/Investigation/Product/ReviewItems/membership.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
