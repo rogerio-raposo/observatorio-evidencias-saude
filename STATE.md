@@ -371,7 +371,7 @@ Readiness real N4:
 
 ### Mapa de Evidências
 
-Documentos 123–136:
+Documentos 123–137:
 
 - 123 — Especificação Científica e Funcional;
 - 124 — Revisão de Coerência e Decisão Arquitetural Inicial;
@@ -386,7 +386,8 @@ Documentos 123–136:
 - 133 — MAP-01: inventário formal de 17 MapItems;
 - 134 — MAP-01: codebook v0.1;
 - 135 — MAP-01: correção arquitetural — Question/Investigation próprias + N3-01 como `source_corpus`;
-- 136 — source_corpus: validação técnica **PASS**.
+- 136 — source_corpus: validação técnica **PASS**;
+- 137 — MAP-01: resultado e encerramento controlado — **A1 interno / não publicável**.
 
 Implementação validada:
 
@@ -511,9 +512,35 @@ Source-corpus support:
 - artifact **11420063123**;
 - digest `sha256:c7dc99be7781200e0ad603b0d03f9e90e3022ed7eafabd32be5138f41c29024b`.
 
+MAP-01 real:
+
+- Product `OES-P-2026-001401`;
+- 17 MapItems;
+- 67 assignments finais IA/unverified;
+- 20 CellScope;
+- 13 referências;
+- 3 Searches + 20 SearchHits + 34 ScreeningDecisions herdados via `source_corpus`;
+- MAP01-T01–T15 PASS;
+- AI methodological second pass = passed;
+- assurance final = **A1**;
+- owner approval ausente;
+- expert review ausente;
+- `publishable=false`;
+- MAP01-A1-T01–T07 PASS;
+- MAP01-RENDER-A1 PASS;
+- run **37487017809** = success;
+- artifact **11423951911**;
+- digest `sha256:ae81f09905853a395b0bf4ba03e5209938d1cb7e6175390531d117e49f0a46e8`;
+- rebuild through migration 018 + MAP-01 A1 PASS;
+- N3-01 permaneceu inalterado em A0.
+
+Estado final:
+
+> **MAP-01 concluído — A1 interno / não publicável.**
+
 Próxima etapa:
 
-> **persistir o Caso Real MAP-01 com Question/Investigation próprias e N3-01 como source_corpus.**
+> **iniciar a Especificação Científica e Funcional do Overview de Revisões.**
 
 Produtos exercitados até aqui:
 
@@ -525,29 +552,24 @@ Produtos exercitados até aqui:
 
 Taxonomia restante da Fase 3:
 
-- concluir o Caso Real MAP-01 do Mapa de Evidências;
 - Overview de Revisões;
 - Monitor de Evidências;
 - Alerta de Evidência.
 
 ## 9. Próxima etapa
 
-**Caso Real MAP-01: persistência controlada.**
+**Overview de Revisões: Especificação Científica e Funcional.**
 
-Documentos 132–134 fecharam protocolo, inventário e codebook.
+O MAP-01 foi encerrado em A1 interno no Documento 137.
 
 Sequência seguinte:
 
-1. materializar artifacts de protocolo/codebook;
-2. criar Question/Investigation próprias do MAP-01;
-3. criar Framework/FrameworkVersion;
-4. criar 17 MapItems;
-5. criar assignments finais IA/unverified conforme codebook;
-6. criar 20 CellScope;
-7. criar novo Product evidence_map interno + link `source_corpus`;
-8. validar/renderizar;
-9. executar adversarial verification;
-10. encerrar com assurance derivada.
+1. especificação científica e funcional do Overview de Revisões;
+2. revisão de coerência e decisão arquitetural;
+3. contrato de dados;
+4. fixture/testes;
+5. view/renderização;
+6. readiness pré-caso real.
 
 O Caso Real N4 formal continua deferido por readiness `NOT_READY`.
 
