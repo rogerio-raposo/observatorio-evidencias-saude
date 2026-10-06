@@ -399,6 +399,15 @@ INSERT INTO evidence.result_source(
 ('f9310000-0000-0000-0000-000000000502','f9310000-0000-0000-0000-000000000403','Main meta-analysis','review_report','{"RR":0.78,"CI":[0.68,0.90]}'::jsonb,'manual',true,'SYN_OV_EXTRACTOR',TIMESTAMPTZ '2026-10-06 11:41:00-03'),
 ('f9310000-0000-0000-0000-000000000503','f9310000-0000-0000-0000-000000000404','Main meta-analysis','review_report','{"RR":0.92,"CI":[0.74,1.14]}'::jsonb,'manual',true,'SYN_OV_EXTRACTOR',TIMESTAMPTZ '2026-10-06 11:42:00-03');
 
+INSERT INTO provenance.record(
+    provenance_uuid,target_version_uuid,field_path,
+    source_report_version_uuid,source_location,source_value,
+    process_type,transformation,actor,status
+) VALUES
+('f9700000-0000-0000-0000-000000000501','f9310000-0000-0000-0000-000000000501','reported_value','f9310000-0000-0000-0000-000000000402','Main meta-analysis','{"RR":0.82,"CI":[0.70,0.96]}'::jsonb,'review_result_extraction','{"normalized":false}'::jsonb,'SYN_OV_EXTRACTOR','active'),
+('f9700000-0000-0000-0000-000000000502','f9310000-0000-0000-0000-000000000502','reported_value','f9310000-0000-0000-0000-000000000403','Main meta-analysis','{"RR":0.78,"CI":[0.68,0.90]}'::jsonb,'review_result_extraction','{"normalized":false}'::jsonb,'SYN_OV_EXTRACTOR','active'),
+('f9700000-0000-0000-0000-000000000503','f9310000-0000-0000-0000-000000000503','reported_value','f9310000-0000-0000-0000-000000000404','Main meta-analysis','{"RR":0.92,"CI":[0.74,1.14]}'::jsonb,'review_result_extraction','{"normalized":false}'::jsonb,'SYN_OV_EXTRACTOR','active');
+
 INSERT INTO appraisal.certainty_assessment(entity_uuid)
 VALUES
 ('f9300000-0000-0000-0000-000000000601'),
