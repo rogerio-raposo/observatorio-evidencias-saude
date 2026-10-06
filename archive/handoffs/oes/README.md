@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP35 — 2026-10-05**
+**CP36 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-05_CP35.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP36.md`
 
 Checkpoint anterior:
 
-`CP34`
+`CP35`
 
 Status:
 
@@ -95,3 +95,4 @@ em **Modo Continuidade**.
 - **CP33 — 2026-10-05:** fecha a trilha inicial do **Evidence Scan N0** com Caso Real N0-01 em **A1 interno**, run final 37382201584 PASS; retomada na especificação científica e funcional da **Síntese Rápida de Evidências — N3**.
 - **CP34 — 2026-10-05:** consolida Documentos 99–102, migration 014, RapidEvidenceSynthesisView e RS-T01–T15 em PASS; retomada no **contrato de renderização da Síntese Rápida N3**.
 - **CP35 — 2026-10-05:** consolida Documentos 103–105, template/renderização N3 e F3-RS-TEMPLATE em PASS; retomada no **Caso Real N3 experimental**.
+- **CP36 — 2026-10-06:** fecha o **Caso Real N3-01** em A0 experimental após dois adversariais `REVISE`, com bloqueio metodológico por cobertura bibliográfica insuficiente; retomada na **Revisão de Evidências — N4**.
