@@ -1792,3 +1792,12 @@ Documentos:
 - Contrato de Dados v0.1 do Overview consolidado;
 - template segue embargado até PASS técnico;
 - retomada movida para migration 019 + fixture + OV-T01–T33.
+
+
+## 2026-10-06 — Continuity editorial cleanup after CP51
+
+- referências históricas em `STATE.md` e `docs/products/README.md` foram qualificadas como marcos já superados, evitando leitura como instrução vigente;
+- histórico CP39–CP50 em `archive/handoffs/oes/README.md` teve sequências literais `\n` convertidas em quebras de linha reais;
+- nenhuma decisão metodológica, estado técnico ou ponto de retomada foi alterado;
+- CP51 continua vigente;
+- próxima etapa permanece: migration 019 + fixture formal + OV-T01–T33.
