@@ -209,5 +209,9 @@
   "audit.invalidated_dependencies": {
     "true": "sim",
     "false": "não"
+  },
+  "product_role": {
+    "primary": "primária",
+    "source_corpus": "corpus fonte"
   }
 }
