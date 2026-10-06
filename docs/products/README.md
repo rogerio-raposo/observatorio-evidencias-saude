@@ -273,6 +273,7 @@ O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condiç
 - [145 — Resultado da Validação do Template Operacional](145-resultado-validacao-template-overview-revisoes.md)
 - [146 — Readiness Gate Pré-Caso Real](146-overview-readiness-gate-pre-caso-real.md)
 - [147 — Qualificação do Corpus Candidato OVR-01 / N3-01](147-qualificacao-corpus-candidato-ovr01-n3.md)
+- [148 — Qualificação do Corpus Candidato OVR-01 / dCBT-I](148-qualificacao-corpus-candidato-ovr01-dcbti.md)
 
 ### Estado
 
@@ -357,6 +358,25 @@ Motivo determinante: apenas uma systematic review inequivocamente elegível sob 
 
 Nenhum Product/Investigation OVR-01 foi criado e o N3-01 permanece inalterado.
 
+### Segundo corpus candidato
+
+O Documento 148 concluiu:
+
+> **dCBT-I totalmente automatizada = SUITABLE_WITH_CONDITIONS para OVR-01 developmental.**
+
+O corpus já possui duas systematic reviews como Study/StudyVersion, Reports, ResultVersions e Syntheses externas distintas.
+
+Condições obrigatórias antes da persistência de ReviewItems/membership:
+
+- study list de Gao;
+- last-search date de Gao;
+- reconciliação de Study identities Hwang × Gao;
+- inventário de membership/overlap;
+- escopo/comparador do cluster;
+- decisão prospectiva sobre terceira review;
+- ROBIS de Gao;
+- nenhuma nova meta-analysis.
+
 ### Próxima etapa
 
-**Selecionar e qualificar um novo corpus candidato especificamente adequado a Overview**, antes de abrir OVR-01.
+**Preparar o protocolo developmental de OVR-01**, sem persistir ReviewItems/membership até fechar as condições.
