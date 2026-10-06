@@ -473,3 +473,21 @@ O Documento 156 concluiu:
 - C2 continua bloqueado.
 
 Próxima etapa: fechar C9–C12 e reavaliar o gate pré-persistência.
+
+
+### C9–C12 fechados
+
+Documentos 157–158:
+
+- C9 = **PASS**;
+- C10 = **PASS_WITH_DOCUMENTED_LIMITATIONS**;
+- C11 = **PASS_WITH_PREPARED_NAZARI_MATERIALIZATION**;
+- C12 = **PASS_WITH_DOCUMENTED_LIMITATION**;
+- Hwang ROBIS = unclear;
+- Gao ROBIS = unclear;
+- Nazari ROBIS = high;
+- certainty review-level permanece ausente quando não reportada;
+- GRADE da Evidence Sheet N2 não será reutilizado;
+- C2 Gao last-search date continua **BLOCKED / NOT_VERIFIED**.
+
+Próxima etapa: gate pré-persistência consolidado do OVR-01.
