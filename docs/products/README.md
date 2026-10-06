@@ -198,6 +198,9 @@ Documentos principais:
 - [129 — Especificação do Template Operacional](129-especificacao-template-mapa-evidencias.md)
 - [130 — Resultado da Validação do Template/Renderização](130-resultado-validacao-template-mapa-evidencias.md)
 - [131 — Readiness Gate Pré-Caso Real](131-mapa-evidencias-readiness-gate-pre-caso-real.md)
+- [132 — MAP-01: Protocolo](132-caso-real-map01-ambient-ai-scribes-protocolo.md)
+- [133 — MAP-01: Inventário do Corpus e MapItems](133-caso-real-map01-inventario-corpus-mapitems.md)
+- [134 — MAP-01: Codebook v0.1](134-caso-real-map01-codebook-v01.md)
 
 Implementação validada:
 
@@ -234,6 +237,13 @@ O Documento 131 concluiu:
 
 Fica autorizado apenas o MAP-01 interno A1, com `descriptive_mapping_review + structured_non_exhaustive + apparent_only`, reutilizando o corpus N3-01 sem reabrir ou elevar a assurance do produto N3.
 
-Primeiro passo: protocolo do MAP-01, antes da persistência do caso.
+Pré-persistência concluída:
+
+- protocolo MAP-01;
+- inventário formal = 17 MapItems;
+- codebook v0.1;
+- decisão arquitetural: reutilizar a InvestigationVersion N3-01 como investigação primária, sem duplicar Search/Screening.
+
+Próximo passo: persistir FrameworkVersion, MapItems, assignments, CellScope e Product do MAP-01, mantendo o caso interno e não publicado.
 
 O N4 e a rota formal do Mapa permanecem deferidos até mudança real das condições de readiness.
