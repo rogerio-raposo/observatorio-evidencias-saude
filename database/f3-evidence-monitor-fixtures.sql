@@ -222,23 +222,16 @@ INSERT INTO maintenance.monitor_state(
 -- Cycle 1: no update needed.
 INSERT INTO maintenance.monitor_cycle(
     cycle_uuid,monitor_product_version_uuid,cycle_no,
-    window_start_date,window_end_date,planned_at,started_at,completed_at,
-    execution_status,completeness_status,maintenance_decision,
-    decision_rationale,escalation_recommendation,
-    decided_by,actor_type,verification_status,
-    verified_by,verifier_actor_type,verified_at,execution_payload
+    window_start_date,window_end_date,planned_at,started_at,
+    execution_status,completeness_status,verification_status,
+    execution_payload
 ) VALUES (
     'e5420000-0000-0000-0000-000000000001',
     'e5100000-0000-0000-0000-000000000005',1,
     DATE '2026-10-02',DATE '2026-10-03',
     TIMESTAMPTZ '2026-10-02 08:00:00+00',
     TIMESTAMPTZ '2026-10-03 08:00:00+00',
-    TIMESTAMPTZ '2026-10-03 09:00:00+00',
-    'completed','complete','no_update_needed',
-    'No retained candidate with material impact.',
-    'none','fixture-ai','ai_system','ai_verified',
-    'fixture-ai-check','ai_system',
-    TIMESTAMPTZ '2026-10-03 09:05:00+00',
+    'running','not_assessed','unverified',
     '{"fixture":true}'::jsonb
 );
 
@@ -292,6 +285,21 @@ INSERT INTO maintenance.candidate_assessment(
     TIMESTAMPTZ '2026-10-03 08:50:00+00'
 );
 
+UPDATE maintenance.monitor_cycle
+   SET completed_at=TIMESTAMPTZ '2026-10-03 09:00:00+00',
+       execution_status='completed',
+       completeness_status='complete',
+       maintenance_decision='no_update_needed',
+       decision_rationale='No retained candidate with material impact.',
+       escalation_recommendation='none',
+       decided_by='fixture-ai',
+       actor_type='ai_system',
+       verification_status='ai_verified',
+       verified_by='fixture-ai-check',
+       verifier_actor_type='ai_system',
+       verified_at=TIMESTAMPTZ '2026-10-03 09:05:00+00'
+ WHERE cycle_uuid='e5420000-0000-0000-0000-000000000001';
+
 UPDATE product.currency_state
    SET record_status='superseded'
  WHERE currency_state_uuid='e5300000-0000-0000-0000-000000000001';
@@ -319,11 +327,9 @@ INSERT INTO maintenance.cycle_currency_state(
 -- Cycle 2: evaluate update.
 INSERT INTO maintenance.monitor_cycle(
     cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
-    window_start_date,window_end_date,planned_at,started_at,completed_at,
-    execution_status,completeness_status,maintenance_decision,
-    decision_rationale,escalation_recommendation,
-    decided_by,actor_type,verification_status,
-    verified_by,verifier_actor_type,verified_at,execution_payload
+    window_start_date,window_end_date,planned_at,started_at,
+    execution_status,completeness_status,verification_status,
+    execution_payload
 ) VALUES (
     'e5420000-0000-0000-0000-000000000002',
     'e5100000-0000-0000-0000-000000000005',2,
@@ -331,12 +337,7 @@ INSERT INTO maintenance.monitor_cycle(
     DATE '2026-10-04',DATE '2026-10-06',
     TIMESTAMPTZ '2026-10-04 08:00:00+00',
     TIMESTAMPTZ '2026-10-06 08:00:00+00',
-    TIMESTAMPTZ '2026-10-06 09:00:00+00',
-    'completed','complete','evaluate_update',
-    'A retained candidate and regulatory signal require scientific evaluation.',
-    'evaluate_alert','fixture-ai','ai_system','ai_verified',
-    'fixture-ai-check','ai_system',
-    TIMESTAMPTZ '2026-10-06 09:05:00+00',
+    'running','not_assessed','unverified',
     '{"fixture":true}'::jsonb
 );
 
@@ -421,6 +422,21 @@ INSERT INTO maintenance.candidate_assessment(
     'fixture-ai-check','ai_system',
     TIMESTAMPTZ '2026-10-06 08:55:00+00'
 );
+
+UPDATE maintenance.monitor_cycle
+   SET completed_at=TIMESTAMPTZ '2026-10-06 09:00:00+00',
+       execution_status='completed',
+       completeness_status='complete',
+       maintenance_decision='evaluate_update',
+       decision_rationale='A retained candidate and regulatory signal require scientific evaluation.',
+       escalation_recommendation='evaluate_alert',
+       decided_by='fixture-ai',
+       actor_type='ai_system',
+       verification_status='ai_verified',
+       verified_by='fixture-ai-check',
+       verifier_actor_type='ai_system',
+       verified_at=TIMESTAMPTZ '2026-10-06 09:05:00+00'
+ WHERE cycle_uuid='e5420000-0000-0000-0000-000000000002';
 
 UPDATE product.currency_state
    SET record_status='superseded'
@@ -525,22 +541,14 @@ INSERT INTO maintenance.monitor_state(
 
 INSERT INTO maintenance.monitor_cycle(
     cycle_uuid,monitor_product_version_uuid,cycle_no,
-    window_start_date,window_end_date,started_at,completed_at,
-    execution_status,completeness_status,maintenance_decision,
-    decision_rationale,escalation_recommendation,
-    decided_by,actor_type,verification_status,
-    verified_by,verifier_actor_type,verified_at
+    window_start_date,window_end_date,started_at,
+    execution_status,completeness_status,verification_status
 ) VALUES (
     'e5420000-0000-0000-0000-000000000003',
     'e5100000-0000-0000-0000-000000000007',1,
     DATE '2026-10-02',DATE '2026-10-06',
     TIMESTAMPTZ '2026-10-06 07:00:00+00',
-    TIMESTAMPTZ '2026-10-06 07:30:00+00',
-    'completed','complete','no_update_needed',
-    'Synthetic complete living cycle.',
-    'none','fixture-ai','ai_system','ai_verified',
-    'fixture-ai-check','ai_system',
-    TIMESTAMPTZ '2026-10-06 07:35:00+00'
+    'running','not_assessed','unverified'
 );
 
 INSERT INTO investigation.search(
@@ -563,6 +571,21 @@ INSERT INTO maintenance.cycle_search(
     'e5500000-0000-0000-0000-000000000003',
     'primary',1
 );
+
+UPDATE maintenance.monitor_cycle
+   SET completed_at=TIMESTAMPTZ '2026-10-06 07:30:00+00',
+       execution_status='completed',
+       completeness_status='complete',
+       maintenance_decision='no_update_needed',
+       decision_rationale='Synthetic complete living cycle.',
+       escalation_recommendation='none',
+       decided_by='fixture-ai',
+       actor_type='ai_system',
+       verification_status='ai_verified',
+       verified_by='fixture-ai-check',
+       verifier_actor_type='ai_system',
+       verified_at=TIMESTAMPTZ '2026-10-06 07:35:00+00'
+ WHERE cycle_uuid='e5420000-0000-0000-0000-000000000003';
 
 INSERT INTO product.assurance_record(
     assurance_uuid,product_version_uuid,assurance_type,
