@@ -2677,3 +2677,16 @@ Documentos:
 - ponteiro movido para CP86;
 - retomada: migration 026 / EvidenceAlertView 0.1;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — EvidenceAlertView 0.1 PASS
+
+- Documento 184 criado;
+- migration 026 implementou `oes.evidence_alert_view/0.1`;
+- EAV-T01–T15 = PASS;
+- EAV-T16 = PASS;
+- EAV-T17/rebuild-through-026 = PASS;
+- run **37560891043** (#138) = success;
+- artifact **11456283842**;
+- próxima etapa: contrato de renderização + Template Operacional do Alerta;
+- Fase 4 permanece não iniciada.
