@@ -2765,3 +2765,34 @@ Documentos:
 - M3 formal operacional = BLOCKED;
 - retomada exata: especificar maintenance policy/version, update signal, materiality assessment e update decision, seguido de gate de coerência física.
 
+## 2026-10-07 — Phase 4 transversal update data contract PASS
+
+- Documento 07 definiu o Contrato de Dados v0.1 do Protocolo Transversal de Atualização;
+- o contrato foi endurecido adversarialmente para preservar maintenance × currentness × editorial × assurance;
+- `MethodDecision` foi confirmado como conceito documental, não entidade física do baseline;
+- Documento 08 executou gate de coerência física = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- migration `027_transversal_update_protocol_contract.sql` autorizada e implementada;
+- sete estruturas aditivas criadas em `maintenance`;
+- fixtures e bateria `F4-UP-T01–T63` implementadas;
+- erro provisório no setup de T44 foi corrigido antes da validação canônica;
+- workflow S5 atualizado para migration 027, F4 fixtures/tests, idempotência e rebuild;
+- run **37570978847** = **success**;
+- HEAD técnico validado `d56ea65c024d60c60ec77d1ab4fe9dc7be1c5fa9`;
+- F4-UP-T01–T63 = **PASS**;
+- F4-UP-IDEM = **PASS**;
+- rebuild-through-027 = **PASS**;
+- regressões F2-B/S4/S5/Monitor/Alert = **PASS**;
+- artifact **11460960487**;
+- digest `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`;
+- Documento 09 registrou `PHASE_4_UPDATE_DATA_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_027 = PASS`;
+- `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL` permanece ativo;
+- thresholds, SLAs numéricos, score de prioridade, scheduler, notifications, auto-classification, auto-escalation, propagation e M3 readiness continuam fora do escopo.
+
+## 2026-10-07 — CP90
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP90.md`;
+- ponteiro de continuidade movido para CP90;
+- primeiro contrato físico transversal da Fase 4 consolidado em PASS técnico;
+- próximo passo: arquitetura de perfis de risco operacional/científico para parametrizar cadence, thresholds, SLAs e prioridade.
+
