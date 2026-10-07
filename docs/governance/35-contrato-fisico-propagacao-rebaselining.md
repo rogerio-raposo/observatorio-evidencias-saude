@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_PHYSICAL_GATE — MIGRATION_NOT_AUTHORIZED**  
+**Status:** **REVISED_AFTER_PHYSICAL_GATE — READY_FOR_DOCUMENT_36_RECHECK — MIGRATION_NOT_AUTHORIZED**  
 **Dependências:** Documentos 33–34; Documentos 05–09, 16–32; docs/architecture/28–29; migrations 004, 021–030  
 **Objeto:** contrato físico candidato para propagation assessment, dependency-path snapshot, re-baselining same-entity e handover explícito de maintenance objects
 
@@ -89,7 +89,7 @@ Campos candidatos:
 - `origin_event_class text NOT NULL`;
 - `triggered_at timestamptz NOT NULL`;
 - `dependency_snapshot_at timestamptz NOT NULL`;
-- `max_depth integer NOT NULL CHECK (max_depth > 0 AND max_depth <= 64)`;
+- `max_depth integer NOT NULL CHECK (max_depth > 0)`;
 - `lineage_validation_status text NOT NULL`;
 - `lineage_validation_payload jsonb NOT NULL DEFAULT '{}'`;
 - `assessment_scope text NOT NULL`;
@@ -234,13 +234,13 @@ Domínio:
 
 - `maintainable_product`;
 - `maintainable_investigation`;
-- `intermediate_dependency_object`.
+- `nonmaintainable_version`.
 
 Validator:
 
 ### maintainable_product
 
-impacted_version_uuid deve existir em `product.product_version`.
+impacted_version_uuid deve existir em `product.product_version` e o `product_type` deve ser elegível a UpdatePolicy, excluindo pelo menos `evidence_monitor` e `evidence_alert`.
 
 ### maintainable_investigation
 
@@ -248,9 +248,15 @@ deve existir em `investigation.investigation_version` e:
 
 > `investigation_type <> 'evidence_monitoring'`.
 
-### intermediate_dependency_object
+### nonmaintainable_version
 
-não pode simultaneamente ser classificado como maintainable target.
+Inclui explicitamente:
+
+- ProductVersion com `product_type IN ('evidence_monitor','evidence_alert')`;
+- InvestigationVersion com `investigation_type='evidence_monitoring'`;
+- outros objetos versionados sem UpdatePolicy própria.
+
+Não pode simultaneamente ser classificado como maintainable target.
 
 Essa classificação é física e verificável; não deve depender apenas de texto livre.
 
@@ -330,9 +336,9 @@ O candidate não cria signal automaticamente.
 
 Somente maintainable target sem policy ativa aplicável.
 
-### 11.4 intermediate objects
+### 11.4 nonmaintainable_version
 
-Não podem usar:
+Não pode usar:
 
 - open_update_signal;
 - maintenance_policy_required;
@@ -476,7 +482,7 @@ Campos candidatos:
 - `decision_stage text NOT NULL`;
 - `transition_basis_type text NOT NULL`;
 - structured locator columns;
-- `version_chain_payload jsonb NOT NULL`;
+- `version_chain_summary_payload jsonb NOT NULL DEFAULT '{}'::jsonb`;
 - `authority_domain text NOT NULL`;
 - `rationale text NOT NULL`;
 - `decided_by text NOT NULL`;
@@ -581,21 +587,13 @@ Para `governance_decision`/other, exigir artifact ou payload/rationale estrutura
 
 ---
 
-## 20. version_chain_payload
+## 20. version chain normalizada
 
-JSONB canônico mínimo:
+`version_chain_summary_payload` pode existir apenas como serializer/snapshot derivado.
 
-- `schema_version`;
-- `old_version_uuid`;
-- `new_version_uuid`;
-- `intermediate_version_uuids` array;
-- `chain_complete` boolean;
-- `validated_at`;
-- `validation_basis`.
+A fonte física primária da cadeia será `maintenance.rebaseline_version_chain_step`, definida no hardening pós-Documento 36.
 
 Validator físico deve recomputar a cadeia com `core.entity_version.supersedes_version_uuid` e exigir igualdade exata para activation.
-
-Não confiar apenas no payload fornecido.
 
 ---
 
@@ -725,9 +723,10 @@ Campos:
 
 Domínio:
 
-- `reassessment_required`;
+- `target_profile_available`;
 - `carry_forward_authorized`;
 - `new_assessment_required`;
+- `target_reassessment_required`;
 - `not_applicable`;
 - `pending`.
 
@@ -748,9 +747,9 @@ Target profile:
 - target.carried_forward_from_profile_uuid = source;
 - migration 030 guards satisfeitos.
 
-`reassessment_required` não pode apontar para target profile com assessment_kind=reassessment de old target; reassessment preserva exact target e não substitui carry-forward cross-version.
+`target_reassessment_required` refere-se apenas a reassessment de profile já pertencente ao new target; reassessment preserva exact target e não substitui carry-forward cross-version.
 
-Activation que resultará em novas PriorityAssessments exige target profile aplicável quando o contrato vigente o exigir.
+Activation não exige profile universalmente. `pending` bloqueia activation; ausência de target profile é readiness gap/warning salvo quando uma operação já exige profile. Qualquer nova PriorityAssessment continua sujeita ao guard obrigatório da migration 030.
 
 ---
 
@@ -785,7 +784,7 @@ coverage_code:
 
 For `incorporated_through_new_target_cutoff`:
 
-- window_end_date <= new target evidence_cutoff_date.
+- quando houver janela, `window_end_date = new target evidence_cutoff_date`.
 
 For `post_cutoff_pending_assessment`:
 
@@ -900,7 +899,7 @@ Fields:
 Domain:
 
 - `resolve_on_old_target`;
-- `invalidate_as_target_superseded`;
+- `retain_historical_no_transfer`;
 - `continue_old_target_workflow`;
 - `create_new_signal_on_new_target`;
 - `governance_review_required`.
@@ -1403,9 +1402,9 @@ Antes de migration, Documento 36 deve atacar no mínimo:
 
 ## 46. Estado
 
-> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = CANDIDATE_FOR_PHYSICAL_GATE**
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
 
-> **F4_PRB_T01_T128 = TEST_PLAN_CANDIDATE**
+> **F4_PRB_T01_T140 = TEST_PLAN_REVISED_FOR_RECHECK**
 
 > **MIGRATION_031 = NOT_AUTHORIZED**
 
@@ -1415,4 +1414,404 @@ Antes de migration, Documento 36 deve atacar no mínimo:
 
 ## 47. Próximo passo exato
 
-> **Executar gate adversarial/físico do Documento 35; corrigir o contrato se necessário; somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar migration 031 em escopo estrito.**
+> **Executar o recheck do Documento 36 sobre o hardening abaixo; somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar migration 031 em escopo estrito.**
+
+
+---
+
+# PARTE U — HARDENING PÓS-DOCUMENTO 36
+
+## 48. Interpretação normativa do hardening
+
+As regras desta parte corrigem e prevalecem sobre qualquer formulação anterior ambígua do Documento 35.
+
+---
+
+## 49. Target classification final
+
+`target_class`:
+
+- `maintainable_product`;
+- `maintainable_investigation`;
+- `nonmaintainable_version`.
+
+### maintainable_product
+
+Exige:
+
+- row em `product.product_version`;
+- `product_type NOT IN ('evidence_monitor','evidence_alert')`;
+- compatibilidade com as demais restrições de UpdatePolicy vigentes.
+
+### maintainable_investigation
+
+Exige:
+
+- row em `investigation.investigation_version`;
+- `investigation_type <> 'evidence_monitoring'`.
+
+### nonmaintainable_version
+
+Abrange:
+
+- Evidence Monitor;
+- Evidence Alert;
+- evidence_monitoring InvestigationVersion;
+- demais objetos versionados sem policy própria.
+
+Somente os dois maintainable classes podem usar:
+
+- `maintenance_policy_required`;
+- `open_update_signal`;
+- `rebaseline_required`.
+
+---
+
+## 50. max_depth
+
+`max_depth`:
+
+- obrigatório;
+- inteiro > 0;
+- sem default universal;
+- sem teto normativo neste contrato.
+
+O valor usado em cada assessment é provenance operacional da traversal.
+
+Resource guards de execução não podem ser reinterpretados como threshold científico/metodológico.
+
+---
+
+## 51. no_action_supported endurecido
+
+Authoritative `no_action_supported` exige:
+
+1. parent `lineage_validation_status='validated_against_canonical_relations'`;
+2. candidate com ao menos um path `complete`, quando originado por traversal;
+3. ausência de path relevante em `cycle_detected`, `depth_limit_reached`, `projection_divergence` ou `incomplete_unknown` sem resolução explícita;
+4. rationale;
+5. authority humana qualificada para scientific/methodological/mixed.
+
+Traversal truncada nunca sustenta ausência de impacto.
+
+---
+
+## 52. maintenance.rebaseline_version_chain_step
+
+Nova estrutura física obrigatória.
+
+Campos:
+
+- `rebaseline_decision_uuid uuid NOT NULL FK maintenance.rebaseline_decision`;
+- `step_no integer NOT NULL CHECK (step_no > 0)`;
+- `from_version_uuid uuid NOT NULL FK core.entity_version`;
+- `to_version_uuid uuid NOT NULL FK core.entity_version`;
+- `relationship_type text NOT NULL DEFAULT 'supersedes'`;
+- PRIMARY KEY(`rebaseline_decision_uuid,step_no`).
+
+Guards:
+
+1. relationship_type v0.1 = `supersedes`;
+2. step 1 from = old target;
+3. último step to = new target;
+4. step N to = step N+1 from;
+5. cada `to_version_uuid.supersedes_version_uuid = from_version_uuid`;
+6. from/to pertencem à mesma entity_uuid;
+7. nenhuma version se repete;
+8. steps contíguos;
+9. count >= 1.
+
+`version_chain_summary_payload` é apenas derivado/serializer e não substitui essas FKs.
+
+---
+
+## 53. RebaselineDecision supersession/lifecycle
+
+Supersession exige:
+
+- old target exatamente igual;
+- new target exatamente igual;
+- mesma target family;
+- `decided_at` monotônico.
+
+Transições:
+
+- `planned → activated`;
+- `planned → cancelled_invalidated`;
+- `activated → activated` somente para correção append-preserving que preserve target pair, activation fact e causal basis essencial;
+- `cancelled_invalidated` terminal.
+
+Mudança do new target:
+
+> nova decisão causal, não supersession da mesma decisão.
+
+Child records da nova decision são novos registros completos; children do parent anterior permanecem imutáveis.
+
+---
+
+## 54. Unicidade da activation authoritative
+
+Adicionar partial unique indexes separados:
+
+- old ProductVersion;
+- old InvestigationVersion.
+
+Condição:
+
+- `record_status='active'`;
+- `decision_stage='activated'`;
+- `authority_status='authoritative'`.
+
+Resultado:
+
+> no máximo um handover authoritative activated ativo por old target.
+
+Planned/proposal concorrentes continuam permitidos.
+
+---
+
+## 55. Policy activation readiness
+
+Para `decision_stage='activated'`:
+
+### replace_with_new_policy
+
+- old policy target = old target;
+- new policy target = new target;
+- new policy `record_status='active'`.
+
+Old policy:
+
+- pode estar active ou superseded;
+- nunca pode apontar para target diferente.
+
+### maintenance_policy_required
+
+Bloqueia activation.
+
+### pending
+
+Bloqueia activation.
+
+### stop_maintenance
+
+Pode ativar com new policy NULL.
+
+### not_applicable
+
+Exige rationale que demonstre por que manutenção não se aplica.
+
+Cross-target `supersedes_update_policy_uuid` continua proibido.
+
+---
+
+## 56. Profile readiness final
+
+`profile_disposition`:
+
+- `target_profile_available`;
+- `carry_forward_authorized`;
+- `new_assessment_required`;
+- `target_reassessment_required`;
+- `not_applicable`;
+- `pending`.
+
+Rules:
+
+- `pending` bloqueia activation;
+- target_profile_available exige target profile do new target;
+- carry_forward_authorized exige physical carry-forward da migration 030;
+- target_reassessment_required só pode referir reassessment de profile já do new target;
+- ausência de profile não bloqueia toda activation por default;
+- se nova PriorityAssessment existir/for criada, migration 030 continua exigindo physical profile.
+
+`REBASELINE_PROFILE_REQUIRED` vira issue contextual, não universal.
+
+---
+
+## 57. Coverage cutoff final
+
+`incorporated_through_new_target_cutoff`:
+
+- se window_end_date estiver presente, deve ser exatamente new target `evidence_cutoff_date`;
+- window_start_date <= window_end_date;
+- ausência de janela exige payload/rationale com basis estruturado.
+
+`post_cutoff_pending_assessment`:
+
+- window_start_date, quando presente, deve ser > cutoff.
+
+Nenhum old Monitor `completed_at` é usado como scientific baseline.
+
+---
+
+## 58. Old UpdateSignal não é invalidated por supersession do target
+
+`signal_disposition` final:
+
+- `retain_historical_no_transfer`;
+- `resolve_on_old_target`;
+- `continue_old_target_workflow`;
+- `create_new_signal_on_new_target`;
+- `governance_review_required`.
+
+Rebaseline disposition:
+
+- não muda `update_signal.status` por si só;
+- não transforma target supersession em signal invalidation.
+
+`update_signal.status='invalidated'` continua reservado ao caso em que o signal em si é invalidado segundo o contrato existente.
+
+---
+
+## 59. UpdateSignalSource propagation adapter completo
+
+Migration 031, se autorizada, deverá modificar em conjunto:
+
+1. source_type domain;
+2. nova FK `propagation_candidate_uuid`;
+3. locator XOR;
+4. `maintenance.assert_update_signal_source_consistency()`;
+5. `maintenance.update_signal_issues()`;
+6. qualquer query/test que conte locators;
+7. idempotência das alterações de constraint.
+
+Candidate source válido exige:
+
+- candidate active;
+- assessment_status = assessed;
+- disposition = open_update_signal;
+- authority_status = authoritative;
+- candidate target = exact UpdatePolicy target do signal.
+
+---
+
+## 60. maintenance.contract_epoch
+
+Adicionar metadata técnica transversal se não houver mecanismo equivalente.
+
+Schema candidato:
+
+- `contract_code text PRIMARY KEY`;
+- `schema_version text NOT NULL`;
+- `effective_at timestamptz NOT NULL`;
+- `migration_id text NOT NULL`;
+- `created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`.
+
+Migration 031 insere idempotentemente:
+
+- contract_code = `PROPAGATION_REBASELINE_V01`;
+- schema_version = `0.1`;
+- migration_id = `031`;
+- effective_at = timestamp de primeira aplicação do contrato.
+
+Idempotência:
+
+> reaplicação não altera effective_at original.
+
+Uso permitido:
+
+- grandfathering técnico.
+
+Uso proibido:
+
+- evidence cutoff;
+- cadence anchor;
+- SLA start;
+- publication timestamp;
+- scientific event time;
+- rebaseline decision time.
+
+---
+
+## 61. Transition basis equality
+
+Se:
+
+- `transition_basis_type='result_product_version'`, então locator = new ProductVersion;
+- `transition_basis_type='result_investigation_version'`, então locator = new InvestigationVersion.
+
+Se basis = workflow_round:
+
+- o round deve pertencer à causalidade declarada;
+- quando sua result version é usada como justificativa de produção do target, result = new target.
+
+Locator XOR permanece obrigatório.
+
+---
+
+## 62. SLA cross-policy guard
+
+Para `rebaseline_sla_rule_link`:
+
+- old rule.policy = old policy;
+- new rule.policy = new policy;
+- `new_rule.supersedes_sla_rule_uuid IS DISTINCT FROM old_rule_uuid`;
+- mesma `rule_code` pode documentar continuidade semântica;
+- supersession FK de SLA continua estritamente same-policy.
+
+Nenhuma rule é copiada por default.
+
+---
+
+## 63. Child sets e activation
+
+Planned decision e activated decision possuem child sets próprios.
+
+Não:
+
+- UPDATE child de planned para “virar” activated;
+- mover child entre parent decisions;
+- reutilizar child PK.
+
+A parent supersession fornece lineage entre os snapshots de handover.
+
+---
+
+## 64. Activation completeness
+
+`rebaseline_decision_issues()` para activated authoritative deverá verificar adicionalmente:
+
+- version chain normalizada completa;
+- policy disposition não pending/maintenance_policy_required;
+- Monitor requirements satisfeitos para M2/M3;
+- profile disposition não pending;
+- coverage sem pending obrigatório;
+- old active signals relevantes possuem disposition;
+- old open/relevant SLA instances possuem disposition;
+- active workflow rounds relevantes possuem disposition;
+- child set pertence à mesma decision;
+- contract epoch existe;
+- M3 blocker quando aplicável.
+
+---
+
+## 65. Test plan revisado — T129–T140
+
+Adicionar:
+
+T129 — maintainable_product rejeita Evidence Monitor/Alert;  
+T130 — nonmaintainable_version classifica Monitor/Alert/evidence_monitoring;  
+T131 — max_depth sem teto universal e valor explícito;  
+T132 — no_action bloqueado por candidate path truncado;  
+T133 — rebaseline_version_chain_step FK/contiguidade/supersession;  
+T134 — authoritative activated unique por old target;  
+T135 — planned→activated preserva exact target pair;  
+T136 — target supersession não invalida UpdateSignal;  
+T137 — propagation adapter atualiza locator count + issue helper;  
+T138 — contract_epoch idempotente e effective_at preservado;  
+T139 — transition result locator deve igualar new target;  
+T140 — activated child set completo + M3 blocker.
+
+---
+
+## 66. Estado após hardening
+
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
+
+> **F4_PRB_T01_T140 = TEST_PLAN_REVISED_FOR_RECHECK**
+
+> **MIGRATION_031 = NOT_AUTHORIZED_UNTIL_DOCUMENT_36_RECHECK**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
