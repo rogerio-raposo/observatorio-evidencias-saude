@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP79 — 2026-10-06**
+**CP80 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP79.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP80.md`
 
 Checkpoint anterior:
 
-`CP78`
+`CP79`
 
 Status:
 
@@ -174,3 +174,5 @@ em **Modo Continuidade**.
 - **CP78 — 2026-10-06:** consolida a especificação do **Projection Readiness hardening** do Monitor; retomada na migration 022 + MONH-T01–T24.
 
 - **CP79 — 2026-10-06:** registra **PASS técnico do Projection Readiness hardening** do Monitor, migration 022 + MONH-T01–T24; retomada no novo Projection Readiness Gate explícito.
+
+- **CP80 — 2026-10-06:** registra **Projection Readiness do Monitor = READY**, Documento 172; autoriza migration 023 para EvidenceMonitorView 0.1.
