@@ -3023,3 +3023,23 @@ Documentos:
 - modo médio seguro para implementação mecânica, com escalada para alto diante de nova decisão arquitetural;
 - regra de pausa após checkpoint preservada.
 
+## 2026-10-07 — Phase 4 operational control technical PASS
+
+- migration 029 implementada no escopo autorizado dos Documentos 27–28;
+- criadas fixtures sintéticas não normativas;
+- criada suíte `database/f4-operational-control-tests.sql`;
+- F4-OC-T01–T69 = PASS;
+- T70 migration 029 idempotency = PASS;
+- T71 rebuild-through-029 = PASS;
+- T72 regressões completas = PASS;
+- run canônico **37580906483** (#150) = success;
+- technical HEAD `ae45918bb8cbf1ab929aec2e1af53f7239f75323`;
+- artifact **11464672034**;
+- digest `sha256:ec4546afc64fb5eb86b69d966905fc583cfbe43e4586abc922b57eb48e67a43c`;
+- F4-UP-T01–T63 e P01–P63 permanecem verdes;
+- migrations 021–029 aplicáveis permanecem idempotentes conforme workflow;
+- M3 blocker preservado;
+- runs #145–#149 classificadas como diagnósticas/falhas não canônicas, detalhadas no Documento 29;
+- Documento 29 registra `INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = TECHNICALLY_VALIDATED`;
+- nenhum número SLA normativo, priority score, auto-escalation ou M3 unblock foi introduzido.
+
