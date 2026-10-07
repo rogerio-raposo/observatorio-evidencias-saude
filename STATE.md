@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 6 de outubro de 2026  
+**Última atualização:** 7 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP89 — 2026-10-06**.
+- checkpoint vigente: **CP90 — 2026-10-07**.
 
 ## 2. Estado das fases
 
@@ -1190,4 +1190,75 @@ Próximo passo exato:
 - Documentos 05–06 consolidados;
 - retomada movida para Contrato de Dados v0.1;
 - M3 formal continua bloqueado.
+
+### Fase 4 — Contrato Transversal de Atualização v0.1 tecnicamente validado
+
+Documentos:
+
+- Documento 07 — Contrato de Dados v0.1;
+- Documento 08 — Gate de Coerência Física = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- Documento 09 — Resultado da Validação Técnica = **PASS**.
+
+Implementação:
+
+- migration `027_transversal_update_protocol_contract.sql`;
+- fixtures `f4-update-protocol-fixtures.sql`;
+- testes `f4-update-protocol-tests.sql`;
+- sete estruturas aditivas no schema `maintenance`;
+- nenhuma tabela científica existente alterada por `ALTER TABLE`.
+
+Validação:
+
+- F4-UP-T01–T63 = **PASS**;
+- F4-UP-IDEM = **PASS**;
+- rebuild-through-027 = **PASS**;
+- regressões F2-B/S4/S5 = **PASS**;
+- regressões Monitor/Alert e demais produtos F3 = **PASS**.
+
+Evidência canônica:
+
+- workflow: **OES PoC-S5 PostgreSQL Validation**;
+- run **37570978847** = **success**;
+- HEAD técnico validado `d56ea65c024d60c60ec77d1ab4fe9dc7be1c5fa9`;
+- artifact **11460960487**;
+- digest `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`.
+
+Estado:
+
+> **PHASE_4_UPDATE_DATA_CONTRACT = TECHNICALLY_VALIDATED**
+
+> **MIGRATION_027 = PASS**
+
+M3:
+
+> **M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL permanece ativo.**
+
+A existência de UpdatePolicy M3 foi validada sem desbloquear publicação formal de Monitor M3.
+
+Não definidos/autorizados neste marco:
+
+- thresholds quantitativos;
+- SLAs numéricos;
+- score global de prioridade;
+- scheduler;
+- notifications;
+- auto-classification;
+- auto-escalation;
+- propagation automática;
+- Monitor re-baselining;
+- M3 readiness;
+- auto-publication;
+- auto-update científico.
+
+Próximo passo exato:
+
+> **Definir a arquitetura transversal de perfis de risco operacional/científico que parametrizará cadence, thresholds, SLAs e prioridade, sem ainda fixar números universais.**
+
+### CP90
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP90.md`;
+- ponteiro de continuidade movido para CP90;
+- contrato físico v0.1 da Fase 4 tecnicamente validado;
+- migration 027 = PASS;
+- retomada movida para perfis de risco operacional/científico.
 
