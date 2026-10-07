@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP92 — 2026-10-07**
+**CP93 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP92.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP93.md`
 
 Checkpoint anterior:
 
-`CP91`
+`CP92`
 
 Status:
 
@@ -196,3 +196,4 @@ em **Modo Continuidade**.
 - **CP90 — 2026-10-07:** valida tecnicamente o contrato transversal de atualização v0.1; migration 027 + F4-UP-T01–T63 + idempotência + rebuild = PASS; retomada em perfis de risco para cadence/thresholds/SLA/prioridade.
 - **CP91 — 2026-10-07:** consolida perfis de risco e política temporal da Fase 4; Documentos 16–19 = PASS_WITH_ARCHITECTURAL_DECISIONS; próximo passo = arquitetura transversal de SLA.
 - **CP92 — 2026-10-07:** reconcilia CP91, corrige alinhamento de continuidade e formaliza pausa obrigatória após cada checkpoint; retomada: arquitetura transversal de SLA.
+- **CP93 — 2026-10-07:** arquitetura transversal de SLA = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 028 segue não autorizada; retomada em prioridade/escalation.
