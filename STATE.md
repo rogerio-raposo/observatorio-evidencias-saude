@@ -2351,3 +2351,39 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: selecionar e executar o primeiro exact real context de Evidence Readiness, em modo alto, sem calibração numérica;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — primeiro Evidence Readiness Assessment real
+
+Documento:
+- `docs/governance/48-primeiro-evidence-readiness-assessment-real-n1-cadence.md`.
+
+Contexto:
+> **N1_01_PRODUCTVERSION_2_CADENCE_POLICY_AGGREGATE**
+
+Resultado:
+> **FIRST_REAL_READINESS_ASSESSMENT = COMPLETED**
+
+> **PRIMARY_READINESS_STATE = INSUFFICIENT_EVIDENCE**
+
+> **READY_FOR_CALIBRATION = NO**
+
+> **REAL_CALIBRATION_DOSSIER_FOR_CONTEXT = NOT_AUTHORIZED**
+
+> **TEMPORAL_OBSERVATION_PLAN = NOT_YET_SPECIFIED**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+Blockers materiais:
+- ausência de UpdateRiskProfile real para o target;
+- source characterization insuficiente;
+- ausência de história longitudinal de surveillance/cadence;
+- ausência de human authority específica para readiness/maintenance;
+- feasibility/capacity não estabelecida;
+- replay longitudinal atualmente inviável.
+
+Princípio validado:
+> produto real/publicado + searches reais não equivalem a base temporal operacional suficiente para calibration.
+
+Próximo passo:
+> **após checkpoint, decidir em modo alto entre especificar um Temporal Observation Plan não normativo para N1-01 ou executar um segundo real-context readiness assessment antes de iniciar observação prospectiva.**
