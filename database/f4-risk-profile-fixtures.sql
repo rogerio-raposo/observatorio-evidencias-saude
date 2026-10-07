@@ -80,14 +80,7 @@ INSERT INTO maintenance.update_risk_profile_dimension_basis(
 ('f6000000-0000-0000-0000-000000000001','B1','monitor_cycle',
  'e5420000-0000-0000-0000-000000000002',
  '{"fixture":true,"observation":"structured monitored sources"}'::jsonb,
- 'Synthetic MonitorCycle evidence for observability assessment',1),
-('f6000000-0000-0000-0000-000000000001','A3','candidate_assessment',
- NULL,'{"fixture":true}'::jsonb,
- 'placeholder',99);
-
-DELETE FROM maintenance.update_risk_profile_dimension_basis
- WHERE update_risk_profile_uuid='f6000000-0000-0000-0000-000000000001'
-   AND dimension_code='A3' AND sequence_no=99;
+ 'Synthetic MonitorCycle evidence for observability assessment',1);
 
 INSERT INTO maintenance.update_risk_profile_dimension_basis(
     update_risk_profile_uuid,dimension_code,source_type,
