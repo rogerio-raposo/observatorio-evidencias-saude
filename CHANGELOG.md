@@ -2396,3 +2396,13 @@ Documentos:
 - M3 formal permanece bloqueado até Protocolo de Atualização da Fase 4;
 - migration candidata = `database/021_evidence_monitor_contract.sql`;
 - próxima etapa: migration 021 + fixture + testes + rebuild/regressões.
+
+
+## 2026-10-06 — CP75
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP75.md`;
+- Documento 167 consolidado;
+- contrato de dados do Monitor = **READY_FOR_IMPLEMENTATION**;
+- migration 021 autorizada;
+- ponteiro de continuidade movido para CP75;
+- retomada movida para migration 021 + fixture/testes/rebuild.
