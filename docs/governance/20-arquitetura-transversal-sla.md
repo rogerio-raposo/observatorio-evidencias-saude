@@ -202,6 +202,16 @@ Triage concluída deve produzir disposição explícita:
 - out_of_scope;
 - routed_elsewhere.
 
+A disposição precisa cumprir uma regra de autoridade.
+
+Baseline conceitual:
+
+- IA/sistema pode classificar/sugerir triage;
+- disposição que apenas encaminha para avaliação pode ser automatizável futuramente;
+- IA/sistema **não deve encerrar autoritativamente um signal científico/currentness como invalid_signal ou out_of_scope** quando esse encerramento evitaria avaliação humana material;
+- duplicate_or_already_covered exige linkage auditável ao objeto já coberto;
+- routed_elsewhere exige destino/rationale.
+
 A arquitetura atual não possui registro transversal de triage do UpdateSignal.
 
 Portanto:
@@ -242,15 +252,29 @@ Isso preserva:
 
 > IA pode auxiliar, mas não encerrar autoritativamente a avaliação científica.
 
-## 7.3 Timestamp
+## 7.3 Timestamp qualificante
 
-O evento científico é representado por:
+`materiality_assessment.assessed_at` registra quando o assessment foi realizado.
 
-`materiality_assessment.assessed_at`.
+Quando a qualificação exige verificação humana e `verified_at > assessed_at`:
 
-O registro técnico também precisa preservar, em implementação futura:
+> **o SLA-2 termina em `verified_at`, não em `assessed_at`.**
+
+Conceitualmente:
+
+```text
+materiality_qualified_at =
+  max(assessed_at, verified_at)
+```
+
+para assessments que exigem verificação.
+
+Isso impede contabilizar como concluído um assessment que ainda não possuía a verificação necessária.
+
+Implementação futura deverá preservar também:
 
 - occurred_at/assessed_at;
+- verified_at;
 - recorded_at.
 
 Atraso de documentação deve permanecer detectável.
@@ -261,7 +285,7 @@ Atraso de documentação deve permanecer detectável.
 
 ## 8.1 Início
 
-MaterialityAssessment qualificante concluído.
+`materiality_qualified_at` do MaterialityAssessment qualificante.
 
 ## 8.2 Fim
 
@@ -274,6 +298,19 @@ UpdateDecision:
 Proposal:
 
 > **não encerra SLA-3.**
+
+Quando `verified_at > decided_at`:
+
+> **o SLA-3 termina na qualificação autoritativa, isto é, em `max(decided_at, verified_at)`.**
+
+Conceitualmente:
+
+```text
+decision_qualified_at =
+  max(decided_at, verified_at)
+```
+
+Isso impede que uma decisão ainda não humanamente verificada satisfaça o relógio.
 
 Motivo:
 
@@ -312,7 +349,9 @@ Casos naturais:
 
 ## 9.2 Início
 
-`update_decision.decided_at` da decisão autoritativa.
+`decision_qualified_at` da UpdateDecision autoritativa.
+
+Não usar `decided_at` isoladamente quando a verificação humana qualificante ocorreu depois.
 
 ## 9.3 Fim
 
@@ -417,13 +456,17 @@ A regra não pode trocar endpoint depois que a instância iniciou sem rebase exp
 
 ---
 
-# 12. Origem temporal: occurred_at × recorded_at
+# 12. Origem temporal: occurred_at × qualified_at × recorded_at
 
-Todo milestone futuro de SLA deverá distinguir:
+Milestones futuros de SLA deverão distinguir, quando aplicável:
 
 ### occurred_at
 
 Quando o evento substantivo ocorreu.
+
+### qualified_at
+
+Quando o evento passou a satisfazer requisitos de autoridade/verificação necessários para encerrar/iniciar determinado clock.
 
 ### recorded_at
 
@@ -432,10 +475,14 @@ Quando o evento foi persistido no OES.
 Regras:
 
 1. `recorded_at >= occurred_at`;
-2. backdating sem fonte/rationale não é permitido;
-3. SLA usa `occurred_at` para duração substantiva;
-4. atraso entre occurred_at e recorded_at permanece auditável como documentation latency;
-5. created_at genérico não substitui automaticamente occurred_at.
+2. `qualified_at >= occurred_at` quando existir etapa posterior de verificação/autoridade;
+3. backdating sem fonte/rationale não é permitido;
+4. SLA usa o timestamp semanticamente exigido pelo clock:
+   - occurred_at quando ocorrência basta;
+   - qualified_at quando autoridade/verificação faz parte do endpoint;
+5. atraso entre occurred_at e recorded_at permanece auditável como documentation latency;
+6. created_at genérico não substitui automaticamente occurred_at;
+7. estruturas legadas que não possuem `recorded_at` separado usam o melhor timestamp canônico existente, sem fabricar retroativamente documentation latency.
 
 Isso reduz possibilidade de “melhorar” SLA apenas registrando eventos tarde com timestamps convenientes.
 
@@ -501,7 +548,7 @@ Rebase só pode ocorrer por decisão explícita e deve preservar:
 
 ---
 
-# 15. Basis temporal
+# 15. Basis temporal e deadlines
 
 Uma SLA Rule futura deverá declarar uma basis.
 
@@ -539,6 +586,29 @@ Exemplos possíveis:
 
 Deve preservar origem normativa do deadline.
 
+## 15.4 nominal_due_at × effective_due_at
+
+Quando a regra possuir duração/deadline:
+
+### nominal_due_at
+
+Deadline calculado sem pausas posteriores, segundo a rule snapshot original.
+
+### effective_due_at
+
+Deadline operacional após considerar apenas:
+
+- business calendar declarado;
+- pausas válidas e autorizadas quando a regra permitir suspensão.
+
+Regras:
+
+- `nominal_due_at` nunca é sobrescrito;
+- `effective_due_at` precisa ser reconstruível pelo ledger de pausas/calendário;
+- `fixed_deadline` é não-pausável por default;
+- qualquer fixed deadline suspensível exige autorização normativa explícita;
+- rebase não deve mascarar nominal_due_at nem breach histórico.
+
 ---
 
 # 16. Pause semantics
@@ -554,6 +624,8 @@ Não é equivalente a:
 - espera não documentada.
 
 ## 16.1 Condições candidatas válidas
+
+Pause só existe se a SLA Rule declarar `pause_allowed=true`.
 
 Dependendo do clock e da rule:
 
@@ -576,7 +648,17 @@ Capacidade insuficiente deve aparecer como:
 
 > problema de feasibility/escalation, não pausa automática.
 
-## 16.3 Pause interval
+## 16.3 Restrições de segurança/integridade
+
+Uma rule associada a safety/integrity de alta criticidade pode ser declarada:
+
+> **non_pausable**
+
+ou permitir somente razão externa/normativa muito específica.
+
+Carga/capacidade interna nunca deve transformar automaticamente clock de safety em pausável.
+
+## 16.4 Pause interval
 
 Cada pausa precisa de:
 
@@ -619,25 +701,45 @@ Motivo:
 
 ---
 
-# 18. Estados de SLA Instance
+# 18. Estado operacional × estado de compliance
 
-Estados conceituais mínimos:
+Um único campo de estado seria insuficiente.
+
+Exemplo:
+
+> uma instância pode estar pausada **e já ter sofrido breach antes da pausa**.
+
+Portanto o modelo deve separar dois eixos.
+
+## 18.1 execution_status
 
 - pending;
 - running;
 - paused;
-- satisfied_on_time;
-- breached_open;
-- breached_then_satisfied;
+- satisfied;
 - cancelled_invalidated;
 - terminated_by_authority;
 - not_applicable.
 
+## 18.2 compliance_status
+
+- not_started;
+- within_target;
+- breached_open;
+- breached_then_satisfied;
+- satisfied_on_time;
+- not_applicable.
+
+Regras:
+
+- pause altera execution_status, não apaga compliance_status;
+- satisfied depois de breach produz `breached_then_satisfied`;
+- breach ocorrido permanece histórico;
+- cancelled/terminated também precisam preservar se breach havia ocorrido antes.
+
 Evitar:
 
 > boolean `breached=true/false` como única representação.
-
-Breach histórico não pode desaparecer quando a obrigação termina.
 
 ---
 
@@ -766,7 +868,7 @@ Regras:
 
 ---
 
-# 24. Concurrency
+# 24. Concurrency, ciclos e cardinalidade
 
 Clocks não precisam ser estritamente sequenciais em tempo real.
 
@@ -782,6 +884,20 @@ Entretanto:
 Preparação antecipada não permite declarar satisfação de SLA-4 antes de UpdateDecision autoritativa se a rule exigir essa decisão como start.
 
 Duração zero é válida quando start/end realmente coincidem e são auditáveis.
+
+Uma mesma cadeia de atualização pode produzir múltiplas instâncias de certos clocks.
+
+Exemplos:
+
+- revisão solicita alterações → novo ciclo de trabalho científico;
+- nova disposição formal → novo round de review;
+- workflow é reiniciado de forma auditável após término anterior.
+
+Logo:
+
+- SLA-4/5/6 não devem ser modelados como uma única linha global por UpdateSignal;
+- cada instância precisa de identidade causal de workflow/review round;
+- uma nova instância não apaga o desempenho da anterior.
 
 ---
 
@@ -957,7 +1073,9 @@ Ainda faltam de forma transversal:
 7. workflow completed milestone;
 8. review/publication endpoint normalizado entre produtos;
 9. rule snapshot/rebase;
-10. occurred_at × recorded_at para milestones novos.
+10. occurred_at × qualified_at × recorded_at para milestones novos;
+11. identidade causal de workflow/review round;
+12. nominal_due_at × effective_due_at.
 
 Portanto:
 
@@ -1009,7 +1127,10 @@ A revisão adversarial deverá testar:
 - AI proposal × authoritative endpoint;
 - pause gaming;
 - wall time × accountable time;
+- nominal_due_at × effective_due_at;
 - business calendar;
+- paused + already breached;
+- qualification timestamp após human verification;
 - breach history;
 - rebase;
 - Alert urgency/classification;
