@@ -34,7 +34,7 @@ INSERT INTO product.product_version(
  'a7100000-0000-0000-0000-000000000001',
  'a7000000-0000-0000-0000-000000000001',
  'evidence_alert','Synthetic Evidence Alert A','architecture_validation',
- DATE '2026-10-06',DATE '2026-10-06','published',
+ DATE '2026-10-06',NULL,'under_review',
  NULL,NULL,
  'Synthetic alert generated from Monitor signals; classification is preliminary.'
 ),
@@ -50,7 +50,7 @@ INSERT INTO product.product_version(
  'a7100000-0000-0000-0000-000000000003',
  'a7000000-0000-0000-0000-000000000003',
  'evidence_alert','Synthetic Evidence Alert C direct critical','architecture_validation',
- DATE '2026-10-06',DATE '2026-10-06','published',
+ DATE '2026-10-06',NULL,'under_review',
  NULL,NULL,
  'Synthetic direct-source critical alert; no Phase-4 automatic rule is implied.'
 );
@@ -272,5 +272,15 @@ INSERT INTO product.assurance_record(
  'Synthetic owner governance approval; not expert review',
  '{"fixture":true}'::jsonb,'active'
 );
+
+-- Seal formal Alert versions only after context, sources, dimensions,
+-- dependency lineage and assurance have been assembled.
+UPDATE product.product_version
+   SET status='published',
+       publication_date=DATE '2026-10-06'
+ WHERE version_uuid IN (
+    'a7100000-0000-0000-0000-000000000001',
+    'a7100000-0000-0000-0000-000000000003'
+ );
 
 COMMIT;
