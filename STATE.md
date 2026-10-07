@@ -822,3 +822,62 @@ Próxima etapa:
 > **Implementar EvidenceMonitorView 0.1 + testes de projeção + idempotência + rebuild.**
 
 Template readiness permanece NOT_EVALUATED. Caso Real, Alert e Fase 4 continuam não autorizados.
+
+
+### Monitor de Evidências — EvidenceMonitorView 0.1
+
+Documento 173 — **EVIDENCE_MONITOR_VIEW_0_1 = PASS**.
+
+Implementação:
+
+- migration `database/023_evidence_monitor_view_rendering_readiness.sql`;
+- schema de projeção `oes.evidence_monitor_view/0.1`;
+- `product.evidence_monitor_target_projection(...)`;
+- `maintenance.monitor_cycle_projection(...)`;
+- `product.evidence_monitor_view(...)`;
+- funções read-only / STABLE;
+- nenhuma Search, CurrencyState, ProductVersion ou Alert é criada pela View.
+
+Semântica de projeção validada:
+
+- target ProductVersion e InvestigationVersion permanecem explicitamente distintos;
+- Monitor editorial status, operational status, Monitor currency e target currency permanecem quatro dimensões separadas;
+- baseline cutoff permanece separado do latest completed cycle cutoff;
+- Searches/SearchHits vêm dos registros canônicos;
+- source requirements projetam `fulfilled`, `exception_applied` e `satisfied` separadamente;
+- CandidateAssessments preservam múltiplos `CandidateImpact`;
+- EvidenceEvent permanece distinto de CandidateAssessment;
+- histórico Cycle→CurrencyState preserva estados superseded/active;
+- Monitor assurance e target assurance não são colapsados;
+- AI verification não é apresentada como human verification;
+- blocker M3/Fase 4 permanece explícito.
+
+Validação:
+
+- MONV-T01–T17 = **PASS**;
+- MONV-T18 migration 023 idempotent re-apply = **PASS**;
+- MONV-T19 rebuild-through-023 = **PASS**;
+- workflow **OES PoC-S5 PostgreSQL Validation**;
+- run **37556593132** (#128) = **success**;
+- HEAD validado `613a9ced4ad43a3eb890a2b5db35acf51a08127e`;
+- artifact **11454488440**;
+- digest `sha256:6043e52ac33800ec5d944b1a4633bfe5049a9c8ecff2613eb577aadea2916630`.
+
+Readiness atual:
+
+- scientific/functional = PASS;
+- architecture = PASS;
+- data contract = PASS;
+- projection hardening = PASS;
+- Projection Readiness = READY;
+- EvidenceMonitorView 0.1 = PASS;
+- **template/presentation = NOT_YET_SPECIFIED**;
+- Caso Real do Monitor = NOT_AUTHORIZED;
+- Alert = NOT_IMPLEMENTED;
+- Fase 4 = NOT_STARTED.
+
+Próxima etapa:
+
+> **Definir o contrato de renderização e a Especificação do Template Operacional do Monitor de Evidências.**
+
+A camada de apresentação deverá consumir exclusivamente a `EvidenceMonitorView` e preservar explicitamente Monitor × target × currentness × cycles × assurance × exceptions.
