@@ -3,8 +3,8 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 6 de outubro de 2026  
-**Status:** **BASELINE CONCEITUAL CANDIDATA — requer revisão adversarial antes de contrato físico**  
-**Dependências:** Documentos 00–04; Documento 40; Documentos 165–188; OES-P1; migrations 006, 021–026
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — baseline conceitual aprovada após Documento 06**  
+**Dependências:** Documentos 00–04 e 06; Documento 40; Documentos 165–188; OES-P1; migrations 006, 021–026
 
 ---
 
@@ -681,4 +681,4 @@ Resultado permitido:
 
 ## 24. Próximo passo exato
 
-> **Executar revisão adversarial do Documento 05 contra Documentos 00–04, 165–188 e migrations 006/021–026; somente após PASS ou PASS_WITH_ARCHITECTURAL_DECISIONS decidir o Contrato de Dados da Fase 4.**
+> **Especificar o Contrato de Dados v0.1 do Protocolo Transversal de Atualização, conforme o gate do Documento 06, sem implementar migration antes de novo gate de coerência física.**
