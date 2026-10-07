@@ -194,6 +194,7 @@ INSERT INTO maintenance.rebaseline_decision(
   'scientific',
   'Synthetic planned handover; no activation implied',
   'fixture-ai','ai_system','ai_verified',
+  'fixture-ai-verifier','ai_system',TIMESTAMPTZ '2026-10-07 03:19:30+00',
   'proposal',TIMESTAMPTZ '2026-10-07 03:20:00+00'
 )
 ON CONFLICT (rebaseline_decision_uuid) DO NOTHING;
