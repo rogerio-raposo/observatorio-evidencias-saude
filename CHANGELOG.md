@@ -2668,3 +2668,12 @@ Documentos:
 - Projection Readiness = READY;
 - migration 026 autorizada para EvidenceAlertView 0.1;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — CP86
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP86.md`;
+- Projection Readiness do Alerta = READY;
+- ponteiro movido para CP86;
+- retomada: migration 026 / EvidenceAlertView 0.1;
+- Fase 4 permanece não iniciada.
