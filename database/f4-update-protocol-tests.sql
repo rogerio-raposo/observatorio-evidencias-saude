@@ -83,7 +83,7 @@ SELECT pg_temp.assert_true(
 
 -- F4-UP-T06 — a new post-032 M3/continuous policy is rejected.
 SELECT pg_temp.expect_error(
-$INSERT INTO maintenance.update_policy(
+$q$INSERT INTO maintenance.update_policy(
  update_policy_uuid,target_investigation_version_uuid,
  effective_maintenance_level,cadence_mode,
  governing_monitor_product_version_uuid,effective_at,rationale,created_by,actor_type
@@ -93,7 +93,7 @@ $INSERT INTO maintenance.update_policy(
  'M3','continuous','e5100000-0000-0000-0000-000000000007',
  TIMESTAMPTZ '2026-10-07 00:02:00+00',
  'M3 must remain blocked after temporal v0.1','fixture-owner','owner'
-)$,'F4-UP-T06');
+)$q$,'F4-UP-T06');
 
 -- F4-UP-T07 — existing Monitor M3 publication blocker remains active.
 SELECT pg_temp.assert_true(
