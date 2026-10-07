@@ -326,7 +326,8 @@ jobs:
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/021_evidence_monitor_contract.sql 2>&1 | tee s5-artifacts/MON-T33-021-reapply.log
-          psql -v ON_ERROR_STOP=1 -c "SELECT CASE WHEN product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000005') THEN 'MON-T33 PASS' ELSE 1/0::text END;" 2>&1 | tee -a s5-artifacts/MON-T33-021-reapply.log
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000005');")" = "t"
+          echo "MON-T33 gate smoke PASS" | tee -a s5-artifacts/MON-T33-021-reapply.log
           echo "MON-T33 PASS — migration 021 re-applies idempotently without changing M2 gate semantics" | tee -a s5-artifacts/MON-T33-021-reapply.log
 
       - name: Real N3-01 — ambient AI scribes experimental A0 and corrected v2
