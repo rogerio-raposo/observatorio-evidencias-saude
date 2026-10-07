@@ -3218,3 +3218,23 @@ Documentos:
 - modo médio suficiente para implementação mecânica;
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
+
+
+## 2026-10-07 — Migration 031 technical PASS
+
+- implementada migration lógica `031_propagation_rebaseline_contract.sql` com fragments 031a–031e;
+- implementados PropagationAssessment/Candidate/Path/PathStep, RebaselineDecision/chain e child handover validators;
+- implementado adapter estruturado PropagationCandidate → UpdateSignalSource;
+- adicionadas fixtures sintéticas e suíte **F4-PRB-T01–T145**;
+- migration 031 idempotency = **PASS**;
+- rebuild-through-031 = **PASS**;
+- regressões F4-UP/F4-OC/F4-RP/F2-B/S4/S5/F3/Monitor/Alert = **PASS**;
+- S5 run canônico **37644296649** (#167) = success;
+- technical HEAD `5da1d932f9509214db6a658a2ed5ca830ec7b6c1`;
+- job **112870931087** = success;
+- artifact **11494595216**;
+- digest `sha256:1934c9068c24dc17ea505fd353901270eef3ab3a8cc48cbd74cba0de5132922a`;
+- runs #163–#166 classificadas como diagnósticas/intermediárias;
+- M3 blocker preservado;
+- sem numeric SLA/cadence, scheduler, notifications, auto-propagation/rebaseline ou currentness automático;
+- próximo passo: checkpoint técnico e seleção explícita da próxima dívida da Fase 4.
