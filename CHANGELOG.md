@@ -3270,3 +3270,18 @@ Documentos:
 - auto-escalation continua não autorizada;
 - M3 formal continua bloqueado;
 - recomendado modo alto antes de iniciar metodologia/calibração.
+
+## 2026-10-07 — CP103
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP103.md`;
+- ponteiro de continuidade movido para CP103;
+- próximo bloco selecionado = **TEMPORAL_CALIBRATION**;
+- bloco permanece **SELECTED_NOT_STARTED**;
+- priority score/pesos não são requisito do baseline;
+- nenhum número normativo foi definido;
+- scheduler/notifications não iniciados;
+- auto-escalation continua não autorizada;
+- M3 continua bloqueado;
+- modo alto recomendado antes da metodologia;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
