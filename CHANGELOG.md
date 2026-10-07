@@ -2484,3 +2484,22 @@ Documentos:
 - EvidenceMonitorView continua adiada para migration 023;
 - ponteiro de continuidade movido para CP78;
 - retomada: migration 022 + fixture + MONH-T01–T24 + rebuild.
+
+
+## 2026-10-06 — Evidence Monitor projection hardening technical PASS
+
+- Documento 171 criado;
+- migration 022 = PASS;
+- candidate impacts múltiplos normalizados;
+- source requirements normalizados;
+- source/temporal exceptions integradas via MethodDecision;
+- Search temporal/investigation/status drift revalidado dinamicamente;
+- CycleCurrencyState tornou-se imutável;
+- MON-T01–T32 = PASS;
+- MONH-T01–T22 = PASS;
+- MON-T33 chain 021→022 = PASS;
+- MONH-T23 = PASS;
+- MONH-T24 rebuild-through-022 = PASS;
+- run 37555588465 (#125) = success;
+- artifact 11453649661;
+- próximo passo: novo Projection Readiness Gate explícito.
