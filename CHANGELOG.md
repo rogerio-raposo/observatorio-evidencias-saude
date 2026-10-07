@@ -2569,3 +2569,17 @@ Documentos:
 - run 37556593132 (#128) = success;
 - ponteiro de continuidade movido para CP81;
 - retomada: contrato de renderização + Especificação do Template Operacional do Monitor.
+
+
+## 2026-10-06 — Evidence Monitor presentation PASS
+
+- Documento 174 definiu o contrato de renderização;
+- Documento 175 especificou o Template Operacional;
+- template, presentation map, renderer e validator implementados;
+- run #129 falhou por acesso a target currency não aplicável no M3; corrigido sem mudança científica;
+- run **37558043092** (#130) = success;
+- artifact **11455658237**;
+- Monitor formalizado na Fase 3;
+- Caso Real do Monitor não é obrigatório para o fechamento taxonômico desta fase;
+- próxima etapa: **Alerta de Evidência**;
+- Fase 4 permanece não iniciada.
