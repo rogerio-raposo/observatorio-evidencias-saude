@@ -1345,7 +1345,7 @@ $fn$;
 
 DROP TRIGGER IF EXISTS tr_sla_instance_consistency ON maintenance.sla_instance;
 CREATE TRIGGER tr_sla_instance_consistency
-BEFORE INSERT ON maintenance.sla_instance
+BEFORE INSERT OR UPDATE ON maintenance.sla_instance
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_sla_instance_consistency();
 
 CREATE OR REPLACE FUNCTION maintenance.guard_sla_instance_mutation()
