@@ -2406,3 +2406,23 @@ Documentos:
 - migration 021 autorizada;
 - ponteiro de continuidade movido para CP75;
 - retomada movida para migration 021 + fixture/testes/rebuild.
+
+
+## 2026-10-06 — Evidence Monitor technical validation PASS
+
+- Documento 168 criado;
+- migration 021 implementada e endurecida;
+- lifecycle corrigido para impedir Search/Event/Candidate retrospectivos em cycle terminal;
+- fixture M2 formal/A2 e fixture M3 bloqueada pela fronteira da Fase 4 validadas;
+- MON-T01–T12 = PASS;
+- MON-T13–T32 = PASS;
+- MON-T33 idempotent re-apply = PASS;
+- run intermediário #120 falhou apenas por uso de `min(uuid)`, corrigido sem mudança semântica;
+- run #121 = success;
+- resumo textual do rebuild foi alinhado de migration 020 para 021;
+- run final **37553271462** (#122) = **success**;
+- HEAD validado `d7ca356c8cc4d58552a9e52868fce92f27eaad9e`;
+- rebuild-from-zero through migration 021 = PASS;
+- artifact **11453871816**;
+- digest `sha256:71dd0b68c92ce3d30832862545ac45efbfb94cba51580d77f2673f12a94fbaf8`;
+- próximo gate: **Projection Readiness da EvidenceMonitorView**.
