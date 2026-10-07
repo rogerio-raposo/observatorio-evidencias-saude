@@ -1816,3 +1816,35 @@ Decisões estruturais candidatas:
 
 Próximo passo:
 > **executar revisão adversarial específica do Documento 33 antes de qualquer contrato físico ou migration.**
+
+### Fase 4 — Gate adversarial de propagation/re-baselining
+
+Documentos:
+- 33 — Arquitetura Transversal de Propagação de Mudanças e Re-baselining;
+- 34 — Revisão Adversarial da Arquitetura de Propagação e Re-baselining.
+
+Estado:
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+> **MIGRATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Hardening consolidado:
+- maintainable targets separados de objetos intermediários do dependency graph;
+- target mantível sem policy usa `maintenance_policy_required`;
+- propagation→UpdateSignal exige adapter estruturado futuro, sem apagar causalidade;
+- um candidate por assessment + impacted version, com 1:N path snapshots;
+- cycle/depth guard e lineage validation obrigatórios;
+- rebaseline exige same entity + chain versionada auditável;
+- planned e activated rebaseline separados;
+- policy cross-target lineage é separada de `supersedes_update_policy_uuid`;
+- novo M2/M3 exige novo Monitor ProductVersion current e target coerente antes da policy;
+- coverage, UpdateRiskProfile, SLA Rules/Instances, workflow, Priority/Escalation e Alerts preservam história;
+- authority operacional separada de scientific/methodological/mixed;
+- nenhum currentness/assurance/M3 update automático.
+
+Próximo passo:
+> **especificar o Contrato Físico v0.1 de Propagation/Re-baselining e submetê-lo a novo gate antes de qualquer migration.**
