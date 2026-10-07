@@ -2474,3 +2474,13 @@ Documentos:
 - publication gate será endurecido sem remover blockers da migration 021;
 - migration 022 autorizada somente para hardening;
 - EvidenceMonitorView permanece migration candidata 023.
+
+
+## 2026-10-06 — CP78
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP78.md`;
+- Documento 170 consolidado;
+- migration 022 autorizada para hardening de Projection Readiness;
+- EvidenceMonitorView continua adiada para migration 023;
+- ponteiro de continuidade movido para CP78;
+- retomada: migration 022 + fixture + MONH-T01–T24 + rebuild.
