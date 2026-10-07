@@ -3,8 +3,8 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **BASELINE CONCEITUAL CANDIDATA — requer revisão adversarial**  
-**Dependências:** Documentos 05–09 e 16–17; migrations 014, 021–022 e 027
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 19**  
+**Dependências:** Documentos 05–09 e 16–19; migrations 014, 021–022 e 027
 
 ---
 
@@ -1074,4 +1074,4 @@ Antes disso deve haver gate específico.
 
 # 39. Próximo passo exato
 
-> **Executar revisão adversarial da Política Transversal de Cadence e Thresholds Temporais. Somente após PASS/PASS_WITH_ARCHITECTURAL_DECISIONS definir os relógios/classes de SLA.**
+> **Definir a arquitetura transversal de SLAs como contratos operacionais entre eventos claramente definidos, preservando a separação entre breach operacional e estado científico.**
