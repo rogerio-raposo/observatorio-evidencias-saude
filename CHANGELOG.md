@@ -2513,3 +2513,17 @@ Documentos:
 - run 37555588465 (#125) = success;
 - ponteiro de continuidade movido para CP79;
 - retomada: novo Projection Readiness Gate explícito.
+
+
+## 2026-10-06 — Evidence Monitor Projection Readiness READY
+
+- Documento 172 criado;
+- novo gate adversarial concluiu PR-MON-01–05 = RESOLVED;
+- resíduo pós-CP79 identificado: temporal exception helper não exigia stage=search;
+- migration 022 corrigida para exigir stage=search;
+- MONH-T12 ampliado para rejeitar accepted exception no estágio errado;
+- run final pós-correção **37555981343** (#127) = success;
+- artifact **11454409428**;
+- Projection Readiness = **READY**;
+- migration 023 autorizada para EvidenceMonitorView 0.1;
+- template/Caso Real/Alert/Fase 4 permanecem não autorizados.
