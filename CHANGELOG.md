@@ -2343,3 +2343,13 @@ Documentos:
 - thresholds temporais/quantitativos gerais permaneceram reservados à Fase 4;
 - nenhuma migration autorizada antes da revisão de coerência arquitetural;
 - próxima etapa: revisão científica/arquitetural do Monitor.
+
+
+## 2026-10-06 — CP73
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP73.md`;
+- Documento 165 consolidado;
+- Monitor de Evidências = produto/processo M2/M3, não N5;
+- nenhuma migration autorizada antes da revisão arquitetural;
+- ponteiro de continuidade movido para CP73;
+- retomada movida para revisão de coerência científica e arquitetural do Monitor.
