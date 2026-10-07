@@ -1204,11 +1204,20 @@ SELECT pg_temp.assert_true(
  AND product.evidence_alert_is_publishable('a7100000-0000-0000-0000-000000000001'),
  'F4-OC-T68');
 
--- T69 — M3 blocker preserved.
+-- T69 — M3 blocker preserved at Monitor boundary; no post-032 M3 policy is fabricated.
 SELECT pg_temp.assert_true(
- EXISTS(SELECT 1 FROM maintenance.operational_control_readiness(
-  'f4000000-0000-0000-0000-000000000002'
- ) WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL' AND severity='error')
+ NOT EXISTS (
+   SELECT 1 FROM maintenance.update_policy
+   WHERE effective_maintenance_level='M3'
+     AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)
+ )
+ AND EXISTS(
+   SELECT 1 FROM product.evidence_monitor_publication_issues(
+     'e5100000-0000-0000-0000-000000000007'
+   )
+   WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
+     AND severity='error'
+ )
  AND NOT product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000007'),
  'F4-OC-T69');
 
