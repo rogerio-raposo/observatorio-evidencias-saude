@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP98 — 2026-10-07**.
+- checkpoint vigente: **CP99 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1775,4 +1775,24 @@ Limites preservados:
 Próximo passo:
 
 > **ainda não selecionado; deverá ser escolhido explicitamente após o checkpoint pós-PASS.**
+
+### CP99 — PASS técnico do UpdateRiskProfile físico
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP99.md`;
+- ponteiro movido para CP99;
+- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_030 = PASS`;
+- F4-RP-T01–T87 = PASS;
+- rebuild-through-030 = PASS;
+- regressões completas = PASS;
+- run canônico **37618433929** (#161) = success;
+- technical HEAD `dc9ced9f91817441d0b87063c55057cde1c3c3b7`;
+- artifact **11480858194**;
+- digest `sha256:2fa282d226fd78cce87a7240658bf0f1a37b18afef6d29014335b170316183d7`;
+- F4-OC e F4-UP permanecem verdes;
+- M3 formal permanece bloqueado;
+- nenhum risk score/numeric cadence/numeric SLA/auto-policy change foi introduzido;
+- próxima dívida da Fase 4 ainda não selecionada;
+- Fase 5 não iniciada;
+- pausa obrigatória após checkpoint permanece vigente.
 
