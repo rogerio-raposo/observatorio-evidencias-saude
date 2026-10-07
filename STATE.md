@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP92 — 2026-10-07**.
+- checkpoint vigente: **CP93 — 2026-10-07**.
 
 ## 2. Estado das fases
 
@@ -1307,4 +1307,54 @@ Próximo passo exato:
 - após cada checkpoint formal, o trabalho deve parar e aguardar instrução explícita do usuário antes do bloco seguinte;
 - nenhuma migration 028 foi criada;
 - nenhum bloco de SLA foi iniciado neste checkpoint.
+
+### Fase 4 — Arquitetura Transversal de SLA consolidada
+
+Documentos:
+
+- 20 — Arquitetura Transversal de SLA do Protocolo de Atualização;
+- 21 — Revisão Adversarial da Arquitetura Transversal de SLA.
+
+Estado:
+
+> **PHASE_4_SLA_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_PRIORITY_ARCHITECTURE**
+
+> **MIGRATION_028 = NOT_AUTHORIZED**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+Decisões consolidadas:
+
+- SLA mede obrigação operacional, não estado científico;
+- seis clocks mínimos foram definidos;
+- late normalization não reinicia SLA-1;
+- evento pré-policy preserva pre_policy_age sem breach retroativo;
+- MaterialityAssessment e UpdateDecision usam timestamps qualificantes quando verificação humana ocorre depois;
+- rule snapshot é congelada no início da SLA Instance;
+- nominal_due_at e effective_due_at permanecem separados;
+- pause não apaga breach e não é substituto de backlog/capacidade baixa;
+- execution_status e compliance_status são eixos distintos;
+- breached_then_satisfied preserva atraso histórico;
+- Alert priority/classification pode informar SLA sem duração embutida;
+- Monitor fornece timestamps upstream, mas cycle lateness continua pertencendo à cadence;
+- SLA-4/5/6 exigem identidade causal por workflow/review round;
+- triage transversal e milestones de workflow permanecem gaps físicos;
+- currentness não deriva de SLA compliance;
+- automação de breach/escalation não possui autoridade científica.
+
+Próximo passo exato:
+
+> **Definir a arquitetura transversal de prioridade e escalation antes de qualquer migration 028.**
+
+### CP93
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP93.md`;
+- ponteiro movido para CP93;
+- arquitetura transversal de SLA aprovada com decisões arquiteturais;
+- nenhuma migration 028 criada;
+- nenhuma duração universal de SLA definida;
+- retomada movida para prioridade/escalation;
+- pausa obrigatória após checkpoint permanece vigente.
 
