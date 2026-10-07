@@ -208,7 +208,7 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui oito blocos consolidados:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui nove blocos consolidados:
 
 1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 2. Documentos 07–09 + migrations 027–028 — contrato físico v0.1 = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
@@ -217,7 +217,8 @@ A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui oi
 5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**;
 7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-8. Documentos 27–29 — contrato operacional integrado = **TECHNICALLY_VALIDATED**; migration 029 = **PASS**.
+8. Documentos 27–29 — contrato operacional integrado = **TECHNICALLY_VALIDATED**; migration 029 = **PASS**;
+9. Documentos 30–31 — normalização física do UpdateRiskProfile = **PASS_WITH_ARCHITECTURAL_DECISIONS**; migration 030 autorizada em escopo estrito e ainda não implementada.
 
 A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
@@ -271,7 +272,7 @@ Validação canônica atual do controle operacional integrado:
 
 Próximo passo exato:
 
-> **Determinar, no checkpoint pós-PASS, qual dívida aberta da Fase 4 deve ser atacada em seguida, sem iniciar automaticamente calibração SLA, scheduler, notifications, propagation/re-baselining, M3 readiness ou operação humana real.**
+> **Implementar a migration 030 estritamente conforme Documentos 30–31, criar F4-RP-T01–T87 e validar S5/idempotência/rebuild/regressões antes de qualquer PASS técnico.**
 
 ---
 
