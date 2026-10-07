@@ -728,3 +728,27 @@ O checkpoint vigente é **CP77 — 2026-10-06**.
 Ponto exato de retomada:
 
 > **Especificar e implementar o hardening de Projection Readiness na migration 022, antes de qualquer EvidenceMonitorView.**
+
+
+### Monitor de Evidências — Projection Readiness hardening
+
+Documento 170 — **PROJECTION_HARDENING_SPEC_READY**.
+
+Decisões:
+
+- migration 022 = hardening semântico, não View;
+- adicionar `maintenance.candidate_impact` para cardinalidade 1:N de impactos;
+- adicionar `maintenance.monitor_source_requirement` como fonte machine-readable de requisitos;
+- `candidate_assessment.impact_class` permanece como primary impact summary legado;
+- SourceRequirement integra exceções via `investigation.method_decision`;
+- source coverage deverá distinguir `fulfilled` de `exception_applied`;
+- temporal consistency será derivada por helper específico;
+- Search drift será revalidado dinamicamente;
+- todos os cycles completed serão considerados no hardening gate;
+- `cycle_currency_state` será imutável;
+- `product.evidence_monitor_is_publishable()` passará a exigir também ausência de hardening errors;
+- EvidenceMonitorView permanece candidata à migration 023 após novo Projection Readiness Gate.
+
+Próxima etapa:
+
+> **Implementar migration 022 + atualizar fixture + MONH-T01–T24 + regressões/rebuild.**
