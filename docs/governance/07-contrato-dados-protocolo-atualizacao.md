@@ -213,6 +213,16 @@ Motivo:
 
 > Monitor possui seu próprio estado/plano/currency; Alert possui lifecycle próprio. Aplicar UpdatePolicy a esses objetos criaria recursão semântica e duplicação da camada de manutenção.
 
+Na criação de uma policy ativa:
+
+- target EntityVersion deve existir e estar `version_status='current'`;
+- target ProductVersion não pode estar editorialmente `superseded` ou `archived`;
+- target InvestigationVersion não pode estar invalidated/archived.
+
+Se o target for supersedido depois:
+
+> a policy histórica não muda de target; helper de issues deverá sinalizar `UPDATE_POLICY_TARGET_SUPERSEDED` e exigir nova policy para a nova versão quando a manutenção continuar.
+
 ## 6. Semântica de `effective_maintenance_level`
 
 Esse campo representa:
@@ -359,6 +369,8 @@ Valores temporais concretos ficam em `cadence_policy_payload`, mas o v0.1:
 # 11. Estrutura 2 — `maintenance.update_signal`
 
 Representa um signal detectado sob determinada policy.
+
+No INSERT, a policy referenciada deve estar `record_status='active'`. Supersessão posterior da policy não invalida retrospectivamente o signal: o registro preserva qual regra estava vigente na detecção.
 
 DDL lógico:
 
@@ -638,8 +650,7 @@ CREATE TABLE maintenance.materiality_assessment (
         actor_type IN (
             'ai_system',
             'human_reviewer',
-            'human_expert',
-            'owner'
+            'human_expert'
         )
     ),
 
@@ -680,7 +691,16 @@ CREATE TABLE maintenance.materiality_assessment (
 
 ---
 
+MaterialityAssessment é julgamento científico/metodológico. Por isso `actor_type='owner'` não é permitido nesse registro. Owner pode atuar na UpdateDecision de governança, mas não será tratado como avaliador científico apenas por ser proprietário.
+
 ## 18. Unicidade e supersessão da materialidade
+
+Antes de inserir MaterialityAssessment:
+
+- signal deve estar ativo;
+- se `trigger_class<>'governance_demand'`, deve existir exatamente uma primary source;
+- todas as fontes referenciadas devem passar validação dinâmica de existência/status;
+- sources monitor-derived devem continuar coerentes com o Monitor governante da policy.
 
 Exigir:
 
@@ -856,6 +876,7 @@ O campo `update_signal_uuid` é denormalização controlada para permitir integr
 Guard obrigatório:
 
 - o signal do decision deve ser o mesmo do MaterialityAssessment;
+- no INSERT, MaterialityAssessment referenciado deve estar `record_status='active'`;
 - no máximo um UpdateDecision ativo por UpdateSignal;
 - supersessão deve preservar o mesmo UpdateSignal;
 - novo decision pode referenciar assessment mais recente do mesmo signal;
@@ -903,12 +924,16 @@ Mapeamento mínimo:
 
 ### no_scientific_update
 
-Compatível com:
+Compatível somente com:
 
-- no_material_change;
-- insufficient_to_decide, apenas quando a rationale justificar observação sem atualização imediata.
+- no_material_change.
 
-Não pode usar `currency_action=set_outdated`.
+Pode usar:
+
+- no_change;
+- set_current.
+
+Não pode usar under_evaluation, update_recommended ou outdated.
 
 ### observe
 
@@ -926,6 +951,14 @@ Pode usar:
 ### currentness_only
 
 Não inicia nova versão científica.
+
+Compatível com:
+
+- no_material_change;
+- potentially_material;
+- material_change_confirmed;
+- validity_or_use_threat;
+- insufficient_to_decide.
 
 Pode aplicar:
 
@@ -1135,7 +1168,28 @@ Não inferir expertise apenas da presença de humano.
 
 ---
 
-## 30. M3
+## 30. Issues/readiness helpers
+
+A futura migration deverá expor pelo menos:
+
+- `maintenance.update_policy_issues(update_policy_uuid)`;
+- `maintenance.update_signal_issues(update_signal_uuid)`;
+- `maintenance.materiality_assessment_issues(materiality_assessment_uuid)`;
+- `maintenance.update_decision_issues(update_decision_uuid)`.
+
+Esses helpers deverão detectar estado inválido dinâmico que não pode ser congelado apenas no INSERT, incluindo:
+
+- target superseded/invalidated;
+- Monitor governante superseded/incompatível;
+- source invalidada;
+- Alert source drift;
+- signal sem primary source quando exigida;
+- active decision baseado em assessment superseded;
+- CurrencyState linkage que deixou de representar o histórico esperado.
+
+Helpers não deverão alterar dados.
+
+## 31. M3
 
 O contrato v0.1 permite policy com:
 
@@ -1161,7 +1215,7 @@ O desbloqueio exige contrato posterior específico de M3 readiness.
 
 ---
 
-## 31. Não escopo do contrato v0.1
+## 32. Não escopo do contrato v0.1
 
 Não implementar ainda:
 
@@ -1181,7 +1235,7 @@ Não implementar ainda:
 
 ---
 
-## 32. Guards candidatos da futura migration
+## 33. Guards candidatos da futura migration
 
 A migration candidata deverá implementar pelo menos:
 
@@ -1205,65 +1259,70 @@ A migration candidata deverá implementar pelo menos:
 
 ---
 
-## 33. Testes mínimos esperados
+## 34. Testes mínimos esperados
 
 A futura bateria F4-UP deverá cobrir, no mínimo:
 
 1. target XOR de policy;
 2. uma policy ativa por ProductVersion;
 3. uma policy ativa por InvestigationVersion;
-4. supersessão preserva target;
-5. M0 × cadence;
-6. M1 × cadence;
-7. policy em evidence_monitor/evidence_alert é rejeitada;
-8. policy em Investigation evidence_monitoring é rejeitada;
-9. policy por system/AI é rejeitada;
-10. transições M0–M3 inválidas são rejeitadas;
-11. M2 exige Monitor em policy formal;
-12. M3 exige Monitor mas permanece bloqueado formalmente;
-13. Monitor da policy aponta para mesmo target;
-14. signal exige policy;
-15. signal_type × class × trigger coerentes;
-16. signal verification invariants;
-17. signal material imutável;
-18. source locator XOR;
-19. no máximo uma primary source;
-20. SearchHit fora de Monitor rejeitado;
-21. source Monitor pertencente ao Monitor governante;
-22. Alert source target compatível;
-23. SignalSource selada após assessment;
-24. um assessment ativo por signal;
-25. assessment supersession preserva signal;
-26. materiality outcome × dimensions coerente;
-27. MaterialityDimension selada após decision;
-28. proposal por AI permitida;
-29. authoritative por AI rejeitada;
-30. authoritative com assessment AI-only rejeitada;
-31. authoritative sem human verification rejeitada;
-32. um decision ativo por signal;
-33. decision supersession preserva signal;
-34. decision × materiality coerente;
-35. Investigation target com currency action rejeitado;
-36. Product target currency linkage coerente;
-37. wrong-target CurrencyState rejeitado;
-38. currency action/status mismatch rejeitado;
-39. archived não pode ser produzido por UpdateDecision;
-40. no_change com CurrencyState rejeitado;
-41. cycle CurrencyState pode ser reutilizado quando coerente;
-42. contradição cycle/decision rejeitada;
-43. nenhuma decisão cria ProductVersion automaticamente;
-44. nenhuma decisão cria InvestigationVersion automaticamente;
-45. nenhum registro promove assurance;
-46. M3 blocker existente continua ativo;
-47. migrations 021–026 permanecem idempotentes;
-48. futura migration candidata é idempotente quando desenhada para tal;
-49. rebuild-from-zero through migration candidata;
-50. regressões globais F2-B/S4/S5;
-51. regressões completas de Monitor e Alert.
+4. policy sobre target não-current é rejeitada;
+5. target superseded posteriormente gera issue sem retarget silencioso;
+6. supersessão preserva target;
+7. M0 × cadence;
+8. M1 × cadence;
+9. policy em evidence_monitor/evidence_alert é rejeitada;
+10. policy em Investigation evidence_monitoring é rejeitada;
+11. policy por system/AI é rejeitada;
+12. transições M0–M3 inválidas são rejeitadas;
+13. M2 exige Monitor em policy formal;
+14. M3 exige Monitor mas permanece bloqueado formalmente;
+15. Monitor da policy aponta para mesmo target;
+16. signal exige policy ativa no INSERT;
+17. signal_type × class × trigger coerentes;
+18. signal verification invariants;
+19. signal material imutável;
+20. source locator XOR;
+21. no máximo uma primary source;
+22. SearchHit fora de Monitor rejeitado;
+23. source Monitor pertencente ao Monitor governante;
+24. Alert source target compatível;
+25. SignalSource selada após assessment;
+26. assessment sem primary source rejeitado quando exigida;
+27. owner como materiality assessor rejeitado;
+28. um assessment ativo por signal;
+29. assessment supersession preserva signal;
+30. materiality outcome × dimensions coerente;
+31. MaterialityDimension selada após decision;
+32. proposal por AI permitida;
+33. authoritative por AI rejeitada;
+34. authoritative com assessment AI-only rejeitada;
+35. authoritative sem human verification rejeitada;
+36. um decision ativo por signal;
+37. decision supersession preserva signal;
+38. insufficient_to_decide não pode encerrar como no_scientific_update;
+39. decision × materiality coerente;
+40. Investigation target com currency action rejeitado;
+41. Product target currency linkage coerente;
+42. wrong-target CurrencyState rejeitado;
+43. currency action/status mismatch rejeitado;
+44. archived não pode ser produzido por UpdateDecision;
+45. no_change com CurrencyState rejeitado;
+46. cycle CurrencyState pode ser reutilizado quando coerente;
+47. contradição cycle/decision rejeitada;
+48. nenhuma decisão cria ProductVersion automaticamente;
+49. nenhuma decisão cria InvestigationVersion automaticamente;
+50. nenhum registro promove assurance;
+51. M3 blocker existente continua ativo;
+52. migrations 021–026 permanecem idempotentes;
+53. futura migration candidata é idempotente quando desenhada para tal;
+54. rebuild-from-zero through migration candidata;
+55. regressões globais F2-B/S4/S5;
+56. regressões completas de Monitor e Alert.
 
 ---
 
-## 34. Gate obrigatório antes de migration
+## 35. Gate obrigatório antes de migration
 
 Antes de autorizar `database/027_transversal_update_protocol_contract.sql`, executar revisão adversarial física cobrindo:
 
@@ -1290,6 +1349,6 @@ Resultados permitidos:
 
 ---
 
-## 35. Próximo passo exato
+## 36. Próximo passo exato
 
 > **Executar a revisão adversarial física do Documento 07. Somente em PASS ou PASS_WITH_ARCHITECTURAL_DECISIONS poderá ser autorizada a migration candidata 027.**
