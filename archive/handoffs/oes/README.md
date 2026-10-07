@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP95 — 2026-10-07**
+**CP96 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP95.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP96.md`
 
 Checkpoint anterior:
 
-`CP94`
+`CP95`
 
 Status:
 
@@ -199,3 +199,4 @@ em **Modo Continuidade**.
 - **CP93 — 2026-10-07:** arquitetura transversal de SLA = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 028 segue não autorizada; retomada em prioridade/escalation.
 - **CP94 — 2026-10-07:** auditoria retrospectiva e hardening corretivo da Fase 4 = CLOSED_PASS; migration 028 corretiva + P01–P63 PASS; retomada: prioridade/escalation.
 - **CP95 — 2026-10-07:** arquitetura transversal de prioridade/escalation = PASS_WITH_ARCHITECTURAL_DECISIONS; retomada: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration.
+- **CP96 — 2026-10-07:** contrato operacional integrado = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 029 autorizada em escopo estrito e ainda não implementada; retomada: implementação + F4-OC-T01–T72 + S5.
