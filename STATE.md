@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP99 — 2026-10-07**.
+- checkpoint vigente: **CP100 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1848,3 +1848,24 @@ Hardening consolidado:
 
 Próximo passo:
 > **especificar o Contrato Físico v0.1 de Propagation/Re-baselining e submetê-lo a novo gate antes de qualquer migration.**
+
+### CP100 — arquitetura de propagation/re-baselining
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP100.md`;
+- ponteiro movido para CP100;
+- `PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY`;
+- Documento 33 hardenizado após primeira passagem adversarial REVISE;
+- Documento 34 recheck final = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- cross-target policy supersession continua proibida;
+- MonitorTarget retarget in-place continua proibido;
+- new M2/M3 target exige novo Monitor ProductVersion current e coerente;
+- propagation→UpdateSignal exige adapter estruturado futuro;
+- lineage validation, multiple paths, cycle/depth guard e concurrency estão explicitados;
+- UpdateRiskProfile/SLA/workflow/Priority/Escalation/Alert históricos não são retargeteados;
+- nenhuma migration autorizada;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua run **37618433929** (#161) do CP99;
+- próximo passo: Contrato Físico v0.1 + novo gate, ainda em modo alto;
+- Fase 5 não iniciada;
+- pausa obrigatória após checkpoint permanece vigente.
