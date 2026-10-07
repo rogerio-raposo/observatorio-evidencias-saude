@@ -138,16 +138,18 @@ $t$;
 -- MON-T19 — one Search execution cannot belong to two cycles.
 BEGIN;
 INSERT INTO maintenance.monitor_cycle(
-    cycle_uuid,monitor_product_version_uuid,cycle_no,
+    cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
     window_start_date,window_end_date,started_at,
     execution_status,completeness_status
 ) VALUES
 ('e55f0000-0000-0000-0000-000000000191',
  'e5100000-0000-0000-0000-000000000005',91,
+    'e5420000-0000-0000-0000-000000000002',
  DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
  'running','not_assessed'),
 ('e55f0000-0000-0000-0000-000000000192',
  'e5100000-0000-0000-0000-000000000005',92,
+    'e5420000-0000-0000-0000-000000000002',
  DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
  'running','not_assessed');
 
@@ -185,12 +187,13 @@ ROLLBACK;
 -- MON-T20 — Search from scientific target Investigation cannot be appropriated.
 BEGIN;
 INSERT INTO maintenance.monitor_cycle(
-    cycle_uuid,monitor_product_version_uuid,cycle_no,
+    cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
     window_start_date,window_end_date,started_at,
     execution_status,completeness_status
 ) VALUES (
     'e55f0000-0000-0000-0000-000000000201',
     'e5100000-0000-0000-0000-000000000005',93,
+    'e5420000-0000-0000-0000-000000000002',
     DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
     'running','not_assessed'
 );
@@ -228,13 +231,14 @@ DECLARE blocked boolean:=false;
 BEGIN
     BEGIN
         INSERT INTO maintenance.monitor_cycle(
-            cycle_uuid,monitor_product_version_uuid,cycle_no,
+            cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
             window_start_date,window_end_date,started_at,completed_at,
             execution_status,completeness_status,maintenance_decision,
             decision_rationale,decided_by,actor_type
         ) VALUES (
             'e55f0000-0000-0000-0000-000000000210',
             'e5100000-0000-0000-0000-000000000005',94,
+    'e5420000-0000-0000-0000-000000000002',
             DATE '2026-10-07',DATE '2026-10-07',
             CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,
             'incomplete','partial','no_update_needed',
@@ -269,12 +273,13 @@ DECLARE blocked boolean:=false;
 BEGIN
     BEGIN
         INSERT INTO maintenance.monitor_cycle(
-            cycle_uuid,monitor_product_version_uuid,cycle_no,
+            cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
             window_start_date,window_end_date,started_at,
             execution_status,completeness_status
         ) VALUES (
             'e55f0000-0000-0000-0000-000000000222',
             'e5100000-0000-0000-0000-000000000005',95,
+    'e5420000-0000-0000-0000-000000000002',
             DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
             'running','not_assessed'
         );
@@ -290,12 +295,13 @@ ROLLBACK;
 -- MON-T23 — AI cannot be recorded as human verifier for a candidate.
 BEGIN;
 INSERT INTO maintenance.monitor_cycle(
-    cycle_uuid,monitor_product_version_uuid,cycle_no,
+    cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
     window_start_date,window_end_date,started_at,
     execution_status,completeness_status
 ) VALUES (
     'e55f0000-0000-0000-0000-000000000231',
     'e5100000-0000-0000-0000-000000000005',96,
+    'e5420000-0000-0000-0000-000000000002',
     DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
     'running','not_assessed'
 );
@@ -351,12 +357,13 @@ ROLLBACK;
 -- MON-T24 — pending candidate blocks cycle completion.
 BEGIN;
 INSERT INTO maintenance.monitor_cycle(
-    cycle_uuid,monitor_product_version_uuid,cycle_no,
+    cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
     window_start_date,window_end_date,started_at,
     execution_status,completeness_status
 ) VALUES (
     'e55f0000-0000-0000-0000-000000000241',
     'e5100000-0000-0000-0000-000000000005',97,
+    'e5420000-0000-0000-0000-000000000002',
     DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
     'running','not_assessed'
 );
@@ -418,12 +425,13 @@ ROLLBACK;
 -- MON-T25 — unassessed active EvidenceEvent blocks cycle completion.
 BEGIN;
 INSERT INTO maintenance.monitor_cycle(
-    cycle_uuid,monitor_product_version_uuid,cycle_no,
+    cycle_uuid,monitor_product_version_uuid,cycle_no,previous_cycle_uuid,
     window_start_date,window_end_date,started_at,
     execution_status,completeness_status
 ) VALUES (
     'e55f0000-0000-0000-0000-000000000251',
     'e5100000-0000-0000-0000-000000000005',98,
+    'e5420000-0000-0000-0000-000000000002',
     DATE '2026-10-07',DATE '2026-10-07',CURRENT_TIMESTAMP,
     'running','not_assessed'
 );
