@@ -2733,3 +2733,35 @@ Documentos:
 - ponteiro de continuidade movido para CP88;
 - estado consolidado: `PHASE_3_COMPLETE / PHASE_4_NOT_STARTED`;
 - Fase 4 permanece não iniciada e exige consentimento explícito do usuário em nova conversa.
+
+## 2026-10-06 — Fase 4 iniciada: Protocolo Transversal de Atualização
+
+- Freshness Gate confirmou CP88 como estado canônico de encerramento da Fase 3;
+- corrigida a divergência não material do cabeçalho de STATE.md, que ainda declarava Fase 3 em desenvolvimento;
+- criado o Documento 05 — Protocolo Transversal de Atualização v0.1;
+- arquitetura separa versão científica, currentness, manutenção M0–M3 e estado operacional/comunicacional;
+- definidos signals científicos/currentness e signals operacionais como classes distintas;
+- definidos gatilhos, avaliação de materialidade, state machine de currentness, cadence grammar, relógios de SLA, priorização, propagação, governança e fronteira de automação;
+- currentness canônico permanece exclusivo de ProductVersion;
+- InvestigationVersion não recebe CurrencyState artificial;
+- cadence vencida/ciclo incompleto não altera currentness automaticamente;
+- criado o Documento 06 — revisão adversarial;
+- revisão = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- M3 permanece bloqueado por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`;
+- Documento 05 não remove nem contorna o blocker técnico;
+- nenhuma migration, View, template, renderer ou workflow foi alterado;
+- última evidência técnica permanece S5 run **37561515491** (#141) = success;
+- próximo passo: Contrato de Dados v0.1 do Protocolo Transversal de Atualização, antes de qualquer migration.
+
+## 2026-10-06 — CP89
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP89.md`;
+- ponteiro de continuidade movido para CP89;
+- STATE atualizado para **Fase 4 — Protocolo de Atualização**;
+- `PROJECT_STATE = PHASE_4_IN_PROGRESS`;
+- `PHASE_4_UPDATE_PROTOCOL_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- data contract = NOT_YET_SPECIFIED;
+- migration de Fase 4 = NOT_AUTHORIZED;
+- M3 formal operacional = BLOCKED;
+- retomada exata: especificar maintenance policy/version, update signal, materiality assessment e update decision, seguido de gate de coerência física.
+
