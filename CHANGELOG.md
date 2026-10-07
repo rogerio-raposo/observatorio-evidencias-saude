@@ -2381,3 +2381,18 @@ Documentos:
 - migration readiness = NOT_YET;
 - ponteiro de continuidade movido para CP74;
 - retomada movida para **Contrato de Dados v0.1 do Monitor de Evidências**.
+
+
+## 2026-10-06 — Evidence Monitor data contract v0.1
+
+- Documento 167 criado;
+- contrato = **DATA_CONTRACT_V0_1_READY_FOR_IMPLEMENTATION**;
+- schema `maintenance` definido conceitualmente;
+- oito estruturas especializadas definidas;
+- cutoff do Monitor definido como baseline estático da versão monitorada;
+- cycles passam a carregar cutoffs posteriores;
+- Search/SearchHit, currentness, version_change_class e provenance são reutilizados;
+- Monitor M2 formal v0.1 exige A2;
+- M3 formal permanece bloqueado até Protocolo de Atualização da Fase 4;
+- migration candidata = `database/021_evidence_monitor_contract.sql`;
+- próxima etapa: migration 021 + fixture + testes + rebuild/regressões.
