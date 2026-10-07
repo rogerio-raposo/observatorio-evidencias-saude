@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP108 — 2026-10-07**.
+- checkpoint vigente: **CP109 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2387,3 +2387,23 @@ Princípio validado:
 
 Próximo passo:
 > **após checkpoint, decidir em modo alto entre especificar um Temporal Observation Plan não normativo para N1-01 ou executar um segundo real-context readiness assessment antes de iniciar observação prospectiva.**
+
+
+### CP109 — primeiro Evidence Readiness real
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP109.md`;
+- ponteiro movido para CP109;
+- `FIRST_REAL_READINESS_ASSESSMENT = COMPLETED`;
+- contexto = N1-01 / ProductVersion 2 / cadence / policy_aggregate;
+- `PRIMARY_READINESS_STATE = INSUFFICIENT_EVIDENCE`;
+- `READY_FOR_CALIBRATION = NO`;
+- Calibration Dossier real para o contexto = não autorizado;
+- Temporal Observation Plan = ainda não especificado;
+- nenhum valor temporal normativo autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications continuam deferidos;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: decidir em modo alto entre observation plan não normativo para N1-01 ou segundo readiness assessment real;
+- pausa obrigatória preservada.
