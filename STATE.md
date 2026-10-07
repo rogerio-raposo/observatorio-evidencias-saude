@@ -2065,3 +2065,52 @@ Próximo passo:
 - modo alto recomendado antes da metodologia de calibração;
 - Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — metodologia de calibração temporal
+
+Documentos:
+- 39 — Metodologia de Calibração Temporal da Fase 4;
+- 40 — Gate Adversarial da Metodologia de Calibração Temporal.
+
+Estado:
+> **TEMPORAL_CALIBRATION_METHODOLOGY = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **MIGRATION_032 = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Metodologia fechada:
+- calibração por envelopes independentes, sem score;
+- A1–A5 não mapeiam automaticamente para números;
+- seleção por constraints + dominância/Pareto;
+- source latency não determina cadence isoladamente;
+- replay inclui censura/missingness/falhas;
+- PriorityAssessment usado na seleção SLA é snapshot pré-instance;
+- calibração provisional não vira rule ativa;
+- repeated breach não relaxa SLA automaticamente;
+- external deadline exige compatibilidade semântica;
+- capacity/calendar laundering proibidos.
+
+Pré-requisitos físicos autorizados apenas para especificação:
+- Calibration Dossier + structured basis;
+- cadence schema/obligation contract;
+- source-scoped cadence support quando necessário;
+- canonical SLA rule resolver;
+- filter-domain validation;
+- canonical rule snapshot;
+- nominal due calculator;
+- business-calendar arithmetic;
+- fixed-deadline lineage;
+- calendar effective-window;
+- warning/breach/escalation schemas;
+- issue/readiness helpers e test plan.
+
+Nenhum valor numérico, calendário real ou SLARule normativa foi autorizado.
+
+Próximo passo:
+> **especificar contrato físico v0.1 dos pré-requisitos de calibração temporal e submetê-lo a novo gate antes de qualquer migration ou valor normativo.**
