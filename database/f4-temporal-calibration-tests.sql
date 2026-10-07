@@ -647,8 +647,8 @@ SELECT pg_temp.assert_true((maintenance.sla_calendar_open_seconds_between('f5300
 -- T208 — weekend add moves to Monday
 SELECT pg_temp.assert_true((maintenance.sla_calendar_add_open_seconds('f5300000-0000-0000-0000-000000000001',TIMESTAMPTZ '2026-10-10 12:00:00+00',3600)=TIMESTAMPTZ '2026-10-12 12:00:00+00'),'F4-TCAL-PH-T208');
 
--- T209 — weekend subtract moves to Friday close
-SELECT pg_temp.assert_true((maintenance.sla_calendar_subtract_open_seconds('f5300000-0000-0000-0000-000000000001',TIMESTAMPTZ '2026-10-12 12:00:00+00',3600)=TIMESTAMPTZ '2026-10-09 20:00:00+00'),'F4-TCAL-PH-T209');
+-- T209 — Monday open-hour subtraction is local-calendar correct
+SELECT pg_temp.assert_true((maintenance.sla_calendar_subtract_open_seconds('f5300000-0000-0000-0000-000000000001',TIMESTAMPTZ '2026-10-12 12:00:00+00',3600)=TIMESTAMPTZ '2026-10-12 11:00:00+00'),'F4-TCAL-PH-T209');
 
 -- T210 — active SLA lineage is open-ended
 SELECT pg_temp.assert_true((maintenance.sla_rule_effective_until('f5400000-0000-0000-0000-000000000001') IS NULL),'F4-TCAL-PH-T210');
