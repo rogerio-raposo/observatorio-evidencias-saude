@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP96 — 2026-10-07**.
+- checkpoint vigente: **CP97 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1652,4 +1652,24 @@ Limites preservados:
 Próximo passo:
 
 > **ser definido no checkpoint pós-PASS; nenhum novo bloco funcional é iniciado automaticamente.**
+
+### CP97 — PASS técnico do controle operacional integrado
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP97.md`;
+- ponteiro movido para CP97;
+- `INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_029 = PASS`;
+- F4-OC-T01–T72 = PASS;
+- run canônico **37580906483** (#150) = success;
+- technical HEAD `ae45918bb8cbf1ab929aec2e1af53f7239f75323`;
+- artifact **11464672034**;
+- digest `sha256:ec4546afc64fb5eb86b69d966905fc583cfbe43e4586abc922b57eb48e67a43c`;
+- rebuild-through-029 = PASS;
+- regressões completas = PASS;
+- F4-UP-T01–T63/P01–P63 permanecem verdes;
+- M3 formal permanece bloqueado;
+- nenhum SLA normativo/score/auto-escalation foi introduzido;
+- próximo bloco da Fase 4 ainda não foi selecionado;
+- Fase 5 não iniciada;
+- pausa obrigatória após checkpoint permanece vigente.
 
