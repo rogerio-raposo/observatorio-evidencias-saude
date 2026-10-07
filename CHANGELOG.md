@@ -2436,3 +2436,17 @@ Documentos:
 - run final 37553271462 (#122) = success;
 - ponteiro de continuidade movido para CP76;
 - retomada movida para **Projection Readiness Gate da EvidenceMonitorView**.
+
+
+## 2026-10-06 — Evidence Monitor Projection Readiness NOT_READY
+
+- Documento 169 criado;
+- Projection Readiness da EvidenceMonitorView = **NOT_READY**;
+- PR-MON-01: múltiplas categorias de impacto não estão normalizadas;
+- PR-MON-02: source policy é apenas parcialmente interpretada pelo engine;
+- PR-MON-03: exceções de cobertura via MethodDecision não entram no cálculo de coverage;
+- PR-MON-04: temporal consistency de cycle/Search e drift dinâmico ainda são incompletos;
+- PR-MON-05: Cycle → CurrencyState ainda pode ser regravado;
+- migration 022 passa a ser reservada ao **Projection Readiness hardening**;
+- EvidenceMonitorView passa a ser candidata para migration 023;
+- nenhum template ou Caso Real do Monitor está autorizado antes do novo gate.
