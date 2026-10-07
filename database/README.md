@@ -361,9 +361,13 @@ Estado metodológico após Documentos 16–28:
 - priority score/pesos numéricos = **NOT_DEFINED**;
 - auto-escalation = **NOT_AUTHORIZED**;
 - contrato operacional integrado = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-- migration 029 = **AUTHORIZED_IN_STRICT_SCOPE**, ainda não implementada.
+- migration 029 = **TECHNICALLY_VALIDATED**;
+- F4-OC-T01–T72 = **PASS**;
+- rebuild-through-029 = **PASS**;
+- regressões completas = **PASS**;
+- run canônico = **37580906483** (#150), success.
 
 Próxima etapa metodológica:
 
-> **implementar migration 029 estritamente conforme Documentos 27–28 + F4-OC-T01–T72 + S5/idempotência/rebuild/regressões.**
+> **definir o próximo bloco da Fase 4 a partir das dívidas ainda abertas, sem presumir autorização para calibração SLA, scheduler, notifications, propagation/re-baselining ou M3 readiness.**
 
