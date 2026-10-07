@@ -3043,3 +3043,19 @@ Documentos:
 - Documento 29 registra `INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = TECHNICALLY_VALIDATED`;
 - nenhum número SLA normativo, priority score, auto-escalation ou M3 unblock foi introduzido.
 
+## 2026-10-07 — CP97
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP97.md`;
+- ponteiro de continuidade movido para CP97;
+- migration 029 e contrato operacional integrado = **TECHNICALLY_VALIDATED**;
+- F4-OC-T01–T72 = PASS;
+- run canônico **37580906483** (#150) = success;
+- artifact **11464672034**;
+- rebuild-through-029 = PASS;
+- regressões completas = PASS;
+- M3 blocker preservado;
+- documentos agregados reconciliados após período de baixa visibilidade na interface;
+- próximo bloco da Fase 4 ainda não selecionado;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
+
