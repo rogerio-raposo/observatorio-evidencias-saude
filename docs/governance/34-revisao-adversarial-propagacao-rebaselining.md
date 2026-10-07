@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — primeira passagem adversarial**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — após correções e recheck**  
 **Dependências:** Documento 33; Documentos 05–09, 16–32; docs/architecture/28–29; migrations 004, 021–030  
 **Objeto:** revisão adversarial da arquitetura candidata de propagation/re-baselining antes de qualquer contrato físico
 
@@ -671,3 +671,179 @@ Antes do recheck final, incorporar:
 ## 26. Próximo passo exato
 
 > **Corrigir o Documento 33 conforme AR-F4-PR01–PR20 e executar recheck adversarial antes de qualquer contrato físico.**
+
+
+---
+
+## 27. Recheck pós-hardening do Documento 33
+
+O Documento 33 foi corrigido após a primeira passagem e submetido a recheck.
+
+### PR01–PR03 — target elegível, policy e source adapter
+
+Correções confirmadas:
+
+- maintainable target separado de intermediate dependency object;
+- `maintenance_policy_required` explícito;
+- UpdateSignal downstream exige policy ativa;
+- propagation→UpdateSignal requer adapter estruturado futuro;
+- causalidade original do signal deve ser preservada.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISIONS.
+
+### PR04–PR06 — cardinalidade, traversal e lineage
+
+Correções confirmadas:
+
+- um candidate por assessment + impacted version;
+- 1:N paths congelados;
+- cycle/depth guard obrigatório;
+- traversal truncada não equivale a no impact;
+- lineage validation status explícito;
+- `no_action_supported` authoritative depende de lineage suficientemente validado.
+
+**Resultado:** PASS.
+
+### PR07–PR09 — chain e policy handover
+
+Correções confirmadas:
+
+- same entity + tipo compatível + chain auditável;
+- skipped versions congeladas;
+- planned/activated separados;
+- new target deve estar current na ativação;
+- old/new policy lineage separado de same-target supersession;
+- handover incompleto deve ser detectável.
+
+**Resultado:** PASS.
+
+### PR10–PR12 — Monitor e coverage
+
+Correções confirmadas:
+
+- M2/M3 new policy só ativa após novo Monitor coerente;
+- novo Monitor ProductVersion deve estar current para ativação;
+- Monitor disposition distingue same lineage, replacement e stop;
+- MonitorTarget permanece imutável;
+- old cycles/sources não são movidos;
+- coverage partition diferencia incorporado, post-cutoff, gaps e recheck;
+- old completed_at não redefine baseline.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+### PR13 — UpdateRiskProfile
+
+Correções confirmadas:
+
+- old profile UUID não migra;
+- disposition explícita;
+- carry-forward segue migration 030;
+- ausência de profile aplicável bloqueia nova PriorityAssessment quando o contrato vigente o exigir.
+
+**Resultado:** PASS.
+
+### PR14–PR15 — SLA Rule/Instance
+
+Correções confirmadas:
+
+- SLA Rule continua vinculada à old policy;
+- `supersedes_sla_rule_uuid` não atravessa policy;
+- new policy exige novas rules ou estado não configurado;
+- SLACalendarVersion pode ser reaproveitada apenas por adoção explícita quando válida;
+- nenhuma duração/deadline é copiada por default;
+- open SLA Instance recebe disposition explícita;
+- original due/breach/history são preservados.
+
+**Resultado:** PASS.
+
+### PR16–PR18 — workflow, casos operacionais e concorrência
+
+Correções confirmadas:
+
+- RebaselineDecision pode citar UpdateDecision/WorkflowRound/result version;
+- old signal/workflow não é retargeteado;
+- Priority/Escalation históricos não são copiados;
+- mudança de new target durante handover exige nova decisão append-preserving;
+- não existe follow-latest automático.
+
+**Resultado:** PASS.
+
+### PR19 — authority
+
+Correções confirmadas:
+
+- domain explícito operational/scientific/methodological/mixed;
+- owner sozinho limitado a disposição puramente operacional;
+- scientific/methodological/mixed authoritative exige boundary humana qualificada.
+
+**Resultado:** PASS.
+
+### PR20 — M3
+
+Confirmado:
+
+> **M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL**
+
+Propagation/re-baselining é requisito necessário, não suficiente.
+
+**Resultado:** PASS.
+
+---
+
+## 28. Decisões arquiteturais finais
+
+O recheck fixa:
+
+1. propagation assessment é registro de julgamento; dependency_edge é apenas suporte de descoberta/projeção;
+2. downstream scientific/currentness action ocorre via fluxo local próprio, nunca por write propagation;
+3. re-baselining só cruza versões da mesma entidade, com chain auditável;
+4. UpdatePolicy same-target supersession permanece semanticamente intacta;
+5. cross-target policy lineage será estrutura própria;
+6. MonitorTarget continua imutável;
+7. M2/M3 exige novo Monitor current e coerente antes da new policy;
+8. risk profile, SLA Rule, signals, Priority, Escalation, workflow e Alert não são retargeteados;
+9. carry-forward é sempre explícito, auditável e authority-sensitive;
+10. nenhum objeto científico downstream é alterado automaticamente.
+
+---
+
+## 29. Escopo autorizado após o gate
+
+Autorizado:
+
+> **especificar o Contrato Físico v0.1 de Propagation/Re-baselining.**
+
+Esse próximo contrato poderá propor estruturas, validators, issue/readiness helpers e plano de testes.
+
+Ainda não autorizado:
+
+- migration;
+- scheduler;
+- notification channels;
+- auto-escalation;
+- numeric SLA calibration;
+- numeric cadence;
+- auto-retarget;
+- auto-rebaseline;
+- automatic currentness change;
+- M3 unblock;
+- operação humana fabricada.
+
+---
+
+## 30. Estado final
+
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+> **MIGRATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 31. Próximo passo exato
+
+> **Especificar o Contrato Físico v0.1 de Propagation/Re-baselining e submetê-lo a novo gate adversarial/físico antes de qualquer migration.**
+
