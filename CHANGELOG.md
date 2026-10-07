@@ -3008,3 +3008,18 @@ Documentos:
 - nenhuma duração SLA, score/peso, auto-escalation ou M3 unblock autorizados;
 - implementação deverá cobrir F4-OC-T01–T72 + idempotência + rebuild + regressões.
 
+## 2026-10-07 — CP96
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP96.md`;
+- ponteiro de continuidade movido para CP96;
+- contrato operacional integrado consolidado em **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- migration 029 autorizada somente em escopo **OPERATIONAL_CONTROL_INFRASTRUCTURE_ONLY**;
+- migration 029 ainda não implementada;
+- F4-OC-T01–T72 definido como plano mínimo de testes;
+- nenhuma duração SLA, score/peso ou auto-escalation autorizados;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua run **37576434417** (#144), through migration 028;
+- próximo passo: implementação migration 029 + testes + validação canônica;
+- modo médio seguro para implementação mecânica, com escalada para alto diante de nova decisão arquitetural;
+- regra de pausa após checkpoint preservada.
+
