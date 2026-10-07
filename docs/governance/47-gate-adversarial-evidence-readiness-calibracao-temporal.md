@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — primeira passagem**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — após recheck final**  
 **Revisa:** Documento 46  
 **Objeto:** atacar o protocolo de readiness antes de qualquer avaliação em contexto real
 
@@ -419,3 +419,272 @@ Antes do recheck, o Documento 46 deve incorporar:
 > **Aplicar o hardening ao Documento 46 e reexecutar este gate.**
 
 Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar a primeira avaliação de readiness em contexto real.
+
+
+---
+
+# RECHECK FINAL APÓS HARDENING
+
+## 25. Objeto do recheck
+
+O recheck foi executado contra o Documento 46 após o hardening persistido no commit:
+
+4bbcb180cecf6659934a4f1e9e1bf32c90639013
+
+Foram reavaliados todos os achados ERG-01–ERG-20.
+
+## 26. ERG-01 — synthetic leakage
+
+Fechado.
+
+O protocolo agora exige prova positiva de realidade/admissibilidade, não mera ausência de label sintético.
+
+> **PASS**
+
+## 27. ERG-02 — authority
+
+Fechado.
+
+IA/system pode preparar assessment, mas READY_FOR_CALIBRATION exige human verification compatível com os domínios científico/metodológico e operacional materialmente envolvidos.
+
+Essa verificação não equivale a normative activation.
+
+> **PASS_WITH_ARCHITECTURAL_DECISION**
+
+## 28. ERG-03 — blocker dominance
+
+Fechado.
+
+READY exige blocker set material vazio.
+
+Não é permitido READY com NEEDS_HUMAN_AUTHORITY, NEEDS_SOURCE_CHARACTERIZATION, capacity conflict ou outro blocker material registrado como secundário.
+
+> **PASS**
+
+## 29. ERG-04 e ERG-15 — amostra, cohort e replay
+
+Fechados.
+
+O protocolo agora exige:
+
+- cohort definition;
+- inclusion/exclusion;
+- observation-window rationale;
+- denominator ou limitação explícita;
+- case/event count;
+- missing/censored count;
+- structural breaks;
+- peak-load/failure representation;
+- pre-specification antes de candidate comparison.
+
+Análise exploratória permanece permitida, mas não sustenta READY sozinha.
+
+> **PASS**
+
+## 30. ERG-05 — external evidence persistence
+
+Fechado.
+
+Fato externo material para READY deve possuir locator persistente/auditável.
+
+Sem preservação, não pode ser controlling basis.
+
+> **PASS**
+
+## 31. ERG-06 — measurement schedule drift
+
+Fechado.
+
+Measurement schedule:
+
+- permanece explicitamente non-normative;
+- possui lifecycle;
+- não pode ser vinculado a policy/cadence/SLA;
+- não produz compliance/overdue/breach;
+- não aciona notification/auto-escalation;
+- não vira candidate por persistência.
+
+> **PASS**
+
+## 32. ERG-07 — R7
+
+Fechado.
+
+Not applicable exige rationale e verification compatível quando material.
+
+Unknown não pode ser convertido em not applicable.
+
+> **PASS**
+
+## 33. ERG-08 — source behavior versus latency
+
+Fechado.
+
+O protocolo separa documented source schedule, observed source latency, availability, OES detection latency e polling/process latency.
+
+> **PASS**
+
+## 34. ERG-09 — zero-event fallacy
+
+Fechado.
+
+Zero event sem coverage/denominator/observability adequados não sustenta adequação.
+
+> **PASS**
+
+## 35. ERG-10 — drift invalidation
+
+Fechado.
+
+Antes de abrir Calibration Dossier, READY deve ser revalidado contra target, Monitor, source/API, workflow, capacity, calendar, authority, external rule e evidence cut-off.
+
+> **PASS**
+
+## 36. ERG-11 — governance judgment
+
+Permanece fechado.
+
+Judgment não preenche dado ausente.
+
+> **PASS**
+
+## 37. ERG-12 — capacity laundering
+
+Fechado com hardening adicional.
+
+Observed constrained performance foi separado de sustainable capacity e resource deficit.
+
+> **PASS**
+
+## 38. ERG-13 — calendar laundering
+
+Permanece fechado.
+
+Institutional calendar depende de obligation/authority, não de horário informal da equipe.
+
+> **PASS**
+
+## 39. ERG-14 — fixed deadline applicability
+
+Fechado.
+
+Legal/regulatory/contractual/institutional applicability exige autoridade institucional competente.
+
+Automação pode extrair e sinalizar; não pode decidir applicability normativa sozinha.
+
+> **PASS**
+
+## 40. ERG-16 — real-case overgeneralization
+
+Fechado.
+
+Pilot readiness vale somente para exact context.
+
+Transportability exige nova avaliação quando diferenças materiais existirem.
+
+> **PASS**
+
+## 41. ERG-17 — segundo sistema normativo
+
+Permanece fechado.
+
+Readiness artifact continua metodológico/governamental e não armazena valor normativo decisório.
+
+> **PASS**
+
+## 42. ERG-18 — circularidade com Calibration Dossier
+
+Permanece fechado.
+
+READY apenas autoriza abertura de dossier real inicial; dossier não retroage para reescrever readiness.
+
+> **PASS**
+
+## 43. ERG-19 — prospective observation data governance
+
+Fechado.
+
+Observation Plan exige minimização, finalidade, acesso, segurança, retenção, confidentiality/privacy e provenance.
+
+Quando governance específica for necessária, observação não começa antes dela.
+
+> **PASS**
+
+## 44. ERG-20 — stale readiness
+
+Fechado.
+
+Todo READY exige reassess_by ou rationale explícita para ausência de data fixa, além de event-based invalidation triggers.
+
+> **PASS**
+
+## 45. Decisões arquiteturais preservadas
+
+O recheck consolida:
+
+1. readiness é pré-calibração;
+2. readiness não é Calibration Dossier;
+3. readiness não contém valor normativo;
+4. READY apenas autoriza abrir dossier real inicial;
+5. human verification do READY não é normative approval;
+6. measurement schedule é não normativo;
+7. evidence readiness pode ser documental sem migration nova;
+8. migration 032 continua suficiente para o passo seguinte;
+9. qualquer novo stratifier/time basis/endpoint/authority semantics retorna à arquitetura;
+10. blockers materiais dominam READY.
+
+## 46. Autorização resultante
+
+> **TEMPORAL_CALIBRATION_EVIDENCE_READINESS_PROTOCOL = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READINESS_ASSESSMENT_ON_REAL_CONTEXT = AUTHORIZED_UNDER_PROTOCOL**
+
+Essa autorização permite:
+
+- selecionar um exact real context;
+- inventariar evidência real;
+- classificar inputs R1–R7;
+- emitir readiness state sob o protocolo;
+- recomendar observation plan não normativo quando necessário.
+
+Ela não permite:
+
+- escolher cadence/SLA/grace/warning/threshold;
+- abrir Calibration Dossier se o resultado não for READY_FOR_CALIBRATION;
+- normative activation;
+- real CadenceContract;
+- real SLARule;
+- real SLACalendarVersion;
+- real calibrated UpdatePolicy;
+- scheduler;
+- notification delivery;
+- auto-escalation;
+- M3 unblock.
+
+## 47. Estado final
+
+> **TEMPORAL_CALIBRATION_EVIDENCE_READINESS_PROTOCOL = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **FIRST_REAL_READINESS_ASSESSMENT = AUTHORIZED_FOR_SELECTION_AND_EXECUTION**
+
+> **REAL_CALIBRATION_DOSSIER = CONDITIONALLY_AUTHORIZED_ONLY_AFTER_CONTEXT_SPECIFIC_READY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **NO_NEW_MIGRATION = AUTHORIZED**
+
+> **SCHEDULER = DEFERRED**
+
+> **NOTIFICATIONS = DEFERRED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+## 48. Próximo passo exato
+
+> **Após checkpoint, selecionar em modo alto o primeiro exact real context para Evidence Readiness e executar apenas o readiness assessment, sem iniciar calibração numérica.**
+
+A seleção do primeiro contexto deve evitar generalização indevida e deve explicitar por que aquele contexto é adequado como primeiro piloto metodológico.
