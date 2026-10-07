@@ -377,7 +377,7 @@ INSERT INTO maintenance.update_policy(
 ) VALUES (
  'fb000000-0000-0000-0000-000000000170',
  '61000000-0000-0000-0000-000000000014',
- 'M1','event_driven',TIMESTAMPTZ '2026-10-07 01:19+00',
+ 'M0','none',TIMESTAMPTZ '2026-10-07 01:19+00',
  'P17 inactive policy','audit-owner','owner','superseded'
 );
 SELECT pg_temp.expect_error_like(
