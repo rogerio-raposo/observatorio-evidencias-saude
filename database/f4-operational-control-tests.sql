@@ -219,28 +219,28 @@ SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa090000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000003',
  'f4000000-0000-0000-0000-000000000001',
  'execution','standard','operational','proposal','adequate',
- pg_temp.risk(),'Duplicate active priority','oc-test-ai','ai_system',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Duplicate active priority','oc-test-ai','ai_system',
  'unverified',TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$$,'F4-OC-T09');
+)$,'F4-OC-T09');
 
 -- T10 — AI priority proposal allowed.
 SAVEPOINT t10;
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa100000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'signal_triage','standard','operational','proposal','adequate',
- pg_temp.risk(),'AI proposal','oc-test-ai','ai_system','unverified',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'AI proposal','oc-test-ai','ai_system','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
 );
 SELECT pg_temp.assert_true(EXISTS(SELECT 1 FROM maintenance.priority_assessment
@@ -253,30 +253,30 @@ SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa110000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'signal_triage','expedited','scientific','authoritative','adequate',
- pg_temp.risk(),'AI authoritative invalid','oc-test-ai','ai_system','unverified',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'AI authoritative invalid','oc-test-ai','ai_system','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$$,'F4-OC-T11');
+)$,'F4-OC-T11');
 
 -- T12 — owner cannot author authoritative scientific/mixed priority.
 SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa120000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'signal_triage','expedited','mixed','authoritative','adequate',
- pg_temp.risk(),'Owner scientific priority invalid','oc-test-owner','owner','unverified',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Owner scientific priority invalid','oc-test-owner','owner','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$$,'F4-OC-T12');
+)$,'F4-OC-T12');
 
 -- T13 — AI-only materiality cannot support authoritative scientific priority.
 SAVEPOINT t13;
@@ -296,12 +296,12 @@ INSERT INTO maintenance.priority_assessment(
  'fa130000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'materiality_resolution','expedited','scientific','authoritative','adequate',
- 'fa131000-0000-0000-0000-000000000001',pg_temp.risk(),
+ 'fa131000-0000-0000-0000-000000000001','f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),
  'AI-only materiality invalid for authoritative priority',
  'oc-test-reviewer','human_reviewer','human_verified',
  'oc-test-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-07 02:05:00+00',
  TIMESTAMPTZ '2026-10-07 02:06:00+00'
-)$$,'F4-OC-T13');
+)$,'F4-OC-T13');
 ROLLBACK TO SAVEPOINT t13; RELEASE SAVEPOINT t13;
 
 -- T14 — response class domain closed.
@@ -309,28 +309,28 @@ SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa140000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'signal_triage','critical','operational','proposal','adequate',
- pg_temp.risk(),'Invalid class','oc-test-ai','ai_system','unverified',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Invalid class','oc-test-ai','ai_system','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$$,'F4-OC-T14');
+)$,'F4-OC-T14');
 
 -- T15 — immediate priority does not auto-create escalation.
 SAVEPOINT t15;
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
+ update_risk_profile_uuid,risk_profile_snapshot,rationale,assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa150000-0000-0000-0000-000000000001',
  'f4100000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',
  'signal_triage','immediate','operational','proposal','adequate',
- pg_temp.risk(),'Immediate proposal without auto escalation',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Immediate proposal without auto escalation',
  'oc-test-ai','ai_system','unverified',TIMESTAMPTZ '2026-10-07 02:10:00+00'
 );
 SELECT pg_temp.assert_true(
@@ -352,7 +352,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa162000-0000-0000-0000-000000000001','fa160000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001','materiality_resolution',
  'standard','scientific','authoritative','adequate','fa161000-0000-0000-0000-000000000001',
- pg_temp.risk('moderate','moderate','adequate'),'Confirmed isolated is modifier, not floor',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Confirmed isolated is modifier, not floor',
  'oc-test-reviewer','human_reviewer','human_verified','oc-test-reviewer-2','human_reviewer',
  TIMESTAMPTZ '2026-10-07 02:05:00+00',TIMESTAMPTZ '2026-10-07 02:06:00+00'
 );
@@ -371,7 +371,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa172000-0000-0000-0000-000000000001','fa170000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001','materiality_resolution',
  'standard','scientific','authoritative','adequate','fa171000-0000-0000-0000-000000000001',
- pg_temp.risk('high','moderate','adequate'),'Deliberate floor violation for issue helper',
+ 'f6000000-0000-0000-0000-000000000003',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000003'),'Deliberate floor violation for issue helper',
  'oc-test-reviewer','human_reviewer','human_verified','oc-test-reviewer-2','human_reviewer',
  TIMESTAMPTZ '2026-10-07 02:05:00+00',TIMESTAMPTZ '2026-10-07 02:06:00+00'
 );
@@ -390,7 +390,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa182000-0000-0000-0000-000000000001','fa180000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001','materiality_resolution',
  'standard','scientific','authoritative','adequate','fa181000-0000-0000-0000-000000000001',
- pg_temp.risk('moderate','high','adequate'),'Deliberate potential/high-sensitivity floor violation',
+ 'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Deliberate potential/high-sensitivity floor violation',
  'oc-test-reviewer','human_reviewer','human_verified','oc-test-reviewer-2','human_reviewer',
  TIMESTAMPTZ '2026-10-07 02:05:00+00',TIMESTAMPTZ '2026-10-07 02:06:00+00'
 );
@@ -409,7 +409,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa192000-0000-0000-0000-000000000001','fa190000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001','materiality_resolution',
  'standard','scientific','authoritative','unavailable','fa191000-0000-0000-0000-000000000001',
- pg_temp.risk('moderate','moderate','unavailable'),'Capacity cannot reduce validity threat floor',
+ 'f6000000-0000-0000-0000-000000000004',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000004'),'Capacity cannot reduce validity threat floor',
  'oc-test-reviewer','human_reviewer','human_verified','oc-test-reviewer-2','human_reviewer',
  TIMESTAMPTZ '2026-10-07 02:05:00+00',TIMESTAMPTZ '2026-10-07 02:06:00+00'
 );
@@ -430,7 +430,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa201000-0000-0000-0000-000000000001','fa200000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001','signal_triage',
  'standard','operational','proposal','adequate',
- 'a7100000-0000-0000-0000-000000000001',pg_temp.risk(),
+ 'a7100000-0000-0000-0000-000000000001','f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),
  'Alert is an input; no automatic mapping',
  'oc-test-ai','ai_system','unverified',TIMESTAMPTZ '2026-10-07 02:10:00+00'
 );
@@ -451,7 +451,7 @@ INSERT INTO maintenance.priority_assessment(
  'fa211000-0000-0000-0000-000000000001','fa210000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000002','signal_triage',
  'standard','operational','proposal','adequate',
- 'a7100000-0000-0000-0000-000000000003',pg_temp.risk(),
+ 'a7100000-0000-0000-0000-000000000003','f6000000-0000-0000-0000-000000000002',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000002'),
  'Explicit reconciliation rationale: Alert urgency is communicational, materiality unresolved',
  'oc-test-ai','ai_system','unverified',TIMESTAMPTZ '2026-10-07 02:10:00+00'
 );
@@ -901,7 +901,7 @@ INSERT INTO maintenance.priority_assessment(
  'f4100000-0000-0000-0000-000000000003',
  'f4000000-0000-0000-0000-000000000001','execution',
  'urgent','operational','authoritative','adequate',
- 'f5600000-0000-0000-0000-000000000001',pg_temp.risk(),
+ 'f5600000-0000-0000-0000-000000000001','f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),
  'Later SLA-informed priority','oc-test-owner','owner','unverified',
  TIMESTAMPTZ '2026-10-07 03:00:00+00',
  'f5100000-0000-0000-0000-000000000001'
