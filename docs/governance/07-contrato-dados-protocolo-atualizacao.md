@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS — contrato físico v0.1 validado após Documentos 08–09**  
-**Dependências:** Documentos 05–06 e 08–09; OES-P1; migrations 006, 021–027  
+**Status:** **PASS — contrato físico v0.1 validado e endurecido após Documentos 22–24**  
+**Dependências:** Documentos 05–06 e 08–09; OES-P1; migrations 006, 021–028  
+**Hardening corretivo:** Documentos 22–24; migration 028; suíte F4-UP-P01–P63  
 **Migration:** `database/027_transversal_update_protocol_contract.sql` — **PASS técnico no Documento 09**
 
 ---
@@ -1411,3 +1412,34 @@ Resultados permitidos:
 ## 36. Próximo passo exato
 
 > **Definir a arquitetura transversal de perfis de risco operacional/científico que parametrizará cadence, thresholds, SLAs e prioridade, preservando os limites do Documento 09.**
+
+---
+
+## 37. Hardening corretivo pós-auditoria
+
+A auditoria retrospectiva do Documento 22 identificou que a suíte histórica T01–T63 não espelhava um a um os 63 requisitos mínimos desta especificação.
+
+Correção consolidada:
+
+- migration 027 permanece historicamente intacta;
+- migration 028 adiciona hardening de lifecycle e issue helpers;
+- `signal_type='other'` passa a respeitar fronteira scientific_currentness × operational;
+- UpdateDecision nova exige UpdateSignal ativo;
+- novo linkage CurrencyState exige UpdateDecision ativa;
+- issue helpers revalidam drift/status dinâmico com maior cobertura;
+- `database/f4-update-protocol-plan-tests.sql` implementa P01–P58 exatamente na ordem dos itens desta seção 34;
+- P59–P63 são evidências de workflow para idempotência/rebuild/regressões.
+
+Validação canônica pós-auditoria:
+
+> **F4-UP-P01–P63 = PASS**
+
+> **migration 028 = PASS**
+
+> **run 37576434417 (#144) = success**
+
+Resultado formal:
+
+`docs/governance/24-resultado-validacao-corretiva-fase-4.md`
+
+A lista de 63 itens abaixo permanece o plano canônico; a suíte P, e não a coincidência nominal da suíte histórica T, é sua evidência espelhada.
