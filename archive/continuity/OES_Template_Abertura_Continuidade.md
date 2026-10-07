@@ -154,7 +154,30 @@ Cada checkpoint deve conter:
 
 ---
 
-## 8. Quando criar um checkpoint
+## 8. Regra de interação após checkpoint
+
+Após a conclusão e ativação de qualquer checkpoint formal:
+
+1. apresentar ao usuário um relatório conciso contendo:
+   - checkpoint vigente;
+   - HEAD atual;
+   - marco concluído;
+   - validação relevante;
+   - ponto exato de retomada;
+2. **parar obrigatoriamente**;
+3. não iniciar o bloco seguinte, mesmo que:
+   - o próximo passo seja inequívoco;
+   - o modo de raciocínio já esteja adequado;
+   - não exista dependência técnica adicional;
+4. retomar somente após instrução explícita do usuário, tipicamente **“Prossiga”**.
+
+Durante trabalho longo dentro do mesmo checkpoint, manter atualizações intermediárias suficientes para distinguir execução normal de eventual travamento da interface.
+
+Essa regra é operacional e busca reduzir perda de observabilidade em conversas longas.
+
+---
+
+## 9. Quando criar um checkpoint
 
 Criar checkpoint quando houver pelo menos uma destas situações:
 
@@ -170,7 +193,7 @@ Não é necessário criar checkpoint para pequenas correções editoriais.
 
 ---
 
-## 9. Prompt mínimo
+## 10. Prompt mínimo
 
 ### Modo Partida
 
@@ -182,7 +205,7 @@ Não é necessário criar checkpoint para pequenas correções editoriais.
 
 ---
 
-## 10. Hierarquia operacional
+## 11. Hierarquia operacional
 
 `Documentação canônica → Template canônico → README/pointer → checkpoint vigente → Freshness Gate → Diagnóstico → retomada`
 
