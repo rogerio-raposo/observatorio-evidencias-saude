@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **HARDENED_PENDING_RECHECK — NO_NORMATIVE_VALUES_AUTHORIZED**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — NO_NORMATIVE_VALUES_AUTHORIZED**  
 **Modo:** alto  
 **Dependências:** Documentos 39–45; migration 032; CP107  
 **Objeto:** protocolo pré-calibração para determinar se existe base real suficiente para abrir um Calibration Dossier temporal
@@ -920,3 +920,22 @@ Não autoriza número, candidate selected ou normative activation.
 > **Reexecutar o Documento 47 contra o protocolo endurecido.**
 
 Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS autoriza a primeira avaliação de readiness em contexto real.
+
+
+## 54. Estado final após recheck
+
+O Documento 47 reexecutado após hardening concluiu:
+
+> **TEMPORAL_CALIBRATION_EVIDENCE_READINESS_PROTOCOL = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READINESS_ASSESSMENT_ON_REAL_CONTEXT = AUTHORIZED_UNDER_PROTOCOL**
+
+> **REAL_CALIBRATION_DOSSIER = CONDITIONALLY_AUTHORIZED_ONLY_AFTER_CONTEXT_SPECIFIC_READY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **NO_NEW_MIGRATION = AUTHORIZED**
+
+A próxima atividade permitida é selecionar e executar um primeiro readiness assessment em exact real context.
+
+Ainda não é permitido iniciar calibração numérica.
