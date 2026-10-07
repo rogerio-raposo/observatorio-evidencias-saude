@@ -1,0 +1,199 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicado",
+    "superseded": "Substituído",
+    "archived": "Arquivado"
+  },
+  "operational_state.status": {
+    "active": "Ativo",
+    "paused": "Pausado",
+    "retired": "Encerrado"
+  },
+  "monitor_currency.status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "audit.target_currency_status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "target.target_type": {
+    "product_version": "ProductVersion",
+    "investigation_version": "InvestigationVersion"
+  },
+  "monitor_investigation.maintenance_level": {
+    "M2": "M2 — monitoramento ativo",
+    "M3": "M3 — evidência viva"
+  },
+  "audit.maintenance_level": {
+    "M2": "M2 — monitoramento ativo",
+    "M3": "M3 — evidência viva"
+  },
+  "execution.status": {
+    "planned": "Planejado",
+    "running": "Em execução",
+    "completed": "Concluído",
+    "incomplete": "Incompleto",
+    "cancelled": "Cancelado"
+  },
+  "execution.completeness_status": {
+    "not_assessed": "Não avaliada",
+    "partial": "Parcial",
+    "complete": "Completa"
+  },
+  "maintenance_decision.decision": {
+    "no_update_needed": "Sem atualização necessária",
+    "evaluate_update": "Avaliar atualização",
+    "update_recommended": "Atualização recomendada",
+    "urgent_reassessment": "Reavaliação urgente"
+  },
+  "verification.status": {
+    "unverified": "Não verificado",
+    "ai_verified": "Verificado por IA",
+    "human_verified": "Verificado por humano",
+    "human_consensus": "Consenso humano"
+  },
+  "verification_status": {
+    "unverified": "Não verificado",
+    "ai_verified": "Verificado por IA",
+    "human_verified": "Verificado por humano",
+    "human_consensus": "Consenso humano"
+  },
+  "actor_type": {
+    "ai_system": "Sistema de IA",
+    "human_reviewer": "Revisor humano",
+    "human_expert": "Especialista humano",
+    "system": "Sistema"
+  },
+  "verifier_actor_type": {
+    "ai_system": "Sistema de IA",
+    "human_reviewer": "Revisor humano",
+    "human_expert": "Especialista humano"
+  },
+  "primary_impact_class": {
+    "quantitative": "Quantitativo",
+    "certainty": "Certeza",
+    "applicability": "Aplicabilidade",
+    "conclusion": "Conclusão",
+    "safety": "Segurança",
+    "other": "Outro"
+  },
+  "impact_class": {
+    "quantitative": "Quantitativo",
+    "certainty": "Certeza",
+    "applicability": "Aplicabilidade",
+    "conclusion": "Conclusão",
+    "safety": "Segurança",
+    "other": "Outro"
+  },
+  "event_type": {
+    "new_evidence": "Nova evidência",
+    "correction": "Correção",
+    "retraction": "Retratação",
+    "regulatory_update": "Atualização regulatória",
+    "other": "Outro"
+  },
+  "candidate_kind": {
+    "new_report": "Novo Report",
+    "new_study": "Novo Study",
+    "correction_or_update": "Correção/atualização",
+    "regulatory_or_contextual": "Regulatório/contextual",
+    "other": "Outro"
+  },
+  "decision": {
+    "pending": "Pendente",
+    "retained_for_impact": "Retido para impacto",
+    "excluded": "Excluído"
+  },
+  "requirement_kind": {
+    "source_name": "Fonte específica",
+    "source_class": "Classe de fonte",
+    "minimum_distinct_bibliographic_sources": "Mínimo de fontes bibliográficas distintas"
+  },
+  "resolution_status": {
+    "open": "Aberta",
+    "accepted": "Aceita",
+    "mitigated": "Mitigada",
+    "resolved": "Resolvida",
+    "rerouted": "Rerroteada",
+    "rejected": "Rejeitada"
+  },
+  "severity": {
+    "error": "ERRO",
+    "warning": "AVISO"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.target_assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.required_assurance_level": {
+    "A0": "A0",
+    "A1": "A1",
+    "A2": "A2",
+    "A3": "A3"
+  },
+  "audit.synthetic_fixture": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.publishable": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.required_source_coverage_satisfied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.invalidated_dependencies": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.m3_transversal_update_policy_operational": {
+    "true": "sim",
+    "false": "não"
+  },
+  "fulfilled": {
+    "true": "sim",
+    "false": "não"
+  },
+  "exception_applied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "satisfied": {
+    "true": "sim",
+    "false": "não"
+  },
+  "temporally_acceptable": {
+    "true": "sim",
+    "false": "não"
+  },
+  "allow_exception": {
+    "true": "sim",
+    "false": "não"
+  },
+  "is_primary": {
+    "true": "sim",
+    "false": "não"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  }
+}
