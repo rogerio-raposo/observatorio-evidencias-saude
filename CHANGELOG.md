@@ -2536,3 +2536,26 @@ Documentos:
 - migration 023 autorizada para EvidenceMonitorView 0.1;
 - ponteiro de continuidade movido para CP80;
 - retomada: implementação da View + testes + idempotência + rebuild.
+
+
+## 2026-10-06 — EvidenceMonitorView 0.1 PASS
+
+- Documento 173 criado;
+- migration 023 implementou `oes.evidence_monitor_view/0.1`;
+- target projection e cycle projection especializadas foram adicionadas;
+- View é read-only/STABLE;
+- quatro dimensões de estado permanecem separadas;
+- target ProductVersion/InvestigationVersion permanece polimórfico e explícito;
+- múltiplos CandidateImpacts são projetados sem colapso;
+- source requirement fulfillment e exceptions permanecem distintos;
+- histórico Cycle→CurrencyState é preservado;
+- M3 Phase-4 blocker permanece visível;
+- MONV-T01–T17 = PASS;
+- MONV-T18 = PASS;
+- MONV-T19/rebuild-through-023 = PASS;
+- run final **37556593132** (#128) = success;
+- HEAD validado `613a9ced4ad43a3eb890a2b5db35acf51a08127e`;
+- artifact **11454488440**;
+- digest `sha256:6043e52ac33800ec5d944b1a4633bfe5049a9c8ecff2613eb577aadea2916630`;
+- próxima etapa: contrato de renderização + Template Operacional do Monitor;
+- Caso Real, Alert e Fase 4 continuam não autorizados.
