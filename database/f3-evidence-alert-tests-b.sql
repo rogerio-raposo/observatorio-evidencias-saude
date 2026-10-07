@@ -129,16 +129,32 @@ INSERT INTO maintenance.evidence_alert(
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.alert_source(alert_source_uuid,alert_product_version_uuid,source_role,source_type,source_uri,source_date,description,sequence_no)
-  VALUES ('a7200000-0000-0000-0000-000000000024','a7100000-0000-0000-0000-000000000001','supporting','uri','https://example.invalid/future',DATE '2026-10-07','future',99);
+  VALUES ('a7200000-0000-0000-0000-000000000024','a7100000-0000-0000-0000-000000000002','supporting','uri','https://example.invalid/future',DATE '2026-10-07','future',99);
  EXCEPTION WHEN others THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T24 FAIL'; END IF;
 END $t$;
 
 -- AL-T25 — Monitor-derived source must match source_context Investigation.
+INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
+VALUES ('a7000000-0000-0000-0000-000000000092','OES-P-ALT-TMP092','Product','test');
+INSERT INTO core.entity_version(version_uuid,entity_uuid,version_no,version_status,created_by,change_type)
+VALUES ('a7100000-0000-0000-0000-000000000092','a7000000-0000-0000-0000-000000000092',1,'draft','test','test');
+INSERT INTO product.product(entity_uuid) VALUES ('a7000000-0000-0000-0000-000000000092');
+INSERT INTO product.product_version(version_uuid,entity_uuid,product_type,title,evidence_cutoff_date,status)
+VALUES ('a7100000-0000-0000-0000-000000000092','a7000000-0000-0000-0000-000000000092','evidence_alert','Temporary Alert shell 92',DATE '2026-10-06','draft');
+INSERT INTO product.investigation_link(product_version_uuid,investigation_version_uuid,role)
+VALUES ('a7100000-0000-0000-0000-000000000092','e5100000-0000-0000-0000-000000000002','source_context');
+INSERT INTO maintenance.evidence_alert(
+ alert_product_version_uuid,target_product_version_uuid,headline,summary,detected_at,
+ classification,reassessment_priority,lifecycle_status,justification,assessed_by,actor_type,verification_status
+) VALUES (
+ 'a7100000-0000-0000-0000-000000000092','e5100000-0000-0000-0000-000000000003',
+ 'T25','T25',CURRENT_TIMESTAMP,'informational','routine','triage','T25','ai','ai_system','unverified'
+);
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.alert_source(alert_source_uuid,alert_product_version_uuid,source_role,source_type,candidate_assessment_uuid,description,sequence_no)
-  VALUES ('a7200000-0000-0000-0000-000000000025','a7100000-0000-0000-0000-000000000003','supporting','candidate_assessment','e5530000-0000-0000-0000-000000000002','wrong context',99);
+  VALUES ('a7200000-0000-0000-0000-000000000025','a7100000-0000-0000-0000-000000000092','primary','candidate_assessment','e5530000-0000-0000-0000-000000000002','wrong context',1);
  EXCEPTION WHEN others THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T25 FAIL'; END IF;
 END $t$;
