@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP74 — 2026-10-06**
+**CP75 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP74.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP75.md`
 
 Checkpoint anterior:
 
-`CP73`
+`CP74`
 
 Status:
 
@@ -164,3 +164,5 @@ em **Modo Continuidade**.
 - **CP73 — 2026-10-06:** consolida o Documento 165, **Especificação Científica e Funcional do Monitor de Evidências**; retomada na revisão de coerência científica e arquitetural antes de qualquer contrato de dados/migration.
 
 - **CP74 — 2026-10-06:** registra revisão de coerência do **Monitor de Evidências** = PASS_WITH_ARCHITECTURAL_DECISIONS; retomada no **Contrato de Dados v0.1**, antes de qualquer migration.
+
+- **CP75 — 2026-10-06:** consolida o **Contrato de Dados v0.1 do Monitor de Evidências**; autoriza migration 021 + fixture/testes antes de Projection Readiness.
