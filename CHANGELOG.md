@@ -2327,3 +2327,19 @@ Documentos:
 - publication blockers formais preservados;
 - ponteiro de continuidade movido para CP72;
 - retomada movida para **Especificação Científica e Funcional do Monitor de Evidências**.
+
+
+## 2026-10-06 — Evidence Monitor scientific/functional specification
+
+- Documento 165 criado;
+- Monitor definido como produto/processo de manutenção M2/M3, não N5;
+- alvo científico rastreável tornou-se requisito;
+- Monitoring Cycle separado de ProductVersion científica;
+- ausência de mudança não gera automaticamente nova versão do alvo;
+- `product.currency_state` deverá ser reutilizado para currentness;
+- atualização científica material continuará ocorrendo por versionamento do produto monitorado;
+- Monitor e Alerta de Evidência permanecem distintos;
+- assurance do alvo não é herdado como validação automática do Monitor;
+- thresholds temporais/quantitativos gerais permaneceram reservados à Fase 4;
+- nenhuma migration autorizada antes da revisão de coerência arquitetural;
+- próxima etapa: revisão científica/arquitetural do Monitor.
