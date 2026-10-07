@@ -1722,3 +1722,57 @@ Próximo passo:
 - modo médio seguro para implementação mecânica; nova decisão arquitetural exige parada e modo alto;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Validação técnica do UpdateRiskProfile físico
+
+Documento:
+
+- 32 — Resultado da Validação Técnica do UpdateRiskProfile Físico.
+
+Estado:
+
+> **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED**
+
+> **MIGRATION_030 = PASS**
+
+> **F4_RP_T01_T87 = PASS**
+
+> **REBUILD_THROUGH_030 = PASS**
+
+> **FULL_REGRESSIONS_AFTER_030 = PASS**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Validação canônica:
+
+- workflow: **OES PoC-S5 PostgreSQL Validation**;
+- run: **37618433929** (#161);
+- technical HEAD: `dc9ced9f91817441d0b87063c55057cde1c3c3b7`;
+- job id: **112782351104**;
+- conclusion: **success**;
+- artifact: **11480858194**;
+- digest: `sha256:2fa282d226fd78cce87a7240658bf0f1a37b18afef6d29014335b170316183d7`;
+- F4-RP-T01–T84 = PASS;
+- T85 migration 030 idempotency = PASS;
+- T86 rebuild-through-030 = PASS;
+- T87 regressões completas = PASS;
+- F4-OC-T01–T72 permanecem compatíveis/verdes;
+- F4-UP, F2-B, S4, S5, F3 Products, Monitor e Alert permanecem verdes;
+- M3 blocker preservado.
+
+Runs #153–#160 foram diagnósticas e não canônicas, classificadas no Documento 32 como erros de instalação/implementação/setup/order/brittleness/test editing.
+
+Limites preservados:
+
+- nenhum risk score;
+- nenhuma cadence numérica;
+- nenhum SLA normativo novo;
+- nenhum auto-policy change;
+- nenhum backfill autoritativo fabricado;
+- nenhum auto-signal/auto-alert;
+- scheduler/notifications não implementados;
+- M3 readiness não autorizado.
+
+Próximo passo:
+
+> **ainda não selecionado; deverá ser escolhido explicitamente após o checkpoint pós-PASS.**
+
