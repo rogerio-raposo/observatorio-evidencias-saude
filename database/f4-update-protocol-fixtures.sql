@@ -12,7 +12,7 @@ INSERT INTO maintenance.update_policy(
     update_policy_uuid,
     target_product_version_uuid,
     effective_maintenance_level,cadence_mode,
-    cadence_policy_payload,trigger_policy_payload,
+    cadence_contract_uuid,cadence_policy_payload,trigger_policy_payload,
     materiality_policy_payload,escalation_policy_payload,
     governance_policy_payload,
     governing_monitor_product_version_uuid,
@@ -21,14 +21,15 @@ INSERT INTO maintenance.update_policy(
     'f4000000-0000-0000-0000-000000000001',
     'e5100000-0000-0000-0000-000000000003',
     'M2','periodic',
-    '{"interval_label":"monthly","numeric_default":false}'::jsonb,
+    'fc640000-0000-0000-0000-000000000001',
+    maintenance.cadence_contract_snapshot('fc640000-0000-0000-0000-000000000001'),
     '{"monitor_cycle":true,"alerts":true}'::jsonb,
     '{"dimensions":["magnitude","certainty","conclusion"]}'::jsonb,
     '{"auto_escalation":false}'::jsonb,
     '{"authoritative_automation":false}'::jsonb,
     'e5100000-0000-0000-0000-000000000005',
     TIMESTAMPTZ '2026-10-07 00:00:00+00',
-    'Synthetic M2 transversal policy for the monitored scientific ProductVersion',
+    'Synthetic M2 transversal policy bound to v0.1 cadence contract',
     'fixture-owner','owner'
 );
 
@@ -36,7 +37,7 @@ INSERT INTO maintenance.update_policy(
     update_policy_uuid,
     target_investigation_version_uuid,
     effective_maintenance_level,cadence_mode,
-    cadence_policy_payload,trigger_policy_payload,
+    cadence_contract_uuid,cadence_policy_payload,trigger_policy_payload,
     materiality_policy_payload,escalation_policy_payload,
     governance_policy_payload,
     governing_monitor_product_version_uuid,
@@ -44,15 +45,16 @@ INSERT INTO maintenance.update_policy(
 ) VALUES (
     'f4000000-0000-0000-0000-000000000002',
     'e5100000-0000-0000-0000-000000000002',
-    'M3','continuous',
-    '{"frequency_basis":"living","numeric_default":false}'::jsonb,
+    'M2','periodic',
+    'fc640000-0000-0000-0000-000000000002',
+    maintenance.cadence_contract_snapshot('fc640000-0000-0000-0000-000000000002'),
     '{"monitor_cycle":true}'::jsonb,
-    '{"living_candidate":true}'::jsonb,
+    '{"living_candidate":false}'::jsonb,
     '{"auto_escalation":false}'::jsonb,
     '{"formal_m3_operational":false}'::jsonb,
     'e5100000-0000-0000-0000-000000000007',
     TIMESTAMPTZ '2026-10-07 00:01:00+00',
-    'Synthetic M3 candidate policy; formal M3 remains blocked',
+    'Synthetic M2 investigation policy bound to v0.1 cadence contract; M3 remains blocked',
     'fixture-owner','owner'
 );
 
