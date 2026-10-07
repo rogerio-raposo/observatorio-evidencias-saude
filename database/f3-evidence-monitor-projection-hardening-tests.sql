@@ -426,6 +426,39 @@ INSERT INTO investigation.method_decision(
     decision_type,stage,decision_code,planned_flag,
     rationale,impact_payload,resolution_status,decided_by
 ) VALUES (
+    'e56f4000-0000-0000-0000-000000000120',
+    'e5100000-0000-0000-0000-000000000004',
+    'other','screening','monitor_search_temporal_exception',false,
+    'Wrong-stage temporal exception must not satisfy the search exception contract',
+    '{"cycle_uuid":"e56f3000-0000-0000-0000-000000000121",
+      "search_uuid":"e56f5000-0000-0000-0000-000000000121"}'::jsonb,
+    'accepted','monh'
+);
+
+DO $t$
+BEGIN
+    IF maintenance.monitor_search_temporally_acceptable(
+           'e56f3000-0000-0000-0000-000000000121',
+           'e56f5000-0000-0000-0000-000000000121'
+       )
+       OR NOT EXISTS (
+            SELECT 1
+              FROM maintenance.monitor_cycle_temporal_issues(
+                   'e56f3000-0000-0000-0000-000000000121'
+              )
+             WHERE issue_code='SEARCH_OUTSIDE_CYCLE_WINDOW'
+       ) THEN
+        RAISE EXCEPTION
+            'MONH-T12 FAIL — wrong-stage temporal exception was accepted';
+    END IF;
+END;
+$t$;
+
+INSERT INTO investigation.method_decision(
+    method_decision_uuid,investigation_version_uuid,
+    decision_type,stage,decision_code,planned_flag,
+    rationale,impact_payload,resolution_status,decided_by
+) VALUES (
     'e56f4000-0000-0000-0000-000000000121',
     'e5100000-0000-0000-0000-000000000004',
     'other','search','monitor_search_temporal_exception',false,
@@ -449,7 +482,7 @@ BEGIN
              WHERE issue_code='SEARCH_OUTSIDE_CYCLE_WINDOW'
        ) THEN
         RAISE EXCEPTION
-            'MONH-T12 FAIL — accepted temporal exception not honored';
+            'MONH-T12 FAIL — valid search-stage temporal exception not honored';
     END IF;
 END;
 $t$;
