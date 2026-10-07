@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP103 — 2026-10-07**.
+- checkpoint vigente: **CP104 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2114,3 +2114,19 @@ Nenhum valor numérico, calendário real ou SLARule normativa foi autorizado.
 
 Próximo passo:
 > **especificar contrato físico v0.1 dos pré-requisitos de calibração temporal e submetê-lo a novo gate antes de qualquer migration ou valor normativo.**
+
+### CP104 — metodologia de calibração temporal
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP104.md`;
+- ponteiro movido para CP104;
+- `TEMPORAL_CALIBRATION_METHODOLOGY = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = AUTHORIZED_FOR_SPECIFICATION_ONLY`;
+- nenhum valor temporal normativo autorizado;
+- migration 032 não autorizada;
+- scheduler/notifications/auto-escalation não autorizados;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua S5 #167;
+- próximo passo: contrato físico v0.1 dos pré-requisitos + novo gate;
+- modo alto recomendado;
+- Fase 5 não iniciada;
+- pausa obrigatória preservada.
