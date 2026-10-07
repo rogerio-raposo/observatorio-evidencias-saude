@@ -4,7 +4,8 @@
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
 **Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 17**  
-**Dependências:** Documentos 02–09 e 17; OES-P1; migration 027
+**Dependências:** Documentos 02–09; OES-P1; migration 027
+**Validado por:** Documento 17
 
 ---
 
