@@ -236,4 +236,14 @@ INSERT INTO maintenance.cadence_obligation(
  'monitor_cycle_completed',TIMESTAMPTZ '2026-10-07 00:01:00+00'
 );
 
+-- Supersede calibration-only profiles after dossier/contract creation.
+-- Historical dossier validity is preserved by UUID; later F4 risk-profile fixtures
+-- may establish the active operational profiles for the same exact targets.
+UPDATE maintenance.update_risk_profile
+   SET record_status='superseded'
+ WHERE update_risk_profile_uuid IN (
+   'fc600000-0000-0000-0000-000000000001',
+   'fc600000-0000-0000-0000-000000000002'
+ );
+
 COMMIT;
