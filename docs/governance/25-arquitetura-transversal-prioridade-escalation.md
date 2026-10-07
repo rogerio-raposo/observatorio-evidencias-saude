@@ -513,7 +513,7 @@ pode sustentar `expedited` ou `urgent`, conforme rationale.
 
 ### 11.7 outdated
 
-`outdated` não implica automaticamente `immediate_governance`.
+`outdated` não implica automaticamente `immediate`.
 
 Mas:
 
