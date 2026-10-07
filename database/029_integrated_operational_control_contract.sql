@@ -601,6 +601,18 @@ CREATE TRIGGER tr_priority_basis_consistency
 BEFORE INSERT ON maintenance.priority_basis
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_priority_basis_consistency();
 
+CREATE OR REPLACE FUNCTION maintenance.guard_priority_basis_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $guard$
+BEGIN
+    RAISE EXCEPTION 'PriorityBasis is immutable; supersede PriorityAssessment instead';
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_priority_basis_immutable ON maintenance.priority_basis;
+CREATE TRIGGER tr_priority_basis_immutable
+BEFORE UPDATE OR DELETE ON maintenance.priority_basis
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_priority_basis_mutation();
+
 -- ---------------------------------------------------------------------------
 -- ESCALATION
 -- ---------------------------------------------------------------------------
@@ -1138,7 +1150,13 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_sla_instance_active_round_clock
 
 CREATE OR REPLACE FUNCTION maintenance.assert_sla_instance_consistency()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
-DECLARE r maintenance.sla_rule%ROWTYPE; prior maintenance.sla_instance%ROWTYPE;
+DECLARE
+    r maintenance.sla_rule%ROWTYPE;
+    prior maintenance.sla_instance%ROWTYPE;
+    t maintenance.update_triage%ROWTYPE;
+    ma maintenance.materiality_assessment%ROWTYPE;
+    d maintenance.update_decision%ROWTYPE;
+    milestone_time timestamptz;
 BEGIN
     SELECT * INTO r FROM maintenance.sla_rule WHERE sla_rule_uuid=NEW.sla_rule_uuid;
     IF NOT FOUND THEN RAISE EXCEPTION 'SLAInstance requires SLARule'; END IF;
@@ -1177,6 +1195,109 @@ BEGIN
             RAISE EXCEPTION 'SLA2 requires authoritative accepted triage';
         END IF;
     END IF;
+    IF NEW.execution_status='satisfied' THEN
+        IF NEW.satisfied_at IS NULL OR NEW.end_at IS NULL
+           OR NEW.satisfied_at<>NEW.end_at THEN
+            RAISE EXCEPTION 'Satisfied SLA requires matching end_at/satisfied_at';
+        END IF;
+
+        IF NEW.clock_code='SLA1_DETECTION_TO_TRIAGE' THEN
+            SELECT * INTO t FROM maintenance.update_triage
+             WHERE update_triage_uuid=NEW.update_triage_uuid;
+            IF NOT FOUND OR t.update_signal_uuid<>NEW.update_signal_uuid
+               OR t.authority_status<>'authoritative'
+               OR NEW.end_at<>t.triaged_at THEN
+                RAISE EXCEPTION 'Satisfied SLA1 requires authoritative triage endpoint';
+            END IF;
+
+        ELSIF NEW.clock_code='SLA2_TRIAGE_TO_MATERIALITY' THEN
+            SELECT * INTO ma FROM maintenance.materiality_assessment
+             WHERE materiality_assessment_uuid=NEW.materiality_assessment_uuid;
+            IF NOT FOUND OR ma.update_signal_uuid<>NEW.update_signal_uuid
+               OR ma.verification_status NOT IN ('human_verified','human_consensus')
+               OR ma.verified_at IS NULL
+               OR NEW.end_at<>ma.verified_at THEN
+                RAISE EXCEPTION 'Satisfied SLA2 requires human-qualified materiality endpoint';
+            END IF;
+
+        ELSIF NEW.clock_code='SLA3_MATERIALITY_TO_DECISION' THEN
+            SELECT * INTO d FROM maintenance.update_decision
+             WHERE update_decision_uuid=NEW.update_decision_uuid;
+            IF NOT FOUND OR d.update_signal_uuid<>NEW.update_signal_uuid
+               OR d.authority_status<>'authoritative'
+               OR d.verification_status NOT IN ('human_verified','human_consensus')
+               OR NEW.end_at<>GREATEST(d.decided_at,d.verified_at) THEN
+                RAISE EXCEPTION 'Satisfied SLA3 requires authoritative qualified decision endpoint';
+            END IF;
+
+        ELSIF NEW.clock_code='SLA4_DECISION_TO_WORKFLOW_START' THEN
+            SELECT COALESCE(m.qualified_at,m.occurred_at)
+              INTO milestone_time
+              FROM maintenance.workflow_milestone m
+             WHERE m.workflow_round_uuid=NEW.workflow_round_uuid
+               AND m.milestone_type IN (
+                    'scientific_workflow_started','methodological_workflow_started'
+               )
+               AND m.authority_status='authoritative'
+               AND m.record_status='active'
+             ORDER BY COALESCE(m.qualified_at,m.occurred_at)
+             LIMIT 1;
+            IF milestone_time IS NULL OR NEW.end_at<>milestone_time THEN
+                RAISE EXCEPTION 'Satisfied SLA4 requires authoritative workflow-start milestone';
+            END IF;
+
+        ELSIF NEW.clock_code='SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION' THEN
+            SELECT COALESCE(m.qualified_at,m.occurred_at)
+              INTO milestone_time
+              FROM maintenance.workflow_milestone m
+             WHERE m.workflow_round_uuid=NEW.workflow_round_uuid
+               AND m.milestone_type='scientific_workflow_completed'
+               AND m.authority_status='authoritative'
+               AND m.record_status='active'
+             ORDER BY COALESCE(m.qualified_at,m.occurred_at)
+             LIMIT 1;
+            IF milestone_time IS NULL OR NEW.end_at<>milestone_time THEN
+                RAISE EXCEPTION 'Satisfied SLA5 requires authoritative scientific-completion milestone';
+            END IF;
+
+        ELSIF NEW.clock_code='SLA6_SCIENTIFIC_COMPLETION_TO_ENDPOINT' THEN
+            SELECT COALESCE(m.qualified_at,m.occurred_at)
+              INTO milestone_time
+              FROM maintenance.workflow_milestone m
+             WHERE m.workflow_round_uuid=NEW.workflow_round_uuid
+               AND (
+                    (NEW.endpoint_type='review_disposition'
+                     AND m.milestone_type='review_disposition')
+                    OR
+                    (NEW.endpoint_type='publication'
+                     AND m.milestone_type='publication')
+               )
+               AND m.authority_status='authoritative'
+               AND m.record_status='active'
+               AND m.time_precision='timestamp'
+             ORDER BY COALESCE(m.qualified_at,m.occurred_at)
+             LIMIT 1;
+            IF milestone_time IS NULL OR NEW.end_at<>milestone_time THEN
+                RAISE EXCEPTION 'Satisfied SLA6 requires authoritative timestamp-precision endpoint milestone';
+            END IF;
+        END IF;
+    END IF;
+
+    IF NEW.clock_code='SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION'
+       AND NEW.execution_status IN ('running','paused','satisfied') THEN
+        IF NOT EXISTS (
+            SELECT 1 FROM maintenance.workflow_milestone m
+             WHERE m.workflow_round_uuid=NEW.workflow_round_uuid
+               AND m.milestone_type IN (
+                    'scientific_workflow_started','methodological_workflow_started'
+               )
+               AND m.authority_status='authoritative'
+               AND m.record_status='active'
+        ) THEN
+            RAISE EXCEPTION 'SLA5 requires explicit authoritative workflow-start milestone';
+        END IF;
+    END IF;
+
     IF NEW.supersedes_sla_instance_uuid IS NOT NULL THEN
         SELECT * INTO prior FROM maintenance.sla_instance
          WHERE sla_instance_uuid=NEW.supersedes_sla_instance_uuid;
@@ -1479,6 +1600,26 @@ DROP TRIGGER IF EXISTS tr_workflow_milestone_consistency
 CREATE TRIGGER tr_workflow_milestone_consistency
 BEFORE INSERT ON maintenance.workflow_milestone
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_workflow_milestone_consistency();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_workflow_milestone_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $guard$
+BEGIN
+    IF TG_OP='DELETE' THEN
+        RAISE EXCEPTION 'WorkflowMilestone is append-preserving and cannot be deleted';
+    END IF;
+    IF OLD.record_status='active' AND NEW.record_status='superseded'
+       AND to_jsonb(NEW)-'record_status'-'recorded_at'
+           = to_jsonb(OLD)-'record_status'-'recorded_at'
+    THEN RETURN NEW; END IF;
+    RAISE EXCEPTION 'WorkflowMilestone material fields are immutable; supersede and append';
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_workflow_milestone_guard
+    ON maintenance.workflow_milestone;
+CREATE TRIGGER tr_workflow_milestone_guard
+BEFORE UPDATE OR DELETE ON maintenance.workflow_milestone
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_workflow_milestone_mutation();
 
 -- Add circular FKs after both sides exist.
 DO $do$
