@@ -189,6 +189,31 @@ INSERT INTO maintenance.monitor_definition(
     '{"alert_candidate_allowed":true,"severity_not_defined":true}'::jsonb
 );
 
+INSERT INTO maintenance.monitor_source_requirement(
+    source_requirement_uuid,monitor_product_version_uuid,
+    requirement_code,requirement_kind,required_value,minimum_count,
+    allow_exception,rationale,sequence_no
+) VALUES
+(
+ 'e5450000-0000-0000-0000-000000000001',
+ 'e5100000-0000-0000-0000-000000000005',
+ 'pubmed_required','source_name','PubMed',NULL,true,
+ 'PubMed is prospectively required by the M2 fixture plan',1
+),
+(
+ 'e5450000-0000-0000-0000-000000000002',
+ 'e5100000-0000-0000-0000-000000000005',
+ 'bibliographic_class_required','source_class','bibliographic',NULL,true,
+ 'At least one bibliographic-class source is required',2
+),
+(
+ 'e5450000-0000-0000-0000-000000000003',
+ 'e5100000-0000-0000-0000-000000000005',
+ 'minimum_bibliographic_sources',
+ 'minimum_distinct_bibliographic_sources',NULL,1,true,
+ 'At least one distinct bibliographic source is required',3
+);
+
 INSERT INTO maintenance.monitor_target(
     monitor_target_uuid,monitor_product_version_uuid,
     target_product_version_uuid,rationale
@@ -391,6 +416,25 @@ INSERT INTO maintenance.candidate_assessment(
     TIMESTAMPTZ '2026-10-06 08:45:00+00'
 );
 
+INSERT INTO maintenance.candidate_impact(
+    candidate_impact_uuid,candidate_assessment_uuid,
+    impact_class,is_primary,impact_payload,rationale,sequence_no
+) VALUES
+(
+ 'e5540000-0000-0000-0000-000000000001',
+ 'e5530000-0000-0000-0000-000000000002',
+ 'quantitative',true,
+ '{"possible_effect_change":true}'::jsonb,
+ 'Primary impact dimension for the new-study candidate',1
+),
+(
+ 'e5540000-0000-0000-0000-000000000002',
+ 'e5530000-0000-0000-0000-000000000002',
+ 'certainty',false,
+ '{"possible_certainty_change":true}'::jsonb,
+ 'The same candidate may also alter certainty',2
+);
+
 INSERT INTO maintenance.evidence_event(
     evidence_event_uuid,cycle_uuid,event_type,event_date,
     source_uri,description,event_payload,detected_by,actor_type,
@@ -421,6 +465,17 @@ INSERT INTO maintenance.candidate_assessment(
     'fixture-ai','ai_system','ai_verified',
     'fixture-ai-check','ai_system',
     TIMESTAMPTZ '2026-10-06 08:55:00+00'
+);
+
+INSERT INTO maintenance.candidate_impact(
+    candidate_impact_uuid,candidate_assessment_uuid,
+    impact_class,is_primary,impact_payload,rationale,sequence_no
+) VALUES (
+    'e5540000-0000-0000-0000-000000000003',
+    'e5530000-0000-0000-0000-000000000003',
+    'applicability',true,
+    '{"requires_evaluation":true}'::jsonb,
+    'Primary applicability impact for regulatory signal',1
 );
 
 UPDATE maintenance.monitor_cycle
@@ -507,6 +562,31 @@ INSERT INTO maintenance.monitor_definition(
     '{"instance_interval":"weekly","phase4_default":false}'::jsonb,
     '{"dimensions":["conclusion","validity"]}'::jsonb,
     '{"alert_candidate_allowed":true,"severity_not_defined":true}'::jsonb
+);
+
+INSERT INTO maintenance.monitor_source_requirement(
+    source_requirement_uuid,monitor_product_version_uuid,
+    requirement_code,requirement_kind,required_value,minimum_count,
+    allow_exception,rationale,sequence_no
+) VALUES
+(
+ 'e5450000-0000-0000-0000-000000000011',
+ 'e5100000-0000-0000-0000-000000000007',
+ 'pubmed_required','source_name','PubMed',NULL,true,
+ 'PubMed is prospectively required by the M3 fixture plan',1
+),
+(
+ 'e5450000-0000-0000-0000-000000000012',
+ 'e5100000-0000-0000-0000-000000000007',
+ 'bibliographic_class_required','source_class','bibliographic',NULL,true,
+ 'At least one bibliographic-class source is required',2
+),
+(
+ 'e5450000-0000-0000-0000-000000000013',
+ 'e5100000-0000-0000-0000-000000000007',
+ 'minimum_bibliographic_sources',
+ 'minimum_distinct_bibliographic_sources',NULL,1,true,
+ 'At least one distinct bibliographic source is required',3
 );
 
 INSERT INTO maintenance.monitor_target(
