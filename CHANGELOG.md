@@ -3425,3 +3425,25 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: Protocolo de Evidence Readiness v0.1 + gate adversarial;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Evidence Readiness protocol adversarial PASS
+
+- criado Documento 46 — Protocolo de Evidence Readiness para Calibração Temporal v0.1;
+- criado Documento 47 — gate adversarial do protocolo;
+- primeira passagem = **REVISE**;
+- hardening aplicado ao Documento 46;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- READY exige prova positiva de realidade, blocker set vazio e human verification;
+- cohort/window/denominator e representatividade ficam explícitos;
+- fonte externa material precisa de locator auditável;
+- measurement schedule permanece non-normative e não vira policy por inércia;
+- drift invalida READY até reassessment;
+- first real readiness assessment = autorizado para seleção/execução sob o protocolo;
+- Calibration Dossier real continua condicionado a context-specific READY;
+- nenhum valor normativo autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications deferidos;
+- auto-escalation não autorizada;
+- M3 bloqueado;
+- Fase 5 não iniciada.
