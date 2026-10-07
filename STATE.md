@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP93 — 2026-10-07**.
+- checkpoint vigente: **CP94 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1426,4 +1426,24 @@ Limites preservados:
 Próximo passo exato:
 
 > **Definir a arquitetura transversal de prioridade e escalation, somente após o checkpoint corretivo e nova instrução explícita do usuário.**
+
+### CP94 — auditoria retrospectiva e hardening corretivo
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP94.md`;
+- ponteiro movido para CP94;
+- bloco corretivo da auditoria encerrado em **CLOSED_PASS**;
+- `PHASE_4_UPDATE_DATA_CONTRACT = TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING`;
+- migration 028 corretiva = PASS;
+- T01–T63 = PASS;
+- P01–P63 = PASS;
+- rebuild-through-028 = PASS;
+- regressões F2-B/S4/S5 e Monitor/Alert = PASS;
+- run canônico **37576434417** (#144) = success;
+- artifact **11462802190**;
+- digest `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`;
+- run #143 preservada como falha de desenho do teste P62, não evidência de regressão;
+- M3 formal permanece bloqueado;
+- prioridade/escalation ainda não iniciada;
+- próximo passo: arquitetura transversal de prioridade e escalation;
+- pausa obrigatória após checkpoint permanece vigente.
 
