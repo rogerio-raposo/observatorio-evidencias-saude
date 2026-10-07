@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP101 — 2026-10-07**.
+- checkpoint vigente: **CP102 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1997,3 +1997,22 @@ Limites preservados:
 
 Próximo passo:
 > **criar checkpoint técnico pós-PASS e, somente após nova autorização do usuário, selecionar explicitamente a próxima dívida aberta da Fase 4.**
+
+### CP102 — PASS técnico de propagation/re-baselining
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP102.md`;
+- ponteiro movido para CP102;
+- `PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_031 = PASS`;
+- F4-PRB-T01–T145 = PASS;
+- migration 031 idempotency = PASS;
+- rebuild-through-031 = PASS;
+- regressões completas = PASS;
+- S5 run canônico **37644296649** (#167) = success;
+- technical HEAD `5da1d932f9509214db6a658a2ed5ca830ec7b6c1`;
+- artifact **11494595216**;
+- digest `sha256:1934c9068c24dc17ea505fd353901270eef3ab3a8cc48cbd74cba0de5132922a`;
+- M3 formal permanece bloqueado;
+- próxima dívida da Fase 4 ainda não selecionada;
+- Fase 5 não iniciada;
+- pausa obrigatória após checkpoint preservada.
