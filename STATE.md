@@ -2295,3 +2295,41 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: Protocolo de Evidence Readiness v0.1 + gate adversarial, em modo alto;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — protocolo de Evidence Readiness temporal
+
+Documentos:
+- `docs/governance/46-protocolo-evidence-readiness-calibracao-temporal-v01.md`;
+- `docs/governance/47-gate-adversarial-evidence-readiness-calibracao-temporal.md`.
+
+Estado:
+> **TEMPORAL_CALIBRATION_EVIDENCE_READINESS_PROTOCOL = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READINESS_ASSESSMENT_ON_REAL_CONTEXT = AUTHORIZED_UNDER_PROTOCOL**
+
+> **FIRST_REAL_READINESS_ASSESSMENT = AUTHORIZED_FOR_SELECTION_AND_EXECUTION**
+
+> **REAL_CALIBRATION_DOSSIER = CONDITIONALLY_AUTHORIZED_ONLY_AFTER_CONTEXT_SPECIFIC_READY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **NO_NEW_MIGRATION = AUTHORIZED**
+
+Hardening consolidado:
+- prova positiva de realidade/admissibilidade;
+- human verification para READY;
+- blocker-set dominance;
+- cohort/window/denominator/representativeness;
+- persistência obrigatória de fonte externa material;
+- lifecycle non-normative de measurement schedule;
+- rationale/verificação para R7;
+- source behavior separado de observed/OES detection latency;
+- drift invalidation;
+- fixed-deadline applicability por autoridade competente;
+- pilot inference sem generalização automática;
+- prospective observation sob data governance;
+- reassess boundary obrigatório.
+
+Próximo passo:
+> **após checkpoint, em modo alto, selecionar o primeiro exact real context e executar somente o Evidence Readiness Assessment, sem calibração numérica.**
