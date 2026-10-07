@@ -207,10 +207,13 @@ Após triage autoritativa:
 - SLA-1 pode ser satisfied;
 - SLA-2 torna-se not_applicable/cancelled conforme rule.
 
-A consistência física deverá ser **transacional**, por uma das duas formas:
+A consistência física v0.1 será transacional por:
 
-- constraint trigger `DEFERRABLE INITIALLY DEFERRED`; ou
-- função transacional autoritativa que insira a triage e invalide o signal de forma atômica.
+> constraint trigger `DEFERRABLE INITIALLY DEFERRED`
+
+sobre triage autoritativa `invalid_signal`, verificando no COMMIT que o UpdateSignal está `invalidated`.
+
+Uma função helper poderá encapsular a operação, mas não substituirá o guard de banco.
 
 Além disso, `update_triage_issues()` deverá detectar:
 
@@ -437,6 +440,25 @@ Isso é dívida de normalização, não autorização para duplicar UpdateRiskPr
 
 ---
 
+## 12.1 Consistência PriorityAssessment × PriorityBasis
+
+Quando PriorityAssessment persistir:
+
+- `risk_profile_snapshot`;
+- `dependency_snapshot`;
+- `feasibility_status`;
+
+e também existirem PriorityBasis correspondentes, os valores devem ser coerentes.
+
+Regras:
+
+- basis criticality/sensitivity/safety/dependency derivada do risk snapshot deve coincidir com o snapshot;
+- basis capacity deve coincidir com `feasibility_status`/B5 quando usada;
+- basis materiality/currentness/Alert/SLA usa locator estruturado quando disponível;
+- snapshot child não pode contradizer snapshot parent silenciosamente.
+
+---
+
 # PARTE C — ESCALATION
 
 ## 13. maintenance.escalation_case
@@ -650,6 +672,7 @@ Representa regra normativa versionada por clock.
 Campos mínimos:
 
 - `sla_rule_uuid` PK;
+- `rule_code` text estável dentro da UpdatePolicy;
 - `update_policy_uuid` FK;
 - `clock_code`;
 - `selection_precedence` integer > 0;
@@ -736,6 +759,17 @@ Matriz:
 - non-pausable por default;
 - calendar somente quando a regra normativa explicitamente exigir calendar-aware transformation.
 
+Shape mínimo de `fixed_deadline_rule_payload`:
+
+- `deadline_source_type` = external_rule | entity_version | artifact | manual_governance;
+- `deadline_at` timestamptz **ou** `deadline_date` date, exatamente um;
+- `time_precision` = timestamp | date;
+- locator/source_reference compatível;
+- rationale;
+- timezone quando necessário.
+
+Não fabricar timestamp quando a fonte só possuir data.
+
 Rule operacional ativa sem representação temporal determinística é proibida.
 
 ---
@@ -767,6 +801,8 @@ Regra v0.1:
 Constraints:
 
 - `selection_precedence > 0`;
+- `rule_code` não vazio;
+- UNIQUE ativo em `update_policy_uuid + rule_code`;
 - UNIQUE ativo em `update_policy_uuid + clock_code + selection_precedence`;
 - filters devem ser explícitos/fechados;
 - fallback, quando necessário, deve ser uma rule explícita;
@@ -865,6 +901,20 @@ Rebase:
 - exige rebase_reason + rebased_by + rebased_at;
 - não apaga first breach histórico;
 - não muda target/round causal.
+
+---
+
+## 22.2 SLA Instance — transições de execução
+
+Transições permitidas:
+
+- pending → running | not_applicable | cancelled_invalidated;
+- running → paused | satisfied | terminated_by_authority | cancelled_invalidated;
+- paused → running | satisfied | terminated_by_authority | cancelled_invalidated.
+
+Estados terminais não retornam a estados ativos.
+
+Pause exige existência de intervalo de `sla_pause` válido.
 
 ---
 
@@ -1039,6 +1089,7 @@ Lifecycle limitado:
 
 Regras:
 
+- `authorized_by` deve ser humano/owner compatível; AI/system não autoriza pause na baseline;
 - rule deve permitir pause;
 - fixed_deadline não-pausável por default;
 - backlog/capacity não é pause;
@@ -1088,15 +1139,21 @@ Domínio `round_type`:
 - `publication_remediation`;
 - `other`.
 
-Domínio `status`:
+Domínio `status` do WorkflowRound:
 
 - planned;
 - active;
-- scientific_complete;
-- in_review;
-- completed;
+- closed;
 - terminated;
 - cancelled_invalidated.
+
+Não persistir no status:
+
+- scientific_complete;
+- in_review;
+- publication_complete.
+
+Esses estados são derivados de WorkflowMilestones, evitando duas fontes de verdade.
 
 ---
 
@@ -1112,6 +1169,18 @@ Regras:
 6. review_revision deve apontar para parent round e `opened_by_workflow_milestone_uuid` do review disposition que gerou retrabalho;
 7. novo revise round não sobrescreve round anterior;
 8. uma UpdateDecision pode abrir mais de um round apenas quando tipos/razões forem distintos e explicitamente justificados.
+
+---
+
+## 30.1 WorkflowRound — status × milestone
+
+- planned → ainda não existe workflow_started authoritative;
+- active → existe workflow_started authoritative;
+- closed → existe endpoint terminal aplicável do round;
+- terminated → existe workflow_terminated authoritative;
+- cancelled_invalidated → base causal cancelada/invalidada.
+
+`scientific_workflow_completed`, review e publication continuam fatos dos milestones e não valores redundantes do status.
 
 ---
 
@@ -1154,6 +1223,11 @@ Domínio `milestone_type`:
 - `review_disposition`;
 - `publication`;
 - `workflow_terminated`.
+
+Domínio `authority_status` do milestone:
+
+- `proposal`;
+- `authoritative`.
 
 Domínio `adapter_type`:
 
@@ -1749,7 +1823,15 @@ Foram incorporadas ao contrato:
 19. pause open→closed com mutabilidade limitada;
 20. first breach como fato persistido;
 21. risk-profile snapshot versionado/validável;
-22. guards temporais contra ciclos retroativos.
+22. guards temporais contra ciclos retroativos;
+23. constraint deferred escolhida para invalid triage;
+24. `rule_code` estável + precedência determinística de SLA Rule;
+25. shape fechado de fixed deadline;
+26. WorkflowRound status simplificado para não duplicar milestones;
+27. authority_status fechado dos milestones;
+28. consistência PriorityAssessment × PriorityBasis;
+29. transições fechadas de execution_status;
+30. pause authorization humana na baseline.
 
 Estado:
 
