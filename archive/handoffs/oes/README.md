@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP71 — 2026-10-06**
+**CP72 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP72.md`
 
 Checkpoint anterior:
 
-`CP70`
+`CP71`
 
 Status:
 
@@ -158,3 +158,5 @@ em **Modo Continuidade**.
 - **CP69 — 2026-10-06:** gate pré-persistência = READY_WITH_AMENDMENT_REQUIRED; retomada na Emenda 01.
 - **CP70 — 2026-10-06:** Emenda 01 + micro-gate concluídos; OVR-01 = **READY_TO_PERSIST_DEVELOPMENTAL_A0**; retomada na persistência real controlada e validação pós-persistência.
 - **CP71 — 2026-10-06:** OVR-01 persistido e validado em **A0 developmental**, OVR01-T01–T14/render/rebuild em PASS; retomada na verificação metodológica adversarial antes de eventual A1.
+
+- **CP72 — 2026-10-06:** encerra o **OVR-01 em A1 interno / não publicável** após adversarial REVISE, correções, segunda passagem PASS e S5/rebuild em PASS; retomada na **Especificação Científica e Funcional do Monitor de Evidências**.
