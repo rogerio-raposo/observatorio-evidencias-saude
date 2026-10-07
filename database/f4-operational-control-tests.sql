@@ -1073,6 +1073,12 @@ SAVEPOINT t62;
 SELECT pg_temp.add_signal('fa620000-0000-0000-0000-000000000001','f4000000-0000-0000-0000-000000000001');
 SELECT pg_temp.add_materiality('fa621000-0000-0000-0000-000000000001',
  'fa620000-0000-0000-0000-000000000001','potentially_material');
+INSERT INTO maintenance.materiality_dimension(
+ materiality_assessment_uuid,dimension_code,dimension_status,rationale,sequence_no
+) VALUES (
+ 'fa621000-0000-0000-0000-000000000001',
+ 'method','potential','Synthetic methodological dimension required by existing F4 contract',1
+);
 INSERT INTO maintenance.update_decision(
  update_decision_uuid,update_signal_uuid,materiality_assessment_uuid,
  decision_type,authority_status,currency_action,rationale,decided_by,actor_type,
