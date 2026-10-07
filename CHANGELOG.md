@@ -3189,3 +3189,18 @@ Documentos:
 - migration 031 permanece não autorizada;
 - M3 blocker preservado;
 - próximo passo: gate adversarial/físico do contrato.
+
+## 2026-10-07 — Propagation/re-baselining physical gate
+
+- criado Documento 36 — Gate Adversarial/Físico do contrato;
+- primeira passagem física = **REVISE**;
+- Documento 35 foi hardenizado para corrigir target eligibility, max_depth, no_action/path completeness, version chain normalizada, lifecycle/concorrência, policy/profile/coverage/signal/SLA grandfathering e causal basis;
+- removida invalidação de UpdateSignal apenas por target supersession;
+- adicionado contract epoch técnico para grandfathering prospectivo;
+- adicionados guards causais para update_decision/workflow/propagation_candidate;
+- test plan expandido para **F4-PRB-T01–T145**;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `MIGRATION_031 = AUTHORIZED_IN_STRICT_SCOPE`;
+- M3 blocker preservado;
+- próximo passo: implementação mecânica da migration 031 + fixtures/testes/S5;
+- modo médio passa a ser suficiente enquanto o escopo permanecer fechado.
