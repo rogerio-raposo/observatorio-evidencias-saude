@@ -493,9 +493,10 @@ BEGIN
 
     IF NEW.triggering_sla_instance_uuid IS NOT NULL THEN
         SELECT start_at INTO sla_start FROM maintenance.sla_instance
-         WHERE sla_instance_uuid=NEW.triggering_sla_instance_uuid;
+         WHERE sla_instance_uuid=NEW.triggering_sla_instance_uuid
+           AND update_signal_uuid=NEW.update_signal_uuid;
         IF sla_start IS NULL OR sla_start>NEW.assessed_at THEN
-            RAISE EXCEPTION 'Triggering SLA must precede PriorityAssessment';
+            RAISE EXCEPTION 'Triggering SLA must belong to signal and precede PriorityAssessment';
         END IF;
     END IF;
 
