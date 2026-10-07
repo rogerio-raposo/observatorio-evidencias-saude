@@ -1,0 +1,122 @@
+-- F4 UpdateRiskProfile synthetic fixtures
+-- Requires migrations through 030 + F3 Monitor/Alert + F4 update-protocol fixtures.
+-- All records are synthetic test data. No normative policy defaults.
+-- Date: 2026-10-07
+
+BEGIN;
+
+INSERT INTO maintenance.update_risk_profile(
+    update_risk_profile_uuid,target_product_version_uuid,assessment_kind,
+    recommended_maintenance_level,recommended_cadence_mode,
+    event_driven_surveillance_required,feasibility_status,
+    priority_implications_payload,rationale,
+    profiled_by,actor_type,verification_status,
+    verified_by,verifier_actor_type,verified_at,
+    authority_status,assessed_at,effective_at
+) VALUES (
+    'f6000000-0000-0000-0000-000000000001',
+    'e5100000-0000-0000-0000-000000000003',
+    'initial','M2','periodic',true,'adequate',
+    '{
+      "schema_version":"oes.priority_implications/0.1",
+      "dominance_notes":["high conclusion sensitivity"],
+      "coordination_notes":["broad dependency reach"],
+      "feasibility_notes":["capacity adequate"],
+      "rationale":"Synthetic fixture only; no response class encoded"
+    }'::jsonb,
+    'Synthetic baseline risk profile for the monitored ProductVersion',
+    'fixture-reviewer','human_reviewer','human_verified',
+    'fixture-reviewer-2','human_reviewer',
+    TIMESTAMPTZ '2026-10-06 23:52:00+00',
+    'authoritative',
+    TIMESTAMPTZ '2026-10-06 23:50:00+00',
+    TIMESTAMPTZ '2026-10-06 23:55:00+00'
+);
+
+INSERT INTO maintenance.update_risk_profile_dimension(
+    update_risk_profile_uuid,dimension_code,value_code,assessment_mode,
+    rationale,assessed_by,actor_type,verification_status,
+    verified_by,verifier_actor_type,verified_at,authority_status,assessed_at
+) VALUES
+('f6000000-0000-0000-0000-000000000001','A1','moderate','assessed',
+ 'Synthetic decision criticality','fixture-reviewer','human_reviewer','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:50:10+00'),
+('f6000000-0000-0000-0000-000000000001','A2','moderate','assessed',
+ 'Synthetic evidence volatility','fixture-reviewer','human_reviewer','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:50:20+00'),
+('f6000000-0000-0000-0000-000000000001','A3','high','assessed',
+ 'Synthetic conclusion sensitivity','fixture-reviewer','human_reviewer','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:50:30+00'),
+('f6000000-0000-0000-0000-000000000001','A4','moderate','assessed',
+ 'Synthetic safety/integrity exposure','fixture-reviewer','human_reviewer','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:50:40+00'),
+('f6000000-0000-0000-0000-000000000001','A5','broad','assessed',
+ 'Synthetic downstream dependency reach','fixture-owner','owner','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:50:50+00'),
+('f6000000-0000-0000-0000-000000000001','B1','high','assessed',
+ 'Synthetic source observability','fixture-owner','owner','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:51:00+00'),
+('f6000000-0000-0000-0000-000000000001','B2','short','assessed',
+ 'Synthetic detection latency','fixture-owner','owner','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:10+00','authoritative',TIMESTAMPTZ '2026-10-06 23:51:05+00'),
+('f6000000-0000-0000-0000-000000000001','B3','moderate','assessed',
+ 'Synthetic surveillance load','fixture-owner','owner','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:20+00','authoritative',TIMESTAMPTZ '2026-10-06 23:51:10+00'),
+('f6000000-0000-0000-0000-000000000001','B4','moderate','assessed',
+ 'Synthetic incorporation cost','fixture-owner','owner','human_verified',
+ 'fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:51:30+00','authoritative',TIMESTAMPTZ '2026-10-06 23:51:20+00'),
+('f6000000-0000-0000-0000-000000000001','B5','adequate','assessed',
+ 'Synthetic sustainable institutional capacity','fixture-owner','owner','unverified',
+ NULL,NULL,NULL,'authoritative',TIMESTAMPTZ '2026-10-06 23:51:30+00');
+
+INSERT INTO maintenance.update_risk_profile_dimension_basis(
+    update_risk_profile_uuid,dimension_code,source_type,
+    monitor_cycle_uuid,observation_payload,rationale,sequence_no
+) VALUES
+('f6000000-0000-0000-0000-000000000001','A2','monitor_cycle',
+ 'e5420000-0000-0000-0000-000000000002',
+ '{"fixture":true,"observation":"recent retained candidate"}'::jsonb,
+ 'Synthetic MonitorCycle evidence for volatility assessment',1),
+('f6000000-0000-0000-0000-000000000001','B1','monitor_cycle',
+ 'e5420000-0000-0000-0000-000000000002',
+ '{"fixture":true,"observation":"structured monitored sources"}'::jsonb,
+ 'Synthetic MonitorCycle evidence for observability assessment',1),
+('f6000000-0000-0000-0000-000000000001','A3','candidate_assessment',
+ NULL,'{"fixture":true}'::jsonb,
+ 'placeholder',99);
+
+DELETE FROM maintenance.update_risk_profile_dimension_basis
+ WHERE update_risk_profile_uuid='f6000000-0000-0000-0000-000000000001'
+   AND dimension_code='A3' AND sequence_no=99;
+
+INSERT INTO maintenance.update_risk_profile_dimension_basis(
+    update_risk_profile_uuid,dimension_code,source_type,
+    candidate_assessment_uuid,observation_payload,rationale,sequence_no
+) VALUES (
+ 'f6000000-0000-0000-0000-000000000001','A3','candidate_assessment',
+ 'e5530000-0000-0000-0000-000000000002',
+ '{"fixture":true,"possible_effect_change":true}'::jsonb,
+ 'Synthetic CandidateAssessment evidence for conclusion sensitivity',1
+);
+
+INSERT INTO maintenance.update_risk_profile_trigger(
+    update_risk_profile_uuid,trigger_code,source_type,rationale,sequence_no
+) VALUES (
+    'f6000000-0000-0000-0000-000000000001',
+    'initial_baseline','none',
+    'Synthetic initial risk-profile baseline',1
+);
+
+INSERT INTO maintenance.update_policy_risk_profile_basis(
+    update_policy_risk_profile_basis_uuid,update_policy_uuid,
+    update_risk_profile_uuid,basis_role,linked_at,linked_by,actor_type,rationale
+) VALUES (
+    'f6100000-0000-0000-0000-000000000001',
+    'f4000000-0000-0000-0000-000000000001',
+    'f6000000-0000-0000-0000-000000000001',
+    'governing',TIMESTAMPTZ '2026-10-07 00:00:00+00',
+    'fixture-owner','owner',
+    'Synthetic governing risk-profile basis predating the synthetic policy'
+);
+
+COMMIT;
