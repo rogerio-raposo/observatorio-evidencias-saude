@@ -2960,3 +2960,25 @@ Documentos:
 - M3 formal permanece bloqueado;
 - próximo passo: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration.
 
+## 2026-10-07 — CP95
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP95.md`;
+- ponteiro de continuidade movido para CP95;
+- arquitetura transversal de prioridade/escalation consolidada em **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- primeira revisão adversarial produziu REVISE e foi efetivamente corrigida antes do PASS;
+- response_class = standard | expedited | urgent | immediate;
+- priority/escalation separados;
+- floors isolados não dominantes removidos;
+- authority_status proposal/authoritative incorporado ao desenho;
+- materiality AI-only não sustenta floor científico autoritativo;
+- Alert sem mapping automático;
+- breach sem circularidade com SLA;
+- capacity sem compensação de risco;
+- queue aggregation apenas derivada;
+- auto-escalation não autorizada;
+- migration 029 não autorizada;
+- score/pesos numéricos não definidos;
+- M3 formal permanece bloqueado;
+- próximo passo: contrato de dados integrado de triage + priority/escalation + SLA + workflow milestones, ainda sem migration;
+- regra de pausa após checkpoint preservada.
+
