@@ -350,16 +350,19 @@ Limite preservado:
 
 > `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL` permanece ativo.
 
-Estado metodológico após Documentos 16–24:
+Estado metodológico após Documentos 16–26:
 
 - perfis de risco = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 - cadence/thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 - SLA semântico = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 - auditoria retrospectiva/hardening = **CLOSED_PASS**;
 - contrato físico = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
-- prioridade/escalation = **NOT_STARTED**.
+- prioridade/escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- priority score/pesos numéricos = **NOT_DEFINED**;
+- auto-escalation = **NOT_AUTHORIZED**;
+- migration 029 = **NOT_AUTHORIZED**.
 
 Próxima etapa metodológica:
 
-> **arquitetura transversal de prioridade e escalation**, antes de qualquer contrato físico adicional.
+> **contrato de dados integrado do plano operacional da Fase 4 — triage + prioridade/escalation + SLA + milestones mínimos de workflow — ainda sem migration.**
 
