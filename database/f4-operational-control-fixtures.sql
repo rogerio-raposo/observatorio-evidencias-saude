@@ -69,7 +69,7 @@ INSERT INTO maintenance.priority_assessment(
     priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
     stage,response_class,authority_scope,authority_status,feasibility_status,
     triage_uuid,materiality_assessment_uuid,update_decision_uuid,
-    alert_product_version_uuid,
+    alert_product_version_uuid,update_risk_profile_uuid,
     risk_profile_snapshot,dependency_snapshot,rationale,
     assessed_by,actor_type,verification_status,
     verified_by,verifier_actor_type,verified_at,assessed_at
@@ -82,14 +82,10 @@ INSERT INTO maintenance.priority_assessment(
     'f4310000-0000-0000-0000-000000000001',
     'f4410000-0000-0000-0000-000000000001',
     'a7100000-0000-0000-0000-000000000001',
-    '{
-      "schema_version":"oes.update_risk_profile/0.1",
-      "assessed_at":"2026-10-07T00:41:30Z",
-      "A1":"moderate","A2":"moderate","A3":"high","A4":"moderate",
-      "A5":"broad","B1":"high","B2":"short","B3":"moderate",
-      "B4":"moderate","B5":"adequate",
-      "rationale":"Synthetic risk-profile snapshot for operational-control fixture"
-    }'::jsonb,
+    'f6000000-0000-0000-0000-000000000001',
+    maintenance.update_risk_profile_snapshot(
+      'f6000000-0000-0000-0000-000000000001'
+    ),
     '{"reach":"broad","fixture":true}'::jsonb,
     'Potential materiality plus high conclusion sensitivity supports expedited response',
     'fixture-reviewer','human_reviewer','human_verified',
@@ -110,11 +106,11 @@ INSERT INTO maintenance.priority_basis(
 
 INSERT INTO maintenance.priority_basis(
     priority_assessment_uuid,basis_code,basis_effect,basis_value,
-    source_type,snapshot_payload,rationale,sequence_no
+    source_type,update_risk_profile_uuid,rationale,sequence_no
 ) VALUES (
     'f5100000-0000-0000-0000-000000000001',
     'conclusion_sensitivity','dominance_floor','high',
-    'snapshot','{"source":"risk_profile_snapshot","A3":"high"}'::jsonb,
+    'risk_profile','f6000000-0000-0000-0000-000000000001',
     'High conclusion sensitivity plus potentially material signal sets expedited floor',2
 );
 
