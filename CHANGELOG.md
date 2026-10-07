@@ -3503,3 +3503,21 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: decidir entre observation plan não normativo para N1-01 ou segundo readiness assessment real;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Reconciliação do readiness e seleção do segundo contexto real
+
+- criado `docs/governance/49-reconciliacao-selecao-segundo-evidence-readiness-real.md`;
+- corrigida prospectivamente, sem reescrever Documento 48, a caracterização incorreta do N2/dCBT-I;
+- CP28 e Documentos 66–67 confirmam N2 como A2/published com owner governance approval;
+- resultado do primeiro readiness N1-01 preservado: `INSUFFICIENT_EVIDENCE`;
+- justificativa comparativa de seleção do Documento 48 = parcialmente corrigida;
+- Opção B selecionada antes de Observation Plan prospectivo;
+- segundo contexto = N2 Caso Real 01 / ProductVersion `81000000-0000-0000-0000-000000000701` / cadence / policy_aggregate;
+- segundo assessment = **SELECTED_NOT_EXECUTED**;
+- Temporal Observation Plan N1-01 = deferido até o segundo assessment;
+- nenhum valor temporal normativo ou Calibration Dossier real autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications deferidos; auto-escalation não autorizada; M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: checkpoint e, em modo alto, executar o segundo Evidence Readiness Assessment real.
