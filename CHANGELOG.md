@@ -2849,3 +2849,35 @@ Documentos:
 - nenhum bloco de SLA iniciado;
 - próximo passo: arquitetura transversal de SLA, somente após instrução explícita do usuário.
 
+## 2026-10-07 — Phase 4 SLA architecture baseline
+
+- Documento 20 definiu a arquitetura transversal de SLA;
+- Documento 21 executou revisão adversarial = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `PHASE_4_SLA_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- seis clocks mínimos definidos: detection→triage, triage→materiality, materiality→decision, decision→workflow start, workflow start→scientific completion, completion→review/publication;
+- late normalization não reinicia SLA-1;
+- evento anterior à vigência da SLA Rule preserva pre_policy_age sem breach retroativo;
+- `materiality_qualified_at` e `decision_qualified_at` consideram verificação humana posterior;
+- rule snapshot é congelada por SLA Instance;
+- elapsed_time, business_calendar e fixed_deadline separados;
+- nominal_due_at e effective_due_at separados;
+- pause retroativa não apaga breach;
+- backlog/capacidade baixa não são pause automáticas;
+- execution_status e compliance_status permanecem eixos distintos;
+- `breached_then_satisfied` preserva atraso histórico;
+- Alert urgency/classification não contém duração universal;
+- cycle lateness do Monitor permanece cadence, não SLA;
+- triage transversal e workflow milestones permanecem gaps físicos;
+- prioridade precisa preceder contrato físico conjunto de SLA;
+- `MIGRATION_028 = NOT_AUTHORIZED`;
+- `NUMERIC_SLA_DURATIONS = NOT_DEFINED`;
+- M3 formal permanece bloqueado.
+
+## 2026-10-07 — CP93
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP93.md`;
+- ponteiro movido para CP93;
+- SLA architecture consolidada;
+- próximo passo: prioridade/escalation;
+- regra de pausa obrigatória após checkpoints preservada.
+
