@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP75 — 2026-10-06**.
+- checkpoint vigente: **CP75 — 2026-10-06** (a ser sucedido pelo CP76 desta consolidação).
 
 ## 2. Estado das fases
 
@@ -638,117 +638,89 @@ Marco:
 
 > **OVR-01 = DEVELOPMENTAL_A1_INTERNAL_VALIDATED — concluído / não publicável.**
 
-## 9. Próxima etapa da Fase 3
+## 9. Monitor de Evidências — estado atual
 
-> **Iniciar a Especificação Científica e Funcional do Monitor de Evidências.**
+Documentos:
 
-Segundo o Documento 40:
+- 165 — Especificação Científica e Funcional;
+- 166 — revisão de coerência científica/arquitetural = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- 167 — Contrato de Dados v0.1 = **READY_FOR_IMPLEMENTATION**;
+- 168 — Resultado da Validação Técnica = **PASS**.
 
-- Monitor de Evidências é produto/processo de manutenção;
-- pertence à dimensão **M2/M3**;
-- não cria um novo nível N;
-- deve estar vinculado a Investigation e/ou produto científico persistente;
-- deve vigiar novas evidências capazes de modificar Results, Synthesis, Certainty, aplicabilidade, conclusão ou estado de atualidade.
+Arquitetura consolidada:
 
-O **Alerta de Evidência** permanece produto/evento posterior ao Monitor.
+> **Monitor = Product próprio + Investigation própria de manutenção que herda N do alvo + camada especializada `maintenance`, reutilizando Search/SearchHit, currency_state, version_change_class e provenance existentes.**
 
-## 10. Checkpoint vigente
+Implementação:
 
-**CP73 — 2026-10-06**.
+- migration `database/021_evidence_monitor_contract.sql`;
+- schema `maintenance`;
+- estruturas:
+  - `monitor_definition`;
+  - `monitor_target`;
+  - `monitor_state`;
+  - `monitor_cycle`;
+  - `cycle_search`;
+  - `evidence_event`;
+  - `candidate_assessment`;
+  - `cycle_currency_state`;
+- fixture M2 formal/A2;
+- fixture M3 estruturalmente completa e formalmente bloqueada até Fase 4;
+- MON-T01–T32 = **PASS**;
+- MON-T33 migration 021 idempotent re-apply = **PASS**;
+- rebuild-from-zero through migration 021 = **PASS**.
 
-Arquivo:
+Semântica preservada:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP73.md`
+- Monitor não é N5;
+- M2/M3 permanecem dimensão de manutenção;
+- Search do Monitor não contamina a Investigation científica histórica;
+- ciclo rotineiro não cria ProductVersion científica;
+- baseline cutoff da Monitor ProductVersion é estático;
+- cutoffs posteriores pertencem aos ciclos;
+- Monitor Product currency e target scientific currency são distintos;
+- decisão de cycle pode gerar novo `product.currency_state` sem nova ProductVersion;
+- target conclusion não é alterada silenciosamente;
+- assurance do target não é herdada;
+- Monitor M2 formal v0.1 exige mínimo A2;
+- expert independent review ausente é warning em M2 v0.1;
+- M3 formal permanece bloqueado por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`;
+- Alert completo e thresholds transversais permanecem fora desta etapa/Fase 4.
 
-Ponto exato de retomada após consolidação do novo checkpoint:
+Validação final:
 
-> **Especificação Científica e Funcional do Monitor de Evidências.**
-
-
-### Monitor de Evidências
-
-Documento 165 — **Especificação Científica e Funcional inicial concluída**.
-
-Decisões vigentes:
-
-- Monitor é produto/processo de manutenção, não N5;
-- opera em M2/M3;
-- possui alvo científico rastreável;
-- Monitoring Cycle é distinto de ProductVersion científica;
-- ausência de mudança material não cria automaticamente nova ProductVersion;
-- `product.currency_state` deve ser reutilizado para currentness;
-- mudanças materiais continuam usando versionamento do produto monitorado;
-- Monitor não altera conclusão silenciosamente;
-- Monitor e Alerta de Evidência permanecem distintos;
-- assurance do alvo não valida automaticamente cada ciclo;
-- IA não pode fabricar Search execution, referências ou verificação humana;
-- thresholds temporais/quantitativos gerais permanecem reservados à Fase 4;
-- nenhuma migration está autorizada antes da revisão arquitetural.
-
-Próxima etapa:
-
-> **Revisão de coerência científica e arquitetural do Monitor contra OES-P1, Product/Investigation, Search, provenance, currency_state, version_change_class e fronteira Fase 3 × Fase 4.**
-
-
-### Monitor de Evidências — revisão arquitetural
-
-Documento 166 — **PASS_WITH_ARCHITECTURAL_DECISIONS**.
-
-Decisão consolidada:
-
-> **Monitor = Product próprio + Investigation própria de manutenção que herda N do alvo + camada especializada `maintenance` para target/cycle/candidate/event, reutilizando Search/SearchHit, currency_state, version_change_class e provenance existentes.**
-
-Regras:
-
-- Search do Monitor não será anexada à Investigation científica histórica do alvo;
-- Monitor terá target linkage explícito;
-- `provenance.dependency_edge` complementa, mas não substitui, o vínculo operacional;
-- Monitoring Cycle é registro operacional append-preserving, não ProductVersion;
-- `investigation.search`, `search_hit` e dedup existentes serão reutilizados;
-- candidate assessment especializado cobrirá hits ainda não resolvidos e eventos;
-- eventos de retratação/correção terão representação própria;
-- currentness continuará em `product.currency_state`;
-- mudança científica continuará usando ProductVersion + `version_change_class`;
-- Alert não será implementado nesta etapa;
-- Monitor assurance é próprio do processo e não é herdado automaticamente do alvo.
+- workflow **OES PoC-S5 PostgreSQL Validation**;
+- run **37553271462** (#122);
+- HEAD validado `d7ca356c8cc4d58552a9e52868fce92f27eaad9e`;
+- conclusão = **success**;
+- artifact **11453871816**;
+- digest `sha256:71dd0b68c92ce3d30832862545ac45efbfb94cba51580d77f2673f12a94fbaf8`.
 
 Readiness:
 
 - scientific/functional = PASS;
-- architectural coherence = PASS_WITH_ARCHITECTURAL_DECISIONS;
-- data-contract readiness = READY;
-- migration readiness = NOT_YET.
+- architecture = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- data contract = PASS;
+- migration/fixtures/tests/rebuild = PASS;
+- **Projection Readiness = PENDING**;
+- template readiness = NOT_EVALUATED.
 
-Próxima etapa:
+## 10. Próxima etapa da Fase 3
 
-> **Contrato de Dados v0.1 do Monitor de Evidências.**
+> **Executar o Projection Readiness Gate da EvidenceMonitorView.**
 
+O gate deve decidir se o estado persistido atual permite projeção determinística/auditável de identidade, plano, estados, target, cycles, Searches, Events, Candidates, resulting CurrencyState, escalation e audit.
 
-### Monitor de Evidências — Contrato de Dados v0.1
+Somente se READY:
 
-Documento 167 — **DATA_CONTRACT_V0_1_READY_FOR_IMPLEMENTATION**.
+> **autorizar migration aditiva 022 para EvidenceMonitorView.**
 
-Contrato:
+Nenhum template deverá ser criado antes do Projection Readiness Gate.
 
-- `product_type='evidence_monitor'`;
-- `investigation_type='evidence_monitoring'`;
-- schema especializado `maintenance`;
-- oito estruturas v0.1:
-  1. `monitor_definition`;
-  2. `monitor_target`;
-  3. `monitor_state`;
-  4. `monitor_cycle`;
-  5. `cycle_search`;
-  6. `evidence_event`;
-  7. `candidate_assessment`;
-  8. `cycle_currency_state`;
-- Search/SearchHit/dedup/currency/version_change/provenance permanecem canônicos;
-- Product/Investigation cutoff do Monitor = cutoff basal do alvo;
-- latest surveillance cutoff é derivado dos cycles;
-- Monitor M2 formal v0.1 exige mínimo A2;
-- M3 é representável, mas permanece formalmente bloqueado até a Fase 4;
-- nenhuma conclusão científica do target é sobrescrita pelo Monitor.
+## 11. Checkpoint de continuidade
 
-Próxima etapa:
+O checkpoint vigente permanece CP75 até a criação/ativação do CP76 desta consolidação.
 
-> **Implementar migration 021 + fixture sintética M2/M3 + testes de contrato + regressões/rebuild.**
+Ponto de retomada destinado ao CP76:
+
+> **Projection Readiness Gate da EvidenceMonitorView.**
