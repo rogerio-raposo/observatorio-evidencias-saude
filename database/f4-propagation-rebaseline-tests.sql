@@ -320,6 +320,24 @@ SELECT pg_temp.ok(
     WHERE rebaseline_decision_uuid='f7400000-0000-0000-0000-000000000001'),
   'F4-PRB-G07-profile-pending-planned'
 );
+SELECT pg_temp.expect_error($q$
+ INSERT INTO maintenance.rebaseline_policy_link(
+  rebaseline_decision_uuid,old_update_policy_uuid,new_update_policy_uuid,
+  policy_disposition,rationale,linked_at
+ ) VALUES(
+  'f7400000-0000-0000-0000-000000000001',
+  'f4000000-0000-0000-0000-000000000002',
+  NULL,'stop_maintenance','wrong old-target policy must fail',now()
+ )$q$,'F4-PRB-G07-policy-target-validator');
+SELECT pg_temp.expect_error($q$
+ INSERT INTO maintenance.rebaseline_risk_profile_link(
+  rebaseline_decision_uuid,source_update_risk_profile_uuid,
+  target_update_risk_profile_uuid,profile_disposition,rationale,linked_at
+ ) VALUES(
+  'f7400000-0000-0000-0000-000000000001',
+  NULL,'f6000000-0000-0000-0000-000000000001',
+  'target_profile_available','old-target profile cannot be new-target profile',now()
+ )$q$,'F4-PRB-G07-profile-target-validator');
 SELECT pg_temp.ok(
   NOT EXISTS(
     SELECT 1
