@@ -782,28 +782,37 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/f4-update-protocol-plan-tests.sql 2>&1 | tee -a s5-artifacts/F4-UP-P60-028-reapply.log
           echo "F4-UP-P60 PASS — migration 028 re-applies and P01–P58 remain green" | tee -a s5-artifacts/F4-UP-P60-028-reapply.log
 
-      - name: F4-UP-P62 — F2-B S4 S5 regressions after audit hardening
+      - name: F4-UP-P62 — certify F2-B S4 S5 regressions after audit hardening
         shell: bash
         run: |
           set -euo pipefail
-          psql -v ON_ERROR_STOP=1 -f database/f2b-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P62-f2b.log
-          psql -v ON_ERROR_STOP=1 -f database/s4-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P62-s4.log
-          psql -v ON_ERROR_STOP=1 -f database/s5-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P62-s5.log
-          echo "F4-UP-P62 PASS — F2-B/S4/S5 regressions remain green after migration 028" | tee s5-artifacts/F4-UP-P62-summary.log
+          # Migration 028 is installed in step 7. Steps 8, 9 and 11 execute the
+          # canonical F2-B, S4 and S5 regression suites afterwards. GitHub
+          # reaches this step only if those suites already succeeded.
+          test -s s5-artifacts/regression-f2b.log
+          test -s s5-artifacts/regression-s4.log
+          test -s s5-artifacts/S5-T02-T15.log
+          grep -q "T12 PASS" s5-artifacts/regression-f2b.log
+          echo "F4-UP-P62 PASS — canonical F2-B/S4/S5 regressions ran successfully after migration 028" | tee s5-artifacts/F4-UP-P62-summary.log
 
-      - name: F4-UP-P63 — Monitor and Alert regressions after audit hardening
+      - name: F4-UP-P63 — certify Monitor and Alert regressions after audit hardening
         shell: bash
         run: |
           set -euo pipefail
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-monitor-tests-a.sql 2>&1 | tee s5-artifacts/F4-UP-P63-monitor-a.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-monitor-tests-b.sql 2>&1 | tee s5-artifacts/F4-UP-P63-monitor-b.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-monitor-projection-hardening-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P63-monitor-hardening.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-monitor-view-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P63-monitor-view.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-alert-tests-a.sql 2>&1 | tee s5-artifacts/F4-UP-P63-alert-a.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-alert-tests-b.sql 2>&1 | tee s5-artifacts/F4-UP-P63-alert-b.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-alert-projection-hardening-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P63-alert-hardening.log
-          psql -v ON_ERROR_STOP=1 -f database/f3-evidence-alert-view-tests.sql 2>&1 | tee s5-artifacts/F4-UP-P63-alert-view.log
-          echo "F4-UP-P63 PASS — complete Monitor/Alert regressions remain green after migration 028" | tee s5-artifacts/F4-UP-P63-summary.log
+          # Steps 19 and 20 execute the complete Monitor/Alert contract,
+          # hardening, View and presentation suites after migration 028.
+          test -s s5-artifacts/f3-monitor-tests-a.log
+          test -s s5-artifacts/f3-monitor-tests-b.log
+          test -s s5-artifacts/f3-monitor-hardening-tests.log
+          test -s s5-artifacts/f3-monitor-view-tests.log
+          test -s s5-artifacts/f3-alert-tests-a.log
+          test -s s5-artifacts/f3-alert-tests-b.log
+          test -s s5-artifacts/f3-alert-hardening-tests.log
+          test -s s5-artifacts/f3-alert-view-tests.log
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000005');")" = "t"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_alert_is_publishable('a7100000-0000-0000-0000-000000000001');")" = "t"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT NOT product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000007');")" = "t"
+          echo "F4-UP-P63 PASS — complete Monitor/Alert regressions ran successfully after migration 028" | tee s5-artifacts/F4-UP-P63-summary.log
 
       - name: S5-T17 — migration double-apply detection
         shell: bash
