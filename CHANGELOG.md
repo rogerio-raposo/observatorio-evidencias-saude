@@ -2461,3 +2461,16 @@ Documentos:
 - EvidenceMonitorView movida para migration candidata 023;
 - ponteiro de continuidade movido para CP77;
 - retomada: especificação + implementação do Projection Readiness hardening.
+
+
+## 2026-10-06 — Evidence Monitor projection hardening specification
+
+- Documento 170 criado;
+- hardening spec = **READY**;
+- duas estruturas auxiliares normalizadas autorizadas: `candidate_impact` e `monitor_source_requirement`;
+- source exceptions reutilizarão MethodDecision;
+- temporal/search drift será revalidado dinamicamente;
+- CycleCurrencyState será imutável;
+- publication gate será endurecido sem remover blockers da migration 021;
+- migration 022 autorizada somente para hardening;
+- EvidenceMonitorView permanece migration candidata 023.
