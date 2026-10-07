@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP104 — 2026-10-07**.
+- checkpoint vigente: **CP105 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2174,3 +2174,18 @@ Uploads manuais reconciliados:
 
 Próximo passo:
 > **após CP105 e novo Freshness Gate, implementar migration 032 + fixtures sintéticas + F4-TCAL-PH-T01–T230 e integrar ao S5; parar se surgir nova decisão arquitetural.**
+
+### CP105 — contrato físico de calibração temporal
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP105.md`;
+- ponteiro movido para CP105;
+- `TEMPORAL_CALIBRATION_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `F4_TCAL_PH_T01_T230 = APPROVED_MINIMUM_TEST_PLAN`;
+- `MIGRATION_032 = AUTHORIZED_IN_STRICT_INFRASTRUCTURE_SCOPE`;
+- valores normativos permanecem não autorizados;
+- scheduler/notifications/auto-escalation permanecem não autorizados;
+- M3 formal permanece bloqueado;
+- próximo passo: implementar migration 032 + fixtures/testes e validar tecnicamente;
+- modo médio suficiente para implementação mecânica; voltar a alto se surgir nova decisão arquitetural;
+- Fase 5 não iniciada;
+- pausa obrigatória preservada.
