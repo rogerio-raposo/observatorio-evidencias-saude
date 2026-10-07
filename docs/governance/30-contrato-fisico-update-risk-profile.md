@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW — pronto para recheck do Documento 31**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 31**  
 **Dependências:** Documentos 16–17, 18–21, 25–29; migrations 027–029  
+**Validado por:** Documento 31  
 **Migration:** **não autorizada neste documento**
 
 ---
@@ -1452,9 +1453,9 @@ Priority implications são rationale, não decisão.
 
 ## 60. Estado
 
-> **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = CANDIDATE**
+> **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
-> **MIGRATION_030 = NOT_AUTHORIZED**
+> **MIGRATION_030 = AUTHORIZED_IN_STRICT_SCOPE_AFTER_DOCUMENT_31**
 
 > **RISK_SCORE = NOT_DEFINED**
 
@@ -1468,7 +1469,7 @@ Priority implications são rationale, não decisão.
 
 ## 61. Próximo passo
 
-> **Executar gate adversarial do contrato físico candidato antes de qualquer migration 030.**
+> **Implementar migration 030 no escopo estrito autorizado pelo Documento 31 + F4-RP-T01–T87 + S5/idempotência/rebuild/regressões.**
 
 
 ---
