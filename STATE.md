@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP102 — 2026-10-07**.
+- checkpoint vigente: **CP103 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2050,3 +2050,18 @@ Disciplina de modo:
 
 Próximo passo:
 > **em modo alto, definir primeiro a metodologia de calibração temporal; somente depois considerar valores normativos.**
+
+### CP103 — seleção do próximo bloco da Fase 4
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP103.md`;
+- ponteiro movido para CP103;
+- `NEXT_PHASE_4_BLOCK = TEMPORAL_CALIBRATION`;
+- `TEMPORAL_CALIBRATION = SELECTED_NOT_STARTED`;
+- priority score permanece deliberadamente dispensável no baseline;
+- nenhum valor numérico foi definido;
+- scheduler/notifications não iniciados;
+- auto-escalation não autorizada;
+- M3 formal permanece bloqueado;
+- modo alto recomendado antes da metodologia de calibração;
+- Fase 5 não iniciada;
+- pausa obrigatória preservada.
