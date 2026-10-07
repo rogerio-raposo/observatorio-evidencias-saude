@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_ADVERSARIAL_GATE — NO_NORMATIVE_VALUES_AUTHORIZED**  
+**Status:** **REVISED_AFTER_DOCUMENT_40 — READY_FOR_RECHECK — NO_NORMATIVE_VALUES_AUTHORIZED**  
 **Dependências:** Documentos 16–21, 25–31, 33–38; migrations 027, 029–031  
 **Objeto:** metodologia para calibrar cadence, thresholds temporais, calendários e durações SLA antes de qualquer valor normativo
 
@@ -952,3 +952,419 @@ Mesmo após calibração:
 ## 38. Próximo passo exato
 
 > **Executar gate adversarial da metodologia, atacando falsa precisão, capacity laundering, ausência de provenance, resolver SLA, due calculation, calendar arithmetic, cadence JSON aberto, retroatividade e M3. Nenhum número deve ser definido antes do PASS do gate.**
+
+
+---
+
+# PARTE L — HARDENING PÓS-DOCUMENTO 40
+
+## 39. Need envelope não determina números automaticamente
+
+As dimensões A1–A5 e demais fatores de necessidade:
+
+- orientam direção;
+- podem criar floors qualitativos;
+- restringem candidatos;
+- exigem rationale.
+
+Elas não autorizam mappings automáticos do tipo:
+
+> `high = X dias`.
+
+Qualquer valor temporal continua dependente de Calibration Dossier, evidência aplicável e decisão explícita.
+
+---
+
+## 40. Seleção por dominância/Pareto, não por função objetivo escalar
+
+A seleção de candidatos segue ordem metodológica:
+
+1. eliminar candidatos que não satisfazem need envelope;
+2. eliminar candidatos incompatíveis com constraints externas aplicáveis;
+3. eliminar candidatos source-ineffective;
+4. eliminar candidatos inviáveis prospectivamente;
+5. comparar os candidatos restantes por dominância/Pareto;
+6. governance seleciona entre candidatos não dominados com rationale explícita.
+
+Não existe função objetivo universal que combine:
+
+- risco;
+- workload;
+- custo;
+- breach;
+- latency;
+
+em um único score.
+
+A expressão anterior “menor carga” não significa minimizar custo a qualquer preço.
+
+---
+
+## 41. Source latency não é cadence target
+
+Source latency:
+
+- limita ganho observacional possível;
+- informa redundância de polling;
+- informa desenho de fallback;
+- pode excluir schedules inutilmente rápidos.
+
+Mas:
+
+> não define sozinho a cadence.
+
+Need, volatility, event channels e external constraints permanecem independentes.
+
+---
+
+## 42. Suficiência da base precisa de caracterização, não N universal
+
+Nenhum tamanho mínimo universal é definido.
+
+Todo Calibration Dossier deve registrar:
+
+- número de casos;
+- período observado;
+- missingness;
+- censura;
+- outliers;
+- representatividade;
+- estabilidade temporal;
+- mudança estrutural relevante;
+- source/channel failure history.
+
+`sufficient_for_calibration` exige rationale explícita sobre esses elementos.
+
+---
+
+## 43. Replay inclui informação desfavorável
+
+Counterfactual replay deve incluir, quando existirem:
+
+- casos completos;
+- casos censurados;
+- timestamps ausentes;
+- falhas de canal;
+- períodos de overload;
+- outliers;
+- late detections;
+- incomplete workflow endpoints.
+
+É proibido excluir ou imputar casos com a finalidade de melhorar desempenho aparente.
+
+---
+
+## 44. Snapshot temporal Priority → SLA
+
+Quando `response_class` ou outro dado de PriorityAssessment participa da seleção de SLARule:
+
+- usar apenas contexto disponível antes do nascimento da SLA Instance;
+- registrar o PriorityAssessment de início;
+- congelar a rule selecionada e seu snapshot.
+
+Breach posterior pode:
+
+- gerar nova PriorityAssessment;
+- gerar escalation candidate conforme rule futura.
+
+Breach posterior não pode:
+
+- trocar a SLARule da instância existente;
+- recalcular nominal due;
+- reclassificar retroativamente o snapshot.
+
+---
+
+## 45. Calibração provisional não vira rule normativa ativa
+
+`provisional_requires_reassessment` representa conclusão metodológica, não lifecycle de SLARule.
+
+Enquanto o schema não tiver mecanismo específico de proposal:
+
+> calibrações provisórias permanecem fora das tabelas normativas ativas.
+
+Somente:
+
+> `approved_for_normative_activation`
+
+pode originar UpdatePolicy/SLARule temporal real, e apenas após os pré-requisitos físicos estarem fechados.
+
+---
+
+## 46. Repeated breach não relaxa SLA automaticamente
+
+Repeated breach exige decomposição causal antes de qualquer recalibração:
+
+- capacity shortfall;
+- process defect;
+- source delay;
+- endpoint unavailability;
+- rule unrealistic;
+- need envelope change;
+- external constraint change.
+
+Alongamento de SLA só é admissível se:
+
+1. a necessidade científica/decisória continuar satisfeita;
+2. não houver capacity laundering;
+3. rationale demonstrar por que o valor anterior era metodologicamente inadequado, e não apenas operacionalmente difícil.
+
+---
+
+## 47. External deadline exige compatibilidade semântica
+
+External normative basis não se torna automaticamente OES SLA.
+
+Antes de dominar uma regra deve existir demonstração de:
+
+- applicability ao target/context;
+- compatibilidade entre start externo e start do clock OES;
+- compatibilidade entre endpoint externo e endpoint OES;
+- precision preservada;
+- timezone preservado quando aplicável;
+- conflito com outras constraints resolvido.
+
+Quando semânticas diferem:
+
+> registrar external constraint como constraint, não copiá-la como duration/deadline OES.
+
+---
+
+## 48. Normative activation depende dos blockers físicos
+
+Mesmo que um valor candidato esteja metodologicamente bem sustentado:
+
+> nenhum valor normativo pode ser ativado enquanto os pré-requisitos físicos abaixo permanecerem abertos.
+
+Pré-requisitos mínimos:
+
+1. cadence payload/schema fechado;
+2. source-scoped cadence obligation quando necessária;
+3. Calibration Dossier físico + structured basis;
+4. canonical SLA rule resolver;
+5. validators dos filter domains;
+6. canonical rule snapshot;
+7. nominal due calculator;
+8. business-calendar arithmetic;
+9. fixed-deadline source lineage;
+10. calendar effective-window guard;
+11. warning/breach/escalation payload schemas.
+
+Esses blockers são:
+
+> **implementation prerequisites**, não justificativa para inventar números em estruturas abertas.
+
+---
+
+## 49. Cadence payload — contrato futuro necessário
+
+Antes de numeric cadence, o contrato físico deverá representar deterministicamente:
+
+- cadence mode;
+- interval value;
+- interval unit;
+- anchor type;
+- anchor reference;
+- grace;
+- source scope;
+- satisfaction event;
+- timezone/calendar semantics;
+- event channel;
+- fallback;
+- effective_at;
+- supersession.
+
+O design físico exato ainda não é autorizado por este documento.
+
+---
+
+## 50. Source-specific obligation
+
+Quando uma policy depender de múltiplas fontes:
+
+- a calibração deve testar se MonitorCycle agregado é suficiente;
+- se não for, a obrigação temporal precisa ser source-scoped fisicamente.
+
+Não é permitido inferir source compliance apenas da conclusão de um cycle agregado se ele não provar cobertura de cada obrigação calibrada.
+
+---
+
+## 51. Canonical SLA rule resolver
+
+Antes de rules normativas, deve existir função canônica que:
+
+1. receba o contexto fechado;
+2. valide os valores contra domínios canônicos;
+3. filtre rules elegíveis;
+4. ordene por `selection_precedence`;
+5. detecte ambiguity;
+6. detecte ausência de fallback quando fallback for requerido;
+7. retorne a rule selecionada;
+8. produza selection trace auditável.
+
+Não existe specificity score.
+
+---
+
+## 52. Filter domains
+
+Antes de ativar rules reais:
+
+- `response_class_filter`;
+- `signal_class_filter`;
+- `trigger_class_filter`;
+- `decision_type_filter`;
+- `materiality_outcome_filter`;
+- `endpoint_type`;
+
+devem ser validados contra os domínios canônicos correspondentes.
+
+Typo ou valor impossível não pode permanecer em rule ativa.
+
+---
+
+## 53. round_type como estratificador potencial
+
+`round_type` não será adicionado preventivamente à SLARule.
+
+A calibração deverá testar heterogeneidade de SLA4–SLA6 entre:
+
+- scientific_update;
+- methodological_reroute;
+- review_revision;
+- publication_remediation;
+- other.
+
+Se a heterogeneidade for material e necessária para uma regra justa/determinística:
+
+> abrir decisão física explícita.
+
+É proibido esconder esse selector em JSON ou rationale.
+
+---
+
+## 54. Canonical rule snapshot
+
+A SLA Instance futura deve congelar serializer canônico contendo pelo menos:
+
+- SLARule UUID;
+- UpdatePolicy UUID;
+- target version;
+- clock;
+- filters efetivamente usados;
+- selection precedence;
+- endpoint;
+- time basis;
+- duration/deadline;
+- calendar version;
+- warning/breach/escalation policy;
+- start PriorityAssessment quando aplicável;
+- calibration dossier/version basis.
+
+Snapshot deve ser determinístico e verificável.
+
+---
+
+## 55. Nominal due calculator
+
+Antes de SLA normativa, deve existir função canônica:
+
+> `nominal_due = f(start_at, SLARule, CalendarVersion/fixed deadline)`.
+
+SLA Instance não pode aceitar `nominal_due_at` discrepante da regra selecionada.
+
+O due pode ser:
+
+- derivado internamente;
+- ou fornecido pelo caller e verificado por equality estrita.
+
+Cálculo externo opaco não é fonte autoritativa.
+
+---
+
+## 56. Business-calendar arithmetic
+
+A operação temporal deverá ser determinística e cobrir:
+
+- timezone;
+- weekly schedule;
+- open/closed days;
+- custom exceptions;
+- intervals cruzando dias;
+- início fora da janela aberta;
+- fim de janela;
+- DST quando aplicável;
+- calendário superseded;
+- test vectors independentes.
+
+Calendar arithmetic não pode alterar first breach histórico.
+
+---
+
+## 57. Fixed deadline lineage
+
+Fixed deadline normativo exige source locator estruturado compatível com:
+
+- external_rule;
+- entity_version;
+- artifact;
+- manual_governance.
+
+A estrutura deverá preservar:
+
+- source identity;
+- source version;
+- precision original;
+- observed/recorded time;
+- rationale;
+- timezone quando aplicável.
+
+Date-only não vira timestamp sem regra normativa explícita.
+
+---
+
+## 58. Calendar effective-window
+
+Business-calendar SLARule normativa deve usar calendar version válida em seu `effective_at`.
+
+Mudança de calendário:
+
+- cria nova CalendarVersion;
+- não altera instances já abertas;
+- não reescreve rule snapshot histórico.
+
+---
+
+## 59. Warning/breach/escalation schemas
+
+Antes de números nesses payloads:
+
+- schema fechado;
+- units explícitas;
+- boundary semantics explícitas;
+- warning < due quando aplicável;
+- breach sempre ancorado no effective due;
+- post-breach escalation não altera first breach;
+- thresholds não mudam CurrencyState;
+- thresholds não produzem MaterialityAssessment automaticamente.
+
+---
+
+## 60. Estado após hardening
+
+> **TEMPORAL_CALIBRATION_METHODOLOGY = REVISED_READY_FOR_RECHECK**
+
+> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = IDENTIFIED_NOT_SPECIFIED**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **MIGRATION_032 = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 61. Próximo passo exato
+
+> **Reexecutar o Documento 40. Se o recheck passar, autorizar somente a especificação do contrato físico dos pré-requisitos de calibração, ainda sem valores normativos.**
+
