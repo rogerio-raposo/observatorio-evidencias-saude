@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP78 — 2026-10-06**.
+- checkpoint vigente: **CP78 — 2026-10-06** (a ser sucedido pelo CP79 desta consolidação).
 
 ## 2. Estado das fases
 
@@ -752,3 +752,41 @@ Decisões:
 Próxima etapa:
 
 > **Implementar migration 022 + atualizar fixture + MONH-T01–T24 + regressões/rebuild.**
+
+
+### Monitor de Evidências — hardening técnico
+
+Documento 171 — **EVIDENCE_MONITOR_PROJECTION_HARDENING = TECHNICALLY_VALIDATED**.
+
+Implementação:
+
+- migration `database/022_evidence_monitor_projection_hardening.sql`;
+- `maintenance.candidate_impact`;
+- `maintenance.monitor_source_requirement`;
+- source requirement status com `fulfilled` / `exception_applied` / `satisfied`;
+- exceções reutilizando `investigation.method_decision`;
+- temporal/Search hardening dinâmico;
+- avaliação de todos os completed cycles;
+- `cycle_currency_state` imutável;
+- `product.evidence_monitor_projection_hardening_issues(...)`;
+- publishability endurecida.
+
+Validação:
+
+- MON-T01–T32 = PASS;
+- MONH-T01–T22 = PASS;
+- MON-T33 = PASS — chain 021→022 re-apply;
+- MONH-T23 = PASS — migration 022 re-apply;
+- MONH-T24 = PASS — rebuild-through-022;
+- run final **37555588465** (#125) = **success**;
+- HEAD validado `a66ea298b30ffacda10ce16fe2bc0974362b87fe`;
+- artifact **11453649661**;
+- digest `sha256:002f0a0fdde28bb20bdba9e86263b275bd140d2aec2ae1e67e69f74579089bf6`.
+
+Projection Readiness permanece formalmente:
+
+> **NOT_READY até novo gate explícito.**
+
+Próxima etapa:
+
+> **Reexecutar adversarialmente PR-MON-01–05 e decidir READY/NOT_READY antes da EvidenceMonitorView.**
