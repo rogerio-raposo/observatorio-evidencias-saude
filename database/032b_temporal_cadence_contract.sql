@@ -329,6 +329,8 @@ CREATE OR REPLACE FUNCTION maintenance.assert_cadence_observation()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
 DECLARE o maintenance.cadence_obligation%ROWTYPE; c maintenance.cadence_contract%ROWTYPE;
  causal timestamptz; art_type text; art_status text; cyc_status text;
+ locator_monitor uuid; locator_source_name text; locator_source_class text;
+ search_inv uuid; target_inv uuid;
 BEGIN
   SELECT * INTO o FROM maintenance.cadence_obligation WHERE cadence_obligation_uuid=NEW.cadence_obligation_uuid;
   SELECT * INTO c FROM maintenance.cadence_contract WHERE cadence_contract_uuid=o.cadence_contract_uuid;
@@ -346,14 +348,42 @@ BEGIN
 
   IF NEW.monitor_cycle_uuid IS NOT NULL THEN
     IF o.satisfaction_event_type<>'monitor_cycle_completed' THEN RAISE EXCEPTION 'Cadence locator/event mismatch'; END IF;
-    SELECT completed_at,execution_status INTO causal,cyc_status FROM maintenance.monitor_cycle WHERE cycle_uuid=NEW.monitor_cycle_uuid;
+    SELECT completed_at,execution_status,monitor_product_version_uuid
+      INTO causal,cyc_status,locator_monitor
+    FROM maintenance.monitor_cycle WHERE cycle_uuid=NEW.monitor_cycle_uuid;
     IF cyc_status<>'completed' THEN RAISE EXCEPTION 'Cadence MonitorCycle must be completed'; END IF;
+    IF c.governing_monitor_product_version_uuid IS NOT NULL
+       AND locator_monitor IS DISTINCT FROM c.governing_monitor_product_version_uuid THEN
+      RAISE EXCEPTION 'Cadence MonitorCycle must belong to governing Monitor';
+    END IF;
   ELSIF NEW.search_uuid IS NOT NULL THEN
     IF o.satisfaction_event_type<>'search_execution' THEN RAISE EXCEPTION 'Cadence locator/event mismatch'; END IF;
-    SELECT executed_at INTO causal FROM investigation.search WHERE search_uuid=NEW.search_uuid;
+    SELECT s.executed_at,s.source_name,s.source_class,s.investigation_version_uuid
+      INTO causal,locator_source_name,locator_source_class,search_inv
+    FROM investigation.search s WHERE s.search_uuid=NEW.search_uuid;
+    IF c.governing_monitor_product_version_uuid IS NOT NULL THEN
+      SELECT maintenance.monitor_primary_investigation(c.governing_monitor_product_version_uuid) INTO target_inv;
+      IF search_inv IS DISTINCT FROM target_inv THEN
+        RAISE EXCEPTION 'Cadence Search must belong to governing Monitor investigation';
+      END IF;
+    ELSIF c.target_investigation_version_uuid IS NOT NULL
+          AND search_inv IS DISTINCT FROM c.target_investigation_version_uuid THEN
+      RAISE EXCEPTION 'Cadence Search must belong to calibrated InvestigationVersion';
+    END IF;
+    IF o.scope_type='monitor_source_name' AND locator_source_name IS DISTINCT FROM o.source_name THEN
+      RAISE EXCEPTION 'Cadence Search does not prove required source name';
+    END IF;
+    IF o.scope_type='monitor_source_class' AND locator_source_class IS DISTINCT FROM o.source_class THEN
+      RAISE EXCEPTION 'Cadence Search does not prove required source class';
+    END IF;
   ELSIF NEW.evidence_event_uuid IS NOT NULL THEN
     IF o.satisfaction_event_type<>'evidence_event' OR o.timing_mode<>'event_driven' THEN RAISE EXCEPTION 'Cadence locator/event mismatch'; END IF;
-    SELECT detected_at INTO causal FROM maintenance.evidence_event WHERE evidence_event_uuid=NEW.evidence_event_uuid;
+    SELECT detected_at,monitor_product_version_uuid INTO causal,locator_monitor
+      FROM maintenance.evidence_event WHERE evidence_event_uuid=NEW.evidence_event_uuid;
+    IF c.governing_monitor_product_version_uuid IS NULL
+       OR locator_monitor IS DISTINCT FROM c.governing_monitor_product_version_uuid THEN
+      RAISE EXCEPTION 'Cadence EvidenceEvent must belong to governing Monitor';
+    END IF;
   ELSIF NEW.update_signal_uuid IS NOT NULL THEN
     IF o.satisfaction_event_type<>'update_signal' OR o.timing_mode<>'event_driven' THEN RAISE EXCEPTION 'Cadence locator/event mismatch'; END IF;
     SELECT detected_at INTO causal FROM maintenance.update_signal
