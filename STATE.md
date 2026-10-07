@@ -702,25 +702,29 @@ Readiness:
 - architecture = PASS_WITH_ARCHITECTURAL_DECISIONS;
 - data contract = PASS;
 - migration/fixtures/tests/rebuild = PASS;
-- **Projection Readiness = PENDING**;
+- **Projection Readiness = NOT_READY** — Documento 169;
 - template readiness = NOT_EVALUATED.
 
 ## 10. Próxima etapa da Fase 3
 
-> **Executar o Projection Readiness Gate da EvidenceMonitorView.**
+> **Implementar hardening de Projection Readiness do Monitor na migration 022.**
 
-O gate deve decidir se o estado persistido atual permite projeção determinística/auditável de identidade, plano, estados, target, cycles, Searches, Events, Candidates, resulting CurrencyState, escalation e audit.
+Documento 169 identificou cinco blockers materiais antes de uma EvidenceMonitorView segura:
 
-Somente se READY:
+1. cardinalidade múltipla de impactos não normalizada;
+2. source policy parcialmente interpretada;
+3. exceções de cobertura via MethodDecision não integradas;
+4. semântica temporal cycle/Search incompleta, incluindo drift dinâmico de Search;
+5. vínculo Cycle → CurrencyState ainda regravável.
 
-> **autorizar migration aditiva 022 para EvidenceMonitorView.**
+A migration 022 fica reservada ao hardening desses pontos. A EvidenceMonitorView passa a ser candidata para migration 023, somente após novo Projection Readiness Gate = READY.
 
-Nenhum template deverá ser criado antes do Projection Readiness Gate.
+Nenhum template deverá ser criado enquanto o gate permanecer NOT_READY.
 
 ## 11. Checkpoint de continuidade
 
-O checkpoint vigente é **CP76 — 2026-10-06**.
+O checkpoint vigente permanece **CP76 — 2026-10-06** até a ativação do CP77 desta consolidação.
 
-Ponto exato de retomada:
+Ponto exato de retomada destinado ao CP77:
 
-> **Projection Readiness Gate da EvidenceMonitorView.**
+> **Especificar e implementar o hardening de Projection Readiness na migration 022, antes de qualquer EvidenceMonitorView.**
