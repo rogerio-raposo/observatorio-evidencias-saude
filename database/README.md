@@ -371,3 +371,23 @@ Próxima etapa metodológica:
 
 > **definir o próximo bloco da Fase 4 a partir das dívidas ainda abertas, sem presumir autorização para calibração SLA, scheduler, notifications, propagation/re-baselining ou M3 readiness.**
 
+
+## Fase 4 — UpdateRiskProfile físico
+
+**Arquitetura aprovada — 7 de outubro de 2026.**
+
+Documentos:
+- 30 — contrato físico candidato do UpdateRiskProfile;
+- 31 — gate adversarial.
+
+Estado:
+- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `READY_FOR_MIGRATION_030`;
+- `MIGRATION_030_SCOPE = UPDATE_RISK_PROFILE_NORMALIZATION_ONLY`;
+- migration 030 ainda não implementada;
+- F4-RP-T01–T87 definido como plano mínimo futuro;
+- sem risk score, numeric cadence, numeric SLA, auto policy change ou M3 unblock.
+
+Próxima etapa:
+> implementar migration 030 + F4-RP-T01–T87 + S5/idempotência/rebuild/regressões.
+
