@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP76 — 2026-10-06**.
+- checkpoint vigente: **CP77 — 2026-10-06**.
 
 ## 2. Estado das fases
 
@@ -723,8 +723,8 @@ Nenhum template deverá ser criado enquanto o gate permanecer NOT_READY.
 
 ## 11. Checkpoint de continuidade
 
-O checkpoint vigente permanece **CP76 — 2026-10-06** até a ativação do CP77 desta consolidação.
+O checkpoint vigente é **CP77 — 2026-10-06**.
 
-Ponto exato de retomada destinado ao CP77:
+Ponto exato de retomada:
 
 > **Especificar e implementar o hardening de Projection Readiness na migration 022, antes de qualquer EvidenceMonitorView.**
