@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP100 — 2026-10-07**.
+- checkpoint vigente: **CP101 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1930,3 +1930,18 @@ Próximo passo:
 
 Disciplina de modo:
 > **a etapa arquitetural de alta complexidade terminou; modo médio é suficiente para a implementação mecânica já especificada.**
+
+### CP101 — contrato físico de propagation/re-baselining
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP101.md`;
+- ponteiro movido para CP101;
+- `PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `F4_PRB_T01_T145 = APPROVED_MINIMUM_TEST_PLAN`;
+- `MIGRATION_031 = AUTHORIZED_IN_STRICT_SCOPE`;
+- migration 031 ainda não implementada;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua run **37618433929** (#161);
+- próximo passo: implementação migration 031 + fixtures/testes/S5;
+- modo médio suficiente enquanto o escopo permanecer mecânico;
+- Fase 5 não iniciada;
+- pausa obrigatória após checkpoint preservada.
