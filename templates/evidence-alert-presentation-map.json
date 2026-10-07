@@ -1,0 +1,125 @@
+{
+  "identity.editorial_status": {
+    "draft": "Rascunho",
+    "under_review": "Em revisão",
+    "published": "Publicado",
+    "superseded": "Substituído",
+    "archived": "Arquivado"
+  },
+  "alert.classification": {
+    "informational": "Informativo",
+    "relevant": "Relevante",
+    "critical": "Crítico"
+  },
+  "alert.reassessment_priority": {
+    "routine": "Rotina",
+    "priority": "Prioridade",
+    "urgent": "Urgente"
+  },
+  "alert.lifecycle_status": {
+    "triage": "Triagem",
+    "evaluation": "Em avaliação",
+    "incorporated": "Incorporado",
+    "discarded": "Descartado"
+  },
+  "target.target_type": {
+    "product_version": "ProductVersion",
+    "investigation_version": "InvestigationVersion"
+  },
+  "target.currency.status": {
+    "current": "Atual",
+    "under_evaluation": "Em avaliação",
+    "update_recommended": "Atualização recomendada",
+    "outdated": "Desatualizado",
+    "archived": "Arquivado"
+  },
+  "alert.verification.status": {
+    "unverified": "Não verificado",
+    "ai_verified": "Verificado por IA",
+    "human_verified": "Verificado por humano",
+    "human_consensus": "Consenso humano"
+  },
+  "audit.verification_status": {
+    "unverified": "Não verificado",
+    "ai_verified": "Verificado por IA",
+    "human_verified": "Verificado por humano",
+    "human_consensus": "Consenso humano"
+  },
+  "source_role": {
+    "primary": "Primária",
+    "supporting": "Apoio"
+  },
+  "source_type": {
+    "candidate_assessment": "CandidateAssessment",
+    "evidence_event": "EvidenceEvent",
+    "entity_version": "EntityVersion",
+    "artifact": "Artifact",
+    "uri": "URI direta"
+  },
+  "dimension_code": {
+    "benefit": "Benefício",
+    "harm": "Dano",
+    "magnitude": "Magnitude",
+    "precision": "Precisão",
+    "certainty": "Certeza",
+    "applicability": "Aplicabilidade",
+    "conclusion": "Conclusão",
+    "regulatory_status": "Status regulatório",
+    "validity": "Validade",
+    "scope": "Escopo",
+    "other": "Outro"
+  },
+  "verifier_actor_type": {
+    "ai_system": "Sistema de IA",
+    "human_reviewer": "Revisor humano",
+    "human_expert": "Especialista humano"
+  },
+  "actor_type": {
+    "ai_system": "Sistema de IA",
+    "human_reviewer": "Revisor humano",
+    "human_expert": "Especialista humano",
+    "owner": "Proprietário/governança"
+  },
+  "audit.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "audit.target_assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "target.assurance_level": {
+    "A0": "A0 — não verificada",
+    "A1": "A1 — verificação metodológica por IA",
+    "A2": "A2 — IA verificada + aprovação de governança",
+    "A3": "A3 — revisão especializada independente"
+  },
+  "severity": {
+    "error": "ERRO",
+    "warning": "AVISO"
+  },
+  "audit.synthetic_fixture": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.publishable": {
+    "true": "sim",
+    "false": "não"
+  },
+  "audit.expert_independent_review_present": {
+    "true": "sim",
+    "false": "não"
+  },
+  "independent": {
+    "true": "sim",
+    "false": "não"
+  },
+  "dependency_active": {
+    "true": "sim",
+    "false": "não"
+  }
+}
