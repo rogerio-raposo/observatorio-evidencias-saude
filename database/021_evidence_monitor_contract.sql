@@ -167,7 +167,7 @@ LANGUAGE sql
 STABLE
 AS $q$
     SELECT CASE
-        WHEN count(*)=1 THEN min(il.investigation_version_uuid)
+        WHEN count(*)=1 THEN (array_agg(il.investigation_version_uuid))[1]
         ELSE NULL
     END
       FROM product.investigation_link il
