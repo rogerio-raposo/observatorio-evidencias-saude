@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP102 — 2026-10-07**
+**CP103 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP102.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP103.md`
 
 Checkpoint anterior:
 
-`CP101`
+`CP102`
 
 Status:
 
@@ -206,3 +206,4 @@ em **Modo Continuidade**.
 - **CP100 — 2026-10-07:** arquitetura transversal de propagation/re-baselining = PASS_WITH_ARCHITECTURAL_DECISIONS; contrato físico autorizado apenas para especificação; migration/M3 não autorizados.
 - **CP101 — 2026-10-07:** contrato físico de propagation/re-baselining = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 031 autorizada em escopo estrito; implementação ainda não iniciada.
 - **CP102 — 2026-10-07:** migration 031 e propagation/re-baselining físico = TECHNICALLY_VALIDATED; F4-PRB-T01–T145/idempotência/rebuild/regressões PASS; próxima dívida da Fase 4 ainda não selecionada.
+- **CP103 — 2026-10-07:** próximo bloco da Fase 4 selecionado como calibração temporal; bloco ainda não iniciado; modo alto recomendado antes da metodologia.
