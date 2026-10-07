@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP83 — 2026-10-06**
+**CP84 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP83.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP84.md`
 
 Checkpoint anterior:
 
-`CP82`
+`CP83`
 
 Status:
 
@@ -182,3 +182,5 @@ em **Modo Continuidade**.
 - **CP82 — 2026-10-06:** conclui a formalização do **Monitor de Evidências** na Fase 3; retomada no **Alerta de Evidência**, último produto da taxonomia.
 
 - **CP83 — 2026-10-06:** fecha especificação científica/arquitetural do **Alerta de Evidência**; retomada no Contrato de Dados v0.1, sem iniciar Fase 4.
+
+- **CP84 — 2026-10-06:** fecha o Contrato de Dados v0.1 do **Alerta de Evidência**; autoriza migration 024 + fixtures/testes, sem iniciar Fase 4.
