@@ -2559,3 +2559,13 @@ Documentos:
 - digest `sha256:6043e52ac33800ec5d944b1a4633bfe5049a9c8ecff2613eb577aadea2916630`;
 - próxima etapa: contrato de renderização + Template Operacional do Monitor;
 - Caso Real, Alert e Fase 4 continuam não autorizados.
+
+
+## 2026-10-06 — CP81
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP81.md`;
+- EvidenceMonitorView 0.1 consolidada em PASS;
+- migration 023 + MONV-T01–T19 = PASS;
+- run 37556593132 (#128) = success;
+- ponteiro de continuidade movido para CP81;
+- retomada: contrato de renderização + Especificação do Template Operacional do Monitor.
