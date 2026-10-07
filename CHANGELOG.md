@@ -2982,3 +2982,29 @@ Documentos:
 - próximo passo: contrato de dados integrado de triage + priority/escalation + SLA + workflow milestones, ainda sem migration;
 - regra de pausa após checkpoint preservada.
 
+## 2026-10-07 — Phase 4 integrated operational control contract
+
+- Documento 27 definiu contrato lógico integrado de triage + priority/escalation + SLA + workflow;
+- Documento 28 executou gate físico adversarial;
+- primeira passagem = **REVISE**;
+- corrigidos 22 blockers de determinismo/lifecycle/circularidade e um achado adicional de WorkflowRound status;
+- UpdatePolicy preservada como âncora, sem OperationalPlan duplicado;
+- triage invalid_signal usa consistency guard deferred;
+- PriorityBasis recebeu source_type/locator XOR/snapshot;
+- escalation authority redundante removida e transitions fechadas;
+- SLA Rule recebeu rule_code + selection_precedence;
+- matrizes clock→endpoint e time_basis fechadas;
+- calendar/fixed-deadline payloads fechados;
+- effective due/current compliance definidos como derivados;
+- SLA obligation cardinality/rebase fechados;
+- WorkflowRound planned ancora SLA-4;
+- WorkflowMilestone recebeu adapter_type, locator XOR, authority e precisão temporal;
+- adapter matrix preserva ReviewRecord/AssuranceRecord/MethodDecision/publication gates existentes;
+- risk profile físico segue dívida futura, com snapshot bridge versionado;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `READY_FOR_MIGRATION_029`;
+- migration 029 autorizada somente como infrastructure contract;
+- nenhuma duração SLA, score/peso, auto-escalation ou M3 unblock autorizados;
+- implementação deverá cobrir F4-OC-T01–T72 + idempotência + rebuild + regressões.
+
