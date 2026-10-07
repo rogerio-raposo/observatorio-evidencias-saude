@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS — contrato físico v0.1 validado**  
+**Status:** **PASS — contrato físico v0.1 validado e posteriormente endurecido pela auditoria da Fase 4**  
 **Dependências:** Documentos 05–08; migration 027
+**Validação corretiva posterior:** Documentos 22–24; migration 028
 
 ---
 
@@ -272,3 +273,34 @@ A correção não altera o PASS técnico da migration 027:
 - nenhuma estrutura científica ou metodológica existente foi sobrescrita;
 - eventual integração entre reroute_method e MethodDecision permanece explícita e futura.
 
+---
+
+## 16. Validação corretiva pós-auditoria
+
+A auditoria retrospectiva posterior não invalidou a execução registrada neste documento, mas identificou que:
+
+- T01–T63 não correspondia um-a-um aos 63 itens mínimos do plano do Documento 07;
+- havia gaps de lifecycle e de issue helpers a endurecer.
+
+O bloco corretivo criou:
+
+- migration 028;
+- suíte espelho P01–P63.
+
+Resultado substitutivo para a força probatória atual do contrato:
+
+- run **37576434417** (#144);
+- HEAD técnico **3f36b5dd4103e15834adde107fedeeb1c81fb084**;
+- conclusion **success**;
+- artifact **11462802190**;
+- digest `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`;
+- T01–T63 = PASS;
+- P01–P63 = PASS;
+- rebuild-through-028 = PASS;
+- regressões = PASS.
+
+Resultado formal:
+
+`docs/governance/24-resultado-validacao-corretiva-fase-4.md`
+
+> **PHASE_4_UPDATE_DATA_CONTRACT = TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**
