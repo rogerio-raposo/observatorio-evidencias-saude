@@ -3204,3 +3204,17 @@ Documentos:
 - M3 blocker preservado;
 - próximo passo: implementação mecânica da migration 031 + fixtures/testes/S5;
 - modo médio passa a ser suficiente enquanto o escopo permanecer fechado.
+
+## 2026-10-07 — CP101
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP101.md`;
+- ponteiro de continuidade movido para CP101;
+- contrato físico de propagation/re-baselining = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- F4-PRB-T01–T145 = plano mínimo aprovado;
+- migration 031 autorizada em escopo estrito e ainda não implementada;
+- M3 blocker preservado;
+- último PASS técnico permanece run **37618433929** (#161);
+- próximo passo: implementação migration 031 + fixtures/testes/S5;
+- modo médio suficiente para implementação mecânica;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
