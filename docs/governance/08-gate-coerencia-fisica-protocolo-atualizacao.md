@@ -551,3 +551,21 @@ Escopo:
 ## 26. Próximo passo exato
 
 > **Implementar database/027_transversal_update_protocol_contract.sql + fixtures F4-UP + testes de contrato; executar validação específica, idempotência, rebuild-through-027, regressões globais e Monitor/Alert antes de qualquer novo bloco conceitual.**
+
+## 27. Correção pós-gate — MethodDecision física
+
+Após o gate foi confirmada a existência de `investigation.method_decision` desde a migration 014.
+
+Isso corrige uma premissa documental do Documento 07, mas **não altera a conclusão do gate nem a validade técnica da migration 027**, porque:
+
+- a migration 027 não criou tabela concorrente de decisão metodológica;
+- `maintenance.update_decision` representa decisão especializada de atualização/currentness;
+- `investigation.method_decision` permanece decisão metodológica ligada à InvestigationVersion;
+- não houve FK, trigger ou automação baseada na premissa incorreta.
+
+Fronteira consolidada:
+
+> UpdateDecision pode recomendar/autorizar reroteamento; MethodDecision registra a decisão metodológica correspondente quando o fluxo de reroteamento for efetivamente executado.
+
+Linkage especializado entre ambas, se necessário, será definido em bloco posterior e não será inferido retroativamente.
+
