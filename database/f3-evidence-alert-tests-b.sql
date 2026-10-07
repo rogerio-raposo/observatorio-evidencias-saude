@@ -159,16 +159,16 @@ UPDATE provenance.dependency_edge SET status='active'
    AND dependency_type='maintenance_alert_target';
 
 -- AL-T27 — invalidated upstream provenance dynamically blocks publication.
+-- Use Alert B so the history-preserving provenance row can remain until transaction rollback.
 INSERT INTO provenance.record(provenance_uuid,target_version_uuid,field_path,process_type,process_record_uuid,actor,status,invalidated_at,invalidation_reason)
-VALUES ('a7700000-0000-0000-0000-000000000027','a7100000-0000-0000-0000-000000000001','alert.synthetic_test','evidence_alert_test','a7100000-0000-0000-0000-000000000001','test','invalidated',CURRENT_TIMESTAMP,'Synthetic invalidation for AL-T27');
+VALUES ('a7700000-0000-0000-0000-000000000027','a7100000-0000-0000-0000-000000000002','alert.synthetic_test','evidence_alert_test','a7100000-0000-0000-0000-000000000002','test','invalidated',CURRENT_TIMESTAMP,'Synthetic invalidation for AL-T27');
 DO $t$ BEGIN
- IF NOT EXISTS (SELECT 1 FROM product.evidence_alert_publication_issues('a7100000-0000-0000-0000-000000000001')
+ IF NOT EXISTS (SELECT 1 FROM product.evidence_alert_publication_issues('a7100000-0000-0000-0000-000000000002')
   WHERE issue_code='INVALIDATED_DEPENDENCY' AND severity='error')
  THEN RAISE EXCEPTION 'AL-T27 FAIL'; END IF;
 END $t$;
-DELETE FROM provenance.record WHERE provenance_uuid='a7700000-0000-0000-0000-000000000027';
 
--- AL-T28 — publishability recovers after adversarial mutations are removed.
+-- AL-T28 — Alert A remains publishable because the adversarial invalidation is isolated to Alert B.
 DO $t$ BEGIN
  IF NOT product.evidence_alert_is_publishable('a7100000-0000-0000-0000-000000000001')
  THEN RAISE EXCEPTION 'AL-T28 FAIL'; END IF;
