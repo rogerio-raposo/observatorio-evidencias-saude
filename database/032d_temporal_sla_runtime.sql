@@ -115,7 +115,7 @@ RETURNS TABLE(
 )
 LANGUAGE plpgsql STABLE AS $fn$
 DECLARE pol maintenance.update_policy%ROWTYPE; raw_start timestamptz; candidate_start timestamptz;
- matches uuid[]; chosen uuid; min_rule_at timestamptz; n integer; r record;
+ matches uuid[]; chosen uuid; min_rule_at timestamptz; n integer;
 BEGIN
  SELECT p.* INTO pol FROM maintenance.update_policy p
  JOIN maintenance.update_signal s ON s.update_policy_uuid=p.update_policy_uuid
