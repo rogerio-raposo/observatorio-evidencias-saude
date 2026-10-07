@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — migration 030 autorizada em escopo estrito**  
+**Status:** **EXECUTED_PASS — migration 030 tecnicamente validada pelo Documento 32**  
 **Dependência:** Documento 30  
+**Execução validada por:** Documento 32  
 **Objeto:** identidade, dimensões, authority, provenance, carry-forward e integração com migration 029
 
 ---
@@ -746,7 +747,7 @@ Proposal completo:
 
 > **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
-> **READY_FOR_MIGRATION_030**
+> **MIGRATION_030 = PASS**
 
 > **MIGRATION_030_SCOPE = UPDATE_RISK_PROFILE_NORMALIZATION_ONLY**
 
@@ -854,4 +855,4 @@ A autorização atual é:
 
 ## 38. Próximo passo exato
 
-> **Implementar migration 030 no escopo autorizado + F4-RP-T01–T87 + integração S5; executar idempotência, rebuild e regressões antes de qualquer PASS técnico.**
+> **Execução concluída conforme Documento 32; não selecionar automaticamente a próxima dívida da Fase 4.**
