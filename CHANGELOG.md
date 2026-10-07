@@ -3319,3 +3319,19 @@ Documentos:
 - modo alto recomendado;
 - Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Contrato físico de calibração temporal
+
+- criado Documento 41 — contrato físico v0.1 dos pré-requisitos;
+- criado Documento 42 — primeira passagem física = **REVISE**;
+- Documento 41 hardenizado;
+- Documento 41A incorporado como anexo de auditabilidade;
+- Documento 43 = recheck final **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- uploads manuais 41A/43 reconciliados e verificados por blob SHA;
+- migration 032 autorizada apenas em escopo estrito de infraestrutura;
+- plano mínimo aprovado = **F4-TCAL-PH-T01–T230**;
+- nenhum valor real de cadence/SLA/grace/warning/escalation ou calendário real autorizado;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 continua bloqueado;
+- próximo passo: implementar migration 032 + fixtures/testes e validar tecnicamente.
