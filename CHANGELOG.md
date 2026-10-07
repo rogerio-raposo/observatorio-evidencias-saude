@@ -3304,3 +3304,18 @@ Documentos:
 - pré-requisitos físicos de cadence/SLA foram identificados;
 - autorizada somente a especificação física desses pré-requisitos;
 - nenhum numeric cadence/SLA, calendário real, migration 032, scheduler, notifications ou M3 foi autorizado.
+
+## 2026-10-07 — CP104
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP104.md`;
+- ponteiro de continuidade movido para CP104;
+- metodologia de calibração temporal = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- pré-requisitos físicos = **AUTHORIZED_FOR_SPECIFICATION_ONLY**;
+- nenhum numeric cadence/SLA, calendário real ou migration 032 autorizado;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 continua bloqueado;
+- último PASS técnico permanece S5 #167;
+- próximo passo: especificar contrato físico v0.1 dos pré-requisitos e submeter a novo gate;
+- modo alto recomendado;
+- Fase 5 não iniciada;
+- pausa obrigatória preservada.
