@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **DATA_CONTRACT_CANDIDATE — requer gate adversarial**  
+**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW — pronto para recheck do Documento 31**  
 **Dependências:** Documentos 16–17, 18–21, 25–29; migrations 027–029  
 **Migration:** **não autorizada neste documento**
 
@@ -58,8 +58,9 @@ Baseline candidata:
 
 1. `maintenance.update_risk_profile`;
 2. `maintenance.update_risk_profile_dimension`;
-3. `maintenance.update_risk_profile_trigger`;
-4. `maintenance.update_policy_risk_profile_basis`.
+3. `maintenance.update_risk_profile_dimension_basis`;
+4. `maintenance.update_risk_profile_trigger`;
+5. `maintenance.update_policy_risk_profile_basis`.
 
 ---
 
@@ -184,12 +185,17 @@ Pode ser produzido por:
 
 Exige:
 
-- ator humano;
+- `actor_type = human_reviewer | human_expert`;
 - verification_status = human_verified | human_consensus;
 - dez dimensões completas;
 - dimensões autoritativas;
+- B5 authoritative emitida por owner;
 - regras de authority por dimensão satisfeitas;
 - regras de dominância/não compensação satisfeitas.
+
+Owner pode assess dimensões autorizadas e B5, mas:
+
+> não sintetiza sozinho o profile composto authoritative.
 
 AI/system:
 
@@ -204,6 +210,13 @@ Por target version:
 > no máximo um profile `active + authoritative`.
 
 Proposals podem coexistir.
+
+Proposal:
+
+- pode ser incompleto;
+- pode possuir subconjunto das dimensões;
+- issue helper deve reportar dimensões ausentes;
+- não pode ser usado como authoritative governing basis.
 
 Um novo profile authoritative para o mesmo target:
 
@@ -226,7 +239,6 @@ Campos mínimos:
 - `value_code`;
 - `assessment_mode`;
 - `source_profile_uuid` opcional;
-- `basis_payload` JSONB;
 - `rationale`;
 - `assessed_by`;
 - `actor_type`;
@@ -472,35 +484,55 @@ Motivo:
 
 ---
 
-## 13. basis_payload
+## 13. maintenance.update_risk_profile_dimension_basis
 
-`basis_payload` é provenance operacional estruturada.
+Provenance por dimensão será normalizada em estrutura própria.
 
-Shape mínimo:
+Campos mínimos:
 
-- `schema_version`;
-- `source_types` array;
-- `source_references` array;
-- `observations` opcional.
+- `update_risk_profile_uuid`;
+- `dimension_code`;
+- `source_type`;
+- `monitor_cycle_uuid` opcional;
+- `candidate_assessment_uuid` opcional;
+- `update_signal_uuid` opcional;
+- `alert_product_version_uuid` opcional;
+- `source_entity_version_uuid` opcional;
+- `source_artifact_uuid` opcional;
+- `external_reference_payload` opcional;
+- `observation_payload` opcional;
+- `rationale`;
+- `sequence_no`.
 
-Pode referenciar, conforme a dimensão:
+FK composta:
 
-- Monitor;
-- MonitorCycle;
-- Alert;
-- UpdateSignal;
-- entity/version;
-- dependency graph observation;
-- pipeline/regulatory observation;
-- governance/capacity record externo.
+> profile_uuid + dimension_code deve existir em `update_risk_profile_dimension`.
 
-Não criar UUID fictício.
+Domínio `source_type`:
 
-Quando existir objeto OES concreto:
+- monitor_cycle;
+- candidate_assessment;
+- update_signal;
+- alert_product_version;
+- entity_version;
+- artifact;
+- external_reference.
 
-> source reference deve usar seu identificador real.
+Regras:
 
-A migration futura deverá validar apenas o shape, não interpretar ciência automaticamente.
+- source OES estruturado → exatamente um locator FK compatível;
+- external_reference → nenhum locator OES e payload externo obrigatório;
+- source_type/locator mismatch é erro;
+- Alert locator deve ser ProductVersion `evidence_alert`;
+- MonitorCycle/CandidateAssessment mantêm integridade referencial real.
+
+Não criar UUID fictício nem esconder identificadores OES em JSON.
+
+`observation_payload` registra a observação extraída da fonte.
+
+A migration futura valida integridade/shape:
+
+> não interpreta ciência automaticamente.
 
 ---
 
@@ -679,14 +711,33 @@ Campos:
 
 - `update_risk_profile_uuid`;
 - `trigger_code`;
+- `source_type`;
 - `update_signal_uuid` opcional;
 - `alert_product_version_uuid` opcional;
-- `monitor_product_version_uuid` opcional;
+- `monitor_cycle_uuid` opcional;
 - `source_entity_version_uuid` opcional;
 - `source_artifact_uuid` opcional;
 - `external_reference_payload` opcional;
 - `rationale`;
 - `sequence_no`.
+
+Domínio `source_type`:
+
+- none;
+- update_signal;
+- alert_product_version;
+- monitor_cycle;
+- entity_version;
+- artifact;
+- external_reference.
+
+Regra:
+
+> source_type determina exatamente o locator permitido.
+
+`source_type='none'` exige todos os locators NULL.
+
+`external_reference` exige payload externo e nenhum locator OES.
 
 Domínio `trigger_code`:
 
@@ -713,6 +764,12 @@ Domínio `trigger_code`:
 Exige:
 
 > initial_baseline.
+
+Pode usar:
+
+> `source_type='none'`
+
+quando o baseline não nasce de um evento OES específico.
 
 ### reassessment
 
@@ -747,6 +804,7 @@ Link append-preserving entre UpdatePolicy e profile.
 
 Campos:
 
+- `update_policy_risk_profile_basis_uuid` PK;
 - `update_policy_uuid` FK;
 - `update_risk_profile_uuid` FK;
 - `basis_role`;
@@ -754,7 +812,14 @@ Campos:
 - `linked_by`;
 - `actor_type`;
 - `rationale`;
-- `record_status`.
+- `record_status`;
+- `supersedes_update_policy_risk_profile_basis_uuid` opcional.
+
+Correção:
+
+> supersede + append.
+
+Governing link novo para a mesma policy deve superseder o anterior; não atualizar FK in place.
 
 Domínio `basis_role`:
 
@@ -810,13 +875,19 @@ O profile:
 
 ## 27. Referência física
 
-Migration futura poderá adicionar:
+Migration futura deverá adicionar:
 
-> `maintenance.priority_assessment.update_risk_profile_uuid` nullable.
+> `maintenance.priority_assessment.update_risk_profile_uuid` nullable para compatibilidade histórica.
 
 Não remover:
 
 > `risk_profile_snapshot`.
+
+Regra de adoção:
+
+- linhas já existentes antes da migration permanecem snapshot-only;
+- **todo novo INSERT** de PriorityAssessment após a migration deve possuir `update_risk_profile_uuid`;
+- não backfill histórico fabricado.
 
 A referência física informa a origem.
 
@@ -844,14 +915,15 @@ Não criar profile retroativo apenas para preencher FK.
 
 ## 29. Novas PriorityAssessments
 
-Quando profile físico estiver disponível:
+Após a migration que materializar o profile:
 
-- `update_risk_profile_uuid` deve referenciar profile do mesmo target/policy context;
-- profile authoritative é requerido para PriorityAssessment authoritative scientific/mixed;
-- proposal pode usar profile proposal;
-- `risk_profile_snapshot` deve ser produzido pelo serializer canônico do profile.
+- novo PriorityAssessment deve sempre referenciar `update_risk_profile_uuid`;
+- profile deve corresponder ao mesmo target/policy context;
+- authoritative scientific/mixed exige profile authoritative;
+- proposal pode usar profile proposal ou authoritative;
+- `risk_profile_snapshot` deve ser **exatamente** o serializer canônico daquele profile no INSERT.
 
-Não depender de JSON montado manualmente quando houver profile físico.
+Não depender de JSON montado manualmente para novas linhas.
 
 ---
 
@@ -873,13 +945,17 @@ Incluindo no mínimo:
 - B1–B5;
 - rationale.
 
-Pode adicionar:
+Deve adicionar:
 
 - update_risk_profile_uuid;
 - effective_at;
 - recommended_maintenance_level;
 - recommended_cadence_mode;
 - feasibility_status.
+
+Para novos PriorityAssessments:
+
+> igualdade exata com o serializer canônico é obrigatória no momento do INSERT.
 
 Snapshot não substitui FK.
 
@@ -901,7 +977,7 @@ E adicionar:
 
 Locator XOR deve continuar fechado.
 
-Legacy `source_type='snapshot'` permanece válido.
+Legacy `source_type='snapshot'` permanece válido para registros históricos; novos basis que representem profile físico devem usar `source_type='risk_profile'`.
 
 ---
 
@@ -1004,6 +1080,13 @@ Carry-forward permitido somente se:
 - source e target são ambos ProductVersion do mesmo `entity_uuid`; ou
 - ambos InvestigationVersion do mesmo `entity_uuid`.
 
+Além disso:
+
+- novo profile `effective_at >= source_profile.effective_at`;
+- source profile deve ser authoritative;
+- dimension `carried_forward` em profile carry_forward deve usar o source profile do header;
+- dimension `carried_forward` em reassessment deve usar o profile supersedido.
+
 Não basta título semelhante.
 
 ---
@@ -1094,7 +1177,7 @@ No mínimo:
 
 Uma migration futura poderá:
 
-1. criar as quatro estruturas deste documento;
+1. criar as cinco estruturas deste documento;
 2. criar validators/guards/helpers;
 3. adicionar FK nullable `priority_assessment.update_risk_profile_uuid`;
 4. estender PriorityBasis com source_type risk_profile + FK;
@@ -1256,74 +1339,82 @@ Priority implications são rationale, não decisão.
 26. A3 owner authoritative rejeitado;
 27. A4 owner authoritative rejeitado;
 28. B5 non-owner authoritative rejeitado;
-29. verification humana authoritative exigida.
+29. verification humana authoritative exigida;
+30. profile header authoritative por owner rejeitado;
+31. dimension basis locator XOR;
+32. monitor_cycle basis FK real;
+33. external basis sem UUID OES fictício.
 
 ## 54. Carry-forward
 
-30. initial somente assessed;
-31. reassessment source = superseded profile;
-32. reassessment carried dimension mantém valor;
-33. carry_forward source = header source;
-34. carried dimension mantém valor;
-35. carried dimension rationale obrigatório;
-36. new scientific version sem carry-forward silencioso;
-37. carried source authoritative exigido.
+34. initial somente assessed;
+35. reassessment source = superseded profile;
+36. reassessment carried dimension mantém valor;
+37. carry_forward source = header source;
+38. carried dimension mantém valor;
+39. carried dimension rationale obrigatório;
+40. new scientific version sem carry-forward silencioso;
+41. carried source authoritative exigido;
+42. carry-forward effective_at não antecede source profile.
 
 ## 55. Recomendação
 
-38. M0→none;
-39. M1 cadence compatível;
-40. M2 cadence compatível;
-41. M3 cadence compatível;
-42. A4 high exige event-driven;
-43. A1 high bloqueia M0;
-44. A4 high bloqueia M0;
-45. B5 strained bloqueia M3;
-46. B5 insufficient bloqueia M3;
-47. B5 unavailable bloqueia M3;
-48. feasibility não supera B5 ceiling;
-49. sem score agregado;
-50. priority_implications não contém response_class autoritativa.
+43. M0→none;
+44. M1 cadence compatível;
+45. M2 cadence compatível;
+46. M3 cadence compatível;
+47. A4 high exige event-driven;
+48. A1 high bloqueia M0;
+49. A4 high bloqueia M0;
+50. B5 strained bloqueia M3;
+51. B5 insufficient bloqueia M3;
+52. B5 unavailable bloqueia M3;
+53. feasibility não supera B5 ceiling;
+54. sem score agregado;
+55. priority_implications não contém response_class autoritativa.
 
 ## 56. Triggers
 
-51. initial_baseline obrigatório para initial;
-52. reassessment exige trigger não inicial;
-53. carry_forward exige new_scientific_version;
-54. Alert pode ser trigger sem definir A4;
-55. capacity_change pode gerar reassessment sem UpdateSignal;
-56. trigger locator coerente.
+56. initial_baseline obrigatório para initial;
+57. reassessment exige trigger não inicial;
+58. carry_forward exige new_scientific_version;
+59. Alert pode ser trigger sem definir A4;
+60. capacity_change pode gerar reassessment sem UpdateSignal;
+61. trigger source_type/locator XOR;
+62. source_type none sem locator.
 
 ## 57. Policy basis
 
-57. governing profile target = policy target;
-58. governing profile authoritative;
-59. um governing ativo por policy;
-60. profile posterior não vira governing retroativo;
-61. recommendation divergence permitida;
-62. divergence não altera policy automaticamente.
+63. governing profile target = policy target;
+64. governing profile authoritative;
+65. um governing ativo por policy;
+66. governing link supersession preserva histórico;
+67. profile posterior não vira governing retroativo;
+68. recommendation divergence permitida;
+69. divergence não altera policy automaticamente.
 
 ## 58. Priority/SLA integration
 
-63. legacy snapshot-only permanece válido;
-64. profile FK + canonical snapshot coerentes;
-65. drift entre FK e snapshot rejeitado/issue;
-66. authoritative scientific priority exige authoritative profile quando referenciado;
-67. PriorityBasis risk_profile locator XOR;
-68. SLA snapshot congela profile UUID;
-69. profile posterior não recalcula SLA Instance.
+70. legacy snapshot-only permanece válido;
+71. novo PriorityAssessment sem profile FK rejeitado;
+72. profile FK + canonical snapshot exatamente coerentes;
+73. drift entre FK e snapshot rejeitado;
+74. authoritative scientific priority exige authoritative profile;
+75. PriorityBasis risk_profile locator XOR;
+76. SLA snapshot congela profile UUID;
+77. profile posterior não recalcula SLA Instance.
 
 ## 59. Invariantes e regressões
 
-70. profile não altera CurrencyState;
-71. profile não altera Assurance;
-72. profile não cria UpdatePolicy;
-73. profile não cria UpdateSignal;
-74. profile não cria Alert;
-75. M3 blocker preservado;
-76. migration idempotency;
-77. rebuild;
-78. regressões F4-UP/F4-OC/F2-B/S4/S5/F3/Monitor/Alert.
+78. profile não altera CurrencyState;
+79. profile não altera Assurance;
+80. profile não cria UpdatePolicy;
+81. profile não cria UpdateSignal;
+82. profile não cria Alert;
+83. M3 blocker preservado;
+84. migration idempotency;
+85. rebuild;
+86. regressões F4-UP/F4-OC/F2-B/S4/S5/F3/Monitor/Alert.
 
 ---
 
@@ -1348,3 +1439,28 @@ Priority implications são rationale, não decisão.
 ## 61. Próximo passo
 
 > **Executar gate adversarial do contrato físico candidato antes de qualquer migration 030.**
+
+
+---
+
+## 62. Correções decorrentes do Documento 31
+
+Foram incorporadas:
+
+1. provenance dimensional normalizada em `update_risk_profile_dimension_basis`;
+2. locator XOR + FKs reais para fontes OES;
+3. profile header authoritative restrito a human_reviewer/human_expert;
+4. B5 authoritative preservada como owner-only;
+5. trigger source_type/locator XOR;
+6. policy basis com UUID próprio + supersession;
+7. proposal incompleto explicitamente permitido;
+8. legacy snapshot-only grandfathered;
+9. novos PriorityAssessment passam a exigir profile FK após migration;
+10. snapshot novo deve ser exatamente o serializer canônico;
+11. carry-forward temporal/source reforçado.
+
+Estado:
+
+> **READY_FOR_DOCUMENT_31_RECHECK**
+
+> **MIGRATION_030 = NOT_AUTHORIZED_UNTIL_RECHECK**
