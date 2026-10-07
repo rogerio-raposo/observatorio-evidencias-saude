@@ -3465,3 +3465,22 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: seleção do primeiro exact real context para readiness assessment;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Primeiro Evidence Readiness Assessment real
+
+- criado `docs/governance/48-primeiro-evidence-readiness-assessment-real-n1-cadence.md`;
+- primeiro contexto real selecionado: ProductVersion 2 do Caso Real N1-01, cadence readiness em policy_aggregate;
+- target real/publicado/A2 confirmado;
+- searches e provenance reais preservados;
+- fixtures F3/F4 explicitamente excluídas da evidência normativa;
+- resultado = **INSUFFICIENT_EVIDENCE**;
+- READY_FOR_CALIBRATION = **NO**;
+- Calibration Dossier real para o contexto = **NOT_AUTHORIZED**;
+- blockers: need evidence/UpdateRiskProfile real, source characterization, prospective observation, authority, feasibility e replay;
+- nenhum valor temporal normativo definido;
+- nenhum novo migration autorizado;
+- scheduler/notifications deferidos;
+- auto-escalation não autorizada;
+- M3 bloqueado;
+- próximo passo: decidir entre Temporal Observation Plan não normativo para N1-01 ou segundo readiness assessment real.
