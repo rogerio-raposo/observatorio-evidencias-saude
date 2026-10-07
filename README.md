@@ -217,7 +217,7 @@ A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui oi
 5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**;
 7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-8. Documentos 27–28 — contrato operacional integrado = **PASS_WITH_ARCHITECTURAL_DECISIONS**, migration 029 autorizada em escopo estrito.
+8. Documentos 27–29 — contrato operacional integrado = **TECHNICALLY_VALIDATED**; migration 029 = **PASS**.
 
 A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
@@ -241,7 +241,7 @@ A run **37576345925** (#143) falhou por erro de desenho do teste P62 e **não** 
 
 **M3 formal continua bloqueado** por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
 
-A migration 029 está autorizada **somente** no escopo estrito de infraestrutura operacional definido pelos Documentos 27–28 e ainda não foi implementada. A migration 028 permanece exclusivamente como hardening corretivo.
+A migration 029 foi implementada e tecnicamente validada no escopo estrito de infraestrutura operacional definido pelos Documentos 27–28. A migration 028 permanece exclusivamente como hardening corretivo.
 
 Arquitetura de prioridade/escalation consolidada:
 
@@ -254,11 +254,24 @@ Arquitetura de prioridade/escalation consolidada:
 - capacity nunca reduz prioridade;
 - auto-escalation permanece não autorizada;
 - score/pesos numéricos não foram definidos;
-- `MIGRATION_029 = AUTHORIZED_IN_STRICT_SCOPE`, ainda não implementada.
+- `MIGRATION_029 = TECHNICALLY_VALIDATED`.
 
 Próximo passo exato:
 
-> **Implementar a migration 029 no escopo estrito dos Documentos 27–28, criar a suíte F4-OC-T01–T72, integrar ao S5 e validar idempotência/rebuild/regressões antes de qualquer PASS técnico.**
+Validação canônica atual do controle operacional integrado:
+
+- F4-OC-T01–T69 = PASS;
+- F4-OC-T70 = migration 029 idempotency PASS;
+- F4-OC-T71 = rebuild-through-029 PASS;
+- F4-OC-T72 = regressões completas PASS;
+- S5 run **37580906483** (#150) = success;
+- technical HEAD **ae45918bb8cbf1ab929aec2e1af53f7239f75323**;
+- artifact **11464672034**;
+- digest `sha256:ec4546afc64fb5eb86b69d966905fc583cfbe43e4586abc922b57eb48e67a43c`.
+
+Próximo passo exato:
+
+> **Determinar, no checkpoint pós-PASS, qual dívida aberta da Fase 4 deve ser atacada em seguida, sem iniciar automaticamente calibração SLA, scheduler, notifications, propagation/re-baselining, M3 readiness ou operação humana real.**
 
 ---
 
