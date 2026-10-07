@@ -241,9 +241,9 @@ INSERT INTO maintenance.update_policy(
 ) VALUES(
  'fa060000-0000-0000-0000-000000000001',
  'f7200000-0000-0000-0000-000000000002',
- 'M1','event_driven',
+ 'M0','none',
  '{}'::jsonb,'{}'::jsonb,'{}'::jsonb,'{}'::jsonb,'{}'::jsonb,
- now(),'Synthetic new-target M1 policy','owner','owner'
+ now(),'Synthetic new-target M0 policy for handover lifecycle','owner','owner'
 );
 
 INSERT INTO maintenance.rebaseline_decision(
@@ -288,7 +288,7 @@ INSERT INTO maintenance.rebaseline_policy_link(
 SELECT pg_temp.ok(
  NOT EXISTS(SELECT 1 FROM maintenance.rebaseline_decision_issues(
    'fa060000-0000-0000-0000-000000000002') WHERE severity='error'),
- 'F4-PRB-G06-activated-m1-readiness'
+ 'F4-PRB-G06-activated-policy-readiness'
 );
 
 SELECT pg_temp.expect_error($q$
