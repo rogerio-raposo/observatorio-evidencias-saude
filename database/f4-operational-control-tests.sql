@@ -215,7 +215,7 @@ INSERT INTO maintenance.update_triage(
 )$$,'F4-OC-T08');
 
 -- T09 — one active priority per signal.
-SELECT pg_temp.expect_error($$
+SELECT pg_temp.expect_error($sql$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
@@ -227,7 +227,7 @@ INSERT INTO maintenance.priority_assessment(
  'execution','standard','operational','proposal','adequate',
  'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Duplicate active priority','oc-test-ai','ai_system',
  'unverified',TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$,'F4-OC-T09');
+)$sql$,'F4-OC-T09');
 
 -- T10 — AI priority proposal allowed.
 SAVEPOINT t10;
@@ -249,7 +249,7 @@ SELECT pg_temp.assert_true(EXISTS(SELECT 1 FROM maintenance.priority_assessment
 ROLLBACK TO SAVEPOINT t10; RELEASE SAVEPOINT t10;
 
 -- T11 — AI authoritative scientific priority rejected.
-SELECT pg_temp.expect_error($$
+SELECT pg_temp.expect_error($sql$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
@@ -261,10 +261,10 @@ INSERT INTO maintenance.priority_assessment(
  'signal_triage','expedited','scientific','authoritative','adequate',
  'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'AI authoritative invalid','oc-test-ai','ai_system','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$,'F4-OC-T11');
+)$sql$,'F4-OC-T11');
 
 -- T12 — owner cannot author authoritative scientific/mixed priority.
-SELECT pg_temp.expect_error($$
+SELECT pg_temp.expect_error($sql$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
@@ -276,7 +276,7 @@ INSERT INTO maintenance.priority_assessment(
  'signal_triage','expedited','mixed','authoritative','adequate',
  'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Owner scientific priority invalid','oc-test-owner','owner','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$,'F4-OC-T12');
+)$sql$,'F4-OC-T12');
 
 -- T13 — AI-only materiality cannot support authoritative scientific priority.
 SAVEPOINT t13;
@@ -284,7 +284,7 @@ SELECT pg_temp.add_signal('fa130000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001');
 SELECT pg_temp.add_materiality('fa131000-0000-0000-0000-000000000001',
  'fa130000-0000-0000-0000-000000000001','potentially_material','ai_verified');
-SELECT pg_temp.expect_error($$
+SELECT pg_temp.expect_error($sql$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
@@ -301,11 +301,11 @@ INSERT INTO maintenance.priority_assessment(
  'oc-test-reviewer','human_reviewer','human_verified',
  'oc-test-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-07 02:05:00+00',
  TIMESTAMPTZ '2026-10-07 02:06:00+00'
-)$,'F4-OC-T13');
+)$sql$,'F4-OC-T13');
 ROLLBACK TO SAVEPOINT t13; RELEASE SAVEPOINT t13;
 
 -- T14 — response class domain closed.
-SELECT pg_temp.expect_error($$
+SELECT pg_temp.expect_error($sql$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
@@ -317,7 +317,7 @@ INSERT INTO maintenance.priority_assessment(
  'signal_triage','critical','operational','proposal','adequate',
  'f6000000-0000-0000-0000-000000000001',maintenance.update_risk_profile_snapshot('f6000000-0000-0000-0000-000000000001'),'Invalid class','oc-test-ai','ai_system','unverified',
  TIMESTAMPTZ '2026-10-07 02:10:00+00'
-)$,'F4-OC-T14');
+)$sql$,'F4-OC-T14');
 
 -- T15 — immediate priority does not auto-create escalation.
 SAVEPOINT t15;
