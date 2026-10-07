@@ -140,12 +140,13 @@ RETURNS uuid
 LANGUAGE sql
 STABLE
 AS $q$
-    SELECT il.investigation_version_uuid
+    SELECT CASE
+        WHEN count(*)=1 THEN min(il.investigation_version_uuid)
+        ELSE NULL
+    END
       FROM product.investigation_link il
      WHERE il.product_version_uuid=p_monitor_product_version_uuid
-       AND il.role='primary'
-     GROUP BY il.investigation_version_uuid
-    HAVING count(*)=1;
+       AND il.role='primary';
 $q$;
 
 CREATE OR REPLACE FUNCTION maintenance.assert_monitor_target_consistency()
@@ -1402,13 +1403,16 @@ BEGIN
             'MULTIPLE_PRIMARY_INVESTIGATIONS','error',
             'Evidence Monitor has multiple primary Investigations';
     ELSE
-        SELECT il.investigation_version_uuid,iv0.*
-          INTO inv_uuid,iv
+        SELECT il.investigation_version_uuid
+          INTO inv_uuid
           FROM product.investigation_link il
-          JOIN investigation.investigation_version iv0
-            ON iv0.version_uuid=il.investigation_version_uuid
          WHERE il.product_version_uuid=p_product_version_uuid
            AND il.role='primary';
+
+        SELECT *
+          INTO iv
+          FROM investigation.investigation_version
+         WHERE version_uuid=inv_uuid;
 
         IF iv.investigation_type<>'evidence_monitoring' THEN
             RETURN QUERY SELECT
