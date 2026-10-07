@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — correções arquiteturais requeridas antes de aprovação**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após correções do Documento 25**  
 **Dependência:** Documento 25  
 **Objeto:** testar coerência, não compensação, autoridade, anti-circularidade e separação entre prioridade e escalation
 
@@ -27,6 +27,8 @@ A revisão tenta quebrar o desenho nos pontos em que prioridade costuma se confu
 ---
 
 ## 2. Resultado inicial
+
+A primeira passagem resultou em:
 
 > **REVISE**
 
@@ -640,3 +642,185 @@ Até essas correções:
 ## 30. Próximo passo
 
 > **Aplicar as correções ao Documento 25 e reexecutar este gate adversarial.**
+
+
+---
+
+## 31. Recheck pós-correções
+
+A versão revisada do Documento 25 foi reavaliada contra os achados AR-F4-P01–P25.
+
+### AR-F4-P01
+
+`immediate_governance` foi substituído por:
+
+> `immediate`
+
+Governança agora existe somente no eixo de escalation.
+
+**Resultado:** PASS.
+
+### AR-F4-P02
+
+Floors universais isolados de:
+
+- `material_change_confirmed`;
+- `update_recommended`;
+
+foram removidos.
+
+Permanecem floors compostos/dominantes.
+
+**Resultado:** PASS.
+
+### AR-F4-P03
+
+PriorityAssessment passou a declarar:
+
+> `authority_status = proposal | authoritative`
+
+**Resultado:** PASS.
+
+### AR-F4-P04
+
+MaterialityAssessment AI-only:
+
+- pode sustentar proposal;
+- não sustenta floor científico autoritativo.
+
+**Resultado:** PASS.
+
+### AR-F4-P05
+
+Alert continua input local/comunicacional.
+
+Não há mapping automático para response_class.
+
+**Resultado:** PASS.
+
+### AR-F4-P06
+
+Target supersession/invalidation foi removido de dominance gate.
+
+Permanece como:
+
+- lifecycle issue;
+- reassessment;
+- closure/carry-forward explícito.
+
+**Resultado:** PASS.
+
+### AR-F4-P07
+
+Anti-circularidade SLA × priority preservada.
+
+**Resultado:** PASS.
+
+### AR-F4-P08–P10
+
+Capacidade/custo/dependency reach permanecem não compensáveis e semanticamente separados.
+
+**Resultado:** PASS.
+
+### AR-F4-P11
+
+Queue aggregation passou a ser derivada.
+
+PriorityAssessments causais por signal/case não são substituídas por registro agregado implícito.
+
+**Resultado:** PASS.
+
+### AR-F4-P12–P16
+
+Safety, validity/use, suspend_current_use, Alert reconciliation e insufficient_to_decide permanecem coerentes com a fronteira científica.
+
+**Resultado:** PASS.
+
+### AR-F4-P17
+
+Baseline agora explicita:
+
+- candidate pode ser automático;
+- active escalation exige autoridade humana compatível;
+- issue mecânico não é escalation ativa.
+
+**Resultado:** PASS.
+
+### AR-F4-P18–P25
+
+Rotas, M0–M3, N0–N4, ausência de prazo embutido, currentness read-only, fixed deadline e triage gap permanecem coerentes.
+
+**Resultado:** PASS.
+
+---
+
+## 32. Resultado final
+
+> **PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **PHASE_4_PRIORITY_ESCALATION_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT_DESIGN**
+
+> **MIGRATION_029 = NOT_AUTHORIZED**
+
+> **PRIORITY_SCORE = NOT_DEFINED**
+
+> **NUMERIC_PRIORITY_WEIGHTS = NOT_DEFINED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 33. Decisões arquiteturais consolidadas
+
+1. priority e escalation são eixos independentes;
+2. response_class = standard | expedited | urgent | immediate;
+3. classes não contêm duração;
+4. safety/validity podem criar dominance floors;
+5. estados científicos/currentness isolados não viram prioridade global automaticamente;
+6. priority authoritative baseada em ciência exige qualificação humana apropriada;
+7. Alert classification/reassessment_priority são inputs, não equivalência;
+8. breach é operational pressure modifier;
+9. capacity nunca reduz importância;
+10. dependency reach aumenta coordenação, não materiality;
+11. queue ordering pode ser derivado sem apagar causalidade;
+12. escalation candidate pode ser automática, activation não;
+13. nenhum score aditivo foi autorizado;
+14. nenhum contrato físico foi autorizado ainda.
+
+---
+
+## 34. Implicação física
+
+O próximo contrato não deve implementar priority/escalation isoladamente.
+
+Deve desenhar conjuntamente as referências mínimas entre:
+
+- transversal triage;
+- PriorityAssessment;
+- escalation candidate/case;
+- SLA Rule/version;
+- SLA Instance;
+- pause ledger;
+- workflow started/completed milestones;
+- review/publication endpoints;
+- causal round identity.
+
+Motivo:
+
+> persistir uma dessas peças isoladamente criaria estados órfãos, circularidade ou inferência retroativa.
+
+---
+
+## 35. Próximo passo exato
+
+> **Definir o contrato de dados integrado do plano operacional da Fase 4, sem migration, cobrindo triage + priority/escalation + SLA + milestones mínimos de workflow.**
+
+Somente depois:
+
+> executar gate físico próprio para decidir se migration 029 pode ser autorizada.
