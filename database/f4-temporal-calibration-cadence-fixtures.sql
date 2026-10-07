@@ -40,6 +40,34 @@ INSERT INTO maintenance.update_risk_profile(
  TIMESTAMPTZ '2026-10-06 23:41:00+00'
 );
 
+
+-- Complete authoritative dimensions required by migration 030.
+INSERT INTO maintenance.update_risk_profile_dimension(
+ update_risk_profile_uuid,dimension_code,value_code,assessment_mode,
+ rationale,assessed_by,actor_type,verification_status,
+ verified_by,verifier_actor_type,verified_at,authority_status,assessed_at
+) VALUES
+('fc600000-0000-0000-0000-000000000001','A1','moderate','assessed','TEST-ONLY criticality','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:10+00'),
+('fc600000-0000-0000-0000-000000000001','A2','moderate','assessed','TEST-ONLY volatility','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:20+00'),
+('fc600000-0000-0000-0000-000000000001','A3','moderate','assessed','TEST-ONLY sensitivity','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:30+00'),
+('fc600000-0000-0000-0000-000000000001','A4','moderate','assessed','TEST-ONLY safety','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:40+00'),
+('fc600000-0000-0000-0000-000000000001','A5','moderate','assessed','TEST-ONLY reach','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:50+00'),
+('fc600000-0000-0000-0000-000000000001','B1','high','assessed','TEST-ONLY observability','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:00+00'),
+('fc600000-0000-0000-0000-000000000001','B2','short','assessed','TEST-ONLY latency','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:10+00'),
+('fc600000-0000-0000-0000-000000000001','B3','moderate','assessed','TEST-ONLY load','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:20+00'),
+('fc600000-0000-0000-0000-000000000001','B4','moderate','assessed','TEST-ONLY cost','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:42:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:30+00'),
+('fc600000-0000-0000-0000-000000000001','B5','adequate','assessed','TEST-ONLY capacity','fixture-owner','owner','unverified',NULL,NULL,NULL,'authoritative',TIMESTAMPTZ '2026-10-06 23:41:40+00'),
+('fc600000-0000-0000-0000-000000000002','A1','moderate','assessed','TEST-ONLY criticality','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:10+00'),
+('fc600000-0000-0000-0000-000000000002','A2','moderate','assessed','TEST-ONLY volatility','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:20+00'),
+('fc600000-0000-0000-0000-000000000002','A3','moderate','assessed','TEST-ONLY sensitivity','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:30+00'),
+('fc600000-0000-0000-0000-000000000002','A4','moderate','assessed','TEST-ONLY safety','fixture-reviewer','human_reviewer','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:40+00'),
+('fc600000-0000-0000-0000-000000000002','A5','moderate','assessed','TEST-ONLY reach','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:40:50+00'),
+('fc600000-0000-0000-0000-000000000002','B1','high','assessed','TEST-ONLY observability','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:00+00'),
+('fc600000-0000-0000-0000-000000000002','B2','short','assessed','TEST-ONLY latency','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:10+00'),
+('fc600000-0000-0000-0000-000000000002','B3','moderate','assessed','TEST-ONLY load','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:20+00'),
+('fc600000-0000-0000-0000-000000000002','B4','moderate','assessed','TEST-ONLY cost','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:30+00'),
+('fc600000-0000-0000-0000-000000000002','B5','adequate','assessed','TEST-ONLY capacity','fixture-owner','owner','unverified',NULL,NULL,NULL,'authoritative',TIMESTAMPTZ '2026-10-06 23:41:40+00');
+
 -- Product cadence dossier.
 INSERT INTO maintenance.temporal_calibration_dossier(
  temporal_calibration_dossier_uuid,scope_type,calibration_kind,
