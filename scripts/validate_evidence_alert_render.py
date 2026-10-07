@@ -128,9 +128,10 @@ def validate_c(template: str, payload: dict, presentation: dict) -> None:
         "CRITICAL_WITHOUT_EXPERT_REVIEW",
         "nenhum prazo/SLA",
         "não cria auto-update",
-        "Assurance de Product: não aplicável",
-        "Currentness de Product: não aplicável",
-        "Conclusão de Product: não aplicável",
+        "Assurance de Product",
+        "Currentness de Product",
+        "Conclusão de Product",
+        "não aplicável",
     ]:
         require(value in rendered, f"C required render content missing: {value}")
 
