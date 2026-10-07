@@ -881,3 +881,36 @@ Próxima etapa:
 > **Definir o contrato de renderização e a Especificação do Template Operacional do Monitor de Evidências.**
 
 A camada de apresentação deverá consumir exclusivamente a `EvidenceMonitorView` e preservar explicitamente Monitor × target × currentness × cycles × assurance × exceptions.
+
+
+### Monitor de Evidências — camada de apresentação concluída
+
+Documentos 174–176 concluídos.
+
+Estado:
+
+> **MONITOR_DE_EVIDENCIAS = FORMALIZED_IN_PHASE_3**
+
+Apresentação:
+
+- `templates/evidence-monitor.md`;
+- `templates/evidence-monitor-presentation-map.json`;
+- `scripts/render_evidence_monitor_reference.py`;
+- `scripts/validate_evidence_monitor_render.py`.
+
+Validação final:
+
+- run **37558043092** (#130) = **success**;
+- HEAD validado `40762d00f874599716fcbb86271bea4084ca19ef`;
+- artifact **11455658237**;
+- digest `sha256:6d80f9f80622713717d373d99ea200481f8926c295587e223a15a2f179bde0e3`.
+
+Run #129 falhou apenas porque o template acessava resulting target currency em target InvestigationVersion; correção tornou esse bloco condicional sem alterar contrato científico/View.
+
+Caso Real do Monitor não é requisito para a formalização taxonômica da Fase 3.
+
+Próxima etapa:
+
+> **Especificação Científica e Funcional do Alerta de Evidência — último produto da taxonomia da Fase 3.**
+
+Fase 4 permanece explicitamente não iniciada.
