@@ -949,3 +949,30 @@ Decisões principais:
 Próxima etapa:
 
 > **Contrato de Dados v0.1 do Alerta de Evidência; depois migration 024 + fixtures + testes.**
+
+
+### Alerta de Evidência — Contrato de Dados v0.1
+
+Documento 179 concluído.
+
+Estado:
+
+> **EVIDENCE_ALERT_DATA_CONTRACT = READY**
+
+Migration autorizada:
+
+> `database/024_evidence_alert_contract.sql`
+
+Escopo 024:
+
+- `maintenance.evidence_alert`;
+- `maintenance.alert_source`;
+- `maintenance.alert_affected_dimension`;
+- integrity/versioning guards;
+- publication issues;
+- publishability helper;
+- fixtures/tests.
+
+EvidenceAlertView permanece posterior a Projection Readiness explícito.
+
+Fase 4 permanece não iniciada.
