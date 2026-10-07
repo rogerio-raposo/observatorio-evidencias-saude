@@ -392,31 +392,72 @@ A futura implementação deverá conseguir responder:
 
 ---
 
-# 12. Temporal reference point
+# 12. Âncora temporal e prevenção de schedule drift
 
 A regra de due date deverá partir de referência explícita.
 
-Referências candidatas:
+Modos conceituais:
 
-- effective_at da policy;
-- completed_at do último ciclo elegível;
-- executed_at da última execução da fonte;
-- data de publicação/cutoff do target;
-- evento externo.
+### fixed_anchor
+
+O calendário é ancorado em referência fixa/prospectiva, por exemplo:
+
+- `effective_at` da policy;
+- data de cutoff/publicação;
+- calendário institucional explícito.
+
+Atraso de uma execução:
+
+> **não desloca automaticamente os próximos vencimentos.**
+
+Esse deve ser o padrão quando a intenção é manter frequência estável.
+
+### rolling_anchor
+
+O próximo due é calculado a partir de evento anterior realizado, por exemplo:
+
+- `completed_at` do último ciclo elegível;
+- `executed_at` da última execução elegível da fonte.
+
+Rolling só pode ser usado quando a policy justificar que a obrigação é realmente “X após a última execução”, e não “a cada X no calendário”.
+
+Sem essa distinção, um ciclo atrasado poderia redefinir a base e apagar atraso futuro.
+
+### event_anchor
+
+O relógio nasce de evento externo explícito.
 
 Não permitir:
 
 > due date inferida de “agora menos X” sem fonte normativa registrada.
 
+Mudança de âncora:
+
+> exige nova UpdatePolicy por supersessão quando altera o regime operacional efetivo.
+
 ---
 
-# 13. Due, grace e overdue
+# 13. Due, planned_at, grace e overdue
+
+Para Monitoring Cycle agregado:
+
+> `monitor_cycle.planned_at` é o candidato natural para materializar o vencimento de **início/execução** calculado pela regra de cadence.
+
+Não criar outro timestamp equivalente sem necessidade demonstrada.
+
+Conclusão do ciclo:
+
+> pertence ao relógio de processamento/completion SLA e não será inferida de `planned_at`.
+
+Para source-specific cadence sem ciclo próprio, futuro contrato poderá precisar de obrigação temporal especializada.
 
 O OES adota três conceitos distintos.
 
 ## 13.1 due_at
 
-Momento em que a execução estava programada.
+Conceito normativo do momento em que a execução deveria iniciar.
+
+No Monitor agregado, sua projeção preferencial é `planned_at`.
 
 ## 13.2 grace_until
 
@@ -430,11 +471,15 @@ Grace:
 
 ## 13.3 overdue
 
-Estado operacional quando:
+Estado operacional derivado quando:
 
 > current time > grace_until
 
 e a obrigação ainda não foi satisfeita.
+
+Preferência arquitetural:
+
+> **overdue deve ser computado a partir de regra + relógio + evidência de satisfação, não mantido como boolean mutável que possa ficar stale.**
 
 Overdue:
 
@@ -481,7 +526,28 @@ Regra:
 
 ---
 
-# 16. Pausa operacional
+# 16. Satisfação da obrigação temporal
+
+A policy futura deverá definir o que satisfaz cada obrigação.
+
+Para MonitorCycle agregado, candidato padrão:
+
+- ciclo iniciado até a regra de grace para satisfazer cadence de início;
+- ciclo concluído não é requisito de cadence, mas de processamento/completion.
+
+Para source-specific cadence, satisfação pode exigir:
+
+- Search completed;
+- evento de consulta à fonte;
+- registro explícito de source check sem resultados.
+
+Não usar simples criação de registro vazio para fingir execução.
+
+Uma obrigação satisfeita tardiamente:
+
+> continua historicamente atrasada; não pode ser reclassificada retroativamente como on_schedule.
+
+# 17. Pausa operacional
 
 Policy/Monitor pode entrar em estado operacional incompatível com execução normal.
 
@@ -510,7 +576,7 @@ Pausa nunca apaga janela científica descoberta.
 
 ---
 
-# 17. Exceção temporal
+# 18. Exceção temporal
 
 Exceção não é simples edição do relógio.
 
@@ -535,9 +601,15 @@ Uma futura exceção à cadence/threshold deverá:
 - período de validade;
 - não falsificar status “on time”.
 
+Limite de competência:
+
+- exceções específicas do Monitor continuam em `investigation.method_decision`, ligadas à Monitor InvestigationVersion;
+- não estender MethodDecision artificialmente a obrigações transversais sem InvestigationVersion adequada;
+- exceções transversais gerais podem exigir registro especializado posterior se o gate físico demonstrar necessidade.
+
 ---
 
-# 18. Thresholds temporais
+# 19. Thresholds temporais
 
 O OES não adotará um único “prazo máximo”.
 
@@ -545,23 +617,23 @@ Threshold temporal é uma regra que transforma diferença temporal em estado ope
 
 Classes:
 
-## 18.1 threshold de due
+## 19.1 threshold de due
 
 Determina quando obrigação nasce.
 
-## 18.2 threshold de grace
+## 19.2 threshold de grace
 
 Determina tolerância operacional explícita.
 
-## 18.3 threshold de overdue escalation
+## 19.3 threshold de overdue escalation
 
 Determina quando atraso exige escalonamento adicional.
 
-## 18.4 threshold de stale policy/profile
+## 19.4 threshold de stale policy/profile
 
 Determina quando policy/profile precisa de reassessment mesmo sem signal científico.
 
-## 18.5 threshold de unresolved signal
+## 19.5 threshold de unresolved signal
 
 Pertence ao bloco de SLA:
 
@@ -571,7 +643,7 @@ Não será definido numericamente neste documento.
 
 ---
 
-# 19. Classes qualitativas de atraso
+# 20. Classes qualitativas de atraso
 
 Antes de números, o OES reconhece estados semânticos:
 
@@ -601,7 +673,7 @@ Não equivalem a currentness.
 
 ---
 
-# 20. Materially overdue
+# 21. Materially overdue
 
 `materially_overdue` significa:
 
@@ -621,7 +693,7 @@ e não `materially_overdue`.
 
 ---
 
-# 21. Reassessment de cadence
+# 22. Reassessment de cadence
 
 A cadence deve ser reavaliada quando:
 
@@ -645,7 +717,7 @@ Não editar policy ativa silenciosamente.
 
 ---
 
-# 22. Cadence × M0
+# 23. Cadence × M0
 
 M0:
 
@@ -656,7 +728,7 @@ M0:
 
 ---
 
-# 23. Cadence × M1
+# 24. Cadence × M1
 
 M1:
 
@@ -669,7 +741,7 @@ M1 não promete vigilância contínua.
 
 ---
 
-# 24. Cadence × M2
+# 25. Cadence × M2
 
 M2:
 
@@ -683,7 +755,7 @@ M2 pode possuir fonte event-driven adicional.
 
 ---
 
-# 25. Cadence × M3
+# 26. Cadence × M3
 
 M3:
 
@@ -701,7 +773,7 @@ Nenhuma cadence, por si só, desbloqueia M3.
 
 ---
 
-# 26. Event-driven surveillance
+# 27. Event-driven surveillance
 
 Event-driven não é ausência de cadence.
 
@@ -727,9 +799,13 @@ Se o “event-driven” depender de polling:
 
 > o intervalo de polling é parte da regra temporal e deve ser explícito.
 
+Se depender de push externo:
+
+> a saúde/disponibilidade do canal deve ser observável; “nenhum evento recebido” não prova que a fonte estava operacional.
+
 ---
 
-# 27. Cadence e automação
+# 28. Cadence e automação
 
 Automação pode:
 
@@ -752,7 +828,7 @@ Automação não pode:
 
 ---
 
-# 28. Signal temporal
+# 29. Signal temporal
 
 O contrato 027 já possui:
 
@@ -774,7 +850,7 @@ Regra de parcimônia:
 
 ---
 
-# 29. Cadence_due × materiality
+# 30. Cadence_due × materiality
 
 Um cadence_due pode levar a:
 
@@ -791,7 +867,7 @@ Essa restrição já está implementada na migration 027 para signal operacional
 
 ---
 
-# 30. Threshold temporal × currentness
+# 31. Threshold temporal × currentness
 
 Atraso poderá sustentar `under_evaluation` somente quando:
 
@@ -806,7 +882,7 @@ Nunca:
 
 ---
 
-# 31. Threshold temporal × Alert
+# 32. Threshold temporal × Alert
 
 Alert urgency e cadence são independentes.
 
@@ -820,7 +896,7 @@ Depois da resolução:
 
 ---
 
-# 32. Threshold temporal × MethodDecision
+# 33. Threshold temporal × MethodDecision
 
 `investigation.method_decision` continua sendo registro de exceções metodológicas/temporais específicas do Monitor.
 
@@ -837,7 +913,7 @@ As duas decisões:
 
 ---
 
-# 33. Re-baselining temporal
+# 34. Re-baselining temporal
 
 Quando nova ProductVersion/InvestigationVersion se torna target:
 
@@ -851,11 +927,11 @@ Não usar completed_at da versão anterior como referência automática sem regr
 
 ---
 
-# 34. Métricas operacionais candidatas
+# 35. Métricas operacionais candidatas
 
 Podem ser calculadas futuramente:
 
-- planned_due_at;
+- due_at derivado / `planned_at` quando MonitorCycle;
 - actual_started_at;
 - actual_completed_at;
 - lateness duration;
@@ -874,7 +950,7 @@ Essas métricas:
 
 ---
 
-# 35. Referências metodológicas orientadoras
+# 36. Referências metodológicas orientadoras
 
 A arquitetura foi confrontada com princípios atuais:
 
@@ -887,7 +963,7 @@ Essas fontes não autorizam um intervalo universal no OES.
 
 ---
 
-# 36. Implicações para futuro contrato físico
+# 37. Implicações para futuro contrato físico
 
 Uma extensão física futura poderá precisar representar:
 
@@ -905,26 +981,31 @@ Antes disso deve haver gate específico.
 
 ---
 
-# 37. Testes conceituais obrigatórios antes de migration
+# 38. Testes conceituais obrigatórios antes de migration
 
 1. ciclo atrasado + cobertura completa ≠ gap;
-2. ciclo pontual + janela incompleta = gap;
-3. source latency > cadence não cria falsa atualidade;
-4. M1 event-driven sem periodic funciona;
-5. M2 periodic exige regra prospectiva;
-6. M2 hybrid aceita evento antes do due;
-7. M3 policy não remove blocker;
-8. overdue não altera currentness;
-9. gap não altera currentness sem assessment;
-10. cadence_due operacional não confirma material change;
-11. policy reassessment é relógio distinto;
-12. pause não apaga coverage debt;
-13. MethodDecision temporal exception não substitui UpdateDecision;
-14. supersessão de policy recalcula referência prospectivamente;
-15. no universal default é inferido por M.
+2. fixed_anchor não desliza devido a execução tardia;
+3. rolling_anchor exige justificativa explícita;
+4. planned_at representa due de início, não completion SLA;
+5. ciclo pontual + janela incompleta = gap;
+6. source latency > cadence não cria falsa atualidade;
+7. M1 event-driven sem periodic funciona;
+8. M2 periodic exige regra prospectiva;
+9. M2 hybrid aceita evento antes do due;
+10. M3 policy não remove blocker;
+11. overdue não altera currentness;
+12. gap não altera currentness sem assessment;
+13. cadence_due operacional não confirma material change;
+14. policy reassessment é relógio distinto;
+15. pause não apaga coverage debt;
+16. MethodDecision temporal exception não substitui UpdateDecision;
+17. supersessão de policy recalcula referência prospectivamente;
+18. obrigação satisfeita tardiamente preserva histórico de atraso;
+19. push channel indisponível não conta como vigilância válida;
+20. no universal default é inferido por M.
 
 ---
 
-# 38. Próximo passo exato
+# 39. Próximo passo exato
 
 > **Executar revisão adversarial da Política Transversal de Cadence e Thresholds Temporais. Somente após PASS/PASS_WITH_ARCHITECTURAL_DECISIONS definir os relógios/classes de SLA.**
