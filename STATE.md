@@ -2407,3 +2407,41 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: decidir em modo alto entre observation plan não normativo para N1-01 ou segundo readiness assessment real;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — reconciliação do primeiro readiness e seleção do segundo contexto real
+
+Documento:
+- `docs/governance/49-reconciliacao-selecao-segundo-evidence-readiness-real.md`.
+
+Reconciliação:
+> **FIRST_REAL_READINESS_ASSESSMENT_RESULT = PRESERVED**
+
+> **DOCUMENT_48_SELECTION_RATIONALE = PARTIALLY_CORRECTED**
+
+Foi identificada e reconciliada divergência factual na seção comparativa do Documento 48: o Caso Real N2/dCBT-I não permaneceu em pré-publicação. CP28 e Documentos 66–67 confirmam A2, `published`, owner governance approval e publication gate PASS.
+
+A divergência não invalida os blockers específicos do primeiro assessment N1-01.
+
+Decisão:
+> **OPTION_B = SELECTED**
+
+> **SECOND_REAL_READINESS_CONTEXT = N2_RC01_PRODUCTVERSION_1_CADENCE_POLICY_AGGREGATE**
+
+> **SECOND_REAL_READINESS_ASSESSMENT = SELECTED_NOT_EXECUTED**
+
+> **TEMPORAL_OBSERVATION_PLAN_N1_01 = DEFERRED_PENDING_SECOND_ASSESSMENT**
+
+O N2 selecionado é Product `OES-P-2026-000401`, ProductVersion `81000000-0000-0000-0000-000000000701`, N2/evidence_sheet, A2/published, com quatro Search rows reais em PubMed/MEDLINE, BVS/LILACS e ClinicalTrials.gov.
+
+Restrições preservadas:
+- nenhum Calibration Dossier real autorizado;
+- nenhum valor temporal normativo autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications permanecem deferidos;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, executar o segundo Evidence Readiness Assessment real no N2/dCBT-I, cadence / policy_aggregate, sem calibração numérica nem observação prospectiva.**
