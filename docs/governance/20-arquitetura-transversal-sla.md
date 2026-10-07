@@ -3,8 +3,8 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **BASELINE CONCEITUAL CANDIDATA — requer revisão adversarial**  
-**Dependências:** Documentos 05–09 e 16–19; migrations 002, 014, 021–027
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 21**  
+**Dependências:** Documentos 05–09 e 16–21; migrations 002, 014, 021–027
 
 ---
 
@@ -1219,4 +1219,4 @@ Resultados permitidos:
 
 # 35. Próximo passo exato
 
-> **Executar revisão adversarial da arquitetura de SLA. Somente após PASS/PASS_WITH_ARCHITECTURAL_DECISIONS decidir se já existe base suficiente para um contrato físico ou se o bloco de prioridade deve preceder a migration 028.**
+> **Definir a arquitetura transversal de prioridade e escalation antes de qualquer migration 028, preservando a independência entre prioridade, SLA compliance e currentness.**
