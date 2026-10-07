@@ -3,9 +3,10 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 28**  
+**Status:** **TECHNICALLY_VALIDATED — contrato implementado pela migration 029 e validado no Documento 29**  
 **Dependências:** Documentos 05–09, 16–26; migrations 006, 010, 014–015, 021–028  
 **Validado por:** Documento 28  
+**Validação técnica:** Documento 29; migration 029; F4-OC-T01–T72  
 **Migration:** **não autorizada neste documento**
 
 ---
@@ -1835,3 +1836,37 @@ Estado:
 > **READY_FOR_DOCUMENT_28_RECHECK**
 
 > **MIGRATION_029 = NOT_AUTHORIZED_UNTIL_RECHECK**
+
+---
+
+## 59. Resultado técnico pós-implementação
+
+O escopo autorizado pelo Documento 28 foi implementado em:
+
+`database/029_integrated_operational_control_contract.sql`
+
+Fixtures/testes:
+
+- `database/f4-operational-control-fixtures.sql`;
+- `database/f4-operational-control-tests.sql`.
+
+Resultado canônico:
+
+- F4-OC-T01–T69 = PASS;
+- F4-OC-T70 idempotency = PASS;
+- F4-OC-T71 rebuild-through-029 = PASS;
+- F4-OC-T72 regressions = PASS;
+- run **37580906483** (#150) = success;
+- technical HEAD `ae45918bb8cbf1ab929aec2e1af53f7239f75323`;
+- artifact **11464672034**;
+- digest `sha256:ec4546afc64fb5eb86b69d966905fc583cfbe43e4586abc922b57eb48e67a43c`.
+
+Resultado formal:
+
+`docs/governance/29-resultado-validacao-controle-operacional-integrado.md`
+
+> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = TECHNICALLY_VALIDATED**
+
+> **MIGRATION_029 = PASS**
+
+Os limites arquiteturais permanecem: nenhum SLA normativo numérico, score, auto-escalation ou M3 unblock foi introduzido.
