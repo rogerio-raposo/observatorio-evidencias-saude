@@ -41,6 +41,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [24 — Resultado da Validação Corretiva pós-Auditoria da Fase 4](docs/governance/24-resultado-validacao-corretiva-fase-4.md)
 - [25 — Arquitetura Transversal de Prioridade e Escalation](docs/governance/25-arquitetura-transversal-prioridade-escalation.md)
 - [26 — Revisão Adversarial da Arquitetura Transversal de Prioridade e Escalation](docs/governance/26-revisao-adversarial-prioridade-escalation.md)
+- [27 — Contrato de Dados Integrado do Plano Operacional da Fase 4](docs/governance/27-contrato-dados-integrado-plano-operacional-fase-4.md)
+- [28 — Gate Adversarial de Coerência Física do Contrato Operacional Integrado](docs/governance/28-gate-coerencia-fisica-plano-operacional-integrado.md)
 
 ### Metodologia
 
@@ -206,7 +208,7 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui sete blocos consolidados:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui oito blocos consolidados:
 
 1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 2. Documentos 07–09 + migrations 027–028 — contrato físico v0.1 = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
@@ -214,7 +216,8 @@ A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui se
 4. Documentos 18–19 — cadence e thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**;
-7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
+7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+8. Documentos 27–28 — contrato operacional integrado = **PASS_WITH_ARCHITECTURAL_DECISIONS**, migration 029 autorizada em escopo estrito.
 
 A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
@@ -251,11 +254,11 @@ Arquitetura de prioridade/escalation consolidada:
 - capacity nunca reduz prioridade;
 - auto-escalation permanece não autorizada;
 - score/pesos numéricos não foram definidos;
-- `MIGRATION_029 = NOT_AUTHORIZED`.
+- `MIGRATION_029 = AUTHORIZED_IN_STRICT_SCOPE`, ainda não implementada.
 
 Próximo passo exato:
 
-> **Definir o contrato de dados integrado do plano operacional da Fase 4 — triage + prioridade/escalation + SLA + milestones mínimos de workflow — sem migration; depois executar gate físico próprio.**
+> **Implementar a migration 029 no escopo estrito dos Documentos 27–28, criar a suíte F4-OC-T01–T72, integrar ao S5 e validar idempotência/rebuild/regressões antes de qualquer PASS técnico.**
 
 ---
 
