@@ -788,7 +788,7 @@ jobs:
             echo "OVR01-RENDER-A1 PASS — blocked internal A1 OverviewOfReviewsView render"
             echo "OVR01 formal publication blockers preserved"
             echo "Publication gate PASS"
-            echo "Rebuild through migration 020 + Overview fixture + MAP-01 A1 + OVR-01 A1 regressions PASS"
+            echo "Rebuild through migration 021 + Evidence Monitor + Overview fixture + MAP-01 A1 + OVR-01 A1 regressions PASS"
           } | tee s5-artifacts/S5-summary.txt
 
       - name: Upload S5 evidence
