@@ -1025,7 +1025,7 @@ Como UpdatePolicy M2/M3 exige governing Monitor com target idêntico:
 
 1. new target deve estar current;
 2. RebaselineDecision é preparada;
-3. novo Monitor ProductVersion é criado/configurado quando M2/M3;
+3. novo Monitor ProductVersion é criado/configurado quando M2/M3 e deve estar `current` para ativação do handover;
 4. MonitorDefinition/MonitorTarget e estado aplicável ficam coerentes;
 5. somente então a new UpdatePolicy M2/M3 pode ser ativada;
 6. objetos operacionais prospectivos passam a usar a new policy.
