@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP87 — 2026-10-06**
+**CP88 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP87.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP88.md`
 
 Checkpoint anterior:
 
-`CP86`
+`CP87`
 
 Status:
 
@@ -190,3 +190,5 @@ em **Modo Continuidade**.
 - **CP86 — 2026-10-06:** registra **Projection Readiness do Alerta = READY**; autoriza migration 026 para EvidenceAlertView 0.1.
 
 - **CP87 — 2026-10-06:** registra **EvidenceAlertView 0.1 = PASS**; retomada na camada de apresentação e fechamento da Fase 3.
+
+- **CP88 — 2026-10-06:** encerra formalmente a **Fase 3 — Produtos do Observatório**; 9/9 produtos formalizados; `PHASE_3_COMPLETE / PHASE_4_NOT_STARTED`.
