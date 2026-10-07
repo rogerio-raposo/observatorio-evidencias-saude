@@ -2583,3 +2583,12 @@ Documentos:
 - Caso Real do Monitor não é obrigatório para o fechamento taxonômico desta fase;
 - próxima etapa: **Alerta de Evidência**;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — CP82
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP82.md`;
+- Monitor de Evidências formalizado na Fase 3;
+- ponteiro de continuidade movido para CP82;
+- retomada: **Alerta de Evidência**, último produto da taxonomia;
+- Fase 4 explicitamente não autorizada.
