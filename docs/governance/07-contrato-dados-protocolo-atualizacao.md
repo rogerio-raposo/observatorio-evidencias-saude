@@ -159,8 +159,6 @@ CREATE TABLE maintenance.update_policy (
     created_by text NOT NULL,
     actor_type text NOT NULL CHECK (
         actor_type IN (
-            'system',
-            'ai_system',
             'human_reviewer',
             'human_expert',
             'owner'
@@ -198,7 +196,24 @@ CREATE TABLE maintenance.update_policy (
 
 ---
 
-## 5. Semântica de `effective_maintenance_level`
+## 5. Escopo de target da policy
+
+No v0.1, UpdatePolicy transversal poderá ter como target:
+
+- ProductVersion científica;
+- InvestigationVersion científica.
+
+Não poderá ter como target:
+
+- ProductVersion `evidence_monitor`;
+- ProductVersion `evidence_alert`;
+- InvestigationVersion com `investigation_type='evidence_monitoring'`.
+
+Motivo:
+
+> Monitor possui seu próprio estado/plano/currency; Alert possui lifecycle próprio. Aplicar UpdatePolicy a esses objetos criaria recursão semântica e duplicação da camada de manutenção.
+
+## 6. Semântica de `effective_maintenance_level`
 
 Esse campo representa:
 
@@ -222,7 +237,7 @@ Portanto:
 
 ---
 
-## 6. Unicidade de policy ativa
+## 7. Unicidade de policy ativa
 
 Exigir:
 
@@ -243,7 +258,7 @@ Zero é permitido para conteúdo histórico ainda não incorporado ao protocolo 
 
 ---
 
-## 7. Supersessão de policy
+## 8. Supersessão de policy
 
 `supersedes_update_policy_uuid` deverá apontar para policy do mesmo target versionado.
 
@@ -255,6 +270,23 @@ A nova policy:
 
 Mudança de target version não é supersessão da mesma policy.
 
+UpdatePolicy é configuração autoritativa do regime operacional. Por isso, no v0.1:
+
+- `actor_type='system'` é proibido;
+- `actor_type='ai_system'` é proibido;
+- IA pode preparar draft fora deste registro, mas não ativar policy;
+- ator humano/owner e rationale são obrigatórios.
+
+Transições diretas permitidas por supersessão:
+
+- mesmo M → mesmo M, para revisão de detalhes;
+- M0 → M1 ou M2;
+- M1 → M0 ou M2;
+- M2 → M1 ou M3;
+- M3 → M2, M1 ou M0.
+
+M0 → M3, M1 → M3 e M2 → M0 exigem passagem por estado intermediário ou nova decisão de target/version, não supersessão direta.
+
 Quando o target científico for versionado:
 
 > criar nova policy para a nova versão, com eventual linkage de derivação a ser definido no bloco de propagação/re-baselining.
@@ -263,7 +295,7 @@ Não antecipar esse linkage no v0.1.
 
 ---
 
-## 8. Policy × Monitor
+## 9. Policy × Monitor
 
 `governing_monitor_product_version_uuid` é opcional.
 
@@ -284,7 +316,7 @@ Regras por regime:
 
 ---
 
-## 9. Cadence mode
+## 10. Cadence mode
 
 ### none
 
@@ -324,7 +356,7 @@ Valores temporais concretos ficam em `cadence_policy_payload`, mas o v0.1:
 
 ---
 
-# 10. Estrutura 2 — `maintenance.update_signal`
+# 11. Estrutura 2 — `maintenance.update_signal`
 
 Representa um signal detectado sob determinada policy.
 
@@ -408,7 +440,7 @@ CREATE TABLE maintenance.update_signal (
 
 ---
 
-## 11. Vocabulário inicial de `signal_type`
+## 12. Vocabulário inicial de `signal_type`
 
 O campo será texto controlado por check no contrato inicial, com pelo menos:
 
@@ -443,7 +475,7 @@ Exemplos:
 
 ---
 
-# 12. Estrutura 3 — `maintenance.update_signal_source`
+# 13. Estrutura 3 — `maintenance.update_signal_source`
 
 Signal pode ter múltiplas fontes.
 
@@ -515,7 +547,7 @@ Signals `governance_demand` podem existir sem source externa, desde que rational
 
 ---
 
-## 13. Signal × Monitor
+## 14. Signal × Monitor
 
 Quando source_type for:
 
@@ -528,9 +560,11 @@ o guard deverá verificar que a origem pertence ao mesmo Monitor que governa a p
 
 Isso impede apropriação silenciosa de eventos de outro Monitor.
 
+No v0.1, `source_type='search_hit'` só será permitido quando houver `governing_monitor_product_version_uuid` e o SearchHit pertencer a Search ligada a MonitoringCycle desse mesmo Monitor. Busca ad hoc fora de Monitor deverá originar signal por EntityVersion, Artifact, URI ou outro registro explicitamente rastreável, evitando reutilizar SearchHit histórico da investigação original como se fosse vigilância prospectiva.
+
 ---
 
-## 14. Signal × Alert
+## 15. Signal × Alert
 
 Alert pode originar signal transversal.
 
@@ -543,7 +577,7 @@ Regras:
 
 ---
 
-## 15. Imutabilidade de signal
+## 16. Imutabilidade de signal
 
 Após INSERT, campos materiais do signal são imutáveis.
 
@@ -566,9 +600,15 @@ Correção material:
 
 > criar novo signal e registrar a relação causal na documentação/provenance aplicável.
 
+Após existir qualquer MaterialityAssessment para o signal:
+
+> `update_signal_source` fica selada para INSERT/UPDATE/DELETE.
+
+Isso preserva exatamente o conjunto de fontes sobre o qual o assessment foi produzido.
+
 ---
 
-# 16. Estrutura 4 — `maintenance.materiality_assessment`
+# 17. Estrutura 4 — `maintenance.materiality_assessment`
 
 Representa avaliação transversal da materialidade de um signal.
 
@@ -640,7 +680,7 @@ CREATE TABLE maintenance.materiality_assessment (
 
 ---
 
-## 17. Unicidade e supersessão da materialidade
+## 18. Unicidade e supersessão da materialidade
 
 Exigir:
 
@@ -655,7 +695,7 @@ Supersessão:
 
 ---
 
-# 18. Estrutura 5 — `maintenance.materiality_dimension`
+# 19. Estrutura 5 — `maintenance.materiality_dimension`
 
 Normaliza dimensões afetadas.
 
@@ -706,6 +746,8 @@ CREATE TABLE maintenance.materiality_dimension (
 
 Regras:
 
+- após existir qualquer UpdateDecision que referencie o assessment, suas MaterialityDimensions ficam seladas para INSERT/UPDATE/DELETE;
+- correção de dimensão exige novo MaterialityAssessment por supersessão;
 - `material_change_confirmed` exige pelo menos uma dimensão `confirmed`;
 - `validity_or_use_threat` exige pelo menos uma dimensão `threat`;
 - `potentially_material` exige pelo menos uma dimensão `potential|uncertain`;
@@ -713,7 +755,7 @@ Regras:
 
 ---
 
-# 19. Estrutura 6 — `maintenance.update_decision`
+# 20. Estrutura 6 — `maintenance.update_decision`
 
 Registra a decisão derivada de assessment.
 
@@ -722,6 +764,9 @@ DDL lógico:
 ```sql
 CREATE TABLE maintenance.update_decision (
     update_decision_uuid uuid PRIMARY KEY,
+
+    update_signal_uuid uuid NOT NULL
+        REFERENCES maintenance.update_signal(update_signal_uuid),
 
     materiality_assessment_uuid uuid NOT NULL
         REFERENCES maintenance.materiality_assessment(
@@ -753,8 +798,7 @@ CREATE TABLE maintenance.update_decision (
             'set_current',
             'set_under_evaluation',
             'set_update_recommended',
-            'set_outdated',
-            'set_archived'
+            'set_outdated'
         )
     ),
 
@@ -805,7 +849,21 @@ CREATE TABLE maintenance.update_decision (
 
 ---
 
-## 20. Proposta × decisão autoritativa
+## 21. Unicidade e supersessão de UpdateDecision
+
+O campo `update_signal_uuid` é denormalização controlada para permitir integridade e consulta eficiente.
+
+Guard obrigatório:
+
+- o signal do decision deve ser o mesmo do MaterialityAssessment;
+- no máximo um UpdateDecision ativo por UpdateSignal;
+- supersessão deve preservar o mesmo UpdateSignal;
+- novo decision pode referenciar assessment mais recente do mesmo signal;
+- decisão anterior permanece historicamente preservada.
+
+Isso impede múltiplas decisões concorrentes “ativas” quando a materialidade é reavaliada.
+
+## 22. Proposta × decisão autoritativa
 
 ### proposal
 
@@ -826,7 +884,10 @@ Deve possuir:
 
 - `verification_status IN ('human_verified','human_consensus')`;
 - verifier humano explícito;
-- rationale não vazio.
+- rationale não vazio;
+- MaterialityAssessment referenciado também `human_verified` ou `human_consensus`.
+
+Assim, assessment AI-only pode sustentar proposal, mas não decisão autoritativa.
 
 Regra adicional:
 
@@ -836,7 +897,7 @@ Esse contrato não declara automaticamente que qualquer humano é especialista.
 
 ---
 
-## 21. Coerência decision × materiality
+## 23. Coerência decision × materiality
 
 Mapeamento mínimo:
 
@@ -871,8 +932,9 @@ Pode aplicar:
 - set_current;
 - set_under_evaluation;
 - set_update_recommended;
-- set_outdated;
-- set_archived.
+- set_outdated.
+
+`currency_status='archived'` não será produzido por UpdateDecision v0.1; arquivamento permanece lifecycle/editorial separado.
 
 Somente para ProductVersion target.
 
@@ -912,7 +974,9 @@ Exige decisão autoritativa.
 
 Para ProductVersion:
 
-> deve resultar em `currency_action=set_outdated` ou `set_archived`, conforme o caso.
+> deve resultar em `currency_action=set_outdated`.
+
+Arquivamento, quando pertinente, ocorre por lifecycle próprio e não é abreviado por UpdateDecision.
 
 Para InvestigationVersion:
 
@@ -920,7 +984,7 @@ Para InvestigationVersion:
 
 ---
 
-# 22. Estrutura 7 — `maintenance.update_decision_currency_state`
+# 24. Estrutura 7 — `maintenance.update_decision_currency_state`
 
 Liga decisão autoritativa aplicada ao CurrencyState resultante.
 
@@ -955,11 +1019,10 @@ Mapeamento:
 | set_under_evaluation | under_evaluation |
 | set_update_recommended | update_recommended |
 | set_outdated | outdated |
-| set_archived | archived |
 
 ---
 
-## 23. Relação com CurrencyState produzido por Monitor Cycle
+## 25. Relação com CurrencyState produzido por Monitor Cycle
 
 Pode ocorrer que um Monitor Cycle já tenha criado CurrencyState via:
 
@@ -978,7 +1041,7 @@ Não será permitido:
 
 ---
 
-## 24. Relação com atualização científica futura
+## 26. Relação com atualização científica futura
 
 Uma decisão:
 
@@ -1000,7 +1063,7 @@ Não antecipar tabela de “resulting version” neste v0.1.
 
 ---
 
-## 25. Provenance
+## 27. Provenance
 
 ### 25.1 Process provenance
 
@@ -1032,7 +1095,7 @@ porque esses objetos não são EntityVersions.
 
 ---
 
-## 26. Verification invariants
+## 28. Verification invariants
 
 Para signal, assessment e decision:
 
@@ -1058,7 +1121,7 @@ IA nunca poderá preencher estado humano.
 
 ---
 
-## 27. Actor semantics
+## 29. Actor semantics
 
 Domínios têm finalidade distinta:
 
@@ -1072,7 +1135,7 @@ Não inferir expertise apenas da presença de humano.
 
 ---
 
-## 28. M3
+## 30. M3
 
 O contrato v0.1 permite policy com:
 
@@ -1098,7 +1161,7 @@ O desbloqueio exige contrato posterior específico de M3 readiness.
 
 ---
 
-## 29. Não escopo do contrato v0.1
+## 31. Não escopo do contrato v0.1
 
 Não implementar ainda:
 
@@ -1118,20 +1181,23 @@ Não implementar ainda:
 
 ---
 
-## 30. Guards candidatos da futura migration
+## 32. Guards candidatos da futura migration
 
 A migration candidata deverá implementar pelo menos:
 
 - `maintenance.assert_update_policy_consistency()`;
 - `maintenance.guard_update_policy_mutation()`;
+- `maintenance.assert_update_policy_transition()`;
 - `maintenance.assert_update_signal_consistency()`;
 - `maintenance.guard_update_signal_mutation()`;
 - `maintenance.assert_update_signal_source_consistency()`;
 - `maintenance.guard_update_signal_source_mutation()`;
+- `maintenance.guard_update_signal_sources_after_assessment()`;
 - `maintenance.assert_materiality_assessment_consistency()`;
 - `maintenance.guard_materiality_assessment_mutation()`;
 - `maintenance.assert_materiality_dimension_consistency()`;
 - `maintenance.guard_materiality_dimension_mutation()`;
+- `maintenance.guard_materiality_dimensions_after_decision()`;
 - `maintenance.assert_update_decision_consistency()`;
 - `maintenance.guard_update_decision_mutation()`;
 - `maintenance.assert_update_decision_currency_state_consistency()`;
@@ -1139,7 +1205,7 @@ A migration candidata deverá implementar pelo menos:
 
 ---
 
-## 31. Testes mínimos esperados
+## 33. Testes mínimos esperados
 
 A futura bateria F4-UP deverá cobrir, no mínimo:
 
@@ -1149,44 +1215,55 @@ A futura bateria F4-UP deverá cobrir, no mínimo:
 4. supersessão preserva target;
 5. M0 × cadence;
 6. M1 × cadence;
-7. M2 exige Monitor em policy formal;
-8. M3 exige Monitor mas permanece bloqueado formalmente;
-9. Monitor da policy aponta para mesmo target;
-10. signal exige policy;
-11. signal_type × class × trigger coerentes;
-12. signal verification invariants;
-13. signal material imutável;
-14. source locator XOR;
-15. no máximo uma primary source;
-16. source Monitor pertencente ao Monitor governante;
-17. Alert source target compatível;
-18. um assessment ativo por signal;
-19. assessment supersession preserva signal;
-20. materiality outcome × dimensions coerente;
-21. proposal por AI permitida;
-22. authoritative por AI rejeitada;
-23. authoritative sem human verification rejeitada;
-24. decision × materiality coerente;
-25. Investigation target com currency action rejeitado;
-26. Product target currency linkage coerente;
-27. wrong-target CurrencyState rejeitado;
-28. currency action/status mismatch rejeitado;
-29. no_change com CurrencyState rejeitado;
-30. cycle CurrencyState pode ser reutilizado quando coerente;
-31. contradição cycle/decision rejeitada;
-32. nenhuma decisão cria ProductVersion automaticamente;
-33. nenhuma decisão cria InvestigationVersion automaticamente;
-34. nenhum registro promove assurance;
-35. M3 blocker existente continua ativo;
-36. migrations 021–026 permanecem idempotentes;
-37. futura migration candidata é idempotente quando desenhada para tal;
-38. rebuild-from-zero through migration candidata;
-39. regressões globais F2-B/S4/S5;
-40. regressões completas de Monitor e Alert.
+7. policy em evidence_monitor/evidence_alert é rejeitada;
+8. policy em Investigation evidence_monitoring é rejeitada;
+9. policy por system/AI é rejeitada;
+10. transições M0–M3 inválidas são rejeitadas;
+11. M2 exige Monitor em policy formal;
+12. M3 exige Monitor mas permanece bloqueado formalmente;
+13. Monitor da policy aponta para mesmo target;
+14. signal exige policy;
+15. signal_type × class × trigger coerentes;
+16. signal verification invariants;
+17. signal material imutável;
+18. source locator XOR;
+19. no máximo uma primary source;
+20. SearchHit fora de Monitor rejeitado;
+21. source Monitor pertencente ao Monitor governante;
+22. Alert source target compatível;
+23. SignalSource selada após assessment;
+24. um assessment ativo por signal;
+25. assessment supersession preserva signal;
+26. materiality outcome × dimensions coerente;
+27. MaterialityDimension selada após decision;
+28. proposal por AI permitida;
+29. authoritative por AI rejeitada;
+30. authoritative com assessment AI-only rejeitada;
+31. authoritative sem human verification rejeitada;
+32. um decision ativo por signal;
+33. decision supersession preserva signal;
+34. decision × materiality coerente;
+35. Investigation target com currency action rejeitado;
+36. Product target currency linkage coerente;
+37. wrong-target CurrencyState rejeitado;
+38. currency action/status mismatch rejeitado;
+39. archived não pode ser produzido por UpdateDecision;
+40. no_change com CurrencyState rejeitado;
+41. cycle CurrencyState pode ser reutilizado quando coerente;
+42. contradição cycle/decision rejeitada;
+43. nenhuma decisão cria ProductVersion automaticamente;
+44. nenhuma decisão cria InvestigationVersion automaticamente;
+45. nenhum registro promove assurance;
+46. M3 blocker existente continua ativo;
+47. migrations 021–026 permanecem idempotentes;
+48. futura migration candidata é idempotente quando desenhada para tal;
+49. rebuild-from-zero through migration candidata;
+50. regressões globais F2-B/S4/S5;
+51. regressões completas de Monitor e Alert.
 
 ---
 
-## 32. Gate obrigatório antes de migration
+## 34. Gate obrigatório antes de migration
 
 Antes de autorizar `database/027_transversal_update_protocol_contract.sql`, executar revisão adversarial física cobrindo:
 
@@ -1213,6 +1290,6 @@ Resultados permitidos:
 
 ---
 
-## 33. Próximo passo exato
+## 35. Próximo passo exato
 
 > **Executar a revisão adversarial física do Documento 07. Somente em PASS ou PASS_WITH_ARCHITECTURAL_DECISIONS poderá ser autorizada a migration candidata 027.**
