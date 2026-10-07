@@ -92,12 +92,22 @@ DO $t$ DECLARE blocked boolean:=false; BEGIN
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T11 FAIL'; END IF;
 END $t$;
 
--- AL-T12 — target xor.
+-- AL-T12 — target xor rejects two targets on a fresh Alert shell.
+INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
+VALUES ('a7000000-0000-0000-0000-000000000012','OES-P-ALT-T12','Product','test');
+INSERT INTO core.entity_version(version_uuid,entity_uuid,version_no,version_status,created_by,change_type)
+VALUES ('a7100000-0000-0000-0000-000000000012','a7000000-0000-0000-0000-000000000012',1,'draft','test','test');
+INSERT INTO product.product(entity_uuid)
+VALUES ('a7000000-0000-0000-0000-000000000012');
+INSERT INTO product.product_version(version_uuid,entity_uuid,product_type,title,evidence_cutoff_date,status)
+VALUES ('a7100000-0000-0000-0000-000000000012','a7000000-0000-0000-0000-000000000012','evidence_alert','T12',DATE '2026-10-06','draft');
+INSERT INTO product.investigation_link(product_version_uuid,investigation_version_uuid,role)
+VALUES ('a7100000-0000-0000-0000-000000000012','e5100000-0000-0000-0000-000000000004','source_context');
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.evidence_alert(alert_product_version_uuid,target_product_version_uuid,target_investigation_version_uuid,headline,summary,detected_at,classification,reassessment_priority,lifecycle_status,justification,assessed_by,actor_type,verification_status)
-  VALUES ('a7100000-0000-0000-0000-000000000002','e5100000-0000-0000-0000-000000000003','e5100000-0000-0000-0000-000000000002','x','x',CURRENT_TIMESTAMP,'informational','routine','triage','x','x','ai_system','unverified');
- EXCEPTION WHEN others THEN blocked:=true; END;
+  VALUES ('a7100000-0000-0000-0000-000000000012','e5100000-0000-0000-0000-000000000003','e5100000-0000-0000-0000-000000000002','x','x',CURRENT_TIMESTAMP,'informational','routine','triage','x','x','ai_system','unverified');
+ EXCEPTION WHEN check_violation THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T12 FAIL'; END IF;
 END $t$;
 
@@ -105,7 +115,7 @@ END $t$;
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.alert_source(alert_source_uuid,alert_product_version_uuid,source_role,source_type,source_uri,description)
-  VALUES ('a7200000-0000-0000-0000-000000000013','a7100000-0000-0000-0000-000000000001','supporting','artifact','https://example.invalid/mismatch','mismatch');
+  VALUES ('a7200000-0000-0000-0000-000000000013','a7100000-0000-0000-0000-000000000002','supporting','artifact','https://example.invalid/mismatch','mismatch');
  EXCEPTION WHEN others THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T13 FAIL'; END IF;
 END $t$;
