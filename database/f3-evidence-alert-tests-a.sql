@@ -114,7 +114,7 @@ END $t$;
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.alert_source(alert_source_uuid,alert_product_version_uuid,source_role,source_type,source_uri,description)
-  VALUES ('a7200000-0000-0000-0000-000000000014','a7100000-0000-0000-0000-000000000001','primary','uri','https://example.invalid/second-primary','second primary');
+  VALUES ('a7200000-0000-0000-0000-000000000014','a7100000-0000-0000-0000-000000000002','primary','uri','https://example.invalid/second-primary','second primary');
  EXCEPTION WHEN unique_violation THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T14 FAIL'; END IF;
 END $t$;
@@ -123,7 +123,7 @@ END $t$;
 DO $t$ DECLARE blocked boolean:=false; BEGIN
  BEGIN
   INSERT INTO maintenance.alert_affected_dimension(alert_product_version_uuid,dimension_code,rationale)
-  VALUES ('a7100000-0000-0000-0000-000000000001','certainty','duplicate');
+  VALUES ('a7100000-0000-0000-0000-000000000002','applicability','duplicate');
  EXCEPTION WHEN unique_violation THEN blocked:=true; END;
  IF NOT blocked THEN RAISE EXCEPTION 'AL-T15 FAIL'; END IF;
 END $t$;
