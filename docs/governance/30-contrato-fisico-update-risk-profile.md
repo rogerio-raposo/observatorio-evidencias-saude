@@ -418,8 +418,10 @@ AI/system:
 
 Dimension authoritative:
 
-- ator humano;
-- human_verified | human_consensus.
+- exige ator humano autorizado para aquela dimensão;
+- para dimensões A1–A5 e B1–B4, usa verification metadata canônica;
+- quando a dimensão depende de qualificação científica, `human_verified | human_consensus` é obrigatório;
+- B5 é exceção de governança operacional: sua autoridade deriva do owner e não deve ser rotulada falsamente como verificação científica do owner.
 
 Além disso:
 
@@ -478,9 +480,17 @@ Authoritative:
 
 > owner.
 
+Verification semantics:
+
+- `verification_status='unverified'` é permitido para a linha B5 authoritative quando o owner é o próprio declarante de capacidade;
+- alternativamente, documentação de suporte pode ser human_verified por reviewer/expert quando houver verificação real;
+- não adicionar `owner` artificialmente ao domínio global de `verifier_actor_type`.
+
 Motivo:
 
 > B5 declara capacidade sustentável institucional, não inferência científica.
+
+Authority do owner não deve ser confundida com human scientific verification.
 
 ---
 
@@ -1339,23 +1349,24 @@ Priority implications são rationale, não decisão.
 26. A3 owner authoritative rejeitado;
 27. A4 owner authoritative rejeitado;
 28. B5 non-owner authoritative rejeitado;
-29. verification humana authoritative exigida;
-30. profile header authoritative por owner rejeitado;
-31. dimension basis locator XOR;
-32. monitor_cycle basis FK real;
-33. external basis sem UUID OES fictício.
+29. verification humana authoritative exigida para dimensões científicas;
+30. B5 owner authoritative sem falsa human verification permitido;
+31. profile header authoritative por owner rejeitado;
+32. dimension basis locator XOR;
+33. monitor_cycle basis FK real;
+34. external basis sem UUID OES fictício.
 
 ## 54. Carry-forward
 
-34. initial somente assessed;
-35. reassessment source = superseded profile;
-36. reassessment carried dimension mantém valor;
-37. carry_forward source = header source;
-38. carried dimension mantém valor;
-39. carried dimension rationale obrigatório;
-40. new scientific version sem carry-forward silencioso;
-41. carried source authoritative exigido;
-42. carry-forward effective_at não antecede source profile.
+35. initial somente assessed;
+36. reassessment source = superseded profile;
+37. reassessment carried dimension mantém valor;
+38. carry_forward source = header source;
+39. carried dimension mantém valor;
+40. carried dimension rationale obrigatório;
+41. new scientific version sem carry-forward silencioso;
+42. carried source authoritative exigido;
+43. carry-forward effective_at não antecede source profile.
 
 ## 55. Recomendação
 
@@ -1457,7 +1468,8 @@ Foram incorporadas:
 8. legacy snapshot-only grandfathered;
 9. novos PriorityAssessment passam a exigir profile FK após migration;
 10. snapshot novo deve ser exatamente o serializer canônico;
-11. carry-forward temporal/source reforçado.
+11. carry-forward temporal/source reforçado;
+12. B5 authority reconciliada com o helper global de verification sem adicionar owner como verifier artificial.
 
 Estado:
 
