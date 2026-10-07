@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP90 — 2026-10-07**
+**CP91 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP90.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP91.md`
 
 Checkpoint anterior:
 
-`CP89`
+`CP90`
 
 Status:
 
@@ -194,3 +194,4 @@ em **Modo Continuidade**.
 - **CP88 — 2026-10-06:** encerra formalmente a **Fase 3 — Produtos do Observatório**; 9/9 produtos formalizados; `PHASE_3_COMPLETE / PHASE_4_NOT_STARTED`.
 - **CP89 — 2026-10-06:** inicia formalmente a **Fase 4 — Protocolo de Atualização**; Documentos 05–06; arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**; retomada no Contrato de Dados v0.1.
 - **CP90 — 2026-10-07:** valida tecnicamente o contrato transversal de atualização v0.1; migration 027 + F4-UP-T01–T63 + idempotência + rebuild = PASS; retomada em perfis de risco para cadence/thresholds/SLA/prioridade.
+- **CP91 — 2026-10-07:** consolida perfis de risco e política temporal da Fase 4; Documentos 16–19 = PASS_WITH_ARCHITECTURAL_DECISIONS; próximo passo = arquitetura transversal de SLA.
