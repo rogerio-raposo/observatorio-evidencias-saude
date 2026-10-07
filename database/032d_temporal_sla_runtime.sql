@@ -149,6 +149,10 @@ BEGIN
    AND x.effective_at<=candidate_start
    AND (maintenance.sla_rule_effective_until(x.sla_rule_uuid) IS NULL
         OR candidate_start<maintenance.sla_rule_effective_until(x.sla_rule_uuid))
+   AND NOT (
+     x.record_status='superseded'
+     AND maintenance.sla_rule_effective_until(x.sla_rule_uuid) IS NULL
+   )
    AND maintenance.sla_rule_filter_domains_are_valid(
      x.trigger_class_filter,x.decision_type_filter,x.materiality_outcome_filter)
    AND maintenance.sla_rule_filters_are_causally_valid(
@@ -466,5 +470,50 @@ BEGIN
   AND (to_jsonb(NEW)-'record_status')=(to_jsonb(OLD)-'record_status')
  THEN RETURN NEW; END IF;
  RAISE EXCEPTION 'SLARule material fields are immutable; supersede and append';
+END
+$guard$;
+
+
+-- Freeze all causal and calculation snapshot fields added/used by temporal v0.1.
+CREATE OR REPLACE FUNCTION maintenance.guard_sla_instance_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $guard$
+DECLARE ok boolean;
+BEGIN
+  IF TG_OP='DELETE' THEN RAISE EXCEPTION 'SLAInstance cannot be deleted'; END IF;
+
+  ok := (OLD.execution_status=NEW.execution_status)
+    OR (OLD.execution_status='pending' AND NEW.execution_status IN ('running','not_applicable','cancelled_invalidated'))
+    OR (OLD.execution_status='running' AND NEW.execution_status IN ('paused','satisfied','terminated_by_authority','cancelled_invalidated'))
+    OR (OLD.execution_status='paused' AND NEW.execution_status IN ('running','satisfied','terminated_by_authority','cancelled_invalidated'));
+
+  IF NOT ok THEN RAISE EXCEPTION 'Invalid SLAInstance execution transition'; END IF;
+
+  IF OLD.sla_rule_uuid<>NEW.sla_rule_uuid
+     OR OLD.obligation_uuid<>NEW.obligation_uuid
+     OR OLD.update_signal_uuid<>NEW.update_signal_uuid
+     OR OLD.update_triage_uuid IS DISTINCT FROM NEW.update_triage_uuid
+     OR OLD.materiality_assessment_uuid IS DISTINCT FROM NEW.materiality_assessment_uuid
+     OR OLD.update_decision_uuid IS DISTINCT FROM NEW.update_decision_uuid
+     OR OLD.workflow_round_uuid IS DISTINCT FROM NEW.workflow_round_uuid
+     OR OLD.start_priority_assessment_uuid IS DISTINCT FROM NEW.start_priority_assessment_uuid
+     OR OLD.clock_code<>NEW.clock_code
+     OR OLD.endpoint_type<>NEW.endpoint_type
+     OR OLD.time_basis<>NEW.time_basis
+     OR OLD.rule_snapshot_payload<>NEW.rule_snapshot_payload
+     OR OLD.due_calculation_payload IS DISTINCT FROM NEW.due_calculation_payload
+     OR OLD.source_detected_at IS DISTINCT FROM NEW.source_detected_at
+     OR OLD.pre_policy_age IS DISTINCT FROM NEW.pre_policy_age
+     OR OLD.start_at<>NEW.start_at
+     OR OLD.nominal_due_at<>NEW.nominal_due_at
+  THEN
+    RAISE EXCEPTION 'SLAInstance causal/snapshot fields are immutable under temporal v0.1';
+  END IF;
+
+  IF OLD.first_breached_at IS NOT NULL
+     AND NEW.first_breached_at IS DISTINCT FROM OLD.first_breached_at THEN
+    RAISE EXCEPTION 'SLA first_breached_at is immutable once set';
+  END IF;
+
+  RETURN NEW;
 END
 $guard$;
