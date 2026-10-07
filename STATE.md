@@ -2016,3 +2016,37 @@ Próximo passo:
 - próxima dívida da Fase 4 ainda não selecionada;
 - Fase 5 não iniciada;
 - pausa obrigatória após checkpoint preservada.
+
+
+### Fase 4 — seleção do próximo bloco após CP102
+
+Documento:
+- 38 — Seleção da Próxima Dívida da Fase 4.
+
+Decisão:
+> **NEXT_PHASE_4_BLOCK = TEMPORAL_CALIBRATION**
+
+> **TEMPORAL_CALIBRATION = SELECTED_NOT_STARTED**
+
+> **PRIORITY_SCORE = DELIBERATELY_NOT_REQUIRED_FOR_BASELINE**
+
+Racional:
+- scheduler depende de cadence/thresholds normativos;
+- breach/overdue normativo depende de SLA duration + calendar;
+- notifications dependem de eventos/thresholds definidos;
+- M3 readiness depende de cadence/SLA operacionais coerentes;
+- priority score aditivo foi deliberadamente rejeitado pela arquitetura aprovada.
+
+Limites:
+- nenhum número de cadence/threshold/SLA foi definido;
+- scheduler não iniciado;
+- notifications não iniciadas;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada.
+
+Disciplina de modo:
+> **HIGH_MODE_RECOMMENDED_BEFORE_TEMPORAL_CALIBRATION**
+
+Próximo passo:
+> **em modo alto, definir primeiro a metodologia de calibração temporal; somente depois considerar valores normativos.**
