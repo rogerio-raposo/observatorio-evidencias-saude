@@ -2292,3 +2292,26 @@ Documentos:
 - ponteiro de continuidade movido para CP71;
 - retomada movida para verificação metodológica adversarial pós-persistência;
 - nenhuma promoção A1/A2/A3 ou publicação foi realizada neste checkpoint.
+
+
+## 2026-10-06 — OVR-01 adversarial closure and internal A1
+
+- Documento 162 registrou primeira verificação metodológica adversarial = **REVISE**;
+- achados materiais: Search execution não sustentada, regra retrospectiva `minimum_bibliographic_sources=2` e drift da Question;
+- correções aplicadas sem inferir last-search date de Gao, sem CCA manual, sem nova meta-analysis e sem controles humanos fabricados;
+- OVR01-T15–T16 adicionados como guards de regressão;
+- Documento 163 registrou segunda passagem adversarial = **PASS**;
+- `database/f3-real-case-ovr01-assurance-a1.sql` criado;
+- `database/f3-real-case-ovr01-a1-tests.sql` criado;
+- assurance final = **A1 interno** por `ai_methodological_verification=passed`;
+- OVR01-A1-T01–T09 = PASS;
+- OVR01-RENDER-A1 = PASS;
+- publication blockers formais preservados;
+- owner approval, expert review e human verification continuam ausentes;
+- Documento 164 criado para encerramento controlado;
+- run final **37549135468** (#117) = success;
+- HEAD validado `ecc04933dd5ba116345dc4dcf8d352a646b6aed7`;
+- artifact **11452420926**;
+- digest `sha256:4dff568129b92a6a4565c33c015afbbe7bec2cc872333b4f99b2701b9c9151a6`;
+- OVR-01 = **DEVELOPMENTAL_A1_INTERNAL_VALIDATED / não publicável**;
+- próxima etapa: Especificação Científica e Funcional do Monitor de Evidências.
