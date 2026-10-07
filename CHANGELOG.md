@@ -2835,3 +2835,17 @@ Documentos:
 - perfis de risco e política temporal consolidados;
 - próximo passo: arquitetura transversal de SLA, sem durações universais antes do gate semântico.
 
+## 2026-10-07 — CP92
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP92.md`;
+- ponteiro de continuidade movido para CP92;
+- reconciliado o estado pós-CP91 em README/STATE/CHANGELOG;
+- confirmado diretamente que `investigation.method_decision` existe desde a migration 014;
+- preservada a distinção entre `investigation.method_decision` e `maintenance.update_decision`;
+- o PASS técnico da migration 027 permanece válido;
+- perfis de risco e política de cadence/thresholds temporais permanecem em **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- template canônico de continuidade atualizado para exigir pausa após cada checkpoint formal;
+- nenhuma migration 028 criada;
+- nenhum bloco de SLA iniciado;
+- próximo passo: arquitetura transversal de SLA, somente após instrução explícita do usuário.
+
