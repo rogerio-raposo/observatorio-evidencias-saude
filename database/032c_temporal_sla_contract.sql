@@ -124,6 +124,19 @@ DROP TRIGGER IF EXISTS tr_fixed_deadline_source ON maintenance.fixed_deadline_so
 CREATE TRIGGER tr_fixed_deadline_source BEFORE INSERT ON maintenance.fixed_deadline_source
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_fixed_deadline_source();
 
+CREATE OR REPLACE FUNCTION maintenance.guard_fixed_deadline_source_immutable()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+BEGIN
+  RAISE EXCEPTION 'FixedDeadlineSource is immutable; append a new calibrated source';
+END
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_fixed_deadline_source_immutable
+ ON maintenance.fixed_deadline_source;
+CREATE TRIGGER tr_fixed_deadline_source_immutable
+BEFORE UPDATE OR DELETE ON maintenance.fixed_deadline_source
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_fixed_deadline_source_immutable();
+
 ALTER TABLE maintenance.sla_calendar_version
  ADD COLUMN IF NOT EXISTS temporal_calibration_dossier_uuid uuid
  REFERENCES maintenance.temporal_calibration_dossier(temporal_calibration_dossier_uuid);
