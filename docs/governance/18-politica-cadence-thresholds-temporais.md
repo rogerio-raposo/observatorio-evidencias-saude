@@ -307,7 +307,8 @@ Uma policy com componente periódico deverá registrar, de forma machine-readabl
 
 - referência temporal;
 - frequência/intervalo;
-- timezone/calendário quando relevante;
+- timezone explícito para regras de calendário;
+- semântica de calendário quando relevante (elapsed interval × calendar rule);
 - regra para finais de semana/feriados se aplicável;
 - next_due_at ou regra determinística equivalente;
 - tolerance/grace;
@@ -446,6 +447,12 @@ Mudança de âncora:
 
 > exige nova UpdatePolicy por supersessão quando altera o regime operacional efetivo.
 
+Regra de calendário:
+
+- timestamps persistidos continuam em `timestamptz`;
+- regra do tipo “todo dia X às HH:MM” precisa declarar timezone da policy;
+- mudança de horário sazonal/calendário não pode ser resolvida por inferência silenciosa.
+
 ---
 
 # 13. Due, planned_at, grace e overdue
@@ -575,6 +582,13 @@ Não usar simples criação de registro vazio para fingir execução.
 Uma obrigação satisfeita tardiamente:
 
 > continua historicamente atrasada; não pode ser reclassificada retroativamente como on_schedule.
+
+Execução antecipada:
+
+- no Monitor atual, `started_at < planned_at` é inválido;
+- em futuros mecanismos não-Monitor, execução antes do scheduled instant não satisfaz automaticamente a próxima obrigação fixa;
+- fixed_anchor não é deslocado por execução antecipada;
+- eventual “early fulfillment” exige regra prospectiva explícita e não pode criar janela descoberta.
 
 # 17. Pausa operacional
 
@@ -753,6 +767,13 @@ Mudança de cadence:
 > exige nova UpdatePolicy por supersessão quando altera a regra operacional efetiva.
 
 Não editar policy ativa silenciosamente.
+
+Supersessão não apaga obrigações históricas:
+
+- atraso ocorrido sob policy anterior permanece auditável;
+- incidentes/escalonamentos permanecem vinculados à regra vigente no momento;
+- nova policy não pode “resetar” retroativamente um overdue;
+- outstanding obligation deve ser explicitamente resolvida, transferida ou encerrada por regra de transição futura.
 
 ---
 
@@ -973,6 +994,7 @@ Não usar completed_at da versão anterior como referência automática sem regr
 Podem ser calculadas futuramente:
 
 - scheduled/planned instant (`planned_at` quando MonitorCycle);
+- timezone/calendar basis da regra;
 - actual_started_at;
 - actual_completed_at;
 - lateness duration;
