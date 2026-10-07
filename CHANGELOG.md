@@ -3256,3 +3256,17 @@ Documentos:
 - próxima dívida da Fase 4 ainda não selecionada;
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
+
+
+## 2026-10-07 — Seleção do próximo bloco da Fase 4
+
+- criado Documento 38 — Seleção da Próxima Dívida da Fase 4;
+- selecionado **TEMPORAL_CALIBRATION** como próximo bloco;
+- bloco permanece **SELECTED_NOT_STARTED**;
+- cadence/thresholds normativos e durações SLA devem ser calibrados antes de scheduler/notifications/M3 readiness;
+- priority score/pesos não foram promovidos a dívida obrigatória: baseline qualitativo permanece deliberado;
+- nenhum número normativo foi definido;
+- scheduler/notifications não iniciados;
+- auto-escalation continua não autorizada;
+- M3 formal continua bloqueado;
+- recomendado modo alto antes de iniciar metodologia/calibração.
