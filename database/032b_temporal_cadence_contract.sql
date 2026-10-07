@@ -170,6 +170,7 @@ $q$;
 CREATE OR REPLACE FUNCTION maintenance.assert_cadence_contract_consistency()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
 DECLARE d maintenance.temporal_calibration_dossier%ROWTYPE; p maintenance.update_risk_profile%ROWTYPE;
+ target_status text; monitor_target_product uuid; monitor_target_inv uuid;
 BEGIN
   SELECT * INTO d FROM maintenance.temporal_calibration_dossier
    WHERE temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid;
@@ -182,6 +183,24 @@ BEGIN
   END IF;
   SELECT * INTO p FROM maintenance.update_risk_profile WHERE update_risk_profile_uuid=d.update_risk_profile_uuid;
   IF p.authority_status<>'authoritative' THEN RAISE EXCEPTION 'CadenceContract requires authoritative profile'; END IF;
+
+  SELECT version_status INTO target_status FROM core.entity_version
+   WHERE version_uuid=COALESCE(NEW.target_product_version_uuid,NEW.target_investigation_version_uuid);
+  IF target_status IS DISTINCT FROM 'current' THEN
+    RAISE EXCEPTION 'CadenceContract target must be current at activation';
+  END IF;
+
+  IF NEW.governing_monitor_product_version_uuid IS NOT NULL THEN
+    SELECT target_product_version_uuid,target_investigation_version_uuid
+      INTO monitor_target_product,monitor_target_inv
+    FROM maintenance.monitor_target
+    WHERE monitor_product_version_uuid=NEW.governing_monitor_product_version_uuid;
+    IF NOT FOUND
+       OR monitor_target_product IS DISTINCT FROM NEW.target_product_version_uuid
+       OR monitor_target_inv IS DISTINCT FROM NEW.target_investigation_version_uuid THEN
+      RAISE EXCEPTION 'CadenceContract governing Monitor must target the exact calibrated target';
+    END IF;
+  END IF;
   RETURN NEW;
 END
 $fn$;
@@ -234,6 +253,77 @@ FOR EACH ROW EXECUTE FUNCTION maintenance.guard_cadence_immutable();
 DROP TRIGGER IF EXISTS tr_cadence_observation_guard ON maintenance.cadence_observation;
 CREATE TRIGGER tr_cadence_observation_guard BEFORE UPDATE OR DELETE ON maintenance.cadence_observation
 FOR EACH ROW EXECUTE FUNCTION maintenance.guard_cadence_immutable();
+
+CREATE OR REPLACE FUNCTION maintenance.cadence_obligation_scope_is_valid(p uuid)
+RETURNS boolean LANGUAGE plpgsql STABLE AS $fn$
+DECLARE o maintenance.cadence_obligation%ROWTYPE; c maintenance.cadence_contract%ROWTYPE; st text;
+BEGIN
+  SELECT * INTO o FROM maintenance.cadence_obligation WHERE cadence_obligation_uuid=p;
+  IF NOT FOUND THEN RETURN false; END IF;
+  SELECT * INTO c FROM maintenance.cadence_contract WHERE cadence_contract_uuid=o.cadence_contract_uuid;
+
+  IF o.scope_type='policy_aggregate' THEN RETURN true; END IF;
+
+  IF o.scope_type='source_definition_artifact' THEN
+    SELECT status INTO st FROM artifact.artifact WHERE artifact_uuid=o.source_definition_artifact_uuid;
+    RETURN st='active';
+  END IF;
+
+  IF c.governing_monitor_product_version_uuid IS NULL THEN RETURN false; END IF;
+
+  IF o.scope_type='monitor_source_name' THEN
+    RETURN EXISTS(
+      SELECT 1 FROM maintenance.monitor_source_requirement r
+      WHERE r.monitor_product_version_uuid=c.governing_monitor_product_version_uuid
+        AND r.requirement_kind='source_name'
+        AND r.required_value=o.source_name
+    );
+  END IF;
+
+  IF o.scope_type='monitor_source_class' THEN
+    RETURN EXISTS(
+      SELECT 1 FROM maintenance.monitor_source_requirement r
+      WHERE r.monitor_product_version_uuid=c.governing_monitor_product_version_uuid
+        AND r.requirement_kind='source_class'
+        AND r.required_value=o.source_class
+    );
+  END IF;
+
+  RETURN false;
+END
+$fn$;
+
+CREATE OR REPLACE FUNCTION maintenance.assert_cadence_obligation_scope()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+BEGIN
+  IF NOT maintenance.cadence_obligation_scope_is_valid(NEW.cadence_obligation_uuid) THEN
+    -- NEW is not yet visible to the helper in BEFORE INSERT; validate directly for INSERT below.
+    IF NEW.scope_type='policy_aggregate' THEN RETURN NEW; END IF;
+    IF NEW.scope_type='source_definition_artifact' THEN
+      IF EXISTS(SELECT 1 FROM artifact.artifact a
+                WHERE a.artifact_uuid=NEW.source_definition_artifact_uuid AND a.status='active') THEN
+        RETURN NEW;
+      END IF;
+    ELSE
+      IF EXISTS(
+        SELECT 1 FROM maintenance.cadence_contract cc
+        JOIN maintenance.monitor_source_requirement r
+          ON r.monitor_product_version_uuid=cc.governing_monitor_product_version_uuid
+        WHERE cc.cadence_contract_uuid=NEW.cadence_contract_uuid
+          AND ((NEW.scope_type='monitor_source_name' AND r.requirement_kind='source_name' AND r.required_value=NEW.source_name)
+            OR (NEW.scope_type='monitor_source_class' AND r.requirement_kind='source_class' AND r.required_value=NEW.source_class))
+      ) THEN RETURN NEW; END IF;
+    END IF;
+    RAISE EXCEPTION 'CadenceObligation source scope is not declared by governing Monitor/artifact';
+  END IF;
+  RETURN NEW;
+END
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_cadence_obligation_scope ON maintenance.cadence_obligation;
+CREATE TRIGGER tr_cadence_obligation_scope
+BEFORE INSERT ON maintenance.cadence_obligation
+FOR EACH ROW EXECUTE FUNCTION maintenance.assert_cadence_obligation_scope();
 
 CREATE OR REPLACE FUNCTION maintenance.assert_cadence_observation()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
