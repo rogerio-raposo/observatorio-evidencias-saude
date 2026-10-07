@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **DRAFT_FOR_ADVERSARIAL_REVIEW**  
+**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW**  
 **Dependências:** Documentos 05–09, 16–24; migrations 021–028  
 **Objeto:** prioridade transversal, escalation e relação com risk profile, Alert, materiality, currentness, SLA, capacidade e dependências
 
@@ -161,7 +161,8 @@ Campos conceituais mínimos:
 - rationale;
 - assessed_by;
 - actor_type;
-- verification/authority status;
+- verification_status;
+- authority_status = proposal | authoritative;
 - supersedes PriorityAssessment opcional.
 
 Este documento:
@@ -272,7 +273,7 @@ Domínio conceitual:
 - `standard`;
 - `expedited`;
 - `urgent`;
-- `immediate_governance`.
+- `immediate`.
 
 Essas classes são:
 
@@ -283,7 +284,7 @@ Não significam:
 - standard = X dias;
 - expedited = Y dias;
 - urgent = Z horas;
-- immediate_governance = publicação/suspensão automática.
+- immediate = publicação/suspensão automática.
 
 Durações futuras dependerão de SLA Rule.
 
@@ -338,13 +339,15 @@ Pode decorrer de:
 
 Não muda currentness automaticamente.
 
-### 9.4 immediate_governance
+### 9.4 immediate
 
 Classe excepcional.
 
 Indica:
 
-> **necessidade de encaminhamento humano/governamental imediato para controle do uso, segurança, integridade ou decisão de suspensão.**
+> **necessidade de resposta imediata ao caso.**
+
+A classe não identifica, por si só, a rota de governança. Quando houver obrigação de governança, isso será representado separadamente por escalation reason/route.
 
 Exemplos conceituais:
 
@@ -376,7 +379,7 @@ Verificar:
 - `suspend_current_use`;
 - external regulatory constraint;
 - autoridade externa/fixed deadline;
-- target invalidation/supersession relevante.
+- external legal/normative constraint que afete a resposta.
 
 ### Passo 2 — scientific/decision need
 
@@ -468,7 +471,7 @@ UpdateDecision:
 
 impõe:
 
-- `immediate_governance`;
+- floor `immediate`;
 - rota de current-use/safety governance obrigatória.
 
 A decisão ainda não executa retirada/publicação automaticamente.
@@ -481,7 +484,9 @@ Com A1 high:
 
 Sem A1 high:
 
-- pelo menos `expedited`, salvo rationale explícita excepcional.
+- é strong modifier;
+- não cria floor universal isoladamente;
+- response class depende do restante do contexto.
 
 ### 11.5 potentially_material
 
@@ -495,11 +500,16 @@ Target ProductVersion em:
 
 > `update_recommended`
 
-deve receber, no mínimo, consideração `expedited`.
+é strong modifier de prioridade, mas não cria floor universal isoladamente.
 
-Se A1 high ou ameaça safety/integrity:
+Se combinado com:
 
-- pode exigir `urgent`.
+- A1 high;
+- ameaça safety/integrity;
+- external deadline;
+- materialidade qualificada relevante;
+
+pode sustentar `expedited` ou `urgent`, conforme rationale.
 
 ### 11.7 outdated
 
@@ -562,7 +572,7 @@ Não existe equivalência automática:
 
 ```text
 Alert urgent != transversal urgent
-Alert critical != immediate_governance
+Alert critical != transversal immediate
 ```
 
 Entretanto:
@@ -598,7 +608,9 @@ PriorityAssessment:
 
 - pode usar o outcome;
 - não pode alterá-lo;
-- não pode “compensar” outcome científico com capacidade.
+- não pode “compensar” outcome científico com capacidade;
+- para `authority_status='authoritative'`, um outcome científico usado como floor/strong modifier deve estar `human_verified` ou `human_consensus` quando a regra depender de qualificação científica;
+- assessment AI-only pode sustentar `proposal`, não floor científico autoritativo.
 
 ---
 
@@ -714,7 +726,7 @@ B4 very_high:
 
 ### 18.2 Efeito correto
 
-Capacidade insuficiente diante de caso `urgent` ou `immediate_governance` deve produzir:
+Capacidade insuficiente diante de caso `urgent` ou `immediate` deve produzir:
 
 - capacity escalation;
 - resource/governance issue;
@@ -745,7 +757,7 @@ Um caso pode ser:
 - urgent sem escalation adicional, se rota já estiver adequadamente qualificada;
 - expedited + escalation de capacidade;
 - standard + governance escalation por conflito institucional;
-- immediate_governance por safety/integrity.
+- immediate + escalation de safety/current-use quando a condição correspondente existir.
 
 Logo:
 
@@ -924,7 +936,21 @@ Exemplos:
 
 ## 25. Autoridade
 
-### 25.1 AI/system
+### 25.1 Status de autoridade
+
+Toda PriorityAssessment futura deverá declarar:
+
+- `proposal`;
+- `authoritative`.
+
+Regras:
+
+- proposal pode ser produzido por AI/system ou humano;
+- authoritative exige ator humano compatível com o fundamento da prioridade;
+- authoritative downgrade de `urgent`/`immediate` exige rationale e autoridade compatível com o fundamento dominante;
+- owner/governance não substitui qualificação científica quando esta for requerida.
+
+### 25.2 AI/system
 
 Pode:
 
@@ -946,7 +972,7 @@ Não pode, na baseline v0.1:
 - publicar;
 - promover M3.
 
-### 25.2 Human reviewer/expert
+### 25.3 Human reviewer/expert
 
 Pode qualificar:
 
@@ -957,7 +983,7 @@ Pode qualificar:
 
 Dentro de sua competência.
 
-### 25.3 Owner/governance
+### 25.4 Owner/governance
 
 Pode decidir:
 
@@ -992,6 +1018,12 @@ Mas:
 
 > activation autoritativa automática exigirá contrato próprio, regra explícita, testes e governança.
 
+Na baseline:
+
+- `candidate` pode ser gerado automaticamente;
+- `active` exige autoridade humana compatível;
+- issue mecânico não equivale a escalation ativa.
+
 Migration 029 não é autorizada por este documento.
 
 ---
@@ -1021,7 +1053,7 @@ Não é justificativa suficiente:
 Todo downgrade de:
 
 - urgent;
-- immediate_governance;
+- immediate;
 
 deve exigir rationale explícita e autoridade compatível.
 
@@ -1289,9 +1321,11 @@ Múltiplos signals podem estar ativos para o mesmo target.
 A arquitetura deve permitir:
 
 - prioridade por signal/case;
-- identificação da maior necessidade de resposta na fila;
+- identificação derivada da maior necessidade de resposta na fila;
 - agrupamento operacional sem fundir causalidade;
 - uma escalation cobrir múltiplos casos somente com linkage explícito.
+
+Não persistir, por default, uma prioridade agregada única que substitua as PriorityAssessments causais. Qualquer agregação futura deverá manter linkage explícito para todos os casos componentes.
 
 Não deduplicar apenas porque target é o mesmo.
 
@@ -1389,13 +1423,14 @@ Mas:
 
 ### Caso G — confirmed material change + systemic dependencies
 
-- priority pelo menos expedited;
+- confirmed material change isolado é strong modifier, não floor universal;
 - se A1 high, urgent;
-- dependency coordination escalation obrigatória.
+- systemic reach eleva coordination pressure;
+- dependency coordination escalation assessment obrigatória.
 
 ### Caso H — suspend_current_use
 
-- immediate_governance;
+- immediate;
 - current-use governance route obrigatória;
 - não publica/arquiva automaticamente.
 
@@ -1497,7 +1532,7 @@ Decisão preliminar:
 
 O bloco poderá ser considerado pronto para desenho físico quando a revisão adversarial confirmar:
 
-1. classes não colidem com Alert;
+1. classes não colidem com Alert e `immediate` não embute rota de governança;
 2. floors não transformam prioridade em materiality;
 3. currentness continua read-only para prioridade;
 4. breach não cria circularidade SLA;
@@ -1514,4 +1549,26 @@ O bloco poderá ser considerado pronto para desenho físico quando a revisão ad
 
 ## 49. Próximo passo
 
-> **Executar revisão adversarial da arquitetura transversal de prioridade e escalation antes de qualquer contrato físico adicional.**
+> **Reexecutar o gate do Documento 26 sobre esta versão revisada; somente após PASS definir readiness para desenho físico integrado.**
+
+
+---
+
+## 50. Correções decorrentes do Documento 26
+
+A revisão adversarial inicial identificou e corrigiu:
+
+1. `immediate_governance` → `immediate`, separando priority de escalation;
+2. `material_change_confirmed` isolado deixou de ser floor universal;
+3. `update_recommended` isolado deixou de ser floor universal;
+4. PriorityAssessment passou a distinguir `proposal | authoritative`;
+5. materiality AI-only não pode sustentar floor científico autoritativo;
+6. target supersession/invalidation saiu de dominance gate e permanece lifecycle/reassessment;
+7. queue aggregation passou a ser explicitamente derivada e causalmente ligada;
+8. escalation `candidate` pode ser automática, mas `active` exige autoridade humana na baseline.
+
+Estado após correção:
+
+> **READY_FOR_ADVERSARIAL_RECHECK**
+
+> **MIGRATION_029 = NOT_AUTHORIZED**
