@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **DATA_CONTRACT_CANDIDATE — requer gate físico adversarial**  
+**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW — pronto para recheck do Documento 28**  
 **Dependências:** Documentos 05–09, 16–26; migrations 006, 010, 014–015, 021–028  
 **Migration:** **não autorizada neste documento**
 
@@ -207,9 +207,16 @@ Após triage autoritativa:
 - SLA-1 pode ser satisfied;
 - SLA-2 torna-se not_applicable/cancelled conforme rule.
 
-A persistência futura deve impedir:
+A consistência física deverá ser **transacional**, por uma das duas formas:
 
-> authoritative invalid_signal + UpdateSignal ainda active indefinidamente.
+- constraint trigger `DEFERRABLE INITIALLY DEFERRED`; ou
+- função transacional autoritativa que insira a triage e invalide o signal de forma atômica.
+
+Além disso, `update_triage_issues()` deverá detectar:
+
+> authoritative invalid_signal + UpdateSignal ainda active
+
+sem depender apenas do caminho feliz de escrita.
 
 ### duplicate_or_already_covered
 
@@ -356,9 +363,17 @@ Campos mínimos:
 - `basis_effect`;
 - `basis_value`;
 - `source_type`;
-- locators opcionais;
+- locators estruturados opcionais;
+- `snapshot_payload` JSONB opcional;
 - `rationale`;
 - `sequence_no`.
+
+Regra de locator:
+
+- `source_type='snapshot'` → nenhum FK locator; `snapshot_payload` obrigatório;
+- source estruturado → exatamente um locator coerente com `source_type`;
+- source_type/locator mismatch é erro;
+- UUID genérico sem FK não é permitido.
 
 Domínio `basis_effect`:
 
@@ -434,7 +449,6 @@ Campos mínimos:
 - `update_signal_uuid` FK;
 - `priority_assessment_uuid` opcional;
 - `status`;
-- `authority_status`;
 - `opened_at`;
 - `activated_at`;
 - `acknowledged_at`;
@@ -458,6 +472,20 @@ Domínio `status`:
 - `acknowledged`;
 - `resolved`;
 - `cancelled_invalidated`.
+
+Transições permitidas:
+
+- candidate → active | cancelled_invalidated;
+- active → acknowledged | resolved | cancelled_invalidated;
+- acknowledged → resolved | cancelled_invalidated.
+
+Transições de retorno são proibidas.
+
+A autoridade é inferida pelo ato de activation:
+
+- candidate pode ser system/AI/humano;
+- active/acknowledged/resolved exigem `activated_by`, `activation_actor_type`, `activated_at`;
+- baseline: activation_actor_type humano.
 
 ---
 
@@ -591,6 +619,26 @@ Campos mínimos:
 
 O calendário deve ser versionado.
 
+Shape lógico fechado:
+
+### weekly_schedule_payload
+
+- chaves weekday 1–7;
+- cada dia contém lista ordenada de intervalos `HH:MM-HH:MM`;
+- intervalos não podem se sobrepor;
+- timezone vem de `timezone_name`.
+
+### exception_dates_payload
+
+Cada entrada contém:
+
+- `date`;
+- `mode = closed | custom`;
+- custom intervals quando mode=custom;
+- rationale opcional.
+
+Migration futura deverá incluir validators para ambos os payloads.
+
 Não alterar calendário histórico usado por SLA Instance.
 
 ---
@@ -604,6 +652,7 @@ Campos mínimos:
 - `sla_rule_uuid` PK;
 - `update_policy_uuid` FK;
 - `clock_code`;
+- `selection_precedence` integer > 0;
 - `response_class_filter` opcional;
 - `signal_class_filter` opcional;
 - `trigger_class_filter` opcional;
@@ -649,12 +698,49 @@ Domínio `endpoint_type`:
 - `workflow_started`;
 - `scientific_completed`;
 - `review_disposition`;
-- `publication`;
-- `not_applicable`.
+- `publication`.
+
+Matriz obrigatória:
+
+- SLA1 → triage;
+- SLA2 → materiality;
+- SLA3 → update_decision;
+- SLA4 → workflow_started;
+- SLA5 → scientific_completed;
+- SLA6 → review_disposition | publication.
+
+`not_applicable` pertence à SLA Instance, não à SLA Rule.
 
 ---
 
-## 20. SLA Rule — números não definidos
+## 20. SLA Rule — determinismo temporal
+
+Matriz:
+
+### elapsed_time
+
+- `target_duration` obrigatório e > 0;
+- calendar NULL;
+- fixed deadline payload vazio/NULL.
+
+### business_calendar
+
+- `target_duration` obrigatório e > 0;
+- `sla_calendar_version_uuid` obrigatório;
+- fixed deadline payload vazio/NULL.
+
+### fixed_deadline
+
+- `target_duration` NULL;
+- `fixed_deadline_rule_payload` obrigatório e determinístico;
+- non-pausable por default;
+- calendar somente quando a regra normativa explicitamente exigir calendar-aware transformation.
+
+Rule operacional ativa sem representação temporal determinística é proibida.
+
+---
+
+## 20.1 SLA Rule — números não definidos
 
 O contrato define **capacidade de representação**, não valores default.
 
@@ -670,25 +756,23 @@ Logo, até posterior policy calibration:
 
 ---
 
-## 21. SLA Rule — selector ambiguity
+## 21. SLA Rule — seleção determinística
 
 Duas rules ativas para a mesma UpdatePolicy/clock podem possuir filtros diferentes.
 
-O contrato deverá proibir:
+Regra v0.1:
 
-> ambiguidade não resolvida de rule selection.
+> `selection_precedence` menor é avaliada primeiro; a primeira rule cujos filtros fechados casam vence.
 
-Opções físicas futuras:
+Constraints:
 
-- precedência explícita;
-- specificity rank não numérico?; ou
-- exclusividade por combinação fechada de selectors.
+- `selection_precedence > 0`;
+- UNIQUE ativo em `update_policy_uuid + clock_code + selection_precedence`;
+- filters devem ser explícitos/fechados;
+- fallback, quando necessário, deve ser uma rule explícita;
+- não existe score científico de specificity.
 
-Baseline preferida:
-
-> não introduzir score de specificity.
-
-O gate físico deverá decidir o mecanismo determinístico.
+`selection_precedence` é ordem operacional de resolução, não prioridade científica.
 
 ---
 
@@ -716,18 +800,27 @@ Campos mínimos:
 - `pre_policy_age` interval opcional;
 - `start_at`;
 - `nominal_due_at`;
-- `effective_due_at`;
 - `end_at` opcional;
-- `wall_elapsed_seconds` derivável/não persistir como autoridade;
-- `accountable_elapsed_seconds` derivável/não persistir como autoridade;
 - `execution_status`;
-- `compliance_status`;
 - `first_breached_at` opcional;
 - `satisfied_at` opcional;
 - `termination_reason` opcional;
 - `created_at`;
 - `record_status`;
-- `supersedes_sla_instance_uuid` apenas para rebase explícito.
+- `supersedes_sla_instance_uuid` apenas para rebase explícito;
+- `rebase_reason` opcional;
+- `rebased_by` opcional;
+- `rebase_actor_type` opcional;
+- `rebased_at` opcional.
+
+Não persistir como fonte autoritativa:
+
+- effective_due_at;
+- wall_elapsed;
+- accountable_elapsed;
+- current compliance status.
+
+Expor por helpers/views determinísticos.
 
 Domínio `execution_status`:
 
@@ -739,7 +832,7 @@ Domínio `execution_status`:
 - terminated_by_authority;
 - not_applicable.
 
-Domínio `compliance_status`:
+Compliance atual deverá ser derivada por helper, com domínio:
 
 - not_started;
 - within_target;
@@ -747,6 +840,31 @@ Domínio `compliance_status`:
 - breached_open;
 - breached_then_satisfied;
 - not_applicable.
+
+Fatos persistidos que não podem ser perdidos:
+
+- `first_breached_at`;
+- `satisfied_at`;
+- termination.
+
+Se uma futura implementação optar por cachear compliance, deverá registrar `evaluated_at` e detectar staleness; o cache nunca será a fonte de verdade.
+
+---
+
+## 22.1 SLA Instance — cardinalidade da obrigação
+
+- SLA1–SLA3: no máximo uma instância vigente por UpdateSignal + clock;
+- SLA4–SLA6: no máximo uma instância vigente por WorkflowRound + clock.
+
+Para SLA4, o WorkflowRound `planned` deve existir antes/ao nascimento da instância.
+
+Rebase:
+
+- supersede a instância anterior;
+- preserva obligation identity;
+- exige rebase_reason + rebased_by + rebased_at;
+- não apaga first breach histórico;
+- não muda target/round causal.
 
 ---
 
@@ -866,12 +984,19 @@ Não criar breach retroativo.
 
 ## 27. SLA Instance — breach
 
-Ao primeiro breach:
+`maintenance.sla_effective_due_at(instance_uuid)` deverá derivar o due efetivo a partir de:
+
+- nominal_due_at;
+- calendar snapshot/version;
+- pauses válidas.
+
+Ao primeiro breach materializado:
 
 - fixar `first_breached_at`;
-- compliance = breached_open;
 - abrir issue;
 - criar escalation candidate apenas se rule exigir.
+
+Current compliance é derivada a partir dos fatos.
 
 Conclusão tardia:
 
@@ -898,10 +1023,19 @@ Campos:
 - `authorized_at`;
 - `started_at`;
 - `ended_at` opcional;
+- `closed_by` opcional;
+- `closed_at` opcional;
 - `recorded_at`;
 - `external_event_payload` opcional;
 - `record_status`;
 - `supersedes_sla_pause_uuid` opcional.
+
+Lifecycle limitado:
+
+- open → closed;
+- `ended_at/closed_by/closed_at` podem ser preenchidos uma única vez;
+- demais campos materiais permanecem imutáveis;
+- correção semântica = supersede + append.
 
 Regras:
 
@@ -934,6 +1068,7 @@ Campos mínimos:
 - `round_type`;
 - `round_no`;
 - `parent_workflow_round_uuid` opcional;
+- `opened_by_workflow_milestone_uuid` opcional;
 - `target_product_version_uuid` ou `target_investigation_version_uuid`;
 - `result_product_version_uuid` opcional;
 - `result_investigation_version_uuid` opcional;
@@ -971,11 +1106,12 @@ Regras:
 
 1. exatamente um target original;
 2. result version é opcional enquanto trabalho está em curso;
-3. result version, quando existir, deve ser versão científica apropriada;
-4. result não é criado pelo round automaticamente;
-5. review_revision deve apontar para parent round;
-6. novo revise round não sobrescreve round anterior;
-7. uma UpdateDecision pode abrir mais de um round apenas quando tipos/razões forem distintos e explicitamente justificados.
+3. no máximo um result primário entre ProductVersion/InvestigationVersion;
+4. result version, quando existir, deve ser versão científica apropriada;
+5. result não é criado pelo round automaticamente;
+6. review_revision deve apontar para parent round e `opened_by_workflow_milestone_uuid` do review disposition que gerou retrabalho;
+7. novo revise round não sobrescreve round anterior;
+8. uma UpdateDecision pode abrir mais de um round apenas quando tipos/razões forem distintos e explicitamente justificados.
 
 ---
 
@@ -990,7 +1126,10 @@ Campos mínimos:
 - `workflow_milestone_uuid` PK;
 - `workflow_round_uuid` FK;
 - `milestone_type`;
-- `occurred_at`;
+- `adapter_type`;
+- `time_precision = timestamp | date`;
+- `occurred_at` opcional;
+- `occurred_date` opcional;
 - `qualified_at` opcional;
 - `recorded_at`;
 - `authority_status`;
@@ -1016,6 +1155,24 @@ Domínio `milestone_type`:
 - `publication`;
 - `workflow_terminated`.
 
+Domínio `adapter_type`:
+
+- `native_event`;
+- `product_review`;
+- `assurance_record`;
+- `method_decision`;
+- `product_version`;
+- `investigation_version`;
+- `artifact`.
+
+Regras:
+
+- structured adapter → exatamente um locator correspondente;
+- native_event → nenhum locator estruturado obrigatório, salvo result/reference específico;
+- source/locator mismatch é erro;
+- time_precision=timestamp → occurred_at obrigatório e occurred_date NULL;
+- time_precision=date → occurred_date obrigatório e occurred_at NULL.
+
 ---
 
 ## 32. Milestone — fonte de verdade
@@ -1031,9 +1188,20 @@ Não inferir de:
 - draft AI;
 - scheduler.
 
+Authority baseline:
+
+- authoritative native event exige human_reviewer/human_expert;
+- owner pode registrar mobilização operacional, mas não substituir confirmação humana de início científico;
+- system/AI pode proposal ou adaptar fonte estruturada qualificante; não inventa start.
+
 ### scientific_workflow_completed
 
 É declaração de que conteúdo científico está pronto para review/governance.
+
+Authority baseline:
+
+- authoritative native event exige human_reviewer ou human_expert;
+- AI/system pode proposal, não conclusão científica autoritativa.
 
 Não significa:
 
@@ -1047,26 +1215,53 @@ Quando resultar versão concreta:
 
 ### review_disposition
 
-Quando existir objeto canônico:
+Adapter matrix v0.1:
 
-- `product.review_record`;
-- `product.assurance_record`;
-- `investigation.method_decision`;
+- `product_review` → `product.review_record`;
+- `assurance_record` → `product.assurance_record`;
+- `method_decision` → `investigation.method_decision`, somente para workflow metodológico;
+- adapter especializado futuro somente após gate próprio.
 
-o milestone deve atuar como **adapter** e possuir locator correspondente.
+O milestone deve herdar/validar a autoridade e disposition do objeto fonte.
 
 Não duplicar decisão narrativa divergente em `adapter_payload`.
 
 ### publication
 
-Para ProductVersion:
+Adapter:
 
-- deve apontar para ProductVersion publicada;
-- `occurred_at` deve corresponder à semântica de publication_date/issued_at aplicável.
+- `adapter_type='product_version'`;
+- ProductVersion deve estar efetivamente publicada segundo seu contrato especializado;
+- quando existir função `*_is_publishable()`, ela deve ser verdadeira no evento de publicação.
+
+Precisão temporal:
+
+- se houver timestamp editorial auditável, usar `time_precision='timestamp'`;
+- se a fonte canônica tiver apenas `publication_date date`, usar `time_precision='date'`;
+- não fabricar hora;
+- uma SLA Rule que exija granularidade menor que a precisão do endpoint não é aplicável sem fonte temporal mais precisa.
 
 Para objeto sem publicação formal:
 
 > não inventar publication milestone; usar review_disposition/not_applicable.
+
+---
+
+## 32.1 Adapter matrix por família de endpoint
+
+Os produtos atuais não possuem uma única cadeia de review.
+
+Baseline:
+
+- Evidence Sheet pode usar `product.review_record`;
+- Evidence Response/Scan podem usar ReviewRecord e AssuranceRecord conforme gate especializado;
+- Rapid Evidence Synthesis, Evidence Review, Evidence Map e Overview dependem fortemente de AssuranceRecord/controles especializados;
+- MethodDecision é endpoint apenas de workflow metodológico, não publicação científica;
+- publicação sempre permanece subordinada ao gate especializado do product_type.
+
+Logo:
+
+> `workflow_milestone` normaliza o evento, mas nunca substitui o objeto/gate especializado quando este existir.
 
 ---
 
@@ -1125,6 +1320,10 @@ Permitida apenas de forma temporalmente dirigida:
 2. SLA breach posterior pode ser basis de nova PriorityAssessment;
 3. nova PriorityAssessment não altera silenciosamente a instância já iniciada.
 
+Guard físico futuro:
+
+> `triggering_sla_instance_uuid` deve apontar para instância criada/iniciada antes do `assessed_at` da nova PriorityAssessment.
+
 Logo:
 
 > FKs podem formar grafo técnico opcional, mas o lifecycle causal não pode formar loop retroativo.
@@ -1138,7 +1337,11 @@ Logo:
 3. nova PriorityAssessment pode registrar esse fato;
 4. a prioridade anterior permanece histórica.
 
-Não atualizar PriorityAssessment antiga in place.
+Guards:
+
+- escalation_case não pode apontar para PriorityAssessment que, por sua vez, use aquele mesmo escalation_case como basis no mesmo snapshot;
+- nova PriorityAssessment pode referenciar escalation previamente criada/ativada;
+- não atualizar PriorityAssessment antiga in place.
 
 ---
 
@@ -1207,6 +1410,28 @@ exceto transições lifecycle estritamente definidas em objetos que são, por na
 
 ---
 
+## 40.1 Risk-profile snapshot bridge
+
+Enquanto UpdateRiskProfile não possuir tabela física, `risk_profile_snapshot` deve declarar:
+
+- `schema_version`;
+- `assessed_at`;
+- A1 criticality;
+- A2 evidence_volatility;
+- A3 conclusion_sensitivity;
+- A4 safety_integrity;
+- A5 dependency_reach;
+- B1 source_observability;
+- B2 detection_latency;
+- B3 surveillance_load;
+- B4 incorporation_cost;
+- B5 sustainable_capacity;
+- rationale/reference.
+
+Migration futura deverá possuir validator do snapshot.
+
+---
+
 ## 41. Objetos stateful
 
 ### escalation_case
@@ -1229,9 +1454,13 @@ Pode avançar status sem alterar target/decision/result history.
 
 ### sla_instance
 
-execution/compliance podem evoluir de forma monotônica.
+`execution_status` pode evoluir por transições controladas.
 
-Não permitir:
+Compliance atual é derivada.
+
+Persistir `first_breached_at` como fato histórico imutável quando materializado.
+
+Não permitir que qualquer cache/projection converta:
 
 - breached_open → within_target;
 - breached_then_satisfied → satisfied_on_time.
@@ -1491,3 +1720,39 @@ O contrato físico deve definir uma matriz de adapters por product_type/round_ty
 Somente após esse gate:
 
 > decidir se migration 029 pode ser autorizada ou se o contrato requer revisão adicional.
+
+
+---
+
+## 58. Correções decorrentes do Documento 28
+
+Foram incorporadas ao contrato:
+
+1. consistência transacional deferred/helper para invalid triage;
+2. PriorityBasis source_type + locator XOR + snapshot;
+3. remoção de authority_status redundante de escalation_case;
+4. transições fechadas de escalation;
+5. selection_precedence determinística de SLA Rule;
+6. matriz clock → endpoint;
+7. matriz time_basis;
+8. schema fechado de calendar payload;
+9. effective due derivado por helper;
+10. elapsed/compliance atuais derivados;
+11. unicidade das SLA obligations;
+12. metadata obrigatória de rebase;
+13. WorkflowRound planned como âncora de SLA-4;
+14. revision round ligado ao milestone que o abriu;
+15. milestone adapter_type + locator XOR;
+16. authority baseline dos milestones;
+17. precisão temporal timestamp/date;
+18. adapter matrix por família de endpoint;
+19. pause open→closed com mutabilidade limitada;
+20. first breach como fato persistido;
+21. risk-profile snapshot versionado/validável;
+22. guards temporais contra ciclos retroativos.
+
+Estado:
+
+> **READY_FOR_DOCUMENT_28_RECHECK**
+
+> **MIGRATION_029 = NOT_AUTHORIZED_UNTIL_RECHECK**
