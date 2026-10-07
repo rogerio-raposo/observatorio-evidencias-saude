@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP110 — 2026-10-07**
+**CP111 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP110.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP111.md`
 
 Checkpoint anterior:
 
-`CP109`
+`CP110`
 
 Status:
 
@@ -215,3 +215,5 @@ em **Modo Continuidade**.
 - **CP109 — 2026-10-07:** primeiro Evidence Readiness Assessment real executado no N1-01/cadence; resultado INSUFFICIENT_EVIDENCE; Calibration Dossier e valores normativos permanecem não autorizados.
 
 - **CP110 — 2026-10-07:** reconcilia a caracterização do N2 no Documento 48, preserva o resultado do primeiro readiness N1-01 e seleciona N2/dCBT-I A2/published como segundo Evidence Readiness Assessment real; execução ainda pendente.
+
+- **CP111 — 2026-10-07:** consolida o segundo Evidence Readiness Assessment real no N2/dCBT-I, confirma `INSUFFICIENT_EVIDENCE`, identifica blockers temporais recorrentes em N1/N2 e retoma na decisão entre plano transversal reutilizável e plano target-specific de aquisição temporal não normativa.
