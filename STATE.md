@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP97 — 2026-10-07**.
+- checkpoint vigente: **CP98 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1702,4 +1702,23 @@ Decisões:
 
 Próximo passo:
 > **implementar migration 030 + F4-RP-T01–T87 + validação canônica completa.**
+
+### CP98 — contrato físico do UpdateRiskProfile
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP98.md`;
+- ponteiro movido para CP98;
+- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `READY_FOR_MIGRATION_030`;
+- migration 030 autorizada apenas como `UPDATE_RISK_PROFILE_NORMALIZATION_ONLY`;
+- migration 030 ainda não implementada;
+- F4-RP-T01–T87 definido como plano mínimo futuro;
+- snapshots históricos permanecem grandfathered, sem backfill fabricado;
+- novos PriorityAssessment após migration 030 deverão usar profile físico + serializer canônico;
+- risk score/numeric cadence/numeric SLA continuam não definidos;
+- auto policy change não autorizado;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua run **37580906483** (#150), through migration 029;
+- próximo passo: implementar migration 030 + testes + validação canônica;
+- modo médio seguro para implementação mecânica; nova decisão arquitetural exige parada e modo alto;
+- pausa obrigatória após checkpoint permanece vigente.
 
