@@ -3335,3 +3335,18 @@ Documentos:
 - scheduler/notifications/auto-escalation continuam não autorizados;
 - M3 continua bloqueado;
 - próximo passo: implementar migration 032 + fixtures/testes e validar tecnicamente.
+
+## 2026-10-07 — CP105
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP105.md`;
+- ponteiro de continuidade movido para CP105;
+- contrato físico de calibração temporal = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- migration 032 autorizada somente em escopo estrito de infraestrutura;
+- plano mínimo aprovado = **F4-TCAL-PH-T01–T230**;
+- nenhum valor normativo real autorizado;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 continua bloqueado;
+- próximo passo: implementar migration 032 + fixtures/testes e validar tecnicamente;
+- modo médio suficiente para implementação mecânica;
+- Fase 5 não iniciada;
+- pausa obrigatória preservada.
