@@ -241,7 +241,7 @@ A run **37576345925** (#143) falhou por erro de desenho do teste P62 e **não** 
 
 **M3 formal continua bloqueado** por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
 
-Nenhuma nova migration funcional para prioridade/SLA está autorizada neste momento. A migration 028 já existente é apenas o hardening corretivo acima.
+A migration 029 está autorizada **somente** no escopo estrito de infraestrutura operacional definido pelos Documentos 27–28 e ainda não foi implementada. A migration 028 permanece exclusivamente como hardening corretivo.
 
 Arquitetura de prioridade/escalation consolidada:
 
