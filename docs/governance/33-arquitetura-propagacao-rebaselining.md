@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_ADVERSARIAL_GATE — NOT_AUTHORIZED_FOR_MIGRATION**  
+**Status:** **REVISED_AFTER_ADVERSARIAL — READY_FOR_DOCUMENT_34_RECHECK — NOT_AUTHORIZED_FOR_MIGRATION**  
 **Dependências:** Documentos 05–09, 16–32; docs/architecture/28–29; migrations 004, 021–030  
 **Objeto:** propagação controlada de impacto, re-baselining de targets versionados, rebinding de Monitor e preservação histórica das obrigações operacionais
 
@@ -286,6 +286,7 @@ Disposições conceituais mínimas:
 
 - no_action_supported;
 - reassessment_required;
+- maintenance_policy_required;
 - open_update_signal;
 - method_review_required;
 - new_version_workflow_required;
@@ -833,7 +834,7 @@ Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar especificação
 
 ## 38. Estado
 
-> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = CANDIDATE_FOR_ADVERSARIAL_GATE**
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = REVISED_READY_FOR_RECHECK**
 
 > **PROPAGATION_AUTO_WRITE = NOT_AUTHORIZED**
 
@@ -847,4 +848,355 @@ Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar especificação
 
 ## 39. Próximo passo exato
 
-> **Executar revisão adversarial específica da arquitetura de propagation/re-baselining antes de qualquer contrato físico ou migration.**
+> **Executar o recheck adversarial do Documento 34 sobre as correções incorporadas abaixo, antes de qualquer contrato físico ou migration.**
+
+
+---
+
+## 40. Hardening incorporado após a primeira passagem do Documento 34
+
+Esta seção integra as correções obrigatórias AR-F4-PR01–PR20.
+
+Em caso de leitura ambígua de seções anteriores, as regras abaixo são a interpretação normativa desta versão revisada.
+
+### 40.1 Maintainable target × intermediate dependency object
+
+PropagationCandidate continua genérico sobre `core.entity_version.version_uuid`, mas dois grupos são distintos:
+
+**maintainable target**
+
+- ProductVersion elegível a UpdatePolicy;
+- InvestigationVersion elegível a UpdatePolicy;
+- possui ou pode vir a possuir política de manutenção própria.
+
+**intermediate dependency object**
+
+- Report;
+- Result;
+- Synthesis;
+- Certainty;
+- ou outro objeto versionado sem UpdatePolicy própria.
+
+`open_update_signal` somente é permitido para maintainable target com UpdatePolicy ativa.
+
+InvestigationVersion `evidence_monitoring` não é target elegível a UpdatePolicy e, portanto, não recebe UpdateSignal próprio por esta rota.
+
+Objeto intermediário usa rota de domínio:
+
+- `method_review_required`;
+- `new_version_workflow_required`;
+- `dependency_correction_required`;
+- `governance_review_required`;
+- ou continuation of propagation downstream.
+
+### 40.2 Maintainable target sem policy
+
+Quando o target é mantível, mas não há UpdatePolicy ativa:
+
+> `disposition = maintenance_policy_required`.
+
+Isso:
+
+- não cria policy automaticamente;
+- não cria UpdateSignal;
+- abre necessidade de decisão de governança.
+
+Somente após a policy aplicável estar ativa poderá ser criado novo UpdateSignal.
+
+### 40.3 Adapter propagation → UpdateSignal
+
+O contrato físico vigente não possui `source_type='propagation_candidate'`.
+
+Além disso, `source_type='entity_version'` não é suficiente para todos os casos, porque uma origem invalidada/archived pode ser precisamente o evento que disparou propagation.
+
+Logo, futuro contrato físico deverá criar linkage estruturado entre o novo UpdateSignal e a avaliação/candidate de propagation, sem falsificar um source existente.
+
+O signal downstream deverá preservar a causalidade real por signal_type vigente quando possível, por exemplo:
+
+- correction;
+- retraction;
+- expression_of_concern;
+- methodology_change;
+- regulatory_change.
+
+Não criar signal_type genérico `propagation` que apague a causa.
+
+### 40.4 Cardinalidade de candidate e paths
+
+Baseline:
+
+> uma linha conceitual de PropagationCandidate por `(propagation_assessment_uuid, impacted_version_uuid)`.
+
+Um candidate pode possuir 1:N dependency-path snapshots.
+
+Cada path precisa congelar:
+
+- path sequence de version_uuid;
+- dependency_type por aresta;
+- depth;
+- snapshot timestamp/basis.
+
+Múltiplos paths não criam candidates duplicados.
+
+Múltiplos origin events permanecem avaliações distintas, mesmo quando alcançam o mesmo impacted_version.
+
+### 40.5 Cycle/depth guard
+
+Traversal deve ser cycle-safe:
+
+- não revisitar version_uuid já existente no mesmo path;
+- aplicar limite de profundidade explicitamente configurado/contratual;
+- registrar issue quando cycle/depth limit impedir avaliação íntegra;
+- nunca converter traversal truncada em `no_action_supported`.
+
+### 40.6 Lineage validation status
+
+Como `provenance.dependency_edge` é projeção auxiliar, a avaliação precisa declarar a confiabilidade do snapshot de lineage.
+
+Domínio conceitual mínimo:
+
+- `validated_against_canonical_relations`;
+- `projection_only_unverified`;
+- `projection_divergence_detected`;
+- `incomplete_or_unknown`.
+
+Quando a disposição depende de completude negativa do grafo:
+
+> `no_action_supported` authoritative exige lineage suficientemente validado.
+
+Projection divergence/incompletude abre issue e bloqueia falsa conclusão de ausência de impacto.
+
+### 40.7 Cadeia old target → new target
+
+Rebaseline exige:
+
+- mesma `entity_uuid`;
+- tipo/subtipo compatível;
+- cadeia versionada auditável;
+- temporalidade coerente.
+
+Se houver salto, por exemplo A1 → A4:
+
+- congelar chain A1→A2→A3→A4 ou lineage equivalente;
+- registrar versões intermediárias;
+- justificar o salto;
+- não representar A1→A4 como supersession direta inexistente.
+
+### 40.8 Planned × activated rebaseline
+
+Rebaseline possui ao menos dois estágios conceituais:
+
+- `planned`;
+- `activated`.
+
+Planejamento pode ocorrer antes de toda infraestrutura estar pronta.
+
+Ativação exige:
+
+- new target `current`;
+- precondições de policy/Monitor/profile aplicáveis satisfeitas;
+- authority adequada.
+
+Se o new target for superseded/invalidated antes da ativação:
+
+- a decisão pendente não segue automaticamente a versão mais nova;
+- ela deve ser superseded/invalidated conforme contrato futuro;
+- nova decisão é anexada para o target subsequente.
+
+### 40.9 Handover de UpdatePolicy
+
+A relação histórica possui dois eixos distintos:
+
+1. `supersedes_update_policy_uuid` — somente same exact target version;
+2. rebaseline policy lineage — old target policy → new target policy.
+
+Para handover concluído quando manutenção continua:
+
+- old policy permanece histórica;
+- new policy fica ativa no new target;
+- helper/readiness deve detectar handover incompleto;
+- cross-target supersession continua proibida.
+
+Nenhum campo material da old policy é reescrito.
+
+### 40.10 Ordem causal para M2/M3
+
+Como UpdatePolicy M2/M3 exige governing Monitor com target idêntico:
+
+1. new target deve estar current;
+2. RebaselineDecision é preparada;
+3. novo Monitor ProductVersion é criado/configurado quando M2/M3;
+4. MonitorDefinition/MonitorTarget e estado aplicável ficam coerentes;
+5. somente então a new UpdatePolicy M2/M3 pode ser ativada;
+6. objetos operacionais prospectivos passam a usar a new policy.
+
+A new policy nunca usa o Monitor antigo como binding transitório para target diferente.
+
+### 40.11 Monitor disposition e lineage
+
+`monitor_disposition` mínimo:
+
+- `continue_same_monitor_lineage`;
+- `replace_with_new_monitor_entity`;
+- `stop_monitoring`;
+- `not_applicable`;
+- `pending`.
+
+Quando há continuação da mesma entidade Monitor:
+
+- usar versionamento normal de ProductVersion;
+- old Monitor ProductVersion permanece histórico;
+- old cycles/Search/EvidenceEvents/CandidateAssessments não são movidos.
+
+Quando há nova entidade Monitor, registrar replacement/coordination explicitamente sem fabricar same-entity lineage.
+
+### 40.12 Coverage partitions
+
+Coverage disposition deve separar ao menos:
+
+- `incorporated_through_new_target_cutoff`;
+- `post_cutoff_pending_assessment`;
+- `known_gap_carried_forward`;
+- `source_recheck_required`;
+- `no_carry_forward_supported`.
+
+`evidence_cutoff_date` do new target é a referência científica inicial.
+
+`completed_at` do Monitor anterior não redefine automaticamente baseline.
+
+Coverage debt não desaparece na transição.
+
+### 40.13 Risk-profile readiness
+
+New target não reutiliza old profile UUID.
+
+`risk_profile_disposition` mínimo:
+
+- `reassessment_required`;
+- `carry_forward_authorized`;
+- `new_assessment_required`;
+- `not_applicable`;
+- `pending`.
+
+Quando o contrato vigente exigir profile para PriorityAssessment:
+
+> ausência de profile aplicável no new target é issue/readiness blocker, não licença para snapshot informal.
+
+Carry-forward continua sujeito aos guards físicos da migration 030.
+
+### 40.14 SLA Rules no novo target/policy
+
+SLA Rule é policy-bound.
+
+Como `supersedes_sla_rule_uuid` preserva `update_policy_uuid`, rule da old policy:
+
+- não é retargeteada;
+- não é superseded cross-policy;
+- permanece histórica.
+
+New policy precisa de:
+
+- novas SLA Rules aprovadas/adotadas;
+- ou estado explícito `not_configured/pending`.
+
+SLACalendarVersion pode ser reutilizada quando ainda válida e explicitamente adotada.
+
+Nenhuma duração/deadline é copiada por default.
+
+### 40.15 SLA Instance aberta durante handover
+
+Cada obrigação old-policy ainda aberta deve receber disposition explícita:
+
+- `finish_on_old_obligation`;
+- `terminate_or_cancel_with_rationale`;
+- `supersede_operational_obligation_with_linkage`;
+- `open_new_obligation_independently`;
+- `governance_review_required`.
+
+Preservar:
+
+- original start;
+- original due;
+- rule snapshot;
+- first breach;
+- pause history;
+- closure rationale.
+
+Proibido rebase apenas para apagar breach.
+
+### 40.16 Workflow como transition basis
+
+RebaselineDecision pode citar, conforme o caso:
+
+- UpdateDecision;
+- WorkflowRound;
+- result ProductVersion;
+- result InvestigationVersion;
+- governance decision.
+
+Isso é especialmente importante quando o próprio workflow old-target produz a nova versão.
+
+Milestones continuam históricos e não são copiados.
+
+`continue_old_target_workflow` só é válido para obrigação legitimamente referente ao old target e não pode masquerar como manutenção do new target.
+
+### 40.17 Priority e escalation
+
+PriorityAssessment e EscalationCase:
+
+- nunca são retargeteados;
+- nunca são copiados como estado vigente;
+- podem ser citados como provenance/basis para nova avaliação.
+
+Novo target exige nova PriorityAssessment/Escalation quando aplicável.
+
+### 40.18 Concorrência
+
+Se A1→A2 estiver em preparação e A2 for substituída por A3:
+
+- não atualizar `new_target_version_uuid` da decisão existente;
+- supersede/invalidar decisão pendente conforme regra futura;
+- criar A1/A2→A3 conforme o fato causal real;
+- preservar cadeia e rationale.
+
+Nenhuma regra “follow latest automatically” é permitida.
+
+### 40.19 Authority domain
+
+Toda disposition authoritative deve declarar domínio:
+
+- `operational`;
+- `scientific`;
+- `methodological`;
+- `mixed`.
+
+Owner sozinho pode resolver somente decisão puramente operacional dentro de autoridade definida.
+
+Scientific/methodological/mixed authoritative exige human_reviewer/human_expert conforme os contratos existentes.
+
+Carry-forward de cadence, coverage ou risk profile não deve ser classificado artificialmente como operacional quando depender de julgamento científico/metodológico.
+
+### 40.20 M3
+
+Propagation/re-baselining completa é condição necessária, não suficiente, para M3.
+
+Permanece:
+
+> **M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL**
+
+Rebaseline incompleto deverá ser blocker futuro de readiness M3.
+
+A aprovação arquitetural deste bloco não remove o blocker.
+
+---
+
+## 41. Estado pós-hardening
+
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = REVISED_READY_FOR_RECHECK**
+
+> **PROPAGATION_PHYSICAL_CONTRACT = NOT_AUTHORIZED_UNTIL_DOCUMENT_34_RECHECK**
+
+> **MIGRATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
