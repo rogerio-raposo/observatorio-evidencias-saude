@@ -3537,3 +3537,23 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: segundo Evidence Readiness Assessment real em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Segundo Evidence Readiness Assessment real
+
+- criado `docs/governance/50-segundo-evidence-readiness-assessment-real-n2-cadence.md`;
+- contexto = N2 Caso Real 01 / ProductVersion `81000000-0000-0000-0000-000000000701` / cadence / policy_aggregate;
+- evidence cut-off = HEAD `98f15efddf5bb2bafa6d71a7dd35cc0a575edaf2`;
+- target confirmado A2/published/current;
+- 4 Search rows reais em PubMed/MEDLINE, BVS/LILACS e ClinicalTrials.gov;
+- 6 SearchHits e 6 ScreeningDecisions persistidos;
+- resultado = **INSUFFICIENT_EVIDENCE**;
+- READY_FOR_CALIBRATION = **NO**;
+- blockers = need evidence, source characterization, prospective observation, human authority, feasibility e replay;
+- diversity de fontes de produção não foi tratada como substituto para surveillance longitudinal;
+- comparação N1/N2 mostrou recorrência dos blockers centrais;
+- terceiro readiness assessment imediato não selecionado;
+- próximo problema = desenho de aquisição temporal não normativa;
+- nenhum Calibration Dossier, valor temporal normativo ou migration nova autorizado;
+- scheduler/notifications deferidos; auto-escalation não autorizada; M3 bloqueado;
+- Fase 5 não iniciada.
