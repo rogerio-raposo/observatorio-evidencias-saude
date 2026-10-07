@@ -235,7 +235,7 @@ FOR EACH ROW EXECUTE FUNCTION maintenance.assert_temporal_calibration_candidate(
 
 CREATE OR REPLACE FUNCTION maintenance.assert_temporal_calibration_dossier_complete()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
-DECLARE p maintenance.update_risk_profile%ROWTYPE; selected_count integer; external_count integer;
+DECLARE p maintenance.update_risk_profile%ROWTYPE; selected_count integer; external_count integer; target_status text; target_type text;
 BEGIN
   IF NEW.decision_status='draft' THEN RETURN NULL; END IF;
 
@@ -255,6 +255,49 @@ BEGIN
   END IF;
 
   IF NEW.decision_status='approved_for_normative_activation' THEN
+    IF NEW.scope_type='target' THEN
+      IF NEW.target_product_version_uuid IS NOT NULL THEN
+        SELECT ev.version_status,pv.product_type INTO target_status,target_type
+        FROM core.entity_version ev
+        JOIN product.product_version pv ON pv.version_uuid=ev.version_uuid
+        WHERE ev.version_uuid=NEW.target_product_version_uuid;
+        IF target_status IS DISTINCT FROM 'current'
+           OR target_type IN ('evidence_monitor','evidence_alert') THEN
+          RAISE EXCEPTION 'Approved calibration dossier requires current maintainable ProductVersion target';
+        END IF;
+      ELSE
+        SELECT ev.version_status,iv.investigation_type INTO target_status,target_type
+        FROM core.entity_version ev
+        JOIN investigation.investigation_version iv ON iv.version_uuid=ev.version_uuid
+        WHERE ev.version_uuid=NEW.target_investigation_version_uuid;
+        IF target_status IS DISTINCT FROM 'current'
+           OR target_type='evidence_monitoring' THEN
+          RAISE EXCEPTION 'Approved calibration dossier requires current maintainable InvestigationVersion target';
+        END IF;
+      END IF;
+
+      IF EXISTS (
+        SELECT 1 FROM maintenance.temporal_calibration_basis b
+        WHERE b.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+          AND b.basis_role='controlling'
+          AND b.basis_type IN ('external_normative','methodological_evidence','governance_decision')
+          AND b.artifact_uuid IS NULL
+          AND b.entity_version_uuid IS NULL
+      ) THEN
+        RAISE EXCEPTION 'Controlling normative/methodological/governance basis requires versioned Artifact or EntityVersion locator';
+      END IF;
+    END IF;
+
+    IF NOT EXISTS (
+      SELECT 1 FROM maintenance.temporal_calibration_evaluation e
+      JOIN maintenance.temporal_calibration_candidate c
+        ON c.temporal_calibration_candidate_uuid=e.temporal_calibration_candidate_uuid
+      WHERE c.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND e.evaluation_type='historical_replay'
+    ) THEN
+      RAISE EXCEPTION 'Approved dossier requires historical replay evaluation';
+    END IF;
+
     IF NEW.scope_type='target' THEN
       IF NOT EXISTS (SELECT 1 FROM maintenance.temporal_calibration_authority a
         WHERE a.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
@@ -308,6 +351,37 @@ CREATE CONSTRAINT TRIGGER tr_temporal_calibration_dossier_complete
 AFTER INSERT OR UPDATE ON maintenance.temporal_calibration_dossier
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_temporal_calibration_dossier_complete();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_temporal_calibration_dossier_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+BEGIN
+  IF TG_OP='DELETE' THEN
+    RAISE EXCEPTION 'Temporal calibration dossier cannot be deleted';
+  END IF;
+
+  IF OLD.decision_status='draft' THEN
+    RETURN NEW;
+  END IF;
+
+  IF OLD.record_status='active'
+     AND NEW.record_status='superseded'
+     AND (to_jsonb(NEW)-'record_status')=(to_jsonb(OLD)-'record_status') THEN
+    RETURN NEW;
+  END IF;
+
+  IF to_jsonb(NEW)=to_jsonb(OLD) THEN
+    RETURN NEW;
+  END IF;
+
+  RAISE EXCEPTION 'Terminal temporal calibration dossier is immutable; append/supersede instead';
+END
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_dossier_immutable
+ ON maintenance.temporal_calibration_dossier;
+CREATE TRIGGER tr_temporal_calibration_dossier_immutable
+BEFORE UPDATE OR DELETE ON maintenance.temporal_calibration_dossier
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_temporal_calibration_dossier_mutation();
 
 CREATE OR REPLACE FUNCTION maintenance.guard_temporal_calibration_child_immutable()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
