@@ -1945,3 +1945,55 @@ Disciplina de modo:
 - modo médio suficiente enquanto o escopo permanecer mecânico;
 - Fase 5 não iniciada;
 - pausa obrigatória após checkpoint preservada.
+
+
+### Fase 4 — PASS técnico de Propagation/Re-baselining
+
+Documento:
+- 37 — Resultado da Validação Técnica de Propagation/Re-baselining.
+
+Estado:
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED**
+
+> **MIGRATION_031 = PASS**
+
+> **F4_PRB_T01_T145 = PASS**
+
+> **MIGRATION_031_IDEMPOTENCY = PASS**
+
+> **REBUILD_THROUGH_031 = PASS**
+
+> **GLOBAL_REGRESSIONS_AFTER_031 = PASS**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Evidência canônica:
+- S5 run **37644296649** (#167) = success;
+- technical HEAD `5da1d932f9509214db6a658a2ed5ca830ec7b6c1`;
+- job `postgres-s5` / **112870931087** = success;
+- artifact **11494595216**;
+- digest `sha256:1934c9068c24dc17ea505fd353901270eef3ab3a8cc48cbd74cba0de5132922a`.
+
+Implementação:
+- migration lógica 031 + fragments 031a–031e;
+- fixtures sintéticas PRB;
+- F4-PRB-T01–T145;
+- adapter PropagationCandidate → UpdateSignalSource;
+- child handover validators;
+- idempotência/rebuild/regressões integradas no S5.
+
+Runs #163–#166:
+- diagnósticas/intermediárias;
+- falhas locais de fixture/wiring;
+- não são evidência canônica de PASS.
+
+Limites preservados:
+- sem numeric SLA/cadence;
+- sem scheduler/notifications;
+- sem auto-propagation/auto-rebaseline;
+- sem automatic currentness/assurance;
+- sem backfill/revisão humana fabricados;
+- M3 continua bloqueado.
+
+Próximo passo:
+> **criar checkpoint técnico pós-PASS e, somente após nova autorização do usuário, selecionar explicitamente a próxima dívida aberta da Fase 4.**
