@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP95 — 2026-10-07**.
+- checkpoint vigente: **CP96 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1585,4 +1585,21 @@ Decisões consolidadas:
 Próximo passo exato:
 
 > **Implementar migration 029 + F4-OC-T01–T72 + integração S5 e executar validação canônica completa antes de qualquer PASS técnico.**
+
+### CP96 — contrato operacional integrado
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP96.md`;
+- ponteiro movido para CP96;
+- `INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `READY_FOR_MIGRATION_029`;
+- migration 029 autorizada em escopo **OPERATIONAL_CONTROL_INFRASTRUCTURE_ONLY**;
+- migration 029 ainda não implementada;
+- nenhuma duração SLA numérica foi definida;
+- nenhum priority score/peso foi definido;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua sendo run **37576434417** (#144), through migration 028;
+- próximo passo: implementar migration 029 + F4-OC-T01–T72 + S5/idempotência/rebuild/regressões;
+- modo médio é seguro para a implementação mecânica; se surgir nova decisão arquitetural, parar e recomendar modo alto;
+- pausa obrigatória após checkpoint permanece vigente.
 
