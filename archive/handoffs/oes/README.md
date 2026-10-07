@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP97 — 2026-10-07**
+**CP98 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP97.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP98.md`
 
 Checkpoint anterior:
 
-`CP96`
+`CP97`
 
 Status:
 
@@ -201,3 +201,4 @@ em **Modo Continuidade**.
 - **CP95 — 2026-10-07:** arquitetura transversal de prioridade/escalation = PASS_WITH_ARCHITECTURAL_DECISIONS; retomada: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration.
 - **CP96 — 2026-10-07:** contrato operacional integrado = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 029 autorizada em escopo estrito e ainda não implementada; retomada: implementação + F4-OC-T01–T72 + S5.
 - **CP97 — 2026-10-07:** migration 029 e controle operacional integrado = TECHNICALLY_VALIDATED; F4-OC-T01–T72 PASS; próximo bloco da Fase 4 ainda não selecionado.
+- **CP98 — 2026-10-07:** contrato físico UpdateRiskProfile = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 030 autorizada em escopo estrito e ainda não implementada; retomada: implementação + F4-RP-T01–T87 + S5.
