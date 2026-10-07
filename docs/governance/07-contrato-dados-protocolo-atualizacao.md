@@ -69,13 +69,19 @@ Para InvestigationVersion:
 
 ### 2.4 MethodDecision
 
-Não existe, no baseline físico atual, tabela genérica `MethodDecision`.
+O baseline físico possui `investigation.method_decision` desde a migration 014.
+
+A entidade tem finalidade distinta:
+
+- `investigation.method_decision` = decisão metodológica transversal ligada a uma InvestigationVersion;
+- `maintenance.update_decision` = decisão especializada sobre resposta a um UpdateSignal no protocolo de atualização, podendo governar ProductVersion ou InvestigationVersion.
 
 Portanto:
 
-- o contrato não dependerá de entidade física inexistente;
-- `maintenance.update_decision` será a decisão especializada deste protocolo;
-- eventual registro metodológico genérico futuro poderá referenciar ou projetar essas decisões, mas não é requisito do v0.1.
+- o contrato v0.1 não cria nem substitui `investigation.method_decision`;
+- `maintenance.update_decision` permanece necessário porque materialidade/currentness e decisão de atualização não são equivalentes a uma decisão metodológica;
+- `decision_type='reroute_method'` pode exigir MethodDecision correlata em fluxo posterior, mas o linkage não é obrigatório na migration 027;
+- qualquer integração futura entre as duas estruturas deve ser explícita, auditável e sem dupla autoridade.
 
 ### 2.5 Monitor e Alert não serão duplicados
 
