@@ -395,10 +395,18 @@ SELECT pg_temp.ok(
  'F4-PRB-G10-currentness-unchanged-by-propagation'
 );
 SELECT pg_temp.ok(
- EXISTS(SELECT 1 FROM maintenance.operational_control_readiness(
-   'f4000000-0000-0000-0000-000000000002')
+ NOT EXISTS (
+   SELECT 1 FROM maintenance.update_policy
+   WHERE effective_maintenance_level='M3'
+     AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)
+ )
+ AND EXISTS(
+   SELECT 1 FROM product.evidence_monitor_publication_issues(
+     'e5100000-0000-0000-0000-000000000007'
+   )
    WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
-     AND severity='error'),
+     AND severity='error'
+ ),
  'F4-PRB-G10-m3-blocker-preserved'
 );
 INSERT INTO prb_group_result VALUES(10,true);
