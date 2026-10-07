@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW — pronto para recheck do Documento 28**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 28**  
 **Dependências:** Documentos 05–09, 16–26; migrations 006, 010, 014–015, 021–028  
+**Validado por:** Documento 28  
 **Migration:** **não autorizada neste documento**
 
 ---
@@ -1773,9 +1774,9 @@ O contrato físico deve definir uma matriz de adapters por product_type/round_ty
 
 ## 56. Decisão desta especificação
 
-> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = CANDIDATE**
+> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
-> **MIGRATION_029 = NOT_AUTHORIZED**
+> **MIGRATION_029 = AUTHORIZED_IN_STRICT_SCOPE_AFTER_DOCUMENT_28**
 
 > **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
 
@@ -1789,11 +1790,7 @@ O contrato físico deve definir uma matriz de adapters por product_type/round_ty
 
 ## 57. Próximo passo
 
-> **Executar gate adversarial de coerência física do contrato integrado, incluindo cardinalidades, authority, adapter matrix, rule selection, lifecycle e riscos de circularidade.**
-
-Somente após esse gate:
-
-> decidir se migration 029 pode ser autorizada ou se o contrato requer revisão adicional.
+> **Implementar migration 029 no escopo estrito autorizado pelo Documento 28 + suíte F4-OC-T01–T72 + integração S5; somente então executar validação técnica.**
 
 
 ---
