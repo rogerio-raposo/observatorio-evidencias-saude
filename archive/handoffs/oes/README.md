@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP77 — 2026-10-06**
+**CP78 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP77.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP78.md`
 
 Checkpoint anterior:
 
-`CP76`
+`CP77`
 
 Status:
 
@@ -170,3 +170,5 @@ em **Modo Continuidade**.
 - **CP76 — 2026-10-06:** registra **PASS técnico do contrato v0.1 do Monitor de Evidências**, migration 021, MON-T01–T33 e rebuild; retomada no **Projection Readiness Gate da EvidenceMonitorView**.
 
 - **CP77 — 2026-10-06:** registra **Projection Readiness do Monitor = NOT_READY**, Documento 169; migration 022 reservada ao hardening antes da EvidenceMonitorView.
+
+- **CP78 — 2026-10-06:** consolida a especificação do **Projection Readiness hardening** do Monitor; retomada na migration 022 + MONH-T01–T24.
