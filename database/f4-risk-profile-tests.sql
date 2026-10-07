@@ -940,15 +940,21 @@ SELECT pg_temp.assert_true(EXISTS(
  AND snapshot_payload IS NULL
 ),'F4-RP-T76');
 
--- T77 — SLA snapshot freezes profile UUID.
-SELECT pg_temp.assert_true((SELECT
- rule_snapshot_payload->>'update_risk_profile_uuid'=
- 'f6000000-0000-0000-0000-000000000001'
- FROM maintenance.sla_instance
- WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000001'),
+-- T77 — SLA snapshot freezes the profile UUID only when a PriorityAssessment existed by start.
+SELECT pg_temp.assert_true(
+ (SELECT start_priority_assessment_uuid IS NULL
+         AND NOT (rule_snapshot_payload ? 'update_risk_profile_uuid')
+    FROM maintenance.sla_instance
+   WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000001')
+ AND
+ (SELECT start_priority_assessment_uuid='f5100000-0000-0000-0000-000000000001'
+         AND rule_snapshot_payload->>'update_risk_profile_uuid'=
+             'f6000000-0000-0000-0000-000000000001'
+    FROM maintenance.sla_instance
+   WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000005'),
  'F4-RP-T77');
 
--- T78 — later profile does not recalculate an existing SLA snapshot.
+-- T78 — later profile does not recalculate an existing causally valid SLA snapshot.
 SAVEPOINT t78;
 SELECT pg_temp.add_proposal_profile(
  'fb780000-0000-0000-0000-000000000001',
@@ -959,7 +965,7 @@ SELECT pg_temp.assert_true((SELECT
  rule_snapshot_payload->>'update_risk_profile_uuid'=
  'f6000000-0000-0000-0000-000000000001'
  FROM maintenance.sla_instance
- WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000001'),
+ WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000005'),
  'F4-RP-T78');
 ROLLBACK TO SAVEPOINT t78; RELEASE SAVEPOINT t78;
 
@@ -1002,12 +1008,21 @@ SELECT pg_temp.assert_true(NOT EXISTS(
  AND pg_get_functiondef(p.oid) ILIKE '%INSERT INTO maintenance.evidence_alert%'
 ),'F4-RP-T83');
 
--- T84 — M3 blocker preserved.
-SELECT pg_temp.assert_true(EXISTS(
- SELECT 1 FROM maintenance.operational_control_readiness(
- 'f4000000-0000-0000-0000-000000000002')
- WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
-),'F4-RP-T84');
+-- T84 — M3 blocker preserved at the Monitor boundary; no post-032 M3 policy is fabricated.
+SELECT pg_temp.assert_true(
+ NOT EXISTS (
+   SELECT 1 FROM maintenance.update_policy
+   WHERE effective_maintenance_level='M3'
+     AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)
+ )
+ AND EXISTS(
+   SELECT 1 FROM product.evidence_monitor_publication_issues(
+     'e5100000-0000-0000-0000-000000000007'
+   )
+   WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
+     AND severity='error'
+ ),
+ 'F4-RP-T84');
 
 ROLLBACK;
 
