@@ -2450,3 +2450,14 @@ Documentos:
 - migration 022 passa a ser reservada ao **Projection Readiness hardening**;
 - EvidenceMonitorView passa a ser candidata para migration 023;
 - nenhum template ou Caso Real do Monitor está autorizado antes do novo gate.
+
+
+## 2026-10-06 — CP77
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP77.md`;
+- Documento 169 consolidado;
+- EvidenceMonitorView Projection Readiness = **NOT_READY**;
+- migration 022 reservada ao hardening;
+- EvidenceMonitorView movida para migration candidata 023;
+- ponteiro de continuidade movido para CP77;
+- retomada: especificação + implementação do Projection Readiness hardening.
