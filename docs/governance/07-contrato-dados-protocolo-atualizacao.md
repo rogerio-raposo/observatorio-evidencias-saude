@@ -473,19 +473,42 @@ O campo será texto controlado por check no contrato inicial, com pelo menos:
 - cadence_due;
 - cycle_incomplete;
 - source_coverage_gap;
-- future_sla_breach;
 - explicit_reassessment_request;
 - use_context_change;
 - scope_change;
 - other.
 
-Mapeamentos inválidos serão rejeitados.
+Mapeamento canônico:
 
-Exemplos:
+| signal_type | signal_class | trigger_class |
+|---|---|---|
+| new_study | scientific_currentness | new_evidence |
+| new_review | scientific_currentness | new_evidence |
+| review_update | scientific_currentness | new_evidence |
+| estimate_change_signal | scientific_currentness | new_evidence |
+| safety_signal | scientific_currentness | safety_regulatory |
+| new_population_signal | scientific_currentness | new_evidence |
+| certainty_change_signal | scientific_currentness | new_evidence |
+| correction | scientific_currentness | integrity_validity |
+| retraction | scientific_currentness | integrity_validity |
+| expression_of_concern | scientific_currentness | integrity_validity |
+| methodology_change | scientific_currentness | methodological |
+| regulatory_change | scientific_currentness | safety_regulatory |
+| cadence_due | operational | temporal_operational |
+| cycle_incomplete | operational | temporal_operational |
+| source_coverage_gap | operational | temporal_operational |
+| explicit_reassessment_request | scientific_currentness | governance_demand |
+| use_context_change | scientific_currentness | governance_demand |
+| scope_change | scientific_currentness | scope |
 
-- `cadence_due` deve ser operational + temporal_operational;
-- `retraction` deve ser scientific_currentness + integrity_validity;
-- `safety_signal` deve ser scientific_currentness + safety_regulatory.
+`other` é permitido apenas quando:
+
+- rationale não vazio;
+- signal_class explícita;
+- trigger_class explícita;
+- a combinação não contradiz a taxonomia do Documento 05.
+
+Demais mapeamentos serão rejeitados.
 
 ---
 
@@ -700,9 +723,24 @@ MaterialityAssessment é julgamento científico/metodológico. Por isso `actor_t
 Antes de inserir MaterialityAssessment:
 
 - signal deve estar ativo;
-- se `trigger_class<>'governance_demand'`, deve existir exatamente uma primary source;
+- deve existir exatamente uma primary source, exceto para:
+  - `trigger_class='governance_demand'`, quando a própria demanda/ator estiver documentada em rationale;
+  - `signal_type='cadence_due'`, que é derivado temporalmente da própria UpdatePolicy;
 - todas as fontes referenciadas devem passar validação dinâmica de existência/status;
 - sources monitor-derived devem continuar coerentes com o Monitor governante da policy.
+
+Regra adicional por classe de signal:
+
+> `signal_class='operational'` não pode produzir `outcome='material_change_confirmed'` apenas por falha temporal/operacional.
+
+Signal operacional pode resultar em:
+
+- no_material_change;
+- potentially_material;
+- validity_or_use_threat;
+- insufficient_to_decide.
+
+Confirmação de mudança científica material exige signal científico/currentness rastreável.
 
 Exigir:
 
@@ -1288,49 +1326,52 @@ A futura bateria F4-UP deverá cobrir, no mínimo:
 15. M3 exige Monitor mas permanece bloqueado formalmente;
 16. Monitor da policy aponta para mesmo target;
 17. signal exige policy ativa no INSERT;
-18. signal_type × class × trigger coerentes;
-19. signal verification invariants;
-20. signal material imutável;
-21. source locator XOR;
-22. no máximo uma primary source;
-23. SearchHit fora de Monitor rejeitado;
-24. source Monitor pertencente ao Monitor governante;
-25. Alert source target compatível;
-26. SignalSource selada após assessment;
-27. assessment sem primary source rejeitado quando exigida;
-28. owner como materiality assessor rejeitado;
-29. um assessment ativo por signal;
-30. assessment supersession preserva signal;
-31. materiality outcome × dimensions coerente;
-32. MaterialityDimension selada após decision;
-33. proposal por AI permitida;
-34. authoritative por AI rejeitada;
-35. authoritative com assessment AI-only rejeitada;
-36. authoritative sem human verification rejeitada;
-37. um decision ativo por signal;
-38. decision supersession preserva signal;
-39. insufficient_to_decide não pode encerrar como no_scientific_update;
-40. material_change_confirmed → set_current é rejeitado;
-41. insufficient_to_decide → set_current é rejeitado;
-42. decision × materiality coerente;
-43. Investigation target com currency action rejeitado;
-44. Product target currency linkage coerente;
-45. wrong-target CurrencyState rejeitado;
-46. currency action/status mismatch rejeitado;
-47. archived não pode ser produzido por UpdateDecision;
-48. no_change com CurrencyState rejeitado;
-49. dois signals podem compartilhar o mesmo CurrencyState quando coerentes;
-50. cycle CurrencyState pode ser reutilizado quando coerente;
-51. contradição cycle/decision rejeitada;
-52. nenhuma decisão cria ProductVersion automaticamente;
-53. nenhuma decisão cria InvestigationVersion automaticamente;
-54. nenhum registro promove assurance;
-55. M3 blocker existente continua ativo;
-56. migrations 021–026 permanecem idempotentes;
-57. futura migration candidata é idempotente quando desenhada para tal;
-58. rebuild-from-zero through migration candidata;
-59. regressões globais F2-B/S4/S5;
-60. regressões completas de Monitor e Alert.
+18. matriz completa signal_type × class × trigger é validada;
+19. other exige rationale e combinação válida;
+20. signal verification invariants;
+21. signal material imutável;
+22. source locator XOR;
+23. no máximo uma primary source;
+24. cadence_due sem source externa é permitido;
+25. SearchHit fora de Monitor rejeitado;
+26. source Monitor pertencente ao Monitor governante;
+27. Alert source target compatível;
+28. SignalSource selada após assessment;
+29. assessment sem primary source rejeitado quando exigida;
+30. owner como materiality assessor rejeitado;
+31. operational signal não pode confirmar material_change_confirmed;
+32. um assessment ativo por signal;
+33. assessment supersession preserva signal;
+34. materiality outcome × dimensions coerente;
+35. MaterialityDimension selada após decision;
+36. proposal por AI permitida;
+37. authoritative por AI rejeitada;
+38. authoritative com assessment AI-only rejeitada;
+39. authoritative sem human verification rejeitada;
+40. um decision ativo por signal;
+41. decision supersession preserva signal;
+42. insufficient_to_decide não pode encerrar como no_scientific_update;
+43. material_change_confirmed → set_current é rejeitado;
+44. insufficient_to_decide → set_current é rejeitado;
+45. decision × materiality coerente;
+46. Investigation target com currency action rejeitado;
+47. Product target currency linkage coerente;
+48. wrong-target CurrencyState rejeitado;
+49. currency action/status mismatch rejeitado;
+50. archived não pode ser produzido por UpdateDecision;
+51. no_change com CurrencyState rejeitado;
+52. dois signals podem compartilhar o mesmo CurrencyState quando coerentes;
+53. cycle CurrencyState pode ser reutilizado quando coerente;
+54. contradição cycle/decision rejeitada;
+55. nenhuma decisão cria ProductVersion automaticamente;
+56. nenhuma decisão cria InvestigationVersion automaticamente;
+57. nenhum registro promove assurance;
+58. M3 blocker existente continua ativo;
+59. migrations 021–026 permanecem idempotentes;
+60. futura migration candidata é idempotente quando desenhada para tal;
+61. rebuild-from-zero through migration candidata;
+62. regressões globais F2-B/S4/S5;
+63. regressões completas de Monitor e Alert.
 
 ---
 
