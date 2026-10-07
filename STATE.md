@@ -1523,3 +1523,66 @@ Próximo passo exato:
 - próximo passo: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Contrato operacional integrado
+
+Documentos:
+
+- 27 — Contrato de Dados Integrado do Plano Operacional da Fase 4;
+- 28 — Gate Adversarial de Coerência Física do Contrato Operacional Integrado.
+
+Estado:
+
+> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_MIGRATION_029**
+
+> **MIGRATION_029_SCOPE = OPERATIONAL_CONTROL_INFRASTRUCTURE_ONLY**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+> **PRIORITY_SCORE = NOT_DEFINED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Estruturas autorizadas para a futura migration 029:
+
+- update_triage;
+- priority_assessment;
+- priority_basis;
+- escalation_case;
+- escalation_reason;
+- escalation_route;
+- sla_calendar_version;
+- sla_rule;
+- sla_instance;
+- sla_pause;
+- workflow_round;
+- workflow_milestone;
+- validators/guards/readiness/helpers estritamente necessários.
+
+Decisões consolidadas:
+
+- UpdatePolicy continua a âncora; não criar OperationalPlan duplicado;
+- triage invalid_signal usa constraint deferred para consistência transacional;
+- PriorityBasis usa source_type + locator XOR + snapshot;
+- escalation lifecycle possui transições fechadas e activation humana;
+- SLA Rule usa rule_code + selection_precedence determinística;
+- clock→endpoint e time_basis matrices estão fechadas;
+- calendário e fixed deadline possuem shapes fechados/validáveis;
+- effective_due/current compliance são derivados, não campos autoritativos livres;
+- SLA obligations têm cardinalidade definida por signal/round;
+- WorkflowRound planned ancora SLA-4;
+- WorkflowRound status não duplica scientific/review/publication milestones;
+- WorkflowMilestone usa adapter_type + locator XOR + precisão timestamp/date;
+- publication permanece subordinada ao gate especializado do product_type;
+- UpdateRiskProfile ainda é snapshot bridge versionado, não pseudo-FK;
+- nenhum número/default SLA foi autorizado;
+- migration 029 não pode inserir regras SLA normativas arbitrárias;
+- F4-OC-T01–T72 será a suíte mínima espelhada da implementação.
+
+Próximo passo exato:
+
+> **Implementar migration 029 + F4-OC-T01–T72 + integração S5 e executar validação canônica completa antes de qualquer PASS técnico.**
+
