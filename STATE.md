@@ -1603,3 +1603,53 @@ Próximo passo exato:
 - modo médio é seguro para a implementação mecânica; se surgir nova decisão arquitetural, parar e recomendar modo alto;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Validação técnica do controle operacional integrado
+
+Documento:
+
+- 29 — Resultado da Validação Técnica do Controle Operacional Integrado da Fase 4.
+
+Estado:
+
+> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = TECHNICALLY_VALIDATED**
+
+> **MIGRATION_029 = PASS**
+
+> **F4_OC_T01_T72 = PASS**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Validação canônica:
+
+- workflow: **OES PoC-S5 PostgreSQL Validation**;
+- run: **37580906483** (#150);
+- technical HEAD: `ae45918bb8cbf1ab929aec2e1af53f7239f75323`;
+- conclusion: **success**;
+- artifact: **11464672034**;
+- digest: `sha256:ec4546afc64fb5eb86b69d966905fc583cfbe43e4586abc922b57eb48e67a43c`;
+- F4-OC-T01–T69 = PASS;
+- T70 migration 029 idempotency = PASS;
+- T71 rebuild-through-029 = PASS;
+- T72 regressões completas = PASS;
+- F4-UP-T01–T63 = PASS;
+- F4-UP-P01–P63 = PASS;
+- M3 blocker preservado.
+
+Runs #145–#149 foram diagnósticas/falhas não canônicas, classificadas no Documento 29 como erros de implementação/test setup/test isolation/test editing, e não são evidência de PASS.
+
+Limites preservados:
+
+- nenhuma duração SLA normativa;
+- nenhum priority score/peso;
+- auto-escalation não autorizada;
+- scheduler não implementado;
+- notification channels não implementados;
+- propagation/re-baselining não implementados;
+- UpdateRiskProfile físico ainda não normalizado;
+- M3 readiness ainda não autorizada;
+- operação humana real não iniciada.
+
+Próximo passo:
+
+> **ser definido no checkpoint pós-PASS; nenhum novo bloco funcional é iniciado automaticamente.**
+
