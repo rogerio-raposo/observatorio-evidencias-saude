@@ -143,8 +143,12 @@ Nenhum SourceRequirement normalizado foi projetado.
 - **Decisão:** {{latest_completed_cycle.maintenance_decision.decision}}
 - **Rationale:** {{latest_completed_cycle.maintenance_decision.rationale}}
 - **Verificação:** {{latest_completed_cycle.verification.status}}
+{{#if latest_completed_cycle.resulting_target_currency}}
 - **Resulting target currentness:** {{latest_completed_cycle.resulting_target_currency.currency_status}}
 - **Currency record status:** {{latest_completed_cycle.resulting_target_currency.record_status}}
+{{else}}
+- **Resulting target currentness:** não aplicável para target sem ProductVersion
+{{/if}}
 
 ---
 
@@ -162,8 +166,12 @@ Nenhum SourceRequirement normalizado foi projetado.
 - **Verificação:** {{verification.status}}
 - **Verifier actor type:** {{verification.verifier_actor_type}}
 - **Escalonamento:** {{escalation_recommendation}}
+{{#if resulting_target_currency}}
 - **Resulting target currentness:** {{resulting_target_currency.currency_status}}
 - **Currency record status:** {{resulting_target_currency.record_status}}
+{{else}}
+- **Resulting target currentness:** não aplicável para target sem ProductVersion
+{{/if}}
 
 #### Searches
 
