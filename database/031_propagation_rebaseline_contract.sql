@@ -15,5 +15,6 @@ CREATE SCHEMA IF NOT EXISTS maintenance;
 \ir 031b_propagation_signal_adapter.sql
 \ir 031c_rebaseline_core.sql
 \ir 031d_propagation_rebaseline_helpers.sql
+\ir 031e_rebaseline_child_validators.sql
 
 COMMIT;
