@@ -288,7 +288,7 @@ SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,
  stage,response_class,authority_scope,authority_status,feasibility_status,
- materiality_assessment_uuid,risk_profile_snapshot,rationale,
+ materiality_assessment_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,
  verified_at,assessed_at
 ) VALUES (
@@ -346,7 +346,7 @@ SELECT pg_temp.add_materiality('fa161000-0000-0000-0000-000000000001','fa160000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- materiality_assessment_uuid,risk_profile_snapshot,rationale,
+ materiality_assessment_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,verified_at,assessed_at
 ) VALUES (
  'fa162000-0000-0000-0000-000000000001','fa160000-0000-0000-0000-000000000001',
@@ -365,7 +365,7 @@ SELECT pg_temp.add_materiality('fa171000-0000-0000-0000-000000000001','fa170000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- materiality_assessment_uuid,risk_profile_snapshot,rationale,
+ materiality_assessment_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,verified_at,assessed_at
 ) VALUES (
  'fa172000-0000-0000-0000-000000000001','fa170000-0000-0000-0000-000000000001',
@@ -384,7 +384,7 @@ SELECT pg_temp.add_materiality('fa181000-0000-0000-0000-000000000001','fa180000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- materiality_assessment_uuid,risk_profile_snapshot,rationale,
+ materiality_assessment_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,verified_at,assessed_at
 ) VALUES (
  'fa182000-0000-0000-0000-000000000001','fa180000-0000-0000-0000-000000000001',
@@ -403,7 +403,7 @@ SELECT pg_temp.add_materiality('fa191000-0000-0000-0000-000000000001','fa190000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- materiality_assessment_uuid,risk_profile_snapshot,rationale,
+ materiality_assessment_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,verified_at,assessed_at
 ) VALUES (
  'fa192000-0000-0000-0000-000000000001','fa190000-0000-0000-0000-000000000001',
@@ -424,7 +424,7 @@ SELECT pg_temp.add_signal('fa200000-0000-0000-0000-000000000001','f4000000-0000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- alert_product_version_uuid,risk_profile_snapshot,rationale,
+ alert_product_version_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa201000-0000-0000-0000-000000000001','fa200000-0000-0000-0000-000000000001',
@@ -445,7 +445,7 @@ SELECT pg_temp.add_signal('fa210000-0000-0000-0000-000000000001','f4000000-0000-
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- alert_product_version_uuid,risk_profile_snapshot,rationale,
+ alert_product_version_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fa211000-0000-0000-0000-000000000001','fa210000-0000-0000-0000-000000000001',
@@ -893,7 +893,7 @@ UPDATE maintenance.priority_assessment SET record_status='superseded'
 INSERT INTO maintenance.priority_assessment(
  priority_assessment_uuid,update_signal_uuid,update_policy_uuid,stage,
  response_class,authority_scope,authority_status,feasibility_status,
- triggering_sla_instance_uuid,risk_profile_snapshot,rationale,
+ triggering_sla_instance_uuid,update_risk_profile_uuid,risk_profile_snapshot,rationale,
  assessed_by,actor_type,verification_status,assessed_at,
  supersedes_priority_assessment_uuid
 ) VALUES (
