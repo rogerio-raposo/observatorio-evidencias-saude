@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — migration 029 autorizada em escopo estrito**  
+**Status:** **PASS — migration 029 autorizada no escopo estrito e tecnicamente validada pelo Documento 29**  
 **Dependência:** Documento 27  
 **Objeto:** triage + priority/escalation + SLA + workflow round/milestone
 
@@ -978,3 +978,27 @@ Logo:
 ## 41. Próximo passo exato
 
 > **Implementar migration 029 no escopo autorizado + suíte F4-OC-T01–T72 + integração S5; executar idempotência, rebuild e regressões antes de qualquer PASS técnico.**
+
+---
+
+## 42. Execução do gate
+
+A migration 029 foi implementada exclusivamente no escopo autorizado.
+
+Resultado:
+
+> **Documento 29 = PASS**
+
+> **run 37580906483 (#150) = success**
+
+> **F4-OC-T01–T72 = PASS**
+
+Foram preservados:
+
+- ausência de SLA durations normativas;
+- ausência de priority score/pesos;
+- auto-escalation não autorizada;
+- currentness/assurance/publication externos ao controle operacional;
+- blocker `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
+
+O gate encontra-se executado e fechado para este escopo.
