@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP87 — 2026-10-06**.
+- checkpoint vigente: **CP88 — 2026-10-06**.
 
 ## 2. Estado das fases
 
@@ -723,7 +723,7 @@ Nenhum template deverá ser criado enquanto o gate permanecer NOT_READY.
 
 ## 11. Checkpoint de continuidade
 
-O checkpoint vigente é **CP87 — 2026-10-06**.
+O checkpoint vigente é **CP88 — 2026-10-06**.
 
 Ponto exato de retomada:
 
