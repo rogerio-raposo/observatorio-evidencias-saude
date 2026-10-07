@@ -2805,3 +2805,33 @@ Documentos:
 - o PASS da migration 027 permanece válido porque sua implementação não dependia da ausência de MethodDecision;
 - eventual linkage entre `reroute_method` e MethodDecision será definido explicitamente em bloco posterior, sem inferência retroativa.
 
+## 2026-10-07 — Phase 4 risk profile and cadence baseline
+
+- Documentos 16–17 definiram e revisaram adversarialmente os perfis de risco operacional/científico;
+- `PHASE_4_UPDATE_RISK_PROFILE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- score agregado aditivo rejeitado;
+- taxonomia paralela R0–R3 rejeitada;
+- risco científico e capacidade operacional separados;
+- recomendação de manutenção reutiliza o domínio canônico M0–M3;
+- recomendação M3 não ativa M3;
+- currentness permanece fora do perfil;
+- Documentos 18–19 definiram e revisaram cadence e thresholds temporais;
+- `PHASE_4_CADENCE_TEMPORAL_POLICY = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- separados relógios de vigilância, processamento, reassessment de policy/profile e atualização científica;
+- schedule compliance e coverage continuity permanecem distintos;
+- M1 periódico = reassessment programado, sem Monitoring Cycle por default;
+- M2 periódico = surveillance ativa pelo Monitor governante;
+- `monitor_cycle.planned_at` preservado como instante nominal programado de início;
+- overdue é estado operacional derivado e não CurrencyState;
+- cadence vencida/gap não muda currentness sem UpdateSignal → MaterialityAssessment → UpdateDecision;
+- nenhuma migration 028 criada;
+- M3 formal permanece bloqueado.
+
+## 2026-10-07 — CP91
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP91.md`;
+- ponteiro movido para CP91;
+- correção de inventário de `investigation.method_decision` reconciliada com migration 014;
+- perfis de risco e política temporal consolidados;
+- próximo passo: arquitetura transversal de SLA, sem durações universais antes do gate semântico.
+
