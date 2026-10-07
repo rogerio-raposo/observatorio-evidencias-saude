@@ -1367,3 +1367,63 @@ Próximo passo exato:
 - retomada movida para prioridade/escalation;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Auditoria retrospectiva e hardening corretivo
+
+Documentos:
+
+- 22 — Auditoria Retrospectiva da Fase 4 até CP93;
+- 23 — Gate de Coerência Física Corretivo pós-Auditoria;
+- 24 — Resultado da Validação Corretiva pós-Auditoria.
+
+Estado:
+
+> **RETROSPECTIVE_AUDIT_CORRECTIVE_BLOCK = CLOSED_PASS**
+
+> **PHASE_4_UPDATE_DATA_CONTRACT = TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**
+
+> **MIGRATION_028_CORRECTIVE_HARDENING = PASS**
+
+> **F4_UP_PLAN_MIRRORED_REQUIREMENTS = P01–P63 PASS**
+
+Decisões e correções:
+
+- migration 027 foi preservada historicamente;
+- migration 028 foi usada somente para hardening corretivo;
+- `signal_type='other'` passou a respeitar fronteira scientific_currentness × operational;
+- nova UpdateDecision exige UpdateSignal ativo;
+- novo linkage para CurrencyState exige UpdateDecision ativa;
+- issue helpers de policy/signal/materiality/decision foram ampliados;
+- suíte histórica T01–T63 permanece verde;
+- suíte P01–P63 passa a espelhar explicitamente os 63 requisitos mínimos do Documento 07;
+- a run #143 falhou por erro de desenho do teste P62 e não é evidência de PASS;
+- a run #144 é a evidência canônica do hardening.
+
+Validação canônica:
+
+- workflow: **OES PoC-S5 PostgreSQL Validation**;
+- run: **37576434417** (#144);
+- technical HEAD: `3f36b5dd4103e15834adde107fedeeb1c81fb084`;
+- conclusion: **success**;
+- artifact: **11462802190**;
+- digest: `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`;
+- T01–T63 = PASS;
+- P01–P63 = PASS;
+- migration 027 idempotency = PASS;
+- migration 028 idempotency = PASS;
+- rebuild-through-028 = PASS;
+- F2-B/S4/S5 regressions = PASS;
+- Monitor/Alert regressions = PASS.
+
+Limites preservados:
+
+- M3 formal continua bloqueado por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`;
+- prioridade/escalation ainda não foi iniciada;
+- nenhuma duração numérica universal de SLA foi definida;
+- nenhum contrato físico adicional de prioridade/SLA foi autorizado;
+- triage transversal e milestones de workflow continuam gaps físicos;
+- notifications, propagation/re-baselining e M3 readiness continuam pendentes.
+
+Próximo passo exato:
+
+> **Definir a arquitetura transversal de prioridade e escalation, somente após o checkpoint corretivo e nova instrução explícita do usuário.**
+
