@@ -323,7 +323,7 @@ BEGIN
          'SLA3_MATERIALITY_TO_DECISION','SLA4_DECISION_TO_WORKFLOW_START',
          'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION','SLA6_SCIENTIFIC_COMPLETION_TO_ENDPOINT')
        OR jsonb_typeof(p->'filters')<>'object'
-       OR (p->'filters' - ARRAY['response_class','signal_class','trigger_class','decision_type','materiality_outcome'])<>'{}'::jsonb
+       OR ((p->'filters') - ARRAY['response_class','signal_class','trigger_class','decision_type','materiality_outcome'])<>'{}'::jsonb
        OR p->>'time_basis' NOT IN ('elapsed_time','business_calendar','fixed_deadline')
     THEN RETURN false; END IF;
 
