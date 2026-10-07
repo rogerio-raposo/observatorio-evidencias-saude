@@ -3238,3 +3238,21 @@ Documentos:
 - M3 blocker preservado;
 - sem numeric SLA/cadence, scheduler, notifications, auto-propagation/rebaseline ou currentness automático;
 - próximo passo: checkpoint técnico e seleção explícita da próxima dívida da Fase 4.
+
+## 2026-10-07 — CP102
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP102.md`;
+- ponteiro de continuidade movido para CP102;
+- migration 031 / propagation-rebaselining físico = **TECHNICALLY_VALIDATED**;
+- F4-PRB-T01–T145 = PASS;
+- idempotência 031 = PASS;
+- rebuild-through-031 = PASS;
+- regressões completas = PASS;
+- run canônico **37644296649** (#167) = success;
+- artifact **11494595216**;
+- digest `sha256:1934c9068c24dc17ea505fd353901270eef3ab3a8cc48cbd74cba0de5132922a`;
+- runs #163–#166 permanecem diagnósticas/intermediárias;
+- M3 blocker preservado;
+- próxima dívida da Fase 4 ainda não selecionada;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
