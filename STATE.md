@@ -976,3 +976,31 @@ Escopo 024:
 EvidenceAlertView permanece posterior a Projection Readiness explícito.
 
 Fase 4 permanece não iniciada.
+
+
+### Alerta de Evidência — contrato técnico PASS / Projection Readiness NOT_READY
+
+Documento 180 — **EVIDENCE_ALERT_CONTRACT_0_1 = TECHNICALLY_VALIDATED**.
+
+Validação:
+- run **37559879675** (#132) = success;
+- HEAD validado `180b11324ed19dbf51aa8a902dec4c51f6587025`;
+- AL-T01–T29 = PASS;
+- AL-T30 = PASS;
+- rebuild-through-024 = PASS;
+- artifact **11456436623**;
+- digest `sha256:28974dd66cf678abd3ae3f154e8853894489379bc1293c84ae70980d3fc7886d`.
+
+Documento 181 — **EVIDENCE_ALERT_PROJECTION_READINESS = NOT_READY**.
+
+Blockers:
+1. AlertSource ainda aceita INSERT pós-publicação;
+2. affected dimensions ainda aceitam INSERT pós-publicação;
+3. supporting sources não são todas revalidadas dinamicamente;
+4. EntityVersion AlertSource não exige `maintenance_alert_source` dependency;
+5. source_context deverá ser selado após publicação.
+
+Próxima etapa:
+> **migration 025 de projection hardening + ALT-H tests, antes de qualquer EvidenceAlertView.**
+
+Fase 4 permanece não iniciada.
