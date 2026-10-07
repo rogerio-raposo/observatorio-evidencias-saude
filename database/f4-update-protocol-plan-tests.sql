@@ -191,24 +191,40 @@ $$INSERT INTO maintenance.update_policy(
 ROLLBACK TO SAVEPOINT f4_p07;
 RELEASE SAVEPOINT f4_p07;
 
--- P08 — M1 × cadence: event_driven/periodic/hybrid aceitos; continuous rejeitado.
+-- P08 — pós-032, toda cadence não-none exige CadenceContract; continuous segue inválido para M1.
 SAVEPOINT f4_p08;
-INSERT INTO maintenance.update_policy(
+SELECT pg_temp.expect_error(
+$q$INSERT INTO maintenance.update_policy(
  update_policy_uuid,target_product_version_uuid,
  effective_maintenance_level,cadence_mode,effective_at,rationale,
  created_by,actor_type,record_status
-) VALUES
-('fb000000-0000-0000-0000-000000000081','61000000-0000-0000-0000-000000000014',
- 'M1','event_driven',TIMESTAMPTZ '2026-10-07 01:07+00','P08 event',
- 'audit-owner','owner','superseded'),
-('fb000000-0000-0000-0000-000000000082','61000000-0000-0000-0000-000000000014',
- 'M1','periodic',TIMESTAMPTZ '2026-10-07 01:08+00','P08 periodic',
- 'audit-owner','owner','superseded'),
-('fb000000-0000-0000-0000-000000000083','61000000-0000-0000-0000-000000000014',
- 'M1','hybrid',TIMESTAMPTZ '2026-10-07 01:09+00','P08 hybrid',
- 'audit-owner','owner','superseded');
+) VALUES (
+ 'fb000000-0000-0000-0000-000000000081','61000000-0000-0000-0000-000000000014',
+ 'M1','event_driven',TIMESTAMPTZ '2026-10-07 01:07+00','P08 unbound event',
+ 'audit-owner','owner','superseded'
+)$q$,'F4-UP-P08-event-contract');
+SELECT pg_temp.expect_error(
+$q$INSERT INTO maintenance.update_policy(
+ update_policy_uuid,target_product_version_uuid,
+ effective_maintenance_level,cadence_mode,effective_at,rationale,
+ created_by,actor_type,record_status
+) VALUES (
+ 'fb000000-0000-0000-0000-000000000082','61000000-0000-0000-0000-000000000014',
+ 'M1','periodic',TIMESTAMPTZ '2026-10-07 01:08+00','P08 unbound periodic',
+ 'audit-owner','owner','superseded'
+)$q$,'F4-UP-P08-periodic-contract');
+SELECT pg_temp.expect_error(
+$q$INSERT INTO maintenance.update_policy(
+ update_policy_uuid,target_product_version_uuid,
+ effective_maintenance_level,cadence_mode,effective_at,rationale,
+ created_by,actor_type,record_status
+) VALUES (
+ 'fb000000-0000-0000-0000-000000000083','61000000-0000-0000-0000-000000000014',
+ 'M1','hybrid',TIMESTAMPTZ '2026-10-07 01:09+00','P08 unbound hybrid',
+ 'audit-owner','owner','superseded'
+)$q$,'F4-UP-P08-hybrid-contract');
 SELECT pg_temp.expect_error_like(
-$$INSERT INTO maintenance.update_policy(
+$q$INSERT INTO maintenance.update_policy(
  update_policy_uuid,target_product_version_uuid,
  effective_maintenance_level,cadence_mode,effective_at,rationale,
  created_by,actor_type,record_status
@@ -217,7 +233,13 @@ $$INSERT INTO maintenance.update_policy(
  '61000000-0000-0000-0000-000000000014',
  'M1','continuous',TIMESTAMPTZ '2026-10-07 01:10+00',
  'P08 invalid M1 continuous','audit-owner','owner','superseded'
-)$$,'maintenance level/cadence mode mismatch','F4-UP-P08');
+)$q$,'maintenance level/cadence mode mismatch','F4-UP-P08');
+SELECT pg_temp.assert_true(
+ (SELECT cadence_contract_uuid IS NOT NULL
+    FROM maintenance.update_policy
+   WHERE update_policy_uuid='f4000000-0000-0000-0000-000000000001'),
+ 'F4-UP-P08-bound-policy-control'
+);
 ROLLBACK TO SAVEPOINT f4_p08;
 RELEASE SAVEPOINT f4_p08;
 
