@@ -2315,3 +2315,15 @@ Documentos:
 - digest `sha256:4dff568129b92a6a4565c33c015afbbe7bec2cc872333b4f99b2701b9c9151a6`;
 - OVR-01 = **DEVELOPMENTAL_A1_INTERNAL_VALIDATED / não publicável**;
 - próxima etapa: Especificação Científica e Funcional do Monitor de Evidências.
+
+
+## 2026-10-06 — CP72
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP72.md`;
+- OVR-01 consolidado como **DEVELOPMENTAL_A1_INTERNAL_VALIDATED**;
+- Documento 164 registrado como encerramento controlado;
+- run final 37549135468 = success;
+- OVR01-A1-T01–T09 e OVR01-RENDER-A1 = PASS;
+- publication blockers formais preservados;
+- ponteiro de continuidade movido para CP72;
+- retomada movida para **Especificação Científica e Funcional do Monitor de Evidências**.
