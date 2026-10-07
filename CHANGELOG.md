@@ -2625,3 +2625,12 @@ Documentos:
 - View adiada até Projection Readiness explícito;
 - classification/urgency continuam qualitativas, sem thresholds/SLA;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — CP84
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP84.md`;
+- Contrato de Dados v0.1 do Alerta consolidado;
+- ponteiro movido para CP84;
+- migration 024 + fixtures/testes autorizados;
+- Fase 4 permanece não iniciada.
