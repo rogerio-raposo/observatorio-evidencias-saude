@@ -395,9 +395,13 @@ LANGUAGE plpgsql
 AS $fn$
 DECLARE
     s maintenance.update_signal%ROWTYPE;
+    pol maintenance.update_policy%ROWTYPE;
     ma maintenance.materiality_assessment%ROWTYPE;
     prior maintenance.priority_assessment%ROWTYPE;
     alert_type text;
+    alert_target_product uuid;
+    alert_target_inv uuid;
+    currency_product uuid;
     sla_start timestamptz;
 BEGIN
     SELECT * INTO s FROM maintenance.update_signal
@@ -406,6 +410,9 @@ BEGIN
     IF s.update_policy_uuid<>NEW.update_policy_uuid THEN
         RAISE EXCEPTION 'PriorityAssessment policy must match UpdateSignal policy';
     END IF;
+
+    SELECT * INTO pol FROM maintenance.update_policy
+     WHERE update_policy_uuid=NEW.update_policy_uuid;
 
     IF NOT maintenance.risk_profile_snapshot_is_valid(NEW.risk_profile_snapshot) THEN
         RAISE EXCEPTION 'PriorityAssessment risk_profile_snapshot invalid';
@@ -457,11 +464,30 @@ BEGIN
            AND d.update_signal_uuid=NEW.update_signal_uuid
     ) THEN RAISE EXCEPTION 'PriorityAssessment decision must belong to signal'; END IF;
 
+    IF NEW.currency_state_uuid IS NOT NULL THEN
+        SELECT product_version_uuid INTO currency_product
+          FROM product.currency_state
+         WHERE currency_state_uuid=NEW.currency_state_uuid;
+        IF pol.target_product_version_uuid IS NULL
+           OR currency_product IS DISTINCT FROM pol.target_product_version_uuid THEN
+            RAISE EXCEPTION 'PriorityAssessment CurrencyState must belong to policy target';
+        END IF;
+    END IF;
+
     IF NEW.alert_product_version_uuid IS NOT NULL THEN
-        SELECT product_type INTO alert_type FROM product.product_version
-         WHERE version_uuid=NEW.alert_product_version_uuid;
+        SELECT pv.product_type,a.target_product_version_uuid,
+               a.target_investigation_version_uuid
+          INTO alert_type,alert_target_product,alert_target_inv
+          FROM product.product_version pv
+          JOIN maintenance.evidence_alert a
+            ON a.alert_product_version_uuid=pv.version_uuid
+         WHERE pv.version_uuid=NEW.alert_product_version_uuid;
         IF alert_type IS DISTINCT FROM 'evidence_alert' THEN
             RAISE EXCEPTION 'PriorityAssessment alert reference must be evidence_alert';
+        END IF;
+        IF alert_target_product IS DISTINCT FROM pol.target_product_version_uuid
+           OR alert_target_inv IS DISTINCT FROM pol.target_investigation_version_uuid THEN
+            RAISE EXCEPTION 'PriorityAssessment Alert target must match UpdatePolicy target';
         END IF;
     END IF;
 
