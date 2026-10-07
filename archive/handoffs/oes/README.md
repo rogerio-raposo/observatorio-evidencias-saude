@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP86 — 2026-10-06**
+**CP87 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP86.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP87.md`
 
 Checkpoint anterior:
 
-`CP85`
+`CP86`
 
 Status:
 
@@ -188,3 +188,5 @@ em **Modo Continuidade**.
 - **CP85 — 2026-10-06:** registra PASS técnico do contrato do Alerta e **Projection Readiness NOT_READY**; retomada na migration 025 de hardening.
 
 - **CP86 — 2026-10-06:** registra **Projection Readiness do Alerta = READY**; autoriza migration 026 para EvidenceAlertView 0.1.
+
+- **CP87 — 2026-10-06:** registra **EvidenceAlertView 0.1 = PASS**; retomada na camada de apresentação e fechamento da Fase 3.
