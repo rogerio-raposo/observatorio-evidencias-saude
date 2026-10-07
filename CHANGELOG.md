@@ -3079,3 +3079,18 @@ Documentos:
 - F4-RP-T01–T87 definido como plano mínimo;
 - M3 blocker preservado.
 
+## 2026-10-07 — CP98
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP98.md`;
+- ponteiro de continuidade movido para CP98;
+- contrato físico UpdateRiskProfile = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- migration 030 = **AUTHORIZED_IN_STRICT_SCOPE**, ainda não implementada;
+- F4-RP-T01–T87 definido como plano mínimo;
+- provenance dimensional, authority, carry-forward e snapshot adoption fechados;
+- sem backfill fabricado de profiles/policy links históricos;
+- sem risk score, numeric cadence, numeric SLA ou auto policy change;
+- M3 blocker preservado;
+- último PASS técnico continua run **37580906483** (#150);
+- próximo passo: implementação migration 030 + S5/idempotência/rebuild/regressões;
+- regra de pausa após checkpoint preservada.
+
