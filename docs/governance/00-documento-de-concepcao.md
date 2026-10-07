@@ -300,9 +300,13 @@ Definir como perguntas, investigações, estudos, publicações, resultados, ava
 
 Padronizar fichas, relatórios, sínteses, mapas e monitores.
 
+**Status:** concluída em 6 de outubro de 2026; 9/9 produtos formalizados no escopo técnico/taxonômico.
+
 ### Fase 4 — Protocolo de Atualização
 
 Definir gatilhos e estados de atualização.
+
+**Status:** em desenvolvimento; baseline conceitual nos Documentos 05–06, com gate adversarial **PASS_WITH_ARCHITECTURAL_DECISIONS**.
 
 ### Fase 5 — Automação e IA
 
