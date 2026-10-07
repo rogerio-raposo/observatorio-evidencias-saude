@@ -6,7 +6,7 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 ## Estado do projeto
 
-**Fase atual:** Fase 3 — Produtos do Observatório. A taxonomia e arquitetura comum dos produtos foi consolidada no Documento 40.
+**Fase atual:** Fase 4 — Protocolo de Atualização. A Fase 3 foi encerrada com 9/9 produtos formalizados; a baseline conceitual da Fase 4 está nos Documentos 05–06.
 
 **Painel de estado vivo:** [STATE.md](STATE.md)
 
@@ -25,6 +25,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [02 — Arquitetura de Níveis de Investigação e Produtos](docs/governance/02-niveis-investigacao-produtos.md)
 - [03 — Protocolo de Entrada, Triagem e Roteamento Metodológico](docs/governance/03-roteamento-metodologico.md)
 - [04 — Governança de Garantia Metodológica, Aprovação e Revisão](docs/governance/04-governanca-garantia-revisao.md)
+- [05 — Protocolo Transversal de Atualização — Arquitetura Conceitual v0.1](docs/governance/05-protocolo-transversal-atualizacao.md)
+- [06 — Revisão Adversarial do Protocolo Transversal de Atualização v0.1](docs/governance/06-revisao-adversarial-protocolo-atualizacao.md)
 
 ### Metodologia
 
@@ -188,20 +190,19 @@ Alterações metodológicas relevantes devem:
 
 ## Próxima etapa
 
-A Fase 3 já possui duas trilhas de produto consolidadas ponta a ponta:
+A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-1. **Ficha de Evidência — N2**: Caso Real 01 publicado em **A2**, `publication_date=2026-10-04`, `publishable=true`.
-2. **Resposta de Evidência — N1**: Caso Real N1-01 publicado em **A2**, `publication_date=2026-10-05`, `publishable=true`.
+A **Fase 4 — Protocolo de Atualização** foi iniciada mediante autorização explícita do usuário. O primeiro bloco arquitetural foi concluído:
 
-Na Resposta N1, a primeira verificação adversarial retornou **REVISE**, as correções foram preservadas em nova ProductVersion, a segunda passagem foi **PASSED** e a aprovação explícita do proprietário autorizou A2. A ausência de revisão especializada independente permanece declarada.
+- Documento 05 — Protocolo Transversal de Atualização v0.1;
+- Documento 06 — revisão adversarial = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- M0–M3, currentness, gatilhos, materialidade, cadence, SLA clocks, propagação, governança e fronteira de automação foram separados conceitualmente;
+- **M3 formal continua bloqueado** até contrato físico, migration e validação específicos;
+- nenhuma migration da Fase 4 está autorizada neste marco.
 
-Validação final N1: GitHub Actions run **37362554094** — **PASS**.
+Próximo passo exato:
 
-Conforme a ordem recomendada do Documento 40, a próxima etapa da Fase 3 é:
-
-> **especificação científica e funcional do Evidence Scan — N0**
-
-antes de qualquer contrato de dados, template ou automação específica.
+> **Especificar o Contrato de Dados v0.1 do Protocolo Transversal de Atualização, sem implementar migration antes de novo gate de coerência física.**
 
 ---
 
