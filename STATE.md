@@ -561,239 +561,74 @@ Taxonomia restante da Fase 3:
 
 ### Overview de Revisões
 
-Documentos 138–159:
+Documentos **138–164**: trilha inicial especificada, implementada, exercitada em caso real developmental e encerrada de forma controlada.
 
-- 138 — especificação científica e funcional concluída;
-- 139 — revisão de coerência e decisão arquitetural concluída;
-- 140 — contrato de dados v0.1 concluído;
-- 141 — validação técnica do contrato = **PASS**;
-- 142 — contrato de renderização definido; Projection Readiness inicialmente = **NOT_READY**;
-- 143 — migration 020 + OVR-T01–T12 fecham Projection Readiness = **READY**;
-- 144 — especificação do Template Operacional concluída;
-- 145 — validação da camada de apresentação = **PASS**;
-- 146 — readiness pré-caso real: developmental = **READY_WITH_DOCUMENTED_CONDITIONS** / formal = **NOT_READY**;
-- 147 — qualificação do subconjunto secundário N3-01 = **UNSUITABLE para OVR-01**;
-- 148 — corpus dCBT-I = **SUITABLE_WITH_CONDITIONS para OVR-01 developmental**;
-- 149 — protocolo developmental OVR-01 dCBT-I definido.
-
-Arquitetura/escopo vigentes:
+Arquitetura/contrato:
 
 - unidade principal = systematic review;
-- escopo formal v0.1 = systematic reviews quantitativas de intervenções;
-- OES-P1 reutiliza Study/Report/Result/RiskAssessment/Synthesis/Certainty;
-- overlap exige membership Review × primary Study;
-- CCA/pairwise overlap são derivados;
-- double counting é proibido;
-- ROBIS = default de risk of bias da review;
-- supplemental primary studies ficam fora do corpus analítico formal v0.1;
-- formal Overview exige Investigation N4 + A3 + qualified human controls;
-- nenhuma entidade Review/Overview paralela foi criada.
-
-Contrato técnico:
-
 - migration 019 = PASS;
-- fixture formal sintética A3 = PASS;
-- 3 Reviews / 5 primary Studies / 9 memberships;
-- CCA derivado = 0,4;
-- OV-T01–T33 = PASS;
-- `OverviewOfReviewsView` = PASS;
-- rebuild/regressões = PASS;
-- run **37502184404** = success;
-- artifact **11430003081**;
-- digest `sha256:94759585098f90d0227a3d4435056807c18e72af1e01a558e7a5dad3267afee3`.
-
-Projection Readiness:
-
 - migration 020 = PASS;
+- `OverviewOfReviewsView` = PASS;
+- OV-T01–T33 = PASS;
 - OVR-T01–T12 = PASS;
-- schema `oes.overview_of_reviews_view/0.1` preservado;
-- method decisions, conflicts, QC payloads, search-export metadata, selection/exclusions, Report lineage, OutcomeEvidence provenance e dependency/invalidation detail projetados;
-- migration 020 idempotente = PASS;
-- rebuild/regressões through migration 020 = PASS;
-- run **37503751486** = success;
-- artifact **11430083884**;
-- digest `sha256:f599426adb3afd5cc28066c00eb0de73c6d18dd734f622d58e9f0f5f9be418a5`;
-- Projection Readiness = **READY para especificação do template operacional**.
+- template/presentation map/renderer/validator = PASS;
+- rota developmental interna A0/A1 = suportada;
+- rota formal publicável exige Investigation N4 + A3 + qualified human controls.
 
-Contrato de renderização permanece vinculante:
-
-- renderer consome exclusivamente a `OverviewOfReviewsView`;
-- não recalcula CCA/pairwise overlap;
-- eligibility e overlap disposition permanecem distintas;
-- ROBIS e certainty/currentness permanecem distintas;
-- nenhum global Overview certainty;
-- nenhuma comparação indireta informal;
-- renderer não cria reanalysis ou assurance.
-
-Template Operacional:
-
-- ordem canônica definida;
-- regras de Review ≠ Report e eligibility ≠ overlap disposition preservadas;
-- overlap/CCA/pairwise somente leitura;
-- ROBIS/certainty/currentness separados;
-- nenhum global Overview certainty;
-- nenhum indirect comparison informal;
-- presentation map, renderer e validator especificados;
-- cenários adversariais de A3 bloqueado, membership incompleta, certainty ausente, not comparable e invalidated dependency definidos.
-
-Camada de apresentação:
-
-- template Markdown = PASS;
-- presentation map = PASS;
-- renderer read-only = PASS;
-- validator positivo + cinco cenários adversariais = PASS;
-- integração S5 = PASS;
-- run **37506526884** = success;
-- artifact **11431539311**;
-- digest `sha256:4ddfff2d14f9b8892611199cdade932f7825d2615f76610518a63499c2a58770`.
-
-Readiness pré-caso real:
-
-- infraestrutura técnica = READY;
-- rota developmental interna A0/A1 = READY_WITH_DOCUMENTED_CONDITIONS;
-- rota formal publicável A3 = NOT_READY;
-- nenhum corpus real foi ainda qualificado;
-- N3-01 pode ser examinado apenas como candidato;
-- nenhum Product/Investigation OVR-01 deve ser criado antes da qualificação do corpus.
-
-Qualificação do primeiro candidato:
-
-- Report 206 = systematic review elegível em princípio;
-- Report 211 = rapid review, não reclassificada como systematic review;
-- Reports 210/220 = scoping/narrative, não elegíveis;
-- 206/211 não estão materializados como Review Study/StudyVersion;
-- não existe membership Review × primary Study;
-- não existem Review-level Results/Syntheses/ROBIS/certainty materializados;
-- requisito mínimo de duas systematic reviews = FAIL;
-- decisão = **UNSUITABLE**.
-
-Segundo candidato qualificado:
-
-- Hwang 2025 = systematic review/meta-analysis já materializada;
-- Gao 2026 = systematic review/meta-analysis já materializada;
-- ambas possuem Reports, ResultVersions e Syntheses externas separadas;
-- Hwang possui ROBIS draft;
-- study membership Hwang × Gao ainda não reconciliada;
-- last-search date de Gao ainda não persistida;
-- comparadores diferem e não devem ser tratados como estimando idêntico;
-- decisão = **SUITABLE_WITH_CONDITIONS**.
-
-Protocolo developmental:
-
-- pergunta review-level própria definida;
-- eligibility de systematic reviews definida;
-- discovery pré-persistência não exaustivo definido;
-- cutoff = 2026-10-06;
-- currentness por last-search date;
-- strategy inicial = include_all_separate_estimates;
-- membership/CCA somente após reconciliação;
-- Hwang/Gao estimates permanecem separados por comparador;
-- Nazari deve ser screened prospectivamente;
-- nenhuma nova meta-analysis;
-- A0 inicial / A1 eventual;
-- C1–C12 definidos como condições pré-persistência.
-
-Fechamento C1–C4:
-
-- C1 Gao study list = PASS;
-- C2 Gao last-search date = BLOCKED / NOT_VERIFIED;
-- C3 Nazari = ELIGIBLE;
-- C4 inventário definitivo = PASS;
-- corpus analítico v1 = Hwang 2025 + Gao 2026 + Nazari 2025;
-- nenhum OVR-01 real criado.
-
-C5–C6 preparatórios:
-
-- unidade = primary Study/trial;
-- multiple Reports não contam como Studies distintas;
-- GoodNight colapsado conceitualmente em uma Study;
-- Eigl 2023 e Hinterberger 2024 = Studies distintas; hipótese preliminar de same Study superseded pelo Documento 153;
-- Lorenz 2018/2019, Glozier 2018/2019, Hagatun 2017/2019 e Maurer 2024/2025 = aliases bibliográficos resolvidos;
-- matriz preliminar corrigida;
-- pelo menos cinco overlaps triplos confirmados identificados;
-- CCA ainda proibido.
-
-Estado:
-
-- C2 = BLOCKED / NOT_VERIFIED;
-- C5 = IN_PROGRESS;
-- C6 = IN_PROGRESS.
-
-Reconciliação adicional:
-
-- Hwang = 29 artigos; 27 Study candidates provisórios após GoodNight;
-- Nazari = 49 artigos; máximo provisório de 44 Study candidates após cinco clusters confirmados;
-- multiple-report clusters confirmados em Nazari: GoodNight, REST, DIALS, SPREAD e Ritterband/Shaffer;
-- pelo menos 17 overlaps Hwang × Nazari confirmados;
-- Chan 2023 e Chan 2024 = Studies distintas;
-- C2 continua BLOCKED / NOT_VERIFIED.
-
-Próxima etapa:
-
-> **investigar multiple-report clusters remanescentes em Nazari, consolidar contagens Study-level finais de Hwang/Nazari, cruzar Gao e fechar C5–C6 antes de classificar C7/C8.**
-
-## 9. Emenda 01 e micro-gate
-
-Documentos 160–161 concluídos.
-
-Estado vigente:
-
-- Emenda 01 = **APROVADA para uso prospectivo no OVR-01 developmental**;
-- C2 Gao last-search date = **BLOCKED / NOT_VERIFIED**;
-- Gao será representado, somente na rota developmental, com `last_search_date=NULL`, `currentness_status='unclear'` e rationale explícita;
-- `MISSING_LAST_SEARCH_DATE` permanece **error** do publication gate;
-- rota formal = **NOT_READY**;
-- micro-gate = **READY_TO_PERSIST_DEVELOPMENTAL_A0**;
-- nenhuma entidade real OVR-01 foi criada até o CP70.
-
-A migration 019 foi conferida diretamente e suporta essa representação sem alteração de schema.
-
-## 10. Persistência real OVR-01 A0 e validação pós-persistência
-
-Estado vigente do OVR-01 dCBT-I:
+Caso Real OVR-01 — dCBT-I:
 
 - Product = `OES-P-2026-001601`;
 - rota = developmental interna;
-- assurance = **A0**;
-- status editorial = `under_review`;
-- publicação = bloqueada;
-- Question/Investigation/Product próprios persistidos;
-- Nazari materializada de forma rastreável;
-- ReviewItems Hwang/Gao/Nazari persistidos;
+- ReviewItems = Hwang 2025 + Gao 2026 + Nazari 2025;
 - memberships = **27 / 15 / 44**;
 - occurrences = **86**;
 - unique primary Study candidates = **59**;
 - pairwise overlap derivado pelo banco = **6 / 17 / 9**;
-- CCA = exclusivamente derivado por `overview.overlap_metrics`; nenhum valor foi calculado/persistido manualmente;
-- Gao = `last_search_date=NULL`, `currentness_status='unclear'`, sem inferência;
-- Nazari = precisão de busca disponível somente em nível mensal; nenhum dia foi inventado;
-- Hwang/Gao/Nazari estimates permanecem separados;
-- nenhuma nova meta-analysis OES;
-- certainty review-level não foi inventada nem reutilizada do N2;
-- ROBIS e memberships permanecem AI-assisted/unverified;
-- nenhum reviewer humano, owner approval ou expert review foi fabricado;
-- nenhuma assurance A1/A2/A3 foi criada.
+- CCA permanece exclusivamente derivado por `overview.overlap_metrics`;
+- Gao mantém `last_search_date=NULL` e `currentness_status='unclear'`, sem inferência;
+- comparadores permanecem separados;
+- nenhuma nova meta-analysis OES foi criada;
+- certainty review-level não foi inventada;
+- ROBIS e memberships permanecem AI-assisted/unverified.
 
-Arquivos:
+Trilha adversarial:
 
-- `database/f3-real-case-ovr01-dcbti.sql`;
-- `database/f3-real-case-ovr01-tests.sql`.
+- Documento 162 = primeira passagem adversarial, decisão **REVISE**;
+- achados: Search execution não sustentada, regra retrospectiva `minimum_bibliographic_sources=2` e drift da Question;
+- achados corrigidos e protegidos por OVR01-T15–T16;
+- Documento 163 = segunda passagem adversarial, decisão **PASS**;
+- Documento 164 = encerramento controlado da trilha developmental.
 
-Validação:
+Estado final:
 
-- OVR01-T01–T14 = **PASS**;
-- render via `OverviewOfReviewsView` = **PASS**;
-- regressões/idempotência = **PASS**;
+- assurance = **A1**;
+- `ai_methodological_verification=passed`;
+- editorial status = `under_review`;
+- `publication_date=NULL`;
+- `publishable=false`;
+- owner approval = ausente;
+- expert independent review = ausente;
+- human verification = ausente;
+- rota formal = **NOT_READY**.
+
+Validação final:
+
+- OVR01-T01–T16 = **PASS**;
+- OVR01-A1-T01–T09 = **PASS**;
+- OVR01-RENDER-A1 = **PASS**;
+- regressões integradas = **PASS**;
 - rebuild-from-zero = **PASS**;
-- run final = **37542350632**;
-- HEAD validado = `7da4b8b9e90ae86858728b35a97c49cb7979cbab`;
-- artifact = **11449631263**;
-- digest = `sha256:138fb9fe28432124dc6e70031bd0a99c1c11a40647ba8ff73687f3fd3cecdb93`.
+- run **37549135468** (#117) = **success**;
+- HEAD validado = `ecc04933dd5ba116345dc4dcf8d352a646b6aed7`;
+- artifact **11452420926**;
+- digest `sha256:4dff568129b92a6a4565c33c015afbbe7bec2cc872333b4f99b2701b9c9151a6`.
 
-Publication blockers confirmados incluem:
+Publication blockers formais permanecem, incluindo:
 
 - `MISSING_LAST_SEARCH_DATE`;
-- `MISSING_APPRAISAL_CONTROL`;
+- `MISSING_OWNER_APPROVAL`;
+- `MISSING_EXPERT_INDEPENDENT_REVIEW`;
+- `ASSURANCE_BELOW_REQUIRED_LEVEL`;
 - `UNVERIFIED_REVIEW_APPRAISAL`;
 - `UNVERIFIED_MEMBERSHIP`;
 - `MISSING_OVERLAP_CONTROL`;
@@ -801,33 +636,30 @@ Publication blockers confirmados incluem:
 
 Marco:
 
-> **OVR-01 = PERSISTED_DEVELOPMENTAL_A0_VALIDATED**
+> **OVR-01 = DEVELOPMENTAL_A1_INTERNAL_VALIDATED — concluído / não publicável.**
 
-## 11. Próxima etapa
+## 9. Próxima etapa da Fase 3
 
-**Verificação metodológica adversarial pós-persistência do OVR-01.**
+> **Iniciar a Especificação Científica e Funcional do Monitor de Evidências.**
 
-A verificação deve confrontar o estado persistido e a `OverviewOfReviewsView` com:
+Segundo o Documento 40:
 
-- Documento 149;
-- Emenda 01 / Documento 160;
-- micro-gate / Documento 161;
-- matriz canônica e fechamentos C5–C12;
-- publication blockers;
-- separação developmental × formal.
+- Monitor de Evidências é produto/processo de manutenção;
+- pertence à dimensão **M2/M3**;
+- não cria um novo nível N;
+- deve estar vinculado a Investigation e/ou produto científico persistente;
+- deve vigiar novas evidências capazes de modificar Results, Synthesis, Certainty, aplicabilidade, conclusão ou estado de atualidade.
 
-Somente se o adversarial concluir PASS metodológico poderá ser considerada uma promoção interna para A1.
+O **Alerta de Evidência** permanece produto/evento posterior ao Monitor.
 
-Continuam proibidos: publicação, A2/A3, owner approval automático, expert review fictícia, CCA manual, nova meta-analysis, colapso indevido de comparadores e inferência da data de busca de Gao.
+## 10. Checkpoint vigente
 
-## 12. Checkpoint vigente
-
-**CP71 — 2026-10-06**
+**CP71 — 2026-10-06**, até a criação e ativação do próximo checkpoint de continuidade.
 
 Arquivo:
 
 `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`
 
-Ponto exato de retomada:
+Ponto exato de retomada após consolidação do novo checkpoint:
 
-> **Executar verificação metodológica adversarial pós-persistência; reconciliar qualquer achado material; somente depois considerar A1 interno.**
+> **Especificação Científica e Funcional do Monitor de Evidências.**
