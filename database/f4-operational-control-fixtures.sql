@@ -174,47 +174,81 @@ INSERT INTO maintenance.workflow_round(
     'fixture-owner','owner'
 );
 
+WITH res AS (
+  SELECT * FROM maintenance.resolve_sla_rule(
+    'f4100000-0000-0000-0000-000000000003',
+    'SLA1_DETECTION_TO_TRIAGE',NULL,'triage'
+  )
+)
 INSERT INTO maintenance.sla_instance(
     sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
     update_triage_uuid,start_priority_assessment_uuid,
     clock_code,endpoint_type,time_basis,rule_snapshot_payload,
-    source_detected_at,start_at,nominal_due_at,end_at,
+    due_calculation_payload,source_detected_at,start_at,nominal_due_at,end_at,
     execution_status,satisfied_at
-) VALUES (
+)
+SELECT
     'f5600000-0000-0000-0000-000000000001',
     'f56f0000-0000-0000-0000-000000000001',
-    'f5400000-0000-0000-0000-000000000001',
+    res.sla_rule_uuid,
     'f4100000-0000-0000-0000-000000000003',
     'f5000000-0000-0000-0000-000000000001',
-    'f5100000-0000-0000-0000-000000000001',
+    res.start_priority_assessment_uuid,
     'SLA1_DETECTION_TO_TRIAGE','triage','elapsed_time',
-    '{"fixture":true,"duration":"PT2H","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
-    TIMESTAMPTZ '2026-10-07 00:30:00+00',
-    TIMESTAMPTZ '2026-10-07 00:30:00+00',
-    TIMESTAMPTZ '2026-10-07 02:30:00+00',
+    maintenance.sla_rule_snapshot(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.contractual_start_at,res.selection_trace
+    ),
+    maintenance.sla_due_calculation_payload(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.raw_causal_start_at,res.contractual_start_at,
+      TIMESTAMPTZ '2026-10-07 00:30:00+00'
+    ),
+    res.raw_causal_start_at,
+    res.contractual_start_at,
+    maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
     TIMESTAMPTZ '2026-10-07 00:32:00+00',
     'satisfied',TIMESTAMPTZ '2026-10-07 00:32:00+00'
-);
+FROM res
+WHERE res.resolution_status='selected';
 
+WITH res AS (
+  SELECT * FROM maintenance.resolve_sla_rule(
+    'f4100000-0000-0000-0000-000000000003',
+    'SLA4_DECISION_TO_WORKFLOW_START',
+    'f5500000-0000-0000-0000-000000000001',
+    'workflow_started'
+  )
+)
 INSERT INTO maintenance.sla_instance(
     sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
     update_decision_uuid,workflow_round_uuid,start_priority_assessment_uuid,
     clock_code,endpoint_type,time_basis,rule_snapshot_payload,
-    start_at,nominal_due_at,execution_status
-) VALUES (
+    due_calculation_payload,start_at,nominal_due_at,execution_status
+)
+SELECT
     'f5600000-0000-0000-0000-000000000004',
     'f56f0000-0000-0000-0000-000000000004',
-    'f5400000-0000-0000-0000-000000000004',
+    res.sla_rule_uuid,
     'f4100000-0000-0000-0000-000000000003',
     'f4410000-0000-0000-0000-000000000001',
     'f5500000-0000-0000-0000-000000000001',
-    'f5100000-0000-0000-0000-000000000001',
+    res.start_priority_assessment_uuid,
     'SLA4_DECISION_TO_WORKFLOW_START','workflow_started','elapsed_time',
-    '{"fixture":true,"duration":"PT8H","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
-    TIMESTAMPTZ '2026-10-07 00:41:00+00',
-    TIMESTAMPTZ '2026-10-07 08:41:00+00',
+    maintenance.sla_rule_snapshot(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.contractual_start_at,res.selection_trace
+    ),
+    maintenance.sla_due_calculation_payload(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.raw_causal_start_at,res.contractual_start_at,
+      TIMESTAMPTZ '2026-10-07 00:41:00+00'
+    ),
+    res.contractual_start_at,
+    maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
     'running'
-);
+FROM res
+WHERE res.resolution_status='selected';
 
 INSERT INTO maintenance.workflow_milestone(
     workflow_milestone_uuid,workflow_round_uuid,milestone_type,adapter_type,
@@ -240,25 +274,43 @@ UPDATE maintenance.sla_instance
        satisfied_at=TIMESTAMPTZ '2026-10-07 00:45:00+00'
  WHERE sla_instance_uuid='f5600000-0000-0000-0000-000000000004';
 
+WITH res AS (
+  SELECT * FROM maintenance.resolve_sla_rule(
+    'f4100000-0000-0000-0000-000000000003',
+    'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION',
+    'f5500000-0000-0000-0000-000000000001',
+    'scientific_completed'
+  )
+)
 INSERT INTO maintenance.sla_instance(
     sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
     workflow_round_uuid,start_priority_assessment_uuid,
     clock_code,endpoint_type,time_basis,rule_snapshot_payload,
-    start_at,nominal_due_at,execution_status
-) VALUES (
+    due_calculation_payload,start_at,nominal_due_at,execution_status
+)
+SELECT
     'f5600000-0000-0000-0000-000000000005',
     'f56f0000-0000-0000-0000-000000000005',
-    'f5400000-0000-0000-0000-000000000005',
+    res.sla_rule_uuid,
     'f4100000-0000-0000-0000-000000000003',
     'f5500000-0000-0000-0000-000000000001',
-    'f5100000-0000-0000-0000-000000000001',
+    res.start_priority_assessment_uuid,
     'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION',
     'scientific_completed','business_calendar',
-    '{"fixture":true,"duration":"PT16H","calendar":"fixture-business-calendar","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
-    TIMESTAMPTZ '2026-10-07 00:45:00+00',
-    TIMESTAMPTZ '2026-10-08 16:45:00+00',
+    maintenance.sla_rule_snapshot(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.contractual_start_at,res.selection_trace
+    ),
+    maintenance.sla_due_calculation_payload(
+      res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+      res.raw_causal_start_at,res.contractual_start_at,
+      TIMESTAMPTZ '2026-10-07 00:45:00+00'
+    ),
+    res.contractual_start_at,
+    maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
     'running'
-);
+FROM res
+WHERE res.resolution_status='selected';
 
 INSERT INTO maintenance.sla_pause(
     sla_pause_uuid,sla_instance_uuid,reason_code,rationale,
