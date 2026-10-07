@@ -2606,3 +2606,12 @@ Documentos:
 - Alert não terá scientific conclusion nem Product currency próprios;
 - Fase 4 não foi iniciada;
 - próxima etapa: Contrato de Dados v0.1.
+
+
+## 2026-10-06 — CP83
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP83.md`;
+- arquitetura do Alerta consolidada;
+- ponteiro de continuidade movido para CP83;
+- retomada: Contrato de Dados v0.1 do Alerta;
+- Fase 4 permanece explicitamente não autorizada.
