@@ -1447,3 +1447,59 @@ Próximo passo exato:
 - próximo passo: arquitetura transversal de prioridade e escalation;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Arquitetura transversal de prioridade e escalation
+
+Documentos:
+
+- 25 — Arquitetura Transversal de Prioridade e Escalation;
+- 26 — Revisão Adversarial da Arquitetura Transversal de Prioridade e Escalation.
+
+Estado:
+
+> **PHASE_4_PRIORITY_ESCALATION_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT_DESIGN**
+
+> **MIGRATION_029 = NOT_AUTHORIZED**
+
+> **PRIORITY_SCORE = NOT_DEFINED**
+
+> **NUMERIC_PRIORITY_WEIGHTS = NOT_DEFINED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Decisões consolidadas:
+
+- prioridade é avaliada por case/UpdateSignal/target version, não como atributo permanente do Product/Investigation;
+- response_class transversal = standard | expedited | urgent | immediate;
+- response_class não contém duração de SLA;
+- priority e escalation são eixos independentes;
+- safety/integrity e validity/use podem criar dominance floors;
+- `suspend_current_use` implica floor immediate + rota de current-use governance, sem executar retirada/publicação;
+- `material_change_confirmed` isolado e `update_recommended` isolado são strong modifiers, não floors universais;
+- priority authoritative baseada em materialidade científica exige qualificação humana apropriada;
+- Alert classification/reassessment_priority é input local/comunicacional, sem equivalência automática;
+- SLA breach é operational pressure modifier e não retroage SLA Rule snapshot;
+- capacity/cost não reduzem prioridade;
+- dependency reach aumenta coordenação/propagation assessment, não materiality;
+- queue aggregation futura deve ser derivada e manter linkage para casos causais;
+- escalation candidate pode ser automático; active escalation exige autoridade humana na baseline;
+- nenhum score aditivo ou peso numérico foi autorizado;
+- target supersession/invalidation pertence a lifecycle/reassessment, não dominance gate.
+
+Referências metodológicas consideradas:
+
+- Cochrane Handbook Chapter IV;
+- Cochrane Handbook Chapter 22;
+- Cochrane Interactive Learning Module 14 (2026);
+- NICE PMG49 (2025);
+- WHO living-guidelines approach.
+
+Próximo passo exato:
+
+> **Definir o contrato de dados integrado do plano operacional da Fase 4 — triage + PriorityAssessment + escalation + SLA Rule/Instance + pause ledger + milestones mínimos de workflow/review — sem migration; depois executar gate físico próprio.**
+
