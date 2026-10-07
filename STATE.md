@@ -2465,3 +2465,62 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: executar, em modo alto, o segundo Evidence Readiness Assessment real no N2/dCBT-I;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — segundo Evidence Readiness Assessment real
+
+Documento:
+- `docs/governance/50-segundo-evidence-readiness-assessment-real-n2-cadence.md`.
+
+Contexto:
+> **SECOND_REAL_READINESS_CONTEXT = N2_RC01_PRODUCTVERSION_1_CADENCE_POLICY_AGGREGATE**
+
+Resultado:
+> **SECOND_REAL_READINESS_ASSESSMENT = COMPLETED**
+
+> **PRIMARY_READINESS_STATE = INSUFFICIENT_EVIDENCE**
+
+> **READY_FOR_CALIBRATION = NO**
+
+> **REAL_CALIBRATION_DOSSIER_FOR_N2 = NOT_AUTHORIZED**
+
+Evidência real relevante:
+- ProductVersion N2 A2/published;
+- 4 searches reais;
+- PubMed/MEDLINE, BVS/LILACS e ClinicalTrials.gov;
+- 6 SearchHits persistidos;
+- 6 ScreeningDecisions;
+- provenance/currency/assurance reais.
+
+Blockers materiais:
+- `INSUFFICIENT_NEED_EVIDENCE`;
+- `NEEDS_SOURCE_CHARACTERIZATION`;
+- `NEEDS_PROSPECTIVE_OBSERVATION`;
+- `NEEDS_HUMAN_AUTHORITY`;
+- `FEASIBILITY_NOT_ESTABLISHED`;
+- `REPLAY_NOT_CURRENTLY_FEASIBLE`.
+
+Comparação N1/N2:
+- blockers centrais recorrentes nos dois contexts;
+- source diversity do N2 não elevou cadence readiness;
+- déficit passa a ser interpretado, com cautela, como parcialmente transversal ao estado operacional atual do OES;
+- terceiro readiness assessment imediato não selecionado.
+
+Estado:
+> **TWO_REAL_CONTEXTS_ASSESSED = YES**
+
+> **THIRD_IMMEDIATE_READINESS_ASSESSMENT = NOT_SELECTED**
+
+> **TEMPORAL_EVIDENCE_ACQUISITION_DESIGN = NEXT_DECISION**
+
+Restrições preservadas:
+- nenhum Calibration Dossier real;
+- nenhum valor temporal normativo;
+- nenhum novo migration;
+- scheduler/notifications deferidos;
+- auto-escalation não autorizada;
+- M3 formal bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, decidir e especificar o escopo metodológico do próximo bloco de aquisição de evidência temporal não normativa, escolhendo entre plano transversal reutilizável + instância piloto versus plano inicialmente específico de um target.**
