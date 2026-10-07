@@ -2445,3 +2445,23 @@ Restrições preservadas:
 
 Próximo passo:
 > **após checkpoint, em modo alto, executar o segundo Evidence Readiness Assessment real no N2/dCBT-I, cadence / policy_aggregate, sem calibração numérica nem observação prospectiva.**
+
+
+### CP110 — reconciliação do readiness e segundo contexto real
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP110.md`;
+- ponteiro de continuidade movido para CP110;
+- resultado do primeiro readiness N1-01 preservado;
+- justificativa comparativa do Documento 48 parcialmente corrigida pelo Documento 49;
+- N2/dCBT-I A2/published selecionado como segundo contexto real;
+- `SECOND_REAL_READINESS_ASSESSMENT = SELECTED_NOT_EXECUTED`;
+- `TEMPORAL_OBSERVATION_PLAN_N1_01 = DEFERRED_PENDING_SECOND_ASSESSMENT`;
+- nenhum valor temporal normativo autorizado;
+- nenhum Calibration Dossier real autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications continuam deferidos;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: executar, em modo alto, o segundo Evidence Readiness Assessment real no N2/dCBT-I;
+- pausa obrigatória preservada.
