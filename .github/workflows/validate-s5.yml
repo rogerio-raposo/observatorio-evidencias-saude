@@ -414,11 +414,22 @@ jobs:
           echo "F4-UP-T01–T63 PASS — historical transversal update protocol suite validated" | tee -a s5-artifacts/f4-update-protocol-tests.log
           echo "F4-UP-P01–P58 PASS — Documento 07 contract plan mirrored explicitly" | tee -a s5-artifacts/f4-update-protocol-plan-tests.log
 
-      - name: Phase 4 UpdateRiskProfile — physical contract validation
+      - name: Phase 4 UpdateRiskProfile — load physical fixtures
         shell: bash
         run: |
           set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/f4-risk-profile-fixtures.sql 2>&1 | tee s5-artifacts/f4-risk-profile-fixtures.log
+
+      - name: Phase 4 Operational Control — load fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -v ON_ERROR_STOP=1 -f database/f4-operational-control-fixtures.sql 2>&1 | tee s5-artifacts/f4-operational-control-fixtures.log
+
+      - name: Phase 4 UpdateRiskProfile — physical contract validation
+        shell: bash
+        run: |
+          set -euo pipefail
           psql -v ON_ERROR_STOP=1 -f database/f4-risk-profile-tests.sql 2>&1 | tee s5-artifacts/f4-risk-profile-tests.log
           echo "F4-RP-T01–T84 PASS — physical UpdateRiskProfile SQL contract validated" | tee -a s5-artifacts/f4-risk-profile-tests.log
 
@@ -426,7 +437,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          psql -v ON_ERROR_STOP=1 -f database/f4-operational-control-fixtures.sql 2>&1 | tee s5-artifacts/f4-operational-control-fixtures.log
           psql -v ON_ERROR_STOP=1 -f database/f4-operational-control-tests.sql 2>&1 | tee s5-artifacts/f4-operational-control-tests.log
           echo "F4-OC-T01–T69 PASS — integrated operational-control SQL contract validated" | tee -a s5-artifacts/f4-operational-control-tests.log
 
@@ -958,8 +968,8 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-update-protocol-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-update-protocol-plan-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-risk-profile-fixtures.sql
-            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-risk-profile-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-operational-control-fixtures.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-risk-profile-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f4-operational-control-tests.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-n3-ambient-ai-scribes.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f3-real-case-n3-rebuild-check.sql
