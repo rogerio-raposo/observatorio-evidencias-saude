@@ -489,6 +489,17 @@ SELECT pg_temp.assert_true(
 );
 
 -- P25 — SearchHit fora de Monitor é rejeitado.
+SAVEPOINT f4_p25;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000025',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:25+00','P25 isolated signal','P25',
+ 'audit','system','unverified'
+);
 SELECT pg_temp.assert_true(
     EXISTS (
         SELECT 1
@@ -502,43 +513,71 @@ SELECT pg_temp.assert_true(
     'F4-UP-P25-fixture'
 );
 SELECT pg_temp.expect_error_like(
-$$INSERT INTO maintenance.update_signal_source(
+$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,search_hit_uuid,note
 )
 SELECT
  'fb200000-0000-0000-0000-000000000025',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000025',
  'supporting','search_hit',sh.search_hit_uuid,'P25 outside Monitor'
 FROM investigation.search_hit sh
 WHERE NOT EXISTS (
   SELECT 1 FROM maintenance.cycle_search cs WHERE cs.search_uuid=sh.search_uuid
 )
 ORDER BY sh.search_hit_uuid
-LIMIT 1$$,'must belong to a MonitorCycle','F4-UP-P25');
+LIMIT 1$,'must belong to a MonitorCycle','F4-UP-P25');
+ROLLBACK TO SAVEPOINT f4_p25;
+RELEASE SAVEPOINT f4_p25;
 
 -- P26 — source Monitor pertence ao governing Monitor.
+SAVEPOINT f4_p26;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000026',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:26+00','P26 isolated signal','P26',
+ 'audit','system','unverified'
+);
 SELECT pg_temp.expect_error_like(
-$$INSERT INTO maintenance.update_signal_source(
+$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,
  monitor_cycle_uuid,note
 ) VALUES (
  'fb200000-0000-0000-0000-000000000026',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000026',
  'supporting','monitor_cycle',
  'e5420000-0000-0000-0000-000000000003','P26 wrong Monitor'
-)$$,'must belong to governing Monitor','F4-UP-P26');
+)$,'must belong to governing Monitor','F4-UP-P26');
+ROLLBACK TO SAVEPOINT f4_p26;
+RELEASE SAVEPOINT f4_p26;
 
 -- P27 — Alert source target compatível.
+SAVEPOINT f4_p27;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000027',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:27+00','P27 isolated signal','P27',
+ 'audit','system','unverified'
+);
 SELECT pg_temp.expect_error_like(
-$$INSERT INTO maintenance.update_signal_source(
+$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,
  alert_product_version_uuid,note
 ) VALUES (
  'fb200000-0000-0000-0000-000000000027',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000027',
  'supporting','alert_product_version',
  'a7100000-0000-0000-0000-000000000003','P27 wrong Alert target'
-)$$,'Alert source target must match UpdatePolicy target','F4-UP-P27');
+)$,'Alert source target must match UpdatePolicy target','F4-UP-P27');
+ROLLBACK TO SAVEPOINT f4_p27;
+RELEASE SAVEPOINT f4_p27;
 
 -- P28 — SignalSource selada após assessment.
 SELECT pg_temp.expect_error_like(
@@ -640,12 +679,22 @@ $$INSERT INTO maintenance.materiality_assessment(
 
 -- P34 — materiality outcome × dimensions coerente.
 SAVEPOINT f4_p34;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000034',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:35+00','P34 isolated signal','P34',
+ 'audit','system','unverified'
+);
 INSERT INTO maintenance.materiality_assessment(
  materiality_assessment_uuid,update_signal_uuid,outcome,rationale,
  assessed_by,actor_type,verification_status,assessed_at
 ) VALUES (
  'fb300000-0000-0000-0000-000000000034',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000034',
  'no_material_change','P34','audit','human_reviewer','unverified',
  TIMESTAMPTZ '2026-10-07 01:36+00'
 );
@@ -713,13 +762,23 @@ $$INSERT INTO maintenance.update_decision(
 
 -- P38 — authoritative com assessment AI-only é rejeitada.
 SAVEPOINT f4_p38;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000038',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:38+00','P38 isolated signal','P38',
+ 'audit','system','unverified'
+);
 INSERT INTO maintenance.materiality_assessment(
  materiality_assessment_uuid,update_signal_uuid,outcome,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,
  verified_at,assessed_at
 ) VALUES (
  'fb300000-0000-0000-0000-000000000038',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000038',
  'potentially_material','P38 AI-only assessment',
  'audit-ai','ai_system','ai_verified','audit-ai-check','ai_system',
  TIMESTAMPTZ '2026-10-07 01:39+00',TIMESTAMPTZ '2026-10-07 01:39+00'
@@ -738,7 +797,7 @@ $$INSERT INTO maintenance.update_decision(
  verified_at,decided_at
 ) VALUES (
  'fb400000-0000-0000-0000-000000000038',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000038',
  'fb300000-0000-0000-0000-000000000038',
  'observe','authoritative','no_change','P38',
  'audit-owner','owner','human_verified','audit-human','human_reviewer',
@@ -814,13 +873,23 @@ $$INSERT INTO maintenance.update_decision(
 
 -- P43 — material_change_confirmed → set_current é rejeitado.
 SAVEPOINT f4_p43;
+INSERT INTO maintenance.update_signal(
+ update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
+ detected_at,summary,rationale,detected_by,actor_type,verification_status
+) VALUES (
+ 'fb100000-0000-0000-0000-000000000043',
+ 'f4000000-0000-0000-0000-000000000001',
+ 'scientific_currentness','governance_demand','explicit_reassessment_request',
+ TIMESTAMPTZ '2026-10-07 01:44+00','P43 isolated signal','P43',
+ 'audit','system','unverified'
+);
 INSERT INTO maintenance.materiality_assessment(
  materiality_assessment_uuid,update_signal_uuid,outcome,rationale,
  assessed_by,actor_type,verification_status,verified_by,verifier_actor_type,
  verified_at,assessed_at
 ) VALUES (
  'fb300000-0000-0000-0000-000000000043',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000043',
  'material_change_confirmed','P43',
  'audit-human','human_reviewer','human_verified',
  'audit-human-2','human_reviewer',
@@ -840,7 +909,7 @@ $$INSERT INTO maintenance.update_decision(
  verified_at,decided_at
 ) VALUES (
  'fb400000-0000-0000-0000-000000000043',
- 'f4100000-0000-0000-0000-000000000003',
+ 'fb100000-0000-0000-0000-000000000043',
  'fb300000-0000-0000-0000-000000000043',
  'currentness_only','authoritative','set_current','P43',
  'audit-owner','owner','human_verified','audit-human-2','human_reviewer',
