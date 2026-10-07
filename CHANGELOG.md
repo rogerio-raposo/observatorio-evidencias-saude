@@ -3115,3 +3115,19 @@ Documentos:
 - nenhum risk score, numeric cadence, numeric SLA, auto-policy change ou M3 unblock foi introduzido;
 - próxima dívida da Fase 4 ainda não selecionada.
 
+## 2026-10-07 — CP99
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP99.md`;
+- ponteiro de continuidade movido para CP99;
+- UpdateRiskProfile físico e migration 030 = **TECHNICALLY_VALIDATED**;
+- F4-RP-T01–T87 = PASS;
+- run canônico **37618433929** (#161) = success;
+- artifact **11480858194**;
+- rebuild-through-030 = PASS;
+- regressões completas = PASS;
+- M3 blocker preservado;
+- runs #153–#160 classificadas como diagnósticas/não canônicas no Documento 32;
+- próxima dívida da Fase 4 ainda não selecionada;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
+
