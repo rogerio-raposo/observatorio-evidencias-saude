@@ -722,3 +722,33 @@ Readiness:
 Próxima etapa:
 
 > **Contrato de Dados v0.1 do Monitor de Evidências.**
+
+
+### Monitor de Evidências — Contrato de Dados v0.1
+
+Documento 167 — **DATA_CONTRACT_V0_1_READY_FOR_IMPLEMENTATION**.
+
+Contrato:
+
+- `product_type='evidence_monitor'`;
+- `investigation_type='evidence_monitoring'`;
+- schema especializado `maintenance`;
+- oito estruturas v0.1:
+  1. `monitor_definition`;
+  2. `monitor_target`;
+  3. `monitor_state`;
+  4. `monitor_cycle`;
+  5. `cycle_search`;
+  6. `evidence_event`;
+  7. `candidate_assessment`;
+  8. `cycle_currency_state`;
+- Search/SearchHit/dedup/currency/version_change/provenance permanecem canônicos;
+- Product/Investigation cutoff do Monitor = cutoff basal do alvo;
+- latest surveillance cutoff é derivado dos cycles;
+- Monitor M2 formal v0.1 exige mínimo A2;
+- M3 é representável, mas permanece formalmente bloqueado até a Fase 4;
+- nenhuma conclusão científica do target é sobrescrita pelo Monitor.
+
+Próxima etapa:
+
+> **Implementar migration 021 + fixture sintética M2/M3 + testes de contrato + regressões/rebuild.**
