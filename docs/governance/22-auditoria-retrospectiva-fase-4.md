@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — hardening corretivo requerido antes de prioridade/escalation**  
+**Status:** **CLOSED_PASS — achados corretivos resolvidos e validados no Documento 24**  
 **Objeto:** Documentos 05–21, migration 027, fixtures/testes F4-UP, workflow S5, CP89–CP93  
 **Natureza:** auditoria retrospectiva; não inicia novo bloco funcional
 
@@ -466,3 +466,25 @@ Então:
 ## 17. Próximo passo
 
 > **Executar gate de coerência física corretivo antes de escrever migration 028.**
+
+---
+
+## 18. Fechamento da auditoria
+
+O hardening autorizado pelo Documento 23 foi implementado na migration 028 e validado pelo Documento 24.
+
+Resultado:
+
+> **RETROSPECTIVE_AUDIT_CORRECTIVE_BLOCK = CLOSED_PASS**
+
+Evidência:
+
+- T01–T63 = PASS;
+- P01–P63 = PASS;
+- migration 028 idempotency = PASS;
+- rebuild through 028 = PASS;
+- regressões F2-B/S4/S5 = PASS;
+- Monitor/Alert = PASS;
+- M3 blocker preservado.
+
+A arquitetura de prioridade/escalation volta a ser o próximo bloco, mas não é iniciada neste documento.
