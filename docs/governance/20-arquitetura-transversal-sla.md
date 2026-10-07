@@ -318,11 +318,19 @@ uma proposal de IA ou humano ainda não constitui decisão operacional autoritat
 
 ## 8.3 Terminalidade
 
-Se o signal/assessment for formalmente invalidado antes da decisão:
+Se o UpdateSignal for formalmente invalidado antes da decisão:
 
 - SLA-3 pode terminar como `cancelled_invalidated`;
 - isso não conta como `satisfied`;
 - rationale e autoridade de cancelamento devem ser preservadas.
+
+MaterialityAssessment, no contrato 027, é corrigido por supersessão, não por invalidation.
+
+Se um assessment for superseded antes da UpdateDecision:
+
+- o clock não é automaticamente cancelado;
+- deve continuar a partir do novo assessment qualificante da mesma cadeia;
+- a troca precisa preservar tempo já decorrido e não reiniciar silenciosamente SLA-3.
 
 ---
 
@@ -438,11 +446,23 @@ Termina quando ocorre decisão formal de revisão/governança aplicável:
 - approved;
 - revise;
 - rejected;
-- outra disposição terminal normativamente definida.
+- outra disposição normativamente definida para aquele round.
+
+`revise` satisfaz o clock de **tempo até disposição de revisão daquele round**, mas não significa conclusão do processo de publicação.
+
+Se `revise` abrir novo trabalho científico:
+
+> deve nascer novo workflow/review round com novas instâncias SLA-4/5/6 conforme aplicabilidade.
 
 ### publication
 
 Termina quando a versão elegível é formalmente publicada/emitida.
+
+Para rule cujo endpoint é `publication`:
+
+- `revise` não encerra SLA-6;
+- `rejected` deve produzir terminalidade explícita não-satisfied/terminated, conforme governança;
+- aprovação intermediária não substitui publicação.
 
 Não presumir que aprovação e publicação são o mesmo instante.
 
@@ -513,7 +533,33 @@ D8→triage pertence ao SLA operacional.
 
 ---
 
-# 14. Rule snapshot e não retroatividade
+# 14. Rule snapshot, vigência e não retroatividade
+
+## 14.1 Evento anterior à vigência da regra
+
+Pode ocorrer:
+
+- evento detectado em D0;
+- SLA Rule/UpdatePolicy passa a vigorar em D2;
+- signal é normalizado em D3.
+
+O OES deve preservar:
+
+- `source_detected_at = D0`;
+- `pre_policy_age = D0 → D2`;
+- `sla_start_at = D2`, se a obrigação passou a existir em D2 e o caso já era elegível.
+
+Regra:
+
+> **não criar breach retroativo por período anterior à obrigação normativa, mas também não apagar a idade pré-policy do evento.**
+
+Se a rule exigir ato de aceitação posterior para tornar o caso elegível:
+
+> `sla_start_at` será o primeiro instante em que rule vigente + eligibility estiverem simultaneamente satisfeitos.
+
+Esse caso deve ser distinguível de late normalization sob policy já vigente.
+
+## 14.2 Snapshot
 
 Quando um SLA Instance nasce, deve congelar:
 
@@ -521,7 +567,7 @@ Quando um SLA Instance nasce, deve congelar:
 - target;
 - clock code;
 - duration/deadline rule;
-- calendar basis;
+- calendar basis e calendar version;
 - pause policy;
 - escalation policy;
 - priority/risk inputs usados na resolução.
@@ -570,7 +616,8 @@ Exige:
 - timezone;
 - dias úteis;
 - janelas horárias;
-- feriados/calendário versionado.
+- feriados/calendário versionado;
+- snapshot da versão do calendário usada pela SLA Instance.
 
 Não permitir “dias úteis” sem calendário identificado.
 
@@ -665,9 +712,19 @@ Cada pausa precisa de:
 - reason_code;
 - rationale;
 - authorized_by;
+- authorized_at;
 - started_at;
 - ended_at ou estado aberto;
-- clock(s) afetados.
+- clock(s) afetados;
+- recorded_at.
+
+Regra anti-gaming:
+
+- pausa deve ser autorizada prospectivamente ou sustentada por evento externo independente com timestamp auditável;
+- documentação tardia de uma pausa pode ser registrada, mas não deve apagar automaticamente breach já observado;
+- correção retroativa de compliance exige revisão explícita e trilha de auditoria;
+- pausa iniciada **após** `first_breached_at` não altera o fato nem o instante do primeiro breach;
+- pause pós-breach pode afetar somente obrigações/escalations posteriores quando a rule permitir.
 
 Pausa não apaga:
 
@@ -1075,7 +1132,9 @@ Ainda faltam de forma transversal:
 9. rule snapshot/rebase;
 10. occurred_at × qualified_at × recorded_at para milestones novos;
 11. identidade causal de workflow/review round;
-12. nominal_due_at × effective_due_at.
+12. nominal_due_at × effective_due_at;
+13. policy/rule eligibility timestamp;
+14. pre_policy_age auditável.
 
 Portanto:
 
@@ -1123,9 +1182,13 @@ A revisão adversarial deverá testar:
 - SLA × cadence;
 - origem temporal upstream;
 - late normalization;
+- evento anterior à vigência da SLA Rule;
+- pre-policy age × SLA contractual time;
 - triage gap;
 - AI proposal × authoritative endpoint;
 - pause gaming;
+- pausa documentada retroativamente;
+- pausa iniciada depois do breach;
 - wall time × accountable time;
 - nominal_due_at × effective_due_at;
 - business calendar;
@@ -1139,6 +1202,8 @@ A revisão adversarial deverá testar:
 - target supersession;
 - workflow milestone gaps;
 - applicability de SLA-4/5/6;
+- review_disposition revise × publication endpoint;
+- múltiplos workflow/review rounds;
 - circularidade prioridade ↔ SLA;
 - fronteira de automação;
 - compatibilidade com migration 027.
