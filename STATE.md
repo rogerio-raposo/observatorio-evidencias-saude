@@ -1061,3 +1061,67 @@ Próxima etapa:
 > **Contrato de renderização + Template Operacional do Alerta de Evidência.**
 
 Fase 4 permanece não iniciada.
+
+
+### Alerta de Evidência — camada de apresentação concluída
+
+Documentos 185–187 concluídos.
+
+Estado:
+
+> **ALERTA_DE_EVIDENCIA = FORMALIZED_IN_PHASE_3**
+
+Apresentação:
+
+- `templates/evidence-alert.md`;
+- `templates/evidence-alert-presentation-map.json`;
+- `scripts/render_evidence_alert_reference.py`;
+- `scripts/validate_evidence_alert_render.py`.
+
+Validação final:
+
+- run **37561515491** (#141) = **success**;
+- HEAD validado `7d525fc978ee623f17a981b9bf42cdf18686c51e`;
+- artifact **11456897850**;
+- digest `sha256:257b26162a577f24cede0c21befd437b1cad4dc6c5847d39ef29e2755d85e099`;
+- presentation = PASS;
+- migration 024/025/026 re-apply = PASS;
+- rebuild-through-026 = PASS;
+- regressões globais = PASS.
+
+Runs #139 e #140 falharam exclusivamente por defeitos de template/validator e foram corrigidos sem alteração do contrato científico ou da View.
+
+### Fase 3 — Gate de Encerramento
+
+Documento 188 — **PASS**.
+
+Estado consolidado:
+
+> **PHASE_3_PRODUCTS = COMPLETE**
+
+> **PROJECT_STATE = PHASE_3_COMPLETE / PHASE_4_NOT_STARTED**
+
+Taxonomia:
+
+1. Evidence Scan — formalizado;
+2. Resposta de Evidência — formalizada;
+3. Ficha de Evidência — formalizada;
+4. Síntese Rápida de Evidências — formalizada;
+5. Revisão de Evidências — formalizada;
+6. Mapa de Evidências — formalizado;
+7. Overview de Revisões — formalizado;
+8. Monitor de Evidências — formalizado;
+9. Alerta de Evidência — formalizado.
+
+Critério do encerramento:
+
+- arquitetura/contratos/gates/projeções/apresentação de referência concluídos para os nove produtos;
+- rebuild e regressões globais verdes;
+- blockers específicos de rotas/casos reais continuam preservados;
+- encerramento não implica readiness de produção;
+- encerramento não implica A3 universal;
+- encerramento não torna M3 operacional.
+
+Fronteira obrigatória:
+
+> **Fase 4 não foi iniciada e não deve ser iniciada sem consentimento explícito do usuário, em nova conversa.**
