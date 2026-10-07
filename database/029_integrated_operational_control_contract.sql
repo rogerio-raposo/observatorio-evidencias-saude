@@ -1214,11 +1214,11 @@ BEGIN
         END IF;
     END IF;
     IF NEW.clock_code='SLA2_TRIAGE_TO_MATERIALITY' THEN
-        IF NOT EXISTS (SELECT 1 FROM maintenance.update_triage t
-            WHERE t.update_triage_uuid=NEW.update_triage_uuid
-              AND t.update_signal_uuid=NEW.update_signal_uuid
-              AND t.authority_status='authoritative'
-              AND t.disposition='accepted_for_materiality') THEN
+        IF NOT EXISTS (SELECT 1 FROM maintenance.update_triage tri
+            WHERE tri.update_triage_uuid=NEW.update_triage_uuid
+              AND tri.update_signal_uuid=NEW.update_signal_uuid
+              AND tri.authority_status='authoritative'
+              AND tri.disposition='accepted_for_materiality') THEN
             RAISE EXCEPTION 'SLA2 requires authoritative accepted triage';
         END IF;
     END IF;
