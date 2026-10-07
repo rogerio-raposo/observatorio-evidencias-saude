@@ -8,6 +8,80 @@
 BEGIN;
 
 -- ---------------------------------------------------------------------------
+-- HARDENING 0 — tighten signal_type='other' classification semantics.
+-- 'other' still requires rationale and cannot cross scientific/operational
+-- trigger domains incoherently.
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION maintenance.signal_mapping_is_valid(
+    p_signal_type text,
+    p_signal_class text,
+    p_trigger_class text,
+    p_rationale text
+)
+RETURNS boolean
+LANGUAGE sql
+IMMUTABLE
+AS $q$
+    SELECT CASE p_signal_type
+        WHEN 'new_study' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'new_review' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'review_update' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'estimate_change_signal' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'safety_signal' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='safety_regulatory'
+        WHEN 'new_population_signal' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'certainty_change_signal' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='new_evidence'
+        WHEN 'correction' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='integrity_validity'
+        WHEN 'retraction' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='integrity_validity'
+        WHEN 'expression_of_concern' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='integrity_validity'
+        WHEN 'methodology_change' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='methodological'
+        WHEN 'regulatory_change' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='safety_regulatory'
+        WHEN 'cadence_due' THEN
+            p_signal_class='operational' AND p_trigger_class='temporal_operational'
+        WHEN 'cycle_incomplete' THEN
+            p_signal_class='operational' AND p_trigger_class='temporal_operational'
+        WHEN 'source_coverage_gap' THEN
+            p_signal_class='operational' AND p_trigger_class='temporal_operational'
+        WHEN 'explicit_reassessment_request' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='governance_demand'
+        WHEN 'use_context_change' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='governance_demand'
+        WHEN 'scope_change' THEN
+            p_signal_class='scientific_currentness' AND p_trigger_class='scope'
+        WHEN 'other' THEN
+            length(btrim(COALESCE(p_rationale,'')))>0
+            AND (
+                (
+                    p_signal_class='scientific_currentness'
+                    AND p_trigger_class IN (
+                        'new_evidence','integrity_validity',
+                        'safety_regulatory','governance_demand',
+                        'methodological','scope'
+                    )
+                )
+                OR
+                (
+                    p_signal_class='operational'
+                    AND p_trigger_class='temporal_operational'
+                )
+            )
+        ELSE false
+    END;
+$q$;
+
+-- ---------------------------------------------------------------------------
 -- HARDENING 1 — UpdateDecision requires an active UpdateSignal at INSERT.
 -- Kept as an additive trigger so migration 027 remains historically intact.
 -- ---------------------------------------------------------------------------
