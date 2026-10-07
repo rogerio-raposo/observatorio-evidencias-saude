@@ -374,20 +374,28 @@ Próxima etapa metodológica:
 
 ## Fase 4 — UpdateRiskProfile físico
 
-**Arquitetura aprovada — 7 de outubro de 2026.**
+**PASS técnico — 7 de outubro de 2026.**
 
 Documentos:
 - 30 — contrato físico candidato do UpdateRiskProfile;
-- 31 — gate adversarial.
+- 31 — gate adversarial;
+- 32 — resultado da validação técnica.
 
 Estado:
-- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS`;
-- `READY_FOR_MIGRATION_030`;
+- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_030 = PASS`;
 - `MIGRATION_030_SCOPE = UPDATE_RISK_PROFILE_NORMALIZATION_ONLY`;
-- migration 030 ainda não implementada;
-- F4-RP-T01–T87 definido como plano mínimo futuro;
+- F4-RP-T01–T87 = **PASS**;
+- rebuild-through-030 = **PASS**;
+- regressões completas = **PASS**;
+- run canônico = **37618433929** (#161), success;
 - sem risk score, numeric cadence, numeric SLA, auto policy change ou M3 unblock.
 
+Evidência:
+- technical HEAD: `dc9ced9f91817441d0b87063c55057cde1c3c3b7`;
+- artifact: **11480858194**;
+- digest: `sha256:2fa282d226fd78cce87a7240658bf0f1a37b18afef6d29014335b170316183d7`.
+
 Próxima etapa:
-> implementar migration 030 + F4-RP-T01–T87 + S5/idempotência/rebuild/regressões.
+> selecionar explicitamente a próxima dívida da Fase 4; nenhum novo bloco funcional é iniciado automaticamente.
 
