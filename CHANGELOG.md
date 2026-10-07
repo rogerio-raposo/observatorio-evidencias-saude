@@ -3094,3 +3094,24 @@ Documentos:
 - próximo passo: implementação migration 030 + S5/idempotência/rebuild/regressões;
 - regra de pausa após checkpoint preservada.
 
+## 2026-10-07 — Phase 4 UpdateRiskProfile technical PASS
+
+- migration 030 implementada no escopo dos Documentos 30–31;
+- criadas fixtures sintéticas `f4-risk-profile-fixtures.sql`;
+- criada suíte `f4-risk-profile-tests.sql`;
+- F4-RP-T01–T84 = PASS;
+- T85 migration 030 idempotency = PASS;
+- T86 rebuild-through-030 = PASS;
+- T87 regressões completas = PASS;
+- F4-OC foi adaptado para profile físico sem relaxar seus invariantes;
+- S5 run canônico **37618433929** (#161) = success;
+- technical HEAD `dc9ced9f91817441d0b87063c55057cde1c3c3b7`;
+- artifact **11480858194**;
+- digest `sha256:2fa282d226fd78cce87a7240658bf0f1a37b18afef6d29014335b170316183d7`;
+- M3 blocker preservado;
+- runs #153–#160 registradas como diagnósticas/não canônicas no Documento 32;
+- `UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_030 = PASS`;
+- nenhum risk score, numeric cadence, numeric SLA, auto-policy change ou M3 unblock foi introduzido;
+- próxima dívida da Fase 4 ainda não selecionada.
+
