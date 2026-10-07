@@ -130,9 +130,9 @@ BEGIN
     jsonb_build_object('reason','causal_start_missing'); RETURN;
  END IF;
 
- SELECT min(r.effective_at) INTO min_rule_at FROM maintenance.sla_rule r
- WHERE r.update_policy_uuid=pol.update_policy_uuid AND r.clock_code=p_clock
-   AND (p_endpoint IS NULL OR r.endpoint_type=p_endpoint);
+ SELECT min(sr.effective_at) INTO min_rule_at FROM maintenance.sla_rule sr
+ WHERE sr.update_policy_uuid=pol.update_policy_uuid AND sr.clock_code=p_clock
+   AND (p_endpoint IS NULL OR sr.endpoint_type=p_endpoint);
  IF min_rule_at IS NULL THEN
    RETURN QUERY SELECT 'not_configured',NULL::uuid,raw_start,NULL::timestamptz,NULL::uuid,
     jsonb_build_object('reason','no_rule_for_policy_clock'); RETURN;
