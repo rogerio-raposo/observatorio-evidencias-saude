@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — primeira passagem física**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — após hardening e recheck**  
 **Dependências:** Documento 35; Documentos 33–34; migrations 021–030  
 **Objeto:** testar implementabilidade, integridade, lifecycle e compatibilidade do contrato físico candidato antes de migration
 
@@ -527,3 +527,280 @@ Documento 35 deve incorporar:
 ## 22. Próximo passo exato
 
 > **Corrigir o Documento 35 conforme AR-F4-PRB01–PRB17 e executar recheck físico; não escrever migration 031 antes de PASS/PASS_WITH_ARCHITECTURAL_DECISIONS.**
+
+
+---
+
+## 23. Recheck pós-hardening do Documento 35
+
+O Documento 35 foi corrigido após a primeira passagem REVISE.
+
+### PRB01 — target classification
+
+Confirmado:
+
+- maintainable_product exclui Evidence Monitor/Alert;
+- maintainable_investigation exclui evidence_monitoring;
+- nonmaintainable_version cobre versões sem UpdatePolicy própria;
+- RebaselineDecision target primário também usa somente target elegível.
+
+**Resultado:** PASS.
+
+### PRB02 — traversal depth
+
+Confirmado:
+
+- max_depth > 0;
+- sem default universal;
+- sem teto normativo;
+- valor persistido por assessment.
+
+**Resultado:** PASS.
+
+### PRB03 — no_action e path completeness
+
+Confirmado:
+
+- no_action authoritative exige lineage validado;
+- exige path completo quando derivado por traversal;
+- cycle/depth/divergence unresolved bloqueiam conclusão negativa.
+
+**Resultado:** PASS.
+
+### PRB04 — normalized version chain
+
+Confirmado:
+
+- `maintenance.rebaseline_version_chain_step` é fonte física primária;
+- cada step possui FKs reais;
+- supersedes chain é recomputável;
+- JSON é apenas serializer/snapshot derivado.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+### PRB05–PRB06 — lifecycle e concorrência
+
+Confirmado:
+
+- supersession preserva exact old/new target pair;
+- planned→activated/cancelled fechado;
+- cancelled terminal;
+- activated correction não muda activation fact;
+- authoritative activated unique por old target;
+- proposals concorrentes continuam possíveis.
+
+**Resultado:** PASS.
+
+### PRB07 — policy handover
+
+Confirmado:
+
+- new policy ativa para replace_with_new_policy;
+- pending/maintenance_policy_required bloqueiam activation;
+- stop_maintenance pode não possuir new policy;
+- same-target supersession existente permanece intacta;
+- cross-target lineage é nova estrutura.
+
+**Resultado:** PASS.
+
+### PRB08 — risk profile
+
+Confirmado:
+
+- profile não é requisito universal de activation;
+- pending bloqueia;
+- target profile/carry-forward são explicitamente representados;
+- PriorityAssessment continua submetida ao guard da migration 030.
+
+**Resultado:** PASS.
+
+### PRB09 — coverage
+
+Confirmado:
+
+- incorporated_through_new_target_cutoff termina exatamente no cutoff quando date-bounded;
+- post-cutoff começa depois do cutoff;
+- old Monitor completed_at não vira scientific baseline.
+
+**Resultado:** PASS.
+
+### PRB10 — signal lifecycle
+
+Confirmado:
+
+- removida invalidação automática por target superseded;
+- rebaseline disposition é overlay;
+- UpdateSignal só é invalidated quando o próprio signal é inválido.
+
+**Resultado:** PASS.
+
+### PRB11 — propagation source adapter
+
+Confirmado que migration 031 deverá atualizar atomicamente:
+
+- source_type domain;
+- propagation_candidate FK;
+- locator XOR;
+- consistency trigger;
+- update_signal_issues;
+- locator counts;
+- testes/idempotência.
+
+**Resultado:** PASS_WITH_REQUIRED_IMPLEMENTATION_GUARD.
+
+### PRB12/PRB16 — contract epoch
+
+Confirmado:
+
+- `maintenance.contract_epoch` será metadata técnica;
+- effective_at é preservado em reaplicação;
+- uso restrito a grandfathering;
+- não pode servir como relógio científico/operacional.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+### PRB13 + hardening causal
+
+Confirmado:
+
+- result locator = new target;
+- update_decision basis pertence ao old target;
+- workflow basis target = old target;
+- propagation candidate basis impacta old target e exige rebaseline_required;
+- governance/other exige artifact/payload+rationale.
+
+**Resultado:** PASS.
+
+### PRB14 — SLA cross-policy
+
+Confirmado:
+
+- old/new rules pertencem às policies correspondentes;
+- same-policy supersession FK não é usada cross-policy;
+- mesma rule_code pode expressar continuidade semântica;
+- no duration copy default.
+
+**Resultado:** PASS.
+
+### PRB15 — child sets
+
+Confirmado:
+
+- planned e activated possuem child sets distintos e imutáveis;
+- parent supersession mantém lineage;
+- nenhuma promoção in-place de children.
+
+**Resultado:** PASS.
+
+### SLA Instance lifecycle
+
+Confirmado:
+
+- disposition não cria status transition novo;
+- guard existente continua soberano;
+- causal/snapshot fields e first breach permanecem imutáveis;
+- new obligation é nova instance, não cross-signal rebase.
+
+**Resultado:** PASS.
+
+### M3
+
+Confirmado:
+
+> **M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL**
+
+Nenhum elemento do contrato remove o blocker.
+
+**Resultado:** PASS.
+
+---
+
+## 24. Decisão final do gate
+
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **F4_PRB_T01_T145 = APPROVED_MINIMUM_TEST_PLAN**
+
+> **MIGRATION_031 = AUTHORIZED_IN_STRICT_SCOPE**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 25. Escopo autorizado da migration 031
+
+Autorizado:
+
+1. `maintenance.contract_epoch`;
+2. propagation assessment/candidate/path/path_step;
+3. propagation candidate adapter em UpdateSignalSource;
+4. RebaselineDecision;
+5. normalized version-chain steps;
+6. policy/Monitor/profile/coverage/SLA/signal/workflow handover tables;
+7. validators/guards;
+8. issue/readiness helpers;
+9. synthetic fixtures;
+10. F4-PRB-T01–T145;
+11. idempotency;
+12. rebuild-through-031;
+13. regressões F4-UP/F4-OC/F4-RP;
+14. regressões F2-B/S4/S5/F3 Products/Monitor/Alert;
+15. S5 workflow integration.
+
+---
+
+## 26. Escopo proibido da migration 031
+
+Não autorizado:
+
+- numeric SLA durations;
+- real SLA calibration;
+- real operational calendars;
+- scheduler;
+- notification channels;
+- auto-escalation;
+- auto-propagation;
+- auto-rebaseline;
+- automatic UpdatePolicy creation;
+- automatic Monitor creation;
+- automatic UpdateSignal creation;
+- automatic Currentness update;
+- assurance promotion;
+- publication automation;
+- fabricated human/expert review;
+- historical backfill fabricado;
+- M3 unblock.
+
+---
+
+## 27. Requisitos de implementação
+
+A migration 031 deverá:
+
+- ser aditiva;
+- ser idempotente;
+- não alterar semântica histórica das migrations 021–030;
+- atualizar UpdateSignalSource e seu issue helper no mesmo commit/bloco técnico;
+- preservar existing CHECK/FK semantics;
+- usar deferred validation quando completude depende de child rows;
+- não introduzir seed normativo além do contract epoch técnico;
+- incluir mensagem explícita de preservação do blocker M3 na suíte.
+
+---
+
+## 28. Readiness para implementação
+
+> **READY_FOR_MIGRATION_031_IMPLEMENTATION**
+
+A implementação agora é predominantemente mecânica contra um contrato fechado.
+
+Decisões arquiteturais novas encontradas durante implementação:
+
+> exigem parada e retorno a modo alto/gate, não improvisação em SQL.
+
+---
+
+## 29. Próximo passo exato
+
+> **Implementar migration 031 + fixtures sintéticas + F4-PRB-T01–T145; integrar ao workflow S5; validar camada específica, idempotência, rebuild-through-031 e regressões completas antes de declarar PASS técnico.**
+
