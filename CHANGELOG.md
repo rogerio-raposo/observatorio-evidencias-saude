@@ -2646,3 +2646,13 @@ Documentos:
 - blockers: child inserts pós-publicação, source-context sealing, all-source drift e EntityVersion source lineage;
 - migration 025 reservada ao hardening;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — CP85
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP85.md`;
+- contrato do Alerta tecnicamente validado;
+- Projection Readiness = NOT_READY;
+- ponteiro movido para CP85;
+- retomada: migration 025 de hardening;
+- Fase 4 permanece não iniciada.
