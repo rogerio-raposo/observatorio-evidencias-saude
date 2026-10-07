@@ -260,3 +260,15 @@ Essa ordem evita transformar números arbitrários em comportamento automático 
 ## 14. Próximo passo exato
 
 > **Definir a arquitetura transversal de perfis de risco operacional/científico que parametrizará cadence, thresholds, SLAs e prioridade, sem ainda fixar números universais nem implementar nova migration.**
+
+## 15. Errata de inventário físico
+
+Foi confirmado após esta validação que `investigation.method_decision` já existe desde a migration 014.
+
+A correção não altera o PASS técnico da migration 027:
+
+- nenhum teste ou guard dependia da inexistência de MethodDecision;
+- UpdateDecision e MethodDecision possuem competências distintas;
+- nenhuma estrutura científica ou metodológica existente foi sobrescrita;
+- eventual integração entre reroute_method e MethodDecision permanece explícita e futura.
+
