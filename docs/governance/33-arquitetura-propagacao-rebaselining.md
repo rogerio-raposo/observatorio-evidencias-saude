@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_ADVERSARIAL — READY_FOR_DOCUMENT_34_RECHECK — NOT_AUTHORIZED_FOR_MIGRATION**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 34 — NOT_AUTHORIZED_FOR_MIGRATION**  
 **Dependências:** Documentos 05–09, 16–32; docs/architecture/28–29; migrations 004, 021–030  
+**Validado por:** Documento 34  
 **Objeto:** propagação controlada de impacto, re-baselining de targets versionados, rebinding de Monitor e preservação histórica das obrigações operacionais
 
 ---
@@ -834,7 +835,7 @@ Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar especificação
 
 ## 38. Estado
 
-> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = REVISED_READY_FOR_RECHECK**
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
 > **PROPAGATION_AUTO_WRITE = NOT_AUTHORIZED**
 
@@ -848,7 +849,7 @@ Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar especificação
 
 ## 39. Próximo passo exato
 
-> **Executar o recheck adversarial do Documento 34 sobre as correções incorporadas abaixo, antes de qualquer contrato físico ou migration.**
+> **Especificar o Contrato Físico v0.1 de Propagation/Re-baselining e submetê-lo a novo gate antes de qualquer migration.**
 
 
 ---
@@ -1194,7 +1195,7 @@ A aprovação arquitetural deste bloco não remove o blocker.
 
 > **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = REVISED_READY_FOR_RECHECK**
 
-> **PROPAGATION_PHYSICAL_CONTRACT = NOT_AUTHORIZED_UNTIL_DOCUMENT_34_RECHECK**
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY**
 
 > **MIGRATION = NOT_AUTHORIZED**
 
