@@ -669,7 +669,7 @@ Alert classification não será usada como substituto do perfil.
 
 Entretanto:
 
-- critical Alert pode representar sinal de A4 alto/crítico;
+- Alert `critical` é um signal ativo e pode exigir reassessment prioritário do perfil/risco; não define A4 automaticamente;
 - relevant Alert pode indicar aumento de A3/materialidade potencial;
 - informational Alert não implica perfil baixo.
 
@@ -779,7 +779,7 @@ Ainda não autorizado:
 - A1 baixa;
 - A2 baixa;
 - A3 baixa;
-- A4 sem sinal;
+- A4 baixa;
 - A5 restrito.
 
 Recomendação provável:
@@ -791,7 +791,7 @@ Recomendação provável:
 - A1 alta;
 - A2 alta;
 - A3 moderada/alta;
-- A4 sem sinal;
+- A4 baixa;
 - A5 moderado.
 
 Recomendação provável:
@@ -800,7 +800,7 @@ Recomendação provável:
 
 ## 20.3 Evidência living candidata
 
-- A1 alta/crítica;
+- A1 alta;
 - A2 alta;
 - A3 alta;
 - A4 variável;
@@ -819,7 +819,7 @@ Ainda exige M3 gate.
 - A1 crítica;
 - A2 baixa;
 - A3 moderada;
-- A4 crítico;
+- A4 alta, com safety signal ativo;
 - B1 alta via fonte regulatória.
 
 Recomendação:
@@ -876,7 +876,7 @@ A revisão adversarial deverá testar:
 - risco intrínseco × capacidade;
 - ausência de score aditivo prematuro;
 - dominância de safety/integrity;
-- relação R0–saída recomendatória × M0–M3;
+- saída recomendatória × M0–M3;
 - possibilidade de criticidade alta + baixa volatilidade;
 - possibilidade de alto risco + baixa capacidade;
 - currentness separado do perfil;
