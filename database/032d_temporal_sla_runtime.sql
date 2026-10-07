@@ -202,6 +202,11 @@ SELECT jsonb_strip_nulls(jsonb_build_object(
  'pause_policy',r.pause_policy_payload,'warning_policy',r.warning_policy_payload,
  'breach_policy',r.breach_policy_payload,'escalation_policy',r.escalation_policy_payload,
  'start_priority_assessment_uuid',maintenance.sla_context_priority_at(p_signal,p_start),
+ 'update_risk_profile_uuid',(
+   SELECT pa.update_risk_profile_uuid
+   FROM maintenance.priority_assessment pa
+   WHERE pa.priority_assessment_uuid=maintenance.sla_context_priority_at(p_signal,p_start)
+ ),
  'temporal_calibration_dossier_uuid',r.temporal_calibration_dossier_uuid,
  'selection_trace',p_trace))
 FROM maintenance.sla_rule r
