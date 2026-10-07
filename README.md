@@ -27,6 +27,9 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [04 — Governança de Garantia Metodológica, Aprovação e Revisão](docs/governance/04-governanca-garantia-revisao.md)
 - [05 — Protocolo Transversal de Atualização — Arquitetura Conceitual v0.1](docs/governance/05-protocolo-transversal-atualizacao.md)
 - [06 — Revisão Adversarial do Protocolo Transversal de Atualização v0.1](docs/governance/06-revisao-adversarial-protocolo-atualizacao.md)
+- [07 — Protocolo Transversal de Atualização: Contrato de Dados v0.1](docs/governance/07-contrato-dados-protocolo-atualizacao.md)
+- [08 — Revisão Adversarial Física do Contrato de Dados do Protocolo de Atualização](docs/governance/08-gate-coerencia-fisica-protocolo-atualizacao.md)
+- [09 — Resultado da Validação Técnica do Protocolo Transversal de Atualização v0.1](docs/governance/09-resultado-validacao-protocolo-atualizacao.md)
 
 ### Metodologia
 
@@ -192,17 +195,25 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** foi iniciada mediante autorização explícita do usuário. O primeiro bloco arquitetural foi concluído:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui duas baselines consolidadas:
 
-- Documento 05 — Protocolo Transversal de Atualização v0.1;
-- Documento 06 — revisão adversarial = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-- M0–M3, currentness, gatilhos, materialidade, cadence, SLA clocks, propagação, governança e fronteira de automação foram separados conceitualmente;
-- **M3 formal continua bloqueado** até contrato físico, migration e validação específicos;
-- nenhuma migration da Fase 4 está autorizada neste marco.
+1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+2. Documentos 07–09 + migration 027 — contrato físico v0.1 = **PASS técnico**.
+
+Validação canônica do contrato físico:
+
+- F4-UP-T01–T63 = PASS;
+- F4-UP-IDEM = PASS;
+- rebuild-through-027 = PASS;
+- S5 run **37570978847** = success;
+- artifact **11460960487**;
+- digest `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`.
+
+**M3 formal continua bloqueado** por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
 
 Próximo passo exato:
 
-> **Especificar o Contrato de Dados v0.1 do Protocolo Transversal de Atualização, sem implementar migration antes de novo gate de coerência física.**
+> **Definir a arquitetura transversal de perfis de risco operacional/científico que parametrizará cadence, thresholds, SLAs e prioridade, sem ainda fixar números universais.**
 
 ---
 
