@@ -2634,3 +2634,15 @@ Documentos:
 - ponteiro movido para CP84;
 - migration 024 + fixtures/testes autorizados;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — Evidence Alert contract PASS / projection NOT_READY
+
+- Documento 180 registrou PASS técnico da migration 024;
+- run 37559879675 (#132) = success;
+- AL-T01–T30 + rebuild-through-024 = PASS;
+- Documento 181 executou gate adversarial de projeção;
+- Projection Readiness = NOT_READY;
+- blockers: child inserts pós-publicação, source-context sealing, all-source drift e EntityVersion source lineage;
+- migration 025 reservada ao hardening;
+- Fase 4 permanece não iniciada.
