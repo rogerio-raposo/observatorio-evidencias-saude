@@ -436,6 +436,7 @@ CREATE OR REPLACE FUNCTION maintenance.assert_sla_rule_v01()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
 DECLARE d maintenance.temporal_calibration_dossier%ROWTYPE; p maintenance.update_policy%ROWTYPE;
  cal maintenance.sla_calendar_version%ROWTYPE; f maintenance.fixed_deadline_source%ROWTYPE;
+ target_status text;
 BEGIN
  IF NOT maintenance.sla_rule_filter_domains_are_valid(
     NEW.trigger_class_filter,NEW.decision_type_filter,NEW.materiality_outcome_filter)
@@ -445,6 +446,11 @@ BEGIN
  END IF;
  IF maintenance.temporal_object_is_grandfathered('sla_rule',NEW.sla_rule_uuid) THEN RETURN NEW; END IF;
  SELECT * INTO p FROM maintenance.update_policy WHERE update_policy_uuid=NEW.update_policy_uuid;
+ SELECT version_status INTO target_status FROM core.entity_version
+  WHERE version_uuid=COALESCE(p.target_product_version_uuid,p.target_investigation_version_uuid);
+ IF target_status IS DISTINCT FROM 'current' THEN
+   RAISE EXCEPTION 'New SLARule target must be current at activation';
+ END IF;
  SELECT * INTO d FROM maintenance.temporal_calibration_dossier
   WHERE temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid;
  IF NOT FOUND OR d.scope_type<>'target' OR d.calibration_kind<>'sla_rule'
