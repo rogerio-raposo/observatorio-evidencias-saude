@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP74 — 2026-10-06**.
+- checkpoint vigente: **CP75 — 2026-10-06**.
 
 ## 2. Estado das fases
 
