@@ -3059,3 +3059,23 @@ Documentos:
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
 
+
+## 2026-10-07 — Phase 4 UpdateRiskProfile physical contract
+
+- selecionada a normalização física do UpdateRiskProfile como próxima dívida estrutural após CP97;
+- Documento 30 definiu contrato físico candidato;
+- Documento 31 executou gate adversarial;
+- primeira passagem = **REVISE**;
+- provenance dimensional foi normalizada em estrutura própria;
+- authority do profile composto foi separada da authority operacional de B5;
+- triggers receberam source_type/locator XOR;
+- policy basis ganhou lifecycle/supersession;
+- snapshots históricos foram grandfathered sem backfill fabricado;
+- novos PriorityAssessment deverão usar profile físico + serializer canônico após migration 030;
+- proposal incompleto não pode alimentar PriorityAssessment;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `READY_FOR_MIGRATION_030`;
+- migration 030 ainda não implementada;
+- F4-RP-T01–T87 definido como plano mínimo;
+- M3 blocker preservado.
+
