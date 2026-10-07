@@ -688,3 +688,37 @@ Decisões vigentes:
 Próxima etapa:
 
 > **Revisão de coerência científica e arquitetural do Monitor contra OES-P1, Product/Investigation, Search, provenance, currency_state, version_change_class e fronteira Fase 3 × Fase 4.**
+
+
+### Monitor de Evidências — revisão arquitetural
+
+Documento 166 — **PASS_WITH_ARCHITECTURAL_DECISIONS**.
+
+Decisão consolidada:
+
+> **Monitor = Product próprio + Investigation própria de manutenção que herda N do alvo + camada especializada `maintenance` para target/cycle/candidate/event, reutilizando Search/SearchHit, currency_state, version_change_class e provenance existentes.**
+
+Regras:
+
+- Search do Monitor não será anexada à Investigation científica histórica do alvo;
+- Monitor terá target linkage explícito;
+- `provenance.dependency_edge` complementa, mas não substitui, o vínculo operacional;
+- Monitoring Cycle é registro operacional append-preserving, não ProductVersion;
+- `investigation.search`, `search_hit` e dedup existentes serão reutilizados;
+- candidate assessment especializado cobrirá hits ainda não resolvidos e eventos;
+- eventos de retratação/correção terão representação própria;
+- currentness continuará em `product.currency_state`;
+- mudança científica continuará usando ProductVersion + `version_change_class`;
+- Alert não será implementado nesta etapa;
+- Monitor assurance é próprio do processo e não é herdado automaticamente do alvo.
+
+Readiness:
+
+- scientific/functional = PASS;
+- architectural coherence = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- data-contract readiness = READY;
+- migration readiness = NOT_YET.
+
+Próxima etapa:
+
+> **Contrato de Dados v0.1 do Monitor de Evidências.**
