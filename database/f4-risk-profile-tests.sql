@@ -713,7 +713,10 @@ ROLLBACK TO SAVEPOINT t58; RELEASE SAVEPOINT t58;
 
 -- T59 — Alert trigger does not define A4 automatically.
 SAVEPOINT t59;
-SELECT pg_temp.add_proposal_profile('fb590000-0000-0000-0000-000000000001');
+SELECT pg_temp.add_proposal_profile(
+ 'fb590000-0000-0000-0000-000000000001','e5100000-0000-0000-0000-000000000003',NULL,'reassessment',
+ 'f6000000-0000-0000-0000-000000000001'
+);
 INSERT INTO maintenance.update_risk_profile_trigger(
  update_risk_profile_uuid,trigger_code,source_type,alert_product_version_uuid,
  rationale,sequence_no
@@ -730,7 +733,10 @@ ROLLBACK TO SAVEPOINT t59; RELEASE SAVEPOINT t59;
 
 -- T60 — capacity_change needs no UpdateSignal.
 SAVEPOINT t60;
-SELECT pg_temp.add_proposal_profile('fb600000-0000-0000-0000-000000000010');
+SELECT pg_temp.add_proposal_profile(
+ 'fb600000-0000-0000-0000-000000000010','e5100000-0000-0000-0000-000000000003',NULL,'reassessment',
+ 'f6000000-0000-0000-0000-000000000001'
+);
 INSERT INTO maintenance.update_risk_profile_trigger(
  update_risk_profile_uuid,trigger_code,source_type,rationale,sequence_no
 ) VALUES (
@@ -745,7 +751,10 @@ ROLLBACK TO SAVEPOINT t60; RELEASE SAVEPOINT t60;
 
 -- T61 — trigger source_type/locator mismatch rejected.
 SAVEPOINT t61;
-SELECT pg_temp.add_proposal_profile('fb610000-0000-0000-0000-000000000010');
+SELECT pg_temp.add_proposal_profile(
+ 'fb610000-0000-0000-0000-000000000010','e5100000-0000-0000-0000-000000000003',NULL,'reassessment',
+ 'f6000000-0000-0000-0000-000000000001'
+);
 SELECT pg_temp.expect_error($$
 INSERT INTO maintenance.update_risk_profile_trigger(
  update_risk_profile_uuid,trigger_code,source_type,update_signal_uuid,
