@@ -3390,3 +3390,20 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: decisão metodológica/governamental em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Seleção do sub-bloco de Evidence Readiness
+
+- criado `docs/governance/45-inventario-pos-cp106-selecao-evidence-readiness-calibracao-temporal.md`;
+- inventário pós-CP106 confirmou que não há débito estrutural anterior com prioridade superior à trilha de calibração temporal;
+- infraestrutura física v0.1 está tecnicamente validada;
+- base temporal/operacional disponível no repositório permanece test-only/synthetic para fins de calibração;
+- calibração normativa real não pode ser aberta genericamente como `sufficient_for_calibration`;
+- próximo sub-bloco selecionado = **TEMPORAL_CALIBRATION_EVIDENCE_READINESS**;
+- nenhum valor normativo autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications permanecem dependentes e deferidos;
+- auto-escalation não autorizado;
+- M3 permanece bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: protocolo de Evidence Readiness v0.1 + gate adversarial, em modo alto.
