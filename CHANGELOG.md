@@ -3131,3 +3131,16 @@ Documentos:
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
 
+## 2026-10-07 — Phase 4 propagation/re-baselining architecture
+
+- selecionada propagation/re-baselining como próxima dívida estrutural após CP99;
+- criado o Documento 33 — Arquitetura Transversal de Propagação de Mudanças e Re-baselining;
+- separado fan-out de impacto de re-baselining same-entity;
+- preservada semântica same-target de supersedes_update_policy_uuid;
+- proibido retarget in-place de MonitorTarget;
+- definido que novo target M2/M3 requer novo Monitor ProductVersion/binding explícito;
+- preservados históricos de UpdateSignal, PriorityAssessment, Escalation, SLA, Workflow e Alert;
+- dependency_edge permanece projeção auxiliar, não registro authoritative de decisão;
+- nenhuma migration autorizada;
+- scheduler, notifications, auto-escalation, numeric SLA e M3 unblock permanecem fora do escopo;
+- próximo passo: revisão adversarial do Documento 33.
