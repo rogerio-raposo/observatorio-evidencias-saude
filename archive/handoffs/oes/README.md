@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP108 — 2026-10-07**
+**CP109 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP108.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP109.md`
 
 Checkpoint anterior:
 
-`CP107`
+`CP108`
 
 Status:
 
@@ -212,3 +212,4 @@ em **Modo Continuidade**.
 - **CP106 — 2026-10-07:** migration 032 implementada e tecnicamente validada; F4-TCAL-PH-T01–T230, idempotência 032, rebuild-through-032 e S5 canônico = PASS; valores normativos permanecem não autorizados.
 - **CP107 — 2026-10-07:** trilha de calibração temporal continua, mas calibração normativa real permanece bloqueada até Evidence Readiness real; próximo sub-bloco = TEMPORAL_CALIBRATION_EVIDENCE_READINESS.
 - **CP108 — 2026-10-07:** protocolo de Evidence Readiness temporal endurecido e aprovado em gate adversarial; primeiro readiness assessment real autorizado sob protocolo, sem valores normativos.
+- **CP109 — 2026-10-07:** primeiro Evidence Readiness Assessment real executado no N1-01/cadence; resultado INSUFFICIENT_EVIDENCE; Calibration Dossier e valores normativos permanecem não autorizados.
