@@ -2189,3 +2189,38 @@ Próximo passo:
 - modo médio suficiente para implementação mecânica; voltar a alto se surgir nova decisão arquitetural;
 - Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — migration 032 implementada e validada
+
+Documento técnico:
+- `docs/governance/44-resultado-tecnico-migration-032-validacao-temporal-v01.md`.
+
+Estado:
+> **TEMPORAL_CALIBRATION_PHYSICAL_CONTRACT = IMPLEMENTED_AND_TECHNICALLY_VALIDATED**
+
+> **F4_TCAL_PH_T01_T230 = PASS**
+
+> **MIGRATION_032_IDEMPOTENCY = PASS**
+
+> **REBUILD_THROUGH_032 = PASS**
+
+> **S5_CANONICAL = PASS**
+
+Validação canônica:
+- HEAD técnico: `657c69024fafb6c2e6311d47091d5897730668fd`;
+- run ID: `37690201061`;
+- job ID: `113028117278`;
+- artifact ID: `11512707774`;
+- artifact: `oes-s5-evidence-37690201061`;
+- size: `250711` bytes;
+- digest: `sha256:bb145efb29d7c30e607136defa09c828711162e27ac71a307df229449980f826`.
+
+Restrições preservadas:
+- `NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED`;
+- scheduler/notifications/auto-escalation não autorizados;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após CP106 e novo Freshness Gate, retornar ao nível metodológico/governança em modo alto para decidir qual deve ser o próximo bloco da Fase 4; não iniciar calibração normativa automaticamente.**
