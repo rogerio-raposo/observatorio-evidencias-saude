@@ -34,6 +34,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [17 — Revisão Adversarial dos Perfis de Risco para Atualização](docs/governance/17-revisao-adversarial-perfis-risco-atualizacao.md)
 - [18 — Política Transversal de Cadence e Thresholds Temporais](docs/governance/18-politica-cadence-thresholds-temporais.md)
 - [19 — Revisão Adversarial da Política de Cadence e Thresholds Temporais](docs/governance/19-revisao-adversarial-cadence-thresholds-temporais.md)
+- [20 — Arquitetura Transversal de SLA do Protocolo de Atualização](docs/governance/20-arquitetura-transversal-sla.md)
+- [21 — Revisão Adversarial da Arquitetura Transversal de SLA](docs/governance/21-revisao-adversarial-arquitetura-sla.md)
 
 ### Metodologia
 
@@ -199,12 +201,13 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui quatro blocos consolidados:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui cinco blocos consolidados:
 
 1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 2. Documentos 07–09 + migration 027 — contrato físico v0.1 = **PASS técnico**;
 3. Documentos 16–17 — perfis de risco operacional/científico = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-4. Documentos 18–19 — cadence e thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
+4. Documentos 18–19 — cadence e thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
 
 A correção de inventário de `investigation.method_decision` foi reconciliada: a tabela existe desde a migration 014 e permanece distinta de `maintenance.update_decision`. O PASS da migration 027 permanece válido.
 
@@ -219,9 +222,11 @@ Validação canônica do contrato físico:
 
 **M3 formal continua bloqueado** por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
 
+**Migration 028 permanece não autorizada** até fechar prioridade/escalation e os gaps físicos de triage/workflow.
+
 Próximo passo exato:
 
-> **Definir a arquitetura transversal de SLAs como contratos operacionais entre eventos claramente definidos, sem fixar durações universais antes do gate semântico.**
+> **Definir a arquitetura transversal de prioridade e escalation, antes de qualquer migration 028 ou duração numérica universal de SLA.**
 
 ---
 
