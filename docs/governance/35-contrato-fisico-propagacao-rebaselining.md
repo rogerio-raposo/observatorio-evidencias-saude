@@ -1404,7 +1404,7 @@ Antes de migration, Documento 36 deve atacar no mínimo:
 
 > **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
 
-> **F4_PRB_T01_T140 = TEST_PLAN_REVISED_FOR_RECHECK**
+> **F4_PRB_T01_T145 = TEST_PLAN_REVISED_FOR_RECHECK**
 
 > **MIGRATION_031 = NOT_AUTHORIZED**
 
@@ -1810,6 +1810,103 @@ T140 — activated child set completo + M3 blocker.
 > **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
 
 > **F4_PRB_T01_T140 = TEST_PLAN_REVISED_FOR_RECHECK**
+
+> **MIGRATION_031 = NOT_AUTHORIZED_UNTIL_DOCUMENT_36_RECHECK**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+
+---
+
+## 67. Elegibilidade do target primário de RebaselineDecision
+
+RebaselineDecision representa handover da manutenção do target científico, não versionamento do próprio Monitor/Alert.
+
+Logo:
+
+### ProductVersion old/new
+
+Devem ser elegíveis a UpdatePolicy:
+
+- `product_type NOT IN ('evidence_monitor','evidence_alert')`.
+
+### InvestigationVersion old/new
+
+Devem satisfazer:
+
+- `investigation_type <> 'evidence_monitoring'`.
+
+Handover do Evidence Monitor é representado em `rebaseline_monitor_link`, não como target primário do RebaselineDecision.
+
+---
+
+## 68. Causalidade dos transition basis
+
+Além do locator XOR:
+
+### update_decision
+
+- decision → signal → policy;
+- policy target deve ser exatamente old target;
+- decision deve ser authoritative quando usada como basis authoritative de activation.
+
+### workflow_round
+
+- round target deve ser exatamente old target;
+- round signal/policy deve ser coerente com old target;
+- se o basis declara que o workflow produziu a nova versão, result version deve ser exatamente new target.
+
+### result_product_version / result_investigation_version
+
+- locator deve ser exatamente new target.
+
+### propagation_candidate
+
+- candidate `impacted_version_uuid` deve ser exatamente old target;
+- candidate deve estar assessed;
+- disposition = `rebaseline_required`;
+- authoritative activation exige candidate authoritative ou governance basis adicional explicitamente registrado.
+
+### governance_decision / other
+
+- artifact/payload obrigatório;
+- rationale obrigatório;
+- não fabrica human review.
+
+---
+
+## 69. SLA disposition deve respeitar lifecycle existente
+
+`rebaseline_sla_instance_disposition` é registro de handover; não cria transição nova na SLA Instance.
+
+Quando a disposition implicar término/cancelamento do old instance:
+
+- a mudança real de `execution_status` deve usar transição já aceita por `guard_sla_instance_mutation()`;
+- causal/snapshot fields permanecem imutáveis;
+- `first_breached_at` permanece imutável uma vez definido;
+- disposition não autoriza cross-signal rebase via `supersedes_sla_instance_uuid`.
+
+New obligation, quando aplicável:
+
+> é nova SLA Instance sob new policy/new signal, não rebase da old obligation.
+
+---
+
+## 70. Testes adicionais — T141–T145
+
+T141 — RebaselineDecision rejeita Evidence Monitor/Alert/evidence_monitoring como target primário;  
+T142 — update_decision basis exige old-target policy e authority coerente;  
+T143 — propagation_candidate basis exige impacted_version=old target + rebaseline_required;  
+T144 — workflow basis target=old e produced result=new quando aplicável;  
+T145 — SLA handover disposition não contorna execution-status/first-breach guards.
+
+---
+
+## 71. Estado final para recheck
+
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
+
+> **F4_PRB_T01_T145 = TEST_PLAN_REVISED_FOR_RECHECK**
 
 > **MIGRATION_031 = NOT_AUTHORIZED_UNTIL_DOCUMENT_36_RECHECK**
 
