@@ -2370,3 +2370,14 @@ Documentos:
 - data-contract readiness = READY;
 - migration readiness = NOT_YET;
 - próxima etapa: Contrato de Dados v0.1.
+
+
+## 2026-10-06 — CP74
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP74.md`;
+- Documento 166 consolidado;
+- revisão arquitetural do Monitor = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- data-contract readiness = READY;
+- migration readiness = NOT_YET;
+- ponteiro de continuidade movido para CP74;
+- retomada movida para **Contrato de Dados v0.1 do Monitor de Evidências**.
