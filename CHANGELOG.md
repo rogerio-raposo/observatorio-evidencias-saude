@@ -2353,3 +2353,20 @@ Documentos:
 - nenhuma migration autorizada antes da revisão arquitetural;
 - ponteiro de continuidade movido para CP73;
 - retomada movida para revisão de coerência científica e arquitetural do Monitor.
+
+
+## 2026-10-06 — Evidence Monitor architectural coherence
+
+- Documento 166 criado;
+- revisão arquitetural = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- Monitor será Product próprio com Investigation própria de manutenção;
+- depth N será herdado do alvo; maintenance = M2/M3;
+- Search do Monitor permanecerá separada da Investigation científica histórica;
+- camada especializada `maintenance` foi autorizada conceitualmente;
+- Search/SearchHit, currency_state, version_change_class e provenance serão reutilizados;
+- Monitoring Cycle não será ProductVersion;
+- candidate assessment e validity events serão especializados;
+- Alert completo permanece fora desta etapa;
+- data-contract readiness = READY;
+- migration readiness = NOT_YET;
+- próxima etapa: Contrato de Dados v0.1.
