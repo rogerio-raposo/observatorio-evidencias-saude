@@ -337,7 +337,17 @@ Limite preservado:
 
 A migration 027 não define thresholds, SLA numérico, scheduler, notifications, auto-classification, auto-escalation, propagation automática nem M3 readiness.
 
-Próxima etapa metodológica:
+Após a auditoria retrospectiva da Fase 4, a migration 028 foi autorizada **somente** como hardening corretivo da 027. Ela reforça lifecycle/issue helpers e não implementa prioridade, SLA físico, notificações, propagation ou M3 readiness.
 
-> arquitetura de perfis de risco operacional/científico para parametrizar cadence, thresholds, SLAs e prioridade.
+Estado metodológico após Documentos 16–23:
+
+- perfis de risco = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- cadence/thresholds temporais = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- SLA semântico = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- auditoria retrospectiva = REVISE até nova validação canônica da migration 028;
+- prioridade/escalation = aguardando fechamento do bloco corretivo.
+
+Próxima etapa metodológica, **após PASS corretivo**:
+
+> arquitetura transversal de prioridade e escalation.
 
