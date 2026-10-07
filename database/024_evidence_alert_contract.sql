@@ -114,7 +114,7 @@ BEGIN
             'Evidence Alert cannot carry a scientific conclusion_text';
     END IF;
 
-    SELECT count(*),min(il.investigation_version_uuid)
+    SELECT count(*),(array_agg(il.investigation_version_uuid))[1]
       INTO context_count,context_uuid
       FROM product.investigation_link il
      WHERE il.product_version_uuid=NEW.alert_product_version_uuid
@@ -568,7 +568,7 @@ BEGIN
             'Evidence Alert cannot carry its own scientific conclusion';
     END IF;
 
-    SELECT count(*),min(il.investigation_version_uuid)
+    SELECT count(*),(array_agg(il.investigation_version_uuid))[1]
       INTO context_count,context_uuid
       FROM product.investigation_link il
      WHERE il.product_version_uuid=p_product_version_uuid
