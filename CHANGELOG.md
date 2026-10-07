@@ -2699,3 +2699,27 @@ Documentos:
 - ponteiro de continuidade movido para CP87;
 - retomada: apresentação do Alerta + fechamento da Fase 3;
 - Fase 4 permanece explicitamente não autorizada.
+
+
+## 2026-10-06 — Evidence Alert presentation PASS
+
+- Documentos 185–186 definiram contrato de renderização e template do Alerta;
+- template, presentation map, renderer e validator implementados;
+- run #139 falhou por leitura indiscriminada de campos de subtype em `monitor_origin`; corrigido;
+- run #140 falhou por asserção textual excessivamente rígida do validator; corrigido;
+- run **37561515491** (#141) = success;
+- artifact **11456897850**;
+- digest `sha256:257b26162a577f24cede0c21befd437b1cad4dc6c5847d39ef29e2755d85e099`;
+- Alerta de Evidência formalizado na Fase 3.
+
+## 2026-10-06 — Fase 3 concluída
+
+- Documento 188 executou o Gate de Encerramento da Fase 3;
+- 9/9 produtos da taxonomia = formalizados no escopo técnico/taxonômico da fase;
+- validation S5 #141 = success;
+- rebuild-through-026 = PASS;
+- regressões globais = PASS;
+- blockers reais/developmentais permanecem preservados e não foram artificialmente removidos;
+- `PHASE_3_PRODUCTS = COMPLETE`;
+- `PHASE_4 = NOT_STARTED / NOT_AUTHORIZED`;
+- Fase 4 somente poderá começar mediante consentimento explícito do usuário em nova conversa.
