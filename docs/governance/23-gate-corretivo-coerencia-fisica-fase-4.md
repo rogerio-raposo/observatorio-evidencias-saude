@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — migration 028 corretiva autorizada no escopo abaixo**  
+**Status:** **PASS — migration 028 corretiva autorizada e executada; validação no Documento 24**  
 **Dependências:** Documentos 05–09, 16–22; migrations 014, 021–027  
 **Objeto:** hardening corretivo do contrato físico v0.1 após auditoria retrospectiva
 
@@ -338,3 +338,21 @@ Somente no escopo deste gate.
 ## 17. Próximo passo exato
 
 > **Implementar migration 028 corretiva + suíte P01–P63 + integração S5 e executar validação canônica completa.**
+
+---
+
+## 18. Execução do gate
+
+O escopo autorizado foi implementado sem expansão funcional indevida.
+
+Migration:
+
+`database/028_transversal_update_protocol_audit_hardening.sql`
+
+Validação:
+
+> **Documento 24 = PASS**
+
+> **run 37576434417 (#144) = success**
+
+Nenhum componente de prioridade/SLA físico/M3 readiness foi introduzido.
