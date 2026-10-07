@@ -446,17 +446,17 @@ O perfil não criará estados `R0–R3` nem qualquer segunda escala concorrente 
 
 Sua saída conceitual deverá conter, separadamente:
 
-- `recommended_maintenance_level`: M0, M1, M2 ou M3-candidate;
+- `recommended_maintenance_level`: M0, M1, M2 ou M3;
 - `recommended_cadence_mode`: none, event_driven, periodic, hybrid ou continuous;
 - `event_driven_surveillance_required`: recomendação qualitativa;
-- `priority_posture`: rotina, elevada ou prioritária para desenho posterior;
+- `priority_implications`: rationale estruturada para o bloco posterior de priorização, sem classe fechada nesta etapa;
 - `feasibility_status`: adequada, tensionada, insuficiente ou indisponível;
 - rationale explícita.
 
 Regras:
 
 1. essa saída é recomendatória e não modifica UpdatePolicy;
-2. M3-candidate não equivale a M3 operacional;
+2. `recommended_maintenance_level='M3'` é somente recomendação e não equivale a M3 operacional;
 3. mudança da policy exige decisão própria de governança;
 4. não criar score agregado para escolher M automaticamente;
 5. currentness não é parte da saída do perfil.
@@ -647,7 +647,7 @@ Pode recomendar M2.
 
 ### criticidade alta + volatilidade alta + sensibilidade alta + capacidade adequada
 
-Pode justificar `M3-candidate`.
+Pode recomendar M3, sem ativá-lo.
 
 ### mesmo risco científico + capacidade insuficiente
 
@@ -810,7 +810,7 @@ Recomendação provável:
 
 Recomendação:
 
-> M3-candidate com cadence continuous/hybrid.
+> recomendação M3 com cadence continuous/hybrid, ainda sujeita ao gate próprio de M3.
 
 Ainda exige M3 gate.
 
