@@ -260,15 +260,26 @@ Compatível com:
 - M1;
 - M2.
 
+Semântica por regime:
+
+- em M1, `periodic` significa **reassessment periódico** do target/policy para decidir se busca/atualização deve ser aberta; não cria Monitoring Cycle nem promete surveillance ativa contínua;
+- em M2, `periodic` significa **vigilância ativa prospectiva** executada pelo Monitor governante em Monitoring Cycles.
+
 ## 7.4 hybrid
 
-Combina periodic + event-driven.
+Combina componente temporal + event-driven.
 
 Compatível com:
 
 - M1;
 - M2;
 - M3.
+
+Semântica:
+
+- M1 = reassessment periódico + gatilhos event-driven;
+- M2 = Monitoring Cycles periódicos + gatilhos event-driven;
+- M3 = processo living contínuo com mecanismos temporais/event-driven explicitados.
 
 ## 7.5 continuous
 
@@ -441,9 +452,21 @@ Mudança de âncora:
 
 Para Monitoring Cycle agregado:
 
-> `monitor_cycle.planned_at` é o candidato natural para materializar o vencimento de **início/execução** calculado pela regra de cadence.
+> `monitor_cycle.planned_at` materializa o **instante nominal planejado de início** do ciclo.
 
-Não criar outro timestamp equivalente sem necessidade demonstrada.
+O contrato atual também exige:
+
+> `started_at >= planned_at`.
+
+Portanto, `planned_at` não deve ser reinterpretado como simples “último instante aceitável”.
+
+A regra futura deve distinguir:
+
+- `planned_at` = instante nominal/abertura programada;
+- `grace_until` = limite superior aceitável para início sem atraso formal;
+- `started_at` = início real.
+
+Não criar outro timestamp nominal equivalente a `planned_at` sem necessidade demonstrada.
 
 Conclusão do ciclo:
 
@@ -453,11 +476,15 @@ Para source-specific cadence sem ciclo próprio, futuro contrato poderá precisa
 
 O OES adota três conceitos distintos.
 
-## 13.1 due_at
+## 13.1 scheduled_at / planned_at
 
-Conceito normativo do momento em que a execução deveria iniciar.
+Instante nominal em que a obrigação temporal se abre.
 
-No Monitor agregado, sua projeção preferencial é `planned_at`.
+No Monitor agregado:
+
+> usar `monitor_cycle.planned_at`.
+
+Para regras não materializadas em MonitorCycle, futuro contrato poderá usar nome equivalente, mas não deve criar duplicação quando `planned_at` já existe.
 
 ## 13.2 grace_until
 
@@ -532,8 +559,10 @@ A policy futura deverá definir o que satisfaz cada obrigação.
 
 Para MonitorCycle agregado, candidato padrão:
 
-- ciclo iniciado até a regra de grace para satisfazer cadence de início;
-- ciclo concluído não é requisito de cadence, mas de processamento/completion.
+- `started_at` deve ocorrer em ou após `planned_at`;
+- início até `grace_until` satisfaz a obrigação sem overdue;
+- início após `grace_until` satisfaz a execução, mas preserva histórico de atraso;
+- ciclo concluído não é requisito da cadence de início, mas de processamento/completion.
 
 Para source-specific cadence, satisfação pode exigir:
 
@@ -647,17 +676,29 @@ Não será definido numericamente neste documento.
 
 Antes de números, o OES reconhece estados semânticos:
 
-### on_schedule
+### not_open
 
-Obrigação ainda não venceu ou foi cumprida até grace.
+O instante nominal de início ainda não chegou.
+
+### within_grace
+
+A obrigação foi aberta em `planned_at`, mas ainda está dentro da tolerância operacional.
+
+### satisfied_on_time
+
+A execução iniciou entre `planned_at` e `grace_until`.
 
 ### overdue
 
-Grace vencida; execução/obrigação pendente.
+Grace vencida; execução/obrigação ainda pendente.
 
-### materially_overdue
+### satisfied_late
 
-Atraso ultrapassou threshold de escalation definido pela policy.
+A obrigação foi executada após `grace_until`; o fato de ter sido satisfeita não apaga o atraso histórico.
+
+### escalation_overdue
+
+Atraso pendente ultrapassou threshold adicional de escalonamento definido pela policy.
 
 ### suspended_by_authority
 
@@ -673,23 +714,21 @@ Não equivalem a currentness.
 
 ---
 
-# 21. Materially overdue
+# 21. Escalation overdue
 
-`materially_overdue` significa:
+`escalation_overdue` significa:
 
-> atraso operacional suficientemente importante para exigir escalonamento.
+> atraso operacional pendente suficientemente importante para exigir escalonamento segundo regra temporal explícita.
 
 Não significa:
 
-> material_change_confirmed.
+> `material_change_confirmed`.
 
-A palavra “materially” aqui é operacional.
+Quando a obrigação é finalmente cumprida:
 
-Para evitar ambiguidade em contrato físico futuro, nome recomendado:
-
-> `escalation_overdue`
-
-e não `materially_overdue`.
+- o estado corrente deixa de ser escalation_overdue;
+- o histórico deve registrar `satisfied_late` e duração real do atraso;
+- a resolução não apaga incidentes/escalonamentos já registrados.
 
 ---
 
@@ -733,11 +772,12 @@ M0:
 M1:
 
 - event_driven, periodic ou hybrid;
-- Monitor governante não é exigido pelo contrato 027;
-- periodicidade, se houver, deve ser explícita;
+- Monitor governante é proibido pelo contrato 027;
+- componente periodic = reassessment programado, não Monitoring Cycle;
+- reassessment pode decidir abrir busca ad hoc, reroteamento ou nova policy;
 - event-driven deve identificar fontes/classes de evento.
 
-M1 não promete vigilância contínua.
+M1 não promete vigilância ativa contínua e não deve ser representado como “M2 sem Monitor”.
 
 ---
 
@@ -809,7 +849,8 @@ Se depender de push externo:
 
 Automação pode:
 
-- calcular next_due_at;
+- calcular o próximo `planned_at`/scheduled instant conforme a âncora;
+- calcular `grace_until`;
 - detectar overdue;
 - abrir `cadence_due`;
 - calcular source-specific due;
@@ -931,7 +972,7 @@ Não usar completed_at da versão anterior como referência automática sem regr
 
 Podem ser calculadas futuramente:
 
-- due_at derivado / `planned_at` quando MonitorCycle;
+- scheduled/planned instant (`planned_at` quando MonitorCycle);
 - actual_started_at;
 - actual_completed_at;
 - lateness duration;
@@ -986,23 +1027,26 @@ Antes disso deve haver gate específico.
 1. ciclo atrasado + cobertura completa ≠ gap;
 2. fixed_anchor não desliza devido a execução tardia;
 3. rolling_anchor exige justificativa explícita;
-4. planned_at representa due de início, não completion SLA;
-5. ciclo pontual + janela incompleta = gap;
-6. source latency > cadence não cria falsa atualidade;
-7. M1 event-driven sem periodic funciona;
-8. M2 periodic exige regra prospectiva;
-9. M2 hybrid aceita evento antes do due;
-10. M3 policy não remove blocker;
-11. overdue não altera currentness;
-12. gap não altera currentness sem assessment;
-13. cadence_due operacional não confirma material change;
-14. policy reassessment é relógio distinto;
-15. pause não apaga coverage debt;
-16. MethodDecision temporal exception não substitui UpdateDecision;
-17. supersessão de policy recalcula referência prospectivamente;
-18. obrigação satisfeita tardiamente preserva histórico de atraso;
-19. push channel indisponível não conta como vigilância válida;
-20. no universal default é inferido por M.
+4. `planned_at` é instante nominal e `started_at < planned_at` permanece inválido no Monitor atual;
+5. `grace_until` é limite superior de início sem overdue;
+6. completion SLA é relógio separado;
+7. M1 periodic gera reassessment, não Monitoring Cycle;
+8. ciclo pontual + janela incompleta = gap;
+9. source latency > cadence não cria falsa atualidade;
+10. M1 event-driven sem periodic funciona;
+11. M2 periodic exige regra prospectiva;
+12. M2 hybrid aceita evento antes do scheduled instant;
+13. M3 policy não remove blocker;
+14. overdue não altera currentness;
+15. gap não altera currentness sem assessment;
+16. cadence_due operacional não confirma material change;
+17. policy reassessment é relógio distinto;
+18. pause não apaga coverage debt;
+19. MethodDecision temporal exception não substitui UpdateDecision;
+20. supersessão de policy recalcula referência prospectivamente;
+21. obrigação satisfeita tardiamente preserva histórico de atraso;
+22. push channel indisponível não conta como vigilância válida;
+23. no universal default é inferido por M.
 
 ---
 
