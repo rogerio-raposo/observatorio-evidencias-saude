@@ -75,9 +75,35 @@ BEGIN
             'Evidence Monitor maintenance_level must be M2 or M3';
     END IF;
 
-    IF iv.protocol_artifact_uuid IS NULL THEN
+    IF iv.protocol_artifact_uuid IS NULL
+       OR NOT EXISTS (
+            SELECT 1
+              FROM artifact.artifact a
+             WHERE a.artifact_uuid=iv.protocol_artifact_uuid
+               AND a.status='active'
+       ) THEN
         RAISE EXCEPTION
-            'Evidence Monitor requires a monitoring protocol/plan artifact';
+            'Evidence Monitor requires an active monitoring protocol/plan artifact';
+    END IF;
+
+    IF NEW.source_policy_payload ? 'required_source_names'
+       AND jsonb_typeof(NEW.source_policy_payload->'required_source_names')<>'array' THEN
+        RAISE EXCEPTION 'required_source_names must be a JSON array';
+    END IF;
+
+    IF NEW.source_policy_payload ? 'required_source_classes'
+       AND jsonb_typeof(NEW.source_policy_payload->'required_source_classes')<>'array' THEN
+        RAISE EXCEPTION 'required_source_classes must be a JSON array';
+    END IF;
+
+    IF NEW.source_policy_payload ? 'minimum_bibliographic_sources' THEN
+        BEGIN
+            IF (NEW.source_policy_payload->>'minimum_bibliographic_sources')::integer < 0 THEN
+                RAISE EXCEPTION 'minimum_bibliographic_sources cannot be negative';
+            END IF;
+        EXCEPTION WHEN invalid_text_representation THEN
+            RAISE EXCEPTION 'minimum_bibliographic_sources must be an integer';
+        END;
     END IF;
 
     IF iv.evidence_cutoff_date IS DISTINCT FROM pv.evidence_cutoff_date THEN
@@ -358,6 +384,57 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_monitor_state_active
     ON maintenance.monitor_state(monitor_product_version_uuid)
     WHERE record_status='active';
 
+CREATE OR REPLACE FUNCTION maintenance.assert_monitor_state_consistency()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $fn$
+DECLARE
+    product_type_value text;
+    prior maintenance.monitor_state%ROWTYPE;
+BEGIN
+    SELECT pv.product_type INTO product_type_value
+      FROM product.product_version pv
+     WHERE pv.version_uuid=NEW.monitor_product_version_uuid;
+
+    IF product_type_value IS DISTINCT FROM 'evidence_monitor' THEN
+        RAISE EXCEPTION 'MonitorState requires an evidence_monitor ProductVersion';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+          FROM maintenance.monitor_definition md
+         WHERE md.monitor_product_version_uuid=NEW.monitor_product_version_uuid
+    ) OR NOT EXISTS (
+        SELECT 1
+          FROM maintenance.monitor_target mt
+         WHERE mt.monitor_product_version_uuid=NEW.monitor_product_version_uuid
+    ) THEN
+        RAISE EXCEPTION 'MonitorState requires MonitorDefinition and MonitorTarget';
+    END IF;
+
+    IF NEW.supersedes_monitor_state_uuid IS NOT NULL THEN
+        SELECT * INTO prior
+          FROM maintenance.monitor_state ms
+         WHERE ms.monitor_state_uuid=NEW.supersedes_monitor_state_uuid;
+
+        IF NOT FOUND
+           OR prior.monitor_product_version_uuid<>NEW.monitor_product_version_uuid
+           OR NEW.effective_at<prior.effective_at THEN
+            RAISE EXCEPTION
+                'MonitorState supersession must preserve Monitor and temporal order';
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_monitor_state_consistency
+    ON maintenance.monitor_state;
+CREATE TRIGGER tr_monitor_state_consistency
+BEFORE INSERT ON maintenance.monitor_state
+FOR EACH ROW EXECUTE FUNCTION maintenance.assert_monitor_state_consistency();
+
 CREATE OR REPLACE FUNCTION maintenance.guard_monitor_state_mutation()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -473,7 +550,38 @@ DECLARE
     prev_monitor uuid;
     prev_no integer;
     active_operational_status text;
+    product_type_value text;
 BEGIN
+    SELECT pv.product_type INTO product_type_value
+      FROM product.product_version pv
+     WHERE pv.version_uuid=NEW.monitor_product_version_uuid;
+
+    IF product_type_value IS DISTINCT FROM 'evidence_monitor'
+       OR NOT EXISTS (
+            SELECT 1
+              FROM maintenance.monitor_definition md
+             WHERE md.monitor_product_version_uuid=NEW.monitor_product_version_uuid
+       )
+       OR NOT EXISTS (
+            SELECT 1
+              FROM maintenance.monitor_target mt
+             WHERE mt.monitor_product_version_uuid=NEW.monitor_product_version_uuid
+       ) THEN
+        RAISE EXCEPTION
+            'MonitorCycle requires a configured evidence_monitor ProductVersion';
+    END IF;
+
+    IF NEW.started_at IS NOT NULL
+       AND NEW.planned_at IS NOT NULL
+       AND NEW.started_at<NEW.planned_at THEN
+        RAISE EXCEPTION 'MonitorCycle started_at cannot precede planned_at';
+    END IF;
+
+    IF NEW.completed_at IS NOT NULL
+       AND NEW.started_at IS NOT NULL
+       AND NEW.completed_at<NEW.started_at THEN
+        RAISE EXCEPTION 'MonitorCycle completed_at cannot precede started_at';
+    END IF;
     IF NEW.previous_cycle_uuid IS NOT NULL THEN
         SELECT monitor_product_version_uuid,cycle_no
           INTO prev_monitor,prev_no
@@ -490,6 +598,11 @@ BEGIN
 
     IF NEW.execution_status='running' AND NEW.started_at IS NULL THEN
         RAISE EXCEPTION 'running cycle requires started_at';
+    END IF;
+
+    IF NEW.execution_status IN ('completed','incomplete')
+       AND NEW.started_at IS NULL THEN
+        RAISE EXCEPTION 'completed/incomplete cycle requires started_at';
     END IF;
 
     IF NEW.execution_status IN ('completed','incomplete','cancelled')
@@ -1426,10 +1539,16 @@ BEGIN
                 'Evidence Monitor requires maintenance M2 or M3';
         END IF;
 
-        IF iv.protocol_artifact_uuid IS NULL THEN
+        IF iv.protocol_artifact_uuid IS NULL
+           OR NOT EXISTS (
+                SELECT 1
+                  FROM artifact.artifact a
+                 WHERE a.artifact_uuid=iv.protocol_artifact_uuid
+                   AND a.status='active'
+           ) THEN
             RETURN QUERY SELECT
                 'MISSING_MONITOR_PROTOCOL','error',
-                'Evidence Monitor requires a protocol/monitoring plan';
+                'Evidence Monitor requires an active protocol/monitoring plan';
         END IF;
 
         IF NOT EXISTS (
@@ -1474,6 +1593,44 @@ BEGIN
         RETURN QUERY SELECT
             'MISSING_PRIMARY_TARGET','error',
             'Evidence Monitor requires exactly one primary target';
+    ELSE
+        IF (
+            t.target_product_version_uuid IS NOT NULL
+            AND EXISTS (
+                SELECT 1
+                  FROM core.entity_version ev
+                 WHERE ev.version_uuid=t.target_product_version_uuid
+                   AND ev.version_status IN ('invalidated','archived')
+            )
+        ) OR (
+            t.target_investigation_version_uuid IS NOT NULL
+            AND EXISTS (
+                SELECT 1
+                  FROM core.entity_version ev
+                 WHERE ev.version_uuid=t.target_investigation_version_uuid
+                   AND ev.version_status IN ('invalidated','archived')
+            )
+        ) THEN
+            RETURN QUERY SELECT
+                'TARGET_INVALIDATED','error',
+                'Monitored target version is invalidated or archived';
+        END IF;
+
+        IF NOT EXISTS (
+            SELECT 1
+              FROM provenance.dependency_edge de
+             WHERE de.source_version_uuid=COALESCE(
+                       t.target_product_version_uuid,
+                       t.target_investigation_version_uuid
+                   )
+               AND de.target_version_uuid=p_product_version_uuid
+               AND de.dependency_type='maintenance_surveillance_target'
+               AND de.status='active'
+        ) THEN
+            RETURN QUERY SELECT
+                'MISSING_TARGET_DEPENDENCY','error',
+                'Monitor target linkage requires active maintenance_surveillance_target dependency';
+        END IF;
     END IF;
 
     SELECT ms.operational_status INTO monitor_state_status
