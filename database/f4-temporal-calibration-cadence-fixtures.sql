@@ -68,6 +68,15 @@ INSERT INTO maintenance.update_risk_profile_dimension(
 ('fc600000-0000-0000-0000-000000000002','B4','moderate','assessed','TEST-ONLY cost','fixture-owner','owner','human_verified','fixture-reviewer-2','human_reviewer',TIMESTAMPTZ '2026-10-06 23:43:00+00','authoritative',TIMESTAMPTZ '2026-10-06 23:41:30+00'),
 ('fc600000-0000-0000-0000-000000000002','B5','adequate','assessed','TEST-ONLY capacity','fixture-owner','owner','unverified',NULL,NULL,NULL,'authoritative',TIMESTAMPTZ '2026-10-06 23:41:40+00');
 
+
+INSERT INTO maintenance.update_risk_profile_trigger(
+ update_risk_profile_uuid,trigger_code,source_type,rationale,sequence_no
+) VALUES
+('fc600000-0000-0000-0000-000000000001','initial_baseline','none',
+ 'TEST-ONLY initial calibration baseline',1),
+('fc600000-0000-0000-0000-000000000002','initial_baseline','none',
+ 'TEST-ONLY initial calibration baseline',1);
+
 -- Product cadence dossier.
 INSERT INTO maintenance.temporal_calibration_dossier(
  temporal_calibration_dossier_uuid,scope_type,calibration_kind,
