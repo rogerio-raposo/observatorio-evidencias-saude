@@ -209,6 +209,40 @@ SELECT
  'TEST-ONLY SLA capacity evaluation',TIMESTAMPTZ '2026-10-06 23:55:40+00'
 FROM generate_series(1,6) n;
 
+-- TEST-ONLY historical replay evidence for calendar and SLA candidates.
+INSERT INTO maintenance.temporal_calibration_evaluation(
+ temporal_calibration_evaluation_uuid,temporal_calibration_candidate_uuid,
+ evaluation_type,result_status,metrics_payload,rationale,evaluated_at
+) VALUES
+('fc712000-0000-0000-0000-000000000001',
+ 'fc710000-0000-0000-0000-000000000001',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic calendar replay',TIMESTAMPTZ '2026-10-06 23:54:40+00'),
+('fc741000-0000-0000-0000-000000000001',
+ 'fc730000-0000-0000-0000-000000000001',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA1 replay',TIMESTAMPTZ '2026-10-06 23:55:41+00'),
+('fc741000-0000-0000-0000-000000000002',
+ 'fc730000-0000-0000-0000-000000000002',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA2 replay',TIMESTAMPTZ '2026-10-06 23:55:42+00'),
+('fc741000-0000-0000-0000-000000000003',
+ 'fc730000-0000-0000-0000-000000000003',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA3 replay',TIMESTAMPTZ '2026-10-06 23:55:43+00'),
+('fc741000-0000-0000-0000-000000000004',
+ 'fc730000-0000-0000-0000-000000000004',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA4 replay',TIMESTAMPTZ '2026-10-06 23:55:44+00'),
+('fc741000-0000-0000-0000-000000000005',
+ 'fc730000-0000-0000-0000-000000000005',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA5 replay',TIMESTAMPTZ '2026-10-06 23:55:45+00'),
+('fc741000-0000-0000-0000-000000000006',
+ 'fc730000-0000-0000-0000-000000000006',
+ 'historical_replay','acceptable','{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic SLA6 replay',TIMESTAMPTZ '2026-10-06 23:55:46+00');
+
 -- ---------------------------------------------------------------------------
 -- Calibrated synthetic rules preserving historical UUIDs/test durations.
 -- ---------------------------------------------------------------------------
