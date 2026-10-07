@@ -1894,3 +1894,39 @@ Estruturas candidatas:
 
 Próximo passo:
 > **executar gate adversarial/físico do Documento 35 antes de qualquer migration.**
+
+### Fase 4 — Gate físico de Propagation/Re-baselining
+
+Documentos:
+- 35 — Contrato Físico v0.1 de Propagation/Re-baselining;
+- 36 — Gate Adversarial/Físico do Contrato de Propagation/Re-baselining.
+
+Estado:
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **F4_PRB_T01_T145 = APPROVED_MINIMUM_TEST_PLAN**
+
+> **MIGRATION_031 = AUTHORIZED_IN_STRICT_SCOPE**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Decisões físicas consolidadas:
+- target classes fechadas em maintainable_product / maintainable_investigation / nonmaintainable_version;
+- propagation path normalizado e no_action bloqueado por lineage incompleto;
+- version chain de rebaseline normalizada em child steps com FKs;
+- RebaselineDecision append-preserving com activation authoritative única por old target;
+- policy handover cross-target separado de supersession same-target;
+- new M2/M3 policy exige novo Monitor current/coerente;
+- profile readiness condicional preserva guard da migration 030;
+- target supersession não invalida UpdateSignal;
+- PropagationCandidate → UpdateSignalSource exige adapter completo;
+- contract epoch técnico reservado apenas a grandfathering;
+- SLA cross-policy não reutiliza supersession FK;
+- SLA Instance handover não contorna lifecycle/first-breach guards;
+- migration 031 não pode criar automação científica, numeric SLA/cadence ou remover blocker M3.
+
+Próximo passo:
+> **implementar migration 031 + fixtures sintéticas + F4-PRB-T01–T145 + integração S5; depois validar idempotência, rebuild-through-031 e regressões completas.**
+
+Disciplina de modo:
+> **a etapa arquitetural de alta complexidade terminou; modo médio é suficiente para a implementação mecânica já especificada.**
