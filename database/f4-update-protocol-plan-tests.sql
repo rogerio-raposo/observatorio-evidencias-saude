@@ -513,7 +513,7 @@ SELECT pg_temp.assert_true(
     'F4-UP-P25-fixture'
 );
 SELECT pg_temp.expect_error_like(
-$INSERT INTO maintenance.update_signal_source(
+$$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,search_hit_uuid,note
 )
 SELECT
@@ -525,7 +525,7 @@ WHERE NOT EXISTS (
   SELECT 1 FROM maintenance.cycle_search cs WHERE cs.search_uuid=sh.search_uuid
 )
 ORDER BY sh.search_hit_uuid
-LIMIT 1$,'must belong to a MonitorCycle','F4-UP-P25');
+LIMIT 1$$,'must belong to a MonitorCycle','F4-UP-P25');
 ROLLBACK TO SAVEPOINT f4_p25;
 RELEASE SAVEPOINT f4_p25;
 
@@ -542,7 +542,7 @@ INSERT INTO maintenance.update_signal(
  'audit','system','unverified'
 );
 SELECT pg_temp.expect_error_like(
-$INSERT INTO maintenance.update_signal_source(
+$$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,
  monitor_cycle_uuid,note
 ) VALUES (
@@ -550,7 +550,7 @@ $INSERT INTO maintenance.update_signal_source(
  'fb100000-0000-0000-0000-000000000026',
  'supporting','monitor_cycle',
  'e5420000-0000-0000-0000-000000000003','P26 wrong Monitor'
-)$,'must belong to governing Monitor','F4-UP-P26');
+)$$,'must belong to governing Monitor','F4-UP-P26');
 ROLLBACK TO SAVEPOINT f4_p26;
 RELEASE SAVEPOINT f4_p26;
 
@@ -567,7 +567,7 @@ INSERT INTO maintenance.update_signal(
  'audit','system','unverified'
 );
 SELECT pg_temp.expect_error_like(
-$INSERT INTO maintenance.update_signal_source(
+$$INSERT INTO maintenance.update_signal_source(
  update_signal_source_uuid,update_signal_uuid,source_role,source_type,
  alert_product_version_uuid,note
 ) VALUES (
@@ -575,7 +575,7 @@ $INSERT INTO maintenance.update_signal_source(
  'fb100000-0000-0000-0000-000000000027',
  'supporting','alert_product_version',
  'a7100000-0000-0000-0000-000000000003','P27 wrong Alert target'
-)$,'Alert source target must match UpdatePolicy target','F4-UP-P27');
+)$$,'Alert source target must match UpdatePolicy target','F4-UP-P27');
 ROLLBACK TO SAVEPOINT f4_p27;
 RELEASE SAVEPOINT f4_p27;
 
