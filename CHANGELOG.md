@@ -2615,3 +2615,13 @@ Documentos:
 - ponteiro de continuidade movido para CP83;
 - retomada: Contrato de Dados v0.1 do Alerta;
 - Fase 4 permanece explicitamente não autorizada.
+
+
+## 2026-10-06 — Evidence Alert data contract v0.1
+
+- Documento 179 criado;
+- contrato físico do Alerta fechado;
+- migration 024 autorizada;
+- View adiada até Projection Readiness explícito;
+- classification/urgency continuam qualitativas, sem thresholds/SLA;
+- Fase 4 permanece não iniciada.
