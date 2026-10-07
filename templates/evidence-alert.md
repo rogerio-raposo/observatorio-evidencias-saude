@@ -143,10 +143,14 @@ or scientific conclusion is calculated here.
 - Monitor ProductVersion: {{monitor_origin.monitor_product_version_uuid}}
 - Cycle: {{monitor_origin.cycle_no}}
 - Cycle UUID: {{monitor_origin.cycle_uuid}}
+{{#if candidate_assessment_uuid}}
 - Candidate decision: {{monitor_origin.candidate_decision}}
 - Candidate record status: {{monitor_origin.candidate_record_status}}
+{{/if}}
+{{#if evidence_event_uuid}}
 - Event type: {{monitor_origin.event_type}}
 - Event status: {{monitor_origin.event_status}}
+{{/if}}
 {{else}}
 > **Fonte direta: este AlertSource não deriva de CandidateAssessment/EvidenceEvent persistido em Monitor.**
 {{/if}}
