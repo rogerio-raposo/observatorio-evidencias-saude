@@ -320,9 +320,11 @@ Quando presente:
 Regras por regime:
 
 - M0 → governing Monitor deve ser NULL;
-- M1 → governing Monitor normalmente NULL;
-- M2 → policy formal ativa deve possuir governing Monitor;
+- M1 → governing Monitor deve ser NULL;
+- M2 → policy ativa deve possuir governing Monitor;
 - M3 → governing Monitor obrigatório, mas isso **não torna M3 formalmente operacional**.
+
+Se uma policy M2 for reduzida para M1, a nova policy não reutiliza o Monitor como governante. O Monitor existente permanece historicamente preservado e seu estado operacional deve ser tratado separadamente.
 
 ---
 
@@ -952,24 +954,27 @@ Pode usar:
 
 Não inicia nova versão científica.
 
-Compatível com:
+Somente para ProductVersion target.
 
-- no_material_change;
-- potentially_material;
-- material_change_confirmed;
-- validity_or_use_threat;
-- insufficient_to_decide.
+Matriz obrigatória:
 
-Pode aplicar:
+| Materiality outcome | currency_action permitido |
+|---|---|
+| no_material_change | set_current |
+| potentially_material | set_under_evaluation, set_update_recommended |
+| material_change_confirmed | set_update_recommended, set_outdated |
+| validity_or_use_threat | set_under_evaluation, set_update_recommended, set_outdated |
+| insufficient_to_decide | set_under_evaluation |
 
-- set_current;
-- set_under_evaluation;
-- set_update_recommended;
-- set_outdated.
+Não permitir:
+
+> `material_change_confirmed → set_current`
+
+nem:
+
+> `insufficient_to_decide → set_current`.
 
 `currency_status='archived'` não será produzido por UpdateDecision v0.1; arquivamento permanece lifecycle/editorial separado.
-
-Somente para ProductVersion target.
 
 ### scientific_update_incremental
 
@@ -1028,7 +1033,7 @@ CREATE TABLE maintenance.update_decision_currency_state (
     update_decision_uuid uuid PRIMARY KEY
         REFERENCES maintenance.update_decision(update_decision_uuid),
 
-    currency_state_uuid uuid NOT NULL UNIQUE
+    currency_state_uuid uuid NOT NULL
         REFERENCES product.currency_state(currency_state_uuid),
 
     linked_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -1042,7 +1047,8 @@ Regras:
 3. CurrencyState deve pertencer exatamente ao target ProductVersion;
 4. CurrencyState deve ser active no momento do linkage;
 5. `currency_status` deve corresponder a `currency_action`;
-6. `currency_action='no_change'` não pode possuir linkage.
+6. `currency_action='no_change'` não pode possuir linkage;
+7. múltiplos UpdateDecisions coerentes podem apontar para o mesmo CurrencyState quando uma única avaliação de currentness resolve mais de um signal.
 
 Mapeamento:
 
@@ -1185,7 +1191,9 @@ Esses helpers deverão detectar estado inválido dinâmico que não pode ser con
 - Alert source drift;
 - signal sem primary source quando exigida;
 - active decision baseado em assessment superseded;
-- CurrencyState linkage que deixou de representar o histórico esperado.
+- CurrencyState linkage cujo target/status nunca correspondeu à decisão.
+
+Supersessão posterior normal do CurrencyState **não** constitui issue: o linkage é histórico e deve permanecer válido.
 
 Helpers não deverão alterar dados.
 
@@ -1275,50 +1283,54 @@ A futura bateria F4-UP deverá cobrir, no mínimo:
 10. policy em Investigation evidence_monitoring é rejeitada;
 11. policy por system/AI é rejeitada;
 12. transições M0–M3 inválidas são rejeitadas;
-13. M2 exige Monitor em policy formal;
-14. M3 exige Monitor mas permanece bloqueado formalmente;
-15. Monitor da policy aponta para mesmo target;
-16. signal exige policy ativa no INSERT;
-17. signal_type × class × trigger coerentes;
-18. signal verification invariants;
-19. signal material imutável;
-20. source locator XOR;
-21. no máximo uma primary source;
-22. SearchHit fora de Monitor rejeitado;
-23. source Monitor pertencente ao Monitor governante;
-24. Alert source target compatível;
-25. SignalSource selada após assessment;
-26. assessment sem primary source rejeitado quando exigida;
-27. owner como materiality assessor rejeitado;
-28. um assessment ativo por signal;
-29. assessment supersession preserva signal;
-30. materiality outcome × dimensions coerente;
-31. MaterialityDimension selada após decision;
-32. proposal por AI permitida;
-33. authoritative por AI rejeitada;
-34. authoritative com assessment AI-only rejeitada;
-35. authoritative sem human verification rejeitada;
-36. um decision ativo por signal;
-37. decision supersession preserva signal;
-38. insufficient_to_decide não pode encerrar como no_scientific_update;
-39. decision × materiality coerente;
-40. Investigation target com currency action rejeitado;
-41. Product target currency linkage coerente;
-42. wrong-target CurrencyState rejeitado;
-43. currency action/status mismatch rejeitado;
-44. archived não pode ser produzido por UpdateDecision;
-45. no_change com CurrencyState rejeitado;
-46. cycle CurrencyState pode ser reutilizado quando coerente;
-47. contradição cycle/decision rejeitada;
-48. nenhuma decisão cria ProductVersion automaticamente;
-49. nenhuma decisão cria InvestigationVersion automaticamente;
-50. nenhum registro promove assurance;
-51. M3 blocker existente continua ativo;
-52. migrations 021–026 permanecem idempotentes;
-53. futura migration candidata é idempotente quando desenhada para tal;
-54. rebuild-from-zero through migration candidata;
-55. regressões globais F2-B/S4/S5;
-56. regressões completas de Monitor e Alert.
+13. M1 com governing Monitor é rejeitada;
+14. M2 exige Monitor em policy ativa;
+15. M3 exige Monitor mas permanece bloqueado formalmente;
+16. Monitor da policy aponta para mesmo target;
+17. signal exige policy ativa no INSERT;
+18. signal_type × class × trigger coerentes;
+19. signal verification invariants;
+20. signal material imutável;
+21. source locator XOR;
+22. no máximo uma primary source;
+23. SearchHit fora de Monitor rejeitado;
+24. source Monitor pertencente ao Monitor governante;
+25. Alert source target compatível;
+26. SignalSource selada após assessment;
+27. assessment sem primary source rejeitado quando exigida;
+28. owner como materiality assessor rejeitado;
+29. um assessment ativo por signal;
+30. assessment supersession preserva signal;
+31. materiality outcome × dimensions coerente;
+32. MaterialityDimension selada após decision;
+33. proposal por AI permitida;
+34. authoritative por AI rejeitada;
+35. authoritative com assessment AI-only rejeitada;
+36. authoritative sem human verification rejeitada;
+37. um decision ativo por signal;
+38. decision supersession preserva signal;
+39. insufficient_to_decide não pode encerrar como no_scientific_update;
+40. material_change_confirmed → set_current é rejeitado;
+41. insufficient_to_decide → set_current é rejeitado;
+42. decision × materiality coerente;
+43. Investigation target com currency action rejeitado;
+44. Product target currency linkage coerente;
+45. wrong-target CurrencyState rejeitado;
+46. currency action/status mismatch rejeitado;
+47. archived não pode ser produzido por UpdateDecision;
+48. no_change com CurrencyState rejeitado;
+49. dois signals podem compartilhar o mesmo CurrencyState quando coerentes;
+50. cycle CurrencyState pode ser reutilizado quando coerente;
+51. contradição cycle/decision rejeitada;
+52. nenhuma decisão cria ProductVersion automaticamente;
+53. nenhuma decisão cria InvestigationVersion automaticamente;
+54. nenhum registro promove assurance;
+55. M3 blocker existente continua ativo;
+56. migrations 021–026 permanecem idempotentes;
+57. futura migration candidata é idempotente quando desenhada para tal;
+58. rebuild-from-zero through migration candidata;
+59. regressões globais F2-B/S4/S5;
+60. regressões completas de Monitor e Alert.
 
 ---
 
