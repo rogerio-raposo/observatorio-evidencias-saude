@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_ADVERSARIAL_REVIEW**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 26**  
 **Dependências:** Documentos 05–09, 16–24; migrations 021–028  
+**Validado por:** Documento 26  
 **Objeto:** prioridade transversal, escalation e relação com risk profile, Alert, materiality, currentness, SLA, capacidade e dependências
 
 ---
@@ -1549,7 +1550,7 @@ O bloco poderá ser considerado pronto para desenho físico quando a revisão ad
 
 ## 49. Próximo passo
 
-> **Reexecutar o gate do Documento 26 sobre esta versão revisada; somente após PASS definir readiness para desenho físico integrado.**
+> **Definir o contrato de dados integrado do plano operacional da Fase 4 — triage + prioridade/escalation + SLA + milestones mínimos de workflow — sem migration; depois executar gate físico próprio.**
 
 
 ---
