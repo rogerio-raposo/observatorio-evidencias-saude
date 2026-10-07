@@ -2690,3 +2690,12 @@ Documentos:
 - artifact **11456283842**;
 - próxima etapa: contrato de renderização + Template Operacional do Alerta;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — CP87
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP87.md`;
+- EvidenceAlertView 0.1 consolidada em PASS;
+- ponteiro de continuidade movido para CP87;
+- retomada: apresentação do Alerta + fechamento da Fase 3;
+- Fase 4 permanece explicitamente não autorizada.
