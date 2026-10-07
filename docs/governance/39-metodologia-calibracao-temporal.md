@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_DOCUMENT_40 — READY_FOR_RECHECK — NO_NORMATIVE_VALUES_AUTHORIZED**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 40 — NO_NORMATIVE_VALUES_AUTHORIZED**  
 **Dependências:** Documentos 16–21, 25–31, 33–38; migrations 027, 029–031  
+**Validado por:** Documento 40  
 **Objeto:** metodologia para calibrar cadence, thresholds temporais, calendários e durações SLA antes de qualquer valor normativo
 
 ---
@@ -1352,9 +1353,9 @@ Antes de números nesses payloads:
 
 ## 60. Estado após hardening
 
-> **TEMPORAL_CALIBRATION_METHODOLOGY = REVISED_READY_FOR_RECHECK**
+> **TEMPORAL_CALIBRATION_METHODOLOGY = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
-> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = IDENTIFIED_NOT_SPECIFIED**
+> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = AUTHORIZED_FOR_SPECIFICATION_ONLY**
 
 > **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
 
@@ -1366,5 +1367,5 @@ Antes de números nesses payloads:
 
 ## 61. Próximo passo exato
 
-> **Reexecutar o Documento 40. Se o recheck passar, autorizar somente a especificação do contrato físico dos pré-requisitos de calibração, ainda sem valores normativos.**
+> **Especificar o contrato físico v0.1 dos pré-requisitos de calibração temporal e submetê-lo a novo gate adversarial/físico antes de qualquer migration ou valor normativo.**
 
