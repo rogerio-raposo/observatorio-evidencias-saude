@@ -1384,8 +1384,7 @@ Priority implications são rationale, não decisão.
 39. carried dimension mantém valor;
 40. carried dimension rationale obrigatório;
 41. new scientific version sem carry-forward silencioso;
-42. carried source authoritative exigido;
-43. carry-forward effective_at não antecede source profile.
+42. carried source authoritative exigido **e** carry-forward effective_at não antecede source profile.
 
 ## 55. Recomendação
 
