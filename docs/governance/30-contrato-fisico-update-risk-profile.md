@@ -215,8 +215,17 @@ Proposal:
 
 - pode ser incompleto;
 - pode possuir subconjunto das dimensões;
-- issue helper deve reportar dimensões ausentes;
-- não pode ser usado como authoritative governing basis.
+- outputs recomendatórios do header podem permanecer incompletos/NULL enquanto o proposal estiver incompleto;
+- issue helper deve reportar dimensões/outputs ausentes;
+- não pode ser usado como authoritative governing basis;
+- **proposal incompleto não é elegível para serializer canônico nem para PriorityAssessment**.
+
+Um proposal somente se torna elegível como input de PriorityAssessment proposal quando:
+
+- possui as dez dimensões;
+- cada dimensão possui value válido;
+- outputs recomendatórios necessários estão presentes;
+- serializer canônico consegue produzir snapshot válido.
 
 Um novo profile authoritative para o mesmo target:
 
@@ -930,7 +939,8 @@ Após a migration que materializar o profile:
 - novo PriorityAssessment deve sempre referenciar `update_risk_profile_uuid`;
 - profile deve corresponder ao mesmo target/policy context;
 - authoritative scientific/mixed exige profile authoritative;
-- proposal pode usar profile proposal ou authoritative;
+- proposal pode usar profile proposal **completo/serializer-eligible** ou authoritative;
+- profile proposal incompleto é rejeitado como input;
 - `risk_profile_snapshot` deve ser **exatamente** o serializer canônico daquele profile no INSERT.
 
 Não depender de JSON montado manualmente para novas linhas.
@@ -946,6 +956,14 @@ Função futura candidata:
 Deve produzir JSON compatível com:
 
 > `maintenance.risk_profile_snapshot_is_valid()`
+
+Pré-condição:
+
+> profile possui exatamente as dez dimensões e outputs mínimos completos.
+
+Profile proposal incompleto:
+
+> serializer deve rejeitar/retornar erro controlado; não produzir snapshot parcialmente válido.
 
 Incluindo no mínimo:
 
@@ -1407,25 +1425,26 @@ Priority implications são rationale, não decisão.
 ## 58. Priority/SLA integration
 
 70. legacy snapshot-only permanece válido;
-71. novo PriorityAssessment sem profile FK rejeitado;
-72. profile FK + canonical snapshot exatamente coerentes;
-73. drift entre FK e snapshot rejeitado;
-74. authoritative scientific priority exige authoritative profile;
-75. PriorityBasis risk_profile locator XOR;
-76. SLA snapshot congela profile UUID;
-77. profile posterior não recalcula SLA Instance.
+71. proposal profile incompleto não pode ser serializado/usado por PriorityAssessment;
+72. novo PriorityAssessment sem profile FK rejeitado;
+73. profile FK + canonical snapshot exatamente coerentes;
+74. drift entre FK e snapshot rejeitado;
+75. authoritative scientific priority exige authoritative profile;
+76. PriorityBasis risk_profile locator XOR;
+77. SLA snapshot congela profile UUID;
+78. profile posterior não recalcula SLA Instance.
 
 ## 59. Invariantes e regressões
 
-78. profile não altera CurrencyState;
-79. profile não altera Assurance;
-80. profile não cria UpdatePolicy;
-81. profile não cria UpdateSignal;
-82. profile não cria Alert;
-83. M3 blocker preservado;
-84. migration idempotency;
-85. rebuild;
-86. regressões F4-UP/F4-OC/F2-B/S4/S5/F3/Monitor/Alert.
+79. profile não altera CurrencyState;
+80. profile não altera Assurance;
+81. profile não cria UpdatePolicy;
+82. profile não cria UpdateSignal;
+83. profile não cria Alert;
+84. M3 blocker preservado;
+85. migration idempotency;
+86. rebuild;
+87. regressões F4-UP/F4-OC/F2-B/S4/S5/F3/Monitor/Alert.
 
 ---
 
@@ -1469,7 +1488,8 @@ Foram incorporadas:
 9. novos PriorityAssessment passam a exigir profile FK após migration;
 10. snapshot novo deve ser exatamente o serializer canônico;
 11. carry-forward temporal/source reforçado;
-12. B5 authority reconciliada com o helper global de verification sem adicionar owner como verifier artificial.
+12. B5 authority reconciliada com o helper global de verification sem adicionar owner como verifier artificial;
+13. proposal incompleto impedido de produzir snapshot/servir de input para PriorityAssessment.
 
 Estado:
 
