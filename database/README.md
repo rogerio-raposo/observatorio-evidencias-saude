@@ -298,21 +298,27 @@ Estado do Caso Real 01:
 
 ## Fase 4 — Protocolo Transversal de Atualização v0.1
 
-**PASS técnico — 7 de outubro de 2026.**
+**PASS técnico pós-auditoria — 7 de outubro de 2026.**
 
-Migration:
+Migrations:
 
-- `027_transversal_update_protocol_contract.sql`
+- `027_transversal_update_protocol_contract.sql` — contrato físico v0.1 histórico;
+- `028_transversal_update_protocol_audit_hardening.sql` — hardening corretivo pós-auditoria.
 
 Fixtures/testes:
 
 - `f4-update-protocol-fixtures.sql`;
-- `f4-update-protocol-tests.sql`;
+- `f4-update-protocol-tests.sql` — suíte histórica T01–T63;
+- `f4-update-protocol-plan-tests.sql` — suíte espelho do plano P01–P58;
 - F4-UP-T01–T63: **PASS**;
-- F4-UP-IDEM: **PASS**;
-- rebuild through migration 027: **PASS**.
+- F4-UP-P01–P63: **PASS**;
+- migration 027 idempotency: **PASS**;
+- migration 028 idempotency: **PASS**;
+- rebuild through migration 028: **PASS**;
+- regressões F2-B/S4/S5: **PASS**;
+- regressões completas Monitor/Alert: **PASS**.
 
-Estruturas aditivas:
+Estruturas aditivas do contrato permanecem:
 
 - `maintenance.update_policy`;
 - `maintenance.update_signal`;
@@ -322,32 +328,38 @@ Estruturas aditivas:
 - `maintenance.update_decision`;
 - `maintenance.update_decision_currency_state`.
 
-GitHub Actions:
+A migration 028 não adiciona contrato funcional de prioridade/SLA; ela endurece:
+
+- semântica de `signal_type='other'`;
+- lifecycle UpdateSignal → UpdateDecision;
+- lifecycle UpdateDecision → CurrencyState linkage;
+- issue helpers dinâmicos de policy/signal/materiality/decision.
+
+GitHub Actions canônico pós-auditoria:
 
 - workflow: **OES PoC-S5 PostgreSQL Validation**;
-- run: **37570978847**;
-- HEAD: `d56ea65c024d60c60ec77d1ab4fe9dc7be1c5fa9`;
+- run: **37576434417** (#144);
+- technical HEAD: `3f36b5dd4103e15834adde107fedeeb1c81fb084`;
 - conclusion: **success**;
-- artifact: **11460960487**;
-- digest: `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`.
+- artifact: **11462802190**;
+- digest: `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`.
+
+A run **37576345925** (#143) falhou por erro de desenho do teste P62 e não é evidência de PASS.
 
 Limite preservado:
 
 > `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL` permanece ativo.
 
-A migration 027 não define thresholds, SLA numérico, scheduler, notifications, auto-classification, auto-escalation, propagation automática nem M3 readiness.
+Estado metodológico após Documentos 16–24:
 
-Após a auditoria retrospectiva da Fase 4, a migration 028 foi autorizada **somente** como hardening corretivo da 027. Ela reforça lifecycle/issue helpers e não implementa prioridade, SLA físico, notificações, propagation ou M3 readiness.
+- perfis de risco = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- cadence/thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- SLA semântico = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- auditoria retrospectiva/hardening = **CLOSED_PASS**;
+- contrato físico = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
+- prioridade/escalation = **NOT_STARTED**.
 
-Estado metodológico após Documentos 16–23:
+Próxima etapa metodológica:
 
-- perfis de risco = PASS_WITH_ARCHITECTURAL_DECISIONS;
-- cadence/thresholds temporais = PASS_WITH_ARCHITECTURAL_DECISIONS;
-- SLA semântico = PASS_WITH_ARCHITECTURAL_DECISIONS;
-- auditoria retrospectiva = REVISE até nova validação canônica da migration 028;
-- prioridade/escalation = aguardando fechamento do bloco corretivo.
-
-Próxima etapa metodológica, **após PASS corretivo**:
-
-> arquitetura transversal de prioridade e escalation.
+> **arquitetura transversal de prioridade e escalation**, antes de qualquer contrato físico adicional.
 
