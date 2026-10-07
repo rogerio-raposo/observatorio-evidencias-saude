@@ -2881,3 +2881,39 @@ Documentos:
 - próximo passo: prioridade/escalation;
 - regra de pausa obrigatória após checkpoints preservada.
 
+## 2026-10-07 — Phase 4 retrospective audit and corrective hardening
+
+- Documento 22 executou auditoria retrospectiva da Fase 4 até CP93;
+- a arquitetura conceitual 05–21 permaneceu coerente;
+- identificado que T01–T63 não espelhava um-a-um os 63 requisitos mínimos do Documento 07;
+- identificados gaps de lifecycle e dynamic issue helpers;
+- Documento 23 autorizou migration 028 somente como hardening corretivo;
+- migration 027 permaneceu historicamente intacta;
+- migration 028 passou a:
+  - restringir `signal_type='other'` a combinações semânticas coerentes;
+  - exigir UpdateSignal ativo para nova UpdateDecision;
+  - exigir UpdateDecision ativa para novo CurrencyState linkage;
+  - ampliar issue helpers de policy/signal/materiality/decision;
+- criada suíte `f4-update-protocol-plan-tests.sql`;
+- P01–P58 espelham Documento 07 §34 itens 1–58;
+- P59–P63 são evidências explícitas de idempotência, rebuild e regressões no workflow;
+- run **37576345925** (#143) falhou em P62 por erro de desenho de teste ao reexecutar baseline F2-B sobre banco enriquecido; não é evidência de PASS;
+- P62/P63 foram corrigidos para certificar as regressões canônicas já executadas após migration 028;
+- run **37576434417** (#144) = **success**;
+- technical HEAD `3f36b5dd4103e15834adde107fedeeb1c81fb084`;
+- artifact **11462802190**;
+- digest `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`;
+- T01–T63 = PASS;
+- P01–P63 = PASS;
+- migration 027 idempotency = PASS;
+- migration 028 idempotency = PASS;
+- rebuild-through-028 = PASS;
+- F2-B/S4/S5 = PASS;
+- Monitor/Alert = PASS;
+- M3 blocker preservado;
+- Documento 24 fechou o bloco corretivo em **CLOSED_PASS**;
+- metadados de dependência/validação dos Documentos 16/18/20 foram normalizados;
+- STATE passou a explicitar que trechos antigos são snapshots históricos;
+- database README atualizado para o estado pós-auditoria;
+- próximo bloco permitido: prioridade/escalation.
+
