@@ -3,8 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISED_AFTER_PHYSICAL_GATE — READY_FOR_DOCUMENT_36_RECHECK — MIGRATION_NOT_AUTHORIZED**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 36**  
 **Dependências:** Documentos 33–34; Documentos 05–09, 16–32; docs/architecture/28–29; migrations 004, 021–030  
+**Validado por:** Documento 36  
 **Objeto:** contrato físico candidato para propagation assessment, dependency-path snapshot, re-baselining same-entity e handover explícito de maintenance objects
 
 ---
@@ -1402,9 +1403,9 @@ Antes de migration, Documento 36 deve atacar no mínimo:
 
 ## 46. Estado
 
-> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
 
-> **F4_PRB_T01_T145 = TEST_PLAN_REVISED_FOR_RECHECK**
+> **F4_PRB_T01_T145 = APPROVED_MINIMUM_TEST_PLAN**
 
 > **MIGRATION_031 = NOT_AUTHORIZED**
 
@@ -1414,7 +1415,7 @@ Antes de migration, Documento 36 deve atacar no mínimo:
 
 ## 47. Próximo passo exato
 
-> **Executar o recheck do Documento 36 sobre o hardening abaixo; somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar migration 031 em escopo estrito.**
+> **Implementar migration 031 no escopo estrito aprovado pelo Documento 36, com F4-PRB-T01–T145, idempotência, rebuild-through-031 e regressões completas.**
 
 
 ---
@@ -1811,7 +1812,7 @@ T140 — activated child set completo + M3 blocker.
 
 > **F4_PRB_T01_T140 = TEST_PLAN_REVISED_FOR_RECHECK**
 
-> **MIGRATION_031 = NOT_AUTHORIZED_UNTIL_DOCUMENT_36_RECHECK**
+> **MIGRATION_031 = AUTHORIZED_IN_STRICT_SCOPE**
 
 > **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
 
