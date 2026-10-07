@@ -1,7 +1,7 @@
 # STATE — Estado Atual do Projeto OES
 
 **Última atualização:** 6 de outubro de 2026  
-**Fase atual:** Fase 3 — Produtos do Observatório  
+**Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
 ## 1. Fonte canônica e continuidade
@@ -12,15 +12,16 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP88 — 2026-10-06**.
+- checkpoint vigente: **CP89 — 2026-10-06**.
 
 ## 2. Estado das fases
 
 - Fase 0 — Concepção e fundamentos: base inicial consolidada;
 - Fase 1 — Manual Metodológico: base inicial dos Documentos 10–15 consolidada;
 - Fase 2 — Modelo de Dados da Evidência: **concluída no nível de baseline arquitetural**;
-- Fase 3 — Produtos do Observatório: **em desenvolvimento**;
-- Fases 4–7: ainda não iniciadas formalmente.
+- Fase 3 — Produtos do Observatório: **concluída**;
+- Fase 4 — Protocolo de Atualização: **em desenvolvimento**;
+- Fases 5–7: ainda não iniciadas formalmente.
 
 ## 3. Arquitetura
 
@@ -1125,3 +1126,68 @@ Critério do encerramento:
 Fronteira obrigatória:
 
 > **Fase 4 não foi iniciada e não deve ser iniciada sem consentimento explícito do usuário, em nova conversa.**
+
+### Fase 4 — início formal e baseline conceitual do Protocolo de Atualização
+
+Autorização explícita do usuário recebida em nova conversa após Freshness Gate completo.
+
+Documentos:
+
+- Documento 05 — `docs/governance/05-protocolo-transversal-atualizacao.md`;
+- Documento 06 — `docs/governance/06-revisao-adversarial-protocolo-atualizacao.md`.
+
+Estado:
+
+> **PROJECT_STATE = PHASE_4_IN_PROGRESS**
+
+> **PHASE_4_UPDATE_PROTOCOL_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+Decisões consolidadas:
+
+- versão científica, currentness, manutenção e estado operacional/comunicacional permanecem distintos;
+- ProductVersion recebe CurrencyState; InvestigationVersion não recebe CurrencyState artificial;
+- signal operacional é distinto de signal científico/currentness;
+- cadence vencida/ciclo incompleto não altera currentness automaticamente;
+- atualização científica material exige versionamento history-preserving do alvo apropriado;
+- Alert não é atualização científica;
+- Monitor não é síntese;
+- propagação abre impact assessment, sem reescrever dependentes;
+- M3 permanece ortogonal a N0–N4;
+- automação autoritativa permanece não autorizada sem gate específico.
+
+M3:
+
+> **M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL permanece ativo.**
+
+Documento metodológico não remove o blocker técnico. Desbloqueio exigirá contrato físico, migration, testes, idempotência, rebuild, regressões e gate explícito.
+
+Estado técnico:
+
+- nenhuma migration/View/template/workflow alterada na abertura da Fase 4;
+- última validação técnica continua sendo S5 run **37561515491** (#141) = success;
+- HEAD técnico validado `7d525fc978ee623f17a981b9bf42cdf18686c51e`;
+- artifact **11456897850**;
+- digest `sha256:257b26162a577f24cede0c21befd437b1cad4dc6c5847d39ef29e2755d85e099`.
+
+Readiness:
+
+- conceptual update protocol = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- data contract = NOT_YET_SPECIFIED;
+- migration de Fase 4 = NOT_AUTHORIZED;
+- thresholds numéricos = NOT_DEFINED;
+- SLAs numéricos = NOT_DEFINED;
+- M3 formal operacional = BLOCKED.
+
+Próximo passo exato:
+
+> **Especificar o Contrato de Dados v0.1 do Protocolo Transversal de Atualização, começando por maintenance policy/version, update signal, materiality assessment e update decision; antes de qualquer migration, executar gate de coerência física.**
+
+### CP89
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP89.md`;
+- ponteiro de continuidade movido para CP89;
+- Fase 4 formalmente iniciada;
+- Documentos 05–06 consolidados;
+- retomada movida para Contrato de Dados v0.1;
+- M3 formal continua bloqueado.
+
