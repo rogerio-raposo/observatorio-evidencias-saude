@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_ADVERSARIAL_GATE — NO_NORMATIVE_VALUES_AUTHORIZED**  
+**Status:** **HARDENED_PENDING_RECHECK — NO_NORMATIVE_VALUES_AUTHORIZED**  
 **Modo:** alto  
 **Dependências:** Documentos 39–45; migration 032; CP107  
 **Objeto:** protocolo pré-calibração para determinar se existe base real suficiente para abrir um Calibration Dossier temporal
@@ -565,3 +565,358 @@ Antes de usar o protocolo para declarar qualquer contexto READY_FOR_CALIBRATION,
 Somente PASS ou PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar a primeira avaliação de readiness em contexto real.
 
 Mesmo após PASS, nenhuma calibração numérica fica automaticamente autorizada.
+
+
+---
+
+# PARTE K — HARDENING APÓS GATE ADVERSARIAL
+
+## 36. Prova positiva de realidade
+
+A ausência de label synthetic/test-only não torna uma evidência real.
+
+Para classes R1–R6, quando usadas para sustentar readiness, deve existir prova positiva de admissibilidade:
+
+- provenance chain;
+- locator canônico;
+- contexto operacional/institucional real identificável;
+- actor/source real identificável;
+- período ou observation time;
+- finalidade original;
+- declaração explícita de que a evidência não provém de fixture, smoke test ou geração sintética.
+
+Se a origem não puder ser positivamente demonstrada:
+
+> **EVIDENCE_REALITY_NOT_PROVEN**
+
+e o input não pode sustentar READY_FOR_CALIBRATION.
+
+## 37. Human verification do readiness final
+
+IA/system pode:
+
+- inventariar evidência;
+- detectar lacunas;
+- calcular métricas;
+- preparar candidate readiness assessment;
+- sugerir blocker states.
+
+IA/system não pode ser a autoridade final de READY_FOR_CALIBRATION.
+
+Para status final READY_FOR_CALIBRATION:
+
+- o readiness global deve possuir verificação humana qualificada;
+- necessidade científico-metodológica deve ser verificada por human_reviewer ou human_expert quando material;
+- feasibility/calendar/operational commitment deve ter owner/institutional verification quando material.
+
+Essa verificação:
+
+> autoriza apenas o readiness conclusion.
+
+Não equivale a:
+
+- aprovar candidato temporal;
+- aprovar Calibration Dossier;
+- autorizar normative activation.
+
+## 38. Blocker-set dominance
+
+Todo assessment mantém:
+
+- primary readiness state;
+- blocker set completo.
+
+Regra:
+
+> **READY_FOR_CALIBRATION somente existe quando blocker set material = vazio.**
+
+Se qualquer blocker material existir:
+
+- READY é proibido;
+- primary state deve ser non-ready;
+- blockers adicionais permanecem registrados;
+- não existe score para escolher qual blocker “vale mais”.
+
+A escolha do primary non-ready state serve apenas para orientar a próxima ação e exige rationale.
+
+## 39. Cohort, janela e denominador
+
+Antes de declarar suficiência com evidência histórica, registrar:
+
+- cohort definition;
+- inclusion criteria;
+- exclusion criteria;
+- observation window;
+- motivo da janela;
+- known denominator ou explicação de por que é desconhecido;
+- case count;
+- event count;
+- missing count;
+- censored/open count;
+- structural breaks;
+- periods of peak load;
+- periods of source failure;
+- representativeness rationale.
+
+Cohort/window usados para futuro replay devem ser definidos antes da comparação de candidate values.
+
+Análise exploratória retrospectiva é permitida somente se explicitamente rotulada:
+
+> **EXPLORATORY — NOT SUFFICIENT FOR READY BY ITSELF**
+
+## 40. Pilot inference e transportability
+
+Assessment feito sobre pilot/convenience context:
+
+> vale somente para o exact context avaliado.
+
+Não pode ser generalizado automaticamente para:
+
+- outro target;
+- outro source scope;
+- outro clock;
+- outra response class;
+- outro workflow;
+- outro período estruturalmente distinto.
+
+Transportability exige:
+
+- comparação explícita de contexto;
+- rationale;
+- identificação de diferenças;
+- novo assessment quando diferenças materiais existirem.
+
+## 41. Fonte externa material
+
+Qualquer fato externo que altere materialmente a conclusão READY exige locator persistente/auditável contendo, conforme aplicável:
+
+- source identity;
+- document/page/API/feed locator;
+- retrieval/observation time;
+- version/effective date;
+- timestamp precision;
+- jurisdiction/scope;
+- interpretação.
+
+“Consultado na web” sem locator reproduzível não é controlling basis.
+
+Se a evidência material não puder ser preservada:
+
+> **EXTERNAL_EVIDENCE_NOT_PRESERVED**
+
+e não pode sustentar READY.
+
+## 42. Source behavior não equivale a detection latency
+
+Registrar separadamente:
+
+1. documented publication/update schedule;
+2. observed source publication/indexation latency;
+3. source/API/feed availability;
+4. OES ingestion/detection latency;
+5. polling/process latency.
+
+Nenhuma categoria substitui automaticamente outra.
+
+Exemplo:
+
+> “publicação semanal” não significa “detecção em sete dias”.
+
+## 43. R7 — not applicable
+
+R7 exige:
+
+- rationale específica;
+- domínio ao qual se aplica;
+- assessor;
+- verifier compatível quando a exclusão for material para READY.
+
+R7 não pode ser usado para eliminar silenciosamente input desconhecido.
+
+Input desconhecido:
+
+> não é not applicable.
+
+## 44. Lifecycle do measurement schedule
+
+Measurement schedule non-normative deve possuir:
+
+- observation-plan identifier;
+- purpose;
+- exact target/source;
+- start_at;
+- end_at ou review_at;
+- owner operacional;
+- status non-normative;
+- termination conditions;
+- data-quality plan.
+
+É proibido vinculá-lo como:
+
+- UpdatePolicy cadence;
+- CadenceContract normative obligation;
+- SLA;
+- compliance clock;
+- overdue/breach source;
+- notification trigger;
+- auto-escalation trigger.
+
+Persistência ou repetição histórica não promove measurement schedule a policy.
+
+Qualquer uso posterior em calibration candidate exige nova análise explícita.
+
+## 45. Zero-event e denominador
+
+Zero observed events somente pode ser interpretado junto com:
+
+- coverage;
+- denominator;
+- observability;
+- source/channel liveness;
+- observation window;
+- missingness.
+
+Se coverage/denominator materialmente desconhecido:
+
+> zero events não sustenta adequação.
+
+## 46. Drift invalidation antes de Calibration Dossier
+
+Mesmo após READY_FOR_CALIBRATION, antes de abrir dossier real, revalidar:
+
+- target ainda current;
+- no target supersession;
+- no material Monitor rebaseline;
+- no material source/API change;
+- no material workflow change;
+- no material capacity change;
+- no institutional calendar change;
+- no authority change;
+- no external-rule change;
+- evidence cut-off ainda defensável.
+
+Qualquer mudança material:
+
+> invalida READY até reassessment.
+
+## 47. Fixed deadline applicability authority
+
+Quando fixed deadline deriva de obrigação:
+
+- legal;
+- regulatória;
+- contratual;
+- institucional formal;
+
+a aplicabilidade deve ser confirmada pela autoridade institucional competente para aquele domínio.
+
+Automação/IA pode extrair texto e apontar possível regra.
+
+Não pode concluir sozinha applicability normativa.
+
+## 48. Sustainable capacity versus constrained performance
+
+Baixa performance observada durante:
+
+- understaffing;
+- outage;
+- onboarding;
+- incident;
+- transitional workflow;
+
+não é automaticamente sustainable capacity.
+
+Readiness deve separar:
+
+- observed constrained performance;
+- normal operating capacity;
+- intended/authorized service model;
+- resource deficit.
+
+Capacity deficit não pode virar SLA/cadence mais lenta por definição.
+
+## 49. Prospective observation — data governance
+
+Temporal Observation Plan deve respeitar controles aplicáveis de:
+
+- minimização;
+- finalidade;
+- acesso;
+- segurança;
+- retenção;
+- privacy/confidentiality;
+- provenance.
+
+Readiness não autoriza coleta irrestrita de novos dados.
+
+Quando nova coleta exigir approval/governance específico:
+
+> **OBSERVATION_GOVERNANCE_REQUIRED**
+
+antes do início da observação.
+
+## 50. Reassess boundary
+
+Todo READY_FOR_CALIBRATION deve registrar:
+
+- reassess_by; ou
+- rationale explícita para ausência de data fixa;
+- event-based invalidation triggers.
+
+A ausência de data fixa não elimina triggers.
+
+READY sem qualquer review boundary:
+
+> inválido.
+
+## 51. Regra consolidada de READY
+
+Após o hardening, READY_FOR_CALIBRATION exige cumulativamente:
+
+1. exact target válido/current;
+2. evidence reality positivamente demonstrada;
+3. need basis adequada;
+4. source/operational basis adequada ao objeto;
+5. cohort/window/denominator documentados quando históricos;
+6. data-quality limitations explícitas;
+7. external material evidence persistida;
+8. feasibility avaliada sem capacity laundering;
+9. authority gaps resolvidos para a decisão de readiness;
+10. replay/stress readiness ou non-applicability verificada;
+11. blocker set material vazio;
+12. human verification final do readiness;
+13. evidence_cutoff_at;
+14. reassess boundary;
+15. ausência de drift invalidante.
+
+READY continua autorizando apenas:
+
+> **abrir um Calibration Dossier real em estado inicial, após revalidação imediata.**
+
+Não autoriza número, candidate selected ou normative activation.
+
+## 52. Estado após hardening
+
+> **TEMPORAL_CALIBRATION_EVIDENCE_READINESS_PROTOCOL = HARDENED_PENDING_RECHECK**
+
+> **READINESS_ASSESSMENT_ON_REAL_CONTEXT = NOT_YET_AUTHORIZED**
+
+> **REAL_CALIBRATION_DOSSIER = NOT_YET_AUTHORIZED**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **NO_NEW_MIGRATION = AUTHORIZED**
+
+> **SCHEDULER = DEFERRED**
+
+> **NOTIFICATIONS = DEFERRED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+## 53. Próximo passo pós-hardening
+
+> **Reexecutar o Documento 47 contra o protocolo endurecido.**
+
+Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS autoriza a primeira avaliação de readiness em contexto real.
