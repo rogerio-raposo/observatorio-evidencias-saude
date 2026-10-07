@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — contrato lógico requer hardening antes de autorizar migration 029**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — migration 029 autorizada em escopo estrito**  
 **Dependência:** Documento 27  
 **Objeto:** triage + priority/escalation + SLA + workflow round/milestone
 
@@ -694,3 +694,287 @@ Até as correções:
 ## 33. Próximo passo
 
 > **Aplicar as correções ao Documento 27 e reexecutar este gate antes de qualquer migration.**
+
+
+---
+
+## 34. Recheck pós-hardening
+
+O Documento 27 foi reavaliado após as correções.
+
+### O01 — âncora UpdatePolicy
+
+Sem duplicação de OperationalPlan.
+
+**Resultado:** PASS.
+
+### O02 — invalid triage
+
+Foi escolhido:
+
+> constraint trigger `DEFERRABLE INITIALLY DEFERRED`
+
+com issue helper de drift.
+
+**Resultado:** PASS.
+
+### O03 — PriorityAssessment
+
+Um vigente por signal; history por supersession.
+
+**Resultado:** PASS.
+
+### O04 — PriorityBasis
+
+Adicionados:
+
+- source_type;
+- locator XOR;
+- snapshot_payload;
+- proibição de UUID genérico sem integridade.
+
+**Resultado:** PASS.
+
+### O05–O06 — escalation
+
+- authority_status redundante removido;
+- activation metadata humana;
+- transition matrix fechada.
+
+**Resultado:** PASS.
+
+### O07 — SLA Rule selection
+
+Adicionados:
+
+- `rule_code`;
+- `selection_precedence`;
+- unicidade por policy/clock/precedence;
+- fallback explícito.
+
+Precedência é resolução operacional, não score científico.
+
+**Resultado:** PASS.
+
+### O08–O10 — endpoint/time/calendar
+
+- clock→endpoint matrix fechada;
+- time_basis matrix fechada;
+- fixed-deadline shape fechado;
+- calendar payload shape fechado + validators requeridos.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISIONS.
+
+### O11–O12 — derived SLA fields
+
+Não persistir como fonte de verdade:
+
+- effective_due_at;
+- wall_elapsed;
+- accountable_elapsed;
+- current compliance.
+
+Helpers/views deverão derivá-los.
+
+**Resultado:** PASS.
+
+### O13 — obligation cardinality/rebase
+
+- SLA1–3 por signal+clock;
+- SLA4–6 por round+clock;
+- rebase por supersession com reason/actor/timestamp;
+- first breach preservado.
+
+**Resultado:** PASS.
+
+### O14–O15 — WorkflowRound
+
+- planned antes de SLA-4;
+- review_revision ligado ao parent + milestone causal;
+- result no máximo um primário;
+- status simplificado para não duplicar milestones.
+
+**Resultado:** PASS.
+
+### O16–O19 — milestone adapters
+
+- adapter_type fechado;
+- locator XOR;
+- authority semantics;
+- timestamp/date precision;
+- adapter matrix por endpoint;
+- publication subordinada ao gate especializado.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISIONS.
+
+### O20–O21 — pause/compliance
+
+- pause open→closed com mutabilidade limitada;
+- autorização humana;
+- compliance atual derivada;
+- first breach persistido.
+
+**Resultado:** PASS.
+
+### O22 — risk profile bridge
+
+Snapshot v0.1 possui schema_version + A1–A5/B1–B5 + rationale/reference.
+
+Permanece dívida futura normalizar UpdateRiskProfile fisicamente.
+
+Não é blocker para a infrastructure contract.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+### O23–O24 — circularidade
+
+Guards temporais definidos.
+
+**Resultado:** PASS.
+
+### O25–O28 — invariantes globais
+
+- currentness externo/read-only;
+- assurance externo/read-only;
+- M3 blocker preservado;
+- nenhuma duração default;
+- auto-escalation não autorizada.
+
+**Resultado:** PASS.
+
+---
+
+## 35. Achado adicional do recheck — WorkflowRound status
+
+Durante o recheck foi identificado que:
+
+- `scientific_complete`;
+- `in_review`;
+- `completed`;
+
+no status do round duplicariam WorkflowMilestones.
+
+Correção:
+
+> status do round = planned | active | closed | terminated | cancelled_invalidated.
+
+Estados científicos/review/publication são derivados dos milestones.
+
+**Resultado:** PASS_AFTER_CORRECTION.
+
+---
+
+## 36. Resultado final
+
+> **PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **INTEGRATED_OPERATIONAL_CONTROL_DATA_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_MIGRATION_029**
+
+> **MIGRATION_029_SCOPE = OPERATIONAL_CONTROL_INFRASTRUCTURE_ONLY**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+> **PRIORITY_SCORE = NOT_DEFINED**
+
+> **NUMERIC_PRIORITY_WEIGHTS = NOT_DEFINED**
+
+> **AUTO_ESCALATION = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 37. Escopo autorizado da migration 029
+
+Migration 029 poderá implementar somente:
+
+1. `maintenance.update_triage`;
+2. `maintenance.priority_assessment`;
+3. `maintenance.priority_basis`;
+4. `maintenance.escalation_case`;
+5. `maintenance.escalation_reason`;
+6. `maintenance.escalation_route`;
+7. `maintenance.sla_calendar_version`;
+8. `maintenance.sla_rule`;
+9. `maintenance.sla_instance`;
+10. `maintenance.sla_pause`;
+11. `maintenance.workflow_round`;
+12. `maintenance.workflow_milestone`;
+13. validators/guards/readiness/helpers estritamente necessários ao contrato;
+14. views/helpers derivados para due/compliance/readiness, quando necessários.
+
+Não poderá:
+
+- inserir SLA Rules numéricas normativas arbitrárias;
+- criar priority score;
+- criar pesos;
+- ativar escalation automaticamente;
+- criar scheduler;
+- criar notification channels;
+- mudar CurrencyState automaticamente;
+- criar assurance;
+- publicar;
+- propagar mudança científica;
+- remover M3 blocker.
+
+---
+
+## 38. Dados seed
+
+Migration 029:
+
+> **não deve inserir SLA Rules operacionais com duração.**
+
+Pode inserir, quando estritamente necessário:
+
+- domínios por CHECK;
+- funções;
+- schema validators;
+- nenhum policy decision substantive.
+
+Calendários/regras reais serão dados governados posteriores, não defaults técnicos.
+
+---
+
+## 39. Testes mínimos da implementação
+
+A implementação deverá criar uma suíte espelhada do Documento 27:
+
+> **F4-OC-T01–T72**
+
+Os 72 itens das seções 45–51 do Documento 27 constituem o plano mínimo.
+
+Além disso:
+
+- migration 029 idempotency;
+- rebuild-through-029;
+- T01–T63/P01–P63 anteriores;
+- F2-B/S4/S5;
+- F3 Products;
+- Monitor;
+- Alert;
+- M3 blocker.
+
+PASS técnico só poderá ser declarado com run canônico verde.
+
+---
+
+## 40. Estado técnico atual
+
+Nenhuma migration 029 existe neste gate.
+
+Logo:
+
+> a autorização é arquitetural/física, não um PASS técnico de implementação.
+
+Último PASS técnico permanece:
+
+> run 37576434417 (#144), through migration 028.
+
+---
+
+## 41. Próximo passo exato
+
+> **Implementar migration 029 no escopo autorizado + suíte F4-OC-T01–T72 + integração S5; executar idempotência, rebuild e regressões antes de qualquer PASS técnico.**
