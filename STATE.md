@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP94 — 2026-10-07**.
+- checkpoint vigente: **CP95 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -1502,4 +1502,24 @@ Referências metodológicas consideradas:
 Próximo passo exato:
 
 > **Definir o contrato de dados integrado do plano operacional da Fase 4 — triage + PriorityAssessment + escalation + SLA Rule/Instance + pause ledger + milestones mínimos de workflow/review — sem migration; depois executar gate físico próprio.**
+
+### CP95 — arquitetura transversal de prioridade e escalation
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP95.md`;
+- ponteiro movido para CP95;
+- `PHASE_4_PRIORITY_ESCALATION_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- response_class = standard | expedited | urgent | immediate;
+- priority e escalation permanecem eixos independentes;
+- priority authoritative científica exige qualificação humana apropriada;
+- Alert priority/classification permanece input, sem equivalência automática;
+- SLA breach permanece operational pressure modifier;
+- capacity não reduz priority;
+- dependency reach não vira materiality;
+- priority score/pesos numéricos não definidos;
+- auto-escalation não autorizada;
+- migration 029 não autorizada;
+- M3 formal permanece bloqueado;
+- último PASS técnico continua sendo run **37576434417** (#144), pois o bloco CP95 foi documental/arquitetural;
+- próximo passo: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration;
+- pausa obrigatória após checkpoint permanece vigente.
 
