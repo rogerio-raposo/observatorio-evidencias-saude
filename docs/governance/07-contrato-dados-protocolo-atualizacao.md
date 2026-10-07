@@ -3,9 +3,9 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **DATA CONTRACT CANDIDATE — requer gate de coerência física antes de migration**  
-**Dependências:** Documentos 05–06; OES-P1; migrations 006, 021–026  
-**Migration candidata:** `database/027_transversal_update_protocol_contract.sql` — **NÃO AUTORIZADA neste documento**
+**Status:** **PASS — contrato físico v0.1 validado após Documentos 08–09**  
+**Dependências:** Documentos 05–06 e 08–09; OES-P1; migrations 006, 021–027  
+**Migration:** `database/027_transversal_update_protocol_contract.sql` — **PASS técnico no Documento 09**
 
 ---
 
@@ -1404,4 +1404,4 @@ Resultados permitidos:
 
 ## 36. Próximo passo exato
 
-> **Executar a revisão adversarial física do Documento 07. Somente em PASS ou PASS_WITH_ARCHITECTURAL_DECISIONS poderá ser autorizada a migration candidata 027.**
+> **Definir a arquitetura transversal de perfis de risco operacional/científico que parametrizará cadence, thresholds, SLAs e prioridade, preservando os limites do Documento 09.**
