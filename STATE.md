@@ -1004,3 +1004,34 @@ Próxima etapa:
 > **migration 025 de projection hardening + ALT-H tests, antes de qualquer EvidenceAlertView.**
 
 Fase 4 permanece não iniciada.
+
+
+### Alerta de Evidência — Projection Readiness READY
+
+Documentos 182–183 concluídos.
+
+Estado:
+
+> **EVIDENCE_ALERT_PROJECTION_HARDENING = TECHNICALLY_VALIDATED**
+
+> **EVIDENCE_ALERT_PROJECTION_READINESS = READY**
+
+Hardening 025:
+- sealing pós-publicação de AlertSource/dimensions/source_context;
+- ProductVersion publicado history-preserving;
+- all-source dynamic validation;
+- EntityVersion source lineage obrigatório;
+- hardening issues integrados à publishability.
+
+Validação:
+- run **37560513048** (#135) = success;
+- HEAD validado `bb1cd11c1882583b001597044dda94ac34b966af`;
+- ALT-H01–H13 = PASS;
+- rebuild-through-025 = PASS;
+- artifact **11456149431**;
+- digest `sha256:1606e2b0379910b9100a285fba0dd62d250d07bec70aaa1374d45c797e30fb3b`.
+
+Autorizado:
+> `database/026_evidence_alert_view_rendering_readiness.sql`
+
+Fase 4 permanece não iniciada.
