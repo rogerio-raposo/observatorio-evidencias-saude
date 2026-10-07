@@ -1042,6 +1042,41 @@ END;
 $fn$;
 
 -- ---------------------------------------------------------------------------
+-- SLA SNAPSHOT INTEGRATION
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION maintenance.assert_sla_risk_profile_snapshot()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $fn$
+DECLARE
+    profile_uuid uuid;
+BEGIN
+    IF NEW.start_priority_assessment_uuid IS NULL THEN
+        RETURN NEW;
+    END IF;
+
+    SELECT update_risk_profile_uuid INTO profile_uuid
+      FROM maintenance.priority_assessment
+     WHERE priority_assessment_uuid=NEW.start_priority_assessment_uuid;
+
+    IF profile_uuid IS NOT NULL THEN
+        IF COALESCE(NEW.rule_snapshot_payload->>'update_risk_profile_uuid','')
+           <> profile_uuid::text THEN
+            RAISE EXCEPTION 'SLAInstance rule snapshot must freeze start PriorityAssessment risk profile UUID';
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_sla_risk_profile_snapshot
+    ON maintenance.sla_instance;
+CREATE TRIGGER tr_sla_risk_profile_snapshot
+BEFORE INSERT ON maintenance.sla_instance
+FOR EACH ROW EXECUTE FUNCTION maintenance.assert_sla_risk_profile_snapshot();
+
+-- ---------------------------------------------------------------------------
 -- ISSUE HELPERS / READINESS
 -- ---------------------------------------------------------------------------
 
