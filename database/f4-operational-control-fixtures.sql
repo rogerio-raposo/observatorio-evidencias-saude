@@ -257,7 +257,7 @@ INSERT INTO maintenance.sla_instance(
     'f5000000-0000-0000-0000-000000000001',
     'f5100000-0000-0000-0000-000000000001',
     'SLA1_DETECTION_TO_TRIAGE','triage','elapsed_time',
-    '{"fixture":true,"duration":"PT2H","normative":false}'::jsonb,
+    '{"fixture":true,"duration":"PT2H","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
     TIMESTAMPTZ '2026-10-07 00:30:00+00',
     TIMESTAMPTZ '2026-10-07 00:30:00+00',
     TIMESTAMPTZ '2026-10-07 02:30:00+00',
@@ -279,7 +279,7 @@ INSERT INTO maintenance.sla_instance(
     'f5500000-0000-0000-0000-000000000001',
     'f5100000-0000-0000-0000-000000000001',
     'SLA4_DECISION_TO_WORKFLOW_START','workflow_started','elapsed_time',
-    '{"fixture":true,"duration":"PT8H","normative":false}'::jsonb,
+    '{"fixture":true,"duration":"PT8H","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
     TIMESTAMPTZ '2026-10-07 00:41:00+00',
     TIMESTAMPTZ '2026-10-07 08:41:00+00',
     'running'
@@ -323,7 +323,7 @@ INSERT INTO maintenance.sla_instance(
     'f5100000-0000-0000-0000-000000000001',
     'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION',
     'scientific_completed','business_calendar',
-    '{"fixture":true,"duration":"PT16H","calendar":"fixture-business-calendar","normative":false}'::jsonb,
+    '{"fixture":true,"duration":"PT16H","calendar":"fixture-business-calendar","normative":false,"update_risk_profile_uuid":"f6000000-0000-0000-0000-000000000001"}'::jsonb,
     TIMESTAMPTZ '2026-10-07 00:45:00+00',
     TIMESTAMPTZ '2026-10-08 16:45:00+00',
     'running'
