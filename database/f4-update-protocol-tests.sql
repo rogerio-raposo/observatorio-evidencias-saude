@@ -639,19 +639,6 @@ $$INSERT INTO maintenance.update_decision(
 )$$,'F4-UP-T43');
 
 -- F4-UP-T44 — Investigation target cannot receive currentness action.
-SELECT pg_temp.expect_error(
-$$INSERT INTO maintenance.update_signal(
- update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
- detected_at,summary,rationale,detected_by,actor_type,verification_status
-) VALUES (
- 'f4910000-0000-0000-0000-000000000010',
- 'f4000000-0000-0000-0000-000000000002',
- 'scientific_currentness','governance_demand','explicit_reassessment_request',
- CURRENT_TIMESTAMP,'Investigation target test','governance demand',
- 'fixture-owner','owner','unverified'
-)$$,'F4-UP-T44-precondition-placeholder');
-
--- Replace placeholder semantics: the signal itself is valid; create it explicitly.
 INSERT INTO maintenance.update_signal(
  update_signal_uuid,update_policy_uuid,signal_class,trigger_class,signal_type,
  detected_at,summary,rationale,detected_by,actor_type,verification_status
