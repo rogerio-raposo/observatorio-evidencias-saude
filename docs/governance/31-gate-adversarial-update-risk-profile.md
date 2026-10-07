@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — correções requeridas antes de migration 030**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — migration 030 autorizada em escopo estrito**  
 **Dependência:** Documento 30  
 **Objeto:** identidade, dimensões, authority, provenance, carry-forward e integração com migration 029
 
@@ -552,3 +552,306 @@ Documento 30 deve:
 ## 29. Próximo passo
 
 > **Aplicar as correções ao Documento 30 e reexecutar este gate.**
+
+
+---
+
+## 30. Recheck pós-correções
+
+A versão revisada do Documento 30 foi reavaliada contra AR-F4-RP01–RP24 e contra um achado adicional identificado no próprio recheck.
+
+### RP01 — dimensão como primeira classe
+
+Mantido header + dimension rows.
+
+**Resultado:** PASS.
+
+### RP02 — provenance dimensional
+
+Foi adicionada:
+
+> `maintenance.update_risk_profile_dimension_basis`
+
+Com:
+
+- source_type;
+- locator XOR;
+- FKs reais para MonitorCycle, CandidateAssessment, UpdateSignal, Alert, EntityVersion e Artifact;
+- external_reference separado.
+
+**Resultado:** PASS.
+
+### RP03 — authority do profile composto
+
+Profile header authoritative exige:
+
+- human_reviewer ou human_expert;
+- human verification.
+
+Owner permanece autoridade operacional de dimensões autorizadas/B5, mas não sintetiza sozinho o profile composto.
+
+**Resultado:** PASS.
+
+### RP04–RP05 — A1/B5 authority
+
+- A1 pode ser authoritative por owner/reviewer/expert;
+- B5 authoritative exige owner;
+- B5 não fabrica `owner` como verifier científico;
+- B5 owner declaration pode permanecer `unverified` no eixo de verification quando não houver verificação científica real.
+
+Isso preserva:
+
+> authority ≠ verification.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+### RP06 — trigger locators
+
+Trigger ganhou:
+
+- source_type;
+- locator XOR;
+- source_type=none;
+- external_reference isolado.
+
+**Resultado:** PASS.
+
+### RP07 — policy basis lifecycle
+
+Link ganhou:
+
+- UUID próprio;
+- record_status;
+- supersession;
+- unique governing active per policy.
+
+**Resultado:** PASS.
+
+### RP08 — snapshot adoption
+
+Regra final:
+
+- historical rows = grandfathered snapshot-only;
+- novos PriorityAssessment INSERTs após migration 030 exigem profile FK;
+- snapshot novo = serializer canônico exato;
+- sem backfill fabricado.
+
+**Resultado:** PASS.
+
+### RP09 — policy adoption
+
+Policies históricas não recebem governing link fabricado.
+
+Novas policies/readiness futuras podem exigir governing profile sem reescrever história.
+
+**Resultado:** PASS.
+
+### RP10 — carry-forward
+
+Reforçado:
+
+- same type;
+- same entity_uuid lineage;
+- source authoritative;
+- effective_at não antecede source;
+- dimension carried source coerente com header/superseded profile.
+
+**Resultado:** PASS.
+
+### RP11–RP12 — completeness
+
+Authoritative:
+
+> exatamente dez dimensões.
+
+Proposal:
+
+- pode ser incompleto;
+- issue helper reporta gaps;
+- não é authoritative basis.
+
+**Resultado:** PASS.
+
+### RP13–RP18 — recommendation/invariants
+
+Preservados:
+
+- cadence compatibility;
+- A1/A4 non-compensation;
+- feasibility ceiling;
+- M3 capacity guard;
+- no currentness;
+- no assurance.
+
+**Resultado:** PASS.
+
+### RP19–RP20 — Priority/SLA snapshots
+
+PriorityAssessment mantém:
+
+- profile FK;
+- snapshot congelado.
+
+SLA mantém UUID/snapshot temporal.
+
+Supersession futura:
+
+> não retroage.
+
+**Resultado:** PASS.
+
+### RP21–RP23 — triggers, Monitor/Alert, target lifecycle
+
+Preservada separação entre:
+
+- reassessment trigger;
+- scientific UpdateSignal;
+- Monitor/Alert input;
+- target version lifecycle.
+
+**Resultado:** PASS.
+
+### RP24 — migration boundary
+
+Blockers anteriores foram resolvidos.
+
+**Resultado:** PASS.
+
+---
+
+## 31. Achado adicional — incomplete proposal × serializer
+
+Durante o recheck foi identificado:
+
+- proposal pode ser incompleto;
+- PriorityAssessment snapshot exige A1–A5/B1–B5 completos.
+
+Correção:
+
+> proposal incompleto não é serializer-eligible e não pode ser usado por PriorityAssessment.
+
+Proposal completo:
+
+- pode ser serializer-eligible;
+- pode alimentar PriorityAssessment proposal;
+- não substitui authoritative profile para PriorityAssessment authoritative scientific/mixed.
+
+**Resultado:** PASS_AFTER_CORRECTION.
+
+---
+
+## 32. Resultado final
+
+> **PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_MIGRATION_030**
+
+> **MIGRATION_030_SCOPE = UPDATE_RISK_PROFILE_NORMALIZATION_ONLY**
+
+> **RISK_SCORE = NOT_DEFINED**
+
+> **NUMERIC_CADENCE = NOT_DEFINED**
+
+> **NUMERIC_SLA_DURATIONS = NOT_DEFINED**
+
+> **AUTO_POLICY_CHANGE = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 33. Escopo autorizado da migration 030
+
+Migration 030 poderá:
+
+1. criar `maintenance.update_risk_profile`;
+2. criar `maintenance.update_risk_profile_dimension`;
+3. criar `maintenance.update_risk_profile_dimension_basis`;
+4. criar `maintenance.update_risk_profile_trigger`;
+5. criar `maintenance.update_policy_risk_profile_basis`;
+6. criar validators/guards/deferred completeness checks;
+7. criar serializer canônico;
+8. criar issue/readiness helpers;
+9. adicionar `priority_assessment.update_risk_profile_uuid` nullable para grandfathering;
+10. exigir profile FK em novos PriorityAssessment INSERTs;
+11. validar snapshot novo contra serializer canônico;
+12. estender PriorityBasis com source_type=`risk_profile` + FK;
+13. atualizar fixtures/testes sintéticos necessários;
+14. integrar ao S5.
+
+---
+
+## 34. Escopo proibido da migration 030
+
+Não poderá:
+
+- criar score agregado;
+- criar numeric cadence;
+- criar SLA duration;
+- inserir SLA Rule normativa;
+- alterar UpdatePolicy automaticamente;
+- backfillar profiles autoritativos a partir de snapshots antigos;
+- backfillar governing policy links fabricados;
+- alterar CurrencyState;
+- promover assurance;
+- criar UpdateSignal;
+- criar Alert;
+- criar scheduler;
+- ativar auto-escalation;
+- remover M3 blocker.
+
+---
+
+## 35. Dados históricos
+
+Regra:
+
+> **NO FABRICATED BACKFILL**
+
+Snapshots históricos existentes em PriorityAssessment permanecem válidos sem FK.
+
+Nenhum profile authoritative histórico será inventado.
+
+---
+
+## 36. Plano mínimo de testes
+
+A implementação deverá espelhar o Documento 30:
+
+> **F4-RP-T01–T87**
+
+Além disso:
+
+- migration 030 idempotency;
+- rebuild-through-030;
+- F4-UP-T/P suites;
+- F4-OC-T01–T72;
+- F2-B/S4/S5;
+- F3 Products;
+- Monitor;
+- Alert;
+- M3 blocker.
+
+PASS técnico só poderá ser declarado após run canônico verde.
+
+---
+
+## 37. Estado técnico atual
+
+Nenhuma migration 030 existe neste gate.
+
+Último PASS técnico:
+
+> run **37580906483** (#150), through migration 029.
+
+A autorização atual é:
+
+> arquitetural/física, não técnica.
+
+---
+
+## 38. Próximo passo exato
+
+> **Implementar migration 030 no escopo autorizado + F4-RP-T01–T87 + integração S5; executar idempotência, rebuild e regressões antes de qualquer PASS técnico.**
