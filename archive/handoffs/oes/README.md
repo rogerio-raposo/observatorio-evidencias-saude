@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP81 — 2026-10-06**
+**CP82 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP81.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP82.md`
 
 Checkpoint anterior:
 
-`CP80`
+`CP81`
 
 Status:
 
@@ -178,3 +178,5 @@ em **Modo Continuidade**.
 - **CP80 — 2026-10-06:** registra **Projection Readiness do Monitor = READY**, Documento 172; autoriza migration 023 para EvidenceMonitorView 0.1.
 
 - **CP81 — 2026-10-06:** registra **EvidenceMonitorView 0.1 = PASS**, migration 023 + MONV-T01–T19; retomada no contrato de renderização e Template Operacional do Monitor.
+
+- **CP82 — 2026-10-06:** conclui a formalização do **Monitor de Evidências** na Fase 3; retomada no **Alerta de Evidência**, último produto da taxonomia.
