@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP106 — 2026-10-07**
+**CP107 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP106.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP107.md`
 
 Checkpoint anterior:
 
-`CP105`
+`CP106`
 
 Status:
 
@@ -210,3 +210,4 @@ em **Modo Continuidade**.
 - **CP104 — 2026-10-07:** metodologia de calibração temporal = PASS_WITH_ARCHITECTURAL_DECISIONS; pré-requisitos físicos autorizados apenas para especificação; nenhum valor normativo/migration 032 autorizado.
 - **CP105 — 2026-10-07:** contrato físico de calibração temporal = PASS_WITH_ARCHITECTURAL_DECISIONS; migration 032 autorizada apenas em escopo estrito de infraestrutura; valores normativos continuam não autorizados.
 - **CP106 — 2026-10-07:** migration 032 implementada e tecnicamente validada; F4-TCAL-PH-T01–T230, idempotência 032, rebuild-through-032 e S5 canônico = PASS; valores normativos permanecem não autorizados.
+- **CP107 — 2026-10-07:** trilha de calibração temporal continua, mas calibração normativa real permanece bloqueada até Evidence Readiness real; próximo sub-bloco = TEMPORAL_CALIBRATION_EVIDENCE_READINESS.
