@@ -236,6 +236,24 @@ INSERT INTO maintenance.cadence_obligation(
  'monitor_cycle_completed',TIMESTAMPTZ '2026-10-07 00:01:00+00'
 );
 
+-- TEST-ONLY replay evidence required by temporal v0.1 approval completeness.
+INSERT INTO maintenance.temporal_calibration_evaluation(
+ temporal_calibration_evaluation_uuid,temporal_calibration_candidate_uuid,
+ evaluation_type,result_status,metrics_payload,rationale,evaluated_at
+) VALUES
+('fc631000-0000-0000-0000-000000000001',
+ 'fc620000-0000-0000-0000-000000000001',
+ 'historical_replay','acceptable',
+ '{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic historical replay for cadence candidate',
+ TIMESTAMPTZ '2026-10-06 23:48:10+00'),
+('fc631000-0000-0000-0000-000000000002',
+ 'fc620000-0000-0000-0000-000000000002',
+ 'historical_replay','acceptable',
+ '{"fixture":true,"synthetic_replay":true}'::jsonb,
+ 'TEST-ONLY synthetic historical replay for cadence candidate',
+ TIMESTAMPTZ '2026-10-06 23:49:10+00');
+
 -- Supersede calibration-only profiles after dossier/contract creation.
 -- Historical dossier validity is preserved by UUID; later F4 risk-profile fixtures
 -- may establish the active operational profiles for the same exact targets.
