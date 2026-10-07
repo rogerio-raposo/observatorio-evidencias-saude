@@ -636,6 +636,42 @@ BEGIN
             'incomplete/cancelled cycle cannot assert no_update_needed';
     END IF;
 
+    IF NEW.execution_status='completed' THEN
+        IF NOT maintenance.monitor_cycle_source_coverage(NEW.cycle_uuid) THEN
+            RAISE EXCEPTION
+                'completed cycle does not satisfy declared source coverage';
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+              FROM maintenance.candidate_assessment ca
+             WHERE ca.cycle_uuid=NEW.cycle_uuid
+               AND ca.record_status='active'
+               AND ca.decision='pending'
+        ) THEN
+            RAISE EXCEPTION
+                'completed cycle cannot retain pending CandidateAssessment';
+        END IF;
+
+        IF EXISTS (
+            SELECT 1
+              FROM maintenance.evidence_event ee
+             WHERE ee.cycle_uuid=NEW.cycle_uuid
+               AND ee.status='active'
+               AND NOT EXISTS (
+                    SELECT 1
+                      FROM maintenance.candidate_assessment ca
+                     WHERE ca.cycle_uuid=NEW.cycle_uuid
+                       AND ca.record_status='active'
+                       AND ca.origin_type='evidence_event'
+                       AND ca.origin_evidence_event_uuid=ee.evidence_event_uuid
+               )
+        ) THEN
+            RAISE EXCEPTION
+                'completed cycle cannot contain unassessed active EvidenceEvent';
+        END IF;
+    END IF;
+
     IF NEW.verification_status='unverified' THEN
         IF NEW.verified_by IS NOT NULL
            OR NEW.verifier_actor_type IS NOT NULL
@@ -748,7 +784,13 @@ BEGIN
     SELECT mc.monitor_product_version_uuid
       INTO monitor_product
       FROM maintenance.monitor_cycle mc
-     WHERE mc.cycle_uuid=NEW.cycle_uuid;
+     WHERE mc.cycle_uuid=NEW.cycle_uuid
+       AND mc.execution_status IN ('planned','running');
+
+    IF monitor_product IS NULL THEN
+        RAISE EXCEPTION
+            'Search can be linked only while MonitorCycle is open';
+    END IF;
 
     monitor_inv:=maintenance.monitor_primary_investigation(monitor_product);
 
@@ -771,6 +813,32 @@ DROP TRIGGER IF EXISTS tr_cycle_search_consistency
 CREATE TRIGGER tr_cycle_search_consistency
 BEFORE INSERT OR UPDATE ON maintenance.cycle_search
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_cycle_search_consistency();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_cycle_search_delete()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $guard$
+DECLARE
+    cycle_status text;
+BEGIN
+    SELECT mc.execution_status INTO cycle_status
+      FROM maintenance.monitor_cycle mc
+     WHERE mc.cycle_uuid=OLD.cycle_uuid;
+
+    IF cycle_status IN ('completed','incomplete','cancelled') THEN
+        RAISE EXCEPTION
+            'CycleSearch cannot be deleted after MonitorCycle is terminal';
+    END IF;
+
+    RETURN OLD;
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_cycle_search_no_terminal_delete
+    ON maintenance.cycle_search;
+CREATE TRIGGER tr_cycle_search_no_terminal_delete
+BEFORE DELETE ON maintenance.cycle_search
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_cycle_search_delete();
 
 -- ---------------------------------------------------------------------------
 -- EVIDENCE / VALIDITY EVENTS
@@ -844,7 +912,19 @@ LANGUAGE plpgsql
 AS $fn$
 DECLARE
     rr_type text;
+    cycle_status text;
 BEGIN
+    IF TG_OP='INSERT' THEN
+        SELECT mc.execution_status INTO cycle_status
+          FROM maintenance.monitor_cycle mc
+         WHERE mc.cycle_uuid=NEW.cycle_uuid;
+
+        IF cycle_status NOT IN ('planned','running') THEN
+            RAISE EXCEPTION
+                'EvidenceEvent can be added only while MonitorCycle is open';
+        END IF;
+    END IF;
+
     IF NEW.verification_status='unverified' THEN
         IF NEW.verified_by IS NOT NULL
            OR NEW.verifier_actor_type IS NOT NULL
@@ -893,8 +973,52 @@ $fn$;
 DROP TRIGGER IF EXISTS tr_evidence_event_consistency
     ON maintenance.evidence_event;
 CREATE TRIGGER tr_evidence_event_consistency
-BEFORE INSERT OR UPDATE ON maintenance.evidence_event
+BEFORE INSERT ON maintenance.evidence_event
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_evidence_event_consistency();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_evidence_event_mutation()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $guard$
+BEGIN
+    IF TG_OP='DELETE' THEN
+        RAISE EXCEPTION
+            'EvidenceEvent is append-preserving and cannot be deleted';
+    END IF;
+
+    IF OLD.status='active'
+       AND NEW.status IN ('superseded','invalidated')
+       AND NEW.evidence_event_uuid=OLD.evidence_event_uuid
+       AND NEW.cycle_uuid=OLD.cycle_uuid
+       AND NEW.event_type=OLD.event_type
+       AND NEW.event_date IS NOT DISTINCT FROM OLD.event_date
+       AND NEW.detected_at=OLD.detected_at
+       AND NEW.report_relation_uuid IS NOT DISTINCT FROM OLD.report_relation_uuid
+       AND NEW.affected_version_uuid IS NOT DISTINCT FROM OLD.affected_version_uuid
+       AND NEW.source_artifact_uuid IS NOT DISTINCT FROM OLD.source_artifact_uuid
+       AND NEW.source_uri IS NOT DISTINCT FROM OLD.source_uri
+       AND NEW.description=OLD.description
+       AND NEW.event_payload=OLD.event_payload
+       AND NEW.detected_by=OLD.detected_by
+       AND NEW.actor_type=OLD.actor_type
+       AND NEW.verification_status=OLD.verification_status
+       AND NEW.verified_by IS NOT DISTINCT FROM OLD.verified_by
+       AND NEW.verifier_actor_type IS NOT DISTINCT FROM OLD.verifier_actor_type
+       AND NEW.verified_at IS NOT DISTINCT FROM OLD.verified_at
+    THEN
+        RETURN NEW;
+    END IF;
+
+    RAISE EXCEPTION
+        'EvidenceEvent material fields are immutable; only status supersession/invalidation is allowed';
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_evidence_event_append_preserving
+    ON maintenance.evidence_event;
+CREATE TRIGGER tr_evidence_event_append_preserving
+BEFORE UPDATE OR DELETE ON maintenance.evidence_event
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_evidence_event_mutation();
 
 -- ---------------------------------------------------------------------------
 -- CANDIDATE ASSESSMENT
@@ -1009,6 +1133,16 @@ DECLARE
     actual_type text;
     prior maintenance.candidate_assessment%ROWTYPE;
 BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+          FROM maintenance.monitor_cycle mc
+         WHERE mc.cycle_uuid=NEW.cycle_uuid
+           AND mc.execution_status IN ('planned','running')
+    ) THEN
+        RAISE EXCEPTION
+            'CandidateAssessment can be added only while MonitorCycle is open';
+    END IF;
+
     IF NEW.origin_type='search_hit' THEN
         SELECT cs.cycle_uuid INTO source_cycle
           FROM investigation.search_hit sh
@@ -1112,6 +1246,16 @@ BEGIN
     IF TG_OP='DELETE' THEN
         RAISE EXCEPTION
             'CandidateAssessment is append-preserving and cannot be deleted';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+          FROM maintenance.monitor_cycle mc
+         WHERE mc.cycle_uuid=OLD.cycle_uuid
+           AND mc.execution_status IN ('planned','running')
+    ) THEN
+        RAISE EXCEPTION
+            'CandidateAssessment cannot be superseded after MonitorCycle is terminal';
     END IF;
 
     IF OLD.record_status='active'
