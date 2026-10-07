@@ -14,6 +14,15 @@ Continuidade formal:
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
 - checkpoint vigente: **CP93 — 2026-10-07**.
 
+### Nota de leitura do STATE cumulativo
+
+Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Portanto:
+
+- o **estado corrente** é o declarado no topo desta seção e no ponteiro `archive/handoffs/oes/README.md`;
+- referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
+- em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
+
+
 ## 2. Estado das fases
 
 - Fase 0 — Concepção e fundamentos: base inicial consolidada;
