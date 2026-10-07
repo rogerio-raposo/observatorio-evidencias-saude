@@ -151,23 +151,40 @@ INSERT INTO maintenance.update_triage(
  TIMESTAMPTZ '2026-10-07 02:01:00+00'
 )$$,'F4-OC-T05');
 
--- T06 — accepted triage can anchor SLA-2.
+-- T06 — accepted triage can anchor SLA-2 through the canonical resolver.
 SAVEPOINT t06;
+WITH res AS (
+ SELECT * FROM maintenance.resolve_sla_rule(
+   'f4100000-0000-0000-0000-000000000003',
+   'SLA2_TRIAGE_TO_MATERIALITY',NULL,'materiality'
+ )
+)
 INSERT INTO maintenance.sla_instance(
  sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
- update_triage_uuid,clock_code,endpoint_type,time_basis,rule_snapshot_payload,
+ update_triage_uuid,start_priority_assessment_uuid,
+ clock_code,endpoint_type,time_basis,rule_snapshot_payload,due_calculation_payload,
  start_at,nominal_due_at,execution_status
-) VALUES (
+)
+SELECT
  'fa060000-0000-0000-0000-000000000001',
  'fa06f000-0000-0000-0000-000000000001',
- 'f5400000-0000-0000-0000-000000000002',
- 'f4100000-0000-0000-0000-000000000003',
+ res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
  'f5000000-0000-0000-0000-000000000001',
+ res.start_priority_assessment_uuid,
  'SLA2_TRIAGE_TO_MATERIALITY','materiality','elapsed_time',
- '{"fixture":true}'::jsonb,
- TIMESTAMPTZ '2026-10-07 00:32:00+00',
- TIMESTAMPTZ '2026-10-07 04:32:00+00','running'
-);
+ maintenance.sla_rule_snapshot(
+   res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+   res.contractual_start_at,res.selection_trace
+ ),
+ maintenance.sla_due_calculation_payload(
+   res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+   res.raw_causal_start_at,res.contractual_start_at,
+   TIMESTAMPTZ '2026-10-07 00:32:00+00'
+ ),
+ res.contractual_start_at,
+ maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
+ 'running'
+FROM res WHERE res.resolution_status='selected';
 SELECT pg_temp.assert_true(EXISTS(
  SELECT 1 FROM maintenance.sla_instance
  WHERE sla_instance_uuid='fa060000-0000-0000-0000-000000000001'
@@ -699,19 +716,39 @@ SELECT pg_temp.assert_true(
 SAVEPOINT t43;
 SELECT pg_temp.add_signal('fa430000-0000-0000-0000-000000000001',
  'f4000000-0000-0000-0000-000000000001',TIMESTAMPTZ '2026-10-06 23:00:00+00');
+WITH res AS (
+ SELECT * FROM maintenance.resolve_sla_rule(
+   'fa430000-0000-0000-0000-000000000001',
+   'SLA1_DETECTION_TO_TRIAGE',NULL,'triage'
+ )
+)
 INSERT INTO maintenance.sla_instance(
  sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
- clock_code,endpoint_type,time_basis,rule_snapshot_payload,
+ start_priority_assessment_uuid,
+ clock_code,endpoint_type,time_basis,rule_snapshot_payload,due_calculation_payload,
  source_detected_at,pre_policy_age,start_at,nominal_due_at,execution_status
-) VALUES (
+)
+SELECT
  'fa431000-0000-0000-0000-000000000001',
  'fa43f000-0000-0000-0000-000000000001',
- 'f5400000-0000-0000-0000-000000000001',
- 'fa430000-0000-0000-0000-000000000001',
- 'SLA1_DETECTION_TO_TRIAGE','triage','elapsed_time','{"fixture":true}'::jsonb,
- TIMESTAMPTZ '2026-10-06 23:00:00+00',interval '1 hour',
- TIMESTAMPTZ '2026-10-07 00:00:00+00',TIMESTAMPTZ '2026-10-07 02:00:00+00','pending'
-);
+ res.sla_rule_uuid,'fa430000-0000-0000-0000-000000000001',
+ res.start_priority_assessment_uuid,
+ 'SLA1_DETECTION_TO_TRIAGE','triage','elapsed_time',
+ maintenance.sla_rule_snapshot(
+   res.sla_rule_uuid,'fa430000-0000-0000-0000-000000000001',
+   res.contractual_start_at,res.selection_trace
+ ),
+ maintenance.sla_due_calculation_payload(
+   res.sla_rule_uuid,'fa430000-0000-0000-0000-000000000001',
+   res.raw_causal_start_at,res.contractual_start_at,
+   TIMESTAMPTZ '2026-10-07 00:00:00+00'
+ ),
+ res.raw_causal_start_at,
+ res.contractual_start_at-res.raw_causal_start_at,
+ res.contractual_start_at,
+ maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
+ 'pending'
+FROM res WHERE res.resolution_status='selected';
 SELECT pg_temp.assert_true(
  (SELECT pre_policy_age=interval '1 hour' AND first_breached_at IS NULL
   FROM maintenance.sla_instance
@@ -798,19 +835,37 @@ ROLLBACK TO SAVEPOINT t46; RELEASE SAVEPOINT t46;
 
 -- T47 — SLA3 endpoint uses qualified decision timestamp.
 SAVEPOINT t47;
+WITH res AS (
+ SELECT * FROM maintenance.resolve_sla_rule(
+   'f4100000-0000-0000-0000-000000000003',
+   'SLA3_MATERIALITY_TO_DECISION',NULL,'update_decision'
+ )
+)
 INSERT INTO maintenance.sla_instance(
  sla_instance_uuid,obligation_uuid,sla_rule_uuid,update_signal_uuid,
- materiality_assessment_uuid,update_decision_uuid,
- clock_code,endpoint_type,time_basis,rule_snapshot_payload,
+ materiality_assessment_uuid,update_decision_uuid,start_priority_assessment_uuid,
+ clock_code,endpoint_type,time_basis,rule_snapshot_payload,due_calculation_payload,
  start_at,nominal_due_at,end_at,execution_status,satisfied_at
-) VALUES (
+)
+SELECT
  'fa470000-0000-0000-0000-000000000001','fa47f000-0000-0000-0000-000000000001',
- 'f5400000-0000-0000-0000-000000000003','f4100000-0000-0000-0000-000000000003',
+ res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
  'f4310000-0000-0000-0000-000000000001','f4410000-0000-0000-0000-000000000001',
- 'SLA3_MATERIALITY_TO_DECISION','update_decision','elapsed_time','{"fixture":true}'::jsonb,
- TIMESTAMPTZ '2026-10-07 00:37:00+00',TIMESTAMPTZ '2026-10-07 04:37:00+00',
+ res.start_priority_assessment_uuid,
+ 'SLA3_MATERIALITY_TO_DECISION','update_decision','elapsed_time',
+ maintenance.sla_rule_snapshot(
+   res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+   res.contractual_start_at,res.selection_trace
+ ),
+ maintenance.sla_due_calculation_payload(
+   res.sla_rule_uuid,'f4100000-0000-0000-0000-000000000003',
+   res.raw_causal_start_at,res.contractual_start_at,
+   TIMESTAMPTZ '2026-10-07 00:37:00+00'
+ ),
+ res.contractual_start_at,
+ maintenance.sla_nominal_due_at(res.sla_rule_uuid,res.contractual_start_at),
  TIMESTAMPTZ '2026-10-07 00:41:00+00','satisfied',TIMESTAMPTZ '2026-10-07 00:41:00+00'
-);
+FROM res WHERE res.resolution_status='selected';
 SELECT pg_temp.assert_true(EXISTS(SELECT 1 FROM maintenance.sla_instance
  WHERE sla_instance_uuid='fa470000-0000-0000-0000-000000000001'),'F4-OC-T47');
 ROLLBACK TO SAVEPOINT t47; RELEASE SAVEPOINT t47;
