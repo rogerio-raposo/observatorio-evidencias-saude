@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP71 — 2026-10-06**.
+- checkpoint vigente: **CP72 — 2026-10-06**.
 
 ## 2. Estado das fases
 
@@ -654,11 +654,11 @@ O **Alerta de Evidência** permanece produto/evento posterior ao Monitor.
 
 ## 10. Checkpoint vigente
 
-**CP71 — 2026-10-06**, até a criação e ativação do próximo checkpoint de continuidade.
+**CP72 — 2026-10-06**.
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP71.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP72.md`
 
 Ponto exato de retomada após consolidação do novo checkpoint:
 
