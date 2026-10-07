@@ -2426,3 +2426,13 @@ Documentos:
 - artifact **11453871816**;
 - digest `sha256:71dd0b68c92ce3d30832862545ac45efbfb94cba51580d77f2673f12a94fbaf8`;
 - próximo gate: **Projection Readiness da EvidenceMonitorView**.
+
+
+## 2026-10-06 — CP76
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP76.md`;
+- contrato técnico do Monitor v0.1 consolidado em PASS;
+- migration 021 + MON-T01–T33 + rebuild = PASS;
+- run final 37553271462 (#122) = success;
+- ponteiro de continuidade movido para CP76;
+- retomada movida para **Projection Readiness Gate da EvidenceMonitorView**.
