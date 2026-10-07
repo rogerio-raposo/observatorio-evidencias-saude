@@ -914,3 +914,38 @@ Próxima etapa:
 > **Especificação Científica e Funcional do Alerta de Evidência — último produto da taxonomia da Fase 3.**
 
 Fase 4 permanece explicitamente não iniciada.
+
+
+### Alerta de Evidência — especificação científica e decisão arquitetural
+
+Documentos 177–178 concluídos.
+
+Estado:
+
+> **EVIDENCE_ALERT_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+Decisões principais:
+
+- Alert formal = Product/ProductVersion com `product_type='evidence_alert'`;
+- **não cria Investigation nova**;
+- exatamente um `product.investigation_link(role='source_context')`;
+- target especializado = exatamente um ProductVersion ou InvestigationVersion;
+- `maintenance.evidence_alert` 1:1 com Alert ProductVersion;
+- `maintenance.alert_source` 1:N, exatamente uma primary source;
+- `maintenance.alert_affected_dimension` 1:N;
+- classification `informational|relevant|critical` é persistida, não calculada;
+- reassessment priority `routine|priority|urgent` é qualitativa, sem SLA;
+- lifecycle `triage|evaluation|incorporated|discarded` é versionado;
+- incorporated exige linkage rastreável;
+- discarded exige rationale;
+- Alerta não cria `product.currency_state` próprio;
+- `conclusion_text` do Alert ProductVersion permanece NULL;
+- assurance reutiliza A0–A3;
+- publicação formal v0.1 exige A2 + human verification explícita do Alerta;
+- target assurance/currentness permanecem separados;
+- critical não gera A3 obrigatório, prazo ou auto-update na Fase 3;
+- Fase 4 permanece não iniciada.
+
+Próxima etapa:
+
+> **Contrato de Dados v0.1 do Alerta de Evidência; depois migration 024 + fixtures + testes.**
