@@ -3,8 +3,8 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **BASELINE CONCEITUAL CANDIDATA — requer revisão adversarial**  
-**Dependências:** Documentos 02–09; OES-P1; migration 027
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — aprovado após Documento 17**  
+**Dependências:** Documentos 02–09 e 17; OES-P1; migration 027
 
 ---
 
@@ -896,4 +896,4 @@ Resultados permitidos:
 
 # 23. Próximo passo exato
 
-> **Executar revisão adversarial do Documento 16. Somente após PASS/PASS_WITH_ARCHITECTURAL_DECISIONS definir como o perfil parametriza cadence, thresholds, SLA e prioridade.**
+> **Definir a Política Transversal de Cadence e Thresholds Temporais, usando o perfil como matriz de necessidade/viabilidade e preservando a separação entre tempo operacional e currentness científico.**
