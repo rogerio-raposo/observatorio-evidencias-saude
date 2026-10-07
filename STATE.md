@@ -1673,3 +1673,33 @@ Próximo passo:
 - Fase 5 não iniciada;
 - pausa obrigatória após checkpoint permanece vigente.
 
+
+### Fase 4 — Normalização física do UpdateRiskProfile
+
+Documentos:
+- 30 — Contrato Físico Candidato do UpdateRiskProfile;
+- 31 — Gate Adversarial do Contrato Físico UpdateRiskProfile.
+
+Estado:
+> **UPDATE_RISK_PROFILE_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **READY_FOR_MIGRATION_030**
+
+> **MIGRATION_030_SCOPE = UPDATE_RISK_PROFILE_NORMALIZATION_ONLY**
+
+Decisões:
+- profile = header versionado + 10 dimensões auditáveis;
+- provenance dimensional normalizada com FKs reais/locator XOR;
+- profile authoritative exige reviewer/expert no header;
+- B5 authoritative exige owner, sem fabricar owner como verifier científico;
+- proposal incompleto pode existir, mas não alimenta PriorityAssessment;
+- carry-forward explícito por dimensão e mesma lineage entity_uuid;
+- UpdatePolicy continua soberana;
+- snapshots históricos de PriorityAssessment não serão backfillados;
+- novos PriorityAssessment após migration 030 deverão referenciar profile físico + serializer canônico;
+- M3 continua bloqueado;
+- migration 030 ainda não implementada.
+
+Próximo passo:
+> **implementar migration 030 + F4-RP-T01–T87 + validação canônica completa.**
+
