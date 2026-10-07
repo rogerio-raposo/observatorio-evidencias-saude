@@ -2592,3 +2592,17 @@ Documentos:
 - ponteiro de continuidade movido para CP82;
 - retomada: **Alerta de Evidência**, último produto da taxonomia;
 - Fase 4 explicitamente não autorizada.
+
+
+## 2026-10-06 — Evidence Alert scientific/architectural specification
+
+- Documento 177 definiu o contrato científico/funcional do Alerta;
+- Documento 178 fechou arquitetura em PASS_WITH_ARCHITECTURAL_DECISIONS;
+- Alert será Product/ProductVersion sem nova Investigation;
+- source_context Investigation será reutilizada explicitamente;
+- target, sources e affected dimensions serão normalizados em maintenance;
+- classification/urgency serão qualitativas e persistidas, sem thresholds/SLA;
+- publicação formal exigirá A2 + human verification do conteúdo/classificação;
+- Alert não terá scientific conclusion nem Product currency próprios;
+- Fase 4 não foi iniciada;
+- próxima etapa: Contrato de Dados v0.1.
