@@ -36,6 +36,9 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [19 — Revisão Adversarial da Política de Cadence e Thresholds Temporais](docs/governance/19-revisao-adversarial-cadence-thresholds-temporais.md)
 - [20 — Arquitetura Transversal de SLA do Protocolo de Atualização](docs/governance/20-arquitetura-transversal-sla.md)
 - [21 — Revisão Adversarial da Arquitetura Transversal de SLA](docs/governance/21-revisao-adversarial-arquitetura-sla.md)
+- [22 — Auditoria Retrospectiva da Fase 4 até CP93](docs/governance/22-auditoria-retrospectiva-fase-4.md)
+- [23 — Gate de Coerência Física Corretivo pós-Auditoria da Fase 4](docs/governance/23-gate-corretivo-coerencia-fisica-fase-4.md)
+- [24 — Resultado da Validação Corretiva pós-Auditoria da Fase 4](docs/governance/24-resultado-validacao-corretiva-fase-4.md)
 
 ### Metodologia
 
@@ -201,32 +204,42 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui cinco blocos consolidados:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui seis blocos consolidados:
 
 1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-2. Documentos 07–09 + migration 027 — contrato físico v0.1 = **PASS técnico**;
+2. Documentos 07–09 + migrations 027–028 — contrato físico v0.1 = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
 3. Documentos 16–17 — perfis de risco operacional/científico = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 4. Documentos 18–19 — cadence e thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
+5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**.
 
-A correção de inventário de `investigation.method_decision` foi reconciliada: a tabela existe desde a migration 014 e permanece distinta de `maintenance.update_decision`. O PASS da migration 027 permanece válido.
+A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
-Validação canônica do contrato físico:
+A migration 027 permanece como contrato histórico validado. A migration 028 foi usada **exclusivamente** para hardening corretivo pós-auditoria — lifecycle guards, classificação de `other` e issue helpers — sem implementar prioridade, SLA físico, notificações, propagation ou M3 readiness.
+
+Validação canônica atual do contrato físico:
 
 - F4-UP-T01–T63 = PASS;
-- F4-UP-IDEM = PASS;
-- rebuild-through-027 = PASS;
-- S5 run **37570978847** = success;
-- artifact **11460960487**;
-- digest `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`.
+- F4-UP-P01–P63 = PASS;
+- migration 027 idempotency = PASS;
+- migration 028 idempotency = PASS;
+- rebuild-through-028 = PASS;
+- F2-B/S4/S5 regressions = PASS;
+- Monitor/Alert regressions = PASS;
+- S5 run **37576434417** (#144) = success;
+- technical HEAD **3f36b5dd4103e15834adde107fedeeb1c81fb084**;
+- artifact **11462802190**;
+- digest `sha256:82ada290239676067daf13ec1412c0b10c1612c4a402b53f66d45ede9e097c92`.
+
+A run **37576345925** (#143) falhou por erro de desenho do teste P62 e **não** é evidência de PASS.
 
 **M3 formal continua bloqueado** por `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL`.
 
-**Migration 028 permanece não autorizada** até fechar prioridade/escalation e os gaps físicos de triage/workflow.
+Nenhuma nova migration funcional para prioridade/SLA está autorizada neste momento. A migration 028 já existente é apenas o hardening corretivo acima.
 
 Próximo passo exato:
 
-> **Definir a arquitetura transversal de prioridade e escalation, antes de qualquer migration 028 ou duração numérica universal de SLA.**
+> **Definir a arquitetura transversal de prioridade e escalation, antes de qualquer contrato físico adicional ou duração numérica universal de SLA.**
 
 ---
 
