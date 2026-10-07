@@ -1869,3 +1869,28 @@ Próximo passo:
 - próximo passo: Contrato Físico v0.1 + novo gate, ainda em modo alto;
 - Fase 5 não iniciada;
 - pausa obrigatória após checkpoint permanece vigente.
+
+### Fase 4 — Contrato Físico candidato de Propagation/Re-baselining
+
+Documento:
+- 35 — Contrato Físico v0.1 de Propagation/Re-baselining.
+
+Estado:
+> **PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = CANDIDATE_FOR_PHYSICAL_GATE**
+
+> **F4_PRB_T01_T128 = TEST_PLAN_CANDIDATE**
+
+> **MIGRATION_031 = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Estruturas candidatas:
+- PropagationAssessment/Candidate/Path/PathStep;
+- adapter estruturado PropagationCandidate → UpdateSignalSource;
+- RebaselineDecision;
+- handover explícito de UpdatePolicy, Monitor, UpdateRiskProfile, coverage, SLA Rules/Instances, signals e workflow;
+- issue/readiness helpers;
+- grandfathering sem backfill fabricado.
+
+Próximo passo:
+> **executar gate adversarial/físico do Documento 35 antes de qualquer migration.**
