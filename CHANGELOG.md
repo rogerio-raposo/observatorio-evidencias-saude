@@ -3285,3 +3285,22 @@ Documentos:
 - modo alto recomendado antes da metodologia;
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
+
+
+## 2026-10-07 — Gate da metodologia de calibração temporal
+
+- Documento 39 criado e hardenizado;
+- Documento 40 primeira passagem = **REVISE**;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- metodologia por envelopes preservada sem score aditivo;
+- necessidade científica não mapeia automaticamente para intervalos;
+- seleção passa a usar constraints + Pareto/dominância;
+- source latency não determina cadence isoladamente;
+- replay deve incluir censura/missingness/falhas;
+- Priority→SLA snapshot temporal fechado;
+- provisional calibration permanece fora de rules ativas;
+- repeated breach não autoriza relaxamento automático;
+- external deadline exige compatibilidade semântica;
+- pré-requisitos físicos de cadence/SLA foram identificados;
+- autorizada somente a especificação física desses pré-requisitos;
+- nenhum numeric cadence/SLA, calendário real, migration 032, scheduler, notifications ou M3 foi autorizado.
