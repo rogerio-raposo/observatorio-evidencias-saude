@@ -2796,3 +2796,12 @@ Documentos:
 - primeiro contrato físico transversal da Fase 4 consolidado em PASS técnico;
 - próximo passo: arquitetura de perfis de risco operacional/científico para parametrizar cadence, thresholds, SLAs e prioridade.
 
+## 2026-10-07 — Correção de inventário: MethodDecision
+
+- confirmado que `investigation.method_decision` existe fisicamente desde a migration 014;
+- corrigida a afirmação anterior de que MethodDecision seria apenas conceito documental;
+- `maintenance.update_decision` permanece como decisão especializada do protocolo de atualização;
+- `investigation.method_decision` permanece como decisão metodológica ligada à InvestigationVersion;
+- o PASS da migration 027 permanece válido porque sua implementação não dependia da ausência de MethodDecision;
+- eventual linkage entre `reroute_method` e MethodDecision será definido explicitamente em bloco posterior, sem inferência retroativa.
+
