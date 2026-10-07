@@ -231,6 +231,7 @@ AS $q$
           FROM investigation.method_decision md
          WHERE md.investigation_version_uuid=p_investigation_version_uuid
            AND md.record_status='active'
+           AND md.stage='search'
            AND md.decision_code=p_decision_code
            AND md.resolution_status IN ('accepted','mitigated')
            AND md.impact_payload->>'cycle_uuid'=p_cycle_uuid::text
