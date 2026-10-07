@@ -313,16 +313,17 @@ $$INSERT INTO maintenance.update_policy(
  'P14 M2 no Monitor','audit-owner','owner','superseded'
 )$$,'M2/M3 UpdatePolicy requires governing Monitor','F4-UP-P14');
 
--- P15 — M3 exige Monitor e permanece formalmente bloqueado.
+-- P15 — post-032 policy fixture is M2; Monitor M3 remains formally blocked.
 SELECT pg_temp.assert_true(
-    (SELECT effective_maintenance_level='M3'
-            AND governing_monitor_product_version_uuid IS NOT NULL
+    (SELECT effective_maintenance_level='M2'
+            AND cadence_mode='periodic'
+            AND governing_monitor_product_version_uuid='e5100000-0000-0000-0000-000000000007'
        FROM maintenance.update_policy
       WHERE update_policy_uuid='f4000000-0000-0000-0000-000000000002')
     AND EXISTS (
         SELECT 1
-          FROM maintenance.update_policy_issues(
-            'f4000000-0000-0000-0000-000000000002'
+          FROM product.evidence_monitor_publication_issues(
+            'e5100000-0000-0000-0000-000000000007'
           )
          WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
            AND severity='error'
@@ -1295,15 +1296,12 @@ SELECT pg_temp.assert_true(
     'F4-UP-P57'
 );
 
--- P58 — M3 blocker existente continua ativo.
+-- P58 — M3 blocker existente continua ativo sem policy M3 pós-032.
 SELECT pg_temp.assert_true(
-    EXISTS (
-        SELECT 1
-          FROM maintenance.update_policy_issues(
-            'f4000000-0000-0000-0000-000000000002'
-          )
-         WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
-           AND severity='error'
+    NOT EXISTS (
+        SELECT 1 FROM maintenance.update_policy
+        WHERE effective_maintenance_level='M3'
+          AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)
     )
     AND EXISTS (
         SELECT 1
