@@ -183,6 +183,7 @@ INSERT INTO maintenance.rebaseline_decision(
   decision_stage,transition_basis_type,result_product_version_uuid,
   version_chain_summary_payload,authority_domain,
   rationale,decided_by,actor_type,verification_status,
+  verified_by,verifier_actor_type,verified_at,
   authority_status,decided_at
 ) VALUES (
   'f7400000-0000-0000-0000-000000000001',
