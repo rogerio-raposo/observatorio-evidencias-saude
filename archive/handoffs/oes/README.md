@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP88 — 2026-10-06**
+**CP89 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP88.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP89.md`
 
 Checkpoint anterior:
 
-`CP87`
+`CP88`
 
 Status:
 
@@ -192,3 +192,4 @@ em **Modo Continuidade**.
 - **CP87 — 2026-10-06:** registra **EvidenceAlertView 0.1 = PASS**; retomada na camada de apresentação e fechamento da Fase 3.
 
 - **CP88 — 2026-10-06:** encerra formalmente a **Fase 3 — Produtos do Observatório**; 9/9 produtos formalizados; `PHASE_3_COMPLETE / PHASE_4_NOT_STARTED`.
+- **CP89 — 2026-10-06:** inicia formalmente a **Fase 4 — Protocolo de Atualização**; Documentos 05–06; arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**; retomada no Contrato de Dados v0.1.
