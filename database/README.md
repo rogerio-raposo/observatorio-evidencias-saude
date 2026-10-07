@@ -399,3 +399,51 @@ Evidência:
 Próxima etapa:
 > selecionar explicitamente a próxima dívida da Fase 4; nenhum novo bloco funcional é iniciado automaticamente.
 
+
+## Fase 4 — Propagation/Re-baselining físico
+
+**PASS técnico — 7 de outubro de 2026.**
+
+Documentos:
+- 33 — arquitetura transversal;
+- 34 — gate adversarial arquitetural;
+- 35 — contrato físico;
+- 36 — gate adversarial/físico;
+- 37 — resultado da validação técnica.
+
+Implementação:
+- `031_propagation_rebaseline_contract.sql` — migration lógica;
+- `031a_propagation_core.sql`;
+- `031b_propagation_signal_adapter.sql`;
+- `031c_rebaseline_core.sql`;
+- `031d_propagation_rebaseline_helpers.sql`;
+- `031e_rebaseline_child_validators.sql`;
+- `f4-propagation-rebaseline-fixtures.sql`;
+- `f4-propagation-rebaseline-tests.sql`.
+
+Estado:
+- `PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = TECHNICALLY_VALIDATED`;
+- `MIGRATION_031 = PASS`;
+- F4-PRB-T01–T145 = **PASS**;
+- migration 031 idempotency = **PASS**;
+- rebuild-through-031 = **PASS**;
+- regressões completas = **PASS**;
+- M3 blocker preservado.
+
+Evidência:
+- run canônico **37644296649** (#167), success;
+- technical HEAD `5da1d932f9509214db6a658a2ed5ca830ec7b6c1`;
+- job `postgres-s5` / **112870931087**;
+- artifact **11494595216**;
+- digest `sha256:1934c9068c24dc17ea505fd353901270eef3ab3a8cc48cbd74cba0de5132922a`.
+
+Limites:
+- sem numeric SLA/cadence;
+- sem scheduler/notifications;
+- sem auto-propagation/auto-rebaseline;
+- sem auto-currentness/assurance;
+- sem backfill/revisão humana fabricados;
+- `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL` permanece ativo.
+
+Próxima etapa:
+> selecionar explicitamente a próxima dívida da Fase 4 após checkpoint técnico; nenhum novo bloco é iniciado automaticamente.
