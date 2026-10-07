@@ -1796,3 +1796,23 @@ Próximo passo:
 - Fase 5 não iniciada;
 - pausa obrigatória após checkpoint permanece vigente.
 
+### Fase 4 — Propagação de mudanças e re-baselining
+
+Documento:
+- 33 — Arquitetura Transversal de Propagação de Mudanças e Re-baselining.
+
+Estado:
+> **PHASE_4_PROPAGATION_REBASELINE_ARCHITECTURE = CANDIDATE_FOR_ADVERSARIAL_GATE**
+
+Decisões estruturais candidatas:
+- dependency discovery não equivale a impacto científico;
+- propagation não altera currentness automaticamente;
+- re-baselining é separado de propagation;
+- UpdatePolicy não pode usar supersession cross-target;
+- MonitorTarget não pode ser retargeteado in-place;
+- novo target M2/M3 exige novo Monitor ProductVersion/binding explícito;
+- UpdateRiskProfile, signals, Priority, SLA, workflow e Alerts históricos permanecem ancorados no target original;
+- M3 blocker permanece preservado.
+
+Próximo passo:
+> **executar revisão adversarial específica do Documento 33 antes de qualquer contrato físico ou migration.**
