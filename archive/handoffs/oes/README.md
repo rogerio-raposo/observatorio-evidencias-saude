@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP72 — 2026-10-06**
+**CP73 — 2026-10-06**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP72.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-06_CP73.md`
 
 Checkpoint anterior:
 
-`CP71`
+`CP72`
 
 Status:
 
@@ -160,3 +160,5 @@ em **Modo Continuidade**.
 - **CP71 — 2026-10-06:** OVR-01 persistido e validado em **A0 developmental**, OVR01-T01–T14/render/rebuild em PASS; retomada na verificação metodológica adversarial antes de eventual A1.
 
 - **CP72 — 2026-10-06:** encerra o **OVR-01 em A1 interno / não publicável** após adversarial REVISE, correções, segunda passagem PASS e S5/rebuild em PASS; retomada na **Especificação Científica e Funcional do Monitor de Evidências**.
+
+- **CP73 — 2026-10-06:** consolida o Documento 165, **Especificação Científica e Funcional do Monitor de Evidências**; retomada na revisão de coerência científica e arquitetural antes de qualquer contrato de dados/migration.
