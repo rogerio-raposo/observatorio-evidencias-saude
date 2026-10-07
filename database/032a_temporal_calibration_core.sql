@@ -190,31 +190,192 @@ CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_evaluation (
 );
 
 CREATE OR REPLACE FUNCTION maintenance.temporal_candidate_payload_is_valid(p_kind text,p jsonb)
-RETURNS boolean LANGUAGE plpgsql IMMUTABLE AS $fn$
-DECLARE keys text[];
+RETURNS boolean LANGUAGE plpgsql STABLE AS $fn$
+DECLARE
+  item jsonb;
+  scope_j jsonb;
+  timing_j jsonb;
+  anchor_j jsonb;
+  mode text;
+  recurrence_unit text;
+  n numeric;
 BEGIN
   IF jsonb_typeof(p)<>'object' OR p->>'schema_version' IS NULL THEN RETURN false; END IF;
-  SELECT array_agg(key ORDER BY key) INTO keys FROM jsonb_object_keys(p) key;
+
   IF p_kind='cadence' THEN
-    RETURN p->>'schema_version'='oes.cadence_candidate/0.1'
-      AND (p->>'cadence_mode') IN ('event_driven','periodic','hybrid')
-      AND jsonb_typeof(p->'obligations')='array'
-      AND (p - ARRAY['schema_version','cadence_mode','effective_at',
-            'governing_monitor_product_version_uuid','obligations'])='{}'::jsonb;
+    IF p->>'schema_version'<>'oes.cadence_candidate/0.1'
+       OR (p->>'cadence_mode') NOT IN ('event_driven','periodic','hybrid')
+       OR NOT (p ? 'effective_at')
+       OR jsonb_typeof(p->'obligations')<>'array'
+       OR jsonb_array_length(p->'obligations')<1
+       OR (p - ARRAY['schema_version','cadence_mode','effective_at',
+             'governing_monitor_product_version_uuid','obligations'])<>'{}'::jsonb
+    THEN RETURN false; END IF;
+
+    BEGIN PERFORM (p->>'effective_at')::timestamptz;
+    EXCEPTION WHEN OTHERS THEN RETURN false; END;
+
+    FOR item IN SELECT value FROM jsonb_array_elements(p->'obligations')
+    LOOP
+      IF jsonb_typeof(item)<>'object'
+         OR (item - ARRAY['obligation_code','scope','timing','anchor','grace_seconds',
+              'event_channel_code','satisfaction_event_type','timezone_name',
+              'dst_resolution_policy'])<>'{}'::jsonb
+         OR length(btrim(COALESCE(item->>'obligation_code','')))=0
+         OR jsonb_typeof(item->'scope')<>'object'
+         OR jsonb_typeof(item->'timing')<>'object'
+         OR NOT (item ? 'satisfaction_event_type')
+      THEN RETURN false; END IF;
+
+      scope_j:=item->'scope';
+      IF (scope_j - ARRAY['type','source_name','source_class','source_definition_artifact_uuid'])<>'{}'::jsonb
+         OR scope_j->>'type' NOT IN ('policy_aggregate','monitor_source_name','monitor_source_class','source_definition_artifact')
+      THEN RETURN false; END IF;
+
+      IF (scope_j->>'type'='policy_aggregate'
+          AND (scope_j ? 'source_name' OR scope_j ? 'source_class' OR scope_j ? 'source_definition_artifact_uuid'))
+         OR (scope_j->>'type'='monitor_source_name'
+          AND (length(btrim(COALESCE(scope_j->>'source_name','')))=0 OR scope_j ? 'source_class' OR scope_j ? 'source_definition_artifact_uuid'))
+         OR (scope_j->>'type'='monitor_source_class'
+          AND (length(btrim(COALESCE(scope_j->>'source_class','')))=0 OR scope_j ? 'source_name' OR scope_j ? 'source_definition_artifact_uuid'))
+         OR (scope_j->>'type'='source_definition_artifact'
+          AND (NOT(scope_j ? 'source_definition_artifact_uuid') OR scope_j ? 'source_name' OR scope_j ? 'source_class'))
+      THEN RETURN false; END IF;
+
+      timing_j:=item->'timing';
+      IF (timing_j - ARRAY['mode','fixed_elapsed_seconds','recurrence_count','recurrence_unit','month_roll_policy'])<>'{}'::jsonb
+      THEN RETURN false; END IF;
+      mode:=timing_j->>'mode';
+      IF mode NOT IN ('event_driven','fixed_elapsed','calendar_recurrence') THEN RETURN false; END IF;
+
+      IF item ? 'grace_seconds' THEN
+        BEGIN n:=(item->>'grace_seconds')::numeric;
+        EXCEPTION WHEN OTHERS THEN RETURN false; END;
+        IF n<0 THEN RETURN false; END IF;
+      END IF;
+
+      IF mode='event_driven' THEN
+        IF timing_j ? 'fixed_elapsed_seconds' OR timing_j ? 'recurrence_count'
+           OR timing_j ? 'recurrence_unit' OR timing_j ? 'month_roll_policy'
+           OR length(btrim(COALESCE(item->>'event_channel_code','')))=0
+           OR item ? 'anchor'
+        THEN RETURN false; END IF;
+      ELSIF mode='fixed_elapsed' THEN
+        BEGIN n:=(timing_j->>'fixed_elapsed_seconds')::numeric;
+        EXCEPTION WHEN OTHERS THEN RETURN false; END;
+        IF n<=0 OR timing_j ? 'recurrence_count' OR timing_j ? 'recurrence_unit'
+           OR timing_j ? 'month_roll_policy' OR item ? 'event_channel_code'
+           OR jsonb_typeof(item->'anchor')<>'object'
+        THEN RETURN false; END IF;
+      ELSE
+        BEGIN n:=(timing_j->>'recurrence_count')::numeric;
+        EXCEPTION WHEN OTHERS THEN RETURN false; END;
+        recurrence_unit:=timing_j->>'recurrence_unit';
+        IF n<=0 OR trunc(n)<>n OR recurrence_unit NOT IN ('day','week','month')
+           OR timing_j ? 'fixed_elapsed_seconds' OR item ? 'event_channel_code'
+           OR jsonb_typeof(item->'anchor')<>'object'
+           OR length(btrim(COALESCE(item->>'timezone_name','')))=0
+           OR item->>'dst_resolution_policy' NOT IN ('shift_forward_to_first_valid','earliest_occurrence_on_fold')
+           OR (recurrence_unit='month' AND timing_j->>'month_roll_policy'<>'preserve_day_or_clamp_last_day')
+           OR (recurrence_unit<>'month' AND timing_j ? 'month_roll_policy')
+        THEN RETURN false; END IF;
+      END IF;
+
+      IF item ? 'anchor' THEN
+        anchor_j:=item->'anchor';
+        IF (anchor_j - ARRAY['type','fixed_anchor_at'])<>'{}'::jsonb
+           OR anchor_j->>'type' NOT IN ('policy_effective_at','fixed_timestamp','last_satisfaction')
+           OR (anchor_j->>'type'='fixed_timestamp') IS DISTINCT FROM (anchor_j ? 'fixed_anchor_at')
+        THEN RETURN false; END IF;
+        IF anchor_j ? 'fixed_anchor_at' THEN
+          BEGIN PERFORM (anchor_j->>'fixed_anchor_at')::timestamptz;
+          EXCEPTION WHEN OTHERS THEN RETURN false; END;
+        END IF;
+      END IF;
+    END LOOP;
+
+    IF p->>'cadence_mode'='event_driven' AND EXISTS(
+      SELECT 1 FROM jsonb_array_elements(p->'obligations') x
+      WHERE x->'timing'->>'mode'<>'event_driven'
+    ) THEN RETURN false; END IF;
+    IF p->>'cadence_mode'='periodic' AND EXISTS(
+      SELECT 1 FROM jsonb_array_elements(p->'obligations') x
+      WHERE x->'timing'->>'mode'='event_driven'
+    ) THEN RETURN false; END IF;
+    IF p->>'cadence_mode'='hybrid' AND (
+      NOT EXISTS(SELECT 1 FROM jsonb_array_elements(p->'obligations') x WHERE x->'timing'->>'mode'='event_driven')
+      OR NOT EXISTS(SELECT 1 FROM jsonb_array_elements(p->'obligations') x WHERE x->'timing'->>'mode'<>'event_driven')
+    ) THEN RETURN false; END IF;
+
+    RETURN true;
+
   ELSIF p_kind='sla_rule' THEN
-    RETURN p->>'schema_version'='oes.sla_rule_candidate/0.1'
-      AND p ? 'clock_code' AND p ? 'selection_precedence'
-      AND p ? 'filters' AND p ? 'endpoint_type' AND p ? 'time_basis'
-      AND (p - ARRAY['schema_version','clock_code','selection_precedence','filters','endpoint_type',
-        'time_basis','target_duration_seconds','sla_calendar_version_uuid','fixed_deadline_source_snapshot',
-        'pause_policy','warning_policy','breach_policy','escalation_policy','effective_at'])='{}'::jsonb;
+    IF p->>'schema_version'<>'oes.sla_rule_candidate/0.1'
+       OR NOT (p ? 'clock_code' AND p ? 'selection_precedence' AND p ? 'filters'
+               AND p ? 'endpoint_type' AND p ? 'time_basis' AND p ? 'pause_policy'
+               AND p ? 'warning_policy' AND p ? 'breach_policy' AND p ? 'escalation_policy'
+               AND p ? 'effective_at')
+       OR (p - ARRAY['schema_version','clock_code','selection_precedence','filters','endpoint_type',
+         'time_basis','target_duration_seconds','sla_calendar_version_uuid','fixed_deadline_source_snapshot',
+         'pause_policy','warning_policy','breach_policy','escalation_policy','effective_at'])<>'{}'::jsonb
+       OR p->>'clock_code' NOT IN (
+         'SLA1_DETECTION_TO_TRIAGE','SLA2_TRIAGE_TO_MATERIALITY',
+         'SLA3_MATERIALITY_TO_DECISION','SLA4_DECISION_TO_WORKFLOW_START',
+         'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION','SLA6_SCIENTIFIC_COMPLETION_TO_ENDPOINT')
+       OR jsonb_typeof(p->'filters')<>'object'
+       OR (p->'filters' - ARRAY['response_class','signal_class','trigger_class','decision_type','materiality_outcome'])<>'{}'::jsonb
+       OR p->>'time_basis' NOT IN ('elapsed_time','business_calendar','fixed_deadline')
+    THEN RETURN false; END IF;
+
+    BEGIN
+      IF (p->>'selection_precedence')::integer<1 THEN RETURN false; END IF;
+      PERFORM (p->>'effective_at')::timestamptz;
+    EXCEPTION WHEN OTHERS THEN RETURN false; END;
+
+    IF p ? 'target_duration_seconds' THEN
+      BEGIN n:=(p->>'target_duration_seconds')::numeric;
+      EXCEPTION WHEN OTHERS THEN RETURN false; END;
+      IF n<=0 THEN RETURN false; END IF;
+    END IF;
+
+    IF p->>'time_basis'='elapsed_time' THEN
+      IF NOT(p ? 'target_duration_seconds') OR p ? 'sla_calendar_version_uuid' OR p ? 'fixed_deadline_source_snapshot' THEN RETURN false; END IF;
+    ELSIF p->>'time_basis'='business_calendar' THEN
+      IF NOT(p ? 'target_duration_seconds') OR NOT(p ? 'sla_calendar_version_uuid') OR p ? 'fixed_deadline_source_snapshot' THEN RETURN false; END IF;
+    ELSE
+      IF p ? 'target_duration_seconds' OR p ? 'sla_calendar_version_uuid'
+         OR jsonb_typeof(p->'fixed_deadline_source_snapshot')<>'object' THEN RETURN false; END IF;
+    END IF;
+
+    RETURN true;
+
   ELSIF p_kind='sla_calendar' THEN
-    RETURN p->>'schema_version'='oes.sla_calendar_candidate/0.1'
-      AND p ? 'calendar_key' AND p ? 'timezone_name' AND p ? 'weekly_schedule'
-      AND p ? 'exception_dates' AND p ? 'effective_from'
-      AND (p - ARRAY['schema_version','calendar_key','timezone_name','weekly_schedule',
-        'exception_dates','effective_from','effective_to'])='{}'::jsonb;
+    IF p->>'schema_version'<>'oes.sla_calendar_candidate/0.1'
+       OR NOT (p ? 'calendar_key' AND p ? 'timezone_name' AND p ? 'weekly_schedule'
+               AND p ? 'exception_dates' AND p ? 'effective_from')
+       OR (p - ARRAY['schema_version','calendar_key','timezone_name','weekly_schedule',
+         'exception_dates','effective_from','effective_to'])<>'{}'::jsonb
+       OR length(btrim(COALESCE(p->>'calendar_key','')))=0
+       OR length(btrim(COALESCE(p->>'timezone_name','')))=0
+       OR jsonb_typeof(p->'weekly_schedule')<>'object'
+       OR jsonb_typeof(p->'exception_dates')<>'array'
+    THEN RETURN false; END IF;
+
+    BEGIN
+      PERFORM (p->>'effective_from')::timestamptz;
+      IF p ? 'effective_to' THEN
+        IF (p->>'effective_to')::timestamptz <= (p->>'effective_from')::timestamptz THEN RETURN false; END IF;
+      END IF;
+    EXCEPTION WHEN OTHERS THEN RETURN false; END;
+
+    IF NOT EXISTS(SELECT 1 FROM pg_timezone_names WHERE name=p->>'timezone_name') THEN RETURN false; END IF;
+    IF to_regprocedure('maintenance.sla_calendar_payload_is_valid(jsonb,jsonb)') IS NOT NULL
+       AND NOT maintenance.sla_calendar_payload_is_valid(p->'weekly_schedule',p->'exception_dates')
+    THEN RETURN false; END IF;
+
+    RETURN true;
   END IF;
+
   RETURN false;
 END
 $fn$;
