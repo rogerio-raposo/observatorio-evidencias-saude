@@ -218,7 +218,7 @@ A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui no
 6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**;
 7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 8. Documentos 27–29 — contrato operacional integrado = **TECHNICALLY_VALIDATED**; migration 029 = **PASS**;
-9. Documentos 30–31 — normalização física do UpdateRiskProfile = **PASS_WITH_ARCHITECTURAL_DECISIONS**; migration 030 autorizada em escopo estrito e ainda não implementada.
+9. Documentos 30–32 — normalização física do UpdateRiskProfile = **TECHNICALLY_VALIDATED**; migration 030 = **PASS**.
 
 A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
@@ -272,7 +272,20 @@ Validação canônica atual do controle operacional integrado:
 
 Próximo passo exato:
 
-> **Implementar a migration 030 estritamente conforme Documentos 30–31, criar F4-RP-T01–T87 e validar S5/idempotência/rebuild/regressões antes de qualquer PASS técnico.**
+Validação canônica atual do UpdateRiskProfile físico:
+
+- F4-RP-T01–T84 = PASS;
+- F4-RP-T85 = migration 030 idempotency PASS;
+- F4-RP-T86 = rebuild-through-030 PASS;
+- F4-RP-T87 = regressões completas PASS;
+- S5 run **37618433929** (#161) = success;
+- technical HEAD **dc9ced9f91817441d0b87063c55057cde1c3c3b7**;
+- artifact **11480858194**;
+- digest `sha256:2fa282d226fd78cce87a7240658bf0f1a37b18afef6d29014335b170316183d7`.
+
+Próximo passo exato:
+
+> **Selecionar explicitamente a próxima dívida da Fase 4 após o checkpoint pós-PASS; não iniciar automaticamente SLA calibration, scheduler, notifications, propagation/re-baselining, M3 readiness ou operação humana real.**
 
 ---
 
