@@ -2656,3 +2656,15 @@ Documentos:
 - ponteiro movido para CP85;
 - retomada: migration 025 de hardening;
 - Fase 4 permanece não iniciada.
+
+
+## 2026-10-06 — Evidence Alert Projection Readiness READY
+
+- Documento 182 registrou PASS técnico do hardening 025;
+- Documento 183 reexecutou o gate adversarial;
+- PR-ALT-01–04 = RESOLVED;
+- run 37560513048 (#135) = success;
+- ALT-H01–H13 + rebuild-through-025 = PASS;
+- Projection Readiness = READY;
+- migration 026 autorizada para EvidenceAlertView 0.1;
+- Fase 4 permanece não iniciada.
