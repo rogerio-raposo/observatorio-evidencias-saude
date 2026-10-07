@@ -927,7 +927,7 @@ jobs:
           done
           test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_monitor_is_publishable('e5100000-0000-0000-0000-000000000005');")" = "t"
           test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT product.evidence_alert_is_publishable('a7100000-0000-0000-0000-000000000001');")" = "t"
-          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT EXISTS(SELECT 1 FROM maintenance.operational_control_readiness('f4000000-0000-0000-0000-000000000002') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL');")" = "t"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT NOT EXISTS(SELECT 1 FROM maintenance.update_policy WHERE effective_maintenance_level='M3' AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)) AND EXISTS(SELECT 1 FROM product.evidence_monitor_publication_issues('e5100000-0000-0000-0000-000000000007') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL' AND severity='error');")" = "t"
           echo "F4-OC-T72 PASS — F2-B/S4/S5/F3 Products/Monitor/Alert regressions remain green after migration 029" | tee s5-artifacts/F4-OC-T72-summary.log
 
       - name: F4-RP-T87 — certify regressions after migration 030
@@ -937,7 +937,7 @@ jobs:
           for f in regression-f2b.log regression-s4.log S5-T02-T15.log             f3-monitor-tests-a.log f3-monitor-tests-b.log f3-monitor-hardening-tests.log f3-monitor-view-tests.log             f3-alert-tests-a.log f3-alert-tests-b.log f3-alert-hardening-tests.log f3-alert-view-tests.log             f4-update-protocol-tests.log f4-update-protocol-plan-tests.log             f4-operational-control-tests.log f4-risk-profile-tests.log; do
             test -s "s5-artifacts/$f"
           done
-          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT EXISTS(SELECT 1 FROM maintenance.operational_control_readiness('f4000000-0000-0000-0000-000000000002') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL');")" = "t"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT NOT EXISTS(SELECT 1 FROM maintenance.update_policy WHERE effective_maintenance_level='M3' AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)) AND EXISTS(SELECT 1 FROM product.evidence_monitor_publication_issues('e5100000-0000-0000-0000-000000000007') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL' AND severity='error');")" = "t"
           echo "F4-RP-T87 PASS — F4-UP/F4-OC/F2-B/S4/S5/F3/Monitor/Alert regressions remain green after migration 030" | tee s5-artifacts/F4-RP-T87-summary.log
 
       - name: F4-PRB-REGRESSIONS — certify regressions after migration 031
@@ -947,7 +947,7 @@ jobs:
           for f in regression-f2b.log regression-s4.log S5-T02-T15.log f3-monitor-tests-a.log f3-monitor-tests-b.log f3-monitor-hardening-tests.log f3-monitor-view-tests.log f3-alert-tests-a.log f3-alert-tests-b.log f3-alert-hardening-tests.log f3-alert-view-tests.log f4-update-protocol-tests.log f4-update-protocol-plan-tests.log f4-operational-control-tests.log f4-risk-profile-tests.log f4-propagation-rebaseline-tests.log; do
             test -s "s5-artifacts/$f"
           done
-          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT EXISTS(SELECT 1 FROM maintenance.operational_control_readiness('f4000000-0000-0000-0000-000000000002') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL');")" = "t"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT NOT EXISTS(SELECT 1 FROM maintenance.update_policy WHERE effective_maintenance_level='M3' AND NOT maintenance.temporal_object_is_grandfathered('update_policy',update_policy_uuid)) AND EXISTS(SELECT 1 FROM product.evidence_monitor_publication_issues('e5100000-0000-0000-0000-000000000007') WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL' AND severity='error');")" = "t"
           test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT status='active' FROM maintenance.update_signal WHERE update_signal_uuid='f4100000-0000-0000-0000-000000000001';")" = "t"
           echo "F4-PRB-REGRESSIONS PASS — F4-UP/F4-OC/F4-RP/F2-B/S4/S5/F3/Monitor/Alert remain green after migration 031" | tee s5-artifacts/F4-PRB-regressions-summary.log
 
@@ -1003,6 +1003,7 @@ jobs:
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/029_integrated_operational_control_contract.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/030_update_risk_profile_contract.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/031_propagation_rebaseline_contract.sql
+            PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/032_temporal_calibration_prerequisites.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/f2b-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s4-fixtures.sql
             PGDATABASE=oes_s5_rebuild psql -v ON_ERROR_STOP=1 -f database/s5-fixtures.sql
