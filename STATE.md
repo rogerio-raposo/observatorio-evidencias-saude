@@ -790,3 +790,35 @@ Projection Readiness permanece formalmente:
 Próxima etapa:
 
 > **Reexecutar adversarialmente PR-MON-01–05 e decidir READY/NOT_READY antes da EvidenceMonitorView.**
+
+
+### Monitor de Evidências — Projection Readiness Gate 02
+
+Documento 172 — **EVIDENCE_MONITOR_PROJECTION_READINESS = READY**.
+
+Resultado adversarial:
+
+- PR-MON-01 múltiplos impactos = RESOLVED;
+- PR-MON-02 source policy machine-readable = RESOLVED;
+- PR-MON-03 source exceptions via MethodDecision = RESOLVED;
+- PR-MON-04 temporal/Search drift = RESOLVED;
+- PR-MON-05 Cycle→CurrencyState imutável = RESOLVED.
+
+Correção pós-CP79:
+
+- temporal/gap exceptions agora exigem `stage='search'`;
+- decisão accepted em estágio incorreto não satisfaz a exceção;
+- run final pós-correção **37555981343** (#127) = **success**;
+- HEAD validado `06ea4b203b3d2d3a1425f7f4c7fe3c4a1d764aed`;
+- artifact **11454409428**;
+- digest `sha256:c2cc76b684d1e89f5a4ae4aadf8067d6c1a659b62384242f7ebc9a48cb69e4ad`.
+
+Autorizado:
+
+> `database/023_evidence_monitor_view_rendering_readiness.sql`
+
+Próxima etapa:
+
+> **Implementar EvidenceMonitorView 0.1 + testes de projeção + idempotência + rebuild.**
+
+Template readiness permanece NOT_EVALUATED. Caso Real, Alert e Fase 4 continuam não autorizados.
