@@ -1035,3 +1035,29 @@ Autorizado:
 > `database/026_evidence_alert_view_rendering_readiness.sql`
 
 Fase 4 permanece não iniciada.
+
+
+### Alerta de Evidência — EvidenceAlertView 0.1
+
+Documento 184 concluído.
+
+Estado:
+
+> **EVIDENCE_ALERT_VIEW_0_1 = PASS**
+
+Validação final:
+
+- migration 026 = PASS;
+- EAV-T01–T15 = PASS;
+- EAV-T16 idempotent re-apply = PASS;
+- EAV-T17 rebuild-through-026 = PASS;
+- run **37560891043** (#138) = success;
+- HEAD validado `7e41436bb02b47b039356c9ec51aa5d3708a2615`;
+- artifact **11456283842**;
+- digest `sha256:9513fab7aa3209c8fc4cc008f7b26b687b31d167cbd51ed68a60bae6289740d6`.
+
+Próxima etapa:
+
+> **Contrato de renderização + Template Operacional do Alerta de Evidência.**
+
+Fase 4 permanece não iniciada.
