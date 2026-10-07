@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP105 — 2026-10-07**.
+- checkpoint vigente: **CP106 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2224,3 +2224,21 @@ Restrições preservadas:
 
 Próximo passo:
 > **após CP106 e novo Freshness Gate, retornar ao nível metodológico/governança em modo alto para decidir qual deve ser o próximo bloco da Fase 4; não iniciar calibração normativa automaticamente.**
+
+
+### CP106 — migration 032 validada
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP106.md`;
+- ponteiro movido para CP106;
+- `TEMPORAL_CALIBRATION_PHYSICAL_CONTRACT = IMPLEMENTED_AND_TECHNICALLY_VALIDATED`;
+- `F4_TCAL_PH_T01_T230 = PASS`;
+- `MIGRATION_032_IDEMPOTENCY = PASS`;
+- `REBUILD_THROUGH_032 = PASS`;
+- `S5_CANONICAL = PASS`;
+- valores temporais normativos continuam não autorizados;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 formal continua bloqueado;
+- Fase 5 não iniciada;
+- próximo passo volta ao nível metodológico/governança;
+- modo alto recomendado para decidir o próximo bloco da Fase 4;
+- pausa obrigatória preservada.
