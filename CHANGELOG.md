@@ -3371,3 +3371,22 @@ Documentos:
 - M3 continua bloqueado;
 - Fase 5 não iniciada;
 - próximo passo: checkpoint CP106 e retorno metodológico em modo alto antes de qualquer calibração normativa.
+
+
+## 2026-10-07 — CP106
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP106.md`;
+- ponteiro de continuidade movido para CP106;
+- migration 032 = **implemented and technically validated**;
+- **F4-TCAL-PH-T01–T230 = PASS**;
+- idempotência 032 = **PASS**;
+- rebuild-through-032 = **PASS**;
+- S5 canônico = **PASS**;
+- run `37690201061`, job `113028117278`;
+- artifact ID `11512707774`, digest `sha256:bb145efb29d7c30e607136defa09c828711162e27ac71a307df229449980f826`;
+- valores temporais normativos continuam não autorizados;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 continua bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: decisão metodológica/governamental em modo alto;
+- pausa obrigatória preservada.
