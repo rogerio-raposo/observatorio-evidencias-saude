@@ -979,9 +979,19 @@ SELECT pg_temp.assert_true(NOT EXISTS(
 SELECT pg_temp.assert_true(
  (SELECT count(*) FROM maintenance.update_policy)=2,'F4-RP-T81');
 
--- T82 — profile fixtures did not create UpdateSignals.
+-- T82 — creating a profile does not create UpdateSignals.
+SAVEPOINT t82;
+CREATE TEMP TABLE rp_t82_before(n bigint) ON COMMIT DROP;
+INSERT INTO rp_t82_before SELECT count(*) FROM maintenance.update_signal;
+SELECT pg_temp.add_proposal_profile(
+ 'fb820000-0000-0000-0000-000000000001',
+ 'e5100000-0000-0000-0000-000000000003',NULL,'reassessment',
+ 'f6000000-0000-0000-0000-000000000001'
+);
 SELECT pg_temp.assert_true(
- (SELECT count(*) FROM maintenance.update_signal)=3,'F4-RP-T82');
+ (SELECT count(*) FROM maintenance.update_signal)=(SELECT n FROM rp_t82_before),
+ 'F4-RP-T82');
+ROLLBACK TO SAVEPOINT t82; RELEASE SAVEPOINT t82;
 
 -- T83 — risk-profile triggers do not create Evidence Alerts.
 SELECT pg_temp.assert_true(NOT EXISTS(
