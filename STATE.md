@@ -2130,3 +2130,47 @@ Próximo passo:
 - modo alto recomendado;
 - Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — contrato físico de calibração temporal
+
+Documentos:
+- 41 — Contrato Físico v0.1 dos Pré-requisitos de Calibração Temporal;
+- 41A — Anexo A de auditabilidade;
+- 42 — Gate Adversarial/Físico;
+- 43 — Recheck Final.
+
+Estado:
+> **TEMPORAL_CALIBRATION_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **F4_TCAL_PH_T01_T230 = APPROVED_MINIMUM_TEST_PLAN**
+
+> **MIGRATION_032 = AUTHORIZED_IN_STRICT_INFRASTRUCTURE_SCOPE**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+Decisões consolidadas:
+- Calibration Dossier/authority/basis/candidate/evaluation;
+- cadence contract/obligation/observation normalizados;
+- hybrid por composição de obligations;
+- continuous excluído do CadenceContract v0.1;
+- source-scope proof;
+- causal SLA filter matrix;
+- historical/as-of SLARule resolution;
+- raw causal start versus contractual start;
+- due/calendar arithmetic determinística;
+- fixed-deadline lineage;
+- pause extension/accountable duration auditável;
+- grandfathering por registry técnico explícito, não por backdating;
+- due/occurrence snapshots históricos;
+- nenhum valor real autorizado.
+
+Uploads manuais reconciliados:
+- Documento 41A: commit `3af8f9e1e07a68ca12b29b5d17bf991f7059123f`;
+- Documento 43: commit `1cc02552a57a3fb52559b11c2443b12f3d024902`;
+- blob SHAs remotos coincidem com os arquivos entregues localmente.
+
+Próximo passo:
+> **após CP105 e novo Freshness Gate, implementar migration 032 + fixtures sintéticas + F4-TCAL-PH-T01–T230 e integrar ao S5; parar se surgir nova decisão arquitetural.**
