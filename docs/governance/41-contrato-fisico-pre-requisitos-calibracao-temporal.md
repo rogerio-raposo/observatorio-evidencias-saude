@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_PHYSICAL_GATE — NO_NORMATIVE_VALUES_AUTHORIZED**  
+**Status:** **REVISED_AFTER_DOCUMENT_42 — READY_FOR_RECHECK — NO_NORMATIVE_VALUES_AUTHORIZED**  
 **Dependências:** Documentos 18–21, 25–31, 33–40; migrations 027, 029–031  
 **Objeto:** especificar o contrato físico necessário para calibrar e futuramente ativar cadence/SLA de forma determinística, sem inserir valores normativos
 
@@ -1212,3 +1212,652 @@ Mesmo se o gate físico autorizá-la:
 ## 39. Próximo passo exato
 
 > **Executar gate adversarial/físico deste contrato, atacando dual truth, lifecycle do dossier, authority, cadence recurrence, source-scope proof, resolver SLA, date-only deadlines, calendar/DST arithmetic, pause extension, grandfathering e risco de automação implícita.**
+
+
+---
+
+# PARTE J — HARDENING PÓS-DOCUMENTO 42
+
+## 40. Dossier decision recorder e completeness deferred
+
+Adicionar ao `temporal_calibration_dossier`:
+
+- `decision_recorded_by` opcional;
+- `decision_actor_type` opcional.
+
+Enquanto `decision_status='draft'`:
+
+- decision recorder NULL;
+- decided_at NULL.
+
+Na única transição draft → terminal:
+
+- decision_recorded_by obrigatório;
+- decision_actor_type ∈ human_reviewer | human_expert | owner;
+- decided_at obrigatório;
+- filhos necessários devem estar completos.
+
+Criar constraint trigger:
+
+> `assert_temporal_calibration_dossier_complete()`
+
+DEFERRABLE INITIALLY DEFERRED.
+
+Estados terminais permanecem imutáveis; nova calibração = novo dossier/supersession.
+
+---
+
+## 41. External applicability authority
+
+Expandir `authority_domain`:
+
+- scientific_methodological;
+- operational_feasibility;
+- external_applicability.
+
+Approved dossier com `external_normative + controlling` exige authority row external_applicability.
+
+A row deve registrar:
+
+- compatibilidade do target/context;
+- compatibilidade do start;
+- compatibilidade do endpoint;
+- precision/timezone;
+- resolução de conflito com outras constraints.
+
+AI/system não pode ser authority final.
+
+---
+
+## 42. Candidate schemas fechados
+
+Selected candidate payloads têm schemas explícitos, sem keys extras.
+
+### cadence_candidate/0.1
+
+Top-level:
+
+- schema_version;
+- cadence_mode;
+- effective_at;
+- governing_monitor_product_version_uuid opcional;
+- obligations array ordenado por obligation_code.
+
+Cada obligation contém apenas:
+
+- obligation_code;
+- scope;
+- timing;
+- anchor;
+- grace_seconds;
+- event_channel_code quando event-driven;
+- satisfaction_event_type;
+- timezone/dst/month-roll quando calendar recurrence.
+
+### sla_rule_candidate/0.1
+
+Top-level:
+
+- schema_version;
+- clock_code;
+- selection_precedence;
+- filters;
+- endpoint_type;
+- time_basis;
+- target_duration_seconds opcional;
+- sla_calendar_version_uuid opcional;
+- fixed_deadline_source_snapshot opcional;
+- pause_policy;
+- warning_policy;
+- breach_policy;
+- escalation_policy;
+- effective_at.
+
+### sla_calendar_candidate/0.1
+
+Top-level:
+
+- schema_version;
+- calendar_key;
+- timezone_name;
+- weekly_schedule;
+- exception_dates;
+- effective_from;
+- effective_to opcional.
+
+Validators:
+
+- rejeitam keys extras;
+- validam tipos/domínios;
+- não autorizam valores só porque o JSON é válido.
+
+---
+
+## 43. Exact selected-candidate equality
+
+Criar serializers canônicos:
+
+- `cadence_contract_calibration_snapshot(cadence_contract_uuid)`;
+- `sla_rule_calibration_snapshot(sla_rule_uuid)`;
+- `sla_calendar_calibration_snapshot(sla_calendar_version_uuid)`.
+
+Normative object pós-v0.1:
+
+> snapshot = selected candidate payload.
+
+Comparação usa JSONB equality após serializer canônico.
+
+UUIDs técnicos do próprio objeto, created_at e audit fields não entram no calibration snapshot.
+
+---
+
+## 44. Risk profile temporal validity
+
+Approved target dossier exige:
+
+- UpdateRiskProfile exact target;
+- authority_status=authoritative;
+- `profile.assessed_at <= dossier.decided_at`;
+- `profile.effective_at <= dossier.decided_at`.
+
+Profile superseded após a decisão não invalida retrospectivamente o dossier.
+
+---
+
+## 45. CadenceContract / UpdatePolicy temporal alignment
+
+Policy que vincula contract exige:
+
+> `update_policy.effective_at = cadence_contract.effective_at`.
+
+Também:
+
+- dossier.decided_at <= contract.effective_at;
+- contract target/mode/Monitor = policy target/mode/Monitor;
+- UpdatePolicy append-preserving guard inclui cadence_contract_uuid;
+- cadence payload snapshot equality obrigatória.
+
+Para M0:
+
+- cadence_contract_uuid NULL;
+- cadence_policy_payload = '{}'::jsonb no contrato v0.1.
+
+---
+
+## 46. Hybrid por composição
+
+Remover `timing_mode=hybrid` de CadenceObligation.
+
+CadenceObligation v0.1:
+
+- event_driven;
+- fixed_elapsed;
+- calendar_recurrence.
+
+CadenceContract:
+
+### event_driven
+
+- >=1 obligation event_driven;
+- nenhuma recurring obligation.
+
+### periodic
+
+- >=1 recurring obligation;
+- nenhuma event_driven obligation.
+
+### hybrid
+
+- >=1 event_driven obligation;
+- >=1 recurring obligation.
+
+Event observation e periodic occurrence mantêm identidades independentes.
+
+---
+
+## 47. Continuous não pertence ao CadenceContract v0.1
+
+CadenceContract v0.1 aceita:
+
+- event_driven;
+- periodic;
+- hybrid.
+
+Não aceita continuous.
+
+M3/continuous:
+
+> depende de gate M3 futuro.
+
+Isso evita objeto normativo que aparente readiness inexistente.
+
+---
+
+## 48. Recurrence anchors v0.1
+
+Remover `event_occurrence`.
+
+Recurring anchors:
+
+- policy_effective_at;
+- fixed_timestamp;
+- last_satisfaction.
+
+Event-driven obligation:
+
+- não possui recurrence anchor;
+- usa event_channel_code + observations.
+
+---
+
+## 49. Month-roll e DST
+
+Calendar recurrence com `recurrence_unit='month'` exige:
+
+> `month_roll_policy = preserve_day_or_clamp_last_day`.
+
+Timezone recurrence exige:
+
+`dst_resolution_policy`:
+
+- shift_forward_to_first_valid;
+- earliest_occurrence_on_fold.
+
+Sem defaults implícitos.
+
+---
+
+## 50. Grace invariant
+
+### fixed_elapsed
+
+- `0 <= grace_interval < fixed_elapsed_interval`.
+
+### calendar_recurrence
+
+Para cada occurrence `n`:
+
+> grace_seconds < due(n+1) - due(n).
+
+O helper de occurrence deve recusar um occurrence cujo gap não satisfaça a invariável.
+
+Não existe um threshold universal/horizon artificial.
+
+---
+
+## 51. Cadence attestation/source proof
+
+`artifact_attestation + satisfied` exige:
+
+- Artifact active;
+- actor humano/owner;
+- artifact_type permitido por policy/contract;
+- rationale;
+- prova do source scope declarado.
+
+`update_signal` locator:
+
+- permitido como satisfaction apenas para event_driven obligation;
+- signal deve apontar para a mesma UpdatePolicy;
+- primary source deve ser coerente com source scope.
+
+Periodic polling:
+
+> nunca é satisfeito apenas pela existência de UpdateSignal.
+
+Search/MonitorCycle locators devem provar target/source consistency.
+
+---
+
+## 52. SLA causal filter matrix
+
+Criar:
+
+> `maintenance.sla_rule_filters_are_causally_valid(rule_uuid)`.
+
+### SLA1
+
+Permitidos:
+- signal_class_filter;
+- trigger_class_filter.
+
+Devem ser NULL:
+- response_class_filter;
+- materiality_outcome_filter;
+- decision_type_filter.
+
+### SLA2
+
+Permitidos:
+- signal_class;
+- trigger_class;
+- response_class disponível até start.
+
+Devem ser NULL:
+- materiality_outcome;
+- decision_type.
+
+### SLA3
+
+Permitidos:
+- signal_class;
+- trigger_class;
+- response_class pré-start;
+- materiality_outcome.
+
+decision_type deve ser NULL.
+
+### SLA4–SLA6
+
+Todos os filtros atuais podem ser usados, desde que o fato existisse no contractual start.
+
+Nenhuma rule pode selecionar usando futuro.
+
+---
+
+## 53. Historical/as-of SLARule set
+
+Criar:
+
+> `maintenance.sla_rule_effective_until(rule_uuid)`.
+
+Para cada rule_code lineage:
+
+- início = rule.effective_at;
+- fim = effective_at da próxima rule que supersede essa lineage;
+- intervalo = [start,end).
+
+`record_status='superseded'` não remove validade histórica.
+
+Resolver as-of usa rows cuja effective window contém o instante relevante.
+
+---
+
+## 54. Raw causal start e eligibility
+
+Separar:
+
+### raw_causal_start_at
+
+Derivado exclusivamente do evento causal do clock.
+
+### contractual_start_at
+
+Algoritmo:
+
+1. derive raw causal start;
+2. derive UpdatePolicy eligibility;
+3. encontre rule-set temporal elegível;
+4. contractual start = primeiro instante >= raw start em que policy + uma rule aplicável coexistem;
+5. derive filter context usando somente fatos existentes até esse instante;
+6. resolva por precedence.
+
+Pre-policy age:
+
+> raw causal start é preservado em source_detected_at/pre_policy_age.
+
+Sem rule elegível:
+
+> não criar breach retroativo.
+
+---
+
+## 55. Resolver result explícito
+
+`resolve_sla_rule(...)` retorna estrutura:
+
+- resolution_status;
+- sla_rule_uuid opcional;
+- raw_causal_start_at;
+- contractual_start_at;
+- start_priority_assessment_uuid opcional;
+- selection_trace.
+
+`resolution_status`:
+
+- selected;
+- not_configured;
+- no_matching_rule;
+- ambiguous_invalid.
+
+Ausência de rule:
+
+> nunca significa not_applicable.
+
+---
+
+## 56. Date-only fixed deadline
+
+`date_boundary_policy` não tem default.
+
+Date precision executável exige:
+
+- deadline_date;
+- timezone_name;
+- explicit boundary policy;
+- selected candidate contendo essa transformação;
+- external_applicability/governance rationale quando aplicável.
+
+Sem transformação aprovada:
+
+> `FIXED_DEADLINE_DATE_PRECISION_NOT_EXECUTABLE`.
+
+---
+
+## 57. Calendar arithmetic reversa
+
+Adicionar:
+
+> `sla_calendar_subtract_open_seconds(calendar_uuid,end_at,seconds)`.
+
+Deve ser inversa consistente de add_open_seconds nos test vectors aplicáveis.
+
+Usada para warnings em same_as_sla/business-calendar.
+
+---
+
+## 58. Warning time basis
+
+warning_policy/0.1:
+
+- schema_version;
+- mode = none | lead_time;
+- time_basis = elapsed_time | same_as_sla quando lead_time;
+- lead_seconds integer > 0.
+
+### same_as_sla
+
+- elapsed SLA → wall seconds;
+- business-calendar SLA → subtract_open_seconds;
+- fixed deadline → wall seconds, salvo regra externa/calendário explicitamente modelado em versão futura.
+
+Warning não move due.
+
+---
+
+## 59. Post-breach escalation time basis
+
+escalation_policy/0.1:
+
+- schema_version;
+- mode = none | post_breach_candidate;
+- time_basis = elapsed_time | same_as_sla quando candidate;
+- after_breach_seconds integer >= 0;
+- reason_code = operational_delay na baseline.
+
+same_as_sla/business-calendar usa open-calendar seconds após breach.
+
+Ainda:
+
+> não abre EscalationCase automaticamente.
+
+---
+
+## 60. Business-calendar pause extension
+
+Para rule business_calendar:
+
+1. compute `paused_open_seconds` somente em intervals elegíveis;
+2. effective due =
+   `sla_calendar_add_open_seconds(calendar, nominal_due_at, paused_open_seconds)`.
+
+Nunca:
+
+> nominal_due + wall pause duration.
+
+---
+
+## 61. Pause overlap e due_extension_eligible
+
+Renomear campo proposto:
+
+> `due_extension_eligible`.
+
+O caller não controla seu valor.
+
+Trigger deriva no INSERT:
+
+true somente se:
+
+- rule permite pause;
+- pause.started_at < effective due calculado antes do novo pause;
+- first_breached_at IS NULL;
+- não há overlap.
+
+Caso contrário:
+
+- row pode ser registrada quando governance permitir;
+- due_extension_eligible=false;
+- não move due.
+
+Overlap temporal entre rows válidas da mesma SLAInstance é erro.
+
+---
+
+## 62. Grandfathering não usa backdating
+
+Criar:
+
+### maintenance.temporal_contract_grandfathered_object
+
+Campos:
+
+- `object_type` =
+  - update_policy;
+  - sla_rule;
+  - sla_calendar_version;
+- `object_uuid`;
+- `grandfathered_at`;
+- `migration_id` = 032;
+- `reason_code` = pre_v01_existing_row;
+- PK object_type + object_uuid.
+
+Migration 032, se autorizada:
+
+> snapshot técnico dos objetos fisicamente existentes naquele momento.
+
+Isso:
+
+- não cria aprovação;
+- não cria dossier;
+- não cria evidência histórica;
+- não reescreve rule.
+
+Nova row após migration:
+
+> não pode virar legacy apenas backdating effective_at.
+
+Rebuild-from-zero:
+
+- migration 032 ocorre antes das fixtures novas;
+- fixtures sintéticas devem ser atualizadas para cumprir v0.1;
+- não inserir grandfather rows falsos para fixtures posteriores.
+
+---
+
+## 63. Calendar effective window
+
+Business-calendar SLARule v0.1:
+
+- `calendar.effective_from <= rule.effective_at`;
+- se effective_to não NULL, `rule.effective_at < effective_to`.
+
+SLAInstance congela a CalendarVersion da rule/snapshot.
+
+Supersession posterior do calendar não recalcula instance.
+
+---
+
+## 64. Calendar candidate equality
+
+CalendarVersion pós-v0.1:
+
+> `sla_calendar_calibration_snapshot(calendar_uuid) = selected candidate payload`.
+
+Timezone/schedule/exceptions/effective window devem coincidir.
+
+---
+
+## 65. Grandfather-aware enforcement
+
+Helpers:
+
+- `temporal_object_is_grandfathered(type,uuid)`;
+- `temporal_contract_v01_applies(type,uuid)`.
+
+Novo contract enforcement:
+
+- grandfathered object → legacy semantics preservadas;
+- não-grandfathered object → v0.1 obrigatório.
+
+Nenhuma comparação usa apenas effective_at para decidir grandfathering.
+
+---
+
+## 66. Test plan revisado
+
+> **F4-TCAL-PH-T01–T210**
+
+Adicionar aos testes já previstos:
+
+- decision recorder/deferred completion;
+- external_applicability;
+- closed candidate schemas;
+- candidate/object equality;
+- profile temporal validity;
+- exact policy/contract effective_at;
+- hybrid composed obligations;
+- continuous rejection;
+- month-end recurrence;
+- causal filter matrix;
+- historical rule-set resolution;
+- raw/contractual start;
+- resolver failure statuses;
+- date-only boundary;
+- warning backward calendar arithmetic;
+- escalation time basis;
+- business pause extension;
+- overlap/post-breach pause;
+- backdated new object cannot evade v0.1;
+- rebuild fixtures comply without fake grandfathering.
+
+---
+
+## 67. Estado após hardening
+
+> **TEMPORAL_CALIBRATION_PHYSICAL_CONTRACT = REVISED_READY_FOR_RECHECK**
+
+> **F4_TCAL_PH_T01_T210 = CANDIDATE_MINIMUM_TEST_PLAN**
+
+> **MIGRATION_032 = NOT_AUTHORIZED**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 68. Próximo passo exato
+
+> **Reexecutar Documento 42. Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar migration 032 no escopo estrito de infraestrutura, sem valores normativos.**
+
