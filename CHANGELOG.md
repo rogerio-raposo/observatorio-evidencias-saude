@@ -3177,3 +3177,15 @@ Documentos:
 - próximo passo: especificar Contrato Físico v0.1 e executar novo gate;
 - Fase 5 não iniciada;
 - regra de pausa após checkpoint preservada.
+
+## 2026-10-07 — Propagation/re-baselining physical contract candidate
+
+- criado Documento 35 — Contrato Físico v0.1 de Propagation/Re-baselining;
+- normalizados PropagationAssessment/Candidate/Path/PathStep;
+- especificado adapter futuro PropagationCandidate → UpdateSignalSource;
+- especificado RebaselineDecision e child records explícitos para policy/Monitor/profile/coverage/SLA/signal/workflow;
+- definido grandfathering prospectivo sem backfill fabricado;
+- definido plano mínimo F4-PRB-T01–T128;
+- migration 031 permanece não autorizada;
+- M3 blocker preservado;
+- próximo passo: gate adversarial/físico do contrato.
