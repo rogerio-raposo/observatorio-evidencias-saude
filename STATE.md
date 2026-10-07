@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP106 — 2026-10-07**.
+- checkpoint vigente: **CP107 — 2026-10-07**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -2277,3 +2277,21 @@ Racional:
 
 Próximo passo:
 > **em modo alto, especificar o Protocolo de Evidence Readiness para Calibração Temporal v0.1 e submetê-lo a gate adversarial, ainda sem valores normativos.**
+
+
+### CP107 — seleção do Evidence Readiness temporal
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP107.md`;
+- ponteiro movido para CP107;
+- `TEMPORAL_CALIBRATION_TRACK = CONTINUES`;
+- `NORMATIVE_TEMPORAL_CALIBRATION = BLOCKED_PENDING_REAL_EVIDENCE_READINESS`;
+- `NEXT_PHASE_4_SUBBLOCK = TEMPORAL_CALIBRATION_EVIDENCE_READINESS`;
+- `REAL_CALIBRATION_DOSSIER = NOT_YET_AUTHORIZED`;
+- `NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED`;
+- nenhum novo migration autorizado;
+- scheduler/notifications permanecem deferidos;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: Protocolo de Evidence Readiness v0.1 + gate adversarial, em modo alto;
+- pausa obrigatória preservada.
