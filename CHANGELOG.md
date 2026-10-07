@@ -2935,3 +2935,28 @@ Documentos:
 - próximo passo: arquitetura transversal de prioridade e escalation;
 - regra de pausa obrigatória após checkpoint preservada.
 
+## 2026-10-07 — Phase 4 priority and escalation architecture
+
+- Documento 25 definiu arquitetura transversal de prioridade e escalation;
+- Documento 26 executou revisão adversarial;
+- primeira passagem do gate = **REVISE**;
+- corrigida mistura entre priority e governance: `immediate_governance` → `immediate`;
+- removidos floors universais de `material_change_confirmed` isolado e `update_recommended` isolado;
+- preservados dominance/composite floors de safety/validity/suspend/high criticality;
+- PriorityAssessment futura distingue `proposal | authoritative`;
+- materiality AI-only não sustenta floor científico autoritativo;
+- target supersession/invalidation movido de dominance para lifecycle/reassessment;
+- queue aggregation definida como derivada, sem apagar causalidade por signal/case;
+- escalation candidate pode ser automática, mas active exige autoridade humana na baseline;
+- Alert classification/reassessment_priority permanece input local, sem mapping automático;
+- breach permanece operational pressure modifier;
+- capacity não compensa risco/prioridade;
+- dependency reach aumenta coordination pressure, não materiality;
+- gate reexecutado = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `PHASE_4_PRIORITY_ESCALATION_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS`;
+- `MIGRATION_029 = NOT_AUTHORIZED`;
+- priority score/pesos numéricos não definidos;
+- auto-escalation não autorizada;
+- M3 formal permanece bloqueado;
+- próximo passo: contrato de dados integrado do plano operacional da Fase 4, ainda sem migration.
+
