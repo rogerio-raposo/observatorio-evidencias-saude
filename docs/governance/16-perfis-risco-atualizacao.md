@@ -55,7 +55,28 @@ Portanto:
 
 ---
 
-## 3. Separação obrigatória: risco intrínseco × capacidade operacional
+## 3. Relação com o Routing Record existente
+
+O Documento 03 já possui dimensões canônicas de roteamento:
+
+- criticidade;
+- complexidade;
+- maturidade;
+- incerteza;
+- volatilidade;
+- contexto.
+
+O Documento 16 **não cria uma taxonomia concorrente** para esses conceitos.
+
+Regras:
+
+- criticidade da atualização reutiliza a criticidade canônica, podendo ser reavaliada quando a finalidade/uso mudar;
+- volatilidade reutiliza a dimensão canônica de volatilidade, agora aplicada longitudinalmente;
+- sensibilidade da conclusão é avaliação de manutenção derivada de incerteza, maturidade, precisão e proximidade de mudança decisória;
+- qualquer divergência entre Routing Record histórico e perfil posterior deve ser explícita e justificada;
+- perfil de atualização nunca reescreve silenciosamente o Routing Record histórico.
+
+## 4. Separação obrigatória: risco intrínseco × capacidade operacional
 
 O OES manterá duas famílias de dimensões.
 
@@ -85,9 +106,9 @@ Nunca poderá ser usada para “rebaixar” artificialmente criticidade científ
 
 ---
 
-# 4. Família A — risco científico/decisório
+# 5. Família A — risco científico/decisório
 
-## 4.1 A1 — Criticidade da decisão
+## 5.1 A1 — Criticidade da decisão
 
 Pergunta:
 
@@ -107,20 +128,16 @@ Pode influenciar prática ou decisão, mas com consequências geralmente revers�
 
 Pode afetar decisões clínicas, de política, incorporação, segurança ou alocação relevante de recursos.
 
-### crítica
-
-Erro/desatualização pode contribuir para dano grave, decisão populacional de alta consequência, segurança importante ou resposta regulatória urgente.
-
 Regras:
 
 - criticidade não é produto do nível N;
 - N4 não é automaticamente crítico;
 - N1 pode suportar decisão crítica e, nesse caso, pode exigir reroteamento/garantia maior;
-- criticidade alta/crítica eleva exigência de resposta, mas não prova materialidade de um signal.
+- criticidade alta eleva exigência de resposta, mas não prova materialidade de um signal.
 
 ---
 
-## 4.2 A2 — Volatilidade da base de evidências
+## 5.2 A2 — Volatilidade da base de evidências
 
 Pergunta:
 
@@ -140,8 +157,7 @@ Níveis:
 
 - baixa;
 - moderada;
-- alta;
-- muito alta.
+- alta.
 
 Volatilidade:
 
@@ -151,7 +167,7 @@ Alta volatilidade sem criticidade/sensibilidade elevada pode justificar vigilân
 
 ---
 
-## 4.3 A3 — Sensibilidade da conclusão
+## 5.3 A3 — Sensibilidade da conclusão
 
 Pergunta:
 
@@ -174,8 +190,7 @@ Níveis:
 
 - baixa;
 - moderada;
-- alta;
-- muito alta.
+- alta.
 
 Sensibilidade alta:
 
@@ -185,39 +200,45 @@ Significa que nova informação merece avaliação mais rápida/intensa.
 
 ---
 
-## 4.4 A4 — Risco de segurança/integridade
+## 5.4 A4 — Exposição a consequências de segurança/integridade
 
 Pergunta:
 
-> existe uma classe de evento cujo atraso na avaliação pode expor o usuário a dano ou manter uma conclusão baseada em evidência comprometida?
+> se surgir um evento de segurança, integridade ou regulação, qual a consequência potencial de atraso na sua detecção/avaliação?
 
-Domínios:
+Considerar:
 
-- dano/segurança;
-- retratação;
-- correção material;
-- expression of concern;
-- fraude/integridade;
-- alerta regulatório;
-- contraindicação/restrição;
-- falha metodológica que comprometa validade.
+- potencial de dano;
+- dependência da conclusão de fontes vulneráveis a correção/retratação;
+- relevância de fontes regulatórias;
+- consequências de contraindicação/restrição tardia;
+- possibilidade de invalidação metodológica relevante.
 
 Níveis:
 
-- nenhum sinal especial;
-- relevante;
-- alto;
-- crítico.
+- baixa;
+- moderada;
+- alta.
+
+A4 descreve **exposição estrutural do target**, não a existência de um signal ativo.
+
+Quando efetivamente ocorre:
+
+- safety signal;
+- retraction;
+- correction;
+- expression of concern;
+- regulatory change;
+
+o evento pertence a `maintenance.update_signal` e segue MaterialityAssessment/UpdateDecision.
 
 Regra de dominância:
 
-> **A4 alto/crítico aciona prioridade de triagem independentemente do score/perfil das demais dimensões.**
+> **A4 alta exige forte capacidade event-driven e prioridade elevada quando um signal correspondente surge.**
 
-Isso não altera currentness automaticamente.
+Não altera currentness automaticamente.
 
----
-
-## 4.5 A5 — Alcance de dependências
+## 5.5 A5 — Alcance de dependências
 
 Pergunta:
 
@@ -248,9 +269,9 @@ Não aumenta, sozinho, materialidade científica da nova evidência.
 
 ---
 
-# 5. Família B — perfil operacional
+# 6. Família B — perfil operacional
 
-## 5.1 B1 — Observabilidade das fontes
+## 6.1 B1 — Observabilidade das fontes
 
 Pergunta:
 
@@ -281,7 +302,7 @@ Não reduz necessidade científica.
 
 ---
 
-## 5.2 B2 — Latência de detecção
+## 6.2 B2 — Latência de detecção
 
 Pergunta:
 
@@ -300,7 +321,7 @@ Uma cadence mais frequente que a latência real da fonte pode produzir custo sem
 
 ---
 
-## 5.3 B3 — Carga de vigilância
+## 6.3 B3 — Carga de vigilância
 
 Pergunta:
 
@@ -327,7 +348,7 @@ Carga é variável operacional e não justificativa para ignorar risco.
 
 ---
 
-## 5.4 B4 — Custo de incorporação científica
+## 6.4 B4 — Custo de incorporação científica
 
 Pergunta:
 
@@ -361,7 +382,7 @@ Não justifica falso currentness.
 
 ---
 
-## 5.5 B5 — Capacidade sustentável
+## 6.5 B5 — Capacidade sustentável
 
 Pergunta:
 
@@ -374,6 +395,8 @@ Níveis:
 - insuficiente;
 - indisponível.
 
+B5 é uma fotografia operacional com período de vigência; pode mudar sem mudança científica do target.
+
 B5 é gate de viabilidade.
 
 Regras:
@@ -385,7 +408,7 @@ Regras:
 
 ---
 
-# 6. Perfil composto sem score aditivo
+# 7. Perfil composto sem score aditivo
 
 O OES não somará A1–A5 e B1–B5 em um único número nesta etapa.
 
@@ -417,97 +440,61 @@ OperationalProfile
 
 ---
 
-# 7. Bandas de vigilância recomendadas
+# 8. Saída recomendatória do perfil
 
-O perfil pode produzir uma **recomendação** de intensidade, sem mudar automaticamente M0–M3.
+O perfil não criará estados `R0–R3` nem qualquer segunda escala concorrente de M0–M3.
 
-## R0 — vigilância não ativa
+Sua saída conceitual deverá conter, separadamente:
 
-Padrão compatível com M0.
+- `recommended_maintenance_level`: M0, M1, M2 ou M3-candidate;
+- `recommended_cadence_mode`: none, event_driven, periodic, hybrid ou continuous;
+- `event_driven_surveillance_required`: recomendação qualitativa;
+- `priority_posture`: rotina, elevada ou prioritária para desenho posterior;
+- `feasibility_status`: adequada, tensionada, insuficiente ou indisponível;
+- rationale explícita.
 
-Condições típicas:
+Regras:
 
-- baixa prioridade de atualização;
-- baixa volatilidade;
-- conclusão pouco sensível;
-- ausência de safety/integrity concern.
+1. essa saída é recomendatória e não modifica UpdatePolicy;
+2. M3-candidate não equivale a M3 operacional;
+3. mudança da policy exige decisão própria de governança;
+4. não criar score agregado para escolher M automaticamente;
+5. currentness não é parte da saída do perfil.
 
-## R1 — vigilância reativa/periódica leve
+# 9. Regras de dominância e não compensação
 
-Padrão compatível com M1.
+## 9.1 Segurança/integridade
 
-Condições típicas:
-
-- questão ainda relevante;
-- risco não nulo de mudança;
-- baixa/moderada volatilidade;
-- atualização acionada por evento ou revisão programada.
-
-## R2 — vigilância ativa
-
-Padrão compatível com M2.
-
-Condições típicas:
-
-- criticidade, volatilidade ou sensibilidade relevantes;
-- necessidade de ciclos prospectivos;
-- fontes e Monitor identificáveis.
-
-## R3 — candidato a living
-
-Padrão candidato a M3.
-
-Exige combinação forte de:
-
-- alta criticidade/prioridade;
-- alta/muito alta volatilidade;
-- alta/muito alta sensibilidade;
-- benefício real de reduzir latência;
-- capacidade sustentável adequada;
-- método incremental viável.
-
-R3:
-
-> **não promove M3 automaticamente.**
-
-M3 formal continua sujeito a gate próprio.
-
----
-
-# 8. Regras de dominância e não compensação
-
-## 8.1 Segurança/integridade
-
-A4 alto/crítico:
+A4 alta:
 
 - exige triagem prioritária;
 - pode encurtar SLA futuro;
 - pode abrir under_evaluation após assessment;
 - não declara outdated automaticamente.
 
-## 8.2 Criticidade
+## 9.2 Criticidade
 
-A1 alta/crítica não pode ser “compensada” por baixa volatilidade para eliminar vigilância quando eventos raros teriam grande impacto.
+A1 alta não pode ser “compensada” por baixa volatilidade para eliminar vigilância quando eventos raros teriam grande impacto.
 
 Pode favorecer:
 
 - event-driven surveillance forte mesmo com periodicidade baixa.
 
-## 8.3 Volatilidade
+## 9.3 Volatilidade
 
 A2 alta isolada:
 
 - aumenta necessidade de detecção;
 - não implica M3 se A1/A3 forem baixos.
 
-## 8.4 Sensibilidade
+## 9.4 Sensibilidade
 
 A3 alta:
 
 - reduz tolerância a signals relevantes;
 - não muda currentness sem assessment.
 
-## 8.5 Capacidade
+## 9.5 Capacidade
 
 B5 insuficiente:
 
@@ -515,7 +502,7 @@ B5 insuficiente:
 - deve gerar limitação/governança;
 - pode bloquear regime prometido.
 
-## 8.6 Dependências
+## 9.6 Dependências
 
 A5 amplo/sistêmico:
 
@@ -524,7 +511,7 @@ A5 amplo/sistêmico:
 
 ---
 
-# 9. Relação com cadence
+# 10. Relação com cadence
 
 Cadence futura deverá ser função de:
 
@@ -557,7 +544,7 @@ Regras:
 
 ---
 
-# 10. Relação com thresholds
+# 11. Relação com thresholds
 
 Threshold futuro não será um único número global.
 
@@ -592,7 +579,7 @@ Esses thresholds poderão ser:
 
 ---
 
-# 11. Relação com SLA
+# 12. Relação com SLA
 
 SLA futuro será derivado de:
 
@@ -616,7 +603,7 @@ Quebra de SLA:
 
 ---
 
-# 12. Relação com prioridade
+# 13. Relação com prioridade
 
 Prioridade futura será multidimensional.
 
@@ -640,31 +627,31 @@ sem validação metodológica posterior.
 
 ---
 
-# 13. Relação com M0–M3
+# 14. Relação com M0–M3
 
-O perfil é recomendador, não state machine.
+O perfil recomenda, mas não muda M0–M3 automaticamente.
 
-Exemplos:
+Padrões conceituais:
 
 ### perfil baixo/estável
 
-Pode sustentar M0 ou M1.
+Pode recomendar M0 ou M1.
 
 ### criticidade alta + volatilidade baixa
 
-Pode sustentar M1 com forte event-driven surveillance.
+Pode recomendar M1 com forte vigilância event-driven.
 
-### volatilidade alta + sensibilidade moderada
+### volatilidade alta + sensibilidade moderada/alta
 
-Pode sustentar M2.
+Pode recomendar M2.
 
 ### criticidade alta + volatilidade alta + sensibilidade alta + capacidade adequada
 
-Pode justificar candidatura M3.
+Pode justificar `M3-candidate`.
 
-### mesmo perfil, capacidade insuficiente
+### mesmo risco científico + capacidade insuficiente
 
-Risco científico permanece alto, mas M3 formal fica bloqueado.
+A necessidade científica permanece alta, mas M3 formal fica bloqueado.
 
 Resultado correto:
 
@@ -674,9 +661,9 @@ e não:
 
 > “risco moderado”.
 
----
+A decisão efetiva continua em `maintenance.update_policy`.
 
-# 14. Relação com Alert
+# 15. Relação com Alert
 
 Alert classification não será usada como substituto do perfil.
 
@@ -690,7 +677,7 @@ UpdateRiskProfile deve ser avaliado independentemente.
 
 ---
 
-# 15. Relação com Monitor
+# 16. Relação com Monitor
 
 Monitor M2/M3 fornece dados empíricos para revisão do perfil:
 
@@ -714,26 +701,34 @@ Monitor não decide sozinho o perfil.
 
 ---
 
-# 16. Relação com ProductVersion/InvestigationVersion
+# 17. Temporalidade e target do perfil
 
-O perfil deve pertencer a uma versão concreta do target.
+Cada assessment de perfil deverá:
 
-Motivo:
+- apontar para uma versão concreta do target;
+- possuir `effective_at`;
+- ser supersedível;
+- preservar rationale e ator/verificação.
 
-- risco pode mudar quando método/escopo/conclusão muda;
-- uma nova ProductVersion pode ter sensibilidade diferente;
-- nova InvestigationVersion pode alterar escopo/fontes;
-- perfil histórico precisa permanecer auditável.
+Podem existir múltiplos perfis ao longo do tempo para a **mesma** ProductVersion/InvestigationVersion.
 
-Mudança de versão:
+Isso é necessário porque:
 
-> exige nova avaliação de perfil ou decisão explícita de carry-forward.
+- capacidade muda;
+- observabilidade das fontes muda;
+- pipeline de pesquisa muda;
+- finalidade de uso pode mudar;
+- dependency reach pode mudar;
 
-Carry-forward nunca deve ser silencioso.
+sem nova versão científica.
 
----
+Nova versão científica:
 
-# 17. Revisão do próprio perfil
+> exige novo assessment ou carry-forward explícito.
+
+Carry-forward nunca deve ser silencioso e deve declarar quais dimensões foram reavaliadas.
+
+# 18. Revisão do próprio perfil
 
 Triggers de reassessment do perfil incluem:
 
@@ -752,7 +747,7 @@ Perfil não deve ser tratado como permanente.
 
 ---
 
-# 18. Implicações para future data contract
+# 19. Implicações para future data contract
 
 Contrato físico posterior poderá representar:
 
@@ -764,7 +759,7 @@ Contrato físico posterior poderá representar:
 - effective period;
 - supersession;
 - target version;
-- recommended surveillance band R0–R3;
+- recommended maintenance level/cadence mode;
 - feasibility status;
 - issues.
 
@@ -777,9 +772,9 @@ Ainda não autorizado:
 
 ---
 
-# 19. Exemplos conceituais
+# 20. Exemplos conceituais
 
-## 19.1 Campo estável, baixo impacto
+## 20.1 Campo estável, baixo impacto
 
 - A1 baixa;
 - A2 baixa;
@@ -789,9 +784,9 @@ Ainda não autorizado:
 
 Recomendação provável:
 
-> R0/R1.
+> M0/M1, conforme finalidade, com cadence none/event-driven/periodic justificada.
 
-## 19.2 Intervenção clínica em área ativa
+## 20.2 Intervenção clínica em área ativa
 
 - A1 alta;
 - A2 alta;
@@ -801,12 +796,12 @@ Recomendação provável:
 
 Recomendação provável:
 
-> R2.
+> M2 com cadence periodic/hybrid.
 
-## 19.3 Evidência living candidata
+## 20.3 Evidência living candidata
 
 - A1 alta/crítica;
-- A2 alta/muito alta;
+- A2 alta;
 - A3 alta;
 - A4 variável;
 - B1 alta;
@@ -815,11 +810,11 @@ Recomendação provável:
 
 Recomendação:
 
-> R3 candidate.
+> M3-candidate com cadence continuous/hybrid.
 
 Ainda exige M3 gate.
 
-## 19.4 Sinal raro de segurança
+## 20.4 Sinal raro de segurança
 
 - A1 crítica;
 - A2 baixa;
@@ -833,7 +828,7 @@ Recomendação:
 
 Isso demonstra por que “cadence curta para tudo” seria um modelo ruim.
 
-## 19.5 Alto risco, baixa capacidade
+## 20.5 Alto risco, baixa capacidade
 
 - A1 alta;
 - A2 alta;
@@ -848,7 +843,7 @@ A resposta correta é escalonar capacidade/governança, não reduzir artificialm
 
 ---
 
-# 20. Referências metodológicas orientadoras
+# 21. Referências metodológicas orientadoras
 
 Esta baseline foi confrontada com:
 
@@ -874,14 +869,14 @@ Essas referências orientam princípios; não são copiadas como thresholds univ
 
 ---
 
-# 21. Gate antes de qualquer persistência física
+# 22. Gate antes de qualquer persistência física
 
 A revisão adversarial deverá testar:
 
 - risco intrínseco × capacidade;
 - ausência de score aditivo prematuro;
 - dominância de safety/integrity;
-- relação R0–R3 × M0–M3;
+- relação R0–saída recomendatória × M0–M3;
 - possibilidade de criticidade alta + baixa volatilidade;
 - possibilidade de alto risco + baixa capacidade;
 - currentness separado do perfil;
@@ -899,6 +894,6 @@ Resultados permitidos:
 
 ---
 
-# 22. Próximo passo exato
+# 23. Próximo passo exato
 
 > **Executar revisão adversarial do Documento 16. Somente após PASS/PASS_WITH_ARCHITECTURAL_DECISIONS definir como o perfil parametriza cadence, thresholds, SLA e prioridade.**
