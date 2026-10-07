@@ -3163,3 +3163,17 @@ Documentos:
 - nenhuma migration foi autorizada;
 - M3 blocker preservado;
 - próximo passo: Contrato Físico v0.1 + novo gate.
+
+## 2026-10-07 — CP100
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP100.md`;
+- ponteiro de continuidade movido para CP100;
+- arquitetura de propagation/re-baselining = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- Documento 34 registrou primeira passagem REVISE e recheck final PASS_WITH_ARCHITECTURAL_DECISIONS;
+- contrato físico de propagation/re-baselining autorizado apenas para especificação;
+- nenhuma migration autorizada;
+- M3 blocker preservado;
+- último PASS técnico permanece run **37618433929** (#161);
+- próximo passo: especificar Contrato Físico v0.1 e executar novo gate;
+- Fase 5 não iniciada;
+- regra de pausa após checkpoint preservada.
