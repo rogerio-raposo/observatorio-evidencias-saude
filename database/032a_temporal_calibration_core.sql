@@ -437,16 +437,6 @@ BEGIN
         END IF;
       END IF;
 
-      IF EXISTS (
-        SELECT 1 FROM maintenance.temporal_calibration_basis b
-        WHERE b.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
-          AND b.basis_role='controlling'
-          AND b.basis_type IN ('external_normative','methodological_evidence','governance_decision')
-          AND b.artifact_uuid IS NULL
-          AND b.entity_version_uuid IS NULL
-      ) THEN
-        RAISE EXCEPTION 'Controlling normative/methodological/governance basis requires versioned Artifact or EntityVersion locator';
-      END IF;
     END IF;
 
     IF NOT EXISTS (
@@ -457,6 +447,17 @@ BEGIN
         AND e.evaluation_type='historical_replay'
     ) THEN
       RAISE EXCEPTION 'Approved dossier requires historical replay evaluation';
+    END IF;
+
+    IF EXISTS (
+      SELECT 1 FROM maintenance.temporal_calibration_basis b
+      WHERE b.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND b.basis_role='controlling'
+        AND b.basis_type IN ('external_normative','methodological_evidence','governance_decision')
+        AND b.artifact_uuid IS NULL
+        AND b.entity_version_uuid IS NULL
+    ) THEN
+      RAISE EXCEPTION 'Controlling normative/methodological/governance basis requires versioned Artifact or EntityVersion locator';
     END IF;
 
     IF NEW.scope_type='target' THEN
