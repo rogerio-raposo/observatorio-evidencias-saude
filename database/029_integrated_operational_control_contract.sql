@@ -971,9 +971,9 @@ BEGIN
        OR d.authority_status<>'authoritative' THEN
         RAISE EXCEPTION 'WorkflowRound requires authoritative UpdateDecision for same signal';
     END IF;
-    SELECT p.* INTO p
+    SELECT pol.* INTO p
       FROM maintenance.update_signal s
-      JOIN maintenance.update_policy p ON p.update_policy_uuid=s.update_policy_uuid
+      JOIN maintenance.update_policy pol ON pol.update_policy_uuid=s.update_policy_uuid
      WHERE s.update_signal_uuid=NEW.update_signal_uuid;
     IF p.target_product_version_uuid IS DISTINCT FROM NEW.target_product_version_uuid
        OR p.target_investigation_version_uuid IS DISTINCT FROM NEW.target_investigation_version_uuid THEN
