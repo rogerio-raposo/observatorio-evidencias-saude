@@ -808,6 +808,31 @@ CREATE TRIGGER tr_sla_calendar_consistency
 BEFORE INSERT ON maintenance.sla_calendar_version
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_sla_calendar_consistency();
 
+CREATE OR REPLACE FUNCTION maintenance.guard_sla_calendar_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $guard$
+BEGIN
+    IF TG_OP='DELETE' THEN RAISE EXCEPTION 'SLACalendarVersion cannot be deleted'; END IF;
+    IF OLD.record_status='active' AND NEW.record_status='superseded'
+       AND NEW.sla_calendar_version_uuid=OLD.sla_calendar_version_uuid
+       AND NEW.calendar_key=OLD.calendar_key AND NEW.version_no=OLD.version_no
+       AND NEW.timezone_name=OLD.timezone_name
+       AND NEW.weekly_schedule_payload=OLD.weekly_schedule_payload
+       AND NEW.exception_dates_payload=OLD.exception_dates_payload
+       AND NEW.effective_from=OLD.effective_from
+       AND NEW.effective_to IS NOT DISTINCT FROM OLD.effective_to
+       AND NEW.created_by=OLD.created_by AND NEW.actor_type=OLD.actor_type
+       AND NEW.supersedes_sla_calendar_version_uuid
+            IS NOT DISTINCT FROM OLD.supersedes_sla_calendar_version_uuid
+    THEN RETURN NEW; END IF;
+    RAISE EXCEPTION 'SLACalendarVersion material fields are immutable; supersede and append';
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_sla_calendar_guard ON maintenance.sla_calendar_version;
+CREATE TRIGGER tr_sla_calendar_guard
+BEFORE UPDATE OR DELETE ON maintenance.sla_calendar_version
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_sla_calendar_mutation();
+
 CREATE TABLE IF NOT EXISTS maintenance.sla_rule (
     sla_rule_uuid uuid PRIMARY KEY,
     rule_code text NOT NULL CHECK (length(btrim(rule_code))>0),
@@ -913,6 +938,46 @@ DROP TRIGGER IF EXISTS tr_sla_rule_consistency ON maintenance.sla_rule;
 CREATE TRIGGER tr_sla_rule_consistency
 BEFORE INSERT ON maintenance.sla_rule
 FOR EACH ROW EXECUTE FUNCTION maintenance.assert_sla_rule_consistency();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_sla_rule_mutation()
+RETURNS trigger LANGUAGE plpgsql AS $guard$
+BEGIN
+    IF TG_OP='DELETE' THEN RAISE EXCEPTION 'SLARule cannot be deleted'; END IF;
+    IF OLD.record_status='active' AND NEW.record_status='superseded'
+       AND NEW.sla_rule_uuid=OLD.sla_rule_uuid
+       AND NEW.rule_code=OLD.rule_code
+       AND NEW.update_policy_uuid=OLD.update_policy_uuid
+       AND NEW.clock_code=OLD.clock_code
+       AND NEW.selection_precedence=OLD.selection_precedence
+       AND NEW.response_class_filter IS NOT DISTINCT FROM OLD.response_class_filter
+       AND NEW.signal_class_filter IS NOT DISTINCT FROM OLD.signal_class_filter
+       AND NEW.trigger_class_filter IS NOT DISTINCT FROM OLD.trigger_class_filter
+       AND NEW.decision_type_filter IS NOT DISTINCT FROM OLD.decision_type_filter
+       AND NEW.materiality_outcome_filter IS NOT DISTINCT FROM OLD.materiality_outcome_filter
+       AND NEW.endpoint_type=OLD.endpoint_type
+       AND NEW.time_basis=OLD.time_basis
+       AND NEW.target_duration IS NOT DISTINCT FROM OLD.target_duration
+       AND NEW.fixed_deadline_rule_payload IS NOT DISTINCT FROM OLD.fixed_deadline_rule_payload
+       AND NEW.sla_calendar_version_uuid IS NOT DISTINCT FROM OLD.sla_calendar_version_uuid
+       AND NEW.pause_allowed=OLD.pause_allowed
+       AND NEW.pause_policy_payload=OLD.pause_policy_payload
+       AND NEW.warning_policy_payload=OLD.warning_policy_payload
+       AND NEW.breach_policy_payload=OLD.breach_policy_payload
+       AND NEW.escalation_policy_payload=OLD.escalation_policy_payload
+       AND NEW.effective_at=OLD.effective_at
+       AND NEW.rationale=OLD.rationale
+       AND NEW.created_by=OLD.created_by
+       AND NEW.actor_type=OLD.actor_type
+       AND NEW.supersedes_sla_rule_uuid IS NOT DISTINCT FROM OLD.supersedes_sla_rule_uuid
+    THEN RETURN NEW; END IF;
+    RAISE EXCEPTION 'SLARule material fields are immutable; supersede and append';
+END;
+$guard$;
+
+DROP TRIGGER IF EXISTS tr_sla_rule_guard ON maintenance.sla_rule;
+CREATE TRIGGER tr_sla_rule_guard
+BEFORE UPDATE OR DELETE ON maintenance.sla_rule
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_sla_rule_mutation();
 
 -- ---------------------------------------------------------------------------
 -- WORKFLOW ROUND (before SLA instance)
