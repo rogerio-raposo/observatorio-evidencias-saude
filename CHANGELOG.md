@@ -3350,3 +3350,24 @@ Documentos:
 - modo médio suficiente para implementação mecânica;
 - Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Migration 032 technical PASS
+
+- implementada `database/032_temporal_calibration_prerequisites.sql` com fragments 032a–032d;
+- adicionadas fixtures sintéticas de cadence e SLA/calendar v0.1;
+- adicionada suíte dedicada **F4-TCAL-PH-T01–T230**;
+- T01–T230 = **PASS**;
+- migration 032 idempotent re-apply = **PASS**;
+- rebuild-through-032 = **PASS**;
+- regressões F4/F2-B/S4/S5/F3 = **PASS**;
+- Documento 44 registra o resultado técnico canônico;
+- HEAD técnico: `657c69024fafb6c2e6311d47091d5897730668fd`;
+- S5 run `37690201061`, job `113028117278`, conclusion `success`;
+- artifact `oes-s5-evidence-37690201061`, ID `11512707774`, 250711 bytes;
+- digest `sha256:bb145efb29d7c30e607136defa09c828711162e27ac71a307df229449980f826`;
+- nenhum valor temporal normativo real autorizado;
+- scheduler/notifications/auto-escalation continuam não autorizados;
+- M3 continua bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: checkpoint CP106 e retorno metodológico em modo alto antes de qualquer calibração normativa.
