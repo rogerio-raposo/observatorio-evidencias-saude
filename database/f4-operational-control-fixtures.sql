@@ -181,41 +181,42 @@ INSERT INTO maintenance.sla_calendar_version(
 INSERT INTO maintenance.sla_rule(
     sla_rule_uuid,rule_code,update_policy_uuid,clock_code,
     selection_precedence,endpoint_type,time_basis,target_duration,
-    pause_allowed,effective_at,rationale,created_by,actor_type
+    sla_calendar_version_uuid,pause_allowed,effective_at,rationale,created_by,actor_type
 ) VALUES
 (
  'f5400000-0000-0000-0000-000000000001','fixture-sla1',
  'f4000000-0000-0000-0000-000000000001',
  'SLA1_DETECTION_TO_TRIAGE',1,'triage','elapsed_time',interval '2 hours',
- false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
+ NULL,false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 ),
 (
  'f5400000-0000-0000-0000-000000000002','fixture-sla2',
  'f4000000-0000-0000-0000-000000000001',
  'SLA2_TRIAGE_TO_MATERIALITY',1,'materiality','elapsed_time',interval '4 hours',
- false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
+ NULL,false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 ),
 (
  'f5400000-0000-0000-0000-000000000003','fixture-sla3',
  'f4000000-0000-0000-0000-000000000001',
  'SLA3_MATERIALITY_TO_DECISION',1,'update_decision','elapsed_time',interval '4 hours',
- false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
+ NULL,false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 ),
 (
  'f5400000-0000-0000-0000-000000000004','fixture-sla4',
  'f4000000-0000-0000-0000-000000000001',
  'SLA4_DECISION_TO_WORKFLOW_START',1,'workflow_started','elapsed_time',interval '8 hours',
- false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
+ NULL,false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 ),
 (
  'f5400000-0000-0000-0000-000000000005','fixture-sla5',
  'f4000000-0000-0000-0000-000000000001',
  'SLA5_WORKFLOW_START_TO_SCIENTIFIC_COMPLETION',1,'scientific_completed',
- 'business_calendar',interval '16 hours',true,
+ 'business_calendar',interval '16 hours',
+ 'f5300000-0000-0000-0000-000000000001',true,
  TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 ),
@@ -223,13 +224,9 @@ INSERT INTO maintenance.sla_rule(
  'f5400000-0000-0000-0000-000000000006','fixture-sla6',
  'f4000000-0000-0000-0000-000000000001',
  'SLA6_SCIENTIFIC_COMPLETION_TO_ENDPOINT',1,'publication','elapsed_time',interval '8 hours',
- false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
+ NULL,false,TIMESTAMPTZ '2026-10-07 00:00:00+00',
  'TEST-ONLY synthetic duration','fixture-owner','owner'
 );
-
-UPDATE maintenance.sla_rule
-   SET sla_calendar_version_uuid='f5300000-0000-0000-0000-000000000001'
- WHERE sla_rule_uuid='f5400000-0000-0000-0000-000000000005';
 
 -- ---------------------------------------------------------------------------
 -- Workflow round and milestones.
