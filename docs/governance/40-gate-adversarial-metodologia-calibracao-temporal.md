@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **REVISE — primeira passagem metodológica**  
+**Status:** **PASS_WITH_ARCHITECTURAL_DECISIONS — após hardening e recheck**  
 **Dependência:** Documento 39  
 **Objeto:** atacar a metodologia antes de qualquer valor normativo
 
@@ -577,3 +577,224 @@ Contrato posterior deverá resolver pelo menos:
 ## 29. Próximo passo exato
 
 > **Aplicar o hardening ao Documento 39 e reexecutar este gate. Somente PASS/PASS_WITH_ARCHITECTURAL_DECISIONS poderá autorizar a especificação do contrato físico de calibração — ainda sem valores normativos.**
+
+
+---
+
+# PARTE C — RECHECK PÓS-HARDENING
+
+## 30. Resultado do recheck
+
+O Documento 39 incorporou as correções obrigatórias da primeira passagem.
+
+Resultado:
+
+> **TEMPORAL_CALIBRATION_METHODOLOGY = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **MIGRATION_032 = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 31. TC01–TC03 — need, Pareto e source latency
+
+Confirmado:
+
+- A1–A5 não mapeiam automaticamente para números;
+- nenhum score temporal foi criado;
+- seleção usa eliminação por constraints + dominância/Pareto;
+- source latency limita ganho observacional, mas não determina cadence.
+
+**Resultado:** PASS.
+
+---
+
+## 32. TC04–TC05 — suficiência, censura e missingness
+
+Confirmado:
+
+- nenhum N mínimo universal;
+- dossier deverá registrar volume, período, missingness, censura, outliers e estabilidade;
+- replay inclui casos desfavoráveis;
+- não é permitido imputar/excluir dados para melhorar performance aparente.
+
+**Resultado:** PASS.
+
+---
+
+## 33. TC06 — Priority ↔ SLA temporal ordering
+
+Confirmado:
+
+- seleção de rule usa contexto disponível antes da SLA Instance;
+- start PriorityAssessment/rule snapshot ficam congelados;
+- breach posterior pode gerar nova avaliação;
+- nova prioridade não recalcula instance existente.
+
+**Resultado:** PASS.
+
+---
+
+## 34. TC07 — provisional calibration
+
+Confirmado:
+
+- `provisional_requires_reassessment` não vira SLARule ativa;
+- somente `approved_for_normative_activation` poderá gerar policy/rule real;
+- isso ainda depende dos blockers físicos.
+
+**Resultado:** PASS.
+
+---
+
+## 35. TC08–TC09 — cadence physical prerequisites
+
+Confirmado como blocker físico explícito:
+
+- cadence payload/schema fechado ainda precisa ser especificado;
+- source-scoped obligation deve existir quando cycle agregado não provar cobertura;
+- nenhum número pode entrar no JSON aberto atual.
+
+**Resultado:** PASS_WITH_PHYSICAL_PREREQUISITE.
+
+---
+
+## 36. TC10–TC12 — SLA selection/filtering
+
+Confirmado:
+
+- canonical resolver é pré-requisito;
+- filter domains deverão ser fechados/validados;
+- round_type não será adicionado preventivamente;
+- heterogeneidade deverá ser testada antes de qualquer extensão física.
+
+**Resultado:** PASS_WITH_ARCHITECTURAL_DECISION.
+
+---
+
+## 37. TC13–TC17 — due/calendar/fixed deadline/threshold payloads
+
+Confirmado como pré-requisito físico:
+
+- canonical rule snapshot;
+- nominal due calculator;
+- equality guard;
+- business-calendar arithmetic determinística;
+- fixed-deadline lineage;
+- calendar effective-window;
+- warning/breach/escalation schemas fechados.
+
+Nenhum desses itens recebeu valor numérico.
+
+**Resultado:** PASS_WITH_PHYSICAL_PREREQUISITES.
+
+---
+
+## 38. TC18–TC21 — anti-laundering e external constraints
+
+Confirmado:
+
+- repeated breach não alonga SLA automaticamente;
+- capacity shortage não relaxa need envelope;
+- business calendar não pode mascarar obrigação contínua;
+- prazo externo só domina quando start/end/aplicabilidade/precision são semanticamente compatíveis.
+
+**Resultado:** PASS.
+
+---
+
+## 39. TC20 — Calibration Dossier
+
+Confirmado:
+
+- provenance física estruturada é obrigatória antes de activation normativa;
+- rationale textual isolada é insuficiente;
+- dossier deve ligar basis, UpdateRiskProfile, policy/rule, effective_at, authority e supersession.
+
+**Resultado:** PASS_WITH_PHYSICAL_PREREQUISITE.
+
+---
+
+## 40. TC22–TC24 — currentness, assurance, M3 e automação
+
+Confirmado:
+
+- nenhuma mudança automática em CurrencyState;
+- nenhuma Assurance promotion;
+- nenhum scientific conclusion change;
+- M3 continua bloqueado;
+- scheduler/notifications continuam dependentes de gate próprio mesmo após futura calibração.
+
+**Resultado:** PASS.
+
+---
+
+## 41. Decisão final
+
+A metodologia está suficientemente fechada para orientar a próxima etapa.
+
+Autoriza-se exclusivamente:
+
+> **especificar o contrato físico dos pré-requisitos de calibração temporal.**
+
+Não se autoriza:
+
+- numeric cadence;
+- numeric grace;
+- numeric stale thresholds;
+- numeric SLA durations;
+- real SLA calendars;
+- normative SLARules;
+- migration 032;
+- scheduler;
+- notifications;
+- auto-escalation;
+- M3.
+
+---
+
+## 42. Escopo da próxima especificação física
+
+O contrato físico deverá tratar, no mínimo:
+
+1. Calibration Dossier;
+2. structured calibration basis;
+3. cadence schema/obligation contract;
+4. source-scoped cadence support quando necessário;
+5. canonical SLA rule resolver;
+6. filter-domain validation;
+7. canonical rule snapshot;
+8. nominal due calculator;
+9. business-calendar arithmetic;
+10. fixed-deadline lineage;
+11. calendar effective-window validation;
+12. warning/breach/escalation schemas;
+13. issue/readiness helpers;
+14. test plan;
+15. explicit M3 blocker preservation.
+
+---
+
+## 43. Estado final do gate
+
+> **TEMPORAL_CALIBRATION_METHODOLOGY = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **TEMPORAL_CALIBRATION_PHYSICAL_PREREQUISITES = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **MIGRATION_032 = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+---
+
+## 44. Próximo passo exato
+
+> **Especificar o contrato físico v0.1 dos pré-requisitos de calibração temporal e submetê-lo a novo gate adversarial/físico antes de qualquer migration ou valor normativo.**
+
