@@ -65,7 +65,7 @@ A Fase 4 adota como invariantes:
 1. nenhuma evidência nova altera silenciosamente uma conclusão existente;
 2. mudança científica material exige workflow científico e versionamento do alvo;
 3. a ProductVersion anterior permanece historicamente preservada;
-4. currentness é avaliado para uma versão específica, não para uma identidade abstrata;
+4. currentness canônico via product.currency_state é avaliado para uma ProductVersion específica, não para uma identidade abstrata; InvestigationVersion não recebe CurrencyState artificial;
 5. um evento detectado pode iniciar avaliação sem produzir atualização;
 6. uma mudança de currentness pode ocorrer sem nova ProductVersion científica;
 7. uma nova ProductVersion científica não herda automaticamente assurance da anterior;
@@ -158,13 +158,26 @@ M3 só poderá ser ativado quando houver justificativa documentada para o conjun
 
 Ausência de capacidade operacional bloqueia M3 formal mesmo que o tema seja importante.
 
+A existência deste protocolo, por si só, **não torna operacional o blocker técnico de M3** já existente nas migrations do Monitor. Publicação formal de Monitor M3 continuará bloqueada até que um contrato físico específico da Fase 4:
+
+- represente de forma auditável a política transversal aplicável;
+- defina o gate que demonstra que essa política está operacional;
+- seja implementado por migration controlada;
+- passe por testes específicos, idempotência, rebuild e regressões globais.
+
+Nenhum booleano ou flag de M3 poderá ser simplesmente invertido por documentação.
+
 ---
 
 ## 7. Unidade de entrada: signal de atualização
 
 A unidade inicial do protocolo é um **signal de atualização** rastreável.
 
-Um signal pode surgir de:
+O protocolo distingue duas classes semânticas de signal:
+
+### 7.1 Signal científico/currentness
+
+Pode surgir de:
 
 - Monitoring Cycle;
 - Search/SearchHit;
@@ -174,12 +187,24 @@ Um signal pode surgir de:
 - detecção de correção ou retratação;
 - mudança regulatória fundamentada em evidência;
 - revisão metodológica relevante;
-- demanda explícita de reavaliação;
-- vencimento de cadence ou outra condição temporal prevista.
+- demanda explícita de reavaliação científica.
 
-Signal é somente entrada para avaliação.
+Pode abrir avaliação de materialidade/currentness quando aceito para esse fim.
 
-> **Signal não equivale a mudança científica material.**
+### 7.2 Signal operacional
+
+Pode surgir de:
+
+- vencimento de cadence;
+- ciclo incompleto;
+- falha de cobertura;
+- quebra de SLA futuro;
+- indisponibilidade de fonte;
+- incapacidade operacional para executar o regime M previsto.
+
+Signal operacional exige primeiro avaliação do impacto da lacuna. Ele **não muda currentness automaticamente** e não deve ser tratado como se nova evidência científica tivesse sido encontrada.
+
+> **Signal, científico ou operacional, não equivale a mudança científica material.**
 
 ---
 
@@ -224,7 +249,7 @@ Inclui:
 - falha de cobertura de fonte obrigatória;
 - ausência prolongada de reavaliação quando uma política exigir revisão periódica.
 
-Esses gatilhos não tornam automaticamente o produto outdated.
+Esses gatilhos não tornam automaticamente o produto outdated nem under_evaluation. Primeiro deve ser avaliado se a lacuna operacional compromete materialmente a capacidade de sustentar a avaliação de atualidade.
 
 ### 8.5 Governança/demanda
 
@@ -269,6 +294,15 @@ Esses resultados são científicos/operacionais e não devem ser confundidos com
 
 ## 10. Currentness
 
+Esta state machine aplica-se ao currentness canônico de **ProductVersion** por `product.currency_state`.
+
+Para target que seja somente InvestigationVersion:
+
+- não criar CurrencyState fictício;
+- registrar avaliação/decisão de atualização no mecanismo transversal apropriado;
+- versionar InvestigationVersion quando houver mudança material da investigação;
+- criar nova ProductVersion apenas quando um produto científico correspondente também mudar.
+
 O vocabulário canônico permanece:
 
 - current;
@@ -292,13 +326,21 @@ A versão ainda pode ser utilizável dentro de limites explícitos, mas existe j
 A versão não deve ser tratada como síntese atual adequada para seu uso declarado sem qualificação substancial ou atualização.
 
 **archived**  
-A versão foi retirada do uso corrente por supersessão/arquivamento ou decisão explícita.
+A avaliação de currentness da ProductVersion foi encerrada para uso corrente por supersessão/arquivamento ou decisão explícita.
+
+`currency_status='archived'` permanece distinto de:
+
+- editorial status `archived` da ProductVersion;
+- `core.entity_version.version_status='archived'`;
+- supersessão científica da versão.
+
+Esses estados podem coexistir, mas não devem ser colapsados.
 
 ### 10.2 Regras
 
 1. detecção de signal não altera currentness automaticamente;
 2. mudança de currentness exige assessment registrado;
-3. current → under_evaluation é a transição normal quando um signal não resolvido é aceito;
+3. current → under_evaluation é a transição normal quando um signal científico/currentness, ou uma lacuna operacional materialmente relevante, é explicitamente aceito para avaliação de atualidade;
 4. under_evaluation → current exige conclusão documentada de ausência de impacto material suficiente;
 5. under_evaluation → update_recommended exige decisão documentada de necessidade de atualização;
 6. under_evaluation → outdated exige decisão documentada de inadequação para uso corrente;
@@ -336,9 +378,11 @@ A profundidade da atualização deverá ser proporcional a:
 
 ---
 
-## 12. Relação com ProductVersion e version_change_class
+## 12. Relação com versionamento científico
 
-Mudança científica material deverá ocorrer por nova ProductVersion do alvo e poderá usar as classes já existentes:
+### 12.1 Target ProductVersion
+
+Mudança científica material em produto deverá ocorrer por nova ProductVersion do alvo e poderá usar as classes já existentes em `product.version_change_class`:
 
 - editorial;
 - new_evidence;
@@ -352,7 +396,15 @@ Uma atualização pode possuir múltiplas classes.
 
 Atualização de currentness isolada não exige nova ProductVersion científica.
 
-Mudança de escopo capaz de alterar a Question deverá acionar reroteamento e pode exigir nova Investigation/QuestionVersion, conforme a arquitetura existente.
+### 12.2 Target InvestigationVersion
+
+Quando o target primário for InvestigationVersion, mudança material da investigação deverá ocorrer por nova InvestigationVersion history-preserving.
+
+Se essa mudança alterar um produto científico derivado, o produto correspondente deverá ser versionado separadamente segundo seus próprios gates.
+
+Mudança de escopo capaz de alterar a Question deverá acionar reroteamento e pode exigir nova QuestionVersion/InvestigationVersion, conforme a arquitetura existente.
+
+> **Não criar ProductVersion apenas para simular versionamento de uma Investigation sem produto correspondente.**
 
 ---
 
@@ -375,6 +427,8 @@ Um Monitoring Cycle concluído sem signal material:
 Um Monitoring Cycle incompleto:
 
 > não pode ser usado como evidência de “nenhuma mudança”; deve preservar a incompletude e acionar avaliação do impacto da lacuna quando pertinente.
+
+A incompletude somente deve abrir `under_evaluation` do target ProductVersion quando a análise da lacuna concluir que ela compromete materialmente a sustentação de currentness.
 
 ---
 
@@ -485,7 +539,7 @@ Quando uma nova versão científica é criada:
 1. dependentes potencialmente afetados são identificados;
 2. abre-se avaliação de impacto;
 3. nenhum dependente é modificado automaticamente;
-4. currentness de cada dependente é decidido localmente;
+4. currentness de cada dependente que seja ProductVersion é decidido localmente; InvestigationVersion dependente recebe avaliação de impacto sem CurrencyState artificial;
 5. Monitor ligado à versão anterior deve passar por re-baselining/rebinding explícito se continuar ativo;
 6. ponteiro para target não deve ser regravado silenciosamente;
 7. Alerts relacionados podem ser marcados como incorporados apenas com linkage rastreável.
@@ -559,7 +613,8 @@ O contrato físico da Fase 4 provavelmente precisará representar, de forma adit
 - cadence specification;
 - deadline/SLA instance;
 - propagation/impact assessment;
-- re-baselining de Monitor.
+- re-baselining de Monitor;
+- representação explícita do gate de política M3 operacional, sem hardcode documental.
 
 Esta lista é candidata, não autorização de migration.
 
@@ -592,7 +647,7 @@ Ainda não definidos:
 - scheduler;
 - escolha tecnológica da automação;
 - contrato físico;
-- migration 027;
+- qualquer migration da Fase 4, cuja numeração e escopo somente serão definidos após o contrato físico;
 - UI operacional.
 
 Esses itens dependem da revisão adversarial desta arquitetura.
