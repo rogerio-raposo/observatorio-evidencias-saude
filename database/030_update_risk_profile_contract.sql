@@ -385,6 +385,10 @@ BEGIN
         END IF;
     END IF;
 
+    IF p.assessment_kind='initial' AND NEW.assessment_mode<>'assessed' THEN
+        RAISE EXCEPTION 'Initial profile dimensions must be assessed';
+    END IF;
+
     IF NEW.assessment_mode='carried_forward' THEN
         SELECT * INTO src FROM maintenance.update_risk_profile
          WHERE update_risk_profile_uuid=NEW.source_profile_uuid;
@@ -407,8 +411,6 @@ BEGIN
         IF source_value IS NULL OR source_value<>NEW.value_code THEN
             RAISE EXCEPTION 'Carried dimension value must equal authoritative source value';
         END IF;
-    ELSIF p.assessment_kind='initial' AND NEW.assessment_mode<>'assessed' THEN
-        RAISE EXCEPTION 'Initial profile dimensions must be assessed';
     END IF;
 
     RETURN NEW;
