@@ -2242,3 +2242,38 @@ Próximo passo:
 - próximo passo volta ao nível metodológico/governança;
 - modo alto recomendado para decidir o próximo bloco da Fase 4;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — seleção do próximo sub-bloco pós-CP106
+
+Documento:
+- `docs/governance/45-inventario-pos-cp106-selecao-evidence-readiness-calibracao-temporal.md`.
+
+Decisão:
+> **TEMPORAL_CALIBRATION_TRACK = CONTINUES**
+
+> **NORMATIVE_TEMPORAL_CALIBRATION = BLOCKED_PENDING_REAL_EVIDENCE_READINESS**
+
+> **NEXT_PHASE_4_SUBBLOCK = TEMPORAL_CALIBRATION_EVIDENCE_READINESS**
+
+> **REAL_CALIBRATION_DOSSIER = NOT_YET_AUTHORIZED**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **NO_NEW_MIGRATION = AUTHORIZED**
+
+Dependências preservadas:
+- scheduler permanece dependente de obrigações temporais normativas aprovadas;
+- notifications permanecem dependentes de eventos/thresholds aprovados;
+- auto-escalation permanece não autorizada;
+- M3 formal permanece bloqueado;
+- Fase 5 não iniciada.
+
+Racional:
+- infraestrutura física da calibration v0.1 já está validada;
+- fixtures temporais/operacionais disponíveis são explicitamente sintéticas;
+- não há no estado canônico base real suficiente para sustentar genericamente `sufficient_for_calibration`;
+- casos reais de produtos científicos não equivalem automaticamente a histórico real de MonitorCycle, source latency, SLA operacional, capacity ou calendário institucional.
+
+Próximo passo:
+> **em modo alto, especificar o Protocolo de Evidence Readiness para Calibração Temporal v0.1 e submetê-lo a gate adversarial, ainda sem valores normativos.**
