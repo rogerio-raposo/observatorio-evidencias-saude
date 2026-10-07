@@ -1,0 +1,337 @@
+-- Migration 032 fragment A — temporal calibration core + grandfather registry
+-- Loaded by 032_temporal_calibration_prerequisites.sql inside one transaction.
+
+DO $epoch$
+DECLARE first_install boolean;
+BEGIN
+  SELECT NOT EXISTS (
+    SELECT 1 FROM maintenance.contract_epoch
+    WHERE contract_code='TEMPORAL_CALIBRATION_V01'
+  ) INTO first_install;
+
+  INSERT INTO maintenance.contract_epoch(contract_code,schema_version,effective_at,migration_id)
+  VALUES ('TEMPORAL_CALIBRATION_V01','0.1',CURRENT_TIMESTAMP,'032')
+  ON CONFLICT(contract_code) DO NOTHING;
+
+  CREATE TABLE IF NOT EXISTS maintenance.temporal_contract_grandfathered_object (
+    object_type text NOT NULL CHECK(object_type IN ('update_policy','sla_rule','sla_calendar_version')),
+    object_uuid uuid NOT NULL,
+    grandfathered_at timestamptz NOT NULL,
+    migration_id text NOT NULL CHECK(migration_id='032'),
+    reason_code text NOT NULL CHECK(reason_code='pre_v01_existing_row'),
+    PRIMARY KEY(object_type,object_uuid)
+  );
+
+  IF first_install THEN
+    INSERT INTO maintenance.temporal_contract_grandfathered_object
+      (object_type,object_uuid,grandfathered_at,migration_id,reason_code)
+    SELECT 'update_policy',update_policy_uuid,CURRENT_TIMESTAMP,'032','pre_v01_existing_row'
+    FROM maintenance.update_policy
+    ON CONFLICT DO NOTHING;
+
+    INSERT INTO maintenance.temporal_contract_grandfathered_object
+      (object_type,object_uuid,grandfathered_at,migration_id,reason_code)
+    SELECT 'sla_rule',sla_rule_uuid,CURRENT_TIMESTAMP,'032','pre_v01_existing_row'
+    FROM maintenance.sla_rule
+    ON CONFLICT DO NOTHING;
+
+    INSERT INTO maintenance.temporal_contract_grandfathered_object
+      (object_type,object_uuid,grandfathered_at,migration_id,reason_code)
+    SELECT 'sla_calendar_version',sla_calendar_version_uuid,CURRENT_TIMESTAMP,'032','pre_v01_existing_row'
+    FROM maintenance.sla_calendar_version
+    ON CONFLICT DO NOTHING;
+  END IF;
+END
+$epoch$;
+
+CREATE OR REPLACE FUNCTION maintenance.temporal_object_is_grandfathered(p_type text,p_uuid uuid)
+RETURNS boolean LANGUAGE sql STABLE AS $q$
+SELECT EXISTS(
+  SELECT 1 FROM maintenance.temporal_contract_grandfathered_object g
+  WHERE g.object_type=p_type AND g.object_uuid=p_uuid
+);
+$q$;
+
+CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_dossier (
+  temporal_calibration_dossier_uuid uuid PRIMARY KEY,
+  scope_type text NOT NULL CHECK(scope_type IN ('target','calendar')),
+  calibration_kind text NOT NULL CHECK(calibration_kind IN ('cadence','sla_rule','sla_calendar')),
+  target_product_version_uuid uuid REFERENCES product.product_version(version_uuid),
+  target_investigation_version_uuid uuid REFERENCES investigation.investigation_version(version_uuid),
+  calendar_key text,
+  update_risk_profile_uuid uuid REFERENCES maintenance.update_risk_profile(update_risk_profile_uuid),
+  baseline_update_policy_uuid uuid REFERENCES maintenance.update_policy(update_policy_uuid),
+  clock_code text,
+  data_window_start timestamptz,
+  data_window_end timestamptz,
+  decision_status text NOT NULL DEFAULT 'draft' CHECK(decision_status IN (
+    'draft','approved_for_normative_activation','provisional_requires_reassessment',
+    'capacity_conflict','insufficient_evidence','rejected')),
+  rationale text NOT NULL CHECK(length(btrim(rationale))>0),
+  created_by text NOT NULL CHECK(length(btrim(created_by))>0),
+  actor_type text NOT NULL CHECK(actor_type IN ('human_reviewer','human_expert','owner')),
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  decided_at timestamptz,
+  decision_recorded_by text,
+  decision_actor_type text CHECK(decision_actor_type IN ('human_reviewer','human_expert','owner')),
+  record_status text NOT NULL DEFAULT 'active' CHECK(record_status IN ('active','superseded')),
+  supersedes_temporal_calibration_dossier_uuid uuid
+    REFERENCES maintenance.temporal_calibration_dossier(temporal_calibration_dossier_uuid),
+  CHECK(data_window_end IS NULL OR data_window_start IS NULL OR data_window_end>=data_window_start),
+  CHECK(
+    (scope_type='target'
+      AND num_nonnulls(target_product_version_uuid,target_investigation_version_uuid)=1
+      AND calendar_key IS NULL
+      AND calibration_kind IN ('cadence','sla_rule')
+      AND update_risk_profile_uuid IS NOT NULL
+      AND ((calibration_kind='sla_rule' AND clock_code IS NOT NULL)
+           OR (calibration_kind='cadence' AND clock_code IS NULL)))
+    OR
+    (scope_type='calendar'
+      AND target_product_version_uuid IS NULL AND target_investigation_version_uuid IS NULL
+      AND length(btrim(COALESCE(calendar_key,'')))>0
+      AND calibration_kind='sla_calendar'
+      AND update_risk_profile_uuid IS NULL
+      AND baseline_update_policy_uuid IS NULL
+      AND clock_code IS NULL)
+  ),
+  CHECK(
+    (decision_status='draft' AND decided_at IS NULL AND decision_recorded_by IS NULL AND decision_actor_type IS NULL)
+    OR
+    (decision_status<>'draft' AND decided_at IS NOT NULL AND length(btrim(COALESCE(decision_recorded_by,'')))>0
+      AND decision_actor_type IS NOT NULL)
+  )
+);
+
+CREATE INDEX IF NOT EXISTS ix_temporal_calibration_dossier_target_product
+ ON maintenance.temporal_calibration_dossier(target_product_version_uuid,decision_status,record_status);
+CREATE INDEX IF NOT EXISTS ix_temporal_calibration_dossier_target_inv
+ ON maintenance.temporal_calibration_dossier(target_investigation_version_uuid,decision_status,record_status);
+
+CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_authority (
+  temporal_calibration_dossier_uuid uuid NOT NULL
+    REFERENCES maintenance.temporal_calibration_dossier(temporal_calibration_dossier_uuid),
+  authority_domain text NOT NULL CHECK(authority_domain IN (
+    'scientific_methodological','operational_feasibility','external_applicability')),
+  actor text NOT NULL CHECK(length(btrim(actor))>0),
+  actor_type text NOT NULL CHECK(actor_type IN ('human_reviewer','human_expert','owner')),
+  verification_status text NOT NULL CHECK(verification_status IN ('unverified','human_verified','human_consensus')),
+  verified_by text,
+  verifier_actor_type text CHECK(verifier_actor_type IN ('human_reviewer','human_expert')),
+  verified_at timestamptz,
+  rationale text NOT NULL CHECK(length(btrim(rationale))>0),
+  decided_at timestamptz NOT NULL,
+  PRIMARY KEY(temporal_calibration_dossier_uuid,authority_domain),
+  CHECK(
+    (verification_status='unverified' AND verified_by IS NULL AND verifier_actor_type IS NULL AND verified_at IS NULL)
+    OR
+    (verification_status IN ('human_verified','human_consensus')
+      AND verified_by IS NOT NULL AND verifier_actor_type IS NOT NULL AND verified_at IS NOT NULL)
+  )
+);
+
+CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_basis (
+  temporal_calibration_basis_uuid uuid PRIMARY KEY,
+  temporal_calibration_dossier_uuid uuid NOT NULL
+    REFERENCES maintenance.temporal_calibration_dossier(temporal_calibration_dossier_uuid),
+  envelope_domain text NOT NULL CHECK(envelope_domain IN ('need','source_reality','feasibility','external_constraint')),
+  basis_type text NOT NULL CHECK(basis_type IN (
+    'oes_empirical','source_characteristic','external_normative','methodological_evidence','governance_decision')),
+  basis_role text NOT NULL CHECK(basis_role IN ('supporting','controlling','counterevidence')),
+  artifact_uuid uuid REFERENCES artifact.artifact(artifact_uuid),
+  entity_version_uuid uuid REFERENCES core.entity_version(version_uuid),
+  monitor_cycle_uuid uuid REFERENCES maintenance.monitor_cycle(cycle_uuid),
+  update_signal_uuid uuid REFERENCES maintenance.update_signal(update_signal_uuid),
+  workflow_round_uuid uuid REFERENCES maintenance.workflow_round(workflow_round_uuid),
+  sla_instance_uuid uuid REFERENCES maintenance.sla_instance(sla_instance_uuid),
+  update_risk_profile_uuid uuid REFERENCES maintenance.update_risk_profile(update_risk_profile_uuid),
+  priority_assessment_uuid uuid REFERENCES maintenance.priority_assessment(priority_assessment_uuid),
+  observed_from timestamptz,
+  observed_to timestamptz,
+  basis_payload jsonb NOT NULL DEFAULT '{}'::jsonb CHECK(jsonb_typeof(basis_payload)='object'),
+  rationale text NOT NULL CHECK(length(btrim(rationale))>0),
+  created_by text NOT NULL CHECK(length(btrim(created_by))>0),
+  actor_type text NOT NULL CHECK(actor_type IN ('system','ai_system','human_reviewer','human_expert','owner')),
+  recorded_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CHECK(num_nonnulls(artifact_uuid,entity_version_uuid,monitor_cycle_uuid,update_signal_uuid,
+    workflow_round_uuid,sla_instance_uuid,update_risk_profile_uuid,priority_assessment_uuid)=1),
+  CHECK(observed_to IS NULL OR observed_from IS NULL OR observed_to>=observed_from)
+);
+
+CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_candidate (
+  temporal_calibration_candidate_uuid uuid PRIMARY KEY,
+  temporal_calibration_dossier_uuid uuid NOT NULL
+    REFERENCES maintenance.temporal_calibration_dossier(temporal_calibration_dossier_uuid),
+  candidate_no integer NOT NULL CHECK(candidate_no>0),
+  candidate_kind text NOT NULL CHECK(candidate_kind IN ('cadence','sla_rule','sla_calendar')),
+  candidate_payload jsonb NOT NULL CHECK(jsonb_typeof(candidate_payload)='object'),
+  disposition text NOT NULL CHECK(disposition IN (
+    'considered','dominated','source_ineffective','infeasible','rejected','selected')),
+  rationale text NOT NULL CHECK(length(btrim(rationale))>0),
+  recorded_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(temporal_calibration_dossier_uuid,candidate_no)
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_temporal_calibration_candidate_selected
+ ON maintenance.temporal_calibration_candidate(temporal_calibration_dossier_uuid)
+ WHERE disposition='selected';
+
+CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_evaluation (
+  temporal_calibration_evaluation_uuid uuid PRIMARY KEY,
+  temporal_calibration_candidate_uuid uuid NOT NULL
+    REFERENCES maintenance.temporal_calibration_candidate(temporal_calibration_candidate_uuid),
+  evaluation_type text NOT NULL CHECK(evaluation_type IN (
+    'historical_replay','stress_scenario','sensitivity_analysis','source_latency_analysis','capacity_analysis')),
+  result_status text NOT NULL CHECK(result_status IN (
+    'acceptable','dominated','source_ineffective','infeasible','indeterminate')),
+  metrics_payload jsonb NOT NULL DEFAULT '{}'::jsonb CHECK(jsonb_typeof(metrics_payload)='object'),
+  result_artifact_uuid uuid REFERENCES artifact.artifact(artifact_uuid),
+  rationale text NOT NULL CHECK(length(btrim(rationale))>0),
+  evaluated_at timestamptz NOT NULL
+);
+
+CREATE OR REPLACE FUNCTION maintenance.temporal_candidate_payload_is_valid(p_kind text,p jsonb)
+RETURNS boolean LANGUAGE plpgsql IMMUTABLE AS $fn$
+DECLARE keys text[];
+BEGIN
+  IF jsonb_typeof(p)<>'object' OR p->>'schema_version' IS NULL THEN RETURN false; END IF;
+  SELECT array_agg(key ORDER BY key) INTO keys FROM jsonb_object_keys(p) key;
+  IF p_kind='cadence' THEN
+    RETURN p->>'schema_version'='oes.cadence_candidate/0.1'
+      AND (p->>'cadence_mode') IN ('event_driven','periodic','hybrid')
+      AND jsonb_typeof(p->'obligations')='array'
+      AND (p - ARRAY['schema_version','cadence_mode','effective_at',
+            'governing_monitor_product_version_uuid','obligations'])='{}'::jsonb;
+  ELSIF p_kind='sla_rule' THEN
+    RETURN p->>'schema_version'='oes.sla_rule_candidate/0.1'
+      AND p ? 'clock_code' AND p ? 'selection_precedence'
+      AND p ? 'filters' AND p ? 'endpoint_type' AND p ? 'time_basis'
+      AND (p - ARRAY['schema_version','clock_code','selection_precedence','filters','endpoint_type',
+        'time_basis','target_duration_seconds','sla_calendar_version_uuid','fixed_deadline_source_snapshot',
+        'pause_policy','warning_policy','breach_policy','escalation_policy','effective_at'])='{}'::jsonb;
+  ELSIF p_kind='sla_calendar' THEN
+    RETURN p->>'schema_version'='oes.sla_calendar_candidate/0.1'
+      AND p ? 'calendar_key' AND p ? 'timezone_name' AND p ? 'weekly_schedule'
+      AND p ? 'exception_dates' AND p ? 'effective_from'
+      AND (p - ARRAY['schema_version','calendar_key','timezone_name','weekly_schedule',
+        'exception_dates','effective_from','effective_to'])='{}'::jsonb;
+  END IF;
+  RETURN false;
+END
+$fn$;
+
+CREATE OR REPLACE FUNCTION maintenance.assert_temporal_calibration_candidate()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+BEGIN
+  IF NOT maintenance.temporal_candidate_payload_is_valid(NEW.candidate_kind,NEW.candidate_payload) THEN
+    RAISE EXCEPTION 'Temporal calibration candidate payload invalid';
+  END IF;
+  RETURN NEW;
+END
+$fn$;
+DROP TRIGGER IF EXISTS tr_temporal_calibration_candidate ON maintenance.temporal_calibration_candidate;
+CREATE TRIGGER tr_temporal_calibration_candidate
+BEFORE INSERT ON maintenance.temporal_calibration_candidate
+FOR EACH ROW EXECUTE FUNCTION maintenance.assert_temporal_calibration_candidate();
+
+CREATE OR REPLACE FUNCTION maintenance.assert_temporal_calibration_dossier_complete()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+DECLARE p maintenance.update_risk_profile%ROWTYPE; selected_count integer; external_count integer;
+BEGIN
+  IF NEW.decision_status='draft' THEN RETURN NULL; END IF;
+
+  IF OLD.decision_status<>'draft' AND NEW.decision_status IS DISTINCT FROM OLD.decision_status THEN
+    RAISE EXCEPTION 'Terminal temporal calibration dossier cannot transition';
+  END IF;
+
+  IF NEW.scope_type='target' THEN
+    SELECT * INTO p FROM maintenance.update_risk_profile
+      WHERE update_risk_profile_uuid=NEW.update_risk_profile_uuid;
+    IF NOT FOUND OR p.authority_status<>'authoritative'
+       OR p.target_product_version_uuid IS DISTINCT FROM NEW.target_product_version_uuid
+       OR p.target_investigation_version_uuid IS DISTINCT FROM NEW.target_investigation_version_uuid
+       OR p.assessed_at>NEW.decided_at OR p.effective_at>NEW.decided_at THEN
+      RAISE EXCEPTION 'Approved/terminal target dossier requires temporally valid exact authoritative risk profile';
+    END IF;
+  END IF;
+
+  IF NEW.decision_status='approved_for_normative_activation' THEN
+    IF NEW.scope_type='target' THEN
+      IF NOT EXISTS (SELECT 1 FROM maintenance.temporal_calibration_authority a
+        WHERE a.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+          AND a.authority_domain='scientific_methodological'
+          AND a.actor_type IN ('human_reviewer','human_expert')
+          AND a.verification_status IN ('human_verified','human_consensus')) THEN
+        RAISE EXCEPTION 'Approved target dossier requires scientific/methodological authority';
+      END IF;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM maintenance.temporal_calibration_authority a
+      WHERE a.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND a.authority_domain='operational_feasibility' AND a.actor_type='owner') THEN
+      RAISE EXCEPTION 'Approved dossier requires operational feasibility owner authority';
+    END IF;
+
+    SELECT count(*) INTO external_count FROM maintenance.temporal_calibration_basis b
+      WHERE b.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND b.basis_type='external_normative' AND b.basis_role='controlling';
+    IF external_count>0 AND NOT EXISTS (
+      SELECT 1 FROM maintenance.temporal_calibration_authority a
+      WHERE a.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND a.authority_domain='external_applicability'
+    ) THEN RAISE EXCEPTION 'Controlling external normative basis requires external applicability authority'; END IF;
+
+    SELECT count(*) INTO selected_count FROM maintenance.temporal_calibration_candidate c
+      WHERE c.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND c.disposition='selected'
+        AND c.candidate_kind=NEW.calibration_kind;
+    IF selected_count<>1 THEN RAISE EXCEPTION 'Approved dossier requires exactly one matching selected candidate'; END IF;
+    IF NOT EXISTS (SELECT 1 FROM maintenance.temporal_calibration_evaluation e
+      JOIN maintenance.temporal_calibration_candidate c
+        ON c.temporal_calibration_candidate_uuid=e.temporal_calibration_candidate_uuid
+      WHERE c.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND e.evaluation_type='capacity_analysis') THEN
+      RAISE EXCEPTION 'Approved dossier requires capacity analysis';
+    END IF;
+  ELSIF NEW.decision_status IN ('capacity_conflict','insufficient_evidence','rejected') THEN
+    IF EXISTS (SELECT 1 FROM maintenance.temporal_calibration_candidate c
+      WHERE c.temporal_calibration_dossier_uuid=NEW.temporal_calibration_dossier_uuid
+        AND c.disposition='selected') THEN
+      RAISE EXCEPTION 'Non-approval terminal dossier cannot have selected candidate';
+    END IF;
+  END IF;
+  RETURN NULL;
+END
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_dossier_complete
+ ON maintenance.temporal_calibration_dossier;
+CREATE CONSTRAINT TRIGGER tr_temporal_calibration_dossier_complete
+AFTER INSERT OR UPDATE ON maintenance.temporal_calibration_dossier
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW EXECUTE FUNCTION maintenance.assert_temporal_calibration_dossier_complete();
+
+CREATE OR REPLACE FUNCTION maintenance.guard_temporal_calibration_child_immutable()
+RETURNS trigger LANGUAGE plpgsql AS $fn$
+BEGIN
+  RAISE EXCEPTION 'Temporal calibration child rows are immutable; append a new dossier';
+END
+$fn$;
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_authority_immutable ON maintenance.temporal_calibration_authority;
+CREATE TRIGGER tr_temporal_calibration_authority_immutable
+BEFORE UPDATE OR DELETE ON maintenance.temporal_calibration_authority
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_temporal_calibration_child_immutable();
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_basis_immutable ON maintenance.temporal_calibration_basis;
+CREATE TRIGGER tr_temporal_calibration_basis_immutable
+BEFORE UPDATE OR DELETE ON maintenance.temporal_calibration_basis
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_temporal_calibration_child_immutable();
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_candidate_immutable ON maintenance.temporal_calibration_candidate;
+CREATE TRIGGER tr_temporal_calibration_candidate_immutable
+BEFORE UPDATE OR DELETE ON maintenance.temporal_calibration_candidate
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_temporal_calibration_child_immutable();
+
+DROP TRIGGER IF EXISTS tr_temporal_calibration_evaluation_immutable ON maintenance.temporal_calibration_evaluation;
+CREATE TRIGGER tr_temporal_calibration_evaluation_immutable
+BEFORE UPDATE OR DELETE ON maintenance.temporal_calibration_evaluation
+FOR EACH ROW EXECUTE FUNCTION maintenance.guard_temporal_calibration_child_immutable();
