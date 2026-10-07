@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP90 — 2026-10-07**.
+- checkpoint vigente: **CP92 — 2026-10-07**.
 
 ## 2. Estado das fases
 
@@ -1261,4 +1261,50 @@ Próximo passo exato:
 - contrato físico v0.1 da Fase 4 tecnicamente validado;
 - migration 027 = PASS;
 - retomada movida para perfis de risco operacional/científico.
+
+### Fase 4 — Perfis de risco e política temporal consolidados
+
+Documentos:
+
+- 16 — Perfis de Risco Operacional e Científico para Atualização;
+- 17 — Revisão Adversarial dos Perfis de Risco;
+- 18 — Política Transversal de Cadence e Thresholds Temporais;
+- 19 — Revisão Adversarial da Política Temporal.
+
+Estado:
+
+> **PHASE_4_UPDATE_RISK_PROFILE_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **PHASE_4_CADENCE_TEMPORAL_POLICY = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+Decisões consolidadas:
+
+- risco científico/decisório e capacidade operacional permanecem separados;
+- score agregado aditivo não é autorizado;
+- taxonomia paralela R0–R3 foi rejeitada;
+- recomendação de manutenção usa M0–M3 sem ativação automática;
+- cadence, cobertura, processamento, reassessment de policy/profile e duração da atualização científica permanecem semanticamente separados;
+- M1 periódico não cria Monitoring Cycle por default;
+- M2 periódico usa Monitor governante;
+- overdue/gap são estados operacionais e não mudam currentness automaticamente;
+- M3 formal permanece bloqueado.
+
+Correção de inventário:
+
+- `investigation.method_decision` existe desde a migration 014;
+- permanece distinta de `maintenance.update_decision`;
+- a correção não altera o PASS técnico da migration 027.
+
+Próximo passo exato:
+
+> **Definir a arquitetura transversal de SLA como contratos operacionais entre eventos claramente definidos, sem fixar durações universais antes do gate semântico.**
+
+### CP92 — reconciliação e disciplina de interação
+
+- CP91 reconciliado com o estado documental;
+- README principal e CHANGELOG alinhados aos Documentos 16–19;
+- template canônico atualizado com pausa obrigatória após checkpoints;
+- após cada checkpoint formal, o trabalho deve parar e aguardar instrução explícita do usuário antes do bloco seguinte;
+- nenhuma migration 028 foi criada;
+- nenhum bloco de SLA foi iniciado neste checkpoint.
 
