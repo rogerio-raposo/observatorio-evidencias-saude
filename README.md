@@ -39,6 +39,8 @@ O repositório passa a ser a **fonte canônica do projeto**. As conversas de des
 - [22 — Auditoria Retrospectiva da Fase 4 até CP93](docs/governance/22-auditoria-retrospectiva-fase-4.md)
 - [23 — Gate de Coerência Física Corretivo pós-Auditoria da Fase 4](docs/governance/23-gate-corretivo-coerencia-fisica-fase-4.md)
 - [24 — Resultado da Validação Corretiva pós-Auditoria da Fase 4](docs/governance/24-resultado-validacao-corretiva-fase-4.md)
+- [25 — Arquitetura Transversal de Prioridade e Escalation](docs/governance/25-arquitetura-transversal-prioridade-escalation.md)
+- [26 — Revisão Adversarial da Arquitetura Transversal de Prioridade e Escalation](docs/governance/26-revisao-adversarial-prioridade-escalation.md)
 
 ### Metodologia
 
@@ -204,14 +206,15 @@ Alterações metodológicas relevantes devem:
 
 A **Fase 3 — Produtos do Observatório** está formalmente concluída.
 
-A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui seis blocos consolidados:
+A **Fase 4 — Protocolo de Atualização** está em desenvolvimento e possui sete blocos consolidados:
 
 1. Documentos 05–06 — arquitetura conceitual = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 2. Documentos 07–09 + migrations 027–028 — contrato físico v0.1 = **TECHNICALLY_VALIDATED_AFTER_AUDIT_HARDENING**;
 3. Documentos 16–17 — perfis de risco operacional/científico = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 4. Documentos 18–19 — cadence e thresholds temporais = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
 5. Documentos 20–21 — arquitetura transversal de SLA = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
-6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**.
+6. Documentos 22–24 — auditoria retrospectiva + hardening corretivo = **CLOSED_PASS**;
+7. Documentos 25–26 — prioridade e escalation = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
 
 A correção de inventário de `investigation.method_decision` permanece reconciliada: a tabela existe desde a migration 014 e é distinta de `maintenance.update_decision`.
 
@@ -237,9 +240,22 @@ A run **37576345925** (#143) falhou por erro de desenho do teste P62 e **não** 
 
 Nenhuma nova migration funcional para prioridade/SLA está autorizada neste momento. A migration 028 já existente é apenas o hardening corretivo acima.
 
+Arquitetura de prioridade/escalation consolidada:
+
+- response_class: standard | expedited | urgent | immediate;
+- priority e escalation permanecem eixos distintos;
+- safety/validity usam dominance floors qualitativos;
+- materiality/currentness isolados não determinam prioridade global automaticamente;
+- Alert classification/urgency é input, sem mapping automático;
+- breach é operational pressure modifier;
+- capacity nunca reduz prioridade;
+- auto-escalation permanece não autorizada;
+- score/pesos numéricos não foram definidos;
+- `MIGRATION_029 = NOT_AUTHORIZED`.
+
 Próximo passo exato:
 
-> **Definir a arquitetura transversal de prioridade e escalation, antes de qualquer contrato físico adicional ou duração numérica universal de SLA.**
+> **Definir o contrato de dados integrado do plano operacional da Fase 4 — triage + prioridade/escalation + SLA + milestones mínimos de workflow — sem migration; depois executar gate físico próprio.**
 
 ---
 
