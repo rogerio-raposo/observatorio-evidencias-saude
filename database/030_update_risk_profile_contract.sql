@@ -839,6 +839,13 @@ BEGIN
     IF n<>10 THEN
         RAISE EXCEPTION 'Incomplete UpdateRiskProfile is not serializer-eligible';
     END IF;
+    IF rp.recommended_maintenance_level IS NULL
+       OR rp.recommended_cadence_mode IS NULL
+       OR rp.event_driven_surveillance_required IS NULL
+       OR rp.feasibility_status IS NULL
+       OR rp.priority_implications_payload IS NULL THEN
+        RAISE EXCEPTION 'UpdateRiskProfile outputs incomplete; serializer unavailable';
+    END IF;
 
     SELECT jsonb_build_object(
         'schema_version','oes.update_risk_profile/0.1',
