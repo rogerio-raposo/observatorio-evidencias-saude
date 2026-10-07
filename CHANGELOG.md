@@ -2527,3 +2527,12 @@ Documentos:
 - Projection Readiness = **READY**;
 - migration 023 autorizada para EvidenceMonitorView 0.1;
 - template/Caso Real/Alert/Fase 4 permanecem não autorizados.
+
+
+## 2026-10-06 — CP80
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP80.md`;
+- Projection Readiness Gate 02 = **READY**;
+- migration 023 autorizada para EvidenceMonitorView 0.1;
+- ponteiro de continuidade movido para CP80;
+- retomada: implementação da View + testes + idempotência + rebuild.
