@@ -71,27 +71,29 @@ SELECT pg_temp.assert_true(
     'F4-UP-T04'
 );
 
--- F4-UP-T05 — M3 candidate policy is representable for InvestigationVersion.
+-- F4-UP-T05 — second InvestigationVersion policy is M2 under temporal v0.1.
 SELECT pg_temp.assert_true(
-    (SELECT effective_maintenance_level='M3'
+    (SELECT effective_maintenance_level='M2'
+            AND cadence_mode='periodic'
             AND target_investigation_version_uuid='e5100000-0000-0000-0000-000000000002'
        FROM maintenance.update_policy
       WHERE update_policy_uuid='f4000000-0000-0000-0000-000000000002'),
     'F4-UP-T05'
 );
 
--- F4-UP-T06 — M3 transversal blocker is exposed by the new policy helper.
-SELECT pg_temp.assert_true(
-    EXISTS (
-        SELECT 1
-          FROM maintenance.update_policy_issues(
-            'f4000000-0000-0000-0000-000000000002'
-          )
-         WHERE issue_code='M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL'
-           AND severity='error'
-    ),
-    'F4-UP-T06'
-);
+-- F4-UP-T06 — a new post-032 M3/continuous policy is rejected.
+SELECT pg_temp.expect_error(
+$INSERT INTO maintenance.update_policy(
+ update_policy_uuid,target_investigation_version_uuid,
+ effective_maintenance_level,cadence_mode,
+ governing_monitor_product_version_uuid,effective_at,rationale,created_by,actor_type
+) VALUES (
+ 'f4900000-0000-0000-0000-000000000006',
+ 'e5100000-0000-0000-0000-000000000002',
+ 'M3','continuous','e5100000-0000-0000-0000-000000000007',
+ TIMESTAMPTZ '2026-10-07 00:02:00+00',
+ 'M3 must remain blocked after temporal v0.1','fixture-owner','owner'
+)$,'F4-UP-T06');
 
 -- F4-UP-T07 — existing Monitor M3 publication blocker remains active.
 SELECT pg_temp.assert_true(
@@ -892,9 +894,10 @@ SELECT pg_temp.assert_true(
     'F4-UP-T58'
 );
 
--- F4-UP-T59 — M3 candidate policy cadence is continuous.
+-- F4-UP-T59 — second synthetic policy is periodic under v0.1.
 SELECT pg_temp.assert_true(
-    (SELECT cadence_mode='continuous'
+    (SELECT cadence_mode='periodic'
+            AND cadence_contract_uuid='fc640000-0000-0000-0000-000000000002'
        FROM maintenance.update_policy
       WHERE update_policy_uuid='f4000000-0000-0000-0000-000000000002'),
     'F4-UP-T59'
