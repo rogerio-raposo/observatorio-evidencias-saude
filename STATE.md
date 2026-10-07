@@ -663,3 +663,28 @@ Arquivo:
 Ponto exato de retomada após consolidação do novo checkpoint:
 
 > **Especificação Científica e Funcional do Monitor de Evidências.**
+
+
+### Monitor de Evidências
+
+Documento 165 — **Especificação Científica e Funcional inicial concluída**.
+
+Decisões vigentes:
+
+- Monitor é produto/processo de manutenção, não N5;
+- opera em M2/M3;
+- possui alvo científico rastreável;
+- Monitoring Cycle é distinto de ProductVersion científica;
+- ausência de mudança material não cria automaticamente nova ProductVersion;
+- `product.currency_state` deve ser reutilizado para currentness;
+- mudanças materiais continuam usando versionamento do produto monitorado;
+- Monitor não altera conclusão silenciosamente;
+- Monitor e Alerta de Evidência permanecem distintos;
+- assurance do alvo não valida automaticamente cada ciclo;
+- IA não pode fabricar Search execution, referências ou verificação humana;
+- thresholds temporais/quantitativos gerais permanecem reservados à Fase 4;
+- nenhuma migration está autorizada antes da revisão arquitetural.
+
+Próxima etapa:
+
+> **Revisão de coerência científica e arquitetural do Monitor contra OES-P1, Product/Investigation, Search, provenance, currency_state, version_change_class e fronteira Fase 3 × Fase 4.**
