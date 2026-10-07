@@ -2503,3 +2503,13 @@ Documentos:
 - run 37555588465 (#125) = success;
 - artifact 11453649661;
 - próximo passo: novo Projection Readiness Gate explícito.
+
+
+## 2026-10-06 — CP79
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-06_CP79.md`;
+- migration 022/hardening técnico consolidado em PASS;
+- MON-T01–T32 + MONH-T01–T24 = PASS;
+- run 37555588465 (#125) = success;
+- ponteiro de continuidade movido para CP79;
+- retomada: novo Projection Readiness Gate explícito.
