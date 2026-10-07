@@ -295,3 +295,49 @@ Estado do Caso Real 01:
 - owner governance approval: ausente;
 - expert independent review: ausente;
 - `publishable=false`.
+
+## Fase 4 — Protocolo Transversal de Atualização v0.1
+
+**PASS técnico — 7 de outubro de 2026.**
+
+Migration:
+
+- `027_transversal_update_protocol_contract.sql`
+
+Fixtures/testes:
+
+- `f4-update-protocol-fixtures.sql`;
+- `f4-update-protocol-tests.sql`;
+- F4-UP-T01–T63: **PASS**;
+- F4-UP-IDEM: **PASS**;
+- rebuild through migration 027: **PASS**.
+
+Estruturas aditivas:
+
+- `maintenance.update_policy`;
+- `maintenance.update_signal`;
+- `maintenance.update_signal_source`;
+- `maintenance.materiality_assessment`;
+- `maintenance.materiality_dimension`;
+- `maintenance.update_decision`;
+- `maintenance.update_decision_currency_state`.
+
+GitHub Actions:
+
+- workflow: **OES PoC-S5 PostgreSQL Validation**;
+- run: **37570978847**;
+- HEAD: `d56ea65c024d60c60ec77d1ab4fe9dc7be1c5fa9`;
+- conclusion: **success**;
+- artifact: **11460960487**;
+- digest: `sha256:edbdc9dfd6bbe4cd5c5321d796fa5f912b6e28bea9d39346af70aac18e00875b`.
+
+Limite preservado:
+
+> `M3_TRANSVERSAL_UPDATE_POLICY_NOT_OPERATIONAL` permanece ativo.
+
+A migration 027 não define thresholds, SLA numérico, scheduler, notifications, auto-classification, auto-escalation, propagation automática nem M3 readiness.
+
+Próxima etapa metodológica:
+
+> arquitetura de perfis de risco operacional/científico para parametrizar cadence, thresholds, SLAs e prioridade.
+
