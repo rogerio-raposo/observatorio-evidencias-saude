@@ -3144,3 +3144,22 @@ Documentos:
 - nenhuma migration autorizada;
 - scheduler, notifications, auto-escalation, numeric SLA e M3 unblock permanecem fora do escopo;
 - próximo passo: revisão adversarial do Documento 33.
+
+## 2026-10-07 — Propagation/re-baselining adversarial gate
+
+- criado o Documento 34 — Revisão Adversarial da Arquitetura de Propagação e Re-baselining;
+- primeira passagem = **REVISE**;
+- Documento 33 foi hardenizado em AR-F4-PR01–PR20;
+- maintainable/intermediate targets, missing-policy handling e propagation source adapter foram fechados;
+- cardinalidade candidate/path, cycle/depth guard e lineage validation foram fechados;
+- old/new target chain, planned/activated rebaseline e concurrency foram fechados;
+- cross-target UpdatePolicy lineage permanece separada de same-target supersession;
+- new M2/M3 policy exige novo Monitor ProductVersion current e target coerente;
+- coverage partitions, risk-profile readiness e SLA Rule/Instance handover foram fechados;
+- workflow/priority/escalation históricos permanecem não-retargetáveis;
+- authority domain foi explicitado;
+- recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- `PROPAGATION_REBASELINE_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY`;
+- nenhuma migration foi autorizada;
+- M3 blocker preservado;
+- próximo passo: Contrato Físico v0.1 + novo gate.
