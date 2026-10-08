@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP124 — 2026-10-08**
+**CP125 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP124.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP125.md`
 
 Checkpoint anterior:
 
-`CP123`
+`CP124`
 
 Status:
 
@@ -243,3 +243,5 @@ em **Modo Continuidade**.
 - **CP123 — 2026-10-08:** valida a authority operacional do exact Epoch B1, promove o estado `authorized_non_normative`, adiciona hardening de cronologia via migration 034 e preserva zero MeasurementEvent até a janela de ativação em 2026-10-19.
 
 - **CP124 — 2026-10-08:** valida o activation preflight determinístico do B1; estado atual WAIT antes da janela, PASS apenas entre 08:00 e 09:00 -03 em 19/10 e FAIL/EXPIRED_NOT_EXECUTED a partir da primeira Opportunity; zero mutação.
+
+- **CP125 — 2026-10-08:** contrato do primeiro measurement real especificado; FM-T01–T24 planejados; retomada na implementação sintética em modo médio.
