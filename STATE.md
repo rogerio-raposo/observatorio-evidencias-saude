@@ -3367,3 +3367,70 @@ Next step:
 - next step = explicit owner decision on Phase B preparation / Documento 71 / TOPI-N2-DCBTI-01;
 - generic Prossiga is not authority;
 - mandatory pause preserved.
+
+
+### Fase 4 — Phase B preparation concluída; execution authority pendente
+
+Documentos:
+- `docs/governance/72-registro-authority-preparacao-phase-b-topi-n2-dcbti.md`;
+- `docs/governance/73-resultado-probes-conectividade-preparacao-phase-b-topi-n2-dcbti.md`;
+- `docs/governance/74-resultado-preparacao-phase-b-topi-n2-dcbti.md`;
+- `docs/governance/75-pacote-authority-execucao-phase-b-topi-n2-dcbti.md`.
+
+Estado:
+> **PREPARATION_AUTHORITY = APPROVED_AND_EXECUTED**
+
+> **RUNTIME_CONNECTIVITY = VERIFIED_FOR_B1_INTERFACES**
+
+> **REAL_TOPI_DRAFT_MATERIALIZATION = COMPLETED**
+
+> **TOPI_PREP_TESTS = TOPI_PREP_T01_TO_T30_PASS**
+
+> **OBSERVATION_EPOCH_B1 = DRAFT_FROZEN**
+
+> **DESIGN_FROZEN_AT = 2026-10-08T13:12:23-03:00**
+
+> **PHASE_B_EXECUTION_AUTHORITY = AWAITING_EXPLICIT_OWNER_DECISION**
+
+> **PHASE_B_EXECUTION = NOT_AUTHORIZED**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+Connectivity evidence:
+- run `37806308031` / run 215 = success;
+- PubMed E-utilities = VERIFIED;
+- ClinicalTrials.gov API v2 = VERIFIED;
+- no target-specific query executed;
+- evidence artifact `11563182298`;
+- digest `sha256:7f01b41e7156993c547e936e53d7cf161490d5768b120de5051c4722fd74284f`.
+
+Draft validation:
+- run `37807367640` / run 216 = success;
+- validated HEAD `f1034c439082ffdf3f2fbba345daf00b2e2c4a35`;
+- TOPI-PREP-T01–T30 = PASS;
+- rebuild = PASS;
+- evidence artifact `11563323408`;
+- digest `sha256:3516f2de565655628ab74ecfe5ad0d48fe33658b7ceb9561e61e1802259b12c8`.
+
+Physical identity:
+- Plan UUID `b3100000-0000-0000-0000-000000000001`;
+- Epoch B1 UUID `b3120000-0000-0000-0000-000000000001`;
+- PubMed EpochSource `b3130000-0000-0000-0000-000000000001`;
+- ClinicalTrials.gov EpochSource `b3130000-0000-0000-0000-000000000002`;
+- PubMed opportunities = 8;
+- ClinicalTrials.gov opportunities = 6;
+- BVS/LILACS = deferred source debt.
+
+Execution boundary:
+- Documento 75 awaits explicit owner decision;
+- generic `Prossiga` is not execution authority;
+- no transition to authorized_non_normative;
+- no transition to active;
+- no MeasurementEvent;
+- no OpportunityResolution;
+- no normative temporal values;
+- M3 blocked;
+- Phase 5 not started.
+
+Next step:
+> **await explicit owner decision: APPROVED / REVISE / REJECTED — Phase B execution / Documento 75 / TOPI-N2-DCBTI-01 / Epoch B1.**
