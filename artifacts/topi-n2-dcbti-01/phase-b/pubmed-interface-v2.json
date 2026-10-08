@@ -1,0 +1,31 @@
+{
+  "schema": "oes.topi.runtime_interface/0.2",
+  "source_code": "PUBMED_MEDLINE",
+  "interface_code": "ncbi_eutils",
+  "base_endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+  "measurement_utility": "esearch.fcgi",
+  "http_method": "GET",
+  "normalized_query_parameters": {
+    "db": "pubmed",
+    "term_source_artifact_path": "artifacts/topi-n2-dcbti-01/phase-b/pubmed-query-v1.txt",
+    "retmode": "json",
+    "retmax": 10000
+  },
+  "completeness_contract": {
+    "completed_retrieval_requires": "source count <= 10000 and complete PMID idlist retrieval",
+    "if_source_count_exceeds_10000": "fail_closed_and_record_deviation; do not alter frozen query",
+    "relative_date_filter_allowed": false
+  },
+  "runtime_connectivity_evidence": {
+    "workflow_run_id": 37855302262,
+    "workflow_run_number": 224,
+    "job_id": 113577921135,
+    "probe_endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=pubmed&retmode=json",
+    "status": "verified",
+    "observed_at": "2026-10-08T22:45:40Z"
+  },
+  "target_specific_query_executed_in_probe": false,
+  "supersedes_interface_artifact_path": "artifacts/topi-n2-dcbti-01/phase-b/pubmed-interface-v1.json",
+  "corrective_basis": "Documento 82 / Documento 83",
+  "scientific_query_scope_changed": false
+}
