@@ -4031,3 +4031,23 @@ Documentos:
 - zero OpportunityResolution;
 - next valid operational act is 2026-10-19 between 08:00 and 09:00 -03;
 - pause preserved.
+
+
+## 2026-10-08 — Contrato do primeiro measurement real do B1
+
+### Adicionado
+
+- Documento 78 — contrato operacional do primeiro measurement real e plano de harness sintético pós-activation.
+
+### Decisões
+
+- activation e measurement permanecem eventos distintos;
+- primeira observação bem-sucedida de cada source será baseline acquisition;
+- aggregate inicial usa `novelty_state=not_applicable` e `new_identifier_count=NULL`;
+- `new_to_epoch` não implica scientific novelty;
+- missed Opportunity não gera MeasurementEvent fictício;
+- failure attribution exige base factual e Artifact quando requerido pelo schema;
+- nenhum MeasurementEvent cria UpdateSignal, cadence, SLA, MonitorCycle ou mudança científica automática;
+- schema atual 033b/033c é suficiente; nenhuma migration nova foi autorizada;
+- suite sintética FM-T01–T24 será implementada antes da primeira execução real;
+- harness sintético deve provar não mutação do B1 real.
