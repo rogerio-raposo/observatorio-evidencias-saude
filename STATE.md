@@ -3684,3 +3684,50 @@ Próximo passo:
 - próxima ação = implementação sintética em modo médio;
 - qualquer necessidade de migration/semântica nova retorna a modo alto;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — hardening físico da semântica do primeiro measurement
+
+Documento:
+- `docs/governance/79-hardening-semantica-primeiro-measurement.md`.
+
+Decisão:
+> **FIRST_MEASUREMENT_SEMANTICS_HARDENING = REQUIRED**
+
+> **MIGRATION_036_REQUIRED = YES**
+
+> **FM_T06_AND_FM_T08 = BLOCKED_UNTIL_036**
+
+Escopo de supersessão:
+- Documento 78 permanece vigente como contrato metodológico;
+- Documento 79 supersede apenas a conclusão técnica `NEW_SCHEMA_MIGRATION_REQUIRED = NO`;
+- nova conclusão: `NEW_SCHEMA_MIGRATION_REQUIRED = YES — MIGRATION 036`.
+
+Motivo:
+- schema atual permite `novelty_state=not_applicable` com `new_identifier_count` não-NULL;
+- não existe guard que diferencie primeira successful observation por source de successful observations subsequentes;
+- completed event não é obrigado hoje a usar `failure_attribution=not_applicable`.
+
+Hardening definido:
+- baseline aggregate é source-specific;
+- primeiro completed event por epoch_source exige `novelty_state=not_applicable`, `new_identifier_count=NULL`, `failure_attribution=not_applicable`;
+- completed events subsequentes da mesma source não podem usar `not_applicable`;
+- partial/failed/indeterminate não estabelecem successful baseline;
+- implementation deve ser aditiva em migration 036;
+- migrations 033–035 não serão reescritas.
+
+Estado real preservado:
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **started_at = NULL**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+Próximo passo:
+> **após checkpoint, modo médio: implementar migration 036 + FM-T01–T24 + integração S5 + idempotência/rebuild/regressões.**
