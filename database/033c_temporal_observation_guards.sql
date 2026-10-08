@@ -325,10 +325,16 @@ CREATE OR REPLACE FUNCTION maintenance.assert_temporal_opportunity_insert()
 RETURNS trigger LANGUAGE plpgsql AS $fn$
 DECLARE e maintenance.temporal_observation_epoch%ROWTYPE; payload jsonb; expected_ts timestamptz;
 BEGIN
-  SELECT ep.*,es.measurement_schedule_payload INTO e,payload
-  FROM maintenance.temporal_observation_epoch_source es JOIN maintenance.temporal_observation_epoch ep USING(observation_epoch_uuid)
+  SELECT ep.* INTO e
+  FROM maintenance.temporal_observation_epoch_source es
+  JOIN maintenance.temporal_observation_epoch ep USING(observation_epoch_uuid)
   WHERE es.epoch_source_uuid=NEW.epoch_source_uuid;
-  IF e.observation_epoch_uuid IS NULL THEN RAISE EXCEPTION 'epoch source missing'; END IF;
+
+  SELECT es.measurement_schedule_payload INTO payload
+  FROM maintenance.temporal_observation_epoch_source es
+  WHERE es.epoch_source_uuid=NEW.epoch_source_uuid;
+
+  IF e.observation_epoch_uuid IS NULL OR payload IS NULL THEN RAISE EXCEPTION 'epoch source missing'; END IF;
   IF e.epoch_status<>'draft' THEN RAISE EXCEPTION 'opportunities may be materialized only while epoch is draft'; END IF;
   IF NOT maintenance.temporal_target_is_current(e.observation_plan_uuid) THEN RAISE EXCEPTION 'target drift blocks opportunity materialization'; END IF;
   SELECT (x->>'planned_for')::timestamptz INTO expected_ts FROM jsonb_array_elements(payload->'opportunities') x
