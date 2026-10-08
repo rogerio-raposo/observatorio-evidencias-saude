@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP126 — 2026-10-08**
+**CP127 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP126.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP127.md`
 
 Checkpoint anterior:
 
-`CP125`
+`CP126`
 
 Status:
 
@@ -247,3 +247,5 @@ em **Modo Continuidade**.
 - **CP125 — 2026-10-08:** contrato do primeiro measurement real especificado; FM-T01–T24 planejados; retomada na implementação sintética em modo médio.
 
 - **CP126 — 2026-10-08:** hardening da semântica do primeiro measurement definido; migration 036 requerida; implementação pendente em modo médio.
+
+- **CP127 — 2026-10-08:** migration 036 + FM-T01–T24 validados; B1 intacto; próximo ato irreversível continua na janela de 19/10.
