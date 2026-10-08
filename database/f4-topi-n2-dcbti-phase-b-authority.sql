@@ -15,13 +15,10 @@ BEGIN
     RAISE EXCEPTION 'TOPI B1 target is not current';
   END IF;
 
-  SELECT epoch_status
-  INTO STRICT frozen_at
-  FROM (
-    SELECT maintenance.temporal_observation_design_frozen_at(
-      'b3120000-0000-0000-0000-000000000001'
-    ) AS epoch_status
-  ) s;
+  SELECT maintenance.temporal_observation_design_frozen_at(
+    'b3120000-0000-0000-0000-000000000001'
+  )
+  INTO frozen_at;
 
   IF frozen_at IS DISTINCT FROM TIMESTAMPTZ '2026-10-08 13:12:23-03' THEN
     RAISE EXCEPTION 'unexpected B1 design_frozen_at: %',frozen_at;
@@ -112,11 +109,17 @@ SET epoch_status='authorized_non_normative'
 WHERE observation_epoch_uuid='b3120000-0000-0000-0000-000000000001'
   AND epoch_status='draft';
 
-DO $$
+DO $
 BEGIN
-  IF NOT FOUND THEN
+  IF NOT EXISTS(
+    SELECT 1
+    FROM maintenance.temporal_observation_epoch
+    WHERE observation_epoch_uuid='b3120000-0000-0000-0000-000000000001'
+      AND epoch_status='authorized_non_normative'
+      AND started_at IS NULL
+  ) THEN
     RAISE EXCEPTION 'B1 draft -> authorized_non_normative transition did not occur';
   END IF;
-END $$;
+END $;
 
 COMMIT;
