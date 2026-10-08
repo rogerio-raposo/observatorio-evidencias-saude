@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP127 — 2026-10-08**
+**CP128 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP127.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP128.md`
 
 Checkpoint anterior:
 
-`CP126`
+`CP127`
 
 Status:
 
@@ -249,3 +249,5 @@ em **Modo Continuidade**.
 - **CP126 — 2026-10-08:** hardening da semântica do primeiro measurement definido; migration 036 requerida; implementação pendente em modo médio.
 
 - **CP127 — 2026-10-08:** migration 036 + FM-T01–T24 validados; B1 intacto; próximo ato irreversível continua na janela de 19/10.
+
+- **CP128 — 2026-10-08:** pre-execution readiness PASS; retenção S5 estendida a 60 dias; aguardar janela de 19/10.
