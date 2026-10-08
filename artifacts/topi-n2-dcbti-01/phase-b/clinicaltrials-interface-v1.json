@@ -1,0 +1,18 @@
+{
+  "schema": "oes.topi.runtime_interface/0.1",
+  "source_code": "CLINICALTRIALS_GOV",
+  "interface_code": "clinicaltrials_api_v2",
+  "base_endpoint": "https://clinicaltrials.gov/api/v2/",
+  "measurement_endpoint": "studies",
+  "query_parameter_semantics": "query.cond/query.term to preserve the frozen dCBT-I insomnia scope; exact request string must match this artifact at execution",
+  "format": "json",
+  "runtime_connectivity_evidence": {
+    "workflow_run_id": 37806308031,
+    "job_id": 113411379827,
+    "probe_endpoint": "https://clinicaltrials.gov/api/v2/version",
+    "status": "verified",
+    "api_version_observed": "2.0.5",
+    "observed_at": "2026-10-08T16:07:49Z"
+  },
+  "target_specific_query_executed_in_probe": false
+}
