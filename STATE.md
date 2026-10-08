@@ -2547,3 +2547,61 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: decidir em modo alto entre plano transversal reutilizável + instância piloto e plano inicialmente target-specific;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — arquitetura de aquisição de evidência temporal não normativa
+
+Documentos:
+- `docs/governance/51-arquitetura-aquisicao-evidencia-temporal-nao-normativa-v01.md`;
+- `docs/governance/52-gate-adversarial-arquitetura-aquisicao-evidencia-temporal.md`;
+- `docs/governance/53-recheck-final-arquitetura-aquisicao-evidencia-temporal.md`.
+
+Decisão:
+> **TEMPORAL_EVIDENCE_ACQUISITION_ARCHITECTURE = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **ARCHITECTURE_CHOICE = REUSABLE_TRANSVERSAL_PROTOCOL_PLUS_TARGET_INSTANCE**
+
+> **FIRST_OBSERVATION_INSTANCE = AUTHORIZED_FOR_SELECTION_AND_SPECIFICATION_ONLY**
+
+> **REAL_PROSPECTIVE_OBSERVATION = NOT_AUTHORIZED**
+
+Arquitetura:
+- protocolo transversal reutilizável;
+- instância target/source-specific;
+- Observation Epoch versionado;
+- measurement schedule explicitamente não normativo;
+- M1 pilot não é Monitor;
+- Search só pode registrar Search semanticamente real;
+- pre-calibration measurement não é CadenceObservation;
+- semantic storage mapping obrigatório;
+- latency endpoints e precision explícitos;
+- candidate source universe separado de production-search sources;
+- authority humana explícita exigida para execução;
+- outcome de measurement event multidimensional;
+- pilot effort separado de sustainable capacity;
+- drift partitioning;
+- Result Package deve retornar a novo Evidence Readiness antes de Calibration Dossier;
+- physical contract novo apenas se houver lacuna material comprovada.
+
+Gate:
+- Documento 52 first pass = **REVISE**;
+- Documento 51 hardenizado;
+- Documento 53 recheck = **PASS_WITH_ARCHITECTURAL_DECISIONS**.
+
+Estado físico:
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = DEFERRED_PENDING_INSTANCE_NEED**
+
+Restrições:
+- nenhum source check real autorizado;
+- nenhuma measurement schedule em execução;
+- nenhum UpdateRiskProfile aprovado fabricado;
+- nenhum Calibration Dossier;
+- nenhum valor temporal normativo;
+- nenhum novo migration;
+- scheduler/notifications deferidos;
+- auto-escalation não autorizada;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, selecionar entre N1-01 e N2/dCBT-I o primeiro exact target da Temporal Observation Plan Instance e especificar a instância completa, sem executar observação real.**
