@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP128 — 2026-10-08**.
+- checkpoint vigente: **CP129 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -3938,3 +3938,24 @@ Enquanto não houver essa decisão:
 > **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
 
 > **PHASE_5 = NOT_STARTED**
+
+
+### CP129 — ClinicalTrials request freeze defect / corrective authority required
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP129.md`;
+- Documento 82 = CORRECTIVE_PREPARATION_AUTHORITY_REQUIRED;
+- current B1 = authorized_non_normative but governance-blocked;
+- current B1 activation = PROHIBITED;
+- CP128 global readiness claim superseded for execution readiness;
+- exact ClinicalTrials.gov request parameterization was not actually frozen before EpochSource materialization;
+- selected corrective architecture = replacement Epoch `B1R1` under Plan v2;
+- candidate normalized mapping = `query.cond=insomnia` + `query.term=(digital CBT OR digital CBT-I OR internet CBT-I)`;
+- same boundaries and same 14 timestamps must be preserved;
+- current B1 has not been invalidated;
+- B1R1 has not been created;
+- corrective preparation authority = REQUIRED;
+- authority from Documento 75 does not transfer to B1R1;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- next action = await explicit owner corrective preparation decision;
+- mandatory pause preserved.
