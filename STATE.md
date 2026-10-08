@@ -4409,3 +4409,44 @@ Estado atual:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — pacote operacional do dia 19 validado
+
+Documento:
+- `docs/governance/92-pacote-operacional-dia-19-b1r1.md`.
+
+Read-only live preflight capture:
+- `database/f4-topi-n2-dcbti-b1r1-live-preflight-readonly.sql`;
+- transaction mode = READ ONLY;
+- termina em ROLLBACK;
+- sem mutation de Epoch/Event/Resolution.
+
+Resultado:
+> **DAY_19_OPERATOR_PACKET = READY**
+
+> **LIVE_PREFLIGHT_CAPTURE_SQL = READY_READ_ONLY**
+
+> **LIVE_PREFLIGHT_CAPTURE_MUTATION = ZERO_BY_CONSTRUCTION_AND_CI_PROOF**
+
+CI:
+- run 233 / `37861733122` = success;
+- validated HEAD `8e2659ee425c0decde9915b5e43f9efd592692ef`;
+- artifact `11586227719`;
+- digest `sha256:7e10af6697bd692cf8e078e2916de03f5b4f0a2b25f71e7eebab4c78529b6957`;
+- expiry `2026-12-07T23:52:17Z`;
+- TOPI-B1R1-LIVE-PREFLIGHT-READONLY = PASS;
+- rebuild = PASS.
+
+Estado real preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
