@@ -3014,3 +3014,22 @@ Próximo passo:
 
 Modo:
 > **modo médio suficiente para implementação mecânica dentro do boundary aprovado; retornar ao modo alto se surgir nova decisão arquitetural/schema/lifecycle.**
+
+
+### CP117 — autorização da migration 033
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP117.md`;
+- ponteiro movido para CP117;
+- migration 033 = **AUTHORIZED_FOR_IMPLEMENTATION**;
+- boundary = infrastructure-only / synthetic-tests-only / zero-real-seed;
+- master + fragments 033a–033e autorizados;
+- fixtures/smoke/full tests autorizados;
+- integração no `validate-s5.yml` autorizada;
+- maintenance.contract_epoch não será reutilizado;
+- measurement schedule continua NOT_SELECTED;
+- Phase B authority/execution continuam não autorizadas;
+- nenhum normative temporal value autorizado;
+- M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: implementação técnica da 033 em modo médio;
+- pausa obrigatória preservada.
