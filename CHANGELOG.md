@@ -4338,3 +4338,15 @@ Documentos:
 - nenhuma nova migration/schema/authority criada;
 - B1R1 permanece authorized_non_normative, started_at NULL;
 - zero MeasurementEvent e zero OpportunityResolution preservados.
+
+
+## 2026-10-08 — CP134
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP134.md`;
+- ponteiro movido para CP134;
+- Documento 90 promovido como decision tables de contingência do B1R1;
+- nenhuma expansão de schema/migration/authority;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- activation continua pendente da janela de 19/10;
+- pausa obrigatória preservada.
