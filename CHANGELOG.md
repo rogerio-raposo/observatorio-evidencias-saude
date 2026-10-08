@@ -4073,3 +4073,19 @@ Documentos:
 - completed events subsequentes não poderão usar `novelty_state=not_applicable`;
 - migrations 033–035 não serão reescritas;
 - B1 permanece sem MeasurementEvent e sem OpportunityResolution.
+
+
+## 2026-10-08 — CP126
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP126.md`;
+- ponteiro movido para CP126;
+- Documento 79 promovido como decisão arquitetural;
+- contrato metodológico do Documento 78 preservado;
+- conclusão técnica de ausência de migration nova supersedida;
+- migration 036 requerida para hardening da baseline aggregate source-specific;
+- FM-T06/FM-T08 permanecem bloqueados até implementação;
+- B1 continua authorized_non_normative com started_at NULL;
+- zero MeasurementEvent;
+- zero OpportunityResolution;
+- próximo passo em modo médio;
+- pausa obrigatória preservada.
