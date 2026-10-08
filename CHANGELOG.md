@@ -4124,3 +4124,22 @@ Documentos:
 - nenhuma execução real de source;
 - próximo ato irreversível permanece na janela de activation de 19/10;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Auditoria de readiness pré-execução do B1
+
+- Documento 81 criado;
+- pacote frozen de Plan/design/source/query/interface/schedule verificado;
+- activation path = READY;
+- first-measurement path = READY;
+- migration 036 + FM-T01–T24 + idempotência + rebuild permanecem PASS;
+- BVS/LILACS permanece deferred source debt;
+- nenhum schedule/cron de activation existe;
+- detectado gap de retenção: artifacts S5 de 30 dias expirariam antes do review boundary de 10/11;
+- `.github/workflows/validate-s5.yml` alterado para `retention-days: 60`;
+- run 223 / `37830560002` = success;
+- artifact de longa retenção `11573131877`;
+- digest `sha256:8eb1763d0b21a06628766a89c26019a7e1e8eb2beaa549ae8616b63f4dc1247d`;
+- expiry `2026-12-07T19:16:09Z`, cobrindo o review boundary;
+- B1 permanece authorized_non_normative, started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
+- nenhum source query real executado.
