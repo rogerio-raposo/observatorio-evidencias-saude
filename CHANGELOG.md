@@ -4361,3 +4361,16 @@ Documentos:
 - activation SQL e Artifact factual continuam não criados antecipadamente;
 - B1R1 permanece authorized_non_normative, started_at NULL;
 - zero MeasurementEvent e zero OpportunityResolution preservados.
+
+
+## 2026-10-08 — CP135
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP135.md`;
+- ponteiro movido para CP135;
+- Documento 91 promovido como runbook operacional corrente de live activation do B1R1;
+- Documento 77 preservado como histórico;
+- nenhum activation Artifact ou SQL factual criado antecipadamente;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- activation continua pendente da janela de 19/10 em modo alto;
+- pausa obrigatória preservada.
