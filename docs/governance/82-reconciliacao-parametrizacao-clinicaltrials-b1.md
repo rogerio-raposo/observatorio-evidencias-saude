@@ -91,6 +91,13 @@ Para paginação, NLM documenta:
 - default = 10;
 - uso de `pageToken` para obter o conjunto completo quando houver mais resultados que o pageSize.
 
+Locators oficiais consultados:
+
+- ClinicalTrials.gov search surface: `https://clinicaltrials.gov/`;
+- NLM Technical Bulletin — ClinicalTrials.gov API: `https://www.nlm.nih.gov/pubs/techbull/ja25/ja25_clinical_trials_screen-scraping.html`;
+- ClinicalTrials.gov API migration guide: `https://clinicaltrials.gov/data-api/about-api/api-migration`;
+- NCBI E-utilities ESearch reference: `https://www.ncbi.nlm.nih.gov/books/NBK25499/`.
+
 Nenhuma query target-specific foi executada para esta decisão.
 
 ## 5. Query lógica congelada
