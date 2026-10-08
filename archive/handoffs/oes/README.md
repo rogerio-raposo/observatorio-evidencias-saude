@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP114 — 2026-10-07**
+**CP115 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP114.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP115.md`
 
 Checkpoint anterior:
 
-`CP113`
+`CP114`
 
 Status:
 
@@ -223,3 +223,5 @@ em **Modo Continuidade**.
 - **CP113 — 2026-10-07:** seleciona N2/dCBT-I para a TOPI-N2-DCBTI-01, fecha a especificação e o gate target-specific em PASS_FOR_AUTHORITY_REQUEST_ONLY e aguarda decisão explícita do Documento 56 para executar somente a Phase A.
 
 - **CP114 — 2026-10-07:** registra a approval explícita da Phase A e conclui a characterization da TOPI-N2-DCBTI-01; PubMed e ClinicalTrials.gov ficam aptos para desenho de Phase B com controles, BVS/LILACS permanece parcial, measurement schedule não selecionada e Phase B não autorizada.
+
+- **CP115 — 2026-10-07:** fecha o Plan Amendment v0.2 da TOPI-N2-DCBTI-01; inclui PubMed e ClinicalTrials.gov como candidates da Phase B, mantém BVS/LILACS como deferred source debt e confirma lacuna física que exige specification de event layer não normativo antes de schedule, authority ou migration.
