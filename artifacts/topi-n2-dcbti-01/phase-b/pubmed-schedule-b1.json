@@ -1,0 +1,17 @@
+{
+  "schema": "oes.temporal_opportunity_set/0.1",
+  "non_normative": true,
+  "schedule_kind": "finite_opportunity_set",
+  "rationale": "Finite stepped PubMed measurement design for repeated-source execution, identifier comparison, temporal endpoint observability and pilot effort.",
+  "timezone_name": "America/Recife",
+  "opportunities": [
+    {"opportunity_no": 1, "planned_for": "2026-10-19T09:00:00-03:00"},
+    {"opportunity_no": 2, "planned_for": "2026-10-20T09:00:00-03:00"},
+    {"opportunity_no": 3, "planned_for": "2026-10-22T09:00:00-03:00"},
+    {"opportunity_no": 4, "planned_for": "2026-10-26T09:00:00-03:00"},
+    {"opportunity_no": 5, "planned_for": "2026-10-29T09:00:00-03:00"},
+    {"opportunity_no": 6, "planned_for": "2026-11-03T09:00:00-03:00"},
+    {"opportunity_no": 7, "planned_for": "2026-11-06T09:00:00-03:00"},
+    {"opportunity_no": 8, "planned_for": "2026-11-09T09:00:00-03:00"}
+  ]
+}
