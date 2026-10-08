@@ -3867,3 +3867,17 @@ Documentos:
 - migration 033 promovida somente como infraestrutura não normativa;
 - TOPI real, measurement schedule real e Phase B continuam não autorizados;
 - próximo passo exige modo alto para desenho experimental da Phase B.
+
+
+## 2026-10-08 — CP120
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP120.md`;
+- ponteiro movido para CP120;
+- migration 033 tecnicamente validada/promovida somente como infraestrutura não normativa;
+- TNO-T01–T100, idempotência, rebuild e regressões = PASS;
+- CI canônica promovida: run 37802083791 / run number 214;
+- evidence artifact 11560209688;
+- digest sha256:fc2909171dfa16f94cccae8cc5bd739b11c6091c4b04bb3ad78136af4ecd0c6b;
+- TOPI real, schedule real e Phase B continuam não autorizados;
+- próximo passo: desenho experimental da Phase B em modo alto;
+- pausa obrigatória preservada.
