@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 8 de outubro de 2026  
-**Status:** **AWAITING_EXPLICIT_OWNER_DECISION**  
+**Status:** **APPROVED — OWNER DECISION RECORDED**  
 **Dependências:** Documentos 69–74  
 **Instância:** TOPI-N2-DCBTI-01  
 **Epoch:** B1  
@@ -308,3 +308,47 @@ Mensagem genérica como:
 > **PHASE_5 = NOT_STARTED**
 
 **Fim do Documento 75**
+
+
+## 14. Registro da decisão do owner
+
+Decisão recebida em:
+
+`2026-10-08T13:31:42-03:00`
+
+Formulação recebida:
+
+> **APPROVED — Phase B execution / Documento 75 / TOPI-N2-DCBTI-01 / Epoch B1**
+
+A decisão satisfaz o vínculo explícito exigido por este pacote.
+
+Design freeze controlador:
+
+`2026-10-08T13:12:23-03:00`
+
+Resultado de freshness temporal:
+
+> **OWNER_DECISION_AFTER_DESIGN_FREEZE = PASS**
+
+Escopo autorizado:
+
+- persistir authority `operational_execution` para o exact Plan/Epoch;
+- transicionar `draft → authorized_non_normative`, sujeito aos guards físicos;
+- permitir futura ativação somente quando as preconditions temporais e operacionais forem satisfeitas.
+
+A decisão não autoriza:
+
+- ativação antecipada antes do start boundary;
+- criação imediata de MeasurementEvent;
+- alteração do frozen opportunity set;
+- valores temporais normativos.
+
+Estado após este registro documental:
+
+> **PHASE_B_EXECUTION_AUTHORITY_DECISION = APPROVED**
+
+> **PHYSICAL_AUTHORITY_ROW = PENDING_VALIDATION**
+
+> **EPOCH_B1_PHYSICAL_STATE = DRAFT**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
