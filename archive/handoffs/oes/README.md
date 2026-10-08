@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP112 — 2026-10-07**
+**CP113 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP112.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP113.md`
 
 Checkpoint anterior:
 
-`CP111`
+`CP112`
 
 Status:
 
@@ -219,3 +219,5 @@ em **Modo Continuidade**.
 - **CP111 — 2026-10-07:** consolida o segundo Evidence Readiness Assessment real no N2/dCBT-I, confirma `INSUFFICIENT_EVIDENCE`, identifica blockers temporais recorrentes em N1/N2 e retoma na decisão entre plano transversal reutilizável e plano target-specific de aquisição temporal não normativa.
 
 - **CP112 — 2026-10-07:** fecha a arquitetura de aquisição de evidência temporal não normativa em PASS_WITH_ARCHITECTURAL_DECISIONS; adota protocolo transversal reutilizável + instância target-specific e retoma na seleção/especificação do primeiro piloto, ainda sem execução real.
+
+- **CP113 — 2026-10-07:** seleciona N2/dCBT-I para a TOPI-N2-DCBTI-01, fecha a especificação e o gate target-specific em PASS_FOR_AUTHORITY_REQUEST_ONLY e aguarda decisão explícita do Documento 56 para executar somente a Phase A.
