@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP121 — 2026-10-08**
+**CP122 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP121.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP122.md`
 
 Checkpoint anterior:
 
-`CP120`
+`CP121`
 
 Status:
 
@@ -237,3 +237,5 @@ em **Modo Continuidade**.
 - **CP120 — 2026-10-08:** promove tecnicamente a migration 033 como infraestrutura não normativa após TNO-T01–T100, idempotência, regressões e rebuild PASS; TOPI real, schedule real e Phase B continuam não autorizados.
 
 - **CP121 — 2026-10-08:** fecha o desenho experimental finito da Phase B da TOPI-N2-DCBTI-01 e abre somente o gate explícito de authority para preparation; nenhum probe, materialização real ou measurement autorizado.
+
+- **CP122 — 2026-10-08:** registra preparation PASS da TOPI-N2-DCBTI-01, B1 fisicamente congelado em draft e abre exclusivamente o Documento 75 para decisão explícita de Phase B execution authority; zero MeasurementEvent.
