@@ -3921,3 +3921,28 @@ Documentos:
 - nenhum measurement executado;
 - nenhum normative temporal value autorizado;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — TOPI Phase B preparation PASS
+
+- owner explicitly approved Phase B preparation under Documento 71;
+- Documento 72 records preparation authority;
+- run 215 / `37806308031` verified PubMed E-utilities and ClinicalTrials.gov API v2 connectivity without target-specific query;
+- connectivity artifact `11563182298`, digest `sha256:7f01b41e7156993c547e936e53d7cf161490d5768b120de5051c4722fd74284f`;
+- Documento 73 records connectivity PASS;
+- controlling plan/source/query/interface/schedule Artifacts frozen with git blob hashes;
+- real TOPI-N2-DCBTI-01 Plan v2 and Epoch B1 materialized in draft;
+- PubMed = 8 Opportunities;
+- ClinicalTrials.gov = 6 Opportunities;
+- BVS/LILACS = deferred source debt;
+- design_frozen_at = `2026-10-08T13:12:23-03:00`;
+- run 216 / `37807367640` = success;
+- TOPI-PREP-T01–T30 = PASS;
+- rebuild reproducibility = PASS;
+- run216 evidence artifact `11563323408`, digest `sha256:3516f2de565655628ab74ecfe5ad0d48fe33658b7ceb9561e61e1802259b12c8`;
+- zero operational execution authority rows;
+- zero MeasurementEvent;
+- Documento 74 records preparation PASS;
+- Documento 75 opens exact Phase B execution authority decision;
+- Phase B execution remains NOT_AUTHORIZED;
+- no normative temporal values authorized.
