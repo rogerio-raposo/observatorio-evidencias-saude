@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP119 — 2026-10-08**
+**CP120 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP119.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP120.md`
 
 Checkpoint anterior:
 
-`CP118`
+`CP119`
 
 Status:
 
@@ -233,3 +233,5 @@ em **Modo Continuidade**.
 - **CP118 — 2026-10-08:** registra a implementação parcial da migration 033 e bloqueia o coding antes de 033d/033e por uma decisão de schema sobre como persistir/validar o finite frozen opportunity set; requer retomada em modo alto.
 
 - **CP119 — 2026-10-08:** resolve o blocker do frozen opportunity set usando measurement_schedule_payload como snapshot canônico, Artifact como provenance-only e materialização de Opportunities em draft; autoriza retomada da migration 033 em modo médio.
+
+- **CP120 — 2026-10-08:** promove tecnicamente a migration 033 como infraestrutura não normativa após TNO-T01–T100, idempotência, regressões e rebuild PASS; TOPI real, schedule real e Phase B continuam não autorizados.
