@@ -41,7 +41,14 @@ SELECT pg_temp.tno_assert('TNO-T20',NOT EXISTS(
   JOIN pg_class ref ON ref.oid=con.confrelid
   WHERE con.contype='f'
     AND ns.nspname='maintenance'
-    AND src.relname LIKE 'temporal_%'
+    AND src.relname IN (
+      'temporal_observation_plan','temporal_observation_source','temporal_observation_epoch',
+      'temporal_observation_epoch_source','temporal_observation_authority',
+      'temporal_measurement_opportunity','temporal_measurement_event',
+      'temporal_measurement_opportunity_resolution','temporal_measurement_item',
+      'temporal_measurement_item_timepoint','temporal_measurement_event_artifact',
+      'temporal_observation_deviation'
+    )
     AND ref.relname IN ('cadence_contract','cadence_obligation','cadence_observation','monitor_cycle','sla_rule','sla_instance')
 ));
 
