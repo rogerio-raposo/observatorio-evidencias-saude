@@ -4134,3 +4134,53 @@ Next irreversible act:
 - M3 remains blocked;
 - Phase 5 not started;
 - mandatory pause preserved.
+
+
+### Fase 4 — runbook operacional das medições reais do B1R1 concluído
+
+Documento:
+- `docs/governance/88-runbook-operacional-medicoes-reais-b1r1.md`.
+
+Resultado:
+> **B1R1_REAL_MEASUREMENT_RUNBOOK = READY**
+
+Escopo coberto:
+- preflight imediato por Opportunity;
+- request PubMed congelada;
+- request ClinicalTrials.gov congelada;
+- completude/paginação;
+- baseline semantics source-specific;
+- raw/materialized/new counts;
+- MeasurementItem/item_state;
+- timepoints;
+- execution Artifacts;
+- failure attribution;
+- execution status;
+- retries;
+- OpportunityResolution;
+- deviations;
+- effort payload;
+- transação/pós-validação;
+- anti-backfill;
+- clock discipline;
+- scientific triage boundary;
+- primeira Opportunity PubMed e ClinicalTrials.gov.
+
+Nenhuma mudança metodológica/schema:
+> **NEW_ARCHITECTURAL_DECISION = NO**
+
+> **NEW_MIGRATION_REQUIRED = NO**
+
+Estado operacional preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+Próximo ato irreversível:
+> **19/10/2026, 08:00–09:00 -03: live activation preflight do B1R1 em modo alto.**
