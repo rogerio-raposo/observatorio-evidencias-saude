@@ -3649,3 +3649,20 @@ Documentos:
 - próximo passo: decisão explícita APPROVED / REVISE / REJECTED sobre Phase A / Documento 56;
 - modo médio suficiente após a decisão salvo nova complexidade arquitetural/metodológica;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — TOPI-N2-DCBTI-01 Phase A
+
+- owner aprovou explicitamente Phase A / Documento 56 / TOPI-N2-DCBTI-01;
+- criado Documento 57 registrando operational execution authority;
+- executada somente Phase A autorizada;
+- criado Documento 58 — Phase A Characterization Package;
+- PubMed caracterizado com E-utilities, CRDT/EDAT e controles de acesso/uso;
+- BVS/LILACS caracterizado parcialmente; portal/IAHx/FI-Admin e record dates documentados, mas acesso programático público reproduzível ainda não estabelecido;
+- ClinicalTrials.gov caracterizado com API v2 REST/OpenAPI/JSON e posting-date fields;
+- limitações do canal de ferramenta não foram reclassificadas como source failures;
+- UpdateRiskProfile permanece evidence-preparation only;
+- measurement schedule permanece NOT_SELECTED;
+- Phase B continua não autorizada;
+- nenhum valor temporal normativo, Calibration Dossier, UpdatePolicy, Monitor ou migration nova;
+- próximo passo: Plan Amendment v0.2 + novo gate + nova authority antes de qualquer Phase B.
