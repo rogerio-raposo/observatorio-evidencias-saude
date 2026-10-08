@@ -1095,14 +1095,16 @@ PubMed e ClinicalTrials.gov serão configurados por rows/artifacts de source, n�
 
 Helper candidato:
 
-> **maintenance.temporal_epoch_opportunity_set_matches_schedule(epoch_uuid)**
+> **maintenance.temporal_epoch_opportunity_set_matches_schedule(epoch_source_uuid)**
 
 Regras:
 
-- deterministic schedule generator => opportunity rows devem reproduzir exatamente o generator snapshot;
-- manual_opportunity_set => frozen Artifact deve enumerar timestamps e rows devem ser iguais ao Artifact;
+- o v0.1 aceita apenas `finite_opportunity_set`;
+- `schedule_definition_artifact_uuid` enumera opportunity numbers e planned timestamps;
+- Opportunity rows devem ser igualdade estrita ao frozen Artifact;
 - nenhuma oportunidade extra silenciosa;
-- nenhuma opportunity faltante silenciosa.
+- nenhuma opportunity faltante silenciosa;
+- o banco v0.1 não gera recurrence nem cria scheduler implícito.
 
 ## 38E. Artifact liveness
 
