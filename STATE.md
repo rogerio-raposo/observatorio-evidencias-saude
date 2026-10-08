@@ -2605,3 +2605,25 @@ Restrições:
 
 Próximo passo:
 > **após checkpoint, em modo alto, selecionar entre N1-01 e N2/dCBT-I o primeiro exact target da Temporal Observation Plan Instance e especificar a instância completa, sem executar observação real.**
+
+
+### CP112 — arquitetura de aquisição temporal não normativa
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP112.md`;
+- ponteiro de continuidade movido para CP112;
+- arquitetura de aquisição temporal = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- escolha = protocolo transversal reutilizável + instância target/source-specific;
+- primeira instância = autorizada apenas para seleção/especificação;
+- observação prospectiva real = não autorizada;
+- semantic storage mapping, Observation Epoch e authority humana explícita obrigatórios;
+- M1 pilot não é Monitor;
+- pre-calibration measurement não é CadenceObservation;
+- physical contract novo fica deferido até lacuna material comprovada;
+- nenhum valor temporal normativo autorizado;
+- nenhum novo migration autorizado;
+- scheduler/notifications deferidos;
+- auto-escalation não autorizada;
+- M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: selecionar N1-01 ou N2/dCBT-I e especificar a primeira Temporal Observation Plan Instance, em modo alto, sem execução;
+- pausa obrigatória preservada.
