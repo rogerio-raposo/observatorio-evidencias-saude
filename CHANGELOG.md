@@ -4089,3 +4089,23 @@ Documentos:
 - zero OpportunityResolution;
 - próximo passo em modo médio;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Migration 036 e FM-T01–T24 PASS
+
+- migration 036 implementa hardening aditivo da semântica do primeiro measurement;
+- primeiro completed event por epoch_source exige baseline aggregate com `novelty_state=not_applicable`, `new_identifier_count=NULL` e `failure_attribution=not_applicable`;
+- completed subsequente não pode usar `novelty_state=not_applicable`;
+- fixtures sintéticas TNO alinhadas ao contrato;
+- `database/f4-temporal-first-measurement-tests.sql` adiciona FM-T01–T24;
+- harness usa namespace sintético, rollback integral e nenhuma chamada de rede;
+- FM-T01–T24 = PASS;
+- migration 036 idempotency = PASS;
+- rebuild-through-036 = PASS;
+- regressões completas = PASS;
+- B1 real permanece authorized_non_normative, started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
+- run 222 / `37829798269` = success;
+- artifact `11572917207`;
+- digest `sha256:a5d01a58f60e1a4424c24753d9a65290a18443408525ebfd2e53081d1e03f347`;
+- run intermediário 220 falhou durante estado incremental fixture/test e não foi promovido;
+- Documento 80 registra o resultado técnico.
