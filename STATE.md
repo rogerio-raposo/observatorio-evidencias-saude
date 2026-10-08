@@ -3460,3 +3460,80 @@ Next step:
 - Phase 5 not started;
 - generic Prossiga is not execution authority;
 - mandatory pause preserved.
+
+
+### Fase 4 — Phase B execution authority validada; B1 autorizado e não ativo
+
+Documentos:
+- `docs/governance/75-pacote-authority-execucao-phase-b-topi-n2-dcbti.md` — owner decision recorded;
+- `docs/governance/76-resultado-authority-execucao-phase-b-topi-n2-dcbti.md`.
+
+Estado:
+> **PHASE_B_EXECUTION_AUTHORITY = APPROVED_AND_VALIDATED**
+
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **PHASE_B_EXECUTION_STARTED = NO**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+Owner decision:
+- decided_at `2026-10-08T13:31:42-03:00`;
+- design_frozen_at `2026-10-08T13:12:23-03:00`;
+- authority freshness = PASS.
+
+Physical authority:
+- authority UUID `b3150000-0000-0000-0000-000000000001`;
+- Plan UUID `b3100000-0000-0000-0000-000000000001`;
+- Epoch UUID `b3120000-0000-0000-0000-000000000001`;
+- domain `operational_execution`;
+- decision `approved`;
+- actor type `owner`;
+- decision Artifact UUID `b3000000-0000-0000-0000-000000000012`.
+
+Activation hardening:
+- migration `034_temporal_observation_activation_chronology.sql`;
+- active transition requires persisted `started_at` before first Opportunity;
+- authority must already be approved at `started_at`;
+- material/invalidating deviation blocks activation;
+- existing table constraint requires `started_at >= start_boundary_at`;
+- B1 factual activation interval = `2026-10-19T08:00:00-03:00 <= started_at < 2026-10-19T09:00:00-03:00`;
+- this is experimental operational chronology, not cadence/SLA.
+
+Validation:
+- TACT-T01–T08 = PASS;
+- TOPI-AUTH-T01–T15 = PASS;
+- migration 034 idempotency = PASS;
+- rebuild-through-034 = PASS;
+- TOPI authority rebuild = PASS;
+- prior regressions = PASS.
+
+Canonical CI:
+- workflow run `37815729503`;
+- run number `218`;
+- validated HEAD `01c7a72d630fb5fb5c8f6eda8c87fdddc8268bb1`;
+- conclusion `success`;
+- evidence artifact ID `11567660235`;
+- digest `sha256:736cb0f552d944bd1e8506a79e48f7dba1f69278bde01ea3d1b5fd554a007fa0`.
+
+Current temporal boundary:
+- start boundary `2026-10-19T08:00:00-03:00`;
+- first PubMed Opportunity `2026-10-19T09:00:00-03:00`;
+- activation on 2026-10-08 = NOT_ALLOWED.
+
+Next act:
+> **at/after start boundary and before first Opportunity, execute a live activation preflight; only if all preconditions pass may B1 transition to active.**
+
+Still blocked:
+- early activation;
+- MeasurementEvent before real opportunity execution;
+- schedule mutation/extension;
+- Monitor/M2;
+- UpdatePolicy/CadenceContract/SLA;
+- normative temporal values;
+- M3 formalization;
+- Phase 5.
