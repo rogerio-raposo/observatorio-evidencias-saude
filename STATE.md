@@ -3343,3 +3343,27 @@ Schedule expiry:
 
 Next step:
 > **aguardar explicit owner decision on Phase B preparation / Documento 71 / TOPI-N2-DCBTI-01.**
+
+
+### CP121 — Phase B finite design / preparation authority pending
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP121.md`;
+- ponteiro movido para CP121;
+- Phase B design = finite irregular source-specific;
+- PubMed = 8 opportunities;
+- ClinicalTrials.gov = 6 opportunities;
+- BVS/LILACS = deferred source debt;
+- target-specific recheck = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- Documento 71 = AWAITING_EXPLICIT_OWNER_DECISION;
+- preparation authority = PENDING;
+- runtime connectivity probes = NOT_AUTHORIZED;
+- real TOPI draft materialization = NOT_AUTHORIZED;
+- design_frozen_at = NOT_ESTABLISHED;
+- Phase B execution authority = NOT_REQUESTED;
+- Phase B execution = NOT_AUTHORIZED;
+- normative temporal values = NOT_AUTHORIZED;
+- M3 blocked;
+- Phase 5 not started;
+- next step = explicit owner decision on Phase B preparation / Documento 71 / TOPI-N2-DCBTI-01;
+- generic Prossiga is not authority;
+- mandatory pause preserved.
