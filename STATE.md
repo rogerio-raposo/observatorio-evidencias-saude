@@ -3959,3 +3959,71 @@ Enquanto não houver essa decisão:
 - OpportunityResolution count = 0;
 - next action = await explicit owner corrective preparation decision;
 - mandatory pause preserved.
+
+
+### Fase 4 — corrective preparation B1R1 concluída
+
+Authority:
+- Documento 83 = APPROVED / corrective preparation executed.
+
+Resultado:
+> **ORIGINAL_B1 = INVALIDATED_WITHOUT_EXECUTION**
+
+> **B1R1 = DRAFT_FROZEN**
+
+> **B1R1_DESIGN_FROZEN_AT = 2026-10-08T19:48:20-03:00**
+
+> **B1R1_EXECUTION_AUTHORITY = PENDING**
+
+> **B1R1_ACTIVATION = NOT_AUTHORIZED**
+
+Corrective connectivity:
+- run 224 / `37855302262` = success;
+- PubMed E-utilities = VERIFIED;
+- ClinicalTrials.gov API v2 = VERIFIED;
+- apiVersion = 2.0.5;
+- no target-specific query;
+- artifact `11583468584`;
+- digest `sha256:c0d933ca42961e1f0605751544e603dac33039b1c3d1476dbe187c65925f2e52`.
+
+Corrective materialization:
+- Documento 84;
+- B1R1 Epoch UUID `b3120000-0000-0000-0000-000000000002`;
+- PubMed EpochSource `b3130000-0000-0000-0000-000000000003`;
+- ClinicalTrials.gov EpochSource `b3130000-0000-0000-0000-000000000004`;
+- same boundaries and same 14 timestamps;
+- B1R1-T01–T24 = PASS;
+- run 229 / `37855834411` = success;
+- validated HEAD `cea4c1a67b7de4537bdf95485146199c86989a48`;
+- artifact `11583902320`;
+- digest `sha256:77066bb64d4fa3110686027f552f69366702a4c72d53e45e188c7df6d7ff89e2`;
+- rebuild = PASS.
+
+Request freeze:
+- PubMed interface v2 frozen;
+- ClinicalTrials query v2 frozen;
+- ClinicalTrials interface v2 frozen;
+- logical scientific scope unchanged;
+- no schedule sliding.
+
+Novo authority gate:
+- Documento 85 = PENDING OWNER DECISION;
+- formulação requerida:
+  `APPROVED — B1R1 execution / Documento 85 / TOPI-N2-DCBTI-01 / Epoch B1R1`.
+
+Estado corrente:
+> **B1 = INVALIDATED**
+
+> **B1R1 = DRAFT_FROZEN**
+
+> **B1R1_EXECUTION_AUTHORITY = PENDING**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
