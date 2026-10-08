@@ -4284,3 +4284,16 @@ Documentos:
 - B1R1 permanece authorized_non_normative, started_at NULL;
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - nenhuma source query target-specific executada.
+
+
+## 2026-10-08 — CP132
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP132.md`;
+- ponteiro movido para CP132;
+- Documento 88 promovido como runbook operacional das medições reais do B1R1;
+- nenhuma nova semântica ou migration introduzida;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- nenhuma query target-specific executada;
+- activation continua pendente da janela de 19/10;
+- pausa obrigatória preservada.
