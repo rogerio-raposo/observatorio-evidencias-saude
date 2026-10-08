@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP125 — 2026-10-08**.
+- checkpoint vigente: **CP126 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -3731,3 +3731,20 @@ Estado real preservado:
 
 Próximo passo:
 > **após checkpoint, modo médio: implementar migration 036 + FM-T01–T24 + integração S5 + idempotência/rebuild/regressões.**
+
+
+### CP126 — first measurement semantics hardening required
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP126.md`;
+- Documento 79 = ARCHITECTURAL_DECISION / IMPLEMENTATION_PENDING;
+- Documento 78 permanece vigente como contrato metodológico;
+- conclusão `NEW_SCHEMA_MIGRATION_REQUIRED = NO` do Documento 78 foi supersedida;
+- migration 036 = REQUIRED;
+- baseline aggregate = source-specific;
+- FM-T06/FM-T08 bloqueados até hardening;
+- B1 permanece `authorized_non_normative`;
+- started_at = NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- próximo passo = modo médio para migration 036 + FM-T01–T24 + S5 + rebuild/regressões;
+- pausa obrigatória preservada.
