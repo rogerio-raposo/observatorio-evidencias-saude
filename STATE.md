@@ -2627,3 +2627,60 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: selecionar N1-01 ou N2/dCBT-I e especificar a primeira Temporal Observation Plan Instance, em modo alto, sem execução;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — seleção e especificação da primeira Temporal Observation Plan Instance
+
+Documentos:
+- `docs/governance/54-primeira-temporal-observation-plan-instance-n2-dcbti.md`;
+- `docs/governance/55-gate-target-specific-topi-n2-dcbti-01.md`;
+- `docs/governance/56-pacote-decisao-authority-phase-a-topi-n2-dcbti-01.md`.
+
+Seleção:
+> **FIRST_TEMPORAL_OBSERVATION_PLAN_TARGET = N2_RC01_DCBTI_PRODUCTVERSION_1**
+
+> **FIRST_TEMPORAL_OBSERVATION_PLAN_INSTANCE = TOPI_N2_DCBTI_V01**
+
+Racional:
+- maior information gain multi-source;
+- melhor stress-test de semantic storage e source-specific latency;
+- custo operacional maior, mas ainda sem execução;
+- authority feasibility semelhante ao N1;
+- menor risco de overfitting a um único source ecosystem.
+
+Plano:
+- Phase A = source characterization + source-access/data-governance review + semantic storage confirmation + UpdateRiskProfile evidence preparation;
+- Phase B = bloqueada até Phase A Result Package + amendment v0.2 + recheck;
+- measurement schedule = NOT_SELECTED;
+- nenhum intervalo experimental definido antes de source characterization.
+
+Gate target-specific:
+> **TARGET_SPECIFIC_GATE = PASS_FOR_AUTHORITY_REQUEST_ONLY**
+
+> **PHASE_A_SPECIFICATION = PASS**
+
+> **PHASE_A_EXECUTION = BLOCKED_PENDING_EXPLICIT_AUTHORITY**
+
+Blockers de execução:
+- explicit Phase A execution authority ausente;
+- source-access/data-governance review ainda pendente;
+- start boundary não satisfeito.
+
+Authority package:
+> **AUTHORITY_DECISION = PENDING**
+
+Documento 56 exige decisão explícita APPROVED / REVISE / REJECTED vinculada à Phase A / TOPI-N2-DCBTI-01.
+
+Restrições:
+- nenhuma source interaction real antes da decisão;
+- Phase B bloqueada;
+- nenhum Monitor/MonitoringCycle;
+- nenhum cadence/UpdatePolicy/Calibration Dossier;
+- nenhum valor temporal normativo;
+- nenhum scheduler/notifications/auto-escalation;
+- nenhum novo migration;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **obter decisão humana explícita sobre o Documento 56.**
