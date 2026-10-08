@@ -3964,3 +3964,28 @@ Documentos:
 - no Phase B execution;
 - no normative temporal values;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Phase B B1 execution authority PASS
+
+- owner approval recorded directly in Documento 75;
+- decision timestamp `2026-10-08T13:31:42-03:00` is after design freeze `2026-10-08T13:12:23-03:00`;
+- migration 034 added to harden activation chronology without modifying migration 033 retrospectively;
+- migration 034 requires active started_at before first frozen Opportunity and approved authority at started_at;
+- TACT-T01–T08 = PASS;
+- migration 034 idempotent re-apply = PASS;
+- physical authority materialization added;
+- authority UUID `b3150000-0000-0000-0000-000000000001`;
+- TOPI-AUTH-T01–T15 = PASS;
+- B1 state = `authorized_non_normative`;
+- started_at remains NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- run 218 / `37815729503` = success;
+- validated HEAD `01c7a72d630fb5fb5c8f6eda8c87fdddc8268bb1`;
+- rebuild-through-034 and authority rebuild = PASS;
+- evidence artifact `11567660235`;
+- digest `sha256:736cb0f552d944bd1e8506a79e48f7dba1f69278bde01ea3d1b5fd554a007fa0`;
+- Documento 76 records authority PASS;
+- activation remains blocked until 2026-10-19 08:00 -03;
+- no normative temporal values authorized.
