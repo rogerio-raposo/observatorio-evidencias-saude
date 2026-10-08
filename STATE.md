@@ -2838,3 +2838,25 @@ Restrições:
 
 Próximo passo:
 > **após checkpoint, em modo alto, especificar contrato físico v0.1 de ObservationEpoch/TemporalMeasurementEvent não normativos, com constraints, lifecycle, replay/readiness views e test plan; depois gate adversarial antes de qualquer migration.**
+
+
+### CP115 — TOPI v0.2 / Phase B boundary
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP115.md`;
+- ponteiro movido para CP115;
+- Plan Amendment v0.2 rechecked = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- PubMed + ClinicalTrials.gov = included candidates da Phase B;
+- BVS/LILACS = deferred source debt;
+- event model = source-specific non-normative measurement event;
+- physical gap = confirmed;
+- non-normative physical contract = authorized for specification only;
+- measurement schedule = deferred pending physical contract;
+- Phase B authority = not requested;
+- Phase B execution = not authorized;
+- migration = not authorized;
+- nenhum valor temporal normativo autorizado;
+- M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: contrato físico v0.1 de ObservationEpoch/TemporalMeasurementEvent + test plan + gate adversarial;
+- modo alto permanece recomendado;
+- pausa obrigatória preservada.
