@@ -2765,3 +2765,25 @@ Restrições:
 
 Próximo passo:
 > **após checkpoint, especificar Plan Amendment v0.2 da TOPI-N2-DCBTI-01 com source inclusion, Phase B event model, storage mapping e eventual measurement schedule non-normative; depois novo target-specific gate e nova authority antes de Phase B.**
+
+
+### CP114 — TOPI Phase A characterization
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP114.md`;
+- ponteiro movido para CP114;
+- owner approval da Phase A registrada no Documento 57;
+- Phase A Characterization Package = Documento 58;
+- `PHASE_A = COMPLETED_WITH_SOURCE_SPECIFIC_LIMITATIONS`;
+- PubMed = sufficient for Phase B design with controls;
+- BVS/LILACS = partial / programmatic path unresolved;
+- ClinicalTrials.gov = sufficient for Phase B design with runtime connectivity check;
+- UpdateRiskProfile = evidence-preparation only;
+- measurement schedule = NOT_SELECTED;
+- Phase B = NOT_AUTHORIZED;
+- nenhum valor temporal normativo autorizado;
+- nenhum novo migration autorizado;
+- M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: Plan Amendment v0.2;
+- modo alto recomendado novamente para source inclusion / schedule / possible physical-event decision;
+- pausa obrigatória preservada.
