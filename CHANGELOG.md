@@ -3881,3 +3881,25 @@ Documentos:
 - TOPI real, schedule real e Phase B continuam não autorizados;
 - próximo passo: desenho experimental da Phase B em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Phase B finite experimental design for TOPI-N2-DCBTI-01
+
+- Documento 69 especifica finite irregular source-specific opportunity set;
+- PubMed = 8 opportunities;
+- ClinicalTrials.gov = 6 opportunities;
+- candidate observation window = 2026-10-19 through 2026-11-10;
+- BVS/LILACS permanece deferred source debt;
+- PubMed strategy fixada sem relative-date drift;
+- first successful source event definido como epoch baseline acquisition, sem claim de scientific novelty;
+- external documentary source facts rechecked em official NLM/ClinicalTrials.gov materials;
+- Documento 70 adversarial recheck = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- identified required ordering: runtime connectivity before immutable EpochSource materialization;
+- identified required authority ordering: final Phase B execution authority only after physical design freeze;
+- Documento 71 criado como preparation-only authority package;
+- preparation authority = PENDING;
+- no runtime probe executed;
+- no real TOPI row materialized;
+- no Phase B execution authority requested;
+- no measurement executed;
+- no normative temporal value authorized.
