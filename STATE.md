@@ -3265,3 +3265,81 @@ Próximo passo:
 - Fase 5 não iniciada;
 - próximo passo: modo alto para desenho experimental finito da Phase B;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — desenho experimental finito da Phase B / TOPI-N2-DCBTI-01
+
+Documentos:
+- `docs/governance/69-desenho-experimental-finito-phase-b-topi-n2-dcbti.md`;
+- `docs/governance/70-recheck-desenho-experimental-phase-b-topi-n2-dcbti.md`;
+- `docs/governance/71-pacote-authority-preparacao-phase-b-topi-n2-dcbti.md`.
+
+Decisão:
+> **PHASE_B_EXPERIMENTAL_DESIGN = FINITE_IRREGULAR_SOURCE_SPECIFIC_OPPORTUNITY_SET**
+
+> **TOPI_N2_DCBTI_V02_FINAL_DESIGN = READY_FOR_PREPARATION_AUTHORITY_REQUEST**
+
+Candidate Epoch:
+- code: `B1`;
+- start boundary: `2026-10-19T08:00:00-03:00`;
+- review boundary: `2026-11-10T18:00:00-03:00`;
+- timezone: `America/Recife`.
+
+PubMed:
+- included candidate;
+- 8 finite opportunities;
+- planned at 09:00 -03 on 2026-10-19, 10-20, 10-22, 10-26, 10-29, 11-03, 11-06, 11-09;
+- measurement strategy = fixed union of historical review + RCT discovery scopes;
+- no relative date query;
+- first successful event = epoch baseline acquisition, not scientific novelty.
+
+ClinicalTrials.gov:
+- included candidate;
+- 6 finite opportunities;
+- planned at 10:30 -03 on 2026-10-19, 10-22, 10-27, 10-30, 11-04, 11-09;
+- query semantics preserved from historical case;
+- actual API request/parameterization must be frozen after connectivity verification.
+
+BVS/LILACS:
+> **DEFERRED_SOURCE_DEBT**
+
+Architectural ordering:
+1. preparation authority;
+2. minimal runtime connectivity probes;
+3. Artifact/query/interface freeze;
+4. real draft materialization;
+5. design_frozen_at;
+6. new Phase B execution authority package;
+7. owner decision after freeze;
+8. authority row;
+9. authorized_non_normative;
+10. active;
+11. measurement execution.
+
+Reason:
+- `runtime_connectivity_status` is immutable in EpochSource;
+- execution authority must satisfy `decided_at >= design_frozen_at`.
+
+Recheck:
+> **TOPI_N2_DCBTI_PHASE_B_DESIGN_RECHECK = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+Current authority package:
+> **DOCUMENT_71 = AWAITING_EXPLICIT_OWNER_DECISION**
+
+Current restrictions:
+- generic `Prossiga` is not authority;
+- runtime connectivity probes = NOT_AUTHORIZED;
+- real TOPI draft materialization = NOT_AUTHORIZED;
+- design_frozen_at = NOT_ESTABLISHED;
+- Phase B execution authority = NOT_REQUESTED;
+- Phase B execution = NOT_AUTHORIZED;
+- normative temporal values = NOT_AUTHORIZED;
+- M3 blocked;
+- Phase 5 not started.
+
+Schedule expiry:
+- if preparation + draft freeze + later execution authority are not completed before first planned opportunity, do not slide dates;
+- classify candidate schedule as expired_not_executed and re-version/re-gate.
+
+Next step:
+> **aguardar explicit owner decision on Phase B preparation / Documento 71 / TOPI-N2-DCBTI-01.**
