@@ -4270,3 +4270,17 @@ Documentos:
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - activation continua pendente da janela de 19/10 em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Runbook operacional das medições reais do B1R1
+
+- criado `docs/governance/88-runbook-operacional-medicoes-reais-b1r1.md`;
+- runbook deriva exclusivamente de regras/schema/artifacts já aprovados;
+- nenhuma nova decisão metodológica ou migration foi criada;
+- PubMed execution path formalizado com ESearch/db=pubmed/frozen term/retmode=json/retmax=10000;
+- ClinicalTrials.gov execution path formalizado com query.cond/query.term, pageSize=10 e paginação completa;
+- baseline aggregate source-specific, counts, items, timepoints, failure attribution, retries e resolutions documentados;
+- anti-backfill, clock discipline e regra de não improvisação explicitados;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- nenhuma source query target-specific executada.
