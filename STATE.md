@@ -3158,3 +3158,23 @@ Restrições:
 
 Próximo passo:
 > **após checkpoint, retornar a modo médio e corrigir 033c; depois concluir 033d/033e, fixtures, TNO-T01–T100, validate-s5 integration e CI.**
+
+
+### CP119 — frozen opportunity-set schema decision
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP119.md`;
+- ponteiro movido para CP119;
+- schema decision = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- canonical frozen opportunity set = `measurement_schedule_payload`;
+- schedule Artifact = provenance-only;
+- nenhuma tabela/coluna nova necessária;
+- Opportunity materialization = draft;
+- authority freshness guard obrigatório;
+- test plan = TNO-T01–T100;
+- migration 033 = partially implemented/not validated;
+- implementation autorizada a retomar após checkpoint;
+- measurement schedule real continua NOT_SELECTED;
+- Phase B authority/execution continuam não autorizadas;
+- nenhum normative temporal value autorizado;
+- próximo passo: modo médio, corrigir 033c e concluir implementação/CI;
+- pausa obrigatória preservada.
