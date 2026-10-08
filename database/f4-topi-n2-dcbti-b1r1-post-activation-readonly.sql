@@ -1,3 +1,4 @@
+-- CI-integrated post-activation read-only capture
 -- OES Fase 4 — B1R1 post-activation validation capture
 -- READ ONLY. Intended only after a valid factual activation.
 -- Running before activation is harmless and will report the current state.
