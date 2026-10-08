@@ -3683,3 +3683,20 @@ Documentos:
 - M3 bloqueado; Fase 5 não iniciada;
 - próximo passo: Plan Amendment v0.2 em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — TOPI Plan Amendment v0.2 / Phase B boundary
+
+- criado Documento 59 — Plan Amendment v0.2 candidate;
+- PubMed + ClinicalTrials.gov selecionados como candidate sources da Phase B;
+- BVS/LILACS mantido como `DEFERRED_SOURCE_DEBT`, sem completeness claim;
+- event model definido como source-specific non-normative measurement event;
+- physical gap confirmado para repeated pre-calibration measurement;
+- Artifact-only storage rejeitado como event store suficiente;
+- Search, EvidenceEvent e CadenceObservation rejeitados como substitutos semânticos;
+- measurement schedule permanece deferido;
+- criado Documento 60 — recheck = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- physical contract autorizado somente para specification;
+- migration, Phase B authority e Phase B execution continuam não autorizados;
+- nenhum valor temporal normativo autorizado;
+- M3 bloqueado; Fase 5 não iniciada.
