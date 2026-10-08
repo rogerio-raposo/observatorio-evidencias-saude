@@ -4216,3 +4216,19 @@ Documentos:
 - Documento 85 criado como novo pacote de execution authority;
 - B1R1 execution authority permanece PENDING;
 - nenhuma target-specific query ou MeasurementEvent executado.
+
+
+## 2026-10-08 — CP130
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP130.md`;
+- ponteiro movido para CP130;
+- corrective preparation B1R1 consolidada;
+- B1 invalidated without execution;
+- B1R1 draft_frozen com design_frozen_at `2026-10-08T19:48:20-03:00`;
+- run 224 connectivity PASS;
+- run 229 materialization/rebuild PASS;
+- Documento 84 registra resultado;
+- Documento 85 solicita nova execution authority específica do B1R1;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- activation continua não autorizada;
+- pausa obrigatória preservada.
