@@ -41,10 +41,11 @@ Novos objetos candidatos:
 5. `maintenance.temporal_observation_authority`;
 6. `maintenance.temporal_measurement_opportunity`;
 7. `maintenance.temporal_measurement_event`;
-8. `maintenance.temporal_measurement_item`;
-9. `maintenance.temporal_measurement_item_timepoint`;
-10. `maintenance.temporal_measurement_event_artifact`;
-11. `maintenance.temporal_observation_deviation`.
+8. `maintenance.temporal_measurement_opportunity_resolution`;
+9. `maintenance.temporal_measurement_item`;
+10. `maintenance.temporal_measurement_item_timepoint`;
+11. `maintenance.temporal_measurement_event_artifact`;
+12. `maintenance.temporal_observation_deviation`.
 
 Nenhuma tabela é criada por este documento.
 
@@ -305,7 +306,7 @@ Campos:
 - `measurement_event_uuid uuid PK`;
 - `measurement_opportunity_uuid uuid NOT NULL FK`;
 - `attempt_no integer NOT NULL CHECK(attempt_no>=1)`;
-- `execution_status text NOT NULL CHECK(execution_status IN ('completed','partial','failed','not_executed','indeterminate'))`;
+- `execution_status text NOT NULL CHECK(execution_status IN ('completed','partial','failed','indeterminate'))`;
 - `execution_started_at timestamptz NULL`;
 - `execution_completed_at timestamptz NULL`;
 - `novelty_state text NOT NULL CHECK(novelty_state IN ('zero_new','new_items','unknown','not_applicable'))`;
@@ -326,8 +327,9 @@ Constraints:
 - `UNIQUE(measurement_opportunity_uuid,attempt_no)`;
 - rows imutáveis;
 - attempt_no deve ser exatamente o próximo inteiro contíguo da opportunity;
-- `not_executed` exige timestamps NULL, novelty_state=`not_applicable`, counts NULL e failure_attribution=`not_applicable`;
-- completed/partial/failed exigem `execution_started_at`;
+- todo MeasurementEvent representa uma tentativa realmente iniciada e exige `execution_started_at`;
+- ausência de execução é registrada em OpportunityResolution, não como MeasurementEvent;
+- completed/partial/failed/indeterminate exigem `execution_started_at`;
 - `execution_completed_at >= execution_started_at` quando ambos;
 - raw_result_count_status=`known` exige raw_result_count não NULL;
 - raw_result_count_status != known exige raw_result_count NULL;
@@ -351,13 +353,43 @@ Regras:
 - attempts seguintes são contíguos;
 - retry só é permitido após failed, partial ou indeterminate;
 - após completed com novelty_state determinado, nenhuma nova tentativa;
-- `not_executed` é terminal e exclusivo;
 - mais de um successful completed é inválido;
 - histórico anterior nunca é alterado.
 
 Opportunity resolution é derivada, não armazenada por update.
 
-## 12. maintenance.temporal_measurement_item
+## 12. maintenance.temporal_measurement_opportunity_resolution
+
+Closure append-only da opportunity, separado dos attempts.
+
+Campos:
+
+- `opportunity_resolution_uuid uuid PK`;
+- `measurement_opportunity_uuid uuid NOT NULL UNIQUE FK`;
+- `resolution_status text NOT NULL CHECK(resolution_status IN ('completed','failed_closed','not_executed','indeterminate_closed','invalidated'))`;
+- `terminal_measurement_event_uuid uuid NULL FK maintenance.temporal_measurement_event`;
+- `reason_code text NOT NULL`;
+- `reason_artifact_uuid uuid NULL FK artifact.artifact`;
+- `resolved_at timestamptz NOT NULL`;
+- `resolved_by text NOT NULL`;
+- `actor_type text NOT NULL CHECK(actor_type IN ('system','ai_system','human_reviewer','human_expert','owner'))`;
+- `created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`.
+
+Constraints:
+
+- row imutável;
+- exactly one resolution per opportunity;
+- `completed` exige terminal event da mesma opportunity com execution_status=`completed`;
+- `failed_closed` exige terminal event da mesma opportunity com execution_status=`failed`;
+- `indeterminate_closed` exige terminal event da mesma opportunity com execution_status=`indeterminate`;
+- `not_executed` exige ausência de MeasurementEvent para a opportunity e reason_code explícito;
+- `invalidated` exige epoch invalidated ou material deviation correspondente;
+- resolução não pode ocorrer antes de `planned_for`, exceto invalidation causal anterior explicitamente documentada;
+- resolution não representa compliance, overdue ou breach.
+
+A resolução permite fechar missingness/falha sem sobrescrever attempts.
+
+## 13. maintenance.temporal_measurement_item
 
 Representa um identificador/registro observado dentro de um measurement event.
 
@@ -388,7 +420,7 @@ Helper candidato:
 
 > **maintenance.temporal_measurement_item_state_is_valid(item_uuid)**
 
-## 13. maintenance.temporal_measurement_item_timepoint
+## 14. maintenance.temporal_measurement_item_timepoint
 
 Uma row por endpoint temporal source-level do item.
 
@@ -416,7 +448,7 @@ Constraints:
 - not_observable/not_applicable não podem fabricar bounds;
 - rows imutáveis.
 
-## 14. Latency é derivada, não persistida como verdade material
+## 15. Latency é derivada, não persistida como verdade material
 
 No v0.1 não existe `latency_bounds_payload` na event/item row.
 
@@ -444,7 +476,7 @@ Se os endpoints não suportarem derivação:
 
 Isso elimina dual truth entre endpoint persistido e latency calculada.
 
-## 14A. effort_payload
+## 15A. effort_payload
 
 Schema lógico:
 
@@ -470,7 +502,7 @@ Validator candidato:
 
 > **maintenance.temporal_measurement_effort_payload_is_valid(jsonb)**
 
-## 15. maintenance.temporal_measurement_event_artifact
+## 16. maintenance.temporal_measurement_event_artifact
 
 Permite múltiplos Artifacts por event sem inflar a row principal.
 
@@ -488,7 +520,7 @@ Constraints:
 - link imutável;
 - payload sensível/secret é proibido por governance, não apenas por tipo.
 
-## 16. maintenance.temporal_observation_deviation
+## 17. maintenance.temporal_observation_deviation
 
 Registra desvio sem editar design original.
 
@@ -514,7 +546,7 @@ Constraints:
 - `new_epoch_required` ou `invalidating` deve aparecer como issue bloqueante em readiness/replay;
 - deviation não autoriza continuar no mesmo epoch quando materiality != non_material.
 
-## 17. Epoch activation guard
+## 18. Epoch activation guard
 
 Função candidata:
 
@@ -536,27 +568,26 @@ Para `authorized_non_normative` / `active`, exigir:
 
 Não existe hard-code de source brand no activation guard.
 
-## 18. Epoch completion guard
+## 19. Epoch completion guard
 
 Para completed:
 
 - `completed_at` obrigatório;
 - `completed_at >= review_boundary_at`;
 - não existe early completion no v0.1;
-- toda opportunity precisa possuir resolução terminal derivável;
-- opportunity sem execução deve ter event `not_executed`;
+- toda opportunity precisa possuir exatamente uma OpportunityResolution;
 - nenhuma deviation `new_epoch_required` ou `invalidating` no epoch;
 - nenhuma source debt pode ser escondida como included/complete;
 - completion não emite `no_update_needed`;
 - completion não altera currentness.
 
-## 19. Opportunity resolution
+## 20. Opportunity resolution
 
 Função candidata:
 
 > **maintenance.temporal_measurement_opportunity_status(opportunity_uuid)**
 
-Retorno conceitual:
+Retorno a partir de OpportunityResolution:
 
 - planned;
 - retryable;
@@ -564,17 +595,20 @@ Retorno conceitual:
 - failed_closed;
 - not_executed;
 - indeterminate_closed;
+- invalidated;
 - conflicted.
 
 Regras:
 
-- `partial`, `failed` e `indeterminate` podem permanecer retryable enquanto o epoch está ativo;
-- `completed` fecha a opportunity;
-- `not_executed` fecha a opportunity;
-- fechamento administrativo de failure/indeterminate, se necessário, deve ser representado por explicit terminal event type em futura implementação/gate, não por overwrite;
-- retry não apaga failure anterior.
+- sem resolution, failed/partial/indeterminate attempts permanecem retryable enquanto epoch ativo;
+- completed MeasurementEvent deve ser seguido por resolution `completed`;
+- persistent failure pode ser encerrada por `failed_closed`;
+- ausência total de attempt pode ser encerrada por `not_executed`;
+- history de attempts permanece;
+- mais de uma resolution é impossível por UNIQUE;
+- mismatch entre terminal event e resolution => `conflicted`.
 
-## 20. Replay view
+## 21. Replay view
 
 View candidata:
 
@@ -606,7 +640,7 @@ Uma linha por opportunity com:
 
 A view não calcula overdue/compliance.
 
-## 21. Readiness evidence view
+## 22. Readiness evidence view
 
 View candidata:
 
@@ -636,7 +670,7 @@ Proibição:
 
 Ela entrega evidência ao Evidence Readiness Assessment.
 
-## 22. Issue functions
+## 23. Issue functions
 
 Funções candidatas:
 
@@ -668,7 +702,7 @@ Issue classes mínimas:
 - ARTIFACT_INACTIVE;
 - NORMATIVE_LEAKAGE.
 
-## 23. Imutabilidade
+## 24. Imutabilidade
 
 Imutáveis:
 
@@ -701,7 +735,7 @@ Somente campos lifecycle correspondentes podem mudar.
 
 Nenhum DELETE em objetos causais.
 
-## 24. No-normative-link guard
+## 25. No-normative-link guard
 
 A migration futura deve provar que nenhum novo objeto possui FK obrigatório ou semântica de satisfação para:
 
@@ -720,7 +754,7 @@ Links científicos opcionais permitidos:
 - Investigation Search real;
 - Artifact.
 
-## 25. BVS/LILACS debt guard
+## 26. BVS/LILACS debt guard
 
 Para TOPI v0.2:
 
@@ -731,17 +765,17 @@ Para TOPI v0.2:
 
 O physical contract deve ser reusable; essa regra deriva do source status, não de hard-code de BVS.
 
-## 26. Physical contract versioning
+## 27. Physical contract versioning
 
-Contract marker candidato:
+Contract marker lógico candidato:
 
 > **oes.temporal_observation/0.1**
 
-Se implementado, registrar em `maintenance.contract_epoch` somente se essa tabela for semanticamente apropriada ao novo contrato.
+O v0.1 **não reutiliza `maintenance.contract_epoch`**, pois o marker existente pertence à infraestrutura temporal normativa da migration 032.
 
-Não registrar como temporal normative epoch sem gate específico.
+Se a implementação precisar de marker persistido, a migration specification deverá propor um marker explicitamente não normativo e submetê-lo ao gate físico.
 
-## 27. Candidate migration boundary
+## 28. Candidate migration boundary
 
 Se futuro gate autorizar implementação:
 
@@ -761,7 +795,7 @@ Escopo máximo:
 
 O número/nome é candidato, não autorizado por este documento.
 
-## 28. Test plan — estrutura
+## 29. Test plan — estrutura
 
 Testes candidatos devem ser implementados separadamente da migration.
 
@@ -771,7 +805,7 @@ Arquivo candidato:
 
 Rebuild/smoke devem incluir migration apenas se migration for autorizada.
 
-## 29. Test plan — Plan / source
+## 30. Test plan — Plan / source
 
 ### TNO-T01
 XOR exact target.
@@ -797,7 +831,7 @@ included proíbe debt reason.
 ### TNO-T08
 source row immutable.
 
-## 30. Test plan — Epoch / authority
+## 31. Test plan — Epoch / authority
 
 ### TNO-T09
 review boundary > start boundary.
@@ -829,7 +863,7 @@ invalidating deviation bloqueia activation/completion.
 ### TNO-T18
 schedule payload com normative key é rejeitado.
 
-## 31. Test plan — Opportunities
+## 32. Test plan — Opportunities
 
 ### TNO-T19
 opportunity unique por source/no.
@@ -846,16 +880,16 @@ opportunity immutable.
 ### TNO-T23
 retry não cria nova opportunity automaticamente.
 
-## 32. Test plan — Events
+## 33. Test plan — Events
 
 ### TNO-T24
 attempt unique e append-only.
 
 ### TNO-T25
-not_executed com timestamp falha.
+OpportunityResolution `not_executed` com MeasurementEvent existente falha.
 
 ### TNO-T26
-not_executed com result != not_applicable falha.
+OpportunityResolution terminal event cross-opportunity falha.
 
 ### TNO-T27
 completed sem start falha.
@@ -896,7 +930,7 @@ scientific_search cross-investigation falha.
 ### TNO-T39
 probe sem Search aceita scientific_search_uuid NULL.
 
-## 33. Test plan — Artifacts / deviations
+## 34. Test plan — Artifacts / deviations
 
 ### TNO-T40
 inactive artifact link falha.
@@ -913,16 +947,16 @@ material deviation aparece em issue function.
 ### TNO-T44
 deviation immutable.
 
-## 34. Test plan — Completion / replay
+## 35. Test plan — Completion / replay
 
 ### TNO-T45
 epoch complete com unresolved opportunity falha.
 
 ### TNO-T46
-not_executed event resolve missing opportunity sem declarar compliance.
+OpportunityResolution `not_executed` fecha missing opportunity sem declarar compliance.
 
 ### TNO-T47
-contradictory terminal attempts => conflicted.
+resolution/event mismatch => conflicted.
 
 ### TNO-T48
 retry preserva failure anterior.
@@ -945,7 +979,7 @@ completion não cria UpdateSignal.
 ### TNO-T54
 completion não cria CadenceObservation.
 
-## 35. Test plan — Anti-laundering / regression
+## 36. Test plan — Anti-laundering / regression
 
 ### TNO-T55
 nenhum FK causal obrigatório para CadenceContract/Obligation.
@@ -974,7 +1008,7 @@ rebuild completo continua PASS.
 ### TNO-T63
 regressões F2–F4 continuam PASS.
 
-## 36. Test plan — Authority / lifecycle
+## 37. Test plan — Authority / lifecycle
 
 ### TNO-T64
 approval da Phase A não autoriza epoch B1.
@@ -998,7 +1032,7 @@ plan supersession não reparenta epoch antigo.
 new plan version não reutiliza schedule snapshot por inferência.
 
 
-## 36A. Authority state resolver
+## 38A. Authority state resolver
 
 Resolver candidato:
 
@@ -1014,7 +1048,7 @@ Regras:
 - activation/execution exige current state = approved para `operational_execution`;
 - historical events não são apagados por withdrawal posterior.
 
-## 36B. Target drift guard
+## 38B. Target drift guard
 
 Se exact target deixar de current durante epoch ativo:
 
@@ -1025,7 +1059,7 @@ Se exact target deixar de current durante epoch ativo:
 - epoch deve ser invalidated;
 - dados históricos permanecem.
 
-## 36C. Source semantics registry
+## 38C. Source semantics registry
 
 Schema lógico:
 
@@ -1043,7 +1077,7 @@ Nenhuma source brand é hard-coded em trigger.
 
 PubMed e ClinicalTrials.gov serão configurados por rows/artifacts de source, não por branches específicos no schema.
 
-## 36D. Schedule reproducibility
+## 38D. Schedule reproducibility
 
 Helper candidato:
 
@@ -1056,7 +1090,7 @@ Regras:
 - nenhuma oportunidade extra silenciosa;
 - nenhuma opportunity faltante silenciosa.
 
-## 36E. Artifact liveness
+## 38E. Artifact liveness
 
 Em criação/activation:
 
@@ -1068,7 +1102,7 @@ Drift posterior:
 - aparece em issue functions;
 - pode invalidar epoch conforme papel do Artifact.
 
-## 36F. Epoch completion versus source-universe debt
+## 38F. Epoch completion versus source-universe debt
 
 A view deve distinguir:
 
@@ -1079,7 +1113,7 @@ O v0.1 não expõe `coverage_complete` global.
 
 BVS/LILACS deferred continua visível mesmo quando B1 execution for completed.
 
-## 36G. contract_epoch
+## 38G. contract_epoch
 
 O contrato v0.1 **não reutiliza** `maintenance.contract_epoch`.
 
@@ -1089,7 +1123,7 @@ Razão:
 
 Se futura migration precisar de marker próprio, criar mecanismo explicitamente não normativo ou justificar extensão por gate separado.
 
-## 36H. Migration/fixture separation
+## 38H. Migration/fixture separation
 
 Candidate migration 033, se autorizada:
 
@@ -1103,7 +1137,7 @@ Synthetic tests/fixtures:
 - identificados como synthetic/test-only;
 - não podem ser usados como readiness evidence real.
 
-## 36I. Testes adicionais pós-gate
+## 38I. Testes adicionais pós-gate
 
 Adicionar:
 
@@ -1128,7 +1162,27 @@ Adicionar:
 - **TNO-T89** migration não contém seed real;
 - **TNO-T90** synthetic fixtures não entram em real readiness evidence.
 
-## 37. Estado
+
+## 38J. Cross-row deferred consistency
+
+Relações em que o pai precisa existir antes dos filhos devem usar validação transacional apropriada.
+
+Casos:
+
+- Event counts versus MeasurementItems;
+- completed event versus item materialization;
+- failure evidence liveness;
+- schedule snapshot versus opportunity set.
+
+Quando a consistência só puder ser validada após múltiplos INSERTs da mesma transação, usar:
+
+> **DEFERRABLE INITIALLY DEFERRED constraint trigger**
+
+ou issue/closure function acionada antes de resolution/epoch completion.
+
+Não exigir child pré-existente no INSERT do parent.
+
+## 39. Estado
 
 > **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = REVISED_V0_1_READY_FOR_RECHECK**
 
@@ -1150,7 +1204,7 @@ Adicionar:
 
 > **PHASE_5 = NOT_STARTED**
 
-## 38. Próximo passo
+## 40. Próximo passo
 
 > **Executar recheck adversarial/físico final do contrato revisado v0.1. Somente um PASS poderá abrir decisão separada sobre autorização da migration 033.**
 
