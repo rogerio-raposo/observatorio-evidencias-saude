@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP127 — 2026-10-08**.
+- checkpoint vigente: **CP128 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -3866,3 +3866,22 @@ Estado real:
 
 Próximo ato:
 > **aguardar janela de 2026-10-19 08:00–09:00 -03; live activation preflight em modo alto.**
+
+
+### CP128 — B1 pre-execution readiness PASS
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP128.md`;
+- Documento 81 = PRE_EXECUTION_READINESS_PASS;
+- B1_PRE_EXECUTION_PACKAGE = READY;
+- run 223 / `37830560002` = success;
+- evidence artifact `11573131877`;
+- digest `sha256:8eb1763d0b21a06628766a89c26019a7e1e8eb2beaa549ae8616b63f4dc1247d`;
+- expiry `2026-12-07T19:16:09Z`;
+- S5 retention = 60 days;
+- retention covers B1 review boundary;
+- B1 remains `authorized_non_normative`;
+- started_at = NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- next irreversível act = 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
