@@ -3989,3 +3989,12 @@ Documentos:
 - Documento 76 records authority PASS;
 - activation remains blocked until 2026-10-19 08:00 -03;
 - no normative temporal values authorized.
+
+
+## 2026-10-08 — CP123
+
+- continuity pointer moved to CP123;
+- B1 remains authorized_non_normative and not active;
+- zero MeasurementEvent;
+- next operational window: 2026-10-19, 08:00–09:00 -03, subject to live preflight;
+- mandatory pause preserved.
