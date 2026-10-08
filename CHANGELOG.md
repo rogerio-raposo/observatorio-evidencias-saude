@@ -3786,3 +3786,18 @@ Documentos:
 - measurement schedule, Phase B authority/execution e normative temporal values permanecem não autorizados;
 - próximo passo: implementação técnica em modo médio;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Blocker da migration 033
+
+- implementação iniciada após CP117;
+- criados 033 master, 033a, 033b e 033c;
+- guards/lifecycle implementados dentro do boundary;
+- descoberto blocker material: `artifact.artifact` não expõe conteúdo do frozen opportunity set ao PostgreSQL;
+- igualdade entre Opportunity rows e timestamps congelados não pode ser provada com o schema aprovado atual;
+- Documento 65 registra opções A–D;
+- recomendação candidata = opportunity_set_payload estruturado em EpochSource, ainda não aprovada;
+- implementação suspensa antes de 033d/033e/fixtures/tests/CI;
+- migration 033 permanece parcialmente implementada e não validada;
+- measurement schedule/Phase B/normative values continuam não autorizados;
+- próximo passo exige modo alto.
