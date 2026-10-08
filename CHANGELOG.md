@@ -4374,3 +4374,16 @@ Documentos:
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - activation continua pendente da janela de 19/10 em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Pacote operacional do dia 19 validado
+
+- criado `database/f4-topi-n2-dcbti-b1r1-live-preflight-readonly.sql`;
+- criado `docs/governance/92-pacote-operacional-dia-19-b1r1.md`;
+- live preflight capture usa `BEGIN TRANSACTION READ ONLY` e `ROLLBACK`;
+- CI compara estado antes/depois e prova zero mutation de B1R1, MeasurementEvent e OpportunityResolution;
+- run 233 / `37861733122` = success;
+- artifact `11586227719`;
+- digest `sha256:7e10af6697bd692cf8e078e2916de03f5b4f0a2b25f71e7eebab4c78529b6957`;
+- rebuild = PASS;
+- nenhum activation fact ou source execution foi criado.
