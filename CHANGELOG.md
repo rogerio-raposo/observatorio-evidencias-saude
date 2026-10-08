@@ -4232,3 +4232,23 @@ Documentos:
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - activation continua não autorizada;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — B1R1 execution authority approved and validated
+
+- owner approved exact Documento 85 execution authority gate;
+- Documento 86 records factual owner decision at `2026-10-08T20:26:21-03:00`;
+- decision occurred after B1R1 design freeze `2026-10-08T19:48:20-03:00`;
+- physical authority UUID `b3150000-0000-0000-0000-000000000002`;
+- decision Artifact UUID `b3000000-0000-0000-0000-000000000017`;
+- B1R1 transitioned `draft → authorized_non_normative`;
+- original B1 remains invalidated;
+- B1R1 started_at remains NULL;
+- B1R1-AUTH-T01–T20 = PASS;
+- deterministic activation preflight for B1R1 = WAIT now / PASS at 08:00 and 08:30 / FAIL at 09:00 on 19/10;
+- run 232 / `37859791833` = success;
+- artifact `11585626965`;
+- digest `sha256:ea7b831fa6b0d8c2547bb5763e8c0cf0072c6dcabac4e279dd4d7bf10266a0a6`;
+- rebuild ends with B1 invalidated and B1R1 authorized_non_normative, started_at NULL, zero MeasurementEvent;
+- Documento 87 records result;
+- activation remains a separate future act.
