@@ -1436,7 +1436,7 @@ jobs:
             echo "TOPI-B1-AUTH-REBUILD PASS — authority state rebuild reproducibility"
             echo "TOPI-B1-APF PASS — current-state WAIT / eligible-window PASS / expiry FAIL"
             echo "TOPI-B1-APF-REBUILD PASS — preflight rebuild reproducibility"
-            echo "B1 remains authorized_non_normative; activation pending 2026-10-19 start boundary; zero MeasurementEvent"
+            echo "B1 invalidated; B1R1 authorized_non_normative; activation pending 2026-10-19 start boundary; zero MeasurementEvent"
             echo "M3 Phase-4 blocker preserved after propagation/re-baselining"
             echo "Rebuild through migration 031 + F4 Update Protocol + Operational Control + UpdateRiskProfile + Propagation/Re-baselining + all prior regressions PASS"
           } | tee s5-artifacts/S5-summary.txt
