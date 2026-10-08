@@ -4109,3 +4109,18 @@ Documentos:
 - digest `sha256:a5d01a58f60e1a4424c24753d9a65290a18443408525ebfd2e53081d1e03f347`;
 - run intermediário 220 falhou durante estado incremental fixture/test e não foi promovido;
 - Documento 80 registra o resultado técnico.
+
+
+## 2026-10-08 — CP127
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP127.md`;
+- ponteiro movido para CP127;
+- migration 036 tecnicamente validada;
+- FM-T01–T24 = PASS;
+- idempotência e rebuild-through-036 = PASS;
+- run 222 promovido como evidência canônica;
+- artifact `11572917207`, digest `sha256:a5d01a58f60e1a4424c24753d9a65290a18443408525ebfd2e53081d1e03f347`;
+- B1 permanece authorized_non_normative, started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
+- nenhuma execução real de source;
+- próximo ato irreversível permanece na janela de activation de 19/10;
+- pausa obrigatória preservada.
