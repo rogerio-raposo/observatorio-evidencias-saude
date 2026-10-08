@@ -134,17 +134,17 @@ FOR EACH ROW EXECUTE FUNCTION maintenance.reject_temporal_row_mutation();
 CREATE OR REPLACE FUNCTION maintenance.temporal_observation_authority_state(
   p_epoch uuid,p_domain text,p_as_of timestamptz DEFAULT CURRENT_TIMESTAMP
 ) RETURNS text LANGUAGE plpgsql STABLE AS $fn$
-DECLARE r record; latest_time timestamptz; n integer;
+DECLARE latest_time timestamptz; n integer; latest_decision text;
 BEGIN
   SELECT max(decided_at) INTO latest_time
   FROM maintenance.temporal_observation_authority
   WHERE observation_epoch_uuid=p_epoch AND authority_domain=p_domain AND decided_at<=p_as_of;
   IF latest_time IS NULL THEN RETURN 'missing'; END IF;
-  SELECT count(*), min(decision) INTO n,r
+  SELECT count(*), min(decision) INTO n,latest_decision
   FROM maintenance.temporal_observation_authority
   WHERE observation_epoch_uuid=p_epoch AND authority_domain=p_domain AND decided_at=latest_time;
   IF n<>1 THEN RETURN 'conflict'; END IF;
-  RETURN r.min;
+  RETURN latest_decision;
 END
 $fn$;
 
