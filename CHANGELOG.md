@@ -3594,3 +3594,22 @@ Documentos:
 - scheduler/notifications deferidos; auto-escalation não autorizada; M3 bloqueado;
 - Fase 5 não iniciada;
 - próximo passo: checkpoint e seleção/especificação do primeiro target piloto em modo alto.
+
+
+## 2026-10-07 — CP112
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP112.md`;
+- ponteiro movido para CP112;
+- Documentos 51–53 consolidam arquitetura de aquisição temporal não normativa;
+- first pass adversarial = REVISE; recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- arquitetura escolhida = protocolo transversal reutilizável + instância target/source-specific;
+- primeira instância autorizada somente para seleção/especificação;
+- execução prospectiva real continua não autorizada;
+- semantic storage mapping, Observation Epoch e authority humana explícita obrigatórios;
+- M1 pilot não é Monitor e pre-calibration measurement não usa CadenceObservation;
+- physical contract/migration nova deferidos até necessidade material comprovada;
+- nenhum valor temporal normativo autorizado;
+- scheduler/notifications deferidos; auto-escalation não autorizada; M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: selecionar N1-01 ou N2/dCBT-I e especificar a primeira instância piloto, em modo alto;
+- pausa obrigatória preservada.
