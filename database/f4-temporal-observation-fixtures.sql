@@ -127,7 +127,7 @@ INSERT INTO maintenance.temporal_measurement_event(
 ) VALUES (
  'f7160000-0000-0000-0000-000000000001','f7140000-0000-0000-0000-000000000001',
  1,'completed',TIMESTAMPTZ '2026-10-08 12:01:00+00',TIMESTAMPTZ '2026-10-08 12:02:00+00',
- 'new_items',1,'known',1,1,'not_applicable',NULL,
+ 'not_applicable',1,'known',1,NULL,'not_applicable',NULL,
  '{"operator_minutes":2,"machine_elapsed_seconds":60,"retry_count":0,"handoff_count":0,"note":"synthetic"}'::jsonb,
  'fixture-runtime','system',TIMESTAMPTZ '2026-10-08 12:02:00+00'
 );
