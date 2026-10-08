@@ -1,0 +1,16 @@
+{
+  "schema": "oes.topi.runtime_interface/0.1",
+  "source_code": "PUBMED_MEDLINE",
+  "interface_code": "ncbi_eutils",
+  "base_endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+  "measurement_utility": "esearch",
+  "retmode": "json",
+  "runtime_connectivity_evidence": {
+    "workflow_run_id": 37806308031,
+    "job_id": 113411379827,
+    "probe_endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=pubmed&retmode=json",
+    "status": "verified",
+    "observed_at": "2026-10-08T16:07:49Z"
+  },
+  "target_specific_query_executed_in_probe": false
+}
