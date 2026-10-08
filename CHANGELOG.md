@@ -3574,3 +3574,23 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: decidir em modo alto entre plano transversal reutilizável + instância piloto versus plano inicialmente específico de um target;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Arquitetura de aquisição de evidência temporal não normativa
+
+- criado Documento 51 com arquitetura candidata `REUSABLE_TRANSVERSAL_PROTOCOL_PLUS_TARGET_INSTANCE`;
+- criado Documento 52; primeira passagem adversarial = **REVISE**;
+- hardening aplicado ao Documento 51 para shadow-M2, storage semantics, latency endpoints, authority, outcome model, drift, stopping, data governance e anti-anchoring;
+- criado Documento 53; recheck final = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- primeira Observation Plan Instance = autorizada apenas para seleção/especificação;
+- observação prospectiva real continua não autorizada;
+- M1 pilot não é Monitor e não usa MonitoringCycle;
+- pre-calibration measurement não usa CadenceObservation;
+- semantic storage mapping obrigatório;
+- authority humana explícita obrigatória antes de execução;
+- Result Package deve retornar a novo Evidence Readiness antes de qualquer Calibration Dossier;
+- novo physical contract fica deferido até lacuna material comprovada pela instância;
+- nenhum valor normativo ou migration nova autorizado;
+- scheduler/notifications deferidos; auto-escalation não autorizada; M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: checkpoint e seleção/especificação do primeiro target piloto em modo alto.
