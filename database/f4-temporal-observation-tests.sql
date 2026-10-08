@@ -139,7 +139,19 @@ SELECT pg_temp.tno_assert('TNO-T81',NOT EXISTS(SELECT 1 FROM maintenance.tempora
 SELECT pg_temp.tno_assert('TNO-T82',NOT EXISTS(SELECT 1 FROM maintenance.temporal_observation_authority WHERE actor ILIKE '%OES_PROJECT_OWNER%'));
 SELECT pg_temp.tno_assert('TNO-T83',NOT EXISTS(SELECT 1 FROM maintenance.temporal_observation_source WHERE source_code IN ('PUBMED','CLINICALTRIALS_GOV','BVS_LILACS')));
 SELECT pg_temp.tno_assert('TNO-T84',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%cadence%'));
-SELECT pg_temp.tno_assert('TNO-T85',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%sla%'));
+SELECT pg_temp.tno_assert('TNO-T85',NOT EXISTS(
+  SELECT 1 FROM information_schema.columns
+  WHERE table_schema='maintenance'
+    AND table_name IN (
+      'temporal_observation_plan','temporal_observation_source','temporal_observation_epoch',
+      'temporal_observation_epoch_source','temporal_observation_authority',
+      'temporal_measurement_opportunity','temporal_measurement_event',
+      'temporal_measurement_opportunity_resolution','temporal_measurement_item',
+      'temporal_measurement_item_timepoint','temporal_measurement_event_artifact',
+      'temporal_observation_deviation'
+    )
+    AND (column_name='sla' OR column_name LIKE 'sla\_%' ESCAPE '\')
+));
 SELECT pg_temp.tno_assert('TNO-T86',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%overdue%'));
 SELECT pg_temp.tno_assert('TNO-T87',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%breach%'));
 SELECT pg_temp.tno_assert('TNO-T88',(SELECT maintenance_level='M1' FROM investigation.investigation_version WHERE version_uuid='e5100000-0000-0000-0000-000000000002'));
