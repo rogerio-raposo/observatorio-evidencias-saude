@@ -136,7 +136,7 @@ SELECT pg_temp.tno_assert('TNO-T85',NOT EXISTS(SELECT 1 FROM information_schema.
 SELECT pg_temp.tno_assert('TNO-T86',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%overdue%'));
 SELECT pg_temp.tno_assert('TNO-T87',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%breach%'));
 SELECT pg_temp.tno_assert('TNO-T88',(SELECT maintenance_level='M1' FROM investigation.investigation_version WHERE version_uuid='e5100000-0000-0000-0000-000000000002'));
-SELECT pg_temp.tno_assert('TNO-T89',(SELECT count(*)=0 FROM maintenance.cadence_observation WHERE observation_uuid::text LIKE 'f7%'));
+SELECT pg_temp.tno_assert('TNO-T89',(SELECT count(*)=0 FROM maintenance.cadence_observation WHERE cadence_observation_uuid::text LIKE 'f7%'));
 SELECT pg_temp.tno_assert('TNO-T90',(SELECT count(*)=0 FROM maintenance.update_signal WHERE update_signal_uuid::text LIKE 'f7%'));
 
 -- T91–T100: CP119 hardening
