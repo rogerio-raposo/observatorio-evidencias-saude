@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP132 — 2026-10-08**.
+- checkpoint vigente: **CP133 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4256,3 +4256,24 @@ Estado operacional preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP133 — B1R1 review/closure protocol pre-specified
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP133.md`;
+- Documento 89 = PRE-SPECIFIED / REVIEW_NOT_STARTED;
+- B1R1 review protocol = PRE_SPECIFIED;
+- B1R1 review = NOT_STARTED;
+- physical completion before review boundary remains prohibited;
+- no hidden minimum-N;
+- no favorable stopping;
+- no automatic extension;
+- no automatic READY_FOR_CALIBRATION;
+- no Calibration Dossier opened;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
