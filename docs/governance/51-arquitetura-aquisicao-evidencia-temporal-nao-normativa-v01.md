@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 7 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_ADVERSARIAL_GATE — NO_OBSERVATION_AUTHORIZED**  
+**Status:** **REVISED_READY_FOR_RECHECK — NO_OBSERVATION_AUTHORIZED**  
 **Modo:** alto  
 **Dependências:** Documentos 16, 18, 39, 41, 46–50; CP111  
 **Objeto:** definir a arquitetura metodológica para adquirir evidência temporal real antes de qualquer calibração normativa
@@ -481,11 +481,323 @@ A arquitetura só poderá passar para instância piloto após gate adversarial q
 - data-governance gaps;
 - storage semantic mismatch.
 
-## 22. Estado
 
-> **TEMPORAL_EVIDENCE_ACQUISITION_ARCHITECTURE = CANDIDATE_FOR_ADVERSARIAL_GATE**
+## 24. Hardening após Documento 52
+
+O gate adversarial do Documento 52 resultou em `REVISE`.
+
+Os controles abaixo passam a integrar o contrato metodológico.
+
+## 25. Semantic storage mapping obrigatório
+
+Antes de iniciar qualquer instância, cada event class deve possuir mapeamento explícito:
+
+- event semantic;
+- canonical object existente, se houver;
+- reason semantic match;
+- prohibited substitute;
+- fallback documental quando não houver objeto adequado.
+
+Regras:
+
+- scientific search realmente executada pode usar `investigation.search` quando compatível com a Investigation;
+- source liveness probe não é Search;
+- latency probe não é Search;
+- operator-effort measurement não é Search;
+- availability check não é MonitoringCycle;
+- pre-calibration measurement não é CadenceObservation.
+
+Quando não houver estrutura física semanticamente correta:
+
+> **persistir como Artifact/documento/log auditável até decisão física posterior.**
+
+Não criar migration apenas para eliminar desconforto de armazenamento.
+
+## 26. Latency endpoint contract
+
+Nenhuma latency pode ser registrada como observada sem:
+
+- causal start semantic;
+- end semantic;
+- timestamp source de ambos;
+- timezone;
+- precision;
+- observed/inferred flag;
+- censoring ou interval bounds quando aplicável.
+
+Separar obrigatoriamente:
+
+- publication latency;
+- indexing latency;
+- source availability latency;
+- OES detection latency;
+- OES processing latency.
+
+Se o endpoint necessário não for observável:
+
+> **LATENCY_NOT_OBSERVABLE**
+
+Não estimar ponto exato a partir de janela de detecção.
+
+## 27. Observation epoch e versionamento
+
+Toda execução ocorre dentro de um:
+
+> **Observation Epoch**
+
+Um epoch fixa, no mínimo:
+
+- plan version;
+- exact target;
+- source scope;
+- query/strategy versions;
+- interfaces/canais;
+- measurement design;
+- start boundary;
+- planned review boundary;
+- data-quality rules.
+
+Mudança material cria novo epoch ou nova plan version.
+
+Deviations:
+
+- são append-only;
+- não reescrevem o desenho original;
+- devem registrar motivo, instante e impacto.
+
+Dados de epochs diferentes não são agregados sem rationale explícita.
+
+## 28. Candidate source universe
+
+Production-search sources não definem surveillance scope por herança.
+
+Cada instância deve registrar:
+
+- candidate source universe;
+- included sources;
+- excluded sources;
+- exclusion rationale;
+- unknown/unassessed sources;
+- measurement-scope claim.
+
+O plano não pode declarar cobertura além do escopo realmente medido.
+
+## 29. Execution authority evidence
+
+Antes de `authorized_non_normative` ou `active_observation`, deve existir evidence record documental contendo:
+
+- authority type;
+- actor/role;
+- exact scope;
+- decision;
+- decision timestamp;
+- artifact/locator;
+- limitations/conditions.
+
+Não são suficientes por si só:
+
+- instrução genérica para continuar o projeto;
+- aprovação editorial anterior;
+- owner publication approval;
+- AI verification;
+- existência abstrata de um owner role.
+
+Sem evidence record:
+
+> **EXECUTION_NOT_AUTHORIZED**
+
+## 30. Taxonomia de resultado de measurement event
+
+Cada measurement event deve terminar em um estado inequívoco, por exemplo:
+
+- `successful_zero_result`;
+- `successful_nonzero_result`;
+- `denominator_unknown`;
+- `partial_retrieval`;
+- `source_failure`;
+- `oes_failure`;
+- `not_executed`;
+- `indeterminate`.
+
+Somente `successful_zero_result` sustenta interpretação de ausência de resultado no scope executado.
+
+`result_count=NULL` nunca significa zero.
+
+## 31. Pilot effort não é sustainable capacity
+
+Distinguir:
+
+- observed pilot effort;
+- observed throughput;
+- constrained performance;
+- provisional resource requirement;
+- sustainable capacity assessment.
+
+Nenhum desses campos é intercambiável.
+
+Observed pilot effort pode informar B3/B5.
+
+Ele não demonstra B5 adequado sem avaliação própria.
+
+## 32. Drift partitioning e transportability
+
+Quando houver:
+
+- target supersession;
+- source/API/interface change;
+- query/strategy change;
+- measurement instrumentation change;
+- authority change;
+- operational-model change;
+
+deve ocorrer uma destas ações:
+
+1. novo epoch;
+2. plan supersession;
+3. invalidation.
+
+Fatos source-level anteriores permanecem históricos.
+
+Seu reuso em target/epoch novo exige explicit transportability assessment.
+
+## 33. Stopping/review rule
+
+Nenhuma instância pode terminar simplesmente porque os dados “parecem suficientes”.
+
+Antes da execução, registrar:
+
+- review boundary;
+- allowed termination reasons;
+- stop conditions;
+- extension rule;
+- early-stop governance.
+
+Extensão/encurtamento deve ser versionada antes do readiness reassessment.
+
+Não há minimum-N implícito.
+
+A representatividade é avaliada posteriormente no readiness.
+
+## 34. Measurement schedule anti-anchoring
+
+Measurement schedule:
+
+- não recebe status de cadence candidate;
+- não é copiado automaticamente para Calibration Dossier;
+- não ganha prioridade por ter sido usado no piloto;
+- não vira policy por repetição.
+
+Se futura calibration considerar candidate numericamente igual à agenda experimental:
+
+> exigir justificativa independente baseada nos envelopes de calibration e comparação com alternativas.
+
+## 35. External source fact locator
+
+Qualquer fato externo material para o desenho deve registrar:
+
+- source;
+- locator;
+- retrieval/observation time;
+- version/effective date quando disponível;
+- precision;
+- interpretation;
+- whether documented or observed.
+
+Sem locator auditável:
+
+> não pode ser controlling basis para readiness ou calibration.
+
+## 36. Data minimization por event class
+
+A instância deve especificar, por event class:
+
+- campos estritamente necessários;
+- campos proibidos;
+- retention;
+- disposal;
+- access scope.
+
+Credenciais, secrets e tokens nunca são dados de observação.
+
+Conteúdo protegido/licenciado deve ser referenciado de forma mínima e compatível com o direito de acesso/uso, sem cópia desnecessária.
+
+## 37. Chain obrigatória após observação
+
+Fluxo obrigatório:
+
+> **Temporal Observation Plan Instance → Observation Epoch(s) → Temporal Evidence Acquisition Result Package → novo Evidence Readiness Assessment → somente se READY: Calibration Dossier**
+
+É proibido:
+
+- transformar Result Package em Calibration Dossier;
+- promover measurement schedule a candidate automaticamente;
+- ativar policy diretamente do piloto;
+- emitir READY apenas porque o plano foi concluído.
+
+## 38. Query/source heterogeneity
+
+Mudança material de:
+
+- query;
+- filters;
+- platform;
+- interface;
+- source;
+- coverage rule;
+
+deve ser:
+
+- nova plan version; ou
+- novo Observation Epoch.
+
+A heterogeneidade deve permanecer visível na análise final.
+
+## 39. No-shadow-M2 closure
+
+Para M1:
+
+> **repetition frequency does not determine maintenance level.**
+
+Independentemente do número de measurement events:
+
+- não existe MonitoringCycle;
+- não existe governing Monitor;
+- não existe coverage guarantee;
+- não existe cadence compliance;
+- não existe overdue/breach;
+- não existe currentness automation.
+
+Se o purpose se transformar de measurement em surveillance persistente:
+
+> **STOP_AND_REASSESS_M1_TO_M2**
+
+A instância não pode continuar sob o mesmo significado.
+
+## 40. Incidental finding routing
+
+Finding incidental segue:
+
+> `measurement_event → observed_finding → provenance → candidate triage → canonical update workflow`
+
+O observation plan não possui autoridade para:
+
+- aceitar/rejeitar cientificamente o finding como atualização final;
+- alterar conclusão;
+- alterar assurance;
+- alterar currentness;
+- criar ProductVersion automaticamente.
+
+## 41. Estado revisado
+
+> **TEMPORAL_EVIDENCE_ACQUISITION_ARCHITECTURE = REVISED_READY_FOR_RECHECK**
 
 > **ARCHITECTURE_CHOICE = REUSABLE_TRANSVERSAL_PROTOCOL_PLUS_TARGET_INSTANCE**
+
+> **SEMANTIC_STORAGE_MAPPING = REQUIRED_BEFORE_EXECUTION**
+
+> **OBSERVATION_EPOCH_VERSIONING = REQUIRED**
+
+> **EXECUTION_AUTHORITY_EVIDENCE = REQUIRED**
 
 > **FIRST_OBSERVATION_INSTANCE = NOT_YET_SELECTED**
 
@@ -493,22 +805,17 @@ A arquitetura só poderá passar para instância piloto após gate adversarial q
 
 > **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = NOT_YET_SPECIFIED**
 
-> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
-
 > **NO_NEW_MIGRATION = AUTHORIZED**
 
-> **SCHEDULER = DEFERRED**
-
-> **NOTIFICATIONS = DEFERRED**
-
-> **AUTO_ESCALATION = NOT_AUTHORIZED**
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
 
 > **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
 
 > **PHASE_5 = NOT_STARTED**
 
-## 23. Próximo passo
+## 42. Próximo passo revisado
 
-> **Executar gate adversarial desta arquitetura antes de selecionar ou autorizar a primeira Temporal Observation Plan Instance.**
+> **Executar recheck adversarial contra TEA-G01–G18. Somente após PASS selecionar a primeira Temporal Observation Plan Instance.**
+
 
 **Fim do Documento 51**
