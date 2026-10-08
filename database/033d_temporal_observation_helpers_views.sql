@@ -117,7 +117,8 @@ LEFT JOIN maintenance.temporal_measurement_item_timepoint mt USING(measurement_i
 LEFT JOIN maintenance.temporal_measurement_event_artifact ea USING(measurement_event_uuid)
 LEFT JOIN maintenance.temporal_observation_deviation d
   ON d.measurement_opportunity_uuid=o.measurement_opportunity_uuid
-LEFT JOIN maintenance.temporal_measurement_opportunity_resolution r USING(measurement_opportunity_uuid)
+LEFT JOIN maintenance.temporal_measurement_opportunity_resolution r
+  ON r.measurement_opportunity_uuid=o.measurement_opportunity_uuid
 GROUP BY
   p.observation_plan_uuid,p.plan_code,p.plan_version,
   p.target_product_version_uuid,p.target_investigation_version_uuid,
