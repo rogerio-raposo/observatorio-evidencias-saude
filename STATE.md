@@ -2684,3 +2684,24 @@ Restrições:
 
 Próximo passo:
 > **obter decisão humana explícita sobre o Documento 56.**
+
+
+### CP113 — primeira TOPI e authority decision
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP113.md`;
+- ponteiro movido para CP113;
+- N2/dCBT-I selecionado como primeiro target;
+- TOPI-N2-DCBTI-01 v0.1 especificada;
+- target-specific gate = **PASS_FOR_AUTHORITY_REQUEST_ONLY**;
+- Phase A specification = PASS;
+- Documento 56 criado para decisão explícita de authority;
+- `AUTHORITY_DECISION = PENDING`;
+- Phase A execution = não autorizada;
+- Phase B bloqueada;
+- measurement schedule = não selecionada;
+- nenhuma source interaction real autorizada antes da decisão;
+- nenhum valor temporal normativo/migration nova autorizado;
+- Fase 5 não iniciada;
+- próximo passo: aguardar APPROVED / REVISE / REJECTED explicitamente vinculado à Phase A / Documento 56 / TOPI-N2-DCBTI-01;
+- alta complexidade arquitetural deste bloco encerrada; modo médio suficiente após decisão, salvo nova questão complexa;
+- pausa obrigatória preservada.
