@@ -4143,3 +4143,18 @@ Documentos:
 - expiry `2026-12-07T19:16:09Z`, cobrindo o review boundary;
 - B1 permanece authorized_non_normative, started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
 - nenhum source query real executado.
+
+
+## 2026-10-08 — CP128
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP128.md`;
+- ponteiro movido para CP128;
+- pre-execution readiness = PASS;
+- Documento 81 promovido;
+- S5 artifact retention = 60 days;
+- run 223 / `37830560002` = success;
+- artifact `11573131877` expira em 2026-12-07, além do review boundary do B1;
+- B1 permanece authorized_non_normative, started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
+- nenhum source query real executado;
+- próximo ato irreversível permanece na janela de 19/10 em modo alto;
+- pausa obrigatória preservada.
