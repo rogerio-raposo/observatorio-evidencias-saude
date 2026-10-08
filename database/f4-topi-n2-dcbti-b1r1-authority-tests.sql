@@ -1,3 +1,4 @@
+-- CI-integrated in validate-s5.yml
 -- OES Fase 4 — B1R1 execution authority tests
 \set ON_ERROR_STOP on
 
