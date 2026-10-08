@@ -3178,3 +3178,64 @@ Próximo passo:
 - nenhum normative temporal value autorizado;
 - próximo passo: modo médio, corrigir 033c e concluir implementação/CI;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — migration 033 tecnicamente validada
+
+Documento:
+- `docs/governance/68-resultado-tecnico-migration-033-observacao-temporal-nao-normativa.md`.
+
+Resultado:
+> **MIGRATION_033 = TECHNICALLY_VALIDATED**
+
+> **NON_NORMATIVE_TEMPORAL_OBSERVATION_INFRASTRUCTURE = AVAILABLE_NOT_ACTIVATED_FOR_REAL_TOPI**
+
+> **F4_TNO_TESTS = TNO_T01_TO_T100_PASS**
+
+> **MIGRATION_033_IDEMPOTENCY = PASS**
+
+> **REBUILD_THROUGH_033 = PASS**
+
+> **ZERO_REAL_SEED = PASS**
+
+> **NORMATIVE_ISOLATION = PASS**
+
+Implementado:
+- 033 master;
+- 033a–033e;
+- synthetic fixtures;
+- smoke tests;
+- TNO-T01–T100;
+- integração no `validate-s5.yml`.
+
+CI promovida:
+- workflow: OES PoC-S5 PostgreSQL Validation;
+- run: `37802083791`;
+- run number: `214`;
+- validated HEAD: `6b9efb3a2439aa700fe8b38334995cf008327fb5`;
+- conclusion: `success`;
+- artifact ID: `11560209688`;
+- artifact: `oes-s5-evidence-37802083791`;
+- digest: `sha256:fc2909171dfa16f94cccae8cc5bd739b11c6091c4b04bb3ad78136af4ecd0c6b`.
+
+Invariantes:
+- frozen opportunity set canônico = `measurement_schedule_payload`;
+- schedule Artifact = provenance-only;
+- Opportunity materialization = draft;
+- authority freshness guard ativo;
+- latency derivada de item timepoints;
+- source debt preservado;
+- nenhum scheduler/recurrence generator;
+- nenhuma ligação causal normativa 032.
+
+Restrições:
+- TOPI real ainda não materializada;
+- measurement schedule real = NOT_SELECTED;
+- Phase B authority = NOT_REQUESTED;
+- Phase B execution = NOT_AUTHORIZED;
+- nenhum normative temporal value;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, definir o desenho experimental finito da Phase B da TOPI-N2-DCBTI-01 antes de qualquer materialização/authority real.**
