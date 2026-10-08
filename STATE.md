@@ -2940,3 +2940,24 @@ Restrições:
 
 Próximo passo:
 > **após checkpoint, em modo alto, decidir autorização e boundary técnico da candidate migration 033, incluindo decomposição de arquivos, testes/fixtures, CI e no-seed guarantee.**
+
+
+### CP116 — contrato físico v0.1 final PASS
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP116.md`;
+- ponteiro movido para CP116;
+- contrato físico v0.1 = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- physical schema = ready for migration decision;
+- test plan TNO-T01–T90 = ready if migration authorized;
+- migration 033 = eligible for separate authorization;
+- migration 033 ainda não autorizada;
+- schedule = finite frozen opportunity-set contract, mas nenhum timestamp real selecionado;
+- measurement schedule = NOT_SELECTED;
+- Phase B authority = not requested;
+- Phase B execution = not authorized;
+- nenhum normative temporal value autorizado;
+- M3 bloqueado;
+- Fase 5 não iniciada;
+- próximo passo: decidir migration 033 e boundary técnico em modo alto;
+- implementação mecânica poderá voltar a modo médio após autorização/boundary;
+- pausa obrigatória preservada.
