@@ -3537,3 +3537,14 @@ Still blocked:
 - normative temporal values;
 - M3 formalization;
 - Phase 5.
+
+
+### CP123
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP123.md`;
+- B1 permanece `authorized_non_normative`;
+- `started_at` permanece NULL;
+- zero MeasurementEvent;
+- próxima ação operacional somente na janela de 19/10/2026 entre 08:00 e 09:00 -03, após preflight;
+- modo alto recomendado para ativação e primeiro measurement;
+- pausa obrigatória preservada.
