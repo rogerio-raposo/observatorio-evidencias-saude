@@ -3033,3 +3033,47 @@ Modo:
 - Fase 5 não iniciada;
 - próximo passo: implementação técnica da 033 em modo médio;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — implementação parcial da migration 033 bloqueada por decisão de schema
+
+Documento:
+- `docs/governance/65-blocker-migration-033-frozen-opportunity-set.md`.
+
+Implementação já persistida:
+- 033 master;
+- 033a core;
+- 033b measurement core;
+- 033c guards;
+- authority resolver hardening.
+
+Estado:
+> **MIGRATION_033 = PARTIALLY_IMPLEMENTED_NOT_VALIDATED**
+
+> **MIGRATION_033_IMPLEMENTATION = BLOCKED_PENDING_SCHEMA_DECISION**
+
+Blocker:
+- o contrato exige finite frozen opportunity set;
+- `artifact.artifact` guarda metadados/locator/hash, não o conteúdo JSON;
+- PostgreSQL não consegue provar que Opportunity rows correspondem exatamente aos timestamps do Artifact;
+- count-only ou validação externa isolada enfraqueceriam replay/integridade.
+
+Opções registradas:
+- A: `opportunity_set_payload jsonb` estruturado em EpochSource;
+- B: ampliar Artifact para conteúdo consultável;
+- C: nova tabela filha de frozen schedule design;
+- D: validação externa apenas — não recomendada.
+
+Recomendação ainda não aprovada:
+> **Opção A** como menor expansão arquitetural.
+
+Boundary:
+- não continuar 033d/033e;
+- não criar fixtures/tests/CI;
+- não alterar schema para resolver blocker em modo médio;
+- measurement schedule continua NOT_SELECTED;
+- Phase B continua não autorizada;
+- nenhum valor temporal normativo autorizado.
+
+Próximo passo:
+> **modo alto: decidir persistência/enforcement do frozen opportunity set; depois retomar implementação.**
