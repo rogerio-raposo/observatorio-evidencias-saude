@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP134 — 2026-10-08**.
+- checkpoint vigente: **CP135 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4391,3 +4391,21 @@ Estado atual:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP135 — B1R1 live activation runbook ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP135.md`;
+- Documento 91 = READY_FOR_LIVE_PREFLIGHT / ACTIVATION_NOT_YET_ALLOWED;
+- Documento 91 supersede Documento 77 apenas operacionalmente para activation futura;
+- Documento 77 permanece histórico;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- live preflight = NOT_YET_RUN;
+- activation = NOT_STARTED;
+- activation SQL/Artifact factual = NOT_YET_CREATED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
