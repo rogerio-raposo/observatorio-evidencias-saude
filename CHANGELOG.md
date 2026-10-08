@@ -4325,3 +4325,16 @@ Documentos:
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - activation segue pendente da janela de 19/10;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Decision tables de contingência B1R1
+
+- criado `docs/governance/90-decision-tables-contingencias-b1r1.md`;
+- activation WAIT/PASS/FAIL e expiry pré-especificados;
+- contingências PubMed e ClinicalTrials.gov mapeadas aos status/attributions/deviations existentes;
+- retries, missed Opportunities e closure states existentes formalizados;
+- identificado explicitamente que partial sem completed posterior não possui closure state físico próprio e exige retorno a modo alto se precisar encerramento definitivo;
+- query/interface/source-scope drift não pode ser absorvido silenciosamente;
+- nenhuma nova migration/schema/authority criada;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados.
