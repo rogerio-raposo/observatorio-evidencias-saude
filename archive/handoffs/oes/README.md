@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP117 — 2026-10-08**
+**CP118 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP117.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP118.md`
 
 Checkpoint anterior:
 
-`CP116`
+`CP117`
 
 Status:
 
@@ -229,3 +229,5 @@ em **Modo Continuidade**.
 - **CP116 — 2026-10-08:** fecha em PASS_WITH_ARCHITECTURAL_DECISIONS o contrato físico v0.1 de aquisição temporal não normativa; migration 033 torna-se elegível para decisão separada, ainda não autorizada, sem schedule numérico ou Phase B.
 
 - **CP117 — 2026-10-08:** autoriza a implementação infrastructure-only da migration 033, define master + fragments, synthetic tests, integração no validate-s5 e zero-real-seed; SQL ainda não implementado.
+
+- **CP118 — 2026-10-08:** registra a implementação parcial da migration 033 e bloqueia o coding antes de 033d/033e por uma decisão de schema sobre como persistir/validar o finite frozen opportunity set; requer retomada em modo alto.
