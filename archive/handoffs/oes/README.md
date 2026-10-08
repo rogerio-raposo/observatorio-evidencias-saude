@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP133 — 2026-10-08**
+**CP134 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP133.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP134.md`
 
 Checkpoint anterior:
 
-`CP132`
+`CP133`
 
 Status:
 
@@ -261,3 +261,5 @@ em **Modo Continuidade**.
 - **CP132 — 2026-10-08:** runbook operacional das medições reais do B1R1 concluído; activation continua pendente da janela de 19/10.
 
 - **CP133 — 2026-10-08:** protocolo de review/encerramento do B1R1 pré-especificado; review ainda não iniciado; activation segue pendente de 19/10.
+
+- **CP134 — 2026-10-08:** decision tables de contingência do B1R1 pré-especificadas; activation permanece pendente de 19/10.
