@@ -4049,3 +4049,65 @@ Estado corrente:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next action = await explicit owner decision on Documento 85;
 - mandatory pause preserved.
+
+
+### Fase 4 — execution authority do B1R1 aprovada e validada
+
+Documentos:
+- `docs/governance/85-pacote-authority-execucao-b1r1.md`;
+- `docs/governance/86-decisao-authority-execucao-b1r1.md`;
+- `docs/governance/87-resultado-authority-execucao-b1r1.md`.
+
+Decisão:
+> **B1R1_EXECUTION_AUTHORITY = APPROVED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **B1R1_ACTIVATION = NOT_STARTED**
+
+Owner decision:
+- exact approval: `APPROVED — B1R1 execution / Documento 85 / TOPI-N2-DCBTI-01 / Epoch B1R1`;
+- decided_at = `2026-10-08T20:26:21-03:00`;
+- design_frozen_at = `2026-10-08T19:48:20-03:00`;
+- authority ordering = PASS.
+
+Physical authority:
+- authority UUID `b3150000-0000-0000-0000-000000000002`;
+- decision Artifact UUID `b3000000-0000-0000-0000-000000000017`;
+- domain = `operational_execution`;
+- decision = `approved`.
+
+Validation:
+- B1R1-AUTH-T01–T20 = PASS;
+- deterministic preflight:
+  - current state = WAIT;
+  - 2026-10-19 08:00 -03 = PASS;
+  - 2026-10-19 08:30 -03 = PASS;
+  - 2026-10-19 09:00 -03 = FAIL;
+- run 232 / `37859791833` = success;
+- validated HEAD `bfcd493a74e095d1c28974c7a033c5dbf0a08b39`;
+- artifact `11585626965`;
+- digest `sha256:ea7b831fa6b0d8c2547bb5763e8c0cf0072c6dcabac4e279dd4d7bf10266a0a6`;
+- rebuild = PASS.
+
+Current state:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1 started_at = NULL**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+Next irreversible act:
+> **live activation preflight for B1R1 on 2026-10-19 in the 08:00–09:00 -03 interval, high mode.**
