@@ -4277,3 +4277,52 @@ Estado operacional preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — decision tables de contingência do B1R1 pré-especificadas
+
+Documento:
+- `docs/governance/90-decision-tables-contingencias-b1r1.md`.
+
+Resultado:
+> **B1R1_CONTINGENCY_TABLES = PRE_SPECIFIED**
+
+Cobertura:
+- activation WAIT/PASS/FAIL;
+- activation expiry;
+- target/authority/artifact/connectivity blockers;
+- PubMed HTTP/JSON/count/idlist contingencies;
+- ClinicalTrials.gov pagination/schema/token contingencies;
+- duplicate/reobserved/updated identifiers;
+- timepoint missing/date-only;
+- retries;
+- missed/failed/indeterminate closure;
+- partial-without-closure escalation;
+- execution delay;
+- query/interface/source-scope drift;
+- data-governance incidents;
+- failure evidence constraints;
+- incidental scientific findings;
+- mixed source outcomes;
+- review-boundary blockers;
+- mode escalation rule.
+
+Nenhuma expansão física:
+> **NEW_SCHEMA = NO**
+
+> **NEW_MIGRATION = NO**
+
+> **NEW_AUTHORITY = NO**
+
+> **B1R1_STATE_MUTATION = NO**
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
