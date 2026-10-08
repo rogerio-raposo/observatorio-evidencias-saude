@@ -2961,3 +2961,56 @@ Próximo passo:
 - próximo passo: decidir migration 033 e boundary técnico em modo alto;
 - implementação mecânica poderá voltar a modo médio após autorização/boundary;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — autorização e boundary técnico da migration 033
+
+Documento:
+- `docs/governance/64-autorizacao-boundary-tecnico-migration-033.md`.
+
+Decisão:
+> **MIGRATION_033 = AUTHORIZED_FOR_IMPLEMENTATION**
+
+Boundary:
+> **INFRASTRUCTURE_ONLY / SYNTHETIC_TESTS_ONLY / ZERO_REAL_SEED**
+
+Decomposição autorizada:
+- `033_non_normative_temporal_observation.sql`;
+- `033a_temporal_observation_core.sql`;
+- `033b_temporal_measurement_core.sql`;
+- `033c_temporal_observation_guards.sql`;
+- `033d_temporal_observation_helpers_views.sql`;
+- `033e_temporal_observation_issue_validators.sql`.
+
+Testes autorizados:
+- `f4-temporal-observation-fixtures.sql`;
+- `f4-temporal-observation-smoke-tests.sql`;
+- `f4-temporal-observation-tests.sql`.
+
+CI:
+- integrar ao workflow canônico `.github/workflows/validate-s5.yml`;
+- adicionar path triggers, hashes, install 033, smoke, synthetic fixtures/tests, idempotency, rebuild e regressions;
+- logs prefixados `F4-TNO`.
+
+Decisões técnicas:
+- master + fragments, coerente com migrations 031/032;
+- não criar workflow paralelo;
+- não reutilizar `maintenance.contract_epoch`;
+- rollback operacional = rebuild-from-zero;
+- no-seed guarantee obrigatória;
+- normative isolation guarantee obrigatória.
+
+Restrições preservadas:
+- measurement schedule = NOT_SELECTED;
+- Phase B authority = NOT_REQUESTED;
+- Phase B execution = NOT_AUTHORIZED;
+- nenhum real TOPI row/authority/opportunity/event;
+- nenhum normative temporal value;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, implementar migration 033 + tests + validate-s5 integration e executar CI.**
+
+Modo:
+> **modo médio suficiente para implementação mecânica dentro do boundary aprovado; retornar ao modo alto se surgir nova decisão arquitetural/schema/lifecycle.**
