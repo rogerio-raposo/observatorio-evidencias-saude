@@ -4158,3 +4158,21 @@ Documentos:
 - nenhum source query real executado;
 - próximo ato irreversível permanece na janela de 19/10 em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Defeito de parametrização ClinicalTrials.gov detectado antes da execução
+
+- revisão para elaboração do runbook identificou que a parametrização exata ClinicalTrials.gov não foi realmente congelada antes da materialização do EpochSource, apesar da precondition dos Documentos 69–70;
+- o artifact `clinicaltrials-interface-v1.json` registra uso de `query.cond/query.term`, mas não define a decomposição exata;
+- nenhuma query target-specific foi executada para investigar o defeito;
+- Documento 82 criado em modo alto;
+- claim de readiness do CP128 supersedido para o aspecto de execution package;
+- activation do B1 atual passa a ser governance-blocked;
+- correção in-place do artifact e runbook-only patch foram rejeitados por quebra de provenance/design freeze;
+- arquitetura selecionada: replacement Epoch `B1R1` sob o mesmo Plan v2;
+- mesmos start/review boundaries e mesmos 14 timestamps serão preservados;
+- normalized ClinicalTrials.gov request candidate: `query.cond=insomnia` + `query.term=(digital CBT OR digital CBT-I OR internet CBT-I)`, JSON, paginação completa;
+- B1R1 ainda não foi criado;
+- B1 atual não foi invalidado;
+- nova corrective preparation authority explícita é obrigatória antes de qualquer correção física;
+- zero MeasurementEvent e zero OpportunityResolution preservados.
