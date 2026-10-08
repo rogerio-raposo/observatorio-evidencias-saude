@@ -3817,3 +3817,52 @@ Próximo ato operacional irreversível:
 - nenhuma source query real foi executada;
 - próximo ato irreversível = live activation preflight em 2026-10-19, 08:00–09:00 -03, modo alto;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — pre-execution readiness do B1 auditado
+
+Documento:
+- `docs/governance/81-auditoria-readiness-pre-execucao-b1.md`.
+
+Resultado:
+> **B1_PRE_EXECUTION_PACKAGE = READY**
+
+> **PRE_EXECUTION_READINESS = PASS**
+
+> **WAIT_FOR_ACTIVATION_WINDOW = YES**
+
+Auditoria confirmou:
+- frozen Plan/design/source/query/interface/schedule artifacts presentes;
+- activation path validado;
+- first-measurement path validado;
+- migration 036 + FM-T01–T24 = PASS;
+- deferred BVS/LILACS debt continua visível;
+- nenhum scheduler/cron de activation;
+- B1 permanece sem mutation.
+
+Gap operacional corrigido:
+- S5 artifact retention = 30 → 60 dias;
+- run 223 / `37830560002` = success;
+- validated HEAD `da18477e1f754e9c27794c851d6be2909c63e039`;
+- artifact `11573131877`;
+- digest `sha256:8eb1763d0b21a06628766a89c26019a7e1e8eb2beaa549ae8616b63f4dc1247d`;
+- expiry `2026-12-07T19:16:09Z`;
+- retenção cobre review boundary de 2026-11-10.
+
+Estado real:
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **started_at = NULL**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **PHASE_B_EXECUTION_STARTED = NO**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+Próximo ato:
+> **aguardar janela de 2026-10-19 08:00–09:00 -03; live activation preflight em modo alto.**
