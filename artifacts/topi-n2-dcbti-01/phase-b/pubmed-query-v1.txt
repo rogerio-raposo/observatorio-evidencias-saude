@@ -1,0 +1,20 @@
+(insomnia[Title/Abstract])
+AND
+(
+  "digital cognitive behavioral therapy"[Title/Abstract]
+  OR "digital cognitive behavioural therapy"[Title/Abstract]
+  OR "internet cognitive behavioral therapy"[Title/Abstract]
+  OR "internet cognitive behavioural therapy"[Title/Abstract]
+  OR dCBT-I[Title/Abstract]
+  OR "fully automated"[Title/Abstract]
+)
+AND
+(
+  systematic review[Publication Type]
+  OR meta-analysis[Publication Type]
+  OR systematic review[Title/Abstract]
+  OR meta-analysis[Title/Abstract]
+  OR randomized controlled trial[Publication Type]
+  OR randomized[Title/Abstract]
+  OR randomised[Title/Abstract]
+)
