@@ -3718,3 +3718,21 @@ Documentos:
 - M3 bloqueado; Fase 5 não iniciada;
 - próximo passo: physical contract v0.1 + test plan + gate adversarial em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Contrato físico v0.1 de aquisição temporal não normativa
+
+- criado Documento 61 com physical contract candidate;
+- criado Documento 62; first adversarial pass = **REVISE**;
+- contrato hardenizado para multi-item temporal facts, OpportunityResolution, retry lifecycle, authority resolver, source semantics, target drift, Artifact liveness e schedule reproducibility;
+- schedule v0.1 reduzido a finite frozen opportunity set; nenhum scheduler/generator no banco;
+- latency passou a ser derivada de MeasurementItemTimepoint, não persistida como segunda verdade;
+- contrato não reutiliza `maintenance.contract_epoch`;
+- criado Documento 63; final recheck = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- physical schema = ready for migration decision;
+- test plan TNO-T01–T90 = ready if migration authorized;
+- migration 033 = eligible for separate authorization, ainda não autorizada;
+- measurement schedule permanece NOT_SELECTED;
+- Phase B authority/execution continuam bloqueadas;
+- nenhum valor temporal normativo autorizado;
+- M3 bloqueado; Fase 5 não iniciada.
