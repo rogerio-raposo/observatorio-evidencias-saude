@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP129 — 2026-10-08**
+**CP130 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP129.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP130.md`
 
 Checkpoint anterior:
 
-`CP128`
+`CP129`
 
 Status:
 
@@ -253,3 +253,5 @@ em **Modo Continuidade**.
 - **CP128 — 2026-10-08:** pre-execution readiness PASS; retenção S5 estendida a 60 dias; aguardar janela de 19/10.
 
 - **CP129 — 2026-10-08:** ClinicalTrials.gov exact request freeze defect identificado; B1 activation bloqueada; corrective preparation authority requerida para replacement B1R1.
+
+- **CP130 — 2026-10-08:** corrective preparation B1R1 PASS; B1 invalidated sem execução; B1R1 draft frozen; Documento 85 aguarda execution authority explícita.
