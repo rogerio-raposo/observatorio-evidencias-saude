@@ -3846,3 +3846,24 @@ Documentos:
 - measurement schedule real e Phase B continuam não autorizados;
 - próximo passo: modo médio;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Migration 033 technical PASS
+
+- migration 033 master + fragments 033a–033e implementados;
+- frozen opportunity-set enforcement corrigido conforme Documentos 66–67;
+- synthetic fixtures, smoke tests e TNO-T01–T100 implementados;
+- validate-s5 integrado sem workflow paralelo;
+- run 214 / `37802083791` = **success**;
+- validated HEAD = `6b9efb3a2439aa700fe8b38334995cf008327fb5`;
+- TNO-T01–T100 = PASS;
+- migration 033 idempotency = PASS;
+- rebuild-through-033 = PASS;
+- prior regressions = PASS;
+- zero-real-seed = PASS;
+- normative isolation = PASS;
+- evidence artifact ID `11560209688`;
+- digest `sha256:fc2909171dfa16f94cccae8cc5bd739b11c6091c4b04bb3ad78136af4ecd0c6b`;
+- migration 033 promovida somente como infraestrutura não normativa;
+- TOPI real, measurement schedule real e Phase B continuam não autorizados;
+- próximo passo exige modo alto para desenho experimental da Phase B.
