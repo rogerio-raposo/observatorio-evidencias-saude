@@ -3077,3 +3077,19 @@ Boundary:
 
 Próximo passo:
 > **modo alto: decidir persistência/enforcement do frozen opportunity set; depois retomar implementação.**
+
+
+### CP118 — blocker de schema na migration 033
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP118.md`;
+- ponteiro movido para CP118;
+- migration 033 parcialmente implementada, ainda não validada;
+- 033 master/033a/033b/033c persistidos;
+- frozen opportunity-set enforcement = unresolved;
+- Documento 65 registra opções A–D;
+- implementação suspensa antes de 033d/033e/fixtures/tests/CI;
+- measurement schedule continua NOT_SELECTED;
+- Phase B authority/execution continuam não autorizadas;
+- nenhum normative temporal value autorizado;
+- próximo passo requer modo alto;
+- pausa obrigatória preservada.
