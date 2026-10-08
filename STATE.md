@@ -3617,3 +3617,53 @@ Mode:
 - next valid act = live preflight on 2026-10-19 between 08:00 and 09:00 -03;
 - high mode required;
 - mandatory pause preserved.
+
+
+### Fase 4 — contrato do primeiro measurement real e harness sintético
+
+Documento:
+- `docs/governance/78-contrato-primeiro-measurement-real-harness-sintetico-b1.md`.
+
+Decisão:
+> **FIRST_REAL_MEASUREMENT_CONTRACT = SPECIFIED**
+
+> **SYNTHETIC_POST_ACTIVATION_HARNESS = PLANNED_NOT_IMPLEMENTED**
+
+> **NEW_SCHEMA_MIGRATION_REQUIRED = NO**
+
+Semântica consolidada:
+- activation permanece separada de measurement;
+- primeira successful observation por source = `OBSERVED_EPOCH_BASELINE_ACQUISITION`;
+- aggregate `novelty_state = not_applicable`;
+- `new_identifier_count = NULL`;
+- `new_to_epoch` é propriedade estrutural do epoch, não scientific novelty;
+- missed Opportunity não cria MeasurementEvent;
+- failure attribution permanece evidence-based;
+- nenhuma execução temporal cria UpdateSignal automaticamente;
+- nenhuma alteração automática de conclusion/currentness/assurance;
+- B1 real não pode ser usado no harness sintético.
+
+Plano técnico:
+- suite proposta `FM-T01–T24`;
+- arquivo proposto `database/f4-temporal-first-measurement-tests.sql`;
+- harness exclusivamente sintético;
+- CI sem network call real;
+- prova final obrigatória de zero mutation no B1 real.
+
+Estado corrente:
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **PHASE_B_EXECUTION_STARTED = NO**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+Próximo passo:
+> **em modo médio, implementar FM-T01–T24, integrar ao S5 e validar em CI, sem tocar no B1 real.**
