@@ -4311,3 +4311,17 @@ Documentos:
 - Calibration Dossier não foi aberto;
 - B1R1 permanece authorized_non_normative, started_at NULL;
 - zero MeasurementEvent e zero OpportunityResolution preservados.
+
+
+## 2026-10-08 — CP133
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP133.md`;
+- ponteiro movido para CP133;
+- Documento 89 promovido como protocolo pré-especificado de review/encerramento do B1R1;
+- nenhum threshold, minimum-N, favorable stopping ou automatic extension introduzido;
+- review permanece não iniciado;
+- Calibration Dossier permanece fechado;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- activation segue pendente da janela de 19/10;
+- pausa obrigatória preservada.
