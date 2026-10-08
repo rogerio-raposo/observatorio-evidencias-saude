@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 7 de outubro de 2026  
+**Última atualização:** 8 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP109 — 2026-10-07**.
+- checkpoint vigente: **CP124 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
