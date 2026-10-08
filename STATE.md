@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP130 — 2026-10-08**.
+- checkpoint vigente: **CP131 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4111,3 +4111,26 @@ Current state:
 
 Next irreversible act:
 > **live activation preflight for B1R1 on 2026-10-19 in the 08:00–09:00 -03 interval, high mode.**
+
+
+### CP131 — B1R1 execution authority approved / activation pending
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP131.md`;
+- Documento 85 = authority package;
+- Documento 86 = owner APPROVED decision record;
+- Documento 87 = APPROVED_AND_VALIDATED / ACTIVATION_PENDING;
+- B1 = invalidated;
+- B1R1 = authorized_non_normative;
+- B1R1 authority UUID = `b3150000-0000-0000-0000-000000000002`;
+- B1R1 started_at = NULL;
+- B1R1-AUTH-T01–T20 = PASS;
+- run 232 / `37859791833` = success;
+- evidence artifact `11585626965`;
+- digest `sha256:ea7b831fa6b0d8c2547bb5763e8c0cf0072c6dcabac4e279dd4d7bf10266a0a6`;
+- rebuild ends with B1 invalidated and B1R1 authorized_non_normative / zero execution;
+- activation remains pending the 2026-10-19 08:00–09:00 -03 window;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- M3 remains blocked;
+- Phase 5 not started;
+- mandatory pause preserved.
