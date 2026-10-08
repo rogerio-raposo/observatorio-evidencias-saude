@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP124 — 2026-10-08**.
+- checkpoint vigente: **CP125 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -3667,3 +3667,20 @@ Estado corrente:
 
 Próximo passo:
 > **em modo médio, implementar FM-T01–T24, integrar ao S5 e validar em CI, sem tocar no B1 real.**
+
+
+### CP125 — first measurement contract specified
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP125.md`;
+- Documento 78 = SPECIFIED;
+- first real measurement contract = SPECIFIED;
+- synthetic post-activation harness = PLANNED_NOT_IMPLEMENTED;
+- FM-T01–T24 = planned;
+- new schema migration = NOT_REQUIRED;
+- B1 permanece `authorized_non_normative`;
+- started_at = NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- próxima ação = implementação sintética em modo médio;
+- qualquer necessidade de migration/semântica nova retorna a modo alto;
+- pausa obrigatória preservada.
