@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP111 — 2026-10-07**
+**CP112 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP111.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP112.md`
 
 Checkpoint anterior:
 
-`CP110`
+`CP111`
 
 Status:
 
@@ -217,3 +217,5 @@ em **Modo Continuidade**.
 - **CP110 — 2026-10-07:** reconcilia a caracterização do N2 no Documento 48, preserva o resultado do primeiro readiness N1-01 e seleciona N2/dCBT-I A2/published como segundo Evidence Readiness Assessment real; execução ainda pendente.
 
 - **CP111 — 2026-10-07:** consolida o segundo Evidence Readiness Assessment real no N2/dCBT-I, confirma `INSUFFICIENT_EVIDENCE`, identifica blockers temporais recorrentes em N1/N2 e retoma na decisão entre plano transversal reutilizável e plano target-specific de aquisição temporal não normativa.
+
+- **CP112 — 2026-10-07:** fecha a arquitetura de aquisição de evidência temporal não normativa em PASS_WITH_ARCHITECTURAL_DECISIONS; adota protocolo transversal reutilizável + instância target-specific e retoma na seleção/especificação do primeiro piloto, ainda sem execução real.
