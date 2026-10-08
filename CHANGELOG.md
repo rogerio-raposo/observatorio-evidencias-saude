@@ -3815,3 +3815,18 @@ Documentos:
 - measurement schedule e Phase B continuam não autorizados;
 - próximo passo: decisão em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Frozen opportunity-set schema decision
+
+- criado Documento 66 com decisão de usar o `measurement_schedule_payload` existente como canonical structured frozen opportunity set;
+- nenhum novo campo ou tabela necessário;
+- Artifact passa a ser provenance-only para schedule definition;
+- lifecycle corrigido: Opportunity rows são materializadas em draft antes da authorization;
+- authority freshness deve ser posterior/simultânea ao design freeze;
+- row extra fora do payload deve falhar no insert;
+- payload item sem row deve bloquear authorization;
+- criado Documento 67; recheck = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- test plan ampliado para TNO-T01–T100;
+- migration 033 continua parcialmente implementada/não validada, mas autorizada a retomar após checkpoint;
+- measurement schedule real e Phase B continuam não autorizados.
