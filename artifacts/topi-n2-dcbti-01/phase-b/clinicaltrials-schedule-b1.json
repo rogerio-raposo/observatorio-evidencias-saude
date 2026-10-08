@@ -1,0 +1,15 @@
+{
+  "schema": "oes.temporal_opportunity_set/0.1",
+  "non_normative": true,
+  "schedule_kind": "finite_opportunity_set",
+  "rationale": "Finite stepped ClinicalTrials.gov measurement design for registry identifier/update comparison, temporal endpoint observability and pilot effort.",
+  "timezone_name": "America/Recife",
+  "opportunities": [
+    {"opportunity_no": 1, "planned_for": "2026-10-19T10:30:00-03:00"},
+    {"opportunity_no": 2, "planned_for": "2026-10-22T10:30:00-03:00"},
+    {"opportunity_no": 3, "planned_for": "2026-10-27T10:30:00-03:00"},
+    {"opportunity_no": 4, "planned_for": "2026-10-30T10:30:00-03:00"},
+    {"opportunity_no": 5, "planned_for": "2026-11-04T10:30:00-03:00"},
+    {"opportunity_no": 6, "planned_for": "2026-11-09T10:30:00-03:00"}
+  ]
+}
