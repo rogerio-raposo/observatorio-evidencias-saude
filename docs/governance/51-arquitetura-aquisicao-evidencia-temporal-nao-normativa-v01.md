@@ -606,22 +606,63 @@ Sem evidence record:
 
 > **EXECUTION_NOT_AUTHORIZED**
 
-## 30. Taxonomia de resultado de measurement event
+Para iniciar observação real:
 
-Cada measurement event deve terminar em um estado inequívoco, por exemplo:
+- operational execution authority deve ser decisão humana de owner/institutional authority competente;
+- data-governance authority, quando aplicável, deve ser decisão humana/institucional competente;
+- scientific/methodological scope que dependa de julgamento qualificado deve possuir human_reviewer/human_expert apropriado;
+- IA/system pode preparar análise, nunca substituir essas decisões.
 
-- `successful_zero_result`;
-- `successful_nonzero_result`;
-- `denominator_unknown`;
-- `partial_retrieval`;
-- `source_failure`;
-- `oes_failure`;
+## 30. Outcome model multidimensional de measurement event
+
+O resultado de um measurement event não pode ser comprimido em um único enum que misture execução, cardinalidade, denominator e falha.
+
+Registrar dimensões ortogonais.
+
+### 30.1 execution_status
+
+- `completed`;
+- `partial`;
+- `failed`;
 - `not_executed`;
 - `indeterminate`.
 
-Somente `successful_zero_result` sustenta interpretação de ausência de resultado no scope executado.
+### 30.2 result_state
 
-`result_count=NULL` nunca significa zero.
+Quando semanticamente aplicável:
+
+- `zero`;
+- `nonzero`;
+- `unknown`;
+- `not_applicable`.
+
+### 30.3 denominator_status
+
+- `known`;
+- `unknown`;
+- `not_applicable`.
+
+Quando `known`, registrar o denominator e sua semântica.
+
+### 30.4 failure_attribution
+
+Quando houver falha:
+
+- `source_confirmed`;
+- `oes_confirmed`;
+- `mixed`;
+- `unknown`;
+- `not_applicable`.
+
+Atribuição causal exige evidência; indisponibilidade observada pelo OES não prova falha da fonte.
+
+Somente:
+
+> `execution_status=completed` + `result_state=zero`
+
+sustenta interpretação de ausência de resultado dentro do scope realmente executado.
+
+`result_count=NULL` nunca significa zero e pode coexistir com `result_state=nonzero` quando registros foram recuperados sem denominator bruto confiável.
 
 ## 31. Pilot effort não é sustainable capacity
 
