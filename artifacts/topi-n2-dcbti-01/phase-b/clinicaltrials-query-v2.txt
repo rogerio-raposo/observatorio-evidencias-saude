@@ -1,0 +1,5 @@
+# ClinicalTrials.gov B1R1 logical query v2
+# Logical scientific scope is unchanged from v1.
+# The executable parameter mapping is frozen in clinicaltrials-interface-v2.json.
+
+insomnia AND (digital CBT OR digital CBT-I OR internet CBT-I)
