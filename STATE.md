@@ -3599,3 +3599,21 @@ Mode:
 - no normative temporal values;
 - M3 blocked;
 - Phase 5 not started.
+
+
+### CP124 — activation preflight ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP124.md`;
+- B1 = `authorized_non_normative`;
+- live preflight implementation = VALIDATED;
+- current preflight state = WAIT / NOT_IN_ACTIVATION_WINDOW;
+- activation SQL = NOT_YET_CREATED;
+- started_at = NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- run 219 / `37819755672` = success;
+- evidence artifact = `11568343046`;
+- digest = `sha256:73f147fca89833f944b1bbb55fda324afa005bd0f17e9ea3b29fdc46810d906b`;
+- next valid act = live preflight on 2026-10-19 between 08:00 and 09:00 -03;
+- high mode required;
+- mandatory pause preserved.
