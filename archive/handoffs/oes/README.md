@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP115 — 2026-10-07**
+**CP116 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP115.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP116.md`
 
 Checkpoint anterior:
 
-`CP114`
+`CP115`
 
 Status:
 
@@ -225,3 +225,5 @@ em **Modo Continuidade**.
 - **CP114 — 2026-10-07:** registra a approval explícita da Phase A e conclui a characterization da TOPI-N2-DCBTI-01; PubMed e ClinicalTrials.gov ficam aptos para desenho de Phase B com controles, BVS/LILACS permanece parcial, measurement schedule não selecionada e Phase B não autorizada.
 
 - **CP115 — 2026-10-07:** fecha o Plan Amendment v0.2 da TOPI-N2-DCBTI-01; inclui PubMed e ClinicalTrials.gov como candidates da Phase B, mantém BVS/LILACS como deferred source debt e confirma lacuna física que exige specification de event layer não normativo antes de schedule, authority ou migration.
+
+- **CP116 — 2026-10-08:** fecha em PASS_WITH_ARCHITECTURAL_DECISIONS o contrato físico v0.1 de aquisição temporal não normativa; migration 033 torna-se elegível para decisão separada, ainda não autorizada, sem schedule numérico ou Phase B.
