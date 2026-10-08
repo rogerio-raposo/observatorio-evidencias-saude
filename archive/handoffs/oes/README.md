@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP125 — 2026-10-08**
+**CP126 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP125.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP126.md`
 
 Checkpoint anterior:
 
-`CP124`
+`CP125`
 
 Status:
 
@@ -245,3 +245,5 @@ em **Modo Continuidade**.
 - **CP124 — 2026-10-08:** valida o activation preflight determinístico do B1; estado atual WAIT antes da janela, PASS apenas entre 08:00 e 09:00 -03 em 19/10 e FAIL/EXPIRED_NOT_EXECUTED a partir da primeira Opportunity; zero mutação.
 
 - **CP125 — 2026-10-08:** contrato do primeiro measurement real especificado; FM-T01–T24 planejados; retomada na implementação sintética em modo médio.
+
+- **CP126 — 2026-10-08:** hardening da semântica do primeiro measurement definido; migration 036 requerida; implementação pendente em modo médio.
