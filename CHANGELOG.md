@@ -3613,3 +3613,22 @@ Documentos:
 - Fase 5 não iniciada;
 - próximo passo: selecionar N1-01 ou N2/dCBT-I e especificar a primeira instância piloto, em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-07 — Primeira Temporal Observation Plan Instance
+
+- criado Documento 54: N2/dCBT-I selecionado como primeiro target da TOPI;
+- escolha baseada em information gain, source complexity, cost, storage semantics, authority, data governance e overfitting;
+- TOPI-N2-DCBTI-01 especificada em Phase A e Phase B;
+- Phase A = characterization/authority/data-governance/risk-profile evidence preparation;
+- Phase B bloqueada até Result Package + amendment v0.2 + recheck;
+- measurement schedule não selecionada para evitar anchoring antes de source characterization;
+- criado Documento 55: gate target-specific = **PASS_FOR_AUTHORITY_REQUEST_ONLY**;
+- Phase A specification = PASS; execution ainda bloqueada;
+- criado Documento 56: pacote de decisão de authority;
+- `AUTHORITY_DECISION = PENDING`;
+- mensagens genéricas não valem como approval do Documento 56;
+- nenhuma source interaction real autorizada;
+- nenhum valor temporal normativo ou migration nova autorizado;
+- Phase B, scheduler, notifications, auto-escalation e M3 permanecem bloqueados;
+- Fase 5 não iniciada.
