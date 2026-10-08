@@ -3753,3 +3753,21 @@ Documentos:
 - M3 bloqueado; Fase 5 não iniciada;
 - próximo passo: decisão de migration 033 / boundary técnico em modo alto;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Autorização da migration 033
+
+- criado `docs/governance/64-autorizacao-boundary-tecnico-migration-033.md`;
+- migration 033 = **AUTHORIZED_FOR_IMPLEMENTATION**;
+- boundary = infrastructure-only / synthetic-tests-only / zero-real-seed;
+- master + fragments 033a–033e adotados, seguindo padrão 031/032;
+- fixtures/smoke/full tests separados;
+- integração autorizada no workflow canônico `validate-s5.yml`;
+- nenhum workflow paralelo;
+- `maintenance.contract_epoch` não será reutilizado;
+- rebuild-from-zero permanece rollback operacional;
+- no-seed e normative-isolation deverão ser testados;
+- measurement schedule continua NOT_SELECTED;
+- Phase B authority/execution continuam não autorizadas;
+- nenhum valor temporal normativo autorizado;
+- próximo passo: checkpoint e implementação técnica em modo médio.
