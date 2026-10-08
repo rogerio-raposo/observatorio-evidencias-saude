@@ -3700,3 +3700,21 @@ Documentos:
 - migration, Phase B authority e Phase B execution continuam não autorizados;
 - nenhum valor temporal normativo autorizado;
 - M3 bloqueado; Fase 5 não iniciada.
+
+
+## 2026-10-07 — CP115
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP115.md`;
+- ponteiro movido para CP115;
+- Documento 59 = Plan Amendment v0.2;
+- Documento 60 = PASS_WITH_ARCHITECTURAL_DECISIONS;
+- Phase B candidate sources = PubMed + ClinicalTrials.gov;
+- BVS/LILACS = deferred source debt;
+- physical gap para repeated pre-calibration measurement confirmado;
+- physical contract autorizado apenas para specification;
+- measurement schedule continua não selecionado;
+- Phase B authority/execution e migration continuam não autorizados;
+- nenhum valor temporal normativo autorizado;
+- M3 bloqueado; Fase 5 não iniciada;
+- próximo passo: physical contract v0.1 + test plan + gate adversarial em modo alto;
+- pausa obrigatória preservada.
