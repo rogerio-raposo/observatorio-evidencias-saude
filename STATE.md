@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP129 — 2026-10-08**.
+- checkpoint vigente: **CP130 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4027,3 +4027,25 @@ Estado corrente:
 > **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
 
 > **PHASE_5 = NOT_STARTED**
+
+
+### CP130 — corrective preparation B1R1 PASS
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP130.md`;
+- Documento 83 = corrective preparation authority APPROVED/EXECUTED;
+- Documento 84 = corrective preparation PASS;
+- Documento 85 = execution authority package PENDING OWNER DECISION;
+- original B1 = invalidated without execution;
+- B1R1 = draft_frozen;
+- B1R1 UUID = `b3120000-0000-0000-0000-000000000002`;
+- design_frozen_at = `2026-10-08T19:48:20-03:00`;
+- run 224 = corrective connectivity PASS;
+- run 229 = B1R1-T01–T24 + rebuild PASS;
+- run 229 artifact = `11583902320`;
+- digest = `sha256:77066bb64d4fa3110686027f552f69366702a4c72d53e45e188c7df6d7ff89e2`;
+- B1R1 execution authority = PENDING;
+- B1R1 activation = NOT_AUTHORIZED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next action = await explicit owner decision on Documento 85;
+- mandatory pause preserved.
