@@ -156,7 +156,26 @@ SELECT pg_temp.tno_assert('TNO-T86',NOT EXISTS(SELECT 1 FROM information_schema.
 SELECT pg_temp.tno_assert('TNO-T87',NOT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='maintenance' AND table_name LIKE 'temporal_%' AND column_name LIKE '%breach%'));
 SELECT pg_temp.tno_assert('TNO-T88',(SELECT maintenance_level='M1' FROM investigation.investigation_version WHERE version_uuid='e5100000-0000-0000-0000-000000000002'));
 SELECT pg_temp.tno_assert('TNO-T89',(SELECT count(*)=0 FROM maintenance.cadence_observation WHERE cadence_observation_uuid::text LIKE 'f7%'));
-SELECT pg_temp.tno_assert('TNO-T90',(SELECT count(*)=0 FROM maintenance.update_signal WHERE update_signal_uuid::text LIKE 'f7%'));
+SELECT pg_temp.tno_assert('TNO-T90',NOT EXISTS(
+  SELECT 1
+  FROM pg_constraint con
+  JOIN pg_class src ON src.oid=con.conrelid
+  JOIN pg_namespace ns ON ns.oid=src.relnamespace
+  JOIN pg_class ref ON ref.oid=con.confrelid
+  JOIN pg_namespace rns ON rns.oid=ref.relnamespace
+  WHERE con.contype='f'
+    AND ns.nspname='maintenance'
+    AND src.relname IN (
+      'temporal_observation_plan','temporal_observation_source','temporal_observation_epoch',
+      'temporal_observation_epoch_source','temporal_observation_authority',
+      'temporal_measurement_opportunity','temporal_measurement_event',
+      'temporal_measurement_opportunity_resolution','temporal_measurement_item',
+      'temporal_measurement_item_timepoint','temporal_measurement_event_artifact',
+      'temporal_observation_deviation'
+    )
+    AND rns.nspname='maintenance'
+    AND ref.relname='update_signal'
+));
 
 -- T91–T100: CP119 hardening
 SELECT pg_temp.tno_assert('TNO-T91',NOT maintenance.temporal_measurement_schedule_payload_is_valid(
