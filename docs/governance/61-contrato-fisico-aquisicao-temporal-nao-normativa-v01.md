@@ -3,7 +3,7 @@
 **Projeto:** Observatório de Evidências em Saúde — OES  
 **Fase:** 4 — Protocolo Transversal de Atualização  
 **Data:** 8 de outubro de 2026  
-**Status:** **CANDIDATE_FOR_ADVERSARIAL_GATE — MIGRATION_NOT_AUTHORIZED**  
+**Status:** **REVISED_READY_FOR_RECHECK — MIGRATION_NOT_AUTHORIZED**  
 **Modo:** alto  
 **Dependências:** Documentos 51–60; CP115  
 **Objeto:** especificar o contrato físico para ObservationEpoch e measurement events pré-calibração sem introduzir semântica normativa
@@ -37,11 +37,14 @@ Novos objetos candidatos:
 1. `maintenance.temporal_observation_plan`;
 2. `maintenance.temporal_observation_source`;
 3. `maintenance.temporal_observation_epoch`;
-4. `maintenance.temporal_observation_authority`;
-5. `maintenance.temporal_measurement_opportunity`;
-6. `maintenance.temporal_measurement_event`;
-7. `maintenance.temporal_measurement_event_artifact`;
-8. `maintenance.temporal_observation_deviation`.
+4. `maintenance.temporal_observation_epoch_source`;
+5. `maintenance.temporal_observation_authority`;
+6. `maintenance.temporal_measurement_opportunity`;
+7. `maintenance.temporal_measurement_event`;
+8. `maintenance.temporal_measurement_item`;
+9. `maintenance.temporal_measurement_item_timepoint`;
+10. `maintenance.temporal_measurement_event_artifact`;
+11. `maintenance.temporal_observation_deviation`.
 
 Nenhuma tabela é criada por este documento.
 
@@ -58,7 +61,7 @@ Campos candidatos:
 - `target_product_version_uuid uuid NULL FK product.product_version`;
 - `target_investigation_version_uuid uuid NULL FK investigation.investigation_version`;
 - `calibration_object text NOT NULL CHECK(calibration_object='cadence')`;
-- `readiness_scope text NOT NULL`;
+- `readiness_scope text NOT NULL CHECK(readiness_scope IN ('policy_aggregate','source_specific'))`;
 - `specification_artifact_uuid uuid NOT NULL FK artifact.artifact`;
 - `prepared_at timestamptz NOT NULL`;
 - `created_by text NOT NULL`;
@@ -109,6 +112,9 @@ Campos:
 - `source_class text NOT NULL`;
 - `inclusion_status text NOT NULL CHECK(inclusion_status IN ('included','deferred','excluded','unassessed'))`;
 - `interface_code text NULL`;
+- `access_mode text NOT NULL CHECK(access_mode IN ('programmatic','manual','hybrid','unresolved'))`;
+- `runtime_connectivity_required boolean NOT NULL DEFAULT false`;
+- `time_semantics_payload jsonb NOT NULL`;
 - `source_definition_artifact_uuid uuid NULL FK artifact.artifact`;
 - `inclusion_rationale text NOT NULL`;
 - `debt_reason_code text NULL`;
@@ -121,8 +127,9 @@ Constraints:
 - `UNIQUE(observation_plan_uuid,source_code)`;
 - `deferred` exige `debt_reason_code` e `reassessment_trigger`;
 - `included` não pode ter `debt_reason_code`;
+- `time_semantics_payload` deve usar schema `oes.temporal_source_semantics/0.1` e listar semantic codes permitidos pela source;
 - source rows são imutáveis;
-- mudança de source status exige nova PlanVersion.
+- mudança de source status, access mode ou time semantics exige nova PlanVersion.
 
 Para TOPI v0.2:
 
@@ -173,6 +180,9 @@ Campos:
 - `observation_epoch_uuid uuid NOT NULL FK`;
 - `observation_source_uuid uuid NOT NULL FK`;
 - `query_strategy_artifact_uuid uuid NULL FK artifact.artifact`;
+- `interface_config_artifact_uuid uuid NULL FK artifact.artifact`;
+- `baseline_artifact_uuid uuid NULL FK artifact.artifact`;
+- `measurement_investigation_version_uuid uuid NULL FK investigation.investigation_version`;
 - `runtime_interface_code text NOT NULL`;
 - `measurement_schedule_payload jsonb NOT NULL`;
 - `runtime_connectivity_status text NOT NULL CHECK(runtime_connectivity_status IN ('unverified','verified','blocked'))`;
@@ -185,7 +195,10 @@ Constraints:
 - source precisa estar `included`;
 - row é imutável;
 - query artifact obrigatório quando measurement envolver query científica ou registry query;
-- schedule payload deve passar validator estrito.
+- `measurement_investigation_version_uuid`, quando presente, deve ser o exact Investigation target ou uma Investigation vinculada ao ProductVersion target;
+- baseline artifact congela a referência usada para classificar item como `new_to_epoch`, `reobserved` ou `updated_record`;
+- schedule payload deve passar validator estrito;
+- se a source tiver `runtime_connectivity_required=true`, activation exige `runtime_connectivity_status='verified'`.
 
 ## 8. measurement_schedule_payload
 
@@ -199,8 +212,7 @@ Campos permitidos:
 - `non_normative` = true;
 - `schedule_kind`;
 - `rationale`;
-- `generation_payload`;
-- `review_boundary_at`.
+- `generation_payload`.
 
 `schedule_kind`:
 
@@ -221,11 +233,17 @@ Proibições de chave no payload:
 - `penalty`;
 - `escalation`.
 
-Validator candidato:
+Validators candidatos:
+
+> **maintenance.jsonb_contains_forbidden_temporal_keys(jsonb)**
 
 > **maintenance.temporal_measurement_schedule_payload_is_valid(jsonb)**
 
+A proibição de keys normativas é recursiva em qualquer profundidade do JSON.
+
 O validator não autoriza nenhum número; apenas define shape.
+
+O `review_boundary_at` existe somente em `temporal_observation_epoch`; o schedule payload não pode duplicá-lo.
 
 ## 9. maintenance.temporal_observation_authority
 
@@ -278,7 +296,9 @@ Constraints:
 
 ## 11. maintenance.temporal_measurement_event
 
-Registro append-only de tentativa/resultado associado a uma opportunity.
+Registro append-only de tentativa de execução associado a uma opportunity.
+
+O event é **query/execution-level**, não item-level.
 
 Campos:
 
@@ -288,15 +308,13 @@ Campos:
 - `execution_status text NOT NULL CHECK(execution_status IN ('completed','partial','failed','not_executed','indeterminate'))`;
 - `execution_started_at timestamptz NULL`;
 - `execution_completed_at timestamptz NULL`;
-- `result_state text NOT NULL CHECK(result_state IN ('zero','nonzero','unknown','not_applicable'))`;
-- `retrieved_identifier_count integer NULL CHECK(retrieved_identifier_count>=0)`;
-- `denominator_status text NOT NULL CHECK(denominator_status IN ('known','unknown','not_applicable'))`;
-- `denominator_count bigint NULL CHECK(denominator_count>=0)`;
+- `novelty_state text NOT NULL CHECK(novelty_state IN ('zero_new','new_items','unknown','not_applicable'))`;
+- `raw_result_count bigint NULL CHECK(raw_result_count>=0)`;
+- `raw_result_count_status text NOT NULL CHECK(raw_result_count_status IN ('known','unknown','not_applicable'))`;
+- `materialized_identifier_count integer NULL CHECK(materialized_identifier_count>=0)`;
+- `new_identifier_count integer NULL CHECK(new_identifier_count>=0)`;
 - `failure_attribution text NOT NULL CHECK(failure_attribution IN ('source_confirmed','oes_confirmed','mixed','unknown','not_applicable'))`;
-- `source_time_payload jsonb NOT NULL`;
-- `oes_detected_at timestamptz NULL`;
-- `latency_status text NOT NULL CHECK(latency_status IN ('observable','bounded','not_observable','not_applicable'))`;
-- `latency_bounds_payload jsonb NULL`;
+- `failure_evidence_artifact_uuid uuid NULL FK artifact.artifact`;
 - `scientific_search_uuid uuid NULL FK investigation.search`;
 - `effort_payload jsonb NOT NULL DEFAULT '{}'::jsonb`;
 - `operator text NOT NULL`;
@@ -307,130 +325,150 @@ Constraints:
 
 - `UNIQUE(measurement_opportunity_uuid,attempt_no)`;
 - rows imutáveis;
-- attempt numbers crescentes sem overwrite;
-- `not_executed` exige started/completed NULL, result_state=`not_applicable`, denominator_status=`not_applicable`, failure_attribution=`not_applicable`;
+- attempt_no deve ser exatamente o próximo inteiro contíguo da opportunity;
+- `not_executed` exige timestamps NULL, novelty_state=`not_applicable`, counts NULL e failure_attribution=`not_applicable`;
 - completed/partial/failed exigem `execution_started_at`;
 - `execution_completed_at >= execution_started_at` quando ambos;
-- `result_state='zero'` exige execution_status=`completed` e retrieved_identifier_count=0;
-- `result_state='nonzero'` exige retrieved_identifier_count>0;
-- denominator_status=`known` exige denominator_count não NULL;
-- denominator_status != known exige denominator_count NULL;
-- failure_attribution source_confirmed exige evidence artifact linkage com role `failure_evidence`;
-- completed sem falha exige failure_attribution=`not_applicable`;
-- scientific_search_uuid só pode existir para evento que realmente executou Search científica;
-- Search deve pertencer à Investigation do exact target;
+- raw_result_count_status=`known` exige raw_result_count não NULL;
+- raw_result_count_status != known exige raw_result_count NULL;
+- novelty_state=`zero_new` exige new_identifier_count=0;
+- novelty_state=`new_items` exige new_identifier_count>0;
+- source_confirmed ou mixed exige `failure_evidence_artifact_uuid` active;
+- completed sem incidente exige failure_attribution=`not_applicable`;
+- scientific_search_uuid só pode existir para Search científica realmente executada;
+- Search deve pertencer ao `measurement_investigation_version_uuid` congelado em EpochSource;
 - nenhum FK para MonitorCycle, UpdatePolicy, CadenceContract ou CadenceObligation.
 
-## 12. source_time_payload
+### 11.1 Retry/closure guard
 
-Schema lógico:
+Função candidata:
 
-> **oes.temporal_measurement_source_time/0.1**
-
-Campos permitidos:
-
-- `schema_version`;
-- `status` = observed | bounded | not_observable | not_applicable;
-- `semantic_code`;
-- `source_field`;
-- `raw_value`;
-- `precision`;
-- `timezone_name`;
-- `lower_bound_at`;
-- `upper_bound_at`;
-- `interpretation`.
-
-Precision:
-
-- second;
-- minute;
-- hour;
-- day;
-- month;
-- year;
-- interval;
-- unknown.
+> **maintenance.assert_temporal_measurement_event_append()**
 
 Regras:
 
-- not_observable/not_applicable não podem fabricar bounds;
-- bounded exige lower + upper e upper>=lower;
-- observed com date-only não deve ser convertido em fake exact timestamp;
-- raw source value deve ser preservável via Artifact quando necessário.
+- primeiro attempt = 1;
+- attempts seguintes são contíguos;
+- retry só é permitido após failed, partial ou indeterminate;
+- após completed com novelty_state determinado, nenhuma nova tentativa;
+- `not_executed` é terminal e exclusivo;
+- mais de um successful completed é inválido;
+- histórico anterior nunca é alterado.
 
-Source-specific allowed semantics:
+Opportunity resolution é derivada, não armazenada por update.
 
-### PubMed
+## 12. maintenance.temporal_measurement_item
 
-- publication_date;
-- electronic_publication_date;
-- print_publication_date;
-- create_date;
-- entry_date;
-- mesh_date;
-- not_observable.
-
-### ClinicalTrials.gov
-
-- first_posted_date;
-- results_first_posted_date;
-- last_update_posted_date;
-- qc_submission_date;
-- not_observable.
-
-Validator candidato:
-
-> **maintenance.temporal_measurement_source_time_payload_is_valid(source_code,jsonb)**
-
-## 13. latency_bounds_payload
-
-Schema lógico:
-
-> **oes.temporal_measurement_latency/0.1**
+Representa um identificador/registro observado dentro de um measurement event.
 
 Campos:
 
-- `schema_version`;
-- `latency_kind`;
-- `start_semantic`;
-- `end_semantic`;
-- `lower_seconds`;
-- `upper_seconds`;
-- `precision_note`.
+- `measurement_item_uuid uuid PK`;
+- `measurement_event_uuid uuid NOT NULL FK`;
+- `source_identifier text NOT NULL`;
+- `source_locator text NULL`;
+- `item_state text NOT NULL CHECK(item_state IN ('new_to_epoch','reobserved','updated_record','indeterminate'))`;
+- `oes_detected_at timestamptz NOT NULL`;
+- `search_hit_uuid uuid NULL FK investigation.search_hit`;
+- `source_record_artifact_uuid uuid NULL FK artifact.artifact`;
+- `created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`.
 
-Latency kinds:
+Constraints:
 
-- publication_to_source;
-- source_posting;
-- oes_detection;
-- oes_processing.
+- `UNIQUE(measurement_event_uuid,source_identifier)`;
+- source identifier não vazio;
+- row imutável;
+- event deve estar completed ou partial;
+- item source deve corresponder ao EpochSource;
+- SearchHit, quando presente, deve derivar da scientific_search_uuid do event;
+- `new_to_epoch` significa novo em relação ao baseline/observações anteriores do epoch, nunca “novo na ciência”;
+- reobserved/updated_record exigem existência anterior do normalized identifier no mesmo epoch ou baseline.
 
-Regras:
+Helper candidato:
 
-- observable pode ter lower=upper somente se endpoints justificarem precisão;
-- bounded exige upper>=lower;
-- not_observable/not_applicable exige payload NULL;
-- source posting não pode ser rotulado article-publication latency.
+> **maintenance.temporal_measurement_item_state_is_valid(item_uuid)**
 
-## 14. effort_payload
+## 13. maintenance.temporal_measurement_item_timepoint
 
-Schema lógico mínimo:
+Uma row por endpoint temporal source-level do item.
+
+Campos:
+
+- `measurement_item_timepoint_uuid uuid PK`;
+- `measurement_item_uuid uuid NOT NULL FK`;
+- `semantic_code text NOT NULL`;
+- `source_field text NULL`;
+- `raw_value text NULL`;
+- `precision text NOT NULL CHECK(precision IN ('second','minute','hour','day','month','year','interval','unknown'))`;
+- `timezone_name text NULL`;
+- `lower_bound_at timestamptz NULL`;
+- `upper_bound_at timestamptz NULL`;
+- `observability_status text NOT NULL CHECK(observability_status IN ('observed','bounded','not_observable','not_applicable'))`;
+- `source_artifact_uuid uuid NULL FK artifact.artifact`;
+- `created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`.
+
+Constraints:
+
+- `UNIQUE(measurement_item_uuid,semantic_code)`;
+- semantic_code deve pertencer ao `time_semantics_payload` da ObservationSource;
+- bounded exige lower+upper e upper>=lower;
+- observed pode preservar raw date sem fake timestamp;
+- not_observable/not_applicable não podem fabricar bounds;
+- rows imutáveis.
+
+## 14. Latency é derivada, não persistida como verdade material
+
+No v0.1 não existe `latency_bounds_payload` na event/item row.
+
+Helper candidato:
+
+> **maintenance.temporal_measurement_item_latency(item_uuid,semantic_code,as_of_detected_at)**
+
+Retorna:
+
+- latency_kind;
+- observability_status;
+- lower_seconds;
+- upper_seconds;
+- precision_note;
+- calculator_version.
+
+A função deriva bounds a partir de:
+
+- MeasurementItemTimepoint;
+- `MeasurementItem.oes_detected_at`.
+
+Se os endpoints não suportarem derivação:
+
+> **LATENCY_NOT_OBSERVABLE**
+
+Isso elimina dual truth entre endpoint persistido e latency calculada.
+
+## 14A. effort_payload
+
+Schema lógico:
 
 > **oes.temporal_measurement_effort/0.1**
 
-Campos opcionais:
+Allowed keys, sem nested arbitrary payload:
 
-- operator_minutes;
-- machine_elapsed_seconds;
-- retry_count;
-- handoff_count;
-- note.
+- `operator_minutes`;
+- `machine_elapsed_seconds`;
+- `retry_count`;
+- `handoff_count`;
+- `note`.
 
 Regras:
 
-- valores >=0;
-- effort observado não é sustainable capacity;
-- payload não pode conter SLA/capacity rating.
+- números >=0;
+- note text;
+- nenhuma key adicional;
+- nenhuma rating de B5/SLA/capacity;
+- forbidden temporal keys recursivos continuam bloqueados.
+
+Validator candidato:
+
+> **maintenance.temporal_measurement_effort_payload_is_valid(jsonb)**
 
 ## 15. maintenance.temporal_measurement_event_artifact
 
@@ -469,7 +507,9 @@ Campos:
 
 Constraints:
 
-- opportunity/event, quando presentes, devem pertencer ao epoch;
+- event, quando presente, determina sua opportunity e epoch;
+- opportunity, quando presente, deve pertencer ao epoch;
+- se event e opportunity forem ambos informados, devem ser causalmente consistentes;
 - row imutável;
 - `new_epoch_required` ou `invalidating` deve aparecer como issue bloqueante em readiness/replay;
 - deviation não autoriza continuar no mesmo epoch quando materiality != non_material.
@@ -489,23 +529,23 @@ Para `authorized_non_normative` / `active`, exigir:
 - todas epoch_sources pertencem ao plan e são included;
 - measurement design Artifact active;
 - schedule payloads válidos;
-- runtime_connectivity_status != blocked;
-- nenhuma authority withdrawal;
+- para toda source com `runtime_connectivity_required=true`, runtime_connectivity_status = verified;
+- controlling authority state = approved via resolver;
+- nenhum authority conflict/withdrawal;
 - nenhuma invalidating deviation.
 
-Para ClinicalTrials.gov em B1:
-
-> runtime_connectivity_status deve ser `verified`.
+Não existe hard-code de source brand no activation guard.
 
 ## 18. Epoch completion guard
 
 Para completed:
 
 - `completed_at` obrigatório;
-- review boundary alcançado, salvo early-stop reason permitido registrado como deviation;
-- toda opportunity precisa possuir pelo menos um terminal event;
+- `completed_at >= review_boundary_at`;
+- não existe early completion no v0.1;
+- toda opportunity precisa possuir resolução terminal derivável;
 - opportunity sem execução deve ter event `not_executed`;
-- nenhuma material deviation não resolvida no mesmo epoch;
+- nenhuma deviation `new_epoch_required` ou `invalidating` no epoch;
 - nenhuma source debt pode ser escondida como included/complete;
 - completion não emite `no_update_needed`;
 - completion não altera currentness.
@@ -519,19 +559,19 @@ Função candidata:
 Retorno conceitual:
 
 - planned;
-- attempted_open;
+- retryable;
 - completed;
-- partial;
-- failed;
+- failed_closed;
 - not_executed;
-- indeterminate;
+- indeterminate_closed;
 - conflicted.
 
-Regra de retries:
+Regras:
 
-- múltiplos attempts são permitidos;
-- o histórico inteiro permanece;
-- mais de um terminal success incompatível ou outcomes contraditórios => `conflicted`;
+- `partial`, `failed` e `indeterminate` podem permanecer retryable enquanto o epoch está ativo;
+- `completed` fecha a opportunity;
+- `not_executed` fecha a opportunity;
+- fechamento administrativo de failure/indeterminate, se necessário, deve ser representado por explicit terminal event type em futura implementação/gate, não por overwrite;
 - retry não apaga failure anterior.
 
 ## 20. Replay view
@@ -551,13 +591,14 @@ Uma linha por opportunity com:
 - terminal_status derivado;
 - first_started_at;
 - last_completed_at;
-- result_state;
-- retrieved_identifier_count;
-- denominator status/count;
+- novelty_state;
+- raw result count/status;
+- materialized/new identifier counts;
+- measurement item count;
 - failure attribution;
-- source time semantic;
-- OES detection;
-- latency status/bounds;
+- per-item OES detection;
+- per-item timepoints;
+- derived latency observability;
 - artifact counts;
 - effort summary;
 - deviation count;
@@ -580,8 +621,8 @@ Agrega por plan/epoch/source:
 - not_executed;
 - indeterminate;
 - missingness proportion descritiva;
-- denominator-known proportion;
-- latency-observable proportion;
+- raw-count-known proportion;
+- item-level latency-observable proportion;
 - source-confirmed failure count;
 - OES-confirmed failure count;
 - conflict count;
@@ -615,11 +656,12 @@ Issue classes mínimas:
 - OPPORTUNITY_OUTSIDE_BOUNDARY;
 - OPPORTUNITY_UNRESOLVED;
 - EVENT_TIME_INCONSISTENT;
-- RESULT_COUNT_INCONSISTENT;
-- DENOMINATOR_INCONSISTENT;
+- RAW_RESULT_COUNT_INCONSISTENT;
+- NOVELTY_COUNT_INCONSISTENT;
 - FAILURE_ATTRIBUTION_UNSUPPORTED;
-- SOURCE_TIME_INVALID;
-- LATENCY_INVALID;
+- SOURCE_TIME_SEMANTIC_INVALID;
+- ITEM_STATE_INVALID;
+- LATENCY_NOT_DERIVABLE;
 - SEARCH_SEMANTIC_MISMATCH;
 - MATERIAL_DEVIATION;
 - CONFLICTED_RETRY_HISTORY;
@@ -955,11 +997,142 @@ plan supersession não reparenta epoch antigo.
 ### TNO-T70
 new plan version não reutiliza schedule snapshot por inferência.
 
+
+## 36A. Authority state resolver
+
+Resolver candidato:
+
+> **maintenance.temporal_observation_authority_state(epoch_uuid,authority_domain,as_of)**
+
+Regras:
+
+- somente authority rows do exact plan/epoch;
+- decision Artifact deve existir e estar active no momento de activation;
+- decisões ordenadas por `decided_at`;
+- approved seguido de withdrawn => withdrawn;
+- decisões concorrentes/ambíguas => conflict;
+- activation/execution exige current state = approved para `operational_execution`;
+- historical events não são apagados por withdrawal posterior.
+
+## 36B. Target drift guard
+
+Se exact target deixar de current durante epoch ativo:
+
+- nenhuma nova opportunity pode ser criada;
+- nenhum novo attempt operacional pode iniciar;
+- epoch não pode completed;
+- issue `TARGET_NOT_CURRENT` é bloqueante;
+- epoch deve ser invalidated;
+- dados históricos permanecem.
+
+## 36C. Source semantics registry
+
+Schema lógico:
+
+> **oes.temporal_source_semantics/0.1**
+
+Campos:
+
+- schema_version;
+- semantic_codes[];
+- identifier_semantic;
+- source_class;
+- notes.
+
+Nenhuma source brand é hard-coded em trigger.
+
+PubMed e ClinicalTrials.gov serão configurados por rows/artifacts de source, não por branches específicos no schema.
+
+## 36D. Schedule reproducibility
+
+Helper candidato:
+
+> **maintenance.temporal_epoch_opportunity_set_matches_schedule(epoch_uuid)**
+
+Regras:
+
+- deterministic schedule generator => opportunity rows devem reproduzir exatamente o generator snapshot;
+- manual_opportunity_set => frozen Artifact deve enumerar timestamps e rows devem ser iguais ao Artifact;
+- nenhuma oportunidade extra silenciosa;
+- nenhuma opportunity faltante silenciosa.
+
+## 36E. Artifact liveness
+
+Em criação/activation:
+
+- controlling plan/design/authority/query/baseline Artifact deve estar active.
+
+Drift posterior:
+
+- não reescreve rows;
+- aparece em issue functions;
+- pode invalidar epoch conforme papel do Artifact.
+
+## 36F. Epoch completion versus source-universe debt
+
+A view deve distinguir:
+
+- `epoch_execution_completed`;
+- `candidate_source_debt_present`.
+
+O v0.1 não expõe `coverage_complete` global.
+
+BVS/LILACS deferred continua visível mesmo quando B1 execution for completed.
+
+## 36G. contract_epoch
+
+O contrato v0.1 **não reutiliza** `maintenance.contract_epoch`.
+
+Razão:
+
+> seu significado atual pertence à infraestrutura temporal normativa da migration 032.
+
+Se futura migration precisar de marker próprio, criar mecanismo explicitamente não normativo ou justificar extensão por gate separado.
+
+## 36H. Migration/fixture separation
+
+Candidate migration 033, se autorizada:
+
+- cria apenas schema/functions/views/triggers;
+- zero real plan/source/authority/epoch/opportunity/event;
+- zero numeric schedule.
+
+Synthetic tests/fixtures:
+
+- ficam em arquivo separado;
+- identificados como synthetic/test-only;
+- não podem ser usados como readiness evidence real.
+
+## 36I. Testes adicionais pós-gate
+
+Adicionar:
+
+- **TNO-T71** multi-item event preserva timepoints por item;
+- **TNO-T72** raw_result_count e new_identifier_count não se confundem;
+- **TNO-T73** reobserved item não conta como new_to_epoch;
+- **TNO-T74** source semantic não declarado é rejeitado;
+- **TNO-T75** authority resolver approved→withdrawn;
+- **TNO-T76** authority conflict bloqueia activation;
+- **TNO-T77** schedule deterministic mismatch bloqueia activation/completion;
+- **TNO-T78** manual opportunity set deve igual snapshot;
+- **TNO-T79** retry attempt number gap é rejeitado;
+- **TNO-T80** retry após completed é rejeitado;
+- **TNO-T81** attempt após not_executed é rejeitado;
+- **TNO-T82** target drift bloqueia novas opportunities/attempts;
+- **TNO-T83** Artifact controlling drift aparece em issues;
+- **TNO-T84** epoch_execution_completed não oculta source debt;
+- **TNO-T85** source connectivity rule é data-driven, não hard-coded;
+- **TNO-T86** latency é derivada de item timepoints;
+- **TNO-T87** fake second precision a partir de date-only é rejeitada;
+- **TNO-T88** scientific Search deve usar frozen measurement Investigation;
+- **TNO-T89** migration não contém seed real;
+- **TNO-T90** synthetic fixtures não entram em real readiness evidence.
+
 ## 37. Estado
 
-> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = CANDIDATE_V0_1**
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = REVISED_V0_1_READY_FOR_RECHECK**
 
-> **PHYSICAL_SCHEMA = SPECIFIED_NOT_IMPLEMENTED**
+> **PHYSICAL_SCHEMA = REVISED_NOT_IMPLEMENTED**
 
 > **TEST_PLAN = SPECIFIED_NOT_IMPLEMENTED**
 
@@ -979,6 +1152,6 @@ new plan version não reutiliza schedule snapshot por inferência.
 
 ## 38. Próximo passo
 
-> **Executar gate adversarial/físico do contrato v0.1, atacando lifecycle, authority, target drift, source debt, retries, time precision, schedule laundering, Search semantics, Artifact semantics, replay, migration scope e integração com os contratos temporais normativos.**
+> **Executar recheck adversarial/físico final do contrato revisado v0.1. Somente um PASS poderá abrir decisão separada sobre autorização da migration 033.**
 
 **Fim do Documento 61**
