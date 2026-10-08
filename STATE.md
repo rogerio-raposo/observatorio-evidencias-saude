@@ -3093,3 +3093,68 @@ Próximo passo:
 - nenhum normative temporal value autorizado;
 - próximo passo requer modo alto;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — decisão de schema do frozen opportunity set
+
+Documentos:
+- `docs/governance/66-decisao-schema-frozen-opportunity-set-migration-033.md`;
+- `docs/governance/67-recheck-decisao-schema-frozen-opportunity-set.md`.
+
+Decisão:
+> **SCHEMA_DECISION = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **FROZEN_OPPORTUNITY_SET_CANONICAL_STORE = MEASUREMENT_SCHEDULE_PAYLOAD**
+
+> **SCHEDULE_DEFINITION_ARTIFACT_ROLE = PROVENANCE_ONLY**
+
+> **NEW_TABLE_REQUIRED = NO**
+
+> **NEW_COLUMN_REQUIRED = NO**
+
+O payload canônico usa schema lógico:
+> `oes.temporal_opportunity_set/0.1`
+
+Regras:
+- finite opportunity set;
+- timestamps concretos;
+- sem recurrence generator;
+- sem opportunity_count redundante;
+- opportunity numbers positivos, únicos e contíguos;
+- planned_for com offset explícito/Z;
+- forbidden temporal keys recursivos;
+- payload imutável via EpochSource.
+
+Lifecycle corrigido:
+- EpochSource + payload + Opportunity rows em `draft`;
+- authorization exige igualdade payload↔rows;
+- authority precisa ser posterior/simultânea ao design freeze;
+- nenhuma Opportunity nova após saída de draft;
+- activation permanece etapa separada.
+
+Artifact:
+- `schedule_definition_artifact_uuid` = provenance/rationale;
+- não controla lista de timestamps;
+- não há dependência do conteúdo externo do Artifact para enforcement.
+
+Test plan:
+> **TNO-T01–T100**
+
+Supersession documental:
+- Documento 66/67 supersedem apenas as partes do Documento 61/63 relativas ao frozen opportunity set/Artifact;
+- sem rewrite retroativo.
+
+Estado da migration:
+> **MIGRATION_033 = PARTIALLY_IMPLEMENTED_NOT_VALIDATED**
+
+> **MIGRATION_033_IMPLEMENTATION = AUTHORIZED_TO_RESUME_AFTER_CHECKPOINT**
+
+Restrições:
+- measurement schedule real continua NOT_SELECTED;
+- Phase B authority/execution continuam não autorizadas;
+- nenhum normative temporal value;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, retornar a modo médio e corrigir 033c; depois concluir 033d/033e, fixtures, TNO-T01–T100, validate-s5 integration e CI.**
