@@ -2787,3 +2787,54 @@ Próximo passo:
 - próximo passo: Plan Amendment v0.2;
 - modo alto recomendado novamente para source inclusion / schedule / possible physical-event decision;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — TOPI Plan Amendment v0.2 e boundary da Phase B
+
+Documentos:
+- `docs/governance/59-topi-n2-dcbti-plan-amendment-v02-phase-b-boundary.md`;
+- `docs/governance/60-recheck-target-specific-topi-v02-phase-b-boundary.md`.
+
+Plan Amendment:
+> **PLAN_VERSION = V0_2_CANDIDATE_RECHECKED**
+
+Source inclusion:
+> **PHASE_B_INCLUDED_SOURCES = PUBMED_MEDLINE + CLINICALTRIALS_GOV**
+
+> **BVS_LILACS_PHASE_B_STATUS = DEFERRED_SOURCE_DEBT**
+
+Event model:
+> **PHASE_B_EVENT_MODEL = SOURCE_SPECIFIC_NON_NORMATIVE_MEASUREMENT_EVENT**
+
+Physical finding:
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = AUTHORIZED_FOR_SPECIFICATION_ONLY**
+
+A lacuna física foi confirmada porque:
+- `artifact.artifact` normaliza metadata de arquivo, não event semantics;
+- `investigation.search` só é válido para Search científica real;
+- `maintenance.evidence_event` exige MonitoringCycle;
+- `maintenance.cadence_observation` exige CadenceObligation;
+- repeated experimental measurement requer planned opportunities, missingness, source-specific outcomes, failure attribution e replay estruturado.
+
+Measurement schedule:
+> **MEASUREMENT_SCHEDULE = DEFERRED_PENDING_PHYSICAL_CONTRACT**
+
+Nenhum número foi selecionado.
+
+Recheck:
+> **TOPI_N2_DCBTI_V02_RECHECK = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+O PASS autoriza somente specification do physical contract e test plan.
+
+Restrições:
+- Phase B authority não solicitada;
+- Phase B execution não autorizada;
+- migration não autorizada;
+- cadence/UpdatePolicy/Calibration Dossier não autorizados;
+- normative temporal values não autorizados;
+- scheduler/notifications/auto-escalation não autorizados;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, especificar contrato físico v0.1 de ObservationEpoch/TemporalMeasurementEvent não normativos, com constraints, lifecycle, replay/readiness views e test plan; depois gate adversarial antes de qualquer migration.**
