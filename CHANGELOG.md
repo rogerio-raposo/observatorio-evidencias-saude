@@ -4051,3 +4051,25 @@ Documentos:
 - schema atual 033b/033c é suficiente; nenhuma migration nova foi autorizada;
 - suite sintética FM-T01–T24 será implementada antes da primeira execução real;
 - harness sintético deve provar não mutação do B1 real.
+
+
+## 2026-10-08 — Hardening da semântica do primeiro measurement
+
+### Identificado
+
+- durante a preparação de FM-T01–T24, o schema atual não conseguiu provar integralmente FM-T06/FM-T08;
+- `novelty_state=not_applicable` pode coexistir fisicamente com `new_identifier_count` não-NULL;
+- não há distinção relacional entre o primeiro completed event da source e completed events subsequentes;
+- completed event não exige fisicamente `failure_attribution=not_applicable`.
+
+### Decisão
+
+- Documento 79 criado;
+- contrato metodológico do Documento 78 permanece vigente;
+- apenas a conclusão `NEW_SCHEMA_MIGRATION_REQUIRED = NO` do Documento 78 foi supersedida;
+- migration 036 passa a ser necessária para hardening aditivo;
+- baseline aggregate será source-specific;
+- primeiro completed event por epoch_source exigirá `novelty_state=not_applicable`, `new_identifier_count=NULL` e `failure_attribution=not_applicable`;
+- completed events subsequentes não poderão usar `novelty_state=not_applicable`;
+- migrations 033–035 não serão reescritas;
+- B1 permanece sem MeasurementEvent e sem OpportunityResolution.
