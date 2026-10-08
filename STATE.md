@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP135 — 2026-10-08**.
+- checkpoint vigente: **CP136 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4450,3 +4450,24 @@ Estado real preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP136 — day-19 operator packet ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP136.md`;
+- Documento 92 = READY_FOR_DAY_OF_EXECUTION / NO_FACTUAL_ACTIVATION_PRECREATED;
+- read-only live preflight capture = READY;
+- TOPI-B1R1-LIVE-PREFLIGHT-READONLY = PASS;
+- run 233 / `37861733122` = success;
+- artifact `11586227719`;
+- digest `sha256:7e10af6697bd692cf8e078e2916de03f5b4f0a2b25f71e7eebab4c78529b6957`;
+- zero-mutation proof = PASS;
+- rebuild = PASS;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
