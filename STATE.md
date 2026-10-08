@@ -2860,3 +2860,83 @@ Próximo passo:
 - próximo passo: contrato físico v0.1 de ObservationEpoch/TemporalMeasurementEvent + test plan + gate adversarial;
 - modo alto permanece recomendado;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — contrato físico v0.1 de aquisição temporal não normativa
+
+Documentos:
+- `docs/governance/61-contrato-fisico-aquisicao-temporal-nao-normativa-v01.md`;
+- `docs/governance/62-gate-adversarial-contrato-fisico-aquisicao-temporal-v01.md`;
+- `docs/governance/63-recheck-final-contrato-fisico-aquisicao-temporal-v01.md`.
+
+First pass:
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = REVISE**
+
+Hardening incorporado:
+- execution/item/timepoint separation;
+- OpportunityResolution append-only;
+- count/novelty semantics;
+- direct failure-evidence locator;
+- recursive anti-normative JSON guard;
+- data-driven runtime connectivity;
+- source time-semantics registry;
+- retry closure;
+- no early completion;
+- target drift;
+- authority resolver;
+- frozen measurement Investigation;
+- baseline/novelty semantics;
+- latency derived from item timepoints;
+- strict effort payload;
+- Artifact liveness;
+- finite frozen opportunity set;
+- explicit source debt;
+- no reuse of `maintenance.contract_epoch`;
+- migration/fixture separation.
+
+Final recheck:
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = PASS_WITH_ARCHITECTURAL_DECISIONS**
+
+> **PHYSICAL_SCHEMA = READY_FOR_MIGRATION_DECISION**
+
+> **TEST_PLAN = READY_FOR_IMPLEMENTATION_IF_MIGRATION_AUTHORIZED**
+
+Root physical objects:
+- temporal_observation_plan;
+- temporal_observation_source;
+- temporal_observation_epoch;
+- temporal_observation_epoch_source;
+- temporal_observation_authority;
+- temporal_measurement_opportunity;
+- temporal_measurement_event;
+- temporal_measurement_opportunity_resolution;
+- temporal_measurement_item;
+- temporal_measurement_item_timepoint;
+- temporal_measurement_event_artifact;
+- temporal_observation_deviation.
+
+Test plan:
+> **TNO-T01–T90 specified**
+
+Migration:
+> **MIGRATION_033 = ELIGIBLE_FOR_SEPARATE_AUTHORIZATION**
+
+> **MIGRATION_033 = NOT_YET_AUTHORIZED**
+
+Measurement:
+> **MEASUREMENT_SCHEDULE = NOT_SELECTED**
+
+> **PHASE_B_AUTHORITY = NOT_REQUESTED**
+
+> **PHASE_B_EXECUTION = NOT_AUTHORIZED**
+
+Restrições:
+- zero seed real;
+- nenhum numeric schedule;
+- nenhum normative temporal value;
+- nenhum Monitor/CadenceContract/UpdatePolicy binding;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, em modo alto, decidir autorização e boundary técnico da candidate migration 033, incluindo decomposição de arquivos, testes/fixtures, CI e no-seed guarantee.**
