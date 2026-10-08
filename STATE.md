@@ -3434,3 +3434,29 @@ Execution boundary:
 
 Next step:
 > **await explicit owner decision: APPROVED / REVISE / REJECTED — Phase B execution / Documento 75 / TOPI-N2-DCBTI-01 / Epoch B1.**
+
+
+### CP122 — B1 draft frozen / execution authority pending
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP122.md`;
+- ponteiro movido para CP122;
+- preparation authority = APPROVED_AND_EXECUTED;
+- runtime connectivity PubMed/ClinicalTrials.gov = VERIFIED;
+- real TOPI Plan v2 + Epoch B1 draft materialization = COMPLETED;
+- TOPI-PREP-T01–T30 = PASS;
+- rebuild reproducibility = PASS;
+- design_frozen_at = `2026-10-08T13:12:23-03:00`;
+- Plan UUID = `b3100000-0000-0000-0000-000000000001`;
+- Epoch B1 UUID = `b3120000-0000-0000-0000-000000000001`;
+- PubMed opportunities = 8;
+- ClinicalTrials.gov opportunities = 6;
+- BVS/LILACS = deferred source debt;
+- Documento 75 = AWAITING_EXPLICIT_OWNER_DECISION;
+- Phase B execution authority = PENDING;
+- Phase B execution = NOT_AUTHORIZED;
+- MeasurementEvent count = 0;
+- no normative temporal values;
+- M3 blocked;
+- Phase 5 not started;
+- generic Prossiga is not execution authority;
+- mandatory pause preserved.
