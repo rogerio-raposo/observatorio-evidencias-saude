@@ -4202,3 +4202,57 @@ Próximo ato irreversível:
 - no target-specific source query executed;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — protocolo de review/encerramento do B1R1 pré-especificado
+
+Documento:
+- `docs/governance/89-protocolo-review-encerramento-b1r1.md`.
+
+Resultado:
+> **B1R1_REVIEW_PROTOCOL = PRE_SPECIFIED**
+
+> **B1R1_REVIEW = NOT_STARTED**
+
+> **B1R1_EPOCH_COMPLETION = NOT_ALLOWED_BEFORE_REVIEW_BOUNDARY**
+
+Escopo:
+- Opportunity accounting;
+- missingness descritiva;
+- attempts/retries;
+- failure attribution;
+- source-specific completeness;
+- identifier history;
+- aggregate novelty history;
+- source timepoints;
+- descriptive latency;
+- effort;
+- deviations;
+- deferred source debt;
+- cohort/window/denominator;
+- evidence cutoff;
+- reassessment triggers;
+- physical closure preparation;
+- review artifact minimum content;
+- Evidence Readiness boundary;
+- anti-minimum-N;
+- anti-favorable-stopping;
+- anti-automatic-extension.
+
+Nenhuma decisão normativa:
+> **READINESS_ASSESSMENT = NOT_STARTED**
+
+> **CALIBRATION_DOSSIER = NOT_OPEN**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+Estado operacional preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
