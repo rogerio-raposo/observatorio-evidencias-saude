@@ -34,10 +34,15 @@ SELECT pg_temp.tno_assert('TNO-T17',(SELECT count(*)=2 FROM maintenance.temporal
 SELECT pg_temp.tno_assert('TNO-T18',maintenance.temporal_epoch_opportunity_set_matches_schedule('f7130000-0000-0000-0000-000000000001'));
 SELECT pg_temp.tno_assert('TNO-T19',(SELECT candidate_source_debt_present FROM maintenance.temporal_measurement_readiness_evidence_v WHERE observation_epoch_uuid='f7120000-0000-0000-0000-000000000001' LIMIT 1));
 SELECT pg_temp.tno_assert('TNO-T20',NOT EXISTS(
-  SELECT 1 FROM information_schema.table_constraints tc
-  JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name=tc.constraint_name AND ccu.constraint_schema=tc.constraint_schema
-  WHERE tc.table_schema='maintenance' AND tc.table_name LIKE 'temporal_%'
-    AND ccu.table_name IN ('cadence_contract','cadence_obligation','cadence_observation','monitor_cycle','sla_rule','sla_instance')
+  SELECT 1
+  FROM pg_constraint con
+  JOIN pg_class src ON src.oid=con.conrelid
+  JOIN pg_namespace ns ON ns.oid=src.relnamespace
+  JOIN pg_class ref ON ref.oid=con.confrelid
+  WHERE con.contype='f'
+    AND ns.nspname='maintenance'
+    AND src.relname LIKE 'temporal_%'
+    AND ref.relname IN ('cadence_contract','cadence_obligation','cadence_observation','monitor_cycle','sla_rule','sla_instance')
 ));
 
 -- T21–T30: payload validators
