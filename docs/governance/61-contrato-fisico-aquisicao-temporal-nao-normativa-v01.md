@@ -184,6 +184,7 @@ Campos:
 - `interface_config_artifact_uuid uuid NULL FK artifact.artifact`;
 - `baseline_artifact_uuid uuid NULL FK artifact.artifact`;
 - `measurement_investigation_version_uuid uuid NULL FK investigation.investigation_version`;
+- `schedule_definition_artifact_uuid uuid NOT NULL FK artifact.artifact`;
 - `runtime_interface_code text NOT NULL`;
 - `measurement_schedule_payload jsonb NOT NULL`;
 - `runtime_connectivity_status text NOT NULL CHECK(runtime_connectivity_status IN ('unverified','verified','blocked'))`;
@@ -203,7 +204,11 @@ Constraints:
 
 ## 8. measurement_schedule_payload
 
-Schema lógico:
+O physical contract v0.1 **não implementa scheduler nem gerador temporal**.
+
+Cada EpochSource referencia um Artifact imutável contendo o conjunto finito de planned opportunities.
+
+Schema lógico do payload:
 
 > **oes.temporal_measurement_schedule/0.1**
 
@@ -211,17 +216,19 @@ Campos permitidos:
 
 - `schema_version`;
 - `non_normative` = true;
-- `schedule_kind`;
+- `schedule_kind` = `finite_opportunity_set`;
 - `rationale`;
-- `generation_payload`.
+- `opportunity_count`.
 
-`schedule_kind`:
+O Artifact referenciado por `schedule_definition_artifact_uuid` deve congelar, no mínimo:
 
-- `fixed_elapsed_experimental`;
-- `calendar_opportunity_set`;
-- `manual_opportunity_set`.
+- exact epoch/source;
+- ordered opportunity numbers;
+- planned timestamps;
+- timezone/offset de cada timestamp;
+- rationale/version.
 
-Proibições de chave no payload:
+Proibições de chave em qualquer profundidade do payload/Artifact schedule metadata:
 
 - `cadence`;
 - `due`;
@@ -240,11 +247,18 @@ Validators candidatos:
 
 > **maintenance.temporal_measurement_schedule_payload_is_valid(jsonb)**
 
-A proibição de keys normativas é recursiva em qualquer profundidade do JSON.
+> **maintenance.temporal_epoch_opportunity_set_matches_schedule(epoch_source_uuid)**
 
-O validator não autoriza nenhum número; apenas define shape.
+Regras:
 
-O `review_boundary_at` existe somente em `temporal_observation_epoch`; o schedule payload não pode duplicá-lo.
+- `opportunity_count >= 1`;
+- number/timestamps das Opportunity rows devem igual exatamente o frozen Artifact;
+- nenhuma oportunidade extra ou faltante;
+- o `review_boundary_at` existe somente em Epoch;
+- o schedule não contém recurrence rule executável;
+- eventual regra usada para preparar a lista pertence à documentação metodológica, não ao runtime contract.
+
+Isso mantém o piloto finito, replayable e sem scheduler implícito.
 
 ## 9. maintenance.temporal_observation_authority
 
@@ -282,7 +296,7 @@ Campos:
 - `epoch_source_uuid uuid NOT NULL FK`;
 - `opportunity_no integer NOT NULL CHECK(opportunity_no>=1)`;
 - `planned_for timestamptz NOT NULL`;
-- `opportunity_origin text NOT NULL CHECK(opportunity_origin IN ('schedule_generated','manual_protocol'))`;
+- `opportunity_origin text NOT NULL CHECK(opportunity_origin='frozen_opportunity_set')`;
 - `schedule_snapshot_artifact_uuid uuid NULL FK artifact.artifact`;
 - `created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP`.
 
@@ -855,13 +869,13 @@ withdrawn authority gera blocking issue.
 target non-current bloqueia activation.
 
 ### TNO-T16
-CTG runtime unverified bloqueia B1 activation.
+source com runtime_connectivity_required=true e status unverified bloqueia activation.
 
 ### TNO-T17
 invalidating deviation bloqueia activation/completion.
 
 ### TNO-T18
-schedule payload com normative key é rejeitado.
+schedule payload/metadata com normative key recursiva é rejeitado.
 
 ## 32. Test plan — Opportunities
 
@@ -1147,8 +1161,8 @@ Adicionar:
 - **TNO-T74** source semantic não declarado é rejeitado;
 - **TNO-T75** authority resolver approved→withdrawn;
 - **TNO-T76** authority conflict bloqueia activation;
-- **TNO-T77** schedule deterministic mismatch bloqueia activation/completion;
-- **TNO-T78** manual opportunity set deve igual snapshot;
+- **TNO-T77** frozen opportunity-set mismatch bloqueia activation/completion;
+- **TNO-T78** schedule Artifact count/timestamps devem igual Opportunity rows;
 - **TNO-T79** retry attempt number gap é rejeitado;
 - **TNO-T80** retry após completed é rejeitado;
 - **TNO-T81** attempt após not_executed é rejeitado;
