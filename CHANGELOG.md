@@ -3946,3 +3946,21 @@ Documentos:
 - Documento 75 opens exact Phase B execution authority decision;
 - Phase B execution remains NOT_AUTHORIZED;
 - no normative temporal values authorized.
+
+
+## 2026-10-08 — CP122
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP122.md`;
+- ponteiro movido para CP122;
+- TOPI Phase B preparation concluída;
+- runtime connectivity verified;
+- B1 materializado e congelado em draft;
+- design_frozen_at = 2026-10-08T13:12:23-03:00;
+- TOPI-PREP-T01–T30 = PASS;
+- rebuild PASS;
+- Documento 75 criado como único execution-authority package do exact frozen B1;
+- execution authority = PENDING;
+- zero MeasurementEvent;
+- no Phase B execution;
+- no normative temporal values;
+- pausa obrigatória preservada.
