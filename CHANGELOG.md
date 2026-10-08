@@ -4387,3 +4387,17 @@ Documentos:
 - digest `sha256:7e10af6697bd692cf8e078e2916de03f5b4f0a2b25f71e7eebab4c78529b6957`;
 - rebuild = PASS;
 - nenhum activation fact ou source execution foi criado.
+
+
+## 2026-10-08 — CP136
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP136.md`;
+- ponteiro movido para CP136;
+- Documento 92 promovido;
+- live preflight capture SQL validado como read-only e zero-mutation;
+- run 233 / `37861733122` = success;
+- artifact `11586227719`;
+- digest `sha256:7e10af6697bd692cf8e078e2916de03f5b4f0a2b25f71e7eebab4c78529b6957`;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- activation continua pendente de 19/10;
+- pausa obrigatória preservada.
