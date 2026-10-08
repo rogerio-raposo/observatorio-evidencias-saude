@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP133 — 2026-10-08**.
+- checkpoint vigente: **CP134 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4326,3 +4326,20 @@ Estado preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP134 — B1R1 contingency decision tables ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP134.md`;
+- Documento 90 = PRE-SPECIFIED / CONTINGENCY_READY;
+- B1R1 contingency tables = PRE_SPECIFIED;
+- no new schema/migration/authority;
+- partial-without-completion remains unresolved unless a physically valid closure path exists;
+- any need for new closure state returns to high mode;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
