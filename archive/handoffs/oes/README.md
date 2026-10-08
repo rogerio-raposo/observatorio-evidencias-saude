@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP131 — 2026-10-08**
+**CP132 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP131.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP132.md`
 
 Checkpoint anterior:
 
-`CP130`
+`CP131`
 
 Status:
 
@@ -257,3 +257,5 @@ em **Modo Continuidade**.
 - **CP130 — 2026-10-08:** corrective preparation B1R1 PASS; B1 invalidated sem execução; B1R1 draft frozen; Documento 85 aguarda execution authority explícita.
 
 - **CP131 — 2026-10-08:** B1R1 execution authority APPROVED e validada; B1R1 authorized_non_normative; activation ainda pendente da janela de 19/10.
+
+- **CP132 — 2026-10-08:** runbook operacional das medições reais do B1R1 concluído; activation continua pendente da janela de 19/10.
