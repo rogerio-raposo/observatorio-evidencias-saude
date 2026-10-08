@@ -3548,3 +3548,54 @@ Still blocked:
 - próxima ação operacional somente na janela de 19/10/2026 entre 08:00 e 09:00 -03, após preflight;
 - modo alto recomendado para ativação e primeiro measurement;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — activation preflight do B1 validado
+
+Documento:
+- `docs/governance/77-runbook-activation-preflight-b1-topi-n2-dcbti.md`.
+
+Infraestrutura:
+- migration `035_temporal_observation_activation_preflight.sql`;
+- função read-only `maintenance.temporal_activation_preflight(epoch, as_of)`;
+- função agregadora `maintenance.temporal_activation_preflight_state(epoch, as_of)`.
+
+Resultado:
+> **LIVE_PREFLIGHT_IMPLEMENTATION = VALIDATED**
+
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **ACTIVATION_NOW = WAIT / NOT_IN_ACTIVATION_WINDOW**
+
+> **ACTIVATION_SQL = NOT_YET_CREATED**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+Validação determinística:
+- APF-T01–T13 = PASS;
+- as-of 2026-10-08 14:47 -03 = WAIT;
+- as-of 2026-10-19 08:00 -03 = PASS;
+- as-of 2026-10-19 08:30 -03 = PASS;
+- as-of 2026-10-19 09:00 -03 = FAIL / EXPIRED_NOT_EXECUTED;
+- preflight = read-only / zero mutation.
+
+Canonical CI:
+- run `37819755672` / run 219 = success;
+- validated HEAD `830fcad1e79b237c5c672c5bf8e19aad66d2711f`;
+- evidence artifact `11568343046`;
+- digest `sha256:73f147fca89833f944b1bbb55fda324afa005bd0f17e9ea3b29fdc46810d906b`;
+- rebuild-through-035 = PASS;
+- prior regressions = PASS.
+
+Activation discipline:
+- factual activation interval remains `2026-10-19T08:00:00-03:00 <= started_at < 2026-10-19T09:00:00-03:00`;
+- activation SQL must be created only after live preflight PASS;
+- started_at must be the actual observed activation timestamp, never pre-authored;
+- activation itself creates zero MeasurementEvent;
+- first actual measurement remains PubMed Opportunity #1 at 2026-10-19 09:00 -03.
+
+Mode:
+- HIGH required for live activation + first real measurement;
+- no normative temporal values;
+- M3 blocked;
+- Phase 5 not started.
