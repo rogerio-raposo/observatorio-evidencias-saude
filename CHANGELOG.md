@@ -4015,3 +4015,19 @@ Documentos:
 - Documento 77 creates activation runbook;
 - activation SQL intentionally not created in advance;
 - B1 remains authorized_non_normative with started_at NULL and zero MeasurementEvent.
+
+
+## 2026-10-08 — CP124
+
+- continuity pointer moved to CP124;
+- deterministic live activation preflight validated;
+- current B1 preflight = WAIT;
+- eligible-window preflight = PASS;
+- first-Opportunity boundary = FAIL / EXPIRED_NOT_EXECUTED;
+- activation SQL intentionally deferred until live PASS;
+- B1 remains authorized_non_normative;
+- started_at NULL;
+- zero MeasurementEvent;
+- zero OpportunityResolution;
+- next valid operational act is 2026-10-19 between 08:00 and 09:00 -03;
+- pause preserved.
