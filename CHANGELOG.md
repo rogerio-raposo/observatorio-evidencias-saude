@@ -3736,3 +3736,20 @@ Documentos:
 - Phase B authority/execution continuam bloqueadas;
 - nenhum valor temporal normativo autorizado;
 - M3 bloqueado; Fase 5 não iniciada.
+
+
+## 2026-10-08 — CP116
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP116.md`;
+- ponteiro movido para CP116;
+- Documento 61 hardenizado após gate adversarial;
+- Documento 62 = REVISE;
+- Documento 63 = **PASS_WITH_ARCHITECTURAL_DECISIONS**;
+- physical schema pronto para migration decision;
+- test plan TNO-T01–T90 pronto para implementação se autorizado;
+- migration 033 elegível para decisão separada, ainda não autorizada;
+- nenhum schedule numérico, Phase B authority ou Phase B execution autorizado;
+- nenhum valor temporal normativo autorizado;
+- M3 bloqueado; Fase 5 não iniciada;
+- próximo passo: decisão de migration 033 / boundary técnico em modo alto;
+- pausa obrigatória preservada.
