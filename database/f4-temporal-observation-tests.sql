@@ -80,8 +80,8 @@ SELECT pg_temp.tno_assert('TNO-T38',(SELECT measurement_investigation_version_uu
 -- T39–T48: attempts, resolution and item semantics
 SELECT pg_temp.tno_assert('TNO-T39',(SELECT attempt_no=1 FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
 SELECT pg_temp.tno_assert('TNO-T40',(SELECT execution_status='completed' FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
-SELECT pg_temp.tno_assert('TNO-T41',(SELECT novelty_state='new_items' FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
-SELECT pg_temp.tno_assert('TNO-T42',(SELECT raw_result_count=1 AND materialized_identifier_count=1 AND new_identifier_count=1 FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
+SELECT pg_temp.tno_assert('TNO-T41',(SELECT novelty_state='not_applicable' FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
+SELECT pg_temp.tno_assert('TNO-T42',(SELECT raw_result_count=1 AND materialized_identifier_count=1 AND new_identifier_count IS NULL FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
 SELECT pg_temp.tno_assert('TNO-T43',maintenance.temporal_measurement_opportunity_status('f7140000-0000-0000-0000-000000000001')='completed');
 SELECT pg_temp.tno_assert('TNO-T44',maintenance.temporal_measurement_opportunity_status('f7140000-0000-0000-0000-000000000002')='planned');
 SELECT pg_temp.tno_assert('TNO-T45',(SELECT item_state='new_to_epoch' FROM maintenance.temporal_measurement_item WHERE measurement_item_uuid='f7170000-0000-0000-0000-000000000001'));
@@ -124,7 +124,7 @@ SELECT pg_temp.tno_assert('TNO-T70',NOT EXISTS(SELECT 1 FROM maintenance.tempora
 
 -- T71–T80: item/timepoint and source semantics
 SELECT pg_temp.tno_assert('TNO-T71',(SELECT count(*)=1 FROM maintenance.temporal_measurement_item WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
-SELECT pg_temp.tno_assert('TNO-T72',(SELECT raw_result_count=1 AND new_identifier_count=1 FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
+SELECT pg_temp.tno_assert('TNO-T72',(SELECT raw_result_count=1 AND new_identifier_count IS NULL FROM maintenance.temporal_measurement_event WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001'));
 SELECT pg_temp.tno_assert('TNO-T73',NOT EXISTS(SELECT 1 FROM maintenance.temporal_measurement_item WHERE measurement_event_uuid='f7160000-0000-0000-0000-000000000001' AND item_state='reobserved'));
 SELECT pg_temp.tno_assert('TNO-T74',(SELECT time_semantics_payload->'semantic_codes' ? 'create_date' FROM maintenance.temporal_observation_source WHERE observation_source_uuid='f7110000-0000-0000-0000-000000000001'));
 SELECT pg_temp.tno_assert('TNO-T75',(SELECT maintenance.temporal_artifact_is_active(source_record_artifact_uuid) FROM maintenance.temporal_measurement_item WHERE measurement_item_uuid='f7170000-0000-0000-0000-000000000001'));
