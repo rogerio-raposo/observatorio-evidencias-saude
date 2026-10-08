@@ -3748,3 +3748,52 @@ Próximo passo:
 - OpportunityResolution count = 0;
 - próximo passo = modo médio para migration 036 + FM-T01–T24 + S5 + rebuild/regressões;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — migration 036 e first-measurement harness validados
+
+Documento:
+- `docs/governance/80-resultado-migration-036-first-measurement-fm.md`.
+
+Resultado:
+> **MIGRATION_036 = TECHNICALLY_VALIDATED**
+
+> **FM_T01_TO_T24 = PASS**
+
+> **MIGRATION_036_IDEMPOTENCY = PASS**
+
+> **REBUILD_THROUGH_036 = PASS**
+
+> **REAL_B1_NON_MUTATION = PASS**
+
+CI canônica:
+- run `37829798269` / run 222 = success;
+- validated HEAD `59225572679ebb0e446956a030f54e700614419a`;
+- artifact `11572917207`;
+- digest `sha256:a5d01a58f60e1a4424c24753d9a65290a18443408525ebfd2e53081d1e03f347`.
+
+Semântica enforced:
+- primeiro completed por epoch_source = baseline aggregate;
+- `novelty_state=not_applicable`;
+- `new_identifier_count=NULL`;
+- `failure_attribution=not_applicable`;
+- completed subsequente não pode usar `not_applicable`;
+- partial/failed/indeterminate não estabelecem successful baseline.
+
+Estado real preservado:
+> **OBSERVATION_EPOCH_B1 = AUTHORIZED_NON_NORMATIVE**
+
+> **started_at = NULL**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **PHASE_B_EXECUTION_STARTED = NO**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
+
+Próximo ato operacional irreversível:
+> **live activation preflight em 2026-10-19, 08:00–09:00 -03, modo alto.**
