@@ -3771,3 +3771,18 @@ Documentos:
 - Phase B authority/execution continuam não autorizadas;
 - nenhum valor temporal normativo autorizado;
 - próximo passo: checkpoint e implementação técnica em modo médio.
+
+
+## 2026-10-08 — CP117
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP117.md`;
+- ponteiro movido para CP117;
+- migration 033 autorizada para implementação infrastructure-only;
+- boundary técnico fechado em master + fragments 033a–033e;
+- synthetic fixtures/smoke/full tests separados;
+- integração no workflow canônico validate-s5 autorizada;
+- zero-real-seed e normative-isolation obrigatórios;
+- SQL ainda não implementado neste checkpoint;
+- measurement schedule, Phase B authority/execution e normative temporal values permanecem não autorizados;
+- próximo passo: implementação técnica em modo médio;
+- pausa obrigatória preservada.
