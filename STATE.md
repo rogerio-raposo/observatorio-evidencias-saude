@@ -4343,3 +4343,51 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — runbook de live activation do B1R1 concluído
+
+Documento:
+- `docs/governance/91-runbook-live-activation-b1r1.md`.
+
+Resultado:
+> **B1R1_ACTIVATION_RUNBOOK = READY**
+
+> **DOCUMENT_91_SUPERSEDES_DOCUMENT_77_OPERATIONALLY_FOR_ACTIVATION**
+
+Documento 77:
+> **HISTORICAL_B1_ACTIVATION_RUNBOOK**
+
+Cobertura:
+- Freshness Gate;
+- hora factual America/Recife;
+- live preflight B1R1;
+- checks individuais obrigatórios;
+- controlling artifacts;
+- connectivity/material drift;
+- opportunity equality;
+- material deviations;
+- zero prestart events/resolutions;
+- activation artifact factual;
+- SQL factual somente pós-PASS;
+- post-activation validation;
+- checkpoint pós-activation;
+- expiry behavior às 09:00;
+- handoff para primeira PubMed Opportunity.
+
+Estado atual:
+> **LIVE_PREFLIGHT = NOT_YET_RUN**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **ACTIVATION_SQL = NOT_YET_CREATED**
+
+> **ACTIVATION_ARTIFACT = NOT_YET_CREATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
