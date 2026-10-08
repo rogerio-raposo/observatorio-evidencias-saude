@@ -109,7 +109,7 @@ SET epoch_status='authorized_non_normative'
 WHERE observation_epoch_uuid='b3120000-0000-0000-0000-000000000001'
   AND epoch_status='draft';
 
-DO $
+DO $auth$
 BEGIN
   IF NOT EXISTS(
     SELECT 1
@@ -120,6 +120,7 @@ BEGIN
   ) THEN
     RAISE EXCEPTION 'B1 draft -> authorized_non_normative transition did not occur';
   END IF;
-END $;
+END
+$auth$;
 
 COMMIT;
