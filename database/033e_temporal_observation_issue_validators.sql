@@ -65,7 +65,7 @@ BEGIN
   WHERE es.observation_epoch_uuid=p_epoch
     AND NOT maintenance.temporal_epoch_opportunity_set_matches_schedule(es.epoch_source_uuid);
   IF mismatch>0 THEN
-    issue_code:='OPPORTUNITY_SET_MISMATCH';severity:='blocker';detail='canonical payload differs from materialized opportunities';RETURN NEXT;
+    issue_code:='OPPORTUNITY_SET_MISMATCH';severity:='blocker';detail:='canonical payload differs from materialized opportunities';RETURN NEXT;
   END IF;
 
   SELECT count(*) INTO unresolved
