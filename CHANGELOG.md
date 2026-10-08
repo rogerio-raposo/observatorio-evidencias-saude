@@ -3801,3 +3801,17 @@ Documentos:
 - migration 033 permanece parcialmente implementada e não validada;
 - measurement schedule/Phase B/normative values continuam não autorizados;
 - próximo passo exige modo alto.
+
+
+## 2026-10-08 — CP118
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP118.md`;
+- ponteiro movido para CP118;
+- migration 033 permanece parcial/não validada;
+- implementation blocker = frozen opportunity-set enforcement não representável pelo Artifact metadata-only atual;
+- Documento 65 registra opções de schema;
+- nenhum workaround foi aplicado em modo médio;
+- 033d/033e/fixtures/tests/CI não iniciados;
+- measurement schedule e Phase B continuam não autorizados;
+- próximo passo: decisão em modo alto;
+- pausa obrigatória preservada.
