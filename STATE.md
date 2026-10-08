@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP131 — 2026-10-08**.
+- checkpoint vigente: **CP132 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4184,3 +4184,21 @@ Estado operacional preservado:
 
 Próximo ato irreversível:
 > **19/10/2026, 08:00–09:00 -03: live activation preflight do B1R1 em modo alto.**
+
+
+### CP132 — B1R1 real measurement runbook ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP132.md`;
+- Documento 88 = READY_FOR_REAL_OPPORTUNITY_EXECUTION / ACTIVATION_STILL_PENDING;
+- B1R1 real measurement runbook = READY;
+- no new architectural decision;
+- no new migration;
+- PubMed and ClinicalTrials.gov real execution paths operationally specified;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- no target-specific source query executed;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
