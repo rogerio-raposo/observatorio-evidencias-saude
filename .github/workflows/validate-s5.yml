@@ -1388,4 +1388,4 @@ jobs:
           name: oes-s5-evidence-${{ github.run_id }}
           path: s5-artifacts/
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 60
