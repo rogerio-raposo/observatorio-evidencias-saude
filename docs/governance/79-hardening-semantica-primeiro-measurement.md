@@ -35,6 +35,20 @@ Objeto da migration:
 
 > **first-measurement aggregate semantics hardening**
 
+## 2.1 Escopo de supersessão
+
+O Documento 79 não substitui o contrato metodológico do Documento 78.
+
+Ele supersede exclusivamente a conclusão técnica do Documento 78 de que:
+
+> **NEW_SCHEMA_MIGRATION_REQUIRED = NO**
+
+Após inspeção dos guards durante a tentativa de implementação de FM-T01–T24, essa conclusão passa a ser:
+
+> **NEW_SCHEMA_MIGRATION_REQUIRED = YES — MIGRATION 036**
+
+Permanecem vigentes as demais semânticas, boundaries e proibições do Documento 78.
+
 ## 3. Regra de baseline por source
 
 Para cada `epoch_source_uuid`, a primeira successful observation é definida como o primeiro MeasurementEvent com:
