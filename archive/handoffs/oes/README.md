@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP122 — 2026-10-08**
+**CP123 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP122.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP123.md`
 
 Checkpoint anterior:
 
-`CP121`
+`CP122`
 
 Status:
 
@@ -239,3 +239,5 @@ em **Modo Continuidade**.
 - **CP121 — 2026-10-08:** fecha o desenho experimental finito da Phase B da TOPI-N2-DCBTI-01 e abre somente o gate explícito de authority para preparation; nenhum probe, materialização real ou measurement autorizado.
 
 - **CP122 — 2026-10-08:** registra preparation PASS da TOPI-N2-DCBTI-01, B1 fisicamente congelado em draft e abre exclusivamente o Documento 75 para decisão explícita de Phase B execution authority; zero MeasurementEvent.
+
+- **CP123 — 2026-10-08:** valida a authority operacional do exact Epoch B1, promove o estado `authorized_non_normative`, adiciona hardening de cronologia via migration 034 e preserva zero MeasurementEvent até a janela de ativação em 2026-10-19.
