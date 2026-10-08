@@ -3885,3 +3885,56 @@ Próximo ato:
 - OpportunityResolution count = 0;
 - next irreversível act = 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — defeito de parametrização ClinicalTrials.gov reconciliado arquiteturalmente
+
+Documento:
+- `docs/governance/82-reconciliacao-parametrizacao-clinicaltrials-b1.md`.
+
+Resultado:
+> **CLINICALTRIALS_EXACT_REQUEST_PARAMETERIZATION = NOT_ACTUALLY_FROZEN**
+
+> **CP128_PRE_EXECUTION_READY_CLAIM = SUPERSEDED_BY_DOCUMENT_82**
+
+> **CURRENT_B1_ACTIVATION_GOVERNANCE_STATUS = BLOCKED**
+
+> **CORRECTIVE_ARCHITECTURE = REPLACEMENT_EPOCH_B1R1_UNDER_PLAN_V2**
+
+Decisão arquitetural:
+- não corrigir artifact congelado in place;
+- não usar runbook suplementar como substituto de design freeze;
+- não criar Plan v3 neste momento;
+- invalidar B1 somente após corrective preparation authority explícita;
+- preparar replacement Epoch `B1R1` sob Plan v2;
+- preservar start/review boundaries e os mesmos 14 timestamps;
+- ClinicalTrials.gov normalized parameters candidatos:
+  - `query.cond=insomnia`;
+  - `query.term=(digital CBT OR digital CBT-I OR internet CBT-I)`;
+  - `format=json`;
+  - `pageSize=10`;
+  - paginação completa via page token;
+- nenhuma query target-specific foi executada.
+
+Authority:
+> **CORRECTIVE_PREPARATION_AUTHORITY = REQUIRED**
+
+Formulação requerida:
+> **APPROVED — corrective preparation / Documento 82 / TOPI-N2-DCBTI-01 / replace B1 with B1R1**
+
+Enquanto não houver essa decisão:
+> **CURRENT_B1 = AUTHORIZED_NON_NORMATIVE_BUT_GOVERNANCE_BLOCKED**
+
+> **CURRENT_B1_ACTIVATION = PROHIBITED**
+
+> **B1R1 = NOT_YET_CREATED**
+
+> **MEASUREMENT_EVENT_COUNT = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT = 0**
+
+> **NORMATIVE_TEMPORAL_VALUES = NOT_AUTHORIZED**
+
+> **M3_FORMAL_OPERATIONALIZATION = BLOCKED**
+
+> **PHASE_5 = NOT_STARTED**
