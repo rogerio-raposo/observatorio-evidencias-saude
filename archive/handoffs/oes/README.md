@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP134 — 2026-10-08**
+**CP135 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP134.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP135.md`
 
 Checkpoint anterior:
 
-`CP133`
+`CP134`
 
 Status:
 
@@ -263,3 +263,5 @@ em **Modo Continuidade**.
 - **CP133 — 2026-10-08:** protocolo de review/encerramento do B1R1 pré-especificado; review ainda não iniciado; activation segue pendente de 19/10.
 
 - **CP134 — 2026-10-08:** decision tables de contingência do B1R1 pré-especificadas; activation permanece pendente de 19/10.
+
+- **CP135 — 2026-10-08:** runbook de live activation do B1R1 concluído; Documento 91 substitui operacionalmente o Documento 77; activation segue pendente de 19/10.
