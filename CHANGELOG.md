@@ -4176,3 +4176,19 @@ Documentos:
 - B1 atual não foi invalidado;
 - nova corrective preparation authority explícita é obrigatória antes de qualquer correção física;
 - zero MeasurementEvent e zero OpportunityResolution preservados.
+
+
+## 2026-10-08 — CP129
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP129.md`;
+- ponteiro movido para CP129;
+- Documento 82 promovido;
+- current B1 activation governance-blocked;
+- CP128 readiness claim superseded para execution readiness;
+- replacement Epoch B1R1 selecionado como corrective architecture;
+- same boundaries/opportunity timestamps preservados como requisito;
+- nenhuma query target-specific executada;
+- current B1 não invalidado;
+- B1R1 não criado;
+- corrective preparation authority explícita requerida;
+- zero MeasurementEvent e zero OpportunityResolution preservados.
