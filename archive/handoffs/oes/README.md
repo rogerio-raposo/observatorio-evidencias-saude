@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP116 — 2026-10-08**
+**CP117 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP116.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP117.md`
 
 Checkpoint anterior:
 
-`CP115`
+`CP116`
 
 Status:
 
@@ -227,3 +227,5 @@ em **Modo Continuidade**.
 - **CP115 — 2026-10-07:** fecha o Plan Amendment v0.2 da TOPI-N2-DCBTI-01; inclui PubMed e ClinicalTrials.gov como candidates da Phase B, mantém BVS/LILACS como deferred source debt e confirma lacuna física que exige specification de event layer não normativo antes de schedule, authority ou migration.
 
 - **CP116 — 2026-10-08:** fecha em PASS_WITH_ARCHITECTURAL_DECISIONS o contrato físico v0.1 de aquisição temporal não normativa; migration 033 torna-se elegível para decisão separada, ainda não autorizada, sem schedule numérico ou Phase B.
+
+- **CP117 — 2026-10-08:** autoriza a implementação infrastructure-only da migration 033, define master + fragments, synthetic tests, integração no validate-s5 e zero-real-seed; SQL ainda não implementado.
