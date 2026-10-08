@@ -4297,3 +4297,17 @@ Documentos:
 - nenhuma query target-specific executada;
 - activation continua pendente da janela de 19/10;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Protocolo de review/encerramento B1R1 pré-especificado
+
+- criado `docs/governance/89-protocolo-review-encerramento-b1r1.md`;
+- review boundary permanece `2026-11-10T18:00:00-03:00`;
+- completion física exige completed_at >= review boundary, target current, zero Opportunities irresolvidas e zero deviations materialmente bloqueantes;
+- protocolo pré-especifica accounting, missingness, failures, identifiers, timepoints, latency, effort, deviations e source debt;
+- nenhum threshold de suficiência ou minimum-N foi criado;
+- nenhum favorable stopping ou automatic extension autorizado;
+- B1R1 review não equivale a READY_FOR_CALIBRATION;
+- Calibration Dossier não foi aberto;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados.
