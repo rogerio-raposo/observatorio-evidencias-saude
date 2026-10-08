@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP120 — 2026-10-08**
+**CP121 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP120.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP121.md`
 
 Checkpoint anterior:
 
-`CP119`
+`CP120`
 
 Status:
 
@@ -235,3 +235,5 @@ em **Modo Continuidade**.
 - **CP119 — 2026-10-08:** resolve o blocker do frozen opportunity set usando measurement_schedule_payload como snapshot canônico, Artifact como provenance-only e materialização de Opportunities em draft; autoriza retomada da migration 033 em modo médio.
 
 - **CP120 — 2026-10-08:** promove tecnicamente a migration 033 como infraestrutura não normativa após TNO-T01–T100, idempotência, regressões e rebuild PASS; TOPI real, schedule real e Phase B continuam não autorizados.
+
+- **CP121 — 2026-10-08:** fecha o desenho experimental finito da Phase B da TOPI-N2-DCBTI-01 e abre somente o gate explícito de authority para preparation; nenhum probe, materialização real ou measurement autorizado.
