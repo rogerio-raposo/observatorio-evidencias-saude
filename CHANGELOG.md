@@ -3830,3 +3830,19 @@ Documentos:
 - test plan ampliado para TNO-T01–T100;
 - migration 033 continua parcialmente implementada/não validada, mas autorizada a retomar após checkpoint;
 - measurement schedule real e Phase B continuam não autorizados.
+
+
+## 2026-10-08 — CP119
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP119.md`;
+- ponteiro movido para CP119;
+- frozen opportunity-set blocker resolvido sem nova tabela/coluna;
+- measurement_schedule_payload = canonical design snapshot;
+- Artifact = provenance-only;
+- Opportunity rows passam a ser materializadas em draft;
+- authority freshness = required;
+- test plan ampliado para TNO-T01–T100;
+- migration 033 continua parcial/não validada, mas pode retomar implementação após checkpoint;
+- measurement schedule real e Phase B continuam não autorizados;
+- próximo passo: modo médio;
+- pausa obrigatória preservada.
