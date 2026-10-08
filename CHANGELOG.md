@@ -3666,3 +3666,20 @@ Documentos:
 - Phase B continua não autorizada;
 - nenhum valor temporal normativo, Calibration Dossier, UpdatePolicy, Monitor ou migration nova;
 - próximo passo: Plan Amendment v0.2 + novo gate + nova authority antes de qualquer Phase B.
+
+
+## 2026-10-07 — CP114
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-07_CP114.md`;
+- ponteiro movido para CP114;
+- Documento 57 registra owner APPROVED para Phase A;
+- Documento 58 conclui Phase A com source-specific limitations;
+- PubMed e ClinicalTrials.gov seguem para desenho potencial de Phase B sob controles;
+- BVS/LILACS permanece parcial e bloqueado para repeated programmatic measurement até resolução do access path ou desenho manual explícito;
+- UpdateRiskProfile permanece evidence-preparation only;
+- measurement schedule não selecionada;
+- Phase B não autorizada;
+- nenhum normative temporal value ou migration nova;
+- M3 bloqueado; Fase 5 não iniciada;
+- próximo passo: Plan Amendment v0.2 em modo alto;
+- pausa obrigatória preservada.
