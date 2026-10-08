@@ -3998,3 +3998,20 @@ Documentos:
 - zero MeasurementEvent;
 - next operational window: 2026-10-19, 08:00–09:00 -03, subject to live preflight;
 - mandatory pause preserved.
+
+
+## 2026-10-08 — B1 activation preflight readiness
+
+- migration 035 adds deterministic read-only activation preflight;
+- APF-T01–T13 = PASS;
+- B1 pre-start state = WAIT;
+- eligible activation-window state = PASS;
+- at first Opportunity boundary state = FAIL / EXPIRED_NOT_EXECUTED;
+- preflight proven non-mutating;
+- run 219 / `37819755672` = success;
+- validated HEAD `830fcad1e79b237c5c672c5bf8e19aad66d2711f`;
+- evidence artifact `11568343046`;
+- digest `sha256:73f147fca89833f944b1bbb55fda324afa005bd0f17e9ea3b29fdc46810d906b`;
+- Documento 77 creates activation runbook;
+- activation SQL intentionally not created in advance;
+- B1 remains authorized_non_normative with started_at NULL and zero MeasurementEvent.
