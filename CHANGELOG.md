@@ -4252,3 +4252,21 @@ Documentos:
 - rebuild ends with B1 invalidated and B1R1 authorized_non_normative, started_at NULL, zero MeasurementEvent;
 - Documento 87 records result;
 - activation remains a separate future act.
+
+
+## 2026-10-08 — CP131
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP131.md`;
+- ponteiro movido para CP131;
+- B1R1 execution authority aprovada e validada;
+- B1 permanece invalidated;
+- B1R1 = authorized_non_normative;
+- B1R1 started_at = NULL;
+- B1R1-AUTH-T01–T20 = PASS;
+- run 232 / `37859791833` = success;
+- artifact `11585626965`;
+- digest `sha256:ea7b831fa6b0d8c2547bb5763e8c0cf0072c6dcabac4e279dd4d7bf10266a0a6`;
+- rebuild = PASS;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- activation continua pendente da janela de 19/10 em modo alto;
+- pausa obrigatória preservada.
