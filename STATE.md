@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP126 — 2026-10-08**.
+- checkpoint vigente: **CP127 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -3797,3 +3797,23 @@ Estado real preservado:
 
 Próximo ato operacional irreversível:
 > **live activation preflight em 2026-10-19, 08:00–09:00 -03, modo alto.**
+
+
+### CP127 — migration 036 / first-measurement harness validated
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP127.md`;
+- migration 036 = TECHNICALLY_VALIDATED;
+- FM-T01–T24 = PASS;
+- F4-FM-IDEM = PASS;
+- F4-FM-REBUILD = PASS;
+- Documento 80 registra o resultado técnico;
+- run 222 / `37829798269` = success;
+- evidence artifact `11572917207`;
+- digest `sha256:a5d01a58f60e1a4424c24753d9a65290a18443408525ebfd2e53081d1e03f347`;
+- B1 permanece `authorized_non_normative`;
+- started_at = NULL;
+- MeasurementEvent count = 0;
+- OpportunityResolution count = 0;
+- nenhuma source query real foi executada;
+- próximo ato irreversível = live activation preflight em 2026-10-19, 08:00–09:00 -03, modo alto;
+- pausa obrigatória preservada.
