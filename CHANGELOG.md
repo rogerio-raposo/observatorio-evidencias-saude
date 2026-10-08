@@ -4350,3 +4350,14 @@ Documentos:
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - activation continua pendente da janela de 19/10;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Runbook de live activation B1R1
+
+- criado `docs/governance/91-runbook-live-activation-b1r1.md`;
+- Documento 91 passa a ser o runbook operacional corrente para activation do replacement B1R1;
+- Documento 77 permanece preservado como runbook histórico do B1 original;
+- runbook formaliza Freshness Gate, factual clock, live preflight, activation Artifact, SQL factual pós-PASS e post-activation validation;
+- activation SQL e Artifact factual continuam não criados antecipadamente;
+- B1R1 permanece authorized_non_normative, started_at NULL;
+- zero MeasurementEvent e zero OpportunityResolution preservados.
