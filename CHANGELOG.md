@@ -4192,3 +4192,27 @@ Documentos:
 - B1R1 não criado;
 - corrective preparation authority explícita requerida;
 - zero MeasurementEvent e zero OpportunityResolution preservados.
+
+
+## 2026-10-08 — Corrective preparation B1R1 concluída
+
+- owner aprovou explicitamente corrective preparation do Documento 82;
+- Documento 83 registra a authority de preparação;
+- novo probe não target-specific executado antes da materialização;
+- run 224 / `37855302262` = success;
+- PubMed connectivity = VERIFIED;
+- ClinicalTrials.gov API v2 = VERIFIED / apiVersion 2.0.5;
+- artifact `11583468584`, digest `sha256:c0d933ca42961e1f0605751544e603dac33039b1c3d1476dbe187c65925f2e52`;
+- criados artifacts B1R1: measurement design, PubMed interface v2, ClinicalTrials query v2 e interface v2;
+- B1 original invalidado com started_at NULL, zero MeasurementEvent e zero OpportunityResolution;
+- B1R1 materializado como draft sob Plan v2;
+- boundaries e 14 timestamps preservados sem sliding;
+- B1R1 design_frozen_at = `2026-10-08T19:48:20-03:00`;
+- B1R1-T01–T24 = PASS;
+- run 229 / `37855834411` = success;
+- artifact `11583902320`, digest `sha256:77066bb64d4fa3110686027f552f69366702a4c72d53e45e188c7df6d7ff89e2`;
+- rebuild termina com B1 invalidated e B1R1 draft;
+- Documento 84 registra o resultado;
+- Documento 85 criado como novo pacote de execution authority;
+- B1R1 execution authority permanece PENDING;
+- nenhuma target-specific query ou MeasurementEvent executado.
