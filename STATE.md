@@ -2705,3 +2705,63 @@ Próximo passo:
 - próximo passo: aguardar APPROVED / REVISE / REJECTED explicitamente vinculado à Phase A / Documento 56 / TOPI-N2-DCBTI-01;
 - alta complexidade arquitetural deste bloco encerrada; modo médio suficiente após decisão, salvo nova questão complexa;
 - pausa obrigatória preservada.
+
+
+### Fase 4 — authority registrada e Phase A da TOPI-N2-DCBTI-01 concluída
+
+Documentos:
+- `docs/governance/57-registro-decisao-authority-phase-a-topi-n2-dcbti-01.md`;
+- `docs/governance/58-topi-n2-dcbti-phase-a-characterization-package.md`.
+
+Authority:
+> **AUTHORITY_DECISION = APPROVED_FOR_PHASE_A**
+
+> **PHASE_A_OPERATIONAL_EXECUTION_AUTHORITY = GRANTED**
+
+Decisão explícita do owner:
+`Approved - phase A / documento 56 / TOPI-N2-DCBTI-01`.
+
+Phase A:
+> **PHASE_A = COMPLETED_WITH_SOURCE_SPECIFIC_LIMITATIONS**
+
+Source characterization:
+- PubMed = `SUFFICIENT_FOR_PHASE_B_DESIGN_WITH_CONTROLS`;
+- BVS/LILACS = `PARTIAL`;
+- ClinicalTrials.gov = `SUFFICIENT_FOR_PHASE_B_DESIGN_WITH_RUNTIME_CONNECTIVITY_CHECK`.
+
+Achados:
+- PubMed possui E-utilities e datas CRDT/EDAT úteis para observability; updates de corpus são documentados como diários, sem implicar latency individual fixa;
+- BVS/LILACS possui IAHx/FI-Admin e modelo com creation/change dates, mas acesso programático público reproduzível não foi estabelecido nesta Phase A;
+- ClinicalTrials.gov possui API v2 REST/OpenAPI/JSON e posting-date fields adequados para observar processo registral;
+- falhas de abertura por ferramenta foram classificadas como `TOOL_MEDIATED / FAILURE_ATTRIBUTION_UNKNOWN`, nunca como source outage.
+
+Data governance:
+- PubMed = PASS_WITH_CONTROLS;
+- BVS/LILACS = metadata characterization permitida, Phase B access unresolved;
+- ClinicalTrials.gov = PASS_WITH_CONTROLS.
+
+UpdateRiskProfile:
+> **EVIDENCE_PREPARATION_ONLY**
+
+Nenhum rating A1–A5/B1–B5 foi declarado authoritative.
+
+Measurement:
+> **MEASUREMENT_SCHEDULE = NOT_SELECTED**
+
+> **PHASE_B = NOT_AUTHORIZED**
+
+Physical contract:
+> **NON_NORMATIVE_OBSERVATION_PHYSICAL_CONTRACT = NOT_REQUIRED_FOR_PHASE_A**
+
+Necessidade de event object específico para Phase B = unresolved.
+
+Restrições:
+- nenhuma repeated prospective measurement executada;
+- nenhuma cadence/Monitor/UpdatePolicy/Calibration Dossier;
+- nenhum valor temporal normativo;
+- nenhum novo migration;
+- M3 bloqueado;
+- Fase 5 não iniciada.
+
+Próximo passo:
+> **após checkpoint, especificar Plan Amendment v0.2 da TOPI-N2-DCBTI-01 com source inclusion, Phase B event model, storage mapping e eventual measurement schedule non-normative; depois novo target-specific gate e nova authority antes de Phase B.**
