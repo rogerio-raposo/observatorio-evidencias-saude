@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP113 — 2026-10-07**
+**CP114 — 2026-10-07**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP113.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-07_CP114.md`
 
 Checkpoint anterior:
 
-`CP112`
+`CP113`
 
 Status:
 
@@ -221,3 +221,5 @@ em **Modo Continuidade**.
 - **CP112 — 2026-10-07:** fecha a arquitetura de aquisição de evidência temporal não normativa em PASS_WITH_ARCHITECTURAL_DECISIONS; adota protocolo transversal reutilizável + instância target-specific e retoma na seleção/especificação do primeiro piloto, ainda sem execução real.
 
 - **CP113 — 2026-10-07:** seleciona N2/dCBT-I para a TOPI-N2-DCBTI-01, fecha a especificação e o gate target-specific em PASS_FOR_AUTHORITY_REQUEST_ONLY e aguarda decisão explícita do Documento 56 para executar somente a Phase A.
+
+- **CP114 — 2026-10-07:** registra a approval explícita da Phase A e conclui a characterization da TOPI-N2-DCBTI-01; PubMed e ClinicalTrials.gov ficam aptos para desenho de Phase B com controles, BVS/LILACS permanece parcial, measurement schedule não selecionada e Phase B não autorizada.
