@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP139 — 2026-10-09**.
+- checkpoint vigente: **CP140 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4722,3 +4722,26 @@ Estado preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP140 — first measurements persistence/post-readout ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP140.md`;
+- Documento 96 = TEMPLATE_ONLY / NO_FACTUAL_MEASUREMENT_DATA;
+- first measurements persistence template = READY;
+- first measurements post-readout read-only = READY;
+- run 240 / `37865666856` = success;
+- artifact `11587648764`;
+- digest `sha256:e6a6d891c257172a3aafb47e1caf3a31ec77e0636a68f344f6f06b1dd252047d`;
+- zero mutation = PASS;
+- rebuild = PASS;
+- run 239 remains non-canonical intermediate read-only failure;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- first real source query = NOT_EXECUTED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible sequence remains 2026-10-19 in high mode;
+- mandatory pause preserved.
