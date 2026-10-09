@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP139 — 2026-10-09**
+**CP140 — 2026-10-09**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP139.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP140.md`
 
 Checkpoint anterior:
 
-`CP138`
+`CP139`
 
 Status:
 
@@ -273,3 +273,5 @@ em **Modo Continuidade**.
 - **CP138 — 2026-10-09:** pacote da primeira measurement PubMed pronto; precheck read-only validado; nenhuma query real executada.
 
 - **CP139 — 2026-10-09:** pacote da primeira measurement ClinicalTrials.gov pronto; precheck read-only validado; nenhuma query real executada.
+
+- **CP140 — 2026-10-09:** template de persistência e post-readout das primeiras measurements pronto; run 240 canônico; nenhuma measurement real executada.
