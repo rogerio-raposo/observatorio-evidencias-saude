@@ -4543,3 +4543,20 @@ Documentos:
 - baseline/subsequent completed semantics source-specific preservadas;
 - nenhuma query real ou MeasurementEvent executado;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Audit de prontidão pré-19/10 B1R1
+
+- criado `database/f4-topi-n2-dcbti-b1r1-pre-day19-readiness-readonly.sql`;
+- criado `docs/governance/98-audit-prontidao-pre-dia19-b1r1.md`;
+- audit separa readiness preparatória de autorização temporal de activation;
+- estado esperado antes da janela permanece `ACTIVATION_WINDOW=WAIT`;
+- `PREPARATION_READY` exige zero blocker não temporal;
+- blobs congelados v2 foram revalidados no GitHub;
+- run 243 falhou somente por coluna `check_state` inexistente; zero mutation;
+- corrigido para `check_status`;
+- run 244 / `37926218841` = success;
+- artifact `11613929240`;
+- digest `sha256:822f753a91f4aefc00f92d5f2c3c1623ed0a0d89694e3144ab5e08d78eaf80d0`;
+- preparation ready, activation window WAIT, zero mutation e rebuild = PASS;
+- nenhuma activation ou source query factual executada.
