@@ -4415,3 +4415,17 @@ Documentos:
 - live preflight read-only e post-activation read-only = PASS;
 - rebuild = PASS;
 - nenhum activation fact ou MeasurementEvent criado.
+
+
+## 2026-10-08 — CP137
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP137.md`;
+- ponteiro movido para CP137;
+- Documento 93 promovido como template não factual;
+- post-activation capture read-only validado;
+- run 234 / `37862383146` = success;
+- artifact `11587035724`;
+- digest `sha256:34a8cb17bd339e9cba9986ea11a9e16af672434815c65f672a6255e4500f276d`;
+- nenhum started_at, activation Artifact factual ou activation SQL factual foi antecipado;
+- zero MeasurementEvent e zero OpportunityResolution preservados;
+- pausa obrigatória preservada.
