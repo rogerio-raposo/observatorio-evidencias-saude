@@ -4560,3 +4560,18 @@ Documentos:
 - digest `sha256:822f753a91f4aefc00f92d5f2c3c1623ed0a0d89694e3144ab5e08d78eaf80d0`;
 - preparation ready, activation window WAIT, zero mutation e rebuild = PASS;
 - nenhuma activation ou source query factual executada.
+
+
+## 2026-10-09 — CP142
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP142.md`;
+- ponteiro movido para CP142;
+- Documento 98 promovido;
+- audit pré-19/10 = PREPARATION_READY;
+- activation window permanece WAIT;
+- run 244 / `37926218841` = success;
+- artifact `11613929240`;
+- digest `sha256:822f753a91f4aefc00f92d5f2c3c1623ed0a0d89694e3144ab5e08d78eaf80d0`;
+- run 243 classificado como intermediário não canônico por erro de coluna em query read-only;
+- nenhuma activation, source query ou MeasurementEvent factual executado;
+- pausa obrigatória preservada.
