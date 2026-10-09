@@ -4745,3 +4745,49 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible sequence remains 2026-10-19 in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — pacote das Opportunities subsequentes do B1R1 pronto
+
+Documento:
+- `docs/governance/97-pacote-opportunities-subsequentes-b1r1.md`.
+
+Read-only readiness matrix:
+- `database/f4-topi-n2-dcbti-b1r1-subsequent-opportunities-readiness-readonly.sql`.
+
+Resultado:
+> **SUBSEQUENT_OPPORTUNITY_OPERATOR_PACKET = READY**
+
+> **SUBSEQUENT_OPPORTUNITY_READINESS_MATRIX = READY_READ_ONLY**
+
+> **SUBSEQUENT_REAL_SOURCE_QUERY = NOT_EXECUTED**
+
+> **FACTUAL_SUBSEQUENT_MEASUREMENT_SQL = NOT_CREATED**
+
+CI:
+- run 241 / `37866002057` = success;
+- validated HEAD `bf0ae05b06d2ae4f0e8eea4297147b39c2d496dc`;
+- artifact `11588596135`;
+- digest `sha256:bc27df73f525774bd43c5484b841d3d72f245c23836820904e4d80ebf7236cff`;
+- expiry `2026-12-08T00:41:47Z`;
+- TOPI-B1R1-SUBSEQUENT-READINESS = PASS;
+- 12 subsequent opportunities visible;
+- all NOT_READY in current pre-activation state;
+- baseline-if-no-prior-completed semantics visible;
+- zero mutation = PASS;
+- rebuild = PASS.
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **FIRST_REAL_SOURCE_QUERY = NOT_EXECUTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
