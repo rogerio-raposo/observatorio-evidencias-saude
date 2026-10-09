@@ -4539,3 +4539,46 @@ Estado real preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — pacote da primeira measurement PubMed do B1R1 pronto
+
+Documento:
+- `docs/governance/94-pacote-primeira-measurement-pubmed-b1r1.md`.
+
+Read-only precheck:
+- `database/f4-topi-n2-dcbti-b1r1-first-pubmed-precheck-readonly.sql`.
+
+Resultado:
+> **FIRST_PUBMED_OPERATOR_PACKET = READY**
+
+> **FIRST_PUBMED_PRECHECK_READONLY = READY**
+
+> **FIRST_REAL_SOURCE_QUERY = NOT_EXECUTED**
+
+> **FIRST_MEASUREMENT_EVENT = NOT_CREATED**
+
+CI:
+- run 236 / `37864644053` = success;
+- validated HEAD `acac8e1a3dd9dc0eac67c9ba4abf8f0d283e78f0`;
+- artifact `11586984803`;
+- digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
+- expiry `2026-12-08T00:25:42Z`;
+- TOPI-B1R1-FIRST-PUBMED-PRECHECK = PASS;
+- pre-activation result = NOT_READY;
+- baseline-if-completed semantics visible;
+- zero mutation = PASS;
+- rebuild = PASS.
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
