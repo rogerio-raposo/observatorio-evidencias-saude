@@ -4672,3 +4672,53 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible sequence remains 2026-10-19 activation then first real source measurements in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — template de persistência e post-readout das primeiras measurements pronto
+
+Documento:
+- `docs/governance/96-template-persistencia-postreadout-primeiras-measurements-b1r1.md`.
+
+Read-only post-readout:
+- `database/f4-topi-n2-dcbti-b1r1-first-measurements-postreadout-readonly.sql`.
+
+Resultado:
+> **FIRST_MEASUREMENTS_PERSISTENCE_TEMPLATE = READY**
+
+> **FIRST_MEASUREMENTS_POSTREADOUT_READONLY = READY**
+
+> **FACTUAL_MEASUREMENT_DATA = NONE**
+
+> **MEASUREMENT_EVENT_SQL_FACTUAL = NOT_CREATED**
+
+CI:
+- run 240 / `37865666856` = success;
+- validated HEAD `1b2de6cbdc460aa8fa858a2c23503cadaa327367`;
+- artifact `11587648764`;
+- digest `sha256:e6a6d891c257172a3aafb47e1caf3a31ec77e0636a68f344f6f06b1dd252047d`;
+- expiry `2026-12-08T00:37:43Z`;
+- TOPI-B1R1-FIRST-MEASUREMENTS-POSTREADOUT = PASS;
+- planned/zero-attempt baseline visible;
+- zero mutation = PASS;
+- rebuild = PASS.
+
+Intermediário não canônico:
+- run 239 falhou apenas por nome incorreto de coluna no read-only deviation query;
+- nenhuma mutation ocorreu;
+- corrigido em commit `1b2de6cbdc460aa8fa858a2c23503cadaa327367`;
+- run 240 supersede tecnicamente o run 239.
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **FIRST_REAL_SOURCE_QUERY = NOT_EXECUTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
