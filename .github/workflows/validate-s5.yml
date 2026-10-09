@@ -891,6 +891,26 @@ jobs:
           grep -q "NOT_YET_PASS" s5-artifacts/TOPI-B1R1-post-activation-readonly.log
           echo "TOPI-B1R1-POST-ACTIVATION-READONLY PASS — pre-activation run is harmless; state unchanged" | tee s5-artifacts/TOPI-B1R1-post-activation-readonly-summary.log
 
+      - name: F4-ISE — isolated dual-source synthetic integration T01–T24
+        shell: bash
+        run: |
+          set -euo pipefail
+          snapshot_sql="SELECT md5(string_agg(observation_epoch_uuid::text||':'||epoch_status||':'||COALESCE(started_at::text,'NULL')||':'||COALESCE(completed_at::text,'NULL'),'|' ORDER BY observation_epoch_uuid)) FROM maintenance.temporal_observation_epoch WHERE observation_epoch_uuid IN ('b3120000-0000-0000-0000-000000000001','b3120000-0000-0000-0000-000000000002');"
+          before_epoch="$(psql -X -qAt -v ON_ERROR_STOP=1 -c "$snapshot_sql")"
+          before_counts="$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT (SELECT count(*) FROM maintenance.temporal_measurement_event)||'|'||(SELECT count(*) FROM maintenance.temporal_measurement_opportunity_resolution)||'|'||(SELECT count(*) FROM maintenance.update_signal)||'|'||(SELECT count(*) FROM maintenance.cadence_observation)||'|'||(SELECT count(*) FROM maintenance.monitor_cycle);")"
+          psql -X -v ON_ERROR_STOP=1 -f database/f4-temporal-integrated-synthetic-harness-tests.sql 2>&1 | tee s5-artifacts/F4-ISE-T01-T24.log
+          grep -q "F4-ISE-T01-T24 PASS" s5-artifacts/F4-ISE-T01-T24.log
+          test "$(grep -Ec 'NOTICE:  ISE-T[0-9][0-9] PASS' s5-artifacts/F4-ISE-T01-T24.log)" -eq 24
+          after_epoch="$(psql -X -qAt -v ON_ERROR_STOP=1 -c "$snapshot_sql")"
+          after_counts="$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT (SELECT count(*) FROM maintenance.temporal_measurement_event)||'|'||(SELECT count(*) FROM maintenance.temporal_measurement_opportunity_resolution)||'|'||(SELECT count(*) FROM maintenance.update_signal)||'|'||(SELECT count(*) FROM maintenance.cadence_observation)||'|'||(SELECT count(*) FROM maintenance.monitor_cycle);")"
+          test "$before_epoch" = "$after_epoch"
+          test "$before_counts" = "$after_counts"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM maintenance.temporal_observation_plan WHERE observation_plan_uuid='f7410000-0000-0000-0000-000000000001';")" = "0"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM artifact.artifact WHERE artifact_uuid::text LIKE 'f7400000-%';")" = "0"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM maintenance.temporal_measurement_event me JOIN maintenance.temporal_measurement_opportunity o USING(measurement_opportunity_uuid) JOIN maintenance.temporal_observation_epoch_source es USING(epoch_source_uuid) WHERE es.observation_epoch_uuid IN ('b3120000-0000-0000-0000-000000000001','b3120000-0000-0000-0000-000000000002');")" = "0"
+          test "$(psql -X -qAt -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM maintenance.temporal_measurement_opportunity_resolution rr JOIN maintenance.temporal_measurement_opportunity o USING(measurement_opportunity_uuid) JOIN maintenance.temporal_observation_epoch_source es USING(epoch_source_uuid) WHERE es.observation_epoch_uuid IN ('b3120000-0000-0000-0000-000000000001','b3120000-0000-0000-0000-000000000002');")" = "0"
+          echo "F4-ISE PASS — 24 synthetic assertions; ROLLBACK verified; B1/B1R1 and normative state unchanged" | tee s5-artifacts/F4-ISE-summary.log
+
       - name: TOPI-B1R1-FIRST-PUBMED-PRECHECK — syntax and zero-mutation proof
         shell: bash
         run: |
