@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP141 — 2026-10-09**
+**CP142 — 2026-10-09**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP141.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP142.md`
 
 Checkpoint anterior:
 
-`CP140`
+`CP141`
 
 Status:
 
@@ -277,3 +277,5 @@ em **Modo Continuidade**.
 - **CP140 — 2026-10-09:** template de persistência e post-readout das primeiras measurements pronto; run 240 canônico; nenhuma measurement real executada.
 
 - **CP141 — 2026-10-09:** pacote das Opportunities subsequentes do B1R1 pronto; matriz read-only das 12 Opportunities validada; nenhuma execução real.
+
+- **CP142 — 2026-10-09:** audit pré-19/10 validado; preparação pronta, activation window ainda WAIT; nenhuma execução factual.
