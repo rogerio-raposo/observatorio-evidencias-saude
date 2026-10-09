@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP136 — 2026-10-08**
+**CP137 — 2026-10-08**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP136.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP137.md`
 
 Checkpoint anterior:
 
-`CP135`
+`CP136`
 
 Status:
 
@@ -267,3 +267,5 @@ em **Modo Continuidade**.
 - **CP135 — 2026-10-08:** runbook de live activation do B1R1 concluído; Documento 91 substitui operacionalmente o Documento 77; activation segue pendente de 19/10.
 
 - **CP136 — 2026-10-08:** pacote operacional do dia 19 validado; live preflight capture read-only provado sem mutação; activation segue pendente.
+
+- **CP137 — 2026-10-08:** templates de activation/pós-activation e capture read-only validados; nenhum dado factual antecipado.
