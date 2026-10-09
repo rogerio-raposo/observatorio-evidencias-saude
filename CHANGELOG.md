@@ -4443,3 +4443,16 @@ Documentos:
 - digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
 - zero mutation e rebuild = PASS;
 - nenhuma query PubMed real ou MeasurementEvent foi executado.
+
+
+## 2026-10-09 — CP138
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP138.md`;
+- ponteiro movido para CP138;
+- Documento 94 promovido;
+- first PubMed precheck read-only validado;
+- run 236 / `37864644053` = success;
+- artifact `11586984803`;
+- digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
+- nenhuma query PubMed target-specific ou MeasurementEvent executado;
+- pausa obrigatória preservada.
