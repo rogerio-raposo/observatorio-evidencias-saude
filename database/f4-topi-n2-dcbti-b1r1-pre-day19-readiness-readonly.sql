@@ -17,20 +17,20 @@ WITH checks AS (
 non_time AS (
   SELECT count(*) FILTER (
            WHERE check_code <> 'ACTIVATION_WINDOW'
-             AND check_state NOT IN ('PASS','INFO')
+             AND check_status NOT IN ('PASS','INFO')
          ) AS non_time_blocker_count,
          count(*) FILTER (
            WHERE check_code <> 'ACTIVATION_WINDOW'
-             AND check_state='PASS'
+             AND check_status='PASS'
          ) AS non_time_pass_count,
          count(*) FILTER (
            WHERE check_code <> 'ACTIVATION_WINDOW'
-             AND check_state='INFO'
+             AND check_status='INFO'
          ) AS info_count
   FROM checks
 ),
 window_state AS (
-  SELECT check_state AS activation_window_state
+  SELECT check_status AS activation_window_state
   FROM checks
   WHERE check_code='ACTIVATION_WINDOW'
 )
@@ -49,7 +49,7 @@ FROM non_time CROSS JOIN window_state;
 
 SELECT
   check_code,
-  check_state,
+  check_status,
   detail
 FROM maintenance.temporal_activation_preflight(
   'b3120000-0000-0000-0000-000000000002',
