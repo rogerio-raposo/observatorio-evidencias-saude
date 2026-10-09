@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP137 — 2026-10-08**
+**CP138 — 2026-10-09**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-08_CP137.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP138.md`
 
 Checkpoint anterior:
 
-`CP136`
+`CP137`
 
 Status:
 
@@ -269,3 +269,5 @@ em **Modo Continuidade**.
 - **CP136 — 2026-10-08:** pacote operacional do dia 19 validado; live preflight capture read-only provado sem mutação; activation segue pendente.
 
 - **CP137 — 2026-10-08:** templates de activation/pós-activation e capture read-only validados; nenhum dado factual antecipado.
+
+- **CP138 — 2026-10-09:** pacote da primeira measurement PubMed pronto; precheck read-only validado; nenhuma query real executada.
