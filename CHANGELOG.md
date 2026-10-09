@@ -4429,3 +4429,17 @@ Documentos:
 - nenhum started_at, activation Artifact factual ou activation SQL factual foi antecipado;
 - zero MeasurementEvent e zero OpportunityResolution preservados;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08/09 — Pacote da primeira measurement PubMed B1R1
+
+- criado `database/f4-topi-n2-dcbti-b1r1-first-pubmed-precheck-readonly.sql`;
+- criado `docs/governance/94-pacote-primeira-measurement-pubmed-b1r1.md`;
+- precheck captura active state, authority, target, resolution, prior attempts, prior completed source events, expected attempt_no e baseline semantics;
+- antes da activation o resultado esperado/validado é `NOT_READY`;
+- first completed PubMed semantics permanecem `novelty_state=not_applicable`, `new_identifier_count=NULL`, `failure_attribution=not_applicable`;
+- run 236 / `37864644053` = success;
+- artifact `11586984803`;
+- digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
+- zero mutation e rebuild = PASS;
+- nenhuma query PubMed real ou MeasurementEvent foi executado.
