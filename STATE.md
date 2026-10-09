@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP141 — 2026-10-09**.
+- checkpoint vigente: **CP142 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4866,3 +4866,28 @@ Estado preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP142 — pre-day19 readiness validated
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP142.md`;
+- Documento 98 = PRE-DAY19 READINESS AUDIT / PREPARATORY ONLY;
+- pre-day19 readiness audit = READY_READ_ONLY;
+- preparation status = PREPARATION_READY;
+- activation window current state = WAIT;
+- activation allowed now = NO;
+- run 244 / `37926218841` = success;
+- artifact `11613929240`;
+- digest `sha256:822f753a91f4aefc00f92d5f2c3c1623ed0a0d89694e3144ab5e08d78eaf80d0`;
+- zero mutation = PASS;
+- rebuild = PASS;
+- run 243 remains non-canonical intermediate read-only failure;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- first real source query = NOT_EXECUTED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible sequence remains 2026-10-19 in high mode;
+- mandatory pause preserved.
