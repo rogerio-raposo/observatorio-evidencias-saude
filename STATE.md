@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP146 — 2026-10-09**.
+- checkpoint vigente: **CP147 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4995,4 +4995,28 @@ Estado preservado:
 - Documento 102 = TECHNICALLY_VALIDATED / SYNTHETIC_OFFLINE_ONLY;
 - próximo bloco opcional: gate adversarial read-only de fronteira parser/decisão factual em modo alto, somente após Prossiga;
 - próximo ato factual B1R1 ainda reservado para 19/10/2026 sob Freshness Gate e live PASS;
+- pausa obrigatória preservada.
+
+
+### Fase 4 — hardening dos contratos offline validado (Documento 103)
+
+- corrigida identidade física dos cinco artefatos congelados via SHA de bytes em disco, não somente pelo SHA declarado;
+- corrigida a proveniência das fixtures em memória, sem referência a JSON ausente;
+- adicionados OFF-A01–A10; total offline 44/44 PASS;
+- run 252 / `37939324857`, job `113849349502`, commit `dbcc79f69bb3ed07306cee5fc05b25eed9bfb2e1`, success;
+- artifact `11621145703` / sha256:0aff81c4bf96f477630e40a14f24f040a7820650c5d82d8d1f446b3db50ffb29;
+- F4-ISE 24/24 e regressões/rebuild PASS, PRE_DAY19_READY WAIT e zero mutation;
+- Documento 103: `docs/governance/103-resultado-hardening-identidade-proveniencia-contratos-offline-b1r1.md`;
+- nenhuma mutation B1R1, nenhuma fonte científica consultada; sem ponte automática parser→MeasurementEvent factual.
+
+> **F4_OFFLINE_SOURCE_HARDENING = VALIDATED_SYNTHETIC_ONLY**
+> **F4_OFFLINE_SOURCE_CASES = 44_OF_44_PASS**
+> **F4_FROZEN_CONTRACT_ATTESTATION = PASS**
+> **B1R1_ACTIVATION = NOT_STARTED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP147 — offline identity and provenance hardening
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP147.md`;
+- próximo ato factual irreversível segue em 19/10/2026, com live preflight e modo alto;
 - pausa obrigatória preservada.

@@ -4660,3 +4660,24 @@ Documentos:
 - próximo bloco opcional: gate adversarial read-only de integração, sujeito a modo alto e novo Prossiga;
 - B1R1 autorizado, não ativo, activation WAIT até 19/10, zero eventos/resolutions; M3 blocked, Phase 5 not started;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Validação do hardening de identidade e proveniência offline
+
+- parser offline verifica cinco artefatos congelados contra Git blob SHA real calculado de bytes em disco;
+- hash/JSON/query divergente bloqueia completude técnica, sem alterar contratos;
+- provenance `generated_in_memory` explícita e `evidence_paths=[]`; nenhuma referência a arquivo de fixture JSON inexistente;
+- novos casos adversariais OFF-A01–A10; suite offline 44/44 PASS;
+- CI canônica run 252 / `37939324857` = success, HEAD técnico `dbcc79f69bb3ed07306cee5fc05b25eed9bfb2e1`;
+- job 113849349502; artifact 11621145703; digest sha256:0aff81c4bf96f477630e40a14f24f040a7820650c5d82d8d1f446b3db50ffb29;
+- F4-ISE 24/24 PASS, B1R1 pre-day19 WAIT/zero mutation, rebuild PASS;
+- resultado documentado no `docs/governance/103-resultado-hardening-identidade-proveniencia-contratos-offline-b1r1.md`;
+- sem HTTP científico, mutation factual, nova migration ou alteração nos frozen artifacts.
+
+## 2026-10-09 — CP147
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP147.md`;
+- ponteiro e STATE atualizados para CP147;
+- hardening sintético validado, nenhuma ponte automática parser → MeasurementEvent;
+- B1R1 autorizado e não ativado, M3 blocked e Fase 5 not started;
+- pausa obrigatória preservada.
