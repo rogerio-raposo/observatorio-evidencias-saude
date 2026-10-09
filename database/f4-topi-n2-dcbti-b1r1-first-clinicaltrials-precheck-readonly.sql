@@ -1,3 +1,4 @@
+-- CI-integrated first ClinicalTrials precheck
 -- OES Fase 4 — B1R1 ClinicalTrials.gov first-measurement pre-check
 -- READ ONLY. Intended immediately before the first factual ClinicalTrials.gov attempt.
 -- Running before activation / before planned_for is harmless and should report NOT_READY.
