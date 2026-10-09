@@ -4512,3 +4512,19 @@ Documentos:
 - run 239 marcado como intermediário não canônico por erro de coluna em query read-only;
 - nenhuma measurement real ou source query executada;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Pacote das Opportunities subsequentes B1R1
+
+- criado `database/f4-topi-n2-dcbti-b1r1-subsequent-opportunities-readiness-readonly.sql`;
+- criado `docs/governance/97-pacote-opportunities-subsequentes-b1r1.md`;
+- matriz cobre exatamente 12 Opportunities posteriores às primeiras Opportunities das duas sources;
+- completed semantics é source-specific e depende de completed anterior na própria source;
+- `BASELINE_IF_NO_PRIOR_COMPLETED` permanece válido quando a primeira Opportunity da source não tiver completed;
+- `SUBSEQUENT_COMPLETED` exige novelty factual diferente de not_applicable;
+- run 241 / `37866002057` = success;
+- artifact `11588596135`;
+- digest `sha256:bc27df73f525774bd43c5484b841d3d72f245c23836820904e4d80ebf7236cff`;
+- 12 Opportunities = NOT_READY no estado pré-activation;
+- zero mutation e rebuild = PASS;
+- nenhuma source query ou MeasurementEvent factual foi executado.
