@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP137 — 2026-10-08**.
+- checkpoint vigente: **CP138 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4582,3 +4582,26 @@ Estado preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP138 — first PubMed measurement packet ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP138.md`;
+- Documento 94 = READY_FOR_FIRST_REAL_PUBMED_OPPORTUNITY / NO_SOURCE_QUERY_EXECUTED;
+- first PubMed precheck read-only = READY;
+- run 236 / `37864644053` = success;
+- artifact `11586984803`;
+- digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
+- pre-activation state = NOT_READY;
+- baseline-if-completed semantics visible;
+- zero mutation = PASS;
+- rebuild = PASS;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- first real source query = NOT_EXECUTED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible sequence remains 2026-10-19 activation then first PubMed measurement in high mode;
+- mandatory pause preserved.
