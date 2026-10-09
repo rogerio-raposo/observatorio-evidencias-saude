@@ -4498,3 +4498,17 @@ Documentos:
 - digest `sha256:e6a6d891c257172a3aafb47e1caf3a31ec77e0636a68f344f6f06b1dd252047d`;
 - zero mutation e rebuild = PASS;
 - nenhum MeasurementEvent factual ou source query real foi executado.
+
+
+## 2026-10-09 — CP140
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP140.md`;
+- ponteiro movido para CP140;
+- Documento 96 promovido;
+- post-readout read-only das primeiras measurements validado;
+- run 240 / `37865666856` = success;
+- artifact `11587648764`;
+- digest `sha256:e6a6d891c257172a3aafb47e1caf3a31ec77e0636a68f344f6f06b1dd252047d`;
+- run 239 marcado como intermediário não canônico por erro de coluna em query read-only;
+- nenhuma measurement real ou source query executada;
+- pausa obrigatória preservada.
