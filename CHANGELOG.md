@@ -4595,3 +4595,24 @@ Documentos:
 - run 244 permanece prova prévia do CP142, não do novo ensaio;
 - próxima etapa candidata: implementação de harness e CI em modo médio após Freshness Gate e novo `Prossiga`;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Harness integrado sintético dual-source validado
+
+- implementado `database/f4-temporal-integrated-synthetic-harness-tests.sql`;
+- integrado ao workflow `.github/workflows/validate-s5.yml` no step `F4-ISE`;
+- run 245 / `37933007291` = success no HEAD técnico `af5595d14647df51d076d64081bec1d6a5328c22`;
+- ISE-T01–T24 = 24/24 PASS no log real; rollback, fingerprints B1/B1R1 e ausência de resíduos = PASS;
+- artifacts 11616374106 / sha256:ccccba178c51d71f21c56c878c02c333e677e4ae76e14ce087faececd2fe7bb4;
+- PRE_DAY19_READINESS, rebuild S5 e B1R1-AUTH-REBUILD PASS;
+- resultado documentado em `docs/governance/100-resultado-harness-integrado-sintetico-pre-dia19-b1r1.md`;
+- nenhum HTTP/source request factual, nenhuma ativação B1R1, nenhuma migration.
+ 
+## 2026-10-09 — CP144
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP144.md`;
+- README/pointer e STATE promovidos a CP144;
+- Documento 100 = TECHNICALLY_VALIDATED / SYNTHETIC_ONLY;
+- próximo bloco opcional: revisão de escopo em modo alto para contratos offline das respostas PubMed e ClinicalTrials.gov;
+- preservados WAIT pré-19/10, B1 invalidated, B1R1 authorized_non_normative, started_at NULL, zero events/resolutions, M3 bloqueado e Fase 5 não iniciada;
+- pausa obrigatória preservada.

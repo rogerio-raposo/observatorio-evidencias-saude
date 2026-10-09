@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP143 — 2026-10-09**
+**CP144 — 2026-10-09**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP143.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP144.md`
 
 Checkpoint anterior:
 
-`CP142`
+`CP143`
 
 Status:
 
@@ -280,3 +280,4 @@ em **Modo Continuidade**.
 
 - **CP142 — 2026-10-09:** audit pré-19/10 validado; preparação pronta, activation window ainda WAIT; nenhuma execução factual.
 - **CP143 — 2026-10-09:** desenho não normativo do harness integrado sintético dual-source pré-19/10 definido no Documento 99; implementação e CI ainda não iniciadas; B1R1 factual intocado, pausa preservada.
+- **CP144 — 2026-10-09:** harness integrado sintético dual-source validado (ISE-T01–T24, run 245, rollback PASS), Documento 100; nenhum evento factual B1R1, pausa preservada.

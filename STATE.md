@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP143 — 2026-10-09**.
+- checkpoint vigente: **CP144 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4915,4 +4915,32 @@ Estado preservado:
 - próximo bloco: SQL sintético com ROLLBACK + CI, modo médio após Prossiga e Freshness Gate;
 - run 244 permanece evidência pré-existente, não prova do futuro harness;
 - B1R1 permanece authorized_non_normative, started_at NULL, zero events/resolutions, activation em WAIT;
+- pausa obrigatória preservada.
+
+
+### Fase 4 — harness integrado sintético dual-source validado (Documento 100)
+
+- arquivo: `database/f4-temporal-integrated-synthetic-harness-tests.sql`;
+- CI: `.github/workflows/validate-s5.yml`, step `F4-ISE`;
+- cobertura ISE-T01–T24 = 24/24 PASS;
+- run 245 / `37933007291` = success, commit validado `af5595d14647df51d076d64081bec1d6a5328c22`;
+- job `postgres-s5` = 113828097739, success;
+- artifact 11616374106; digest `sha256:ccccba178c51d71f21c56c878c02c333e677e4ae76e14ce087faececd2fe7bb4`;
+- ROLLBACK e ausência de resíduos sintéticos = PASS;
+- fingerprints B1/B1R1 e contagens operacionais/normativas pré/pós = iguais;
+- PRE_DAY19_PREPARATION_STATUS continua PREPARATION_READY, activation window WAIT;
+- nenhuma source query factual, nenhum event/resolution B1/B1R1 criado;
+- Documento 99 permanece histórico: o estado NOT_IMPLEMENTED nele descreve a época do desenho, não o presente.
+
+> **F4_ISE_IMPLEMENTATION = DONE**
+> **F4_ISE_TECHNICAL_VALIDATION = PASS**
+> **B1R1_ACTIVATION = NOT_STARTED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP144 — integrated synthetic harness validated
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP144.md`;
+- Documento 100 registra PASS técnico real do harness sintético;
+- próximo bloco opcional: decisão em modo alto para contratos offline PubMed/ClinicalTrials.gov;
+- próximo ato factual irreversível do B1R1: 19/10/2026 08h–09h America/Recife, sujeito a Freshness Gate/live PASS;
 - pausa obrigatória preservada.
