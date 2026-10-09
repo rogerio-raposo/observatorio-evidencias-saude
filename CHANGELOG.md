@@ -4528,3 +4528,18 @@ Documentos:
 - 12 Opportunities = NOT_READY no estado pré-activation;
 - zero mutation e rebuild = PASS;
 - nenhuma source query ou MeasurementEvent factual foi executado.
+
+
+## 2026-10-09 — CP141
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP141.md`;
+- ponteiro movido para CP141;
+- Documento 97 promovido;
+- matriz read-only das 12 Opportunities subsequentes validada;
+- run 241 / `37866002057` = success;
+- artifact `11588596135`;
+- digest `sha256:bc27df73f525774bd43c5484b841d3d72f245c23836820904e4d80ebf7236cff`;
+- all 12 subsequent Opportunities = NOT_READY no estado pré-activation;
+- baseline/subsequent completed semantics source-specific preservadas;
+- nenhuma query real ou MeasurementEvent executado;
+- pausa obrigatória preservada.
