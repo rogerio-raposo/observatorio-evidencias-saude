@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP144 — 2026-10-09**.
+- checkpoint vigente: **CP145 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4943,4 +4943,28 @@ Estado preservado:
 - Documento 100 registra PASS técnico real do harness sintético;
 - próximo bloco opcional: decisão em modo alto para contratos offline PubMed/ClinicalTrials.gov;
 - próximo ato factual irreversível do B1R1: 19/10/2026 08h–09h America/Recife, sujeito a Freshness Gate/live PASS;
+- pausa obrigatória preservada.
+
+
+### Fase 4 — escopo dos contratos offline de resposta definido (Documento 101)
+
+- documento: `docs/governance/101-decisao-escopo-contratos-offline-respostas-pubmed-clinicaltrials-b1r1.md`;
+- decisão em modo alto: desenvolvimento sintético offline de validadores de identidade de request, JSON, cardinalidade, unicidade, paginação, campos mínimos e fail-closed para PubMed ESearch / ClinicalTrials.gov API v2;
+- output será relatório técnico `oes.temporal_offline_source_parse_report/0.1`, sem escrita factual ou `MeasurementEvent`;
+- matriz OFF-P01–P12, OFF-C01–C16, OFF-X01–X06 = 34 casos propostos, **não executados**;
+- interfaces e queries congeladas inalteradas;
+- run 245 continua prova do harness ISE anterior, não deste escopo;
+- nenhuma source request target-specific, nenhuma activation, nenhum evento B1R1.
+
+> **F4_OFFLINE_SOURCE_SCOPE = APPROVED_FOR_SYNTHETIC_DEVELOPMENT**
+> **F4_OFFLINE_SOURCE_IMPLEMENTATION = NOT_STARTED**
+> **F4_OFFLINE_SOURCE_CI_PROOF = NOT_AVAILABLE**
+> **B1R1_ACTIVATION = NOT_STARTED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP145 — offline source contracts scope decision
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP145.md`;
+- próximo bloco em modo médio: implementação dos validadores offline/34 testes e CI, sujeito a Freshness Gate;
+- B1R1 mantém PREPARATION_READY, ACT​IVATION_WINDOW WAIT e janela factual 19/10;
 - pausa obrigatória preservada.

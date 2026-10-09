@@ -4616,3 +4616,23 @@ Documentos:
 - próximo bloco opcional: revisão de escopo em modo alto para contratos offline das respostas PubMed e ClinicalTrials.gov;
 - preservados WAIT pré-19/10, B1 invalidated, B1R1 authorized_non_normative, started_at NULL, zero events/resolutions, M3 bloqueado e Fase 5 não iniciada;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Decisão de escopo para validadores offline de respostas das fontes
+
+- criado `docs/governance/101-decisao-escopo-contratos-offline-respostas-pubmed-clinicaltrials-b1r1.md`;
+- alcance delimitado a request-contract identity, parsing ESearch/CT.gov v2, cardinalidade, duplicates, paginação, tokens, payloads inesperados, fail-closed e relatório técnico offline;
+- matriz proposta: OFF-P01–P12, OFF-C01–C16, OFF-X01–X06 (34 casos planejados, não executados);
+- vedados HTTP target-specific, DB writes, novos enums, migrations, alterações de artifacts congelados, semântica normativa e criação de MeasurementEvent factual;
+- run ISE 245 permanece canônica para validação sintética anterior, não para os testes offline ainda não implementados.
+
+## 2026-10-09 — CP145
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP145.md`;
+- pointer/STATE/CHANGELOG reconciliados com CP145;
+- F4_OFFLINE_SOURCE_SCOPE = APPROVED_FOR_SYNTHETIC_DEVELOPMENT;
+- F4_OFFLINE_SOURCE_IMPLEMENTATION = NOT_STARTED;
+- F4_OFFLINE_SOURCE_CI_PROOF = NOT_AVAILABLE;
+- próximo passo operacional: modo médio, novo Freshness Gate, implementação offline e validação CI;
+- B1 invalidated, B1R1 authorized_non_normative e não ativo, zero MeasurementEvents/OpportunityResolutions factuais, activation pré-19/10 WAIT;
+- pausa obrigatória preservada.
