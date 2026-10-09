@@ -4456,3 +4456,18 @@ Documentos:
 - digest `sha256:e66154c429e25defcb1da91ee96e3bdbc2b38fba16cc74c85e858f724f3292a8`;
 - nenhuma query PubMed target-specific ou MeasurementEvent executado;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08/09 — Pacote da primeira measurement ClinicalTrials.gov B1R1
+
+- criado `database/f4-topi-n2-dcbti-b1r1-first-clinicaltrials-precheck-readonly.sql`;
+- criado `docs/governance/95-pacote-primeira-measurement-clinicaltrials-b1r1.md`;
+- precheck captura active state, authority, target, resolution, prior attempts, prior completed source events, expected attempt_no e baseline semantics;
+- antes da activation/10:30 o resultado esperado/validado é `NOT_READY`;
+- first completed ClinicalTrials.gov semantics permanecem source-specific: `novelty_state=not_applicable`, `new_identifier_count=NULL`, `failure_attribution=not_applicable`;
+- paginação completa via nextPageToken/pageToken permanece requisito de completed;
+- run 237 / `37865221303` = success;
+- artifact `11588041164`;
+- digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
+- zero mutation e rebuild = PASS;
+- nenhuma query target-specific ClinicalTrials.gov ou MeasurementEvent foi executada.
