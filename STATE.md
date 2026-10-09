@@ -4966,5 +4966,5 @@ Estado preservado:
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP145.md`;
 - próximo bloco em modo médio: implementação dos validadores offline/34 testes e CI, sujeito a Freshness Gate;
-- B1R1 mantém PREPARATION_READY, ACT​IVATION_WINDOW WAIT e janela factual 19/10;
+- B1R1 mantém PREPARATION_READY, ACTIVATION_WINDOW WAIT e janela factual 19/10;
 - pausa obrigatória preservada.
