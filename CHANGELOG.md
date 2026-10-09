@@ -4484,3 +4484,17 @@ Documentos:
 - digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
 - nenhuma query target-specific ClinicalTrials.gov ou MeasurementEvent executado;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Template de persistência e post-readout das primeiras measurements
+
+- criado `database/f4-topi-n2-dcbti-b1r1-first-measurements-postreadout-readonly.sql`;
+- criado `docs/governance/96-template-persistencia-postreadout-primeiras-measurements-b1r1.md`;
+- post-readout cobre PubMed #1 e ClinicalTrials.gov #1 e reconcilia replay, event detail, items, timepoints, artifacts, deviations e resolutions;
+- run 239 falhou apenas por coluna read-only incorreta `observation_deviation_uuid`; nenhuma mutation ocorreu;
+- corrigido para o schema físico real `deviation_uuid` e demais campos reais;
+- run 240 / `37865666856` = success;
+- artifact `11587648764`;
+- digest `sha256:e6a6d891c257172a3aafb47e1caf3a31ec77e0636a68f344f6f06b1dd252047d`;
+- zero mutation e rebuild = PASS;
+- nenhum MeasurementEvent factual ou source query real foi executado.
