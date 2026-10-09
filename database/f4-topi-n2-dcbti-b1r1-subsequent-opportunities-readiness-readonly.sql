@@ -1,3 +1,4 @@
+-- CI-integrated subsequent opportunities readiness matrix
 -- OES Fase 4 — B1R1 subsequent opportunities readiness matrix
 -- READ ONLY. Covers all opportunities except the first PubMed and first ClinicalTrials.gov opportunities.
 
