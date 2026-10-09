@@ -2,6 +2,36 @@
 import json
 import re
 
+import hashlib
+from pathlib import Path
+
+PINNED_BLOBS = {
+    "pubmed-interface-v2.json": "8f61b25c3bca5bb4f4da38867371955aec0e05e4",
+    "pubmed-query-v1.txt": "6f783b731884e95ae92d8239366d9e404dc44310",
+    "clinicaltrials-interface-v2.json": "621ed0252c028a33b666494f49a70a62e570a15c",
+    "clinicaltrials-query-v2.txt": "e02987ce16c10cbb915499621de05fbfaee49930",
+    "measurement-design-b1r1.md": "b3dfe5f2c6509cd66941e5c8d422a7a8c49cdfcd",
+}
+FROZEN_ROOT = Path(__file__).resolve().parents[1] / "artifacts/topi-n2-dcbti-01/phase-b"
+
+def verify_frozen(interface_name, interface, supplied_sha, query=None):
+    """Compare a caller's interface with independently pinned bytes on disk."""
+    try:
+        for filename, expected_sha in PINNED_BLOBS.items():
+            raw = (FROZEN_ROOT / filename).read_bytes()
+            header = b"blob " + str(len(raw)).encode() + bytes([0])
+            if hashlib.sha1(header + raw).hexdigest() != expected_sha:
+                return False
+            if filename == interface_name:
+                if supplied_sha != expected_sha or interface != json.loads(raw):
+                    return False
+            if filename == "pubmed-query-v1.txt" and query is not None:
+                if query != raw.decode("utf-8"):
+                    return False
+        return True
+    except (OSError, ValueError, TypeError):
+        return False
+
 SCHEMA = "oes.temporal_offline_source_parse_report/0.1"
 
 def report(source, fixture, sha, match):
@@ -11,7 +41,8 @@ def report(source, fixture, sha, match):
                 parse_state="valid", retrieval_completeness="indeterminate",
                 observed_source_count=None, derived_complete_cardinality=None,
                 identifier_set=[], minimal_records=[], page_trace=[], issues=[],
-                evidence_paths=["tests/fixtures/f4-temporal-sources-offline/"+fixture+".json"])
+                evidence_paths=[], fixture_provenance={"kind":"generated_in_memory",
+                "fixture_id":fixture,"persisted_fixture":False})
 
 def issue(r, code, invalid=False):
     if code not in r["issues"]: r["issues"].append(code)
@@ -41,6 +72,10 @@ def pubmed(response, request, interface, query, fixture, sha):
     match=pm_request(request,interface,query)
     r=report("PUBMED_MEDLINE",fixture,sha,match)
     if not match: issue(r,"REQUEST_CONTRACT_DRIFT")
+    if not verify_frozen("pubmed-interface-v2.json",interface,sha,query):
+        issue(r,"FROZEN_CONTRACT_IDENTITY_MISMATCH",True)
+        r["request_contract_match"]="indeterminate"
+        return r
     try: value=obj(response)
     except (ValueError,TypeError): issue(r,"INVALID_JSON",True); return r
     if "error" in value or "ERROR" in value: issue(r,"SOURCE_ERROR")
@@ -73,6 +108,10 @@ def pubmed(response, request, interface, query, fixture, sha):
 
 def clinical(pages, interface, fixture, sha):
     r=report("CLINICALTRIALS_GOV",fixture,sha,True)
+    if not verify_frozen("clinicaltrials-interface-v2.json",interface,sha):
+        issue(r,"FROZEN_CONTRACT_IDENTITY_MISMATCH",True)
+        r["request_contract_match"]="indeterminate"
+        return r
     if not isinstance(pages,list) or not pages: issue(r,"NO_PAGES"); return r
     expected=None; tokens=set(); identifiers=set(); terminal=False
     for number,page in enumerate(pages,1):
