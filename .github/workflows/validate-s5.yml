@@ -894,14 +894,16 @@ jobs:
           grep -q "NOT_YET_PASS" s5-artifacts/TOPI-B1R1-post-activation-readonly.log
           echo "TOPI-B1R1-POST-ACTIVATION-READONLY PASS — pre-activation run is harmless; state unchanged" | tee s5-artifacts/TOPI-B1R1-post-activation-readonly-summary.log
 
-      - name: F4-OFFLINE-SOURCE-CONTRACTS — 34 synthetic response scenarios
+      - name: F4-OFFLINE-SOURCE-CONTRACTS — 44 synthetic response scenarios
         shell: bash
         run: |
           set -euo pipefail
           python3 scripts/validate_temporal_source_offline_contracts.py 2>&1 | tee s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS.log
           test "$(grep -Ec '^OFF-(P[0-9]{2}|C[0-9]{2}|X[0-9]{2}) PASS$' s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS.log)" -eq 34
           grep -q "F4-OFFLINE-SOURCE-CONTRACTS PASS" s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS.log
-          echo "F4-OFFLINE-SOURCE-CONTRACTS VERIFIED — 34 cases; no HTTP, no PostgreSQL writes" | tee s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS-summary.log
+          test "$(grep -Ec '^OFF-A[0-9]{2} PASS$' s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS.log)" -eq 10
+          grep -q "F4-OFFLINE-SOURCE-HARDENING PASS" s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS.log
+          echo "F4-OFFLINE-SOURCE-CONTRACTS VERIFIED — 44 cases; no HTTP, no PostgreSQL writes" | tee s5-artifacts/F4-OFFLINE-SOURCE-CONTRACTS-summary.log
 
       - name: F4-ISE — isolated dual-source synthetic integration T01–T24
         shell: bash
