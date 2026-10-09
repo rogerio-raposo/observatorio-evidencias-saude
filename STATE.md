@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP136 — 2026-10-08**.
+- checkpoint vigente: **CP137 — 2026-10-08**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4516,3 +4516,26 @@ Estado real preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP137 — B1R1 activation templates ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-08_CP137.md`;
+- Documento 93 = TEMPLATE_ONLY / NO_FACTUAL_ACTIVATION_DATA;
+- activation Artifact template = READY;
+- post-activation checkpoint template = READY;
+- post-activation read-only capture = READY;
+- run 234 / `37862383146` = success;
+- artifact `11587035724`;
+- digest `sha256:34a8cb17bd339e9cba9986ea11a9e16af672434815c65f672a6255e4500f276d`;
+- both read-only captures = PASS;
+- rebuild = PASS;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- factual activation SQL/Artifact = NOT_CREATED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible act remains 2026-10-19 live activation preflight in high mode;
+- mandatory pause preserved.
