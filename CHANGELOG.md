@@ -4471,3 +4471,16 @@ Documentos:
 - digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
 - zero mutation e rebuild = PASS;
 - nenhuma query target-specific ClinicalTrials.gov ou MeasurementEvent foi executada.
+
+
+## 2026-10-09 — CP139
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP139.md`;
+- ponteiro movido para CP139;
+- Documento 95 promovido;
+- first ClinicalTrials.gov precheck read-only validado;
+- run 237 / `37865221303` = success;
+- artifact `11588041164`;
+- digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
+- nenhuma query target-specific ClinicalTrials.gov ou MeasurementEvent executado;
+- pausa obrigatória preservada.
