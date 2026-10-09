@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP138 — 2026-10-09**.
+- checkpoint vigente: **CP139 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4648,3 +4648,27 @@ Estado preservado:
 > **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
 
 > **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
+
+
+### CP139 — first ClinicalTrials.gov measurement packet ready
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP139.md`;
+- Documento 95 = READY_FOR_FIRST_REAL_CLINICALTRIALS_OPPORTUNITY / NO_SOURCE_QUERY_EXECUTED;
+- first ClinicalTrials.gov precheck read-only = READY;
+- run 237 / `37865221303` = success;
+- artifact `11588041164`;
+- digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
+- pre-activation state = NOT_READY;
+- source-specific baseline-if-completed semantics visible;
+- zero mutation = PASS;
+- rebuild = PASS;
+- B1 remains invalidated;
+- B1R1 remains authorized_non_normative;
+- started_at = NULL;
+- activation = NOT_STARTED;
+- first real PubMed query = NOT_EXECUTED;
+- first real ClinicalTrials.gov query = NOT_EXECUTED;
+- MeasurementEvent count across B1+B1R1 = 0;
+- OpportunityResolution count across B1+B1R1 = 0;
+- next irreversible sequence remains 2026-10-19 activation then first real source measurements in high mode;
+- mandatory pause preserved.
