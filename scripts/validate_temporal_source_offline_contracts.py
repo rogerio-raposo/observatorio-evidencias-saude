@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""34 synthetic checks. No source query, network, DB, or factual event."""
+"""44 synthetic checks. No source query, network, DB, or factual event."""
 import copy
 import hashlib
 import json
@@ -97,3 +97,29 @@ check("OFF-X06",c([page([study(1)])])==c([page([study(1)])]) and
       "current_timestamp" not in json.dumps(c([page([study(1)])])).lower())
 if len(PASS)!=34 or len(set(PASS))!=34:raise AssertionError("expected exactly 34 tests")
 print("F4-OFFLINE-SOURCE-CONTRACTS PASS — OFF-P01–P12 OFF-C01–C16 OFF-X01–X06 (34/34)")
+
+# OFF-A01–A08: pinned contract identity and honest synthetic provenance
+good_p=p(es(1,["123"]))
+good_c=c([page([study(1)])])
+check("OFF-A01",good_p["retrieval_completeness"]=="complete")
+check("OFF-A02",good_c["retrieval_completeness"]=="complete")
+check("OFF-A03",has(pubmed(es(0,[]),PREQ,PIF,QUERY,"pubmed-synthetic","0"*40),"FROZEN_CONTRACT_IDENTITY_MISMATCH"))
+check("OFF-A04",has(clinical([page()],CIF,"clinicaltrials-synthetic","0"*40),"FROZEN_CONTRACT_IDENTITY_MISMATCH"))
+tampered=copy.deepcopy(PIF)
+tampered["normalized_query_parameters"]["retmax"]=9999
+check("OFF-A05",has(pubmed(es(0,[]),PREQ,tampered,QUERY,"pubmed-synthetic",BLOBS["pubmed-interface-v2.json"]),"FROZEN_CONTRACT_IDENTITY_MISMATCH"))
+tampered=copy.deepcopy(CIF)
+tampered["normalized_query_parameters"]["pageSize"]=99
+check("OFF-A06",has(clinical([page()],tampered,"clinicaltrials-synthetic",BLOBS["clinicaltrials-interface-v2.json"]),"FROZEN_CONTRACT_IDENTITY_MISMATCH"))
+check("OFF-A07",has(pubmed(es(0,[]),PREQ,PIF,QUERY+" SYNTHETIC_SCOPE_CHANGE","pubmed-synthetic",BLOBS["pubmed-interface-v2.json"]),"FROZEN_CONTRACT_IDENTITY_MISMATCH"))
+check("OFF-A08",all(x["evidence_paths"]==[] and x["fixture_provenance"]=={
+    "kind":"generated_in_memory","fixture_id":x["fixture_id"],"persisted_fixture":False
+} for x in (good_p,good_c)))
+check("OFF-A09",all(x["request_contract_match"]=="match" for x in (good_p,good_c)))
+check("OFF-A10",all(x["derived_complete_cardinality"] is None for x in (
+    pubmed(es(0,[]),PREQ,PIF,QUERY,"pubmed-synthetic","0"*40),
+    clinical([page()],CIF,"clinicaltrials-synthetic","0"*40))))
+if len(PASS)!=44 or len(set(PASS))!=44:
+    raise AssertionError("expected 44 distinct offline tests")
+print("F4-OFFLINE-SOURCE-HARDENING PASS — OFF-A01–A10 (10/10); ALL 44/44")
+
