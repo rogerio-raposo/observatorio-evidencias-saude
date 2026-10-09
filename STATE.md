@@ -4815,3 +4815,54 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible sequence remains 2026-10-19 in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — audit de prontidão pré-19/10 validado
+
+Documento:
+- `docs/governance/98-audit-prontidao-pre-dia19-b1r1.md`.
+
+Read-only audit:
+- `database/f4-topi-n2-dcbti-b1r1-pre-day19-readiness-readonly.sql`.
+
+Resultado:
+> **PRE_DAY19_READINESS_AUDIT = READY_READ_ONLY**
+
+> **PRE_DAY19_PREPARATION_STATUS = PREPARATION_READY**
+
+> **ACTIVATION_WINDOW_CURRENT_STATE = WAIT**
+
+> **ACTIVATION_ALLOWED_NOW = NO**
+
+CI:
+- run 244 / `37926218841` = success;
+- validated HEAD `a60ed2f5ab63efaf3354b8511ef3922a888cb25c`;
+- artifact `11613929240`;
+- digest `sha256:822f753a91f4aefc00f92d5f2c3c1623ed0a0d89694e3144ab5e08d78eaf80d0`;
+- expiry `2026-12-08T11:51:21Z`;
+- TOPI-B1R1-PRE-DAY19-READINESS = PASS;
+- preparation ready = PASS;
+- activation window WAIT = PASS;
+- zero mutation = PASS;
+- rebuild = PASS.
+
+Intermediário não canônico:
+- run 243 falhou apenas por uso do nome `check_state` em vez de `check_status` na leitura do preflight;
+- nenhuma mutation ocorreu;
+- corrigido em `a60ed2f5ab63efaf3354b8511ef3922a888cb25c`;
+- run 244 supersede tecnicamente o run 243.
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **FIRST_REAL_SOURCE_QUERY = NOT_EXECUTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
