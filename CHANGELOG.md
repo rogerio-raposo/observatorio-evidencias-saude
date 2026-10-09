@@ -4401,3 +4401,17 @@ Documentos:
 - B1R1 permanece authorized_non_normative, started_at NULL;
 - activation continua pendente de 19/10;
 - pausa obrigatória preservada.
+
+
+## 2026-10-08 — Templates de activation e pós-validação B1R1
+
+- criado `database/f4-topi-n2-dcbti-b1r1-post-activation-readonly.sql`;
+- criado `docs/governance/93-template-activation-checkpoint-b1r1.md`;
+- template contém somente valores estáticos e placeholders; nenhum factual started_at/preflight result foi preenchido;
+- post-activation capture usa transaction READ ONLY e ROLLBACK;
+- run 234 / `37862383146` = success;
+- artifact `11587035724`;
+- digest `sha256:34a8cb17bd339e9cba9986ea11a9e16af672434815c65f672a6255e4500f276d`;
+- live preflight read-only e post-activation read-only = PASS;
+- rebuild = PASS;
+- nenhum activation fact ou MeasurementEvent criado.
