@@ -4605,3 +4605,46 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible sequence remains 2026-10-19 activation then first PubMed measurement in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — pacote da primeira measurement ClinicalTrials.gov do B1R1 pronto
+
+Documento:
+- `docs/governance/95-pacote-primeira-measurement-clinicaltrials-b1r1.md`.
+
+Read-only precheck:
+- `database/f4-topi-n2-dcbti-b1r1-first-clinicaltrials-precheck-readonly.sql`.
+
+Resultado:
+> **FIRST_CLINICALTRIALS_OPERATOR_PACKET = READY**
+
+> **FIRST_CLINICALTRIALS_PRECHECK_READONLY = READY**
+
+> **CLINICALTRIALS_TARGET_QUERY = NOT_EXECUTED**
+
+> **FIRST_CLINICALTRIALS_MEASUREMENT_EVENT = NOT_CREATED**
+
+CI:
+- run 237 / `37865221303` = success;
+- validated HEAD `42a69dd48b3fcd3d8ffa252017ab120793cb6ede`;
+- artifact `11588041164`;
+- digest `sha256:b001ccb1edcc18a91d7327c9c3298b6355d3a4560e9b50924c2ab07b57a9ef54`;
+- expiry `2026-12-08T00:32:24Z`;
+- TOPI-B1R1-FIRST-CLINICALTRIALS-PRECHECK = PASS;
+- pre-activation result = NOT_READY;
+- source-specific baseline-if-completed semantics visible;
+- zero mutation = PASS;
+- rebuild = PASS.
+
+Estado preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
