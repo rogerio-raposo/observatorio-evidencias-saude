@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP145 — 2026-10-09**
+**CP146 — 2026-10-09**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP145.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP146.md`
 
 Checkpoint anterior:
 
-`CP144`
+`CP145`
 
 Status:
 
@@ -282,3 +282,4 @@ em **Modo Continuidade**.
 - **CP143 — 2026-10-09:** desenho não normativo do harness integrado sintético dual-source pré-19/10 definido no Documento 99; implementação e CI ainda não iniciadas; B1R1 factual intocado, pausa preservada.
 - **CP144 — 2026-10-09:** harness integrado sintético dual-source validado (ISE-T01–T24, run 245, rollback PASS), Documento 100; nenhum evento factual B1R1, pausa preservada.
 - **CP145 — 2026-10-09:** definido em modo alto o escopo de validadores offline sintéticos de PubMed/ClinicalTrials.gov (Documento 101), sem implementação ou CI ainda; frozen artifacts e B1R1 preservados; pausa obrigatória.
+- **CP146 — 2026-10-09:** validadores offline sintéticos PubMed/ClinicalTrials.gov concluídos; 34/34 PASS na run 248, Documento 102; B1R1 factual inalterado, pausa preservada.

@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP145 — 2026-10-09**.
+- checkpoint vigente: **CP146 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4967,4 +4967,32 @@ Estado preservado:
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP145.md`;
 - próximo bloco em modo médio: implementação dos validadores offline/34 testes e CI, sujeito a Freshness Gate;
 - B1R1 mantém PREPARATION_READY, ACTIVATION_WINDOW WAIT e janela factual 19/10;
+- pausa obrigatória preservada.
+
+
+### Fase 4 — contratos offline de fontes validados (Documento 102)
+
+- biblioteca `scripts/temporal_source_offline_contracts.py` e testes `scripts/validate_temporal_source_offline_contracts.py` implementados;
+- cenário estritamente offline/sintético: PubMed ESearch + ClinicalTrials.gov API v2;
+- 12 testes PubMed, 16 ClinicalTrials.gov e 6 transversais = 34/34 PASS;
+- run 248 / `37935448109`, commit validado `6db14ba5107062bec6afa69607c4ff23b23acf7a`, success;
+- job `113836220414`, success;
+- artifact 11617672877 / digest `sha256:77e26b176458ec70f82333c1ea5149269b2a4ec641c7eb580741876dff7c494d`;
+- S5 F4-ISE e rebuild PASS; B1R1 readiness PASS (activation WAIT, zero mutation);
+- run 246 falhou na configuração YAML antes dos jobs, reparada; run 247 é intermediária e não canônica;
+- frozen artifacts e queries B1R1 inalterados; sem HTTP target-specific, DB writes ou eventos factuais;
+- Documento 101 permanece snapshot histórico da decisão original.
+
+> **F4_OFFLINE_SOURCE_IMPLEMENTATION = DONE**
+> **F4_OFFLINE_SOURCE_CI_PROOF = PASS**
+> **F4_OFFLINE_SOURCE_CASES = 34_OF_34_PASS**
+> **B1R1_ACTIVATION = NOT_STARTED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP146 — offline source contracts validated
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP146.md`;
+- Documento 102 = TECHNICALLY_VALIDATED / SYNTHETIC_OFFLINE_ONLY;
+- próximo bloco opcional: gate adversarial read-only de fronteira parser/decisão factual em modo alto, somente após Prossiga;
+- próximo ato factual B1R1 ainda reservado para 19/10/2026 sob Freshness Gate e live PASS;
 - pausa obrigatória preservada.

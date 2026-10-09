@@ -4636,3 +4636,27 @@ Documentos:
 - próximo passo operacional: modo médio, novo Freshness Gate, implementação offline e validação CI;
 - B1 invalidated, B1R1 authorized_non_normative e não ativo, zero MeasurementEvents/OpportunityResolutions factuais, activation pré-19/10 WAIT;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Contratos offline de resposta de fontes validados
+
+- implementados `scripts/temporal_source_offline_contracts.py` e `scripts/validate_temporal_source_offline_contracts.py`;
+- `tests/fixtures/f4-temporal-sources-offline/README.md` registra apenas fixtures sintéticas geradas em memória;
+- integrados 34 casos offline à CI S5, com 12 PubMed, 16 CT.gov, 6 transversais;
+- run 246 falhou por erro de inserção YAML antes da execução de jobs, corrigido;
+- run 247 intermediária anterior à correção Git blob hash, não canônica;
+- run **248** / `37935448109` = success, HEAD `6db14ba5107062bec6afa69607c4ff23b23acf7a`;
+- 34/34 PASS nos logs, F4-ISE PASS, pre-Day19 readiness PASS/WAIT/zero mutation, rebuild PASS;
+- artifact 11617672877 / digest sha256:77e26b176458ec70f82333c1ea5149269b2a4ec641c7eb580741876dff7c494d;
+- resultado consolidado em `docs/governance/102-resultado-validacao-contratos-offline-fontes-b1r1.md`;
+- nenhuma request factual, migration, alteração congelada ou MeasurementEvent B1R1.
+
+## 2026-10-09 — CP146
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP146.md`;
+- ponteiro e STATE atualizados para CP146;
+- novo status: F4_OFFLINE_SOURCE_IMPLEMENTATION=DONE, F4_OFFLINE_SOURCE_CI_PROOF=PASS;
+- run 248 canônica para validador offline; ISE anterior permanece validado;
+- próximo bloco opcional: gate adversarial read-only de integração, sujeito a modo alto e novo Prossiga;
+- B1R1 autorizado, não ativo, activation WAIT até 19/10, zero eventos/resolutions; M3 blocked, Phase 5 not started;
+- pausa obrigatória preservada.
