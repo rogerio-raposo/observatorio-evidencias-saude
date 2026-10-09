@@ -4471,3 +4471,48 @@ Estado real preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible act remains 2026-10-19 live activation preflight in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — templates de activation e pós-validação do B1R1 prontos
+
+Documento:
+- `docs/governance/93-template-activation-checkpoint-b1r1.md`.
+
+Read-only post-activation capture:
+- `database/f4-topi-n2-dcbti-b1r1-post-activation-readonly.sql`.
+
+Resultado:
+> **ACTIVATION_ARTIFACT_TEMPLATE = READY**
+
+> **POST_ACTIVATION_CHECKPOINT_TEMPLATE = READY**
+
+> **POST_ACTIVATION_READONLY_CAPTURE = READY**
+
+> **FACTUAL_ACTIVATION_DATA = NONE**
+
+CI:
+- run 234 / `37862383146` = success;
+- validated HEAD `f1c84729c2061a17a317e5c4b62a24456165aa97`;
+- artifact `11587035724`;
+- digest `sha256:34a8cb17bd339e9cba9986ea11a9e16af672434815c65f672a6255e4500f276d`;
+- expiry `2026-12-07T23:59:52Z`;
+- TOPI-B1R1-LIVE-PREFLIGHT-READONLY = PASS;
+- TOPI-B1R1-POST-ACTIVATION-READONLY = PASS;
+- rebuild = PASS.
+
+Estado real preservado:
+> **B1 = INVALIDATED**
+
+> **B1R1 = AUTHORIZED_NON_NORMATIVE**
+
+> **B1R1_STARTED_AT = NULL**
+
+> **ACTIVATION = NOT_STARTED**
+
+> **ACTIVATION_SQL_FACTUAL = NOT_CREATED**
+
+> **ACTIVATION_ARTIFACT_FACTUAL = NOT_CREATED**
+
+> **MEASUREMENT_EVENT_COUNT_B1_PLUS_B1R1 = 0**
+
+> **OPPORTUNITY_RESOLUTION_COUNT_B1_PLUS_B1R1 = 0**
