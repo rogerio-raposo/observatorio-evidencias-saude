@@ -83,7 +83,7 @@ check("OFF-C16",res["retrieval_completeness"]=="complete" and "StudyFirstPostDat
 
 # OFF-X01–X06
 def blob(data):
-    return hashlib.sha1(b"blob "+str(len(data)).encode()+b"\\0"+data).hexdigest()
+    return hashlib.sha1(b"blob "+str(len(data)).encode()+bytes([0])+data).hexdigest()
 check("OFF-X01",all(blob((FREEZE/name).read_bytes())==sha for name,sha in BLOBS.items()))
 module=(ROOT/"scripts/temporal_source_offline_contracts.py").read_text()
 check("OFF-X02",all(term not in module for term in ("import requests","urllib.request","urlopen(","socket.","http.client")))
