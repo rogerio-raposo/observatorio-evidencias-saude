@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP142 — 2026-10-09**.
+- checkpoint vigente: **CP143 — 2026-10-09**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -4891,3 +4891,28 @@ Estado preservado:
 - OpportunityResolution count across B1+B1R1 = 0;
 - next irreversible sequence remains 2026-10-19 in high mode;
 - mandatory pause preserved.
+
+
+### Fase 4 — desenho do harness integrado sintético pré-19/10 (Documento 99)
+
+- documento: `docs/governance/99-desenho-harness-integrado-sintetico-pre-dia19-b1r1.md`;
+- design sintético dual-source (preflight → activation sintética → attempts/retry → items/timepoints/artifacts → resolutions → replay/review) definido em modo alto;
+- harness de integração ainda NÃO implementado nem executado;
+- nenhuma nova migration, authority factual ou query real;
+- tests propostos ISE-T01–T24 não são PASS;
+- estado pre-day19 do CP142 preservado.
+
+> **F4_ISE_DESIGN = DEFINED_NON_NORMATIVE**
+> **F4_ISE_IMPLEMENTATION = NOT_STARTED**
+> **F4_ISE_CI_PROOF = NOT_AVAILABLE**
+> **B1R1_ACTIVATION = NOT_STARTED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP143 — integrated synthetic harness design
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP143.md`;
+- Documento 99 = DESIGN_DEFINED / SYNTHETIC_ONLY / NOT_IMPLEMENTED;
+- próximo bloco: SQL sintético com ROLLBACK + CI, modo médio após Prossiga e Freshness Gate;
+- run 244 permanece evidência pré-existente, não prova do futuro harness;
+- B1R1 permanece authorized_non_normative, started_at NULL, zero events/resolutions, activation em WAIT;
+- pausa obrigatória preservada.

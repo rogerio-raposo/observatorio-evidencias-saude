@@ -4575,3 +4575,23 @@ Documentos:
 - run 243 classificado como intermediário não canônico por erro de coluna em query read-only;
 - nenhuma activation, source query ou MeasurementEvent factual executado;
 - pausa obrigatória preservada.
+
+
+## 2026-10-09 — Desenho do harness integrado sintético pré-19/10 (Fase 4)
+
+- criado `docs/governance/99-desenho-harness-integrado-sintetico-pre-dia19-b1r1.md`;
+- reconhecida a cobertura ponta a ponta sintética parcial já existente em `f4-temporal-observation-fixtures.sql`;
+- ampliado o desenho para integração de duas sources artificiais, quatro Opportunities, preflight/activation, failure/retry, first-completed baselines independentes, item/timepoint, Event Artifacts, resolutions e review sintético;
+- código SQL e integração CI ainda NÃO implementados; ISE-T01–T24 são identificadores planejados, não PASS;
+- execução futura restrita a identidades sintéticas e `BEGIN`/`ROLLBACK`, sem HTTP, sem dados factuais, sem novas migrations;
+- B1R1 real permanece autorizado, não ativado, com zero MeasurementEvent/Resolution.
+
+## 2026-10-09 — CP143
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP143.md`;
+- ponteiro movido para CP143;
+- design do Documento 99 registrado em modo alto;
+- validação técnica do novo harness pendente;
+- run 244 permanece prova prévia do CP142, não do novo ensaio;
+- próxima etapa candidata: implementação de harness e CI em modo médio após Freshness Gate e novo `Prossiga`;
+- pausa obrigatória preservada.
