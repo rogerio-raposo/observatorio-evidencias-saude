@@ -100,14 +100,15 @@ WHERE measurement_opportunity_uuid IN (
 ORDER BY measurement_opportunity_uuid;
 
 SELECT
-  observation_deviation_uuid,
+  deviation_uuid,
   measurement_opportunity_uuid,
   measurement_event_uuid,
   deviation_type,
   materiality,
-  observed_at,
   recorded_at,
-  note
+  description,
+  evidence_artifact_uuid,
+  recorded_by
 FROM maintenance.temporal_observation_deviation
 WHERE observation_epoch_uuid='b3120000-0000-0000-0000-000000000002'
   AND (
