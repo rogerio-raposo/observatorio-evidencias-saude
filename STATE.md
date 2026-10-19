@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP168 — 2026-10-19**.
+- checkpoint vigente: **CP169 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5350,3 +5350,13 @@ Estado preservado:
 - CI run `39282514522` no commit `52f796f3b500e550335c06a33c761369804fd3e6`: logs mostram 11/11 testes OK e artifact `12201766282` com digest ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b` conferido; metadados administrativos ainda queued/conclusion=null na última consulta, não declarar run success;
 - Nenhum SQL foi executado pela CI documental, nenhuma modificação Neon; BRG-06/07 ainda não operacionais, BRG-03/08/09 pendentes, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco: revisar pós-condições reais 031–036 em modo alto e somente sintético/offline; STOP CP168.
+
+
+### Fase 4 — Revisão estática de pós-condições 031–036, sem liberação operacional (Documento 125 / CP169)
+
+- Freshness Gate CP168/main `d213a618ce6fa87c8008c8e5da30a3ff219048fa` = identical; run anterior `39282514522` confirmado completed/success (11 testes OK);
+- inspeção de 031–036 e 14 fragmentos: 031/032/033 wrappers transacionais; 032 contém grandfathering e seed técnico, 034/036 DROP/CREATE trigger sem wrapper, 035 duas substituições de função;
+- publicados `docs/governance/reconciliation/f4-031-036-source-candidates.json` (6 candidatos NÃO validados), `scripts/oes_f4_031_036_source_review.py`, 8 testes e workflow estático próprio;
+- run CI `39297500185`, commit `feb2b9f115e94a09c975b98f61d7a5ffda53438d`, job `118213715729` completed/success, 8/8 testes, artifact `12209110983`, SHA ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`;
+- Documentação 125 e CP169; scanner prova somente integridade textual de 20 fontes. Catálogo principal 36 UNREVIEWED/0 pós-condições validadas, nenhuma autorização de execução/replay/reconciliação automática;
+- BRG-06/07 operacionais pendentes; nenhuma branch ou SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco PG18 descartável para comparação pré/pós e falhas induzidas, modo alto, STOP.
