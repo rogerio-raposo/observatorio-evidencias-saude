@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP162 — 2026-10-19**.
+- checkpoint vigente: **CP163 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5286,3 +5286,12 @@ Estado preservado:
 - alteração aplicada no commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
 - run/job/artifact de PG18 ainda não confirmado; nenhum PASS de compatibilidade declarado;
 - nenhuma alteração Neon, branch, ledger ou migration; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
+
+
+### Fase 4 — Prova PG18 sintética 36/36 (Documento 119 / CP163)
+
+- run GitHub Actions `39261597847`, job `118090362879`, completed/success, HEAD de teste `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- PostgreSQL servidor 18.6, cliente psql 16.15; 36 migrations PASS, 14 fragmentos conferidos; artifact `12190502582`; digest de inventário `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
+- 275 funções (schemas selecionados), dois registros estruturais contract_epoch; BRG-05 passa apenas para sequência sintética no commit fixado;
+- ledger/locks/recuperação, menor privilégio, backup, Neon Free billing pendentes; sem operações Neon, B1R1 expirado sem execução, Fase 5 não iniciada;
+- próximo bloco requer avaliação de ledger e falhas sintéticas, recomendado modo alto; STOP.
