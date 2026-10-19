@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP147 — 2026-10-09**
+**CP148 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-09_CP147.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP148.md`
 
 Checkpoint anterior:
 
-`CP146`
+`CP147`
 
 Status:
 
@@ -284,3 +284,5 @@ em **Modo Continuidade**.
 - **CP145 — 2026-10-09:** definido em modo alto o escopo de validadores offline sintéticos de PubMed/ClinicalTrials.gov (Documento 101), sem implementação ou CI ainda; frozen artifacts e B1R1 preservados; pausa obrigatória.
 - **CP146 — 2026-10-09:** validadores offline sintéticos PubMed/ClinicalTrials.gov concluídos; 34/34 PASS na run 248, Documento 102; B1R1 factual inalterado, pausa preservada.
 - **CP147 — 2026-10-09:** hardening da identidade dos artefatos e proveniência das fixtures offline validado (44/44 PASS, run 252), Documento 103; B1R1 não ativado; pausa mantida.
+- **CP148 — 2026-10-19:** impedimento factual B1R1: ausência declarada de PostgreSQL operacional persistente; live preflight não executado; Documento 104 e gate arquitetural de infraestrutura antes de novo experimento.
+

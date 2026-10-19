@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 8 de outubro de 2026  
+**Última atualização:** 19 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP147 — 2026-10-09**.
+- checkpoint vigente: **CP148 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5020,3 +5020,29 @@ Estado preservado:
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-09_CP147.md`;
 - próximo ato factual irreversível segue em 19/10/2026, com live preflight e modo alto;
 - pausa obrigatória preservada.
+
+### Fase 4 — impedimento de infraestrutura na janela do B1R1 (Documento 104)
+
+- em 19/10/2026, às 08:00:32 e 08:07:32 America/Recife, relógio factual confirmou janela aberta nos instantes observados;
+- Freshness Gate confirmou CP147, HEAD `d53640c76d69755f3c48ae0a39109c545f9b4bef`, run 252 e os cinco blobs congelados;
+- o usuário declarou inexistência de instância PostgreSQL operacional persistente;
+- o único PostgreSQL identificado no processo técnico é o serviço efêmero dos workflows GitHub Actions;
+- live preflight SQL em instância operacional: **NÃO EXECUTADO**; nenhum agregado ou controle individual físico foi observado;
+- nenhuma ativação/consulta científica/mutation efetuada; não atribuir estado factual da CI ao ambiente operacional;
+- instrução conservadora: não retroagir `started_at`, não mudar os 14 timestamps, não inventar dados experimentais;
+- Documento 104 define contenção e requisitos para infraestrutura persistente e futura decisão sobre novo experimento.
+
+> **F4_OPERATIONAL_INFRASTRUCTURE = BLOCKED_NO_PERSISTENT_POSTGRES**  
+> **B1R1_LIVE_PREFLIGHT = NOT_EXECUTED**  
+> **B1R1_ACTIVATION = NOT_PERFORMED**  
+> **ACTIVATION_WINDOW = OPEN_AT_2026-10-19T08:07:32-03:00_ONLY**  
+> **ACTUAL_OPERATIONAL_EVENT_COUNT = NOT_VERIFIABLE_WITHOUT_DATABASE**  
+> **PHASE_5 = NOT_STARTED**
+
+### CP148 — bloqueio de infraestrutura registrado
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP148.md`;
+- próxima atividade, só após `Prossiga`: gate arquitetural do PostgreSQL persistente, em modo alto, sem deployment automático;
+- expiração B1R1 **não** antecipada: exigir verificação factual posterior a 09:00 para declaração final;
+- pausa obrigatória.
+

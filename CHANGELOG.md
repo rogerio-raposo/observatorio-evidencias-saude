@@ -4681,3 +4681,22 @@ Documentos:
 - hardening sintético validado, nenhuma ponte automática parser → MeasurementEvent;
 - B1R1 autorizado e não ativado, M3 blocked e Fase 5 not started;
 - pausa obrigatória preservada.
+
+## 2026-10-19 — Impedimento operacional de infraestrutura B1R1 (Documento 104)
+
+- Freshness Gate CP147/HEAD `d53640c76d69755f3c48ae0a39109c545f9b4bef` = documentalmente consistente;
+- relógio factual America/Recife 08:00:32 e 08:07:32 confirmou janela aberta nos respectivos instantes;
+- usuário declarou ausência de PostgreSQL persistente operacional; a CI usa serviço efêmero, impróprio como datastore factual;
+- live preflight read-only não foi executado em instância operacional; aggregate e checks individuais não foram afirmados;
+- não houve activation, MeasurementEvent, OpportunityResolution, target-specific request ou mutation factual;
+- Documento 104 registra blocker, requisitos de infraestrutura persistente e contingência caso a janela expire;
+- CP147 e run 252 preservados como evidência sintética, sem promoção à evidência operacional.
+
+## 2026-10-19 — CP148
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP148.md`; pointer e STATE reconciliados com CP148;
+- `F4_OPERATIONAL_INFRASTRUCTURE=BLOCKED_NO_PERSISTENT_POSTGRES`;
+- `B1R1_LIVE_PREFLIGHT=NOT_EXECUTED`, `B1R1_ACTIVATION=NOT_PERFORMED`;
+- expiração não foi declarada antes das 09:00; novos horários/epoch exigem decisão separada;
+- próximo bloco: gate arquitetural de banco operacional persistente, somente com `Prossiga`; pausa obrigatória.
+
