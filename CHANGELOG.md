@@ -4843,3 +4843,12 @@ Documentos:
 - identificador de execução GitHub Actions indisponível; consulta pública não acessível no ambiente; **não se declara sucesso ou inexistência da execução**;
 - Documento 115 e CP159 registrados; SHA-256 canônico de 50 SQL e ensaio PostgreSQL 18/ledger continuam pendentes;
 - nenhuma branch, role, schema, migration, custo ou trabalho factual Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
+
+## 2026-10-19 — Evidência positiva de inventário offline na CI (Documento 116 / CP160)
+
+- Run GitHub Actions `39256905894`, job `118074372781`, `completed/success`; 7 testes unitários sintéticos OK;
+- commit fixado `55ef8051054652b3823de743293524f317a33ec6`, 36 migrations e 14 fragmentos verificados;
+- artifact `12186719617` recuperado, `inventory.json` SHA-256 `5694be45dd10c39131e6a74270bbf66cbb30ee21aba7bd47c91e96d2f2ea2504`, digest agregado `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
+- BRG-04 aprovado estritamente para prova estática no commit testado; nenhum SQL executado nem Neon acessado pelo workflow;
+- PostgreSQL 18/psql, ledger, restore, privilégio e autorização de branch permanecem pendentes; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- Documento 116 e CP160 registrados; pausa obrigatória.
