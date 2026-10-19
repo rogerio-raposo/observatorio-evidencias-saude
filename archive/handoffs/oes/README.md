@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP163 — 2026-10-19**
+**CP164 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP163.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP164.md`
 
 Checkpoint anterior:
 
-`CP162`
+`CP163`
 
 Status:
 
@@ -364,3 +364,11 @@ em **Modo Continuidade**.
 - digest `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`, BRG-05 verificado apenas no ensaio sintético;
 - Documento 119 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP163.md`; ledger não criado, nenhuma mutação Neon, B1R1 expirado e Fase 5 não iniciada;
 - próximo bloco: ledger/locks/recovery PG18 sintético, modo alto recomendado; STOP.
+
+## 2026-10-19 — Ledger de falhas e locks em PG18 sintético (Documento 120 / CP164)
+
+- Freshness Gate CP163 idêntico a `4a2d9d2e60c2b86ca789944dd69a343c8fb4ee01`;
+- fixture, harness e workflow PG18 CI criados para falha transacional, commit-gap, intenção durável, drift/retry e advisory lock; run `39263916981` job `118098438290` 17/17 PASS no commit `2acabe21102774bae5ce86d15858dc434e905bf5`;
+- artifact `12191953694` SHA-256 ZIP `6eefdb6ed5986330b05cc03cda2e53abff8a3ca46a17fea12fbe475ddc81622f`;
+- Documento 120 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP164.md` preservam prova limitada: ledger/runner operacional, guardião de lock contínuo e recovery NÃO implementados;
+- nenhuma mutação Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco: teste de exclusão sob guardião contínuo PG18 sintético, modo alto, após novo `Prossiga`; STOP.
