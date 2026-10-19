@@ -4878,3 +4878,13 @@ Documentos:
 - job `118090362879` success, PostgreSQL 18.6/psql 16.15, 36 migrations aplicadas em PG18 descartável, 14 includes; artifact `12190502582`, 2 epochs estruturais e digest `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
 - BRG-05 PG18 schema sequential install verificado somente no commit testado; ledger e recuperação ainda não ensaiados, Neon não alterado;
 - Documento 119, CP163 e pausa obrigatória; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada.
+
+
+## 2026-10-19 — Falhas de ledger e locks em PG18 sintético (Documento 120 / CP164)
+
+- Freshness Gate CP163/HEAD `4a2d9d2e60c2b86ca789944dd69a343c8fb4ee01` = identical;
+- criados bootstrap SQL sintético de eventos append-only, harness de falhas e workflow PG18 local/CI limitado por destino e escopo;
+- run Actions `39263916981`, job `118098438290`, PG18.6/psql 16.15: 17/17 verificações sintéticas de atomicidade da transação, rollback, intenção durável, replay, drift, commit-gap e advisory lock PASS;
+- artifact `12191953694` recuperado, digest ZIP `6eefdb6ed5986330b05cc03cda2e53abff8a3ca46a17fea12fbe475ddc81622f`, HEAD do teste `2acabe21102774bae5ce86d15858dc434e905bf5`;
+- Documento 120 descreve caminhos candidatos transacional e commit legado com falha incerta: **nenhum runner com lock contínuo, reconciliação ou ledger real foi implementado**;
+- Neon intocado, backup independente pendente, B1R1 expirado sem execução e Fase 5 não iniciada; CP164 e pausa obrigatória.
