@@ -4799,3 +4799,15 @@ Documentos:
 - nenhuma branch, migration, fixture, owner secret ou taxa criada; B1R1 continua EXPIRED_NOT_EXECUTED;
 - checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP155.md`, pointer/STATE reconciliados; pausa obrigatória.
 
+
+
+## 2026-10-19 — Revisão estática das migrations e preparação de autorização específica Neon (Documento 112 / CP156)
+
+- Freshness Gate CP155/HEAD `097d35b7fc38f81396285798cf314def9bd81aed` confirmou nenhum commit posterior;
+- revisados estaticamente no GitHub os 36 SQL entrypoints e 14 arquivos auxiliares da ordem S5, sem execução e sem hashes SHA-256 de checkout;
+- identificados `INSERT` estruturais/condicionais em 031a/032a, wrappers transacionais 031–033, ausência de wrapper explícito em 034–036 e DROP/CREATE TRIGGER em 034;
+- preparado Documento 112 com F4-NBR-01–05, estados individualizados BRG-01–10, requisitos de privilégio mínimo, TLS, runner `psql`, ledger, falha/reconciliação e Free quotas;
+- API Neon de leitura confirmou `oes-sandbox` com única branch default; saldo de quotas/billing efetivo e segurança externa ainda pendentes;
+- autorização específica para criar `oes-schema-test` = PREPARED_NOT_APPROVED; migrações exigirão autorização posterior separada;
+- nenhum CREATE BRANCH/ROLE/SCHEMA/TABLE, migration, backup, fixture factual, Epoch, B1R1 activation ou custo realizado;
+- criado CP156 e reconciliados STATE, CHANGELOG e ponteiro; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
