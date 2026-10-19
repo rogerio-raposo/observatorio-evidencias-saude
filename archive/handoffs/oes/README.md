@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP162 — 2026-10-19**
+**CP163 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP162.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP163.md`
 
 Checkpoint anterior:
 
-`CP161`
+`CP162`
 
 Status:
 
@@ -356,3 +356,11 @@ em **Modo Continuidade**.
 - commit de configuração `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
 - ausência de confirmação do run ou de artifacts; não declarar PASS PostgreSQL 18;
 - Documento 118 e CP162 registrados; nenhuma mutação Neon, B1R1 expirado sem execução e Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Ensaio PG18 sintético comprovado (Documento 119 / CP163)
+
+- run `39261597847`, job PG18 `118090362879` success, PostgreSQL 18.6/psql 16.15, 36 migrations PASS com 14 includes e artifact `12190502582` no commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- digest `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`, BRG-05 verificado apenas no ensaio sintético;
+- Documento 119 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP163.md`; ledger não criado, nenhuma mutação Neon, B1R1 expirado e Fase 5 não iniciada;
+- próximo bloco: ledger/locks/recovery PG18 sintético, modo alto recomendado; STOP.
