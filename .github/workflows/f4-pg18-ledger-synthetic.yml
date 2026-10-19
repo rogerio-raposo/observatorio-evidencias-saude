@@ -1,0 +1,72 @@
+name: F4 PG18 ledger failure-model synthetic CI (no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/f4-pg18-ledger-synthetic.yml'
+      - 'scripts/oes_pg18_ledger_synthetic_test.sh'
+      - 'tests/fixtures/f4-ledger-synthetic/**'
+
+permissions:
+  contents: read
+
+jobs:
+  ledger-failure-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_ledger_synthetic
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_ledger_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_ledger_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout fixed commit without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check synthetic-only harness syntax and PG18 server
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-ledger-artifacts
+          bash -n scripts/oes_pg18_ledger_synthetic_test.sh
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          printf '%s\n' "$GITHUB_SHA" > f4-pg18-ledger-artifacts/commit.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-ledger-artifacts/server-version.txt
+          grep -q '^18' f4-pg18-ledger-artifacts/server-version.txt
+      - name: Exercise isolated ledger states, crash gap and advisory lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/oes_pg18_ledger_synthetic_test.sh 2>&1 | tee f4-pg18-ledger-artifacts/harness.log
+          grep -Fq 'SYNTHETIC_LEDGER_HARNESS_PASS' f4-pg18-ledger-artifacts/result.txt
+      - name: Preserve synthetic logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-pg18-ledger-synthetic-proof
+          path: f4-pg18-ledger-artifacts/
+          if-no-files-found: warn
