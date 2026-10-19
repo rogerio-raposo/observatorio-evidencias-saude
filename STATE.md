@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP165 — 2026-10-19**.
+- checkpoint vigente: **CP166 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5318,3 +5318,14 @@ Estado preservado:
 - BRG-06/07 = modelo sintético comprovado com limitação, ledger operacional/supervisor/guarda de subprocessos/reconciliação por pós-condições ainda pendentes; BRG-03/08/09 pendentes;
 - nenhum Neon write, branch, role, schema, ledger, migration, backup independente ou operação factual. B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
 - próximo bloco: supervisor de processo e falhas induzidas no PG18 sintético, modo alto; STOP CP165.
+
+
+### Fase 4 — Supervisor PG18 sintético: concorrência, cancelamento e reconciliação (Documento 122 / CP166)
+
+- Freshness Gate CP165/HEAD `2ebd3a56da271a4d98859d6b0e5c9db5c40a8ea3` = identical, 0 drift; modo alto;
+- novos artefatos `tests/fixtures/f4-supervisor-synthetic/postconditions.json`, `scripts/oes_pg18_supervisor_synthetic_test.py` e `.github/workflows/f4-pg18-supervisor-synthetic.yml`, exclusivamente PostgreSQL 18 efêmero e sem Neon;
+- harness visa testar índice parcial de claim `prepared` sob concorrência, guardião ocioso, SQL confirmado sem recibo, cancelamento de transação ainda aberta, bloqueio de repetição, recusa de novo subprocesso após perda do guardião e pós-condições conservadoras;
+- run CI automático `39278420804` no SHA `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226`, job `118148257964` permaneceu `queued` nas consultas: **NÃO há teste executado/comprovado, artifact ou PASS neste bloco**;
+- Documento 122 e CP166 registrados; BRG-06/07 permanecem modelos de prova sintética e NÃO autorizam runner/ledger operacional;
+- nenhuma branch/role/schema/migration/ledger Neon, backup independente ausente, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próxima retomada: consultar run 39278420804 e artifacts, diagnosticar falhas se houver; modo alto, pausa obrigatória.
