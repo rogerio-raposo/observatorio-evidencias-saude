@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP157 — 2026-10-19**.
+- checkpoint vigente: **CP158 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5238,3 +5238,14 @@ Estado preservado:
 - autorização para `oes-schema-test` = PREPARED_NOT_APPROVED; branch, roles, schema, ledger e migrations não criados;
 - B1R1 permanece EXPIRED_NOT_EXECUTED; Fase 5 não iniciada; backup independente não configurado;
 - próximo passo: prova do preflight no checkout integral e ensaio de runner/ledger em PostgreSQL 18 sintético sem Neon, sujeitos a disponibilidade e novo `Prossiga`; pausa obrigatória.
+
+
+### Fase 4 — CI offline preparada e PostgreSQL 18 bloqueado (Documento 114 / CP158)
+
+- Freshness Gate CP157/HEAD `3ecb187d04edc75a9b957bef5c252d746607d76e` = identical;
+- workflow `.github/workflows/f4-neon-offline-preflight.yml` registrado: checkout fixado, unit tests sintéticos, inventário SHA-256 de 36+14 arquivos, captura de artifact; sem segredos, conexões ou SQL Neon;
+- 7/7 testes unitários locais em árvore artificial OK; **nenhum run CI/log/artifact verificado** deste novo workflow, portanto hashes reais dos 50 SQL ainda não comprovados;
+- checkout integral local bloqueado por DNS; PG17.11 local identificado, `psql` ausente; **nenhum teste de runner/ledger PostgreSQL 18 executado**;
+- ledger = desenho lógico sem tabela/runner; política de locks e recuperação ainda pendente;
+- autorização branch `oes-schema-test` não concedida; zero mutation Neon, sem backup independente, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo bloco: confirmação de run CI e digest real, depois estudo sintético de runner/ledger PG18; pausa obrigatória.
