@@ -4780,3 +4780,13 @@ Documentos:
 - Documento 109: `docs/governance/109-resultado-conectividade-readonly-neon-free-sandbox.md`;
 - CP153: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP153.md`; README/STATE reconciliados, pausa obrigatória.
 
+## 2026-10-19 — Inventário Neon Free e expiração factual da janela B1R1 (Documento 110 / CP154)
+
+- via Neon SQL SELECT-only, `oes-sandbox` apresentou `public` sem tabelas/funções OES, extensão `plpgsql`, banco ~7536 kB;
+- `oes_sandbox_owner` possui privilégios administrativos; `ssl=off` reportado pelo servidor não verifica TLS de conexão externa;
+- tempo factual PostgreSQL `2026-10-19T12:05:22.721Z` e relógio Recife 09:05:48 comprovaram fim da janela 08:00–09:00; B1R1 não foi ativado validamente;
+- estado da janela registrado `EXPIRED_NOT_EXECUTED`, sem backdating, reprogramação ou source request;
+- Documento 110: `docs/governance/110-inventario-readonly-neon-free-e-expiracao-b1r1.md`; CP154: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP154.md`;
+- preparada estratégia de branch segregada e ledger de migrations, sem criar branch/role/schema;
+- backup independente e ODB integral pendentes; pausa obrigatória.
+

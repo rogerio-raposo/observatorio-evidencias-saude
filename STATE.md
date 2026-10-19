@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP153 — 2026-10-19**.
+- checkpoint vigente: **CP154 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5170,4 +5170,25 @@ Estado preservado:
 > **PHASE_5 = NOT_STARTED**
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP153.md`; STOP até `Prossiga`.
+
+### Fase 4 — inventário Neon Free read-only e expiração B1R1 (Documento 110)
+
+- `oes-sandbox` (São Paulo, PostgreSQL 18.6) auditado via SELECT; apenas schema `public`, 0 tabelas e 0 funções de aplicação, `plpgsql` presente; database `oes_sandbox` ~7536 kB;
+- role `oes_sandbox_owner` com poderes administrativos, sem role read-only segregada; servidor reportou `ssl=off`, sem conclusão automática sobre TLS externo;
+- timestamp PostgreSQL `2026-10-19T12:05:22.721Z` e relógio Recife `2026-10-19T09:05:48-03:00` comprovaram fim da janela, sem preflight/activation válida B1R1; **EXPIRED_NOT_EXECUTED** conforme Documento 91;
+- nenhuma migration/DDL/write/fixture ou query científica executada neste checkpoint;
+- Documento 110 `docs/governance/110-inventario-readonly-neon-free-e-expiracao-b1r1.md` define preparação de sequência migrations, ledger e branch de teste futura, sem criação ainda;
+- ODB-03, ODB-05–10, backup/restore e prontidão operacional continuam bloqueados.
+
+> **NEON_SANDBOX_READONLY_INVENTORY = PASS**
+> **B1R1_ACTIVATION_WINDOW = EXPIRED_NOT_EXECUTED**
+> **OPERATIONAL_DATABASE_READY = NO**
+> **INDEPENDENT_BACKUP = NOT_CONFIGURED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP154 — inventoried sandbox and B1R1 expiry
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP154.md`;
+- próximo passo após `Prossiga`: preparar plano de migrations sintéticas e branch de teste, modo médio;
+- pausa obrigatória.
 
