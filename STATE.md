@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP148 — 2026-10-19**.
+- checkpoint vigente: **CP149 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5044,5 +5044,31 @@ Estado preservado:
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP148.md`;
 - próxima atividade, só após `Prossiga`: gate arquitetural do PostgreSQL persistente, em modo alto, sem deployment automático;
 - expiração B1R1 **não** antecipada: exigir verificação factual posterior a 09:00 para declaração final;
+- pausa obrigatória.
+
+### Fase 4 — gate arquitetural do banco operacional persistente (Documento 105)
+
+- Freshness Gate confirmou CP148, HEAD `d92a426fcdecfc3392244f8625631d26486a9c09`, sem alterações posteriores e impedimento de datastore persistente não resolvido;
+- arquitetura de referência **condicional** para piloto não normativo: PostgreSQL gerenciado persistente + object storage para Artifacts + executor autenticado;
+- manter OES-H1/OES-P1, PostgreSQL para core transacional e CI/synthetic completamente segregada;
+- shortlist não vinculante: Neon (planos pagos condicionados), Supabase Pro ou superior, AWS RDS; VM autogerida não preferida no piloto;
+- **ODB-01–ODB-12** definidos como gates obrigatórios de owner, custo, segurança, migrations, dados, backup/restore e executor;
+- nenhum provedor, plano, região, orçamento, credencial, implantação ou novo Epoch aprovado;
+- relógio Recife consultado 19/10 às 08:14:15 confirmou janela ainda aberta *naquele instante*; preflight real não executado e nenhuma activation;
+- Documento 105: `docs/governance/105-gate-arquitetura-banco-operacional-persistente-oes.md`.
+
+> **PERSISTENT_OPERATIONAL_DB_ARCHITECTURE = APPROVED_WITH_CONDITIONS**
+> **PREFERRED_CLASS = MANAGED_POSTGRES_PLUS_OBJECT_STORAGE**
+> **PROVIDER_PLAN_REGION_BUDGET = PENDING_OWNER_DECISION**
+> **OPERATIONAL_DEPLOYMENT = NOT_AUTHORIZED**
+> **OPERATIONAL_DB_READINESS = NOT_READY**
+> **B1R1_LIVE_PREFLIGHT = NOT_EXECUTED**
+> **B1R1_ACTIVATION = NOT_PERFORMED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP149 — arquitetura candidata de persistência operacional
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP149.md`;
+- próximo passo em modo alto, somente após `Prossiga`: seleção responsável de provedor/plano e autorização própria de infraestrutura;
 - pausa obrigatória.
 

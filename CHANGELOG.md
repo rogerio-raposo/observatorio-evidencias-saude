@@ -4700,3 +4700,21 @@ Documentos:
 - expiração não foi declarada antes das 09:00; novos horários/epoch exigem decisão separada;
 - próximo bloco: gate arquitetural de banco operacional persistente, somente com `Prossiga`; pausa obrigatória.
 
+## 2026-10-19 — Gate arquitetural de infraestrutura operacional persistente (Documento 105)
+
+- Freshness Gate CP148 `d92a426fcdecfc3392244f8625631d26486a9c09` consistente; banco factual persistente segue inexistente segundo evidência disponível;
+- aprovada condicionalmente arquitetura de referência para piloto: PostgreSQL gerenciado + object storage + executor autenticado, segregados de CI;
+- preservados OES-H1/OES-P1, migrações, hashes congelados e semântica não normativa;
+- shortlist investigativa Neon, Supabase, AWS RDS; comparação de backup/restore, rede, custos e disponibilidade; fornecedor não escolhido;
+- gates ODB-01–ODB-12 definidos; sem gastos, conta, migration, deploy, banco factual ou experimentação;
+- B1R1 janela observada aberta às 08:14:15 de Recife, sem live preflight ou ativação; não declarar expiry prematura;
+- decisão registrada em `docs/governance/105-gate-arquitetura-banco-operacional-persistente-oes.md`.
+
+## 2026-10-19 — CP149
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP149.md`; pointer e STATE reconciliados para CP149;
+- `PERSISTENT_OPERATIONAL_DB_ARCHITECTURE=APPROVED_WITH_CONDITIONS`;
+- `OPERATIONAL_DB_READINESS=NOT_READY`, `OPERATIONAL_DEPLOYMENT=NOT_AUTHORIZED`;
+- `B1R1_ACTIVATION=NOT_PERFORMED`, Phase 5 not started;
+- próxima ação depende de escolha/aprovação específica de fornecedor e orçamento; pausa obrigatória.
+
