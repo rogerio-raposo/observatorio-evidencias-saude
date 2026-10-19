@@ -1,0 +1,70 @@
+name: F4 PG18 persistent lock guardian and crash gap (synthetic-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-guardian-synthetic.yml'
+      - 'scripts/oes_pg18_guardian_synthetic_test.py'
+      - 'tests/fixtures/f4-ledger-synthetic/bootstrap.sql'
+
+permissions:
+  contents: read
+
+jobs:
+  guardian-crash-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_guardian_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_guardian_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_guardian_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout fixed commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Ensure PostgreSQL 18 server and psql
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-guardian-artifacts
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-guardian-artifacts/server-version.txt
+          grep -q '^18' f4-pg18-guardian-artifacts/server-version.txt
+          psql --version | tee f4-pg18-guardian-artifacts/psql-version.txt
+          printf '%s\n' "$GITHUB_SHA" > f4-pg18-guardian-artifacts/commit.txt
+      - name: Run synthetic guardian and forced crash negative control
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_pg18_guardian_synthetic_test.py 2>&1 | tee f4-pg18-guardian-artifacts/harness.log
+          grep -Fxq 'SYNTHETIC_GUARDIAN_MODEL_PASS' f4-pg18-guardian-artifacts/result.txt
+      - name: Preserve evidence regardless of result
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-pg18-guardian-synthetic-evidence
+          path: f4-pg18-guardian-artifacts/
+          if-no-files-found: warn
