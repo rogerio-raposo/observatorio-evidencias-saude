@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP167 — 2026-10-19**.
+- checkpoint vigente: **CP168 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5339,3 +5339,14 @@ Estado preservado:
 - **metadados GitHub do run/job passaram de queued para in_progress, com conclusion=null na última leitura**, embora logs e artifact comprovem execução do harness; não alegar conclusão administrativa `completed/success`;
 - Documento 123 e CP167 registrados; BRG-06/07 modelo sintético comprovado, **ledger e runner operacionais não liberados**; segurança ACL/TLS, backup, billing pendentes;
 - nenhuma criação/alteração de branch, SQL, ledger ou schema Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco modo alto, pausa obrigatória.
+
+
+### Fase 4 — Desenho fail-closed e catálogo de reconciliação das 36 migrations (Documento 124 / CP168)
+
+- Freshness Gate CP167/HEAD `0d884ab84e449398ec0367a08364cfde1e5cb8f8` = identical; run supervisor anterior `39278420804` passou a `completed/success`, fechando inconsistência de metadados CP167;
+- Documento 124 criado: distinção entre advisory lock cooperativo e fencing real; política **proposta/não normativa** de intent durável, claim exclusivo, supervisão e reconciliação, sem modificar a política canônica 30;
+- catálogo `database/f4-reconciliation-postconditions-draft.json` com 36/36 migrations na ordem do manifesto, todas UNREVIEWED, 0 pós-condições, 0 autorizações automáticas; observações documentais de fronteiras SQL 031–036;
+- linter offline `scripts/oes_f4_reconciliation_catalog_lint.py`, 11 unit tests sintéticos e CI `.github/workflows/f4-reconciliation-catalog-static.yml` criados;
+- CI run `39282514522` no commit `52f796f3b500e550335c06a33c761369804fd3e6`: logs mostram 11/11 testes OK e artifact `12201766282` com digest ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b` conferido; metadados administrativos ainda queued/conclusion=null na última consulta, não declarar run success;
+- Nenhum SQL foi executado pela CI documental, nenhuma modificação Neon; BRG-06/07 ainda não operacionais, BRG-03/08/09 pendentes, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco: revisar pós-condições reais 031–036 em modo alto e somente sintético/offline; STOP CP168.
