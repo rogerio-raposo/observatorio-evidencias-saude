@@ -4870,3 +4870,11 @@ Documentos:
 - commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
 - não foi possível verificar run, logs ou artifact após o commit; PASS PG18 pendente;
 - CP162 criado, sem mutações Neon; B1R1 expirado, Fase 5 não iniciada.
+
+
+## 2026-10-19 — Ensaio PG18 sintético concluído 36/36 (Documento 119 / CP163)
+
+- Descoberta da lista GitHub Actions via `mcp__GitHub__fetch` em `/actions/runs` sem query, run `39261597847` gerado por push no commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- job `118090362879` success, PostgreSQL 18.6/psql 16.15, 36 migrations aplicadas em PG18 descartável, 14 includes; artifact `12190502582`, 2 epochs estruturais e digest `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
+- BRG-05 PG18 schema sequential install verificado somente no commit testado; ledger e recuperação ainda não ensaiados, Neon não alterado;
+- Documento 119, CP163 e pausa obrigatória; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada.
