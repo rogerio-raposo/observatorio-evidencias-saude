@@ -4790,3 +4790,12 @@ Documentos:
 - preparada estratégia de branch segregada e ledger de migrations, sem criar branch/role/schema;
 - backup independente e ODB integral pendentes; pausa obrigatória.
 
+## 2026-10-19 — Plano de migrations Neon sintético (Documento 111 / CP155)
+
+- Freshness Gate confirmou CP154/HEAD `678a0d8fb007b733e7aa2be10db42d5faceafc7f`;
+- CI S5 aplicava 36 entradas: `poc-s1.sql` + migrations 002–036, wrappers 031/032/033 e 14 fragmentos relativos `\ir`;
+- criado manifesto de ordem `database/f4-neon-sandbox-schema-migration-manifest.txt` e Documento 111 com gate BRG-01–10 para branch isolada, recursos Free, roles, ledger/hashes e provas;
+- Neon SELECT-only confirmou zero tabelas e ~7536 kB, sem alterações de schema ou dados;
+- nenhuma branch, migration, fixture, owner secret ou taxa criada; B1R1 continua EXPIRED_NOT_EXECUTED;
+- checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP155.md`, pointer/STATE reconciliados; pausa obrigatória.
+

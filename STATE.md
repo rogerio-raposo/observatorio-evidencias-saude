@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP154 — 2026-10-19**.
+- checkpoint vigente: **CP155 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5191,4 +5191,23 @@ Estado preservado:
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP154.md`;
 - próximo passo após `Prossiga`: preparar plano de migrations sintéticas e branch de teste, modo médio;
 - pausa obrigatória.
+
+### Fase 4 — preparação de sequência de migrations para branch Neon sintética (Documento 111)
+
+- Freshness Gate CP154 `678a0d8fb007b733e7aa2be10db42d5faceafc7f` consistente; `oes-sandbox` segue sem tabelas de aplicação;
+- extraída sequência canônica de 36 arquivos `psql -f` do workflow S5; wrappers 031/032/033 carregam 14 fragmentos por `\ir`;
+- manifesto `database/f4-neon-sandbox-schema-migration-manifest.txt` versionado, não executado; Documento 111 fixa gate BRG-01–BRG-10;
+- Neon executor `run_sql` não processa `\ir`; preparação exige cliente psql ou executor compatível e hash SHA256 do checkout imutável;
+- nenhum branch Neon, role, schema, migration ledger ou seed criado; nenhum dado factual ou source request;
+- B1R1 expirado permanece intocado; backup externo ainda não configurado; readiness operacional bloqueado.
+
+> **MIGRATION_SEQUENCE_DOCUMENTED = 36_ENTRY_FILES_14_SUBFRAGMENTS**
+> **NEON_TEST_BRANCH = NOT_CREATED**
+> **NEON_SCHEMA_MIGRATION = NOT_STARTED**
+> **OPERATIONAL_DATABASE_READY = NO**
+> **PHASE_5 = NOT_STARTED**
+
+### CP155 — sequência e controles preparados
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP155.md`; pausa obrigatória.
 
