@@ -4925,3 +4925,12 @@ Documentos:
 - linter Python offline, 11 testes negativos/sintéticos e workflow read-only de catálogo criados;
 - CI `39282514522`, SHA `52f796f3b500e550335c06a33c761369804fd3e6`: 11 testes OK e artifact `12201766282` íntegro (SHA ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b`); status run/job administrativo ainda não confirmado (`queued/conclusion=null`);
 - Documento 124, CP168 e continuidade; nenhuma escrita Neon; B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada. STOP.
+
+
+## 2026-10-19 — Auditoria de fontes para candidatos 031–036 (Documento 125 / CP169)
+
+- Freshness Gate CP168 `d213a618ce6fa87c8008c8e5da30a3ff219048fa` idêntico ao main; CI anterior do catálogo `39282514522` agora completed/success;
+- candidatos documentados separadamente para 031–036, com identificação de seeds e grandfathering 032, triggers com DROP/CREATE em 034/036, dupla substituição de funções 035, e fronteiras dos wrappers 031/032/033;
+- verificador somente leitura e oito testes sintéticos publicados; CI `39297500185`, job `118213715729`, completed/success no SHA `feb2b9f115e94a09c975b98f61d7a5ffda53438d`, 8/8 OK;
+- artifact `12209110983` SHA ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`; 6 entrypoints, 14 fragmentos e zero pós-condições validadas;
+- Documento 125, CP169; catálogo principal permanece 36 UNREVIEWED, sem replay, sem execução ou reconciliação automática. Neon intocado; B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
