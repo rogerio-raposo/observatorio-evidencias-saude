@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP161 — 2026-10-19**
+**CP162 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP161.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP162.md`
 
 Checkpoint anterior:
 
-`CP160`
+`CP161`
 
 Status:
 
@@ -348,3 +348,11 @@ em **Modo Continuidade**.
 - nenhum run PG18 comprovado; Documento 117 mantém BRG-05/06/07 pendentes e registra ausência de Neon writes;
 - CP161 em `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP161.md`; B1R1 expirado sem execução, Fase 5 não iniciada;
 - próximo bloco: obter e auditar run PG18 sintético, após novo `Prossiga`; pausa obrigatória.
+
+
+## 2026-10-19 — Auto-trigger da CI sintética PG18 (Documento 118 / CP162)
+
+- Owner aprovou execução automática somente da CI sintética; workflow PG18 agora responde a push na main que altere seu próprio arquivo;
+- commit de configuração `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- ausência de confirmação do run ou de artifacts; não declarar PASS PostgreSQL 18;
+- Documento 118 e CP162 registrados; nenhuma mutação Neon, B1R1 expirado sem execução e Fase 5 não iniciada; pausa obrigatória.
