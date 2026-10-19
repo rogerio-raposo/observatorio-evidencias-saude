@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP151 — 2026-10-19**.
+- checkpoint vigente: **CP152 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5126,4 +5126,29 @@ Estado preservado:
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP151.md`;
 - próxima etapa: aprovação do owner para sandbox Neon Free/região específica, com testes sintéticos sem despesas;
 - pausa obrigatória.
+
+### Fase 4 — autorização específica de Neon Free sandbox (Documento 108)
+
+- proprietário autorizou exatamente `APPROVED — Neon Free sandbox / Documento 107 / OES / synthetic-only / aws-sa-east-1 / no paid services`;
+- escopo aprovado: sandbox sintético gratuito na região São Paulo, sem cartão, plano pago, PHI, query científica ou activation de Epoch;
+- verificações GitHub CP151 `72bbfc330a23d085d45acc33b7d9f8bb104adede` sem drift; integração Neon disponível, porém **não instalada** neste ChatGPT;
+- Documento 108 registra decisão e roteiro manual; script SQL read-only `database/f4-neon-free-sandbox-connectivity-readonly.sql` preparado para primeiro teste;
+- nenhum provisionamento efetivo de projeto Neon, nenhuma conexão PostgreSQL, nenhuma migration, nenhum SQL executado;
+- backup independente e restore seguem sem configuração, ODB-08 bloqueante; ODB integral não passou;
+- próximo bloco condicionado à ação do proprietário no console Neon ou conexão explícita, em modo médio e após `Prossiga`.
+
+> **NEON_FREE_OWNER_SCOPE_APPROVAL = APPROVED**  
+> **APPROVED_REGION = aws-sa-east-1**  
+> **NEON_FREE_SANDBOX = NOT_PROVISIONED_BY_OES**  
+> **NEON_PLUGIN_CONNECTION = NOT_INSTALLED**  
+> **NEON_SANDBOX_CONNECTIVITY_TEST = PREPARED_NOT_EXECUTED**  
+> **BACKUP_INDEPENDENT = NOT_CONFIGURED**  
+> **OPERATIONAL_DB_READINESS = NOT_READY**  
+> **B1R1_ACTIVATION = NOT_PERFORMED**  
+> **PHASE_5 = NOT_STARTED**
+
+### CP152 — autorização reconhecida, aguardando ação de cadastro
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP152.md`;
+- modo médio recomendado após projeto criado; pausa obrigatória.
 

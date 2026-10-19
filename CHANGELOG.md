@@ -4755,3 +4755,19 @@ Documentos:
 - `OPERATIONAL_DB_READINESS=NOT_READY`, `B1R1_ACTIVATION=NOT_PERFORMED`;
 - pausa obrigatória até aprovação específica e novo `Prossiga`.
 
+## 2026-10-19 — Decisão owner: Neon Free sandbox sintético / Documento 108
+
+- decisão explícita recebida: `APPROVED — Neon Free sandbox / Documento 107 / OES / synthetic-only / aws-sa-east-1 / no paid services`;
+- finalidade restrita: projeto Free na região São Paulo para conectividade e testes sintéticos; proibição de despesa, dados clínicos pessoais e atos científicos factuais;
+- interface Neon do ChatGPT permanece não instalada; provisionamento depende de ação do titular;
+- criado `docs/governance/108-decisao-owner-sandbox-neon-free-synthetic-oes.md` e SQL de conectividade read-only `database/f4-neon-free-sandbox-connectivity-readonly.sql`, ambos **sem execução**;
+- nenhum banco, conta, senha, source query, migration factual ou evento;
+- ODB-08 backup/restauração independente continua bloqueante.
+
+## 2026-10-19 — CP152
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP152.md`, ponteiro e STATE atualizados para CP152;
+- `NEON_FREE_OWNER_SCOPE_APPROVAL=APPROVED`; `NEON_FREE_SANDBOX=NOT_PROVISIONED_BY_OES`;
+- `NEON_SANDBOX_CONNECTIVITY_TEST=PREPARED_NOT_EXECUTED`; `B1R1_ACTIVATION=NOT_PERFORMED`;
+- STOP até confirmação de projeto Neon criado/conexão ao plugin e novo `Prossiga`.
+
