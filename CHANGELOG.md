@@ -4915,3 +4915,13 @@ Documentos:
 - SHA ZIP `57dc8e2ba0af83bbfb352735989e48e965cdeafc7111e0725c5a795abadfea9e` verificado, reivindicação concorrente tem um único vencedor, supervisor bloqueou novo SQL após crash e preservou `uncertain` sem applied/retry automáticos;
 - metadados REST de run/job evoluíram de `queued` para `in_progress` com `conclusion=null` na última verificação, apesar de logs/artifact; não declarar job administrativamente concluído;
 - Documento 123 e CP167; provas exclusivamente sintéticas, sem runner operacional ou Neon writes; B1R1 expirado sem execução e Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Política proposta de exclusividade e catálogo não revisado de 36 migrations (Doc 124 / CP168)
+
+- Freshness Gate CP167/HEAD `0d884ab84e449398ec0367a08364cfde1e5cb8f8` = identical. Run CI supervisor `39278420804` e job `118148257964` confirmados `completed/success` em nova leitura;
+- Documento 124 propõe protocolo fail-closed de intent/claim, lock cooperativo, supervisão e pós-condições, explicitando que **não há fencing efetivo nem runner operacional**;
+- `database/f4-reconciliation-postconditions-draft.json` cobre 36 caminhos em ordem do manifesto, **0/36 revisados**, zero pós-condições, flags replay/execute/reconcile todas falsas;
+- linter Python offline, 11 testes negativos/sintéticos e workflow read-only de catálogo criados;
+- CI `39282514522`, SHA `52f796f3b500e550335c06a33c761369804fd3e6`: 11 testes OK e artifact `12201766282` íntegro (SHA ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b`); status run/job administrativo ainda não confirmado (`queued/conclusion=null`);
+- Documento 124, CP168 e continuidade; nenhuma escrita Neon; B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada. STOP.
