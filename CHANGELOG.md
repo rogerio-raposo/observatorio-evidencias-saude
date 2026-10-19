@@ -4834,3 +4834,12 @@ Documentos:
 - tentativa de checkout local GitHub bloqueada por DNS; PG17.11 disponível como biblioteca de desenvolvimento, sem cliente `psql` ou servidor PostgreSQL 18 validado; ledger/runner não executados;
 - Documento 114 e CP158 registrados; BRG-04 permanece pendente de prova CI, BRG-05/06/07 pendentes;
 - nenhuma branch `oes-schema-test`, schema, role, ledger, migration, custo ou operação factual Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 not started; pausa obrigatória.
+
+
+## 2026-10-19 — Tentativa de verificação da CI sem run recuperável (Documento 115 / CP159)
+
+- Freshness Gate CP158/HEAD `94175cafebd9d960d4cb5341090f02cff4ae146e` = identical;
+- workflow de inventário offline permanece publicado, sem evidência verificável de run, conclusão, logs ou artifact na integração atual;
+- identificador de execução GitHub Actions indisponível; consulta pública não acessível no ambiente; **não se declara sucesso ou inexistência da execução**;
+- Documento 115 e CP159 registrados; SHA-256 canônico de 50 SQL e ensaio PostgreSQL 18/ledger continuam pendentes;
+- nenhuma branch, role, schema, migration, custo ou trabalho factual Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
