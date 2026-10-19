@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP166 — 2026-10-19**
+**CP167 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP166.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP167.md`
 
 Checkpoint anterior:
 
-`CP165`
+`CP166`
 
 Status:
 
@@ -390,3 +390,12 @@ em **Modo Continuidade**.
 - GitHub run automático `39278420804` no commit `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226` continuava `queued`; não há prova de execução/sucesso/falha, nem artifact;
 - Documento 122 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP166.md` preservam BRG-06/07 não operacionais, proibição de SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco após `Prossiga`: verificar run 39278420804, jobs/logs/artifacts, corrigir falhas prospectivamente se observadas. STOP.
+
+
+## 2026-10-19 — Prova de supervisor PG18 sintético (Documento 123 / CP167)
+
+- Freshness Gate CP166/main = identical, HEAD `ab9e7ff7ab64ab8125e073f3f5764ab5257526d6`;
+- run `39278420804`, commit `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226`; artifact `12199766445` e logs verificados com 25/25 controles PASS, PG18.6/psql16.15, digest ZIP `57dc8e2ba0af83bbfb352735989e48e965cdeafc7111e0725c5a795abadfea9e`;
+- run/job metadata REST continuam `queued/conclusion=null`, apesar das evidências de execução; conclusão administrativa não certificada;
+- Documento 123 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP167.md` preservam escopo sintético, BRG-06/07 ainda sem liberação operacional, nenhuma alteração Neon;
+- B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada; próximo checkpoint após `Prossiga` em modo alto para análise de fencing e catálogo de pós-condições, STOP.
