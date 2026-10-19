@@ -1,0 +1,72 @@
+name: F4 PG18 synthetic supervisor and reconciliation model (no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-supervisor-synthetic.yml'
+      - 'scripts/oes_pg18_supervisor_synthetic_test.py'
+      - 'tests/fixtures/f4-supervisor-synthetic/**'
+      - 'tests/fixtures/f4-ledger-synthetic/bootstrap.sql'
+
+permissions:
+  contents: read
+
+jobs:
+  supervisor-rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_supervisor_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_supervisor_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_supervisor_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout pinned CI commit without persisted GitHub credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Prepare isolated PG18 and verify script syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-supervisor-artifacts
+          python3 -m py_compile scripts/oes_pg18_supervisor_synthetic_test.py
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-supervisor-artifacts/server-version.txt
+          grep -q '^18' f4-pg18-supervisor-artifacts/server-version.txt
+          psql --version | tee f4-pg18-supervisor-artifacts/client-version.txt
+          printf '%s\n' "$GITHUB_SHA" > f4-pg18-supervisor-artifacts/commit.txt
+      - name: Check concurrent claims, cancellation and uncertain outcomes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_pg18_supervisor_synthetic_test.py 2>&1 | tee f4-pg18-supervisor-artifacts/harness.log
+          grep -Fxq SYNTHETIC_SUPERVISOR_PASS_WITH_LIMITATIONS f4-pg18-supervisor-artifacts/result.txt
+      - name: Upload evidence on success and failure
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-pg18-supervisor-synthetic
+          path: f4-pg18-supervisor-artifacts/
+          if-no-files-found: warn
