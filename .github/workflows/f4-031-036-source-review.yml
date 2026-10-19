@@ -1,0 +1,72 @@
+name: F4 migrations 031-036 source-only review (no database)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-031-036-source-review.yml'
+      - 'scripts/oes_f4_031_036_source_review.py'
+      - 'scripts/oes_f4_reconciliation_catalog_lint.py'
+      - 'tests/test_oes_f4_031_036_source_review.py'
+      - 'docs/governance/reconciliation/f4-031-036-source-candidates.json'
+      - 'database/f4-reconciliation-postconditions-draft.json'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+      - 'database/031*.sql'
+      - 'database/032*.sql'
+      - 'database/033*.sql'
+      - 'database/034*.sql'
+      - 'database/035*.sql'
+      - 'database/036*.sql'
+
+permissions:
+  contents: read
+
+jobs:
+  source-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout pinned source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Synthetic negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_oes_f4_031_036_source_review.py' -v
+      - name: Source markers and transaction boundary inventory only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-source-review-artifacts
+          python scripts/oes_f4_031_036_source_review.py > f4-source-review-artifacts/source.json
+          python - <<'PY'
+          import json
+          with open('f4-source-review-artifacts/source.json',encoding='utf8') as f:
+            d=json.load(f)
+          assert d['status']=='SOURCE_MARKERS_PRESENT_POSTCONDITIONS_UNVALIDATED'
+          assert (d['migrations_scanned'],d['fragments_scanned']) == (6,14)
+          assert d['source_files_checked'] == 20
+          assert d['reviewed_migrations'] == 0
+          assert d['postconditions_validated'] == 0
+          assert d['sql_executed'] is False
+          assert d['neon_accessed'] is False
+          assert d['neon_write_authorized'] is False
+          print('SOURCE_INSPECTION_ONLY_NOT_A_RECONCILIATION_PASS')
+          PY
+          printf '%s\n' "$GITHUB_SHA" > f4-source-review-artifacts/commit.txt
+          sha256sum f4-source-review-artifacts/source.json > f4-source-review-artifacts/source-file-sha256.txt
+      - name: Archive static evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-031-036-source-only
+          path: f4-source-review-artifacts/
+          if-no-files-found: warn
