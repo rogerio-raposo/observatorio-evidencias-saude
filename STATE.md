@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP166 — 2026-10-19**.
+- checkpoint vigente: **CP167 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5329,3 +5329,13 @@ Estado preservado:
 - Documento 122 e CP166 registrados; BRG-06/07 permanecem modelos de prova sintética e NÃO autorizam runner/ledger operacional;
 - nenhuma branch/role/schema/migration/ledger Neon, backup independente ausente, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próxima retomada: consultar run 39278420804 e artifacts, diagnosticar falhas se houver; modo alto, pausa obrigatória.
+
+
+### Fase 4 — Evidência sintética supervisor PG18 recuperada (Documento 123 / CP167)
+
+- Freshness Gate CP166/main = identical, HEAD entrada `ab9e7ff7ab64ab8125e073f3f5764ab5257526d6`, modo alto;
+- run PG18 sintético `39278420804`, commit `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226`, logs completos e artifact `12199766445` recuperados e auditados; **25/25 controles PASS**, PostgreSQL 18.6, psql 16.15;
+- hash SHA-256 ZIP `57dc8e2ba0af83bbfb352735989e48e965cdeafc7111e0725c5a795abadfea9e`; `claim-results.json=[true,false]`, pós-condições de commit sem recibo e de transação cancelada verificadas; replay/applied automáticos recusados;
+- **metadados GitHub do run/job seguem queued/conclusion=null**, embora logs e artifact comprovem execução do harness; não alegar conclusão administrativa `completed/success`;
+- Documento 123 e CP167 registrados; BRG-06/07 modelo sintético comprovado, **ledger e runner operacionais não liberados**; segurança ACL/TLS, backup, billing pendentes;
+- nenhuma criação/alteração de branch, SQL, ledger ou schema Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco modo alto, pausa obrigatória.
