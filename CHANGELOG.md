@@ -4738,3 +4738,20 @@ Documentos:
 - `OPERATIONAL_DEPLOYMENT=NOT_AUTHORIZED`, `B1R1_ACTIVATION=NOT_PERFORMED`;
 - próximo bloco dependente de novo `Prossiga`; pausa obrigatória.
 
+## 2026-10-19 — Diligência e pacote de autorização para sandbox Neon Free (Documento 107)
+
+- Freshness Gate CP150, HEAD `b6fe5a242e2e4c5f5ae1ee52f5478c629416fb8d`, coerente;
+- evidência atualizada do Neon: Postgres Free disponível em São Paulo (`aws-sa-east-1`), mas Object Storage integrado indisponível na região; Object Storage atingiu GA em setembro/2026;
+- corrigida **prospectivamente** a hipótese "beta" do Documento 106, preservando seu snapshot histórico;
+- preparo de instruções para cadastro pelo owner após aprovação expressa, TLS autenticado, isolamento das credenciais, data minimization e read-only smoke test;
+- backups independentes continuam não configurados: opção local criptografada sob responsabilidade do operador; serviço externo cobrado não aprovado;
+- proposta de autorização sintética sem custos e sem dados clínicos pessoais incluída no `docs/governance/107-pacote-autorizacao-neon-free-sandbox-oes.md`;
+- nenhum banco, serviço, migration, conexão factual ou evento criado.
+
+## 2026-10-19 — CP151
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP151.md`, README/STATE atualizados para CP151;
+- `NEON_FREE_SANDBOX_AUTHORIZATION_PACKAGE=READY`, `NEON_FREE_SANDBOX=NOT_PROVISIONED`;
+- `OPERATIONAL_DB_READINESS=NOT_READY`, `B1R1_ACTIVATION=NOT_PERFORMED`;
+- pausa obrigatória até aprovação específica e novo `Prossiga`.
+

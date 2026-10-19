@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP150 — 2026-10-19**
+**CP151 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP150.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP151.md`
 
 Checkpoint anterior:
 
-`CP149`
+`CP150`
 
 Status:
 
@@ -287,4 +287,5 @@ em **Modo Continuidade**.
 - **CP148 — 2026-10-19:** impedimento factual B1R1: ausência declarada de PostgreSQL operacional persistente; live preflight não executado; Documento 104 e gate arquitetural de infraestrutura antes de novo experimento.
 - **CP149 — 2026-10-19:** arquitetura condicional de PostgreSQL gerenciado persistente + object storage e gates ODB-01–ODB-12 (Documento 105); fornecedor, custos e deployment pendentes; B1R1 não ativado.
 - **CP150 — 2026-10-19:** política free-first e candidato Neon Free condicionados (Documento 106); backup independente e owner approval pendentes, sem provisionamento nem B1R1 factual.
+- **CP151 — 2026-10-19:** pacote de autorização do sandbox Neon Free, região SP e backup independente (Documento 107); correção de status Object Storage GA/indisponibilidade regional; sem provisionamento nem ativação factual.
 

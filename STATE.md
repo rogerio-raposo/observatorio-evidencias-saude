@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP150 — 2026-10-19**.
+- checkpoint vigente: **CP151 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5097,5 +5097,33 @@ Estado preservado:
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP150.md`;
 - próximo bloco: autorização operacional e pacote de configuração Neon Free, modo alto, sem provisionamento automático;
+- pausa obrigatória.
+
+### Fase 4 — pacote de autorização de sandbox Neon Free (Documento 107)
+
+- Freshness Gate CP150 / HEAD `b6fe5a242e2e4c5f5ae1ee52f5478c629416fb8d`, sem alterações materiais posteriores à entrada;
+- Neon Free mantido como candidato para **sandbox sintético**, ainda sem conta/projeto provisionado;
+- região candidata `aws-sa-east-1` / São Paulo: PostgreSQL disponível; Object Storage Neon **indisponível nessa região**;
+- informação do Documento 106 sobre Neon Object Storage "beta" **superada** pela GA desde setembro/2026; manter Documento 106 imutável como snapshot histórico;
+- formulário textual de autorização específica proposto; `Prossiga` genérico não autoriza aceitar termos ou provisionar recursos;
+- conexão segura `sslmode=verify-full`, uso de credenciais fora do repositório/chat e segregação total da CI;
+- backup independente e restore/Artifacs (ODB-07/08) não configurados; opções: cópias locais criptografadas em destinos distintos, ou R2 sujeito a risco financeiro e aprovação própria;
+- status ODB-01–12: nenhuma comprovação factual de banco operacional; sem criação de Epoch, consulta científica ou mutation;
+- Documento 107: `docs/governance/107-pacote-autorizacao-neon-free-sandbox-oes.md`.
+
+> **NEON_FREE_SANDBOX_AUTHORIZATION_PACKAGE = READY**
+> **NEON_FREE_SANDBOX = NOT_PROVISIONED**
+> **REGION_CANDIDATE = aws-sa-east-1 / UNAPPROVED**
+> **NEON_OBJECT_STORAGE_SAO_PAULO = UNAVAILABLE_AS_PUBLISHED**
+> **NEON_OBJECT_STORAGE_GA_STATUS = GA_AS_OF_SEPT_2026**
+> **BACKUP_INDEPENDENT = NOT_CONFIGURED**
+> **OPERATIONAL_DB_READINESS = NOT_READY**
+> **B1R1_ACTIVATION = NOT_PERFORMED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP151 — pacote de autorização preparado
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP151.md`;
+- próxima etapa: aprovação do owner para sandbox Neon Free/região específica, com testes sintéticos sem despesas;
 - pausa obrigatória.
 
