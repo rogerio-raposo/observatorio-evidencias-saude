@@ -1,0 +1,12 @@
+{
+  "legacy_commit_gap": {
+    "migration_id": "committed_receipt_missing",
+    "relation": "oes_ci.commit_without_receipt",
+    "expected_exists": true
+  },
+  "cancelled_open_transaction": {
+    "migration_id": "supervised_cancel",
+    "relation": "oes_ci.uncommitted_cancel",
+    "expected_exists": false
+  }
+}
