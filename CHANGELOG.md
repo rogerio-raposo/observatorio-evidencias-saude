@@ -4811,3 +4811,16 @@ Documentos:
 - autorização específica para criar `oes-schema-test` = PREPARED_NOT_APPROVED; migrações exigirão autorização posterior separada;
 - nenhum CREATE BRANCH/ROLE/SCHEMA/TABLE, migration, backup, fixture factual, Epoch, B1R1 activation ou custo realizado;
 - criado CP156 e reconciliados STATE, CHANGELOG e ponteiro; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Pré-gate offline, diligência Free e contrato de ledger (Documento 113 / CP157)
+
+- Freshness Gate CP156/HEAD `cd7855c1fa366716569e35acbd5f81337b866caa` = identical, sem drift;
+- criado script `scripts/oes_neon_migration_preflight.py` sem conexão SQL, com pin de HEAD e inventário 36 SQL + 14 fragmentos `\\ir`, verificações estáticas e hashes SHA-256 de bytes em checkout imutável futuro;
+- criados sete testes unitários puramente sintéticos; 7/7 OK em ambiente local Python 3.13.5; Git blob dos arquivos publicados coincide com artefatos locais testados;
+- CLI sem HEAD bloqueia com exit 2; nenhum ensaio em checkout integral de 50 SQL e nenhum teste CI factual deste script;
+- `psql` não disponível no ambiente local; ledger/runner não implementados; contrato lógico e política fail-closed em caso de commit incerto preparados no Documento 113;
+- Neon API read-only identificou assinatura `free_v3`, limite account-level de 10 branches, única branch default e limite lógico de 1 GiB; sem extrato de billing/consumo do titular;
+- nenhuma operação Neon write, criação de branch/role/schema/ledger, migration, fonte científica factual, novo Epoch ou custo;
+- Documento 113 esclarece a notação literal de diretiva `\ir` sem corrigir retroativamente CP156;
+- CP157 criado; STATE/CHANGELOG/pointer reconciliados; B1R1 EXPIRED_NOT_EXECUTED, backup independente pendente, Fase 5 não iniciada; pausa obrigatória.
