@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP160 — 2026-10-19**.
+- checkpoint vigente: **CP161 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5268,3 +5268,13 @@ Estado preservado:
 - `inventory.json` verificado contra checksum: `5694be45dd10c39131e6a74270bbf66cbb30ee21aba7bd47c91e96d2f2ea2504`; BRG-04 STATIC_CI_VERIFIED somente no commit testado;
 - evidência não autoriza nem prova migrations PG18, runner/ledger, segurança, billing ou backup; sem write Neon, branch ainda não criada, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo passo: ensaio PG18 exclusivamente sintético em CI/local, avaliação de locks/ledger e falhas; pausa obrigatória CP160.
+
+
+### Fase 4 — Preparação de ensaio PostgreSQL 18 sintético (Documento 117 / CP161)
+
+- Freshness Gate CP160/HEAD `255663e154067ecca3f5073ec96ad69d084f4e6b` = identical;
+- publicado workflow manual `.github/workflows/f4-neon-pg18-schema-rehearsal.yml`, contêiner PG18 descartável em GitHub Actions e credenciais somente sintéticas de job;
+- preparação inclui pré-gate SHA-256 em checkout fixado, execução das 36 migrations sem fixtures, logs separados e paragem no primeiro erro; **não houve execução ou resultado verificado**;
+- Documento 117 descreve escopo e limitações; BRG-05 ainda pendente, BRG-06 ledger somente desenho, BRG-07 runner CI preparado/não testado;
+- nenhuma criação de branch, role, schema, migração ou operação no Neon; B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
+- próximo bloco: conferir run manual PG18 e artifacts; pausa obrigatória.
