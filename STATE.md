@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP149 — 2026-10-19**.
+- checkpoint vigente: **CP150 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5070,5 +5070,32 @@ Estado preservado:
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP149.md`;
 - próximo passo em modo alto, somente após `Prossiga`: seleção responsável de provedor/plano e autorização própria de infraestrutura;
+- pausa obrigatória.
+
+### Fase 4 — seleção condicional de infraestrutura gratuita (Documento 106)
+
+- Freshness Gate CP149 confirmado; nenhum commit posterior material identificado antes da decisão;
+- preferência do owner: serviço gratuito sempre que satisfizer integralmente ODB-01–ODB-12, sem compromisso de dispêndio;
+- **Neon Free** selecionado como candidato prioritário **não contratado/não provisionado**: 1 GB DB, 100 CU-h/mês, restore 6 horas/1 GB e autosuspend após 5 min;
+- object storage Neon Free 5 GB em beta é candidato inicial para objetos, insuficiente como cópia independente;
+- cópia externa de `pg_dump` e dos artifacts com teste `pg_restore` obrigatório, ainda não implementada; Cloudflare R2 Standard free-tier opcional com necessidade de cadastro de cobrança/risco, não aprovado;
+- Supabase Free permanece opção secundária, com 500 MB e risco de pausing, sem backup automático;
+- fornecedor/region/security e autorização do owner pendentes, sem acesso factual, sem contrato, sem novos epochs;
+- Documento 106: `docs/governance/106-selecao-condicional-piloto-postgresql-gratuito-oes.md`.
+
+> **FREE_FIRST_PRIORITY = APPROVED_AS_USER_PREFERENCE**
+> **PREFERRED_CANDIDATE = NEON_FREE**
+> **INDEPENDENT_BACKUP = MANDATORY_AND_NOT_CONFIGURED**
+> **PROVIDER_OWNER_APPROVAL = PENDING**
+> **OPERATIONAL_DEPLOYMENT = NOT_AUTHORIZED**
+> **OPERATIONAL_DB_READINESS = NOT_READY**
+> **B1R1_LIVE_PREFLIGHT = NOT_EXECUTED**
+> **B1R1_ACTIVATION = NOT_PERFORMED**
+> **PHASE_5 = NOT_STARTED**
+
+### CP150 — free-first candidate
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP150.md`;
+- próximo bloco: autorização operacional e pacote de configuração Neon Free, modo alto, sem provisionamento automático;
 - pausa obrigatória.
 

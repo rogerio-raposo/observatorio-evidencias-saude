@@ -4718,3 +4718,23 @@ Documentos:
 - `B1R1_ACTIVATION=NOT_PERFORMED`, Phase 5 not started;
 - próxima ação depende de escolha/aprovação específica de fornecedor e orçamento; pausa obrigatória.
 
+## 2026-10-19 — Seleção condicional de solução gratuita para piloto OES (Documento 106)
+
+- user owner explicitou preferência por serviço gratuito; técnica anterior OES-H1/OES-P1 preservada;
+- investigação de fontes primárias confirmou Neon Free 1 GB DB (atualizado 02/10/2026), 100 CU-h/mês, seis horas de restore e object storage 5 GB em beta;
+- **Neon Free** torna-se candidato prioritário, ainda sem aprovação de cadastro/provisionamento;
+- Supabase Free alternativo: 500 MB, pausa por inatividade, sem backups automáticos;
+- R2 Standard free-tier alternativo offsite requer billing subscription e pode cobrar excedentes; não aprovado;
+- independência de backup `pg_dump` e Artifacts + restore ensaiado é condição eliminatória;
+- ODB-01–ODB-12 permanecem exigências; sem produção, credenciais, custo, epoch novo ou source query;
+- Documento 106: `docs/governance/106-selecao-condicional-piloto-postgresql-gratuito-oes.md`.
+
+## 2026-10-19 — CP150
+
+- criado `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP150.md`; README e STATE reconciliados com CP150;
+- `FREE_FIRST_PRIORITY=APPROVED_AS_USER_PREFERENCE`;
+- `PREFERRED_CANDIDATE=NEON_FREE`; `PROVIDER_OWNER_APPROVAL=PENDING`;
+- `INDEPENDENT_BACKUP=MANDATORY_AND_NOT_CONFIGURED`;
+- `OPERATIONAL_DEPLOYMENT=NOT_AUTHORIZED`, `B1R1_ACTIVATION=NOT_PERFORMED`;
+- próximo bloco dependente de novo `Prossiga`; pausa obrigatória.
+
