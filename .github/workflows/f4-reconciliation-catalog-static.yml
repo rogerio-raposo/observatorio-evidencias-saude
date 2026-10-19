@@ -1,0 +1,63 @@
+name: F4 reconciliation catalog draft static controls (no DB access)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-reconciliation-catalog-static.yml'
+      - 'database/f4-reconciliation-postconditions-draft.json'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+      - 'scripts/oes_f4_reconciliation_catalog_lint.py'
+      - 'tests/test_oes_f4_reconciliation_catalog_lint.py'
+
+permissions:
+  contents: read
+
+jobs:
+  fail-closed-draft-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout fixed SHA without credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Synthetic negative unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_oes_f4_reconciliation_catalog_lint.py' -v
+      - name: Validate the real 36-row draft catalog, NOT postconditions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-reconciliation-draft-evidence
+          python scripts/oes_f4_reconciliation_catalog_lint.py > f4-reconciliation-draft-evidence/lint.json
+          python - <<'PY'
+          import json
+          with open('f4-reconciliation-draft-evidence/lint.json', encoding='utf-8') as f:
+              d = json.load(f)
+          assert d['status'] == 'DRAFT_STATIC_CONSISTENCY_ONLY'
+          assert d['migration_entries'] == 36
+          assert d['reviewed_entries'] == 0
+          assert d['postconditions_validated'] == 0
+          assert d['sql_executed'] is False
+          assert d['neon_accessed'] is False
+          assert d['neon_write_authorized'] is False
+          print('FAIL_CLOSED_DRAFT_CATALOG_ONLY', d['catalog_sha256'])
+          PY
+          printf '%s\n' "$GITHUB_SHA" > f4-reconciliation-draft-evidence/commit.txt
+          sha256sum f4-reconciliation-draft-evidence/lint.json > f4-reconciliation-draft-evidence/lint-json-sha256.txt
+      - name: Preserve offline evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-reconciliation-catalog-draft-only
+          path: f4-reconciliation-draft-evidence/
+          if-no-files-found: warn
