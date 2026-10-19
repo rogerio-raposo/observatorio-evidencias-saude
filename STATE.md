@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP159 — 2026-10-19**.
+- checkpoint vigente: **CP160 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5259,3 +5259,12 @@ Estado preservado:
 - Documento 115 documenta meios de obtenção de run_id e critérios de prova; CP159 congela o estado;
 - sem execução PostgreSQL 18 de ledger, sem branch/schema/migration Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - pausa obrigatória até novo `Prossiga`.
+
+
+### Fase 4 — Prova CI offline do inventário confirmada (Documento 116 / CP160)
+
+- run GitHub Actions `39256905894`: job `inventory` completed/success, 7/7 testes unitários, inventário de 36 entrypoints + 14 fragmentos, artifact `12186719617` recuperado;
+- commit testado: `55ef8051054652b3823de743293524f317a33ec6`; checksum SHA-256 agregado `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
+- `inventory.json` verificado contra checksum: `5694be45dd10c39131e6a74270bbf66cbb30ee21aba7bd47c91e96d2f2ea2504`; BRG-04 STATIC_CI_VERIFIED somente no commit testado;
+- evidência não autoriza nem prova migrations PG18, runner/ledger, segurança, billing ou backup; sem write Neon, branch ainda não criada, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo passo: ensaio PG18 exclusivamente sintético em CI/local, avaliação de locks/ledger e falhas; pausa obrigatória CP160.
