@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP167 — 2026-10-19**
+**CP168 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP167.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP168.md`
 
 Checkpoint anterior:
 
-`CP166`
+`CP167`
 
 Status:
 
@@ -399,3 +399,12 @@ em **Modo Continuidade**.
 - metadados REST de run/job evoluíram de `queued` para `in_progress`, mantendo `conclusion=null` na última verificação, apesar de logs e artifact; conclusão administrativa ainda não certificada;
 - Documento 123 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP167.md` preservam escopo sintético, BRG-06/07 ainda sem liberação operacional, nenhuma alteração Neon;
 - B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada; próximo checkpoint após `Prossiga` em modo alto para análise de fencing e catálogo de pós-condições, STOP.
+
+
+## 2026-10-19 — Catálogo fail-closed das 36 migrations e política proposta (Doc 124 / CP168)
+
+- Freshness Gate CP167/main idêntico ao HEAD `0d884ab84e449398ec0367a08364cfde1e5cb8f8`; run supervisor anterior `39278420804` agora `completed/success`;
+- Documento 124 distingue lock cooperativo de fencing real e propõe supervisão/reconciliação por migration, **sem implantar ou aprovar política normativa**;
+- catálogo `database/f4-reconciliation-postconditions-draft.json` com 36 entradas UNREVIEWED e zero pós-condições; linter offline, 11 unit tests sintéticos OK na CI run `39282514522`; artifact `12201766282` verificado por SHA ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b`;
+- run da CI estática ainda sem conclusão administrativa comprovada; nenhuma migração executada pelo linter, nenhuma branch/ledger/role/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP168.md`. Próximo bloco: mapear e revisar pós-condições de 031–036, modo alto; STOP.
