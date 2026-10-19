@@ -1,0 +1,55 @@
+name: F4 Neon offline manifest preflight (synthetic-only)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+      - 'database/*.sql'
+      - '.github/workflows/validate-s5.yml'
+      - '.github/workflows/f4-neon-offline-preflight.yml'
+      - 'scripts/oes_neon_migration_preflight.py'
+      - 'tests/test_oes_neon_migration_preflight.py'
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Run unit tests on synthetic fixtures
+        run: python -m unittest discover -s tests -p 'test_oes_neon_migration_preflight.py' -v
+      - name: Inventory real SQL files without executing them
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-neon-offline-artifacts
+          python scripts/oes_neon_migration_preflight.py --expected-head "$GITHUB_SHA" > f4-neon-offline-artifacts/inventory.json
+          python - <<'PY'
+          import json
+          with open("f4-neon-offline-artifacts/inventory.json", encoding="utf8") as fp:
+              d=json.load(fp)
+          assert d["status"] == "STATIC_INVENTORY_VALIDATED_ONLY"
+          assert (d["entry_count"], d["fragment_count"]) == (36,14)
+          assert d["sql_executed"] is False
+          assert d["neon_accessed"] is False
+          print("OFFLINE_INVENTORY_PASS",d["inventory_sha256"],d["git_head"])
+          PY
+          python --version > f4-neon-offline-artifacts/python-version.txt
+          printf '%s\n' "$GITHUB_SHA" > f4-neon-offline-artifacts/commit.txt
+          sha256sum f4-neon-offline-artifacts/inventory.json > f4-neon-offline-artifacts/inventory-file-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-neon-offline-inventory
+          path: f4-neon-offline-artifacts/
+          if-no-files-found: warn
