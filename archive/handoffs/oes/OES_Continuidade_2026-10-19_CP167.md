@@ -9,7 +9,7 @@
 
 ## Freshness Gate e marco
 
-Consulta CP166/main = `identical`, zero drift. Ponteiro CP166 e checkpoint integral lidos. O trabalho do CP166 terminou com run `39278420804` em `queued`. Nesta retomada foram obtidos logs e ZIP de evidência íntegros, apesar de API de status permanecer `queued/conclusion=null`.
+Consulta CP166/main = `identical`, zero drift. Ponteiro CP166 e checkpoint integral lidos. O trabalho do CP166 terminou com run `39278420804` em `queued`. Nesta retomada foram obtidos logs e ZIP de evidência íntegros; consultas REST inicialmente mostravam `queued/conclusion=null` e evoluíram para `in_progress/conclusion=null`, sem conclusão administrativa comprovada.
 
 **Documento 123:** `docs/governance/123-evidencia-supervisor-pg18-run-39278420804.md`.
 
