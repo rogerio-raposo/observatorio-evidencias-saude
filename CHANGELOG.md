@@ -4824,3 +4824,13 @@ Documentos:
 - nenhuma operação Neon write, criação de branch/role/schema/ledger, migration, fonte científica factual, novo Epoch ou custo;
 - Documento 113 esclarece a notação literal de diretiva `\ir` sem corrigir retroativamente CP156;
 - CP157 criado; STATE/CHANGELOG/pointer reconciliados; B1R1 EXPIRED_NOT_EXECUTED, backup independente pendente, Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Workflow offline de inventário e bloqueio PG18 (Documento 114 / CP158)
+
+- Freshness Gate CP157/HEAD `3ecb187d04edc75a9b957bef5c252d746607d76e` = identical;
+- novo workflow `.github/workflows/f4-neon-offline-preflight.yml` para checkout imutável, sete testes unitários sintéticos e inventário SHA-256 de 36 entradas e 14 fragmentos, com artifact e sem segredos/SQL;
+- repetidos 7/7 testes sintéticos locais OK, mas execução CI do novo workflow e SHA-256 real do inventário não confirmados;
+- tentativa de checkout local GitHub bloqueada por DNS; PG17.11 disponível como biblioteca de desenvolvimento, sem cliente `psql` ou servidor PostgreSQL 18 validado; ledger/runner não executados;
+- Documento 114 e CP158 registrados; BRG-04 permanece pendente de prova CI, BRG-05/06/07 pendentes;
+- nenhuma branch `oes-schema-test`, schema, role, ledger, migration, custo ou operação factual Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 not started; pausa obrigatória.
