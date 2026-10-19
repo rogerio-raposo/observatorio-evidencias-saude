@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP155 — 2026-10-19**.
+- checkpoint vigente: **CP156 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5211,3 +5211,16 @@ Estado preservado:
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP155.md`; pausa obrigatória.
 
+
+
+### Fase 4 — Revisão estática do pacote de branch Neon (Documento 112 / CP156)
+
+- Freshness Gate do CP155 confirmou HEAD `097d35b7fc38f81396285798cf314def9bd81aed`, sem drift;
+- os 36 arquivos de entrada e os 14 fragmentos `\\ir` foram lidos no GitHub; inspeção estática com limitações, não teste de execução;
+- confirmado DML estrutural 031a/032a (epochs, grandfathering), limites transacionais distintos 031–036 e DROP/CREATE TRIGGER em 034;
+- proposta de ledger, runner `psql` e gates BRG-01–BRG-10 **não implementados**; SHA-256 de bytes e compatibilidade PG18 ainda pendentes;
+- API Neon read-only: projeto `oes-sandbox` na região aprovada e apenas branch default `production`; não criar branch por autorização implícita;
+- plano Free publicamente anunciado não substitui checagem factual de saldo, billing e cotas na conta;
+- pacote de autorização `create-branch-only` **PREPARED_NOT_APPROVED**, separado de futura autorização de migrations;
+- Neon schema/ledger/test branch **NOT_STARTED/NOT_CREATED**, backup independente pendente, B1R1 `EXPIRED_NOT_EXECUTED`, Fase 5 não iniciada;
+- próximo passo: pré-gate `psql`/ledger sintético local/CI e quota read-only, sem writes no Neon; pausa obrigatória.
