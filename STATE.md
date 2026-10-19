@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP163 — 2026-10-19**.
+- checkpoint vigente: **CP164 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5295,3 +5295,14 @@ Estado preservado:
 - 275 funções (schemas selecionados), dois registros estruturais contract_epoch; BRG-05 passa apenas para sequência sintética no commit fixado;
 - ledger/locks/recuperação, menor privilégio, backup, Neon Free billing pendentes; sem operações Neon, B1R1 expirado sem execução, Fase 5 não iniciada;
 - próximo bloco requer avaliação de ledger e falhas sintéticas, recomendado modo alto; STOP.
+
+
+### Fase 4 — Falhas transacionais e advisory locks em ledger sintético PG18 (Documento 120 / CP164)
+
+- Freshness Gate CP163 HEAD `4a2d9d2e60c2b86ca789944dd69a343c8fb4ee01` = identical;
+- criados `tests/fixtures/f4-ledger-synthetic/bootstrap.sql`, `scripts/oes_pg18_ledger_synthetic_test.sh`, `.github/workflows/f4-pg18-ledger-synthetic.yml` com CI apenas PG18 descartável, sem Neon;
+- run `39263916981` / job `118098438290` completed/success no SHA `2acabe21102774bae5ce86d15858dc434e905bf5`; PostgreSQL 18.6 / psql 16.15, **17/17** testes sintéticos PASS;
+- artifact `12191953694` e ZIP SHA-256 `6eefdb6ed5986330b05cc03cda2e53abff8a3ca46a17fea12fbe475ddc81622f` conferidos; rollback e recibo atômicos no teste, commit-gap, drift, retry bloqueado, append-only e lock de duas sessões;
+- BRG-06 modelo sintético verificado/ledger operacional NÃO criado; BRG-07 primitiva lock verificada, **não** há guardião de lock cobrindo 36 subprocessos nem testes de kill/recovery;
+- nenhuma branch/role/schema/ledger/migration no Neon, backup independente não configurado, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco: guardião de lock e injeção de falhas sintéticas, modo alto, pausa obrigatória após CP164.
