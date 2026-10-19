@@ -2,6 +2,11 @@ name: F4 PG18 isolated schema rehearsal (no Neon)
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/f4-neon-pg18-schema-rehearsal.yml'
 
 permissions:
   contents: read
