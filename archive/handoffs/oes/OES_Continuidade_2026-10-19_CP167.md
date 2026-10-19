@@ -16,7 +16,7 @@ Consulta CP166/main = `identical`, zero drift. Ponteiro CP166 e checkpoint integ
 ## Provas verificadas
 
 - Run `39278420804`, job `118148257964`, commit `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226`.
-- Metadata run/job: `queued`, `conclusion=null` nas chamadas disponíveis. **NÃO declarar conclusão administrativa do job.**
+- Metadados run/job: inicialmente `queued`, depois `in_progress`, com `conclusion=null` na última verificação. **NÃO declarar conclusão administrativa do job.**
 - Logs registrados provam execução do harness até `SYNTHETIC_SUPERVISOR_PASS_WITH_LIMITATIONS` e upload do artifact.
 - Artifact `12199766445`: ZIP baixado, SHA-256 `57dc8e2ba0af83bbfb352735989e48e965cdeafc7111e0725c5a795abadfea9e` conferido contra digest GitHub.
 - `checks.tsv`: **25/25** PASS. `claim-results.json`: `[true,false]` (uma reivindicação de intent entre dois concorrentes). `postconditions.json`: commit legado sem receipt => objeto existe + status uncertain; transação cancelada => objeto ausente + status uncertain; nenhum replay/applied automático.
