@@ -88,7 +88,7 @@ def main():
         )
         if guardian.stdin is None:
             raise AssertionError("guardian stdin unavailable")
-        guardian.stdin.write(f"SELECT pg_advisory_lock({LOCK_ID});\\n".replace("\\\\n", "\\n"))
+        guardian.stdin.write(f"SELECT pg_advisory_lock({LOCK_ID});\n")
         guardian.stdin.flush()
         try:
             check(await_condition(
