@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP159 — 2026-10-19**
+**CP160 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP159.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP160.md`
 
 Checkpoint anterior:
 
-`CP158`
+`CP159`
 
 Status:
 
@@ -332,3 +332,11 @@ em **Modo Continuidade**.
 - não executado PostgreSQL 18 ou ledger; nenhuma mutação Neon, criação de branch, migrations ou dados factuais;
 - B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - novo checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP159.md`, com pausa obrigatória até novo `Prossiga`.
+
+## 2026-10-19 — Confirmação de prova CI estática do inventário (Documento 116 / CP160)
+
+- Run `39256905894`, job `inventory` success; 7 testes unitários sintéticos OK, 36 migrations e 14 fragments inventariados para commit `55ef8051054652b3823de743293524f317a33ec6`;
+- artifact `12186719617` recuperado, SHA-256 de inventory.json verificado; digest agregado `228583f1cffc9774829b94eb0747537a3939ecf5334034f66bca990576c11ae6`;
+- BRG-04 STATIC_CI_VERIFIED somente no commit da prova, não cobre runtime psql ou PostgreSQL 18;
+- Documento 116 / `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP160.md`; nenhum write Neon, branch/schema/ledger/migration criado, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco: ensaio PG18/psql sintético isolado e desenho de controles ledger. Pausa obrigatória.
