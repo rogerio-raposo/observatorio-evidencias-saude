@@ -4861,3 +4861,12 @@ Documentos:
 - script faz inventário fixado e SHA-256, executa psql com stop-on-error e coleta logs, versão PG18 e contagens estruturais;
 - não houve execução de run/job/artifact e portanto não há PASS PG18, ledger nem comprovação BRG-05/06/07;
 - Documento 117/CP161 registrados; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada, backup independente pendente; pausa obrigatória.
+
+
+## 2026-10-19 — CI sintética PG18 acionável por push (Documento 118 / CP162)
+
+- Aprovação específica do owner para CI sintética, não Neon;
+- workflow PG18 atualizado para push em main apenas quando o próprio arquivo muda, mantendo workflow_dispatch;
+- commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- não foi possível verificar run, logs ou artifact após o commit; PASS PG18 pendente;
+- CP162 criado, sem mutações Neon; B1R1 expirado, Fase 5 não iniciada.
