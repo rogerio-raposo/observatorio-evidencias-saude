@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP155 — 2026-10-19**
+**CP156 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP155.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP156.md`
 
 Checkpoint anterior:
 
-`CP154`
+`CP155`
 
 Status:
 
@@ -293,3 +293,13 @@ em **Modo Continuidade**.
 - **CP154 — 2026-10-19:** inventário Neon Free SELECT-only PASS, banco de aplicação vazio, role admin-capable; janela B1R1 expirada sem execução (Documento 110); próximas migrações apenas em preparação.
 - **CP155 — 2026-10-19:** mapa de 36 migrations e 14 fragmentos, gate de branch sintética Neon, nenhuma mutation; Documento 111.
 
+
+## 2026-10-19 — Revisão estática das migrations e pacote de autorização Neon (Documento 112 / CP156)
+
+- Freshness Gate de CP155 confirmou HEAD `097d35b7fc38f81396285798cf314def9bd81aed` idêntico à `main` de entrada;
+- lidos 36 arquivos de entrada e 14 fragmentos em GitHub; verificação estática não equivale a deploy ou validação de execução;
+- Documento 112 identifica DML estrutural 031a/032a, riscos transacionais 031–036, trigger 034, lacunas de ledger, hashes de bytes, controle de privilégio/TLS e verificação financeira;
+- autorização `create-branch-only` preparada, **não concedida**, migrations sujeitas a segundo gate;
+- API read-only confirma apenas branch default Neon; nenhuma branch, role, migration, schema, backup independente ou operação factual criada;
+- B1R1 permanece EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
+- checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP156.md`; próximo bloco: pré-gate sintético `psql`/ledger e verificação de quotas, sempre sem mutações Neon sem autorização; pausa obrigatória.
