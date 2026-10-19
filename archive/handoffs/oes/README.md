@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP168 — 2026-10-19**
+**CP169 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP168.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP169.md`
 
 Checkpoint anterior:
 
-`CP167`
+`CP168`
 
 Status:
 
@@ -408,3 +408,12 @@ em **Modo Continuidade**.
 - catálogo `database/f4-reconciliation-postconditions-draft.json` com 36 entradas UNREVIEWED e zero pós-condições; linter offline, 11 unit tests sintéticos OK na CI run `39282514522`; artifact `12201766282` verificado por SHA ZIP `208b607dfd72d6ddde9710cef0da0fea093e562fd92a2e76d3e82a3e0f832e8b`;
 - run da CI estática ainda sem conclusão administrativa comprovada; nenhuma migração executada pelo linter, nenhuma branch/ledger/role/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP168.md`. Próximo bloco: mapear e revisar pós-condições de 031–036, modo alto; STOP.
+
+
+## 2026-10-19 — Fontes 031–036 revisadas estaticamente, candidatas não validadas (Documento 125 / CP169)
+
+- Freshness Gate CP168/main `d213a618ce6fa87c8008c8e5da30a3ff219048fa` = identical; run do catálogo anterior `39282514522` agora completed/success;
+- scripts 031–036 com 14 fragmentos e candidatos de pós-condições documentados em `docs/governance/reconciliation/f4-031-036-source-candidates.json` sem alterar catálogo principal;
+- run `39297500185`, job `118213715729` completed/success, 8 testes sintéticos OK, 20 fontes analisadas, artifact `12209110983`, hash ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`;
+- Documento 125 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP169.md`; **36/36 migrations UNREVIEWED e 0 pós-condições validadas**. BRG-06/07 operacionais pendentes;
+- nenhum Neon write, branch, ledger ou migration; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo checkpoint sob `Prossiga`: ensaio PG18 descartável de pré/pós-condições/falhas, modo alto. STOP.
