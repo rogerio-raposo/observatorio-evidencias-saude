@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP158 — 2026-10-19**.
+- checkpoint vigente: **CP159 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5249,3 +5249,13 @@ Estado preservado:
 - ledger = desenho lógico sem tabela/runner; política de locks e recuperação ainda pendente;
 - autorização branch `oes-schema-test` não concedida; zero mutation Neon, sem backup independente, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo bloco: confirmação de run CI e digest real, depois estudo sintético de runner/ledger PG18; pausa obrigatória.
+
+### Fase 4 — Verificação CI sem acesso a run identificável (Documento 115 / CP159)
+
+- Freshness Gate CP158/HEAD `94175cafebd9d960d4cb5341090f02cff4ae146e` = identical, zero drift;
+- novo workflow de inventário offline permanece registrado, porém run_id, resultado CI, logs e artifact SHA-256 reais não recuperados nesta etapa;
+- integração GitHub permite jobs/logs/artifacts a partir de run_id, mas não enumeração geral de runs; endpoint público indisponível neste ambiente;
+- execução CI: DESCONHECIDA, não se conclui que ocorreu nem que não ocorreu, e não se declara PASS;
+- Documento 115 documenta meios de obtenção de run_id e critérios de prova; CP159 congela o estado;
+- sem execução PostgreSQL 18 de ledger, sem branch/schema/migration Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- pausa obrigatória até novo `Prossiga`.
