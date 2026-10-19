@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP152 — 2026-10-19**
+**CP153 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP152.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP153.md`
 
 Checkpoint anterior:
 
-`CP151`
+`CP152`
 
 Status:
 
@@ -289,4 +289,5 @@ em **Modo Continuidade**.
 - **CP150 — 2026-10-19:** política free-first e candidato Neon Free condicionados (Documento 106); backup independente e owner approval pendentes, sem provisionamento nem B1R1 factual.
 - **CP151 — 2026-10-19:** pacote de autorização do sandbox Neon Free, região SP e backup independente (Documento 107); correção de status Object Storage GA/indisponibilidade regional; sem provisionamento nem ativação factual.
 - **CP152 — 2026-10-19:** owner aprovou explicitamente sandbox Neon Free sintético em São Paulo; Documento 108 e script read-only preparados; Neon não conectado, provisionamento pendente.
+- **CP153 — 2026-10-19:** Neon Free `oes-sandbox` São Paulo acessível; PostgreSQL 18.6 e SELECT factual read-only PASS; Documento 109; zero mutation, backup/ODB pendentes.
 

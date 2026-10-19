@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP152 — 2026-10-19**.
+- checkpoint vigente: **CP153 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5151,4 +5151,23 @@ Estado preservado:
 
 - checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP152.md`;
 - modo médio recomendado após projeto criado; pausa obrigatória.
+
+### CP153 — Primeira conexão Neon Free / Documento 109
+
+- projeto Neon `oes-sandbox` na região aprovada `aws-sa-east-1` observado efetivamente pela integração; PostgreSQL 18.6 e banco `oes_sandbox`;
+- branch default `production` apenas nome do provedor, não produção OES;
+- `SELECT` read-only executado com sucesso: clock PostgreSQL `2026-10-19T11:59:14.637Z`, role `oes_sandbox_owner`, sem mutation;
+- chamada com `BEGIN; SELECT; ROLLBACK` falhou devido a prepared statement de múltiplos comandos, sem side effects;
+- Documento 109 em `docs/governance/109-resultado-conectividade-readonly-neon-free-sandbox.md`;
+- role owner requer segregação e privilégios mínimos; backup externo, migration ledger e object storage pendentes;
+- B1R1 **não ativado** e nenhum measurement factual executado.
+
+> **NEON_FREE_SANDBOX = OBSERVED_ACCESSIBLE**
+> **SANDBOX_CONNECTION_READ_ONLY = PASS**
+> **INDEPENDENT_BACKUP = NOT_CONFIGURED**
+> **OPERATIONAL_DB_READINESS = NOT_READY**
+> **B1R1_ACTIVATION = NOT_PERFORMED**
+> **PHASE_5 = NOT_STARTED**
+
+- checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP153.md`; STOP até `Prossiga`.
 

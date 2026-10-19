@@ -4771,3 +4771,12 @@ Documentos:
 - `NEON_SANDBOX_CONNECTIVITY_TEST=PREPARED_NOT_EXECUTED`; `B1R1_ACTIVATION=NOT_PERFORMED`;
 - STOP até confirmação de projeto Neon criado/conexão ao plugin e novo `Prossiga`.
 
+## 2026-10-19 — Primeira conexão do sandbox Neon Free (Documento 109 / CP153)
+
+- leitura factual do projeto Neon confirmou `oes-sandbox`, região São Paulo, PostgreSQL 18.6, branch padrão pronta;
+- executor Neon rejeitou múltiplos comandos SQL em prepared statement; consulta SELECT única read-only teve PASS e observou horário de banco `2026-10-19T11:59:14.637Z`;
+- role `oes_sandbox_owner` identificado; sem migrations/DDL/queries científicas/mutations;
+- dependências ODB-03 e ODB-05–12 ainda não satisfeitas, inclusive backup independente;
+- Documento 109: `docs/governance/109-resultado-conectividade-readonly-neon-free-sandbox.md`;
+- CP153: `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP153.md`; README/STATE reconciliados, pausa obrigatória.
+
