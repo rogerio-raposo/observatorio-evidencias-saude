@@ -79,10 +79,17 @@ def main():
     # A dedicated, long-lived PostgreSQL connection owns a session-level lock.
     # Its lifetime overlaps *multiple independent subprocesses*.
     with (DIR / "guardian.log").open("w", encoding="utf-8") as guardian_log:
+        # Keep the PostgreSQL backend IDLE, not inside pg_sleep().
+        # An in-flight server query can retain a session lock after client SIGKILL.
         guardian = subprocess.Popen(
-            PSQL + ["-c", f"SELECT pg_advisory_lock({LOCK_ID}); SELECT pg_sleep(60);"],
-            stdout=guardian_log, stderr=subprocess.STDOUT, text=True,
+            PSQL,
+            stdin=subprocess.PIPE,
+            stdout=guardian_log, stderr=subprocess.STDOUT, text=True, bufsize=1,
         )
+        if guardian.stdin is None:
+            raise AssertionError("guardian stdin unavailable")
+        guardian.stdin.write(f"SELECT pg_advisory_lock({LOCK_ID});\\n".replace("\\\\n", "\\n"))
+        guardian.stdin.flush()
         try:
             check(await_condition(
                 lambda: scalar(f"SELECT pg_try_advisory_lock({LOCK_ID});") == "f"
