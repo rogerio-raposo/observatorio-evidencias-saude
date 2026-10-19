@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP164 — 2026-10-19**
+**CP165 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP164.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP165.md`
 
 Checkpoint anterior:
 
-`CP163`
+`CP164`
 
 Status:
 
@@ -372,3 +372,12 @@ em **Modo Continuidade**.
 - artifact `12191953694` SHA-256 ZIP `6eefdb6ed5986330b05cc03cda2e53abff8a3ca46a17fea12fbe475ddc81622f`;
 - Documento 120 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP164.md` preservam prova limitada: ledger/runner operacional, guardião de lock contínuo e recovery NÃO implementados;
 - nenhuma mutação Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco: teste de exclusão sob guardião contínuo PG18 sintético, modo alto, após novo `Prossiga`; STOP.
+
+## 2026-10-19 — Guardião de sessão PG18, falhas preservadas e contraprova (Documento 121 / CP165)
+
+- Freshness Gate CP164 idêntico ao HEAD `2ad4da0fbd725273ed253d88fd3ccc29ed2a2ff8`;
+- runs PG18 sintéticos `39266423818` e `39266711331` FAILED: lock com query ativa e newline do stdin; run corrigido `39266780706` SUCCESS, 15/15 PASS, SHA testado `064d970ddbc1e4a4830a44472074eaec5734698b`;
+- PostgreSQL 18.6, psql 16.15, artifact `12193207877` verificado por ZIP SHA-256 `867f2189872cbdd3accf12851f6d4d1843a63bbea7b1a5bf4e7f7c62a39f6175`;
+- prova importante: lock de sessão ociosa mantido durante dois subprocessos, mas SQL em voo pode commitar após matar guardião; intenção persistente bloqueia retry e exige reconciliação;
+- Documento 121 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP165.md` preservam proibições: não criar Neon branch, role, schema, ledger ou migrations, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo bloco em modo alto: supervisor com detecção de perda do guardião, encerramento de subprocessos e reconciliação em PG18 somente sintético, após novo `Prossiga`; STOP.
