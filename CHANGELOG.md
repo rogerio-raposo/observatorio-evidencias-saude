@@ -4852,3 +4852,12 @@ Documentos:
 - BRG-04 aprovado estritamente para prova estática no commit testado; nenhum SQL executado nem Neon acessado pelo workflow;
 - PostgreSQL 18/psql, ledger, restore, privilégio e autorização de branch permanecem pendentes; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - Documento 116 e CP160 registrados; pausa obrigatória.
+
+
+## 2026-10-19 — Ensaio PG18 sintético preparado, não executado (Documento 117 / CP161)
+
+- Freshness Gate CP160/HEAD `255663e154067ecca3f5073ec96ad69d084f4e6b` = identical;
+- publicado novo workflow manual `.github/workflows/f4-neon-pg18-schema-rehearsal.yml` usando PostgreSQL 18 descartável, 36 migrations na ordem do manifesto, 14 includes indiretos, sem fixtures, sem acesso Neon;
+- script faz inventário fixado e SHA-256, executa psql com stop-on-error e coleta logs, versão PG18 e contagens estruturais;
+- não houve execução de run/job/artifact e portanto não há PASS PG18, ledger nem comprovação BRG-05/06/07;
+- Documento 117/CP161 registrados; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada, backup independente pendente; pausa obrigatória.
