@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP158 — 2026-10-19**
+**CP159 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP158.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP159.md`
 
 Checkpoint anterior:
 
-`CP157`
+`CP158`
 
 Status:
 
@@ -323,3 +323,12 @@ em **Modo Continuidade**.
 - Documento 114 e checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP158.md` publicados;
 - nenhuma mutação Neon, branch, role, schema, ledger, migration, uso científico factual ou despesa; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco condicionado a novo `Prossiga`: verificar run CI e artifact, depois reavaliar ensaio PG18 sintético. Pausa obrigatória.
+
+## 2026-10-19 — Tentativa de verificação do run CI offline (Documento 115 / CP159)
+
+- Freshness Gate CP158 = identical (`94175cafebd9d960d4cb5341090f02cff4ae146e`);
+- workflow de inventário offline publicado, mas sem `run_id`, jobs, logs, artifact ou SHA-256 reais disponíveis neste contexto; resultado desconhecido, não declarar CI PASS;
+- Documento 115 documenta o limite de descoberta de runs e critérios para confirmação factual;
+- não executado PostgreSQL 18 ou ledger; nenhuma mutação Neon, criação de branch, migrations ou dados factuais;
+- B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- novo checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP159.md`, com pausa obrigatória até novo `Prossiga`.
