@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP165 — 2026-10-19**
+**CP166 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP165.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP166.md`
 
 Checkpoint anterior:
 
-`CP164`
+`CP165`
 
 Status:
 
@@ -381,3 +381,12 @@ em **Modo Continuidade**.
 - prova importante: lock de sessão ociosa mantido durante dois subprocessos, mas SQL em voo pode commitar após matar guardião; intenção persistente bloqueia retry e exige reconciliação;
 - Documento 121 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP165.md` preservam proibições: não criar Neon branch, role, schema, ledger ou migrations, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo bloco em modo alto: supervisor com detecção de perda do guardião, encerramento de subprocessos e reconciliação em PG18 somente sintético, após novo `Prossiga`; STOP.
+
+## 2026-10-19 — Supervisor PG18 sintético e prova CI pendente (Documento 122 / CP166)
+
+- Freshness Gate CP165/main idêntico ao SHA `2ebd3a56da271a4d98859d6b0e5c9db5c40a8ea3`, modo alto;
+- criados `scripts/oes_pg18_supervisor_synthetic_test.py`, `tests/fixtures/f4-supervisor-synthetic/postconditions.json` e workflow `.github/workflows/f4-pg18-supervisor-synthetic.yml` com PostgreSQL 18 descartável;
+- testes visam claim atômico concorrente, guardião de lock, cancelamento sob perda do guardião e conferência conservadora de pós-condições; nenhum recurso Neon;
+- GitHub run automático `39278420804` no commit `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226` continuava `queued`; não há prova de execução/sucesso/falha, nem artifact;
+- Documento 122 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP166.md` preservam BRG-06/07 não operacionais, proibição de SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco após `Prossiga`: verificar run 39278420804, jobs/logs/artifacts, corrigir falhas prospectivamente se observadas. STOP.
