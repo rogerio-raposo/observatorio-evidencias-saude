@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP156 — 2026-10-19**
+**CP157 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP156.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP157.md`
 
 Checkpoint anterior:
 
-`CP155`
+`CP156`
 
 Status:
 
@@ -303,3 +303,13 @@ em **Modo Continuidade**.
 - API read-only confirma apenas branch default Neon; nenhuma branch, role, migration, schema, backup independente ou operação factual criada;
 - B1R1 permanece EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
 - checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP156.md`; próximo bloco: pré-gate sintético `psql`/ledger e verificação de quotas, sempre sem mutações Neon sem autorização; pausa obrigatória.
+
+## 2026-10-19 — Pré-gate offline de migrations Neon, ledger lógico e quotas (Documento 113 / CP157)
+
+- Freshness Gate CP156/HEAD `cd7855c1fa366716569e35acbd5f81337b866caa` = identical;
+- criados `scripts/oes_neon_migration_preflight.py` e `tests/test_oes_neon_migration_preflight.py`; 7/7 unit tests locais puramente sintéticos OK; pin HEAD, 36 arquivos e 14 includes, hashes SHA-256 preparados para checkout GitHub integral futuro;
+- testes locais não constituem SQL execution, CI run, banco PostgreSQL 18 nem hash do inventário real; cliente `psql` ainda não disponível;
+- Documento 113 define proposta de ledger lógico e fail-closed para estado ambíguo; não cria tabela `ops.schema_migration` nem runner executável;
+- Neon API read-only confirmou projeto Free `free_v3`, dez branches permitidas e única default; billing/consumo do titular pendentes;
+- nenhuma branch, role, schema, migration, backup, fixture factual ou mudança de Epoch; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP157.md`; próximo bloco: prova em checkout integral + preparação synthetic-only PostgreSQL 18/ledger, após novo `Prossiga`; nenhuma mutation Neon automática.
