@@ -1,0 +1,100 @@
+name: F4 PG18 isolated schema rehearsal (no Neon)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pg18-schema-rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_synthetic
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout immutable run SHA
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Prepare environment and check server 18
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-rehearsal
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee f4-pg18-rehearsal/psql-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-rehearsal/server-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version_num;' | tee f4-pg18-rehearsal/server-version-num.txt
+          grep -q '^18' f4-pg18-rehearsal/server-version.txt
+          printf '%s\n' "$GITHUB_SHA" > f4-pg18-rehearsal/commit.txt
+      - name: Validate 36 migrations and 14 fragments without running SQL
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/oes_neon_migration_preflight.py --expected-head "$GITHUB_SHA" > f4-pg18-rehearsal/inventory.json
+      - name: Apply precisely 36 entrypoints to disposable PG18
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' > f4-pg18-rehearsal/migrations.list
+          from pathlib import Path
+          rows=[r.strip() for r in Path('database/f4-neon-sandbox-schema-migration-manifest.txt').read_text().splitlines() if r.strip() and not r.lstrip().startswith('#')]
+          assert len(rows)==36
+          print('\n'.join(rows))
+          PY
+          count=0
+          while IFS= read -r migration; do
+            count=$((count + 1))
+            name=$(printf '%02d' "$count")
+            echo "START $name $migration" | tee -a f4-pg18-rehearsal/sequence.log
+            if psql -X -v ON_ERROR_STOP=1 -f "$migration" > "f4-pg18-rehearsal/${name}.log" 2>&1; then
+              echo "PASS $name $migration" | tee -a f4-pg18-rehearsal/sequence.log
+            else
+              echo "FAIL $name $migration" | tee -a f4-pg18-rehearsal/sequence.log
+              tail -n 40 "f4-pg18-rehearsal/${name}.log" >&2
+              exit 1
+            fi
+          done < f4-pg18-rehearsal/migrations.list
+          test "$count" -eq 36
+      - name: Inspect installed objects without fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -Atc "SELECT schemaname || ':' || count(*) FROM pg_tables WHERE schemaname NOT IN ('pg_catalog','information_schema') GROUP BY schemaname ORDER BY schemaname;" | tee f4-pg18-rehearsal/table-counts.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc "SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN ('core','maintenance','product','investigation','ops');" | tee f4-pg18-rehearsal/function-count.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc "SELECT count(*) FROM maintenance.contract_epoch;" | tee f4-pg18-rehearsal/structural-epoch-count.txt
+      - name: Upload logs for both success and failure
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: f4-pg18-schema-rehearsal
+          path: f4-pg18-rehearsal/
+          if-no-files-found: warn
