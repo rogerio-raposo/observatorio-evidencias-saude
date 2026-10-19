@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP164 — 2026-10-19**.
+- checkpoint vigente: **CP165 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5306,3 +5306,15 @@ Estado preservado:
 - BRG-06 modelo sintético verificado/ledger operacional NÃO criado; BRG-07 primitiva lock verificada, **não** há guardião de lock cobrindo 36 subprocessos nem testes de kill/recovery;
 - nenhuma branch/role/schema/ledger/migration no Neon, backup independente não configurado, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco: guardião de lock e injeção de falhas sintéticas, modo alto, pausa obrigatória após CP164.
+
+
+### Fase 4 — Guardião persistente de lock PG18 e contraprova após crash (Documento 121 / CP165)
+
+- Freshness Gate CP164/main = identical, HEAD `2ad4da0fbd725273ed253d88fd3ccc29ed2a2ff8`; modo alto;
+- criados script `scripts/oes_pg18_guardian_synthetic_test.py` e workflow `.github/workflows/f4-pg18-guardian-synthetic.yml` para PostgreSQL 18 exclusivamente descartável, sem Neon;
+- run `39266423818` FAILED: lock não liberado prontamente com query `pg_sleep` ativa após SIGKILL do cliente; run `39266711331` FAILED por newline de stdin incorreto;
+- run corrigido `39266780706` SUCCESS, 15/15 testes, PostgreSQL 18.6 e psql 16.15, commit `064d970ddbc1e4a4830a44472074eaec5734698b`, artifact `12193207877`, ZIP SHA-256 `867f2189872cbdd3accf12851f6d4d1843a63bbea7b1a5bf4e7f7c62a39f6175`;
+- a sessão ociosa conserva lock em dois subprocessos sequenciais e o libera após SIGKILL, mas um subprocesso SQL em voo **pode concluir commit após morte do guardião**. Intenção durável `prepared` impediu replay e estado `uncertain` persistiu; prova negativa não autoriza runner operacional;
+- BRG-06/07 = modelo sintético comprovado com limitação, ledger operacional/supervisor/guarda de subprocessos/reconciliação por pós-condições ainda pendentes; BRG-03/08/09 pendentes;
+- nenhum Neon write, branch, role, schema, ledger, migration, backup independente ou operação factual. B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
+- próximo bloco: supervisor de processo e falhas induzidas no PG18 sintético, modo alto; STOP CP165.
