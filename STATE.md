@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP156 — 2026-10-19**.
+- checkpoint vigente: **CP157 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5224,3 +5224,17 @@ Estado preservado:
 - pacote de autorização `create-branch-only` **PREPARED_NOT_APPROVED**, separado de futura autorização de migrations;
 - Neon schema/ledger/test branch **NOT_STARTED/NOT_CREATED**, backup independente pendente, B1R1 `EXPIRED_NOT_EXECUTED`, Fase 5 não iniciada;
 - próximo passo: pré-gate `psql`/ledger sintético local/CI e quota read-only, sem writes no Neon; pausa obrigatória.
+
+
+### Fase 4 — Pré-gate offline de migrations Neon e contrato de ledger (Documento 113 / CP157)
+
+- Freshness Gate CP156/HEAD `cd7855c1fa366716569e35acbd5f81337b866caa` = identical;
+- `scripts/oes_neon_migration_preflight.py` e `tests/test_oes_neon_migration_preflight.py` versionados: leitura do manifesto S5 36 entradas + 14 fragmentos, HEAD obrigatório, hashes SHA-256 e saída JSON fail-closed; nenhuma conexão SQL;
+- 7/7 testes unitários sintéticos locais = OK, código GitHub conferido por Git blob SHA; nenhum teste dos 50 SQL reais em checkout integral e nenhum workflow CI disparado para essa prova;
+- cliente `psql` indisponível no ambiente local; runner PostgreSQL 18 e ledger permanecem não implementados;
+- contrato lógico de ledger e tratamento de estado incerto após falhas entre commit SQL e ledger preparados no Documento 113, não autorizados/implantados;
+- API Neon somente leitura: assinatura `free_v3`, limite 10 branches, uma branch default `production`, projeto lógico até 1 GiB; consumo/billing do titular ainda pendente;
+- Documento 113 esclarece prospectivamente notação de `\\ir`/diretiva `\ir`, sem alterar CP156;
+- autorização para `oes-schema-test` = PREPARED_NOT_APPROVED; branch, roles, schema, ledger e migrations não criados;
+- B1R1 permanece EXPIRED_NOT_EXECUTED; Fase 5 não iniciada; backup independente não configurado;
+- próximo passo: prova do preflight no checkout integral e ensaio de runner/ledger em PostgreSQL 18 sintético sem Neon, sujeitos a disponibilidade e novo `Prossiga`; pausa obrigatória.
