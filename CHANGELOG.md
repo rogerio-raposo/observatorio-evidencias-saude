@@ -4898,3 +4898,11 @@ Documentos:
 - run `39266780706` SUCCESS no commit `064d970ddbc1e4a4830a44472074eaec5734698b`, 15/15 controles PASS, servidor PostgreSQL 18.6, psql 16.15, artifact `12193207877`, ZIP SHA-256 `867f2189872cbdd3accf12851f6d4d1843a63bbea7b1a5bf4e7f7c62a39f6175`;
 - contraprova: SQL em voo pode fazer commit após perda do guardião, exigindo intenção durável, supervisor, bloqueio de replay e reconciliação pós-condição; lock isolado insuficiente;
 - Documento 121 e CP165; BRG-06/07 modelados/testados sinteticamente, ledger operacional e safety runner NÃO liberados; B1R1 expirado, Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Novo ensaio de supervisor PG18 preparado, CI na fila (Documento 122 / CP166)
+
+- Freshness Gate CP165 HEAD `2ebd3a56da271a4d98859d6b0e5c9db5c40a8ea3` = identical;
+- criados catálogo de pós-condições sintéticas, harness Python de reivindicação concorrente de intent `prepared` via índice único, cancelamento sob perda do guardião e reconciliação conservadora; workflow PG18 descartável acionado por push específico;
+- run `39278420804` no SHA `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226` e job `118148257964` ainda `queued` nas verificações; nenhum PASS/FAIL técnico do harness, log/artifact ou versão PG18 de execução confirmados;
+- Documento 122 e CP166 documentam limites e estado pendente; nenhuma alteração Neon, B1R1 expirado e Fase 5 não iniciada; pausa obrigatória até novo `Prossiga`.
