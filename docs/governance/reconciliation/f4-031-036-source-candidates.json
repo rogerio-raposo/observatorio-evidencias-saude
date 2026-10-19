@@ -1,0 +1,164 @@
+{
+  "schema_version": "oes.f4.031-036-source-candidates.v1",
+  "status": "SOURCE_REVIEW_CANDIDATES_UNVALIDATED",
+  "source_checkpoint": "CP168",
+  "scope": "Source inspection only; NOT a reconciler, deployment script, SQL parser, or authorization",
+  "primary_catalog": "database/f4-reconciliation-postconditions-draft.json",
+  "executable": false,
+  "review_approved": false,
+  "automatic_replay_allowed": false,
+  "automated_reconciliation_allowed": false,
+  "neon_write_authorized": false,
+  "candidates": [
+    {
+      "ordinal": 31,
+      "entrypoint": "database/031_propagation_rebaseline_contract.sql",
+      "boundary": "INTERNAL_BEGIN_COMMIT_OBSERVED",
+      "includes": [
+        "031a_propagation_core.sql",
+        "031b_propagation_signal_adapter.sql",
+        "031c_rebaseline_core.sql",
+        "031d_propagation_rebaseline_helpers.sql",
+        "031e_rebaseline_child_validators.sql"
+      ],
+      "source_markers": [
+        "CREATE TABLE IF NOT EXISTS maintenance.propagation_assessment (",
+        "CREATE TABLE IF NOT EXISTS maintenance.rebaseline_decision (",
+        "ALTER TABLE maintenance.update_signal_source",
+        "CREATE TRIGGER tr_propagation_assessment_consistency",
+        "INSERT INTO maintenance.contract_epoch(contract_code,schema_version,effective_at,migration_id)"
+      ],
+      "review_candidates": [
+        "Inspect maintenance.contract_epoch row PROPAGATION_REBASELINE_V01 with version and migration_id 031, not just row count",
+        "Catalog every new relation, column, constraint, index, trigger enablement and function definition for the five fragments",
+        "Compare update_signal_source columns and constraints before/after migration; identify dependent prior objects",
+        "Inspect transaction abort and absence of partial structural seed after forced error"
+      ],
+      "limitations": [
+        "CREATE TABLE IF NOT EXISTS is not evidence of correct relation definition",
+        "seed uses ON CONFLICT DO NOTHING; existence may predate execution",
+        "function and trigger signatures alone do not prove semantics"
+      ]
+    },
+    {
+      "ordinal": 32,
+      "entrypoint": "database/032_temporal_calibration_prerequisites.sql",
+      "boundary": "INTERNAL_BEGIN_COMMIT_OBSERVED",
+      "includes": [
+        "032a_temporal_calibration_core.sql",
+        "032b_temporal_cadence_contract.sql",
+        "032c_temporal_sla_contract.sql",
+        "032d_temporal_sla_runtime.sql"
+      ],
+      "source_markers": [
+        "CREATE TABLE IF NOT EXISTS maintenance.temporal_calibration_dossier (",
+        "CREATE TABLE IF NOT EXISTS maintenance.temporal_contract_grandfathered_object (",
+        "CREATE TABLE IF NOT EXISTS maintenance.cadence_contract (",
+        "CREATE TABLE IF NOT EXISTS maintenance.fixed_deadline_source (",
+        "ALTER TABLE maintenance.sla_instance",
+        "INSERT INTO maintenance.contract_epoch(contract_code,schema_version,effective_at,migration_id)"
+      ],
+      "review_candidates": [
+        "Inspect maintenance.contract_epoch TEMPORAL_CALIBRATION_V01 with migration_id 032 and detect preexisting conflicting values",
+        "Verify all new calibration/cadence/deadline relations and constraints as well as altered update_policy/SLA relations",
+        "Determine grandfathered-object DML effects against pre-existing populated data, including counts and provenance",
+        "Compare trigger modes, pg_get_functiondef and pg_get_triggerdef, with cross-dependencies and pre/post snapshots",
+        "Inject error inside legacy wrapper and confirm actual rollback of seed, DDL and modifications"
+      ],
+      "limitations": [
+        "Grandfathering effects are data-dependent; an empty database test cannot certify populated-branch behavior",
+        "Existing relations/rows can make IF NOT EXISTS and ON CONFLICT appear successful"
+      ]
+    },
+    {
+      "ordinal": 33,
+      "entrypoint": "database/033_non_normative_temporal_observation.sql",
+      "boundary": "INTERNAL_BEGIN_COMMIT_OBSERVED",
+      "includes": [
+        "033a_temporal_observation_core.sql",
+        "033b_temporal_measurement_core.sql",
+        "033c_temporal_observation_guards.sql",
+        "033d_temporal_observation_helpers_views.sql",
+        "033e_temporal_observation_issue_validators.sql"
+      ],
+      "source_markers": [
+        "CREATE TABLE IF NOT EXISTS maintenance.temporal_observation_plan (",
+        "CREATE TABLE IF NOT EXISTS maintenance.temporal_measurement_event (",
+        "CREATE OR REPLACE VIEW maintenance.temporal_measurement_replay_v AS",
+        "CREATE OR REPLACE VIEW maintenance.temporal_measurement_readiness_evidence_v AS",
+        "CREATE TRIGGER tr_temporal_event_append",
+        "CREATE TRIGGER tr_temporal_event_immutable"
+      ],
+      "review_candidates": [
+        "Inspect complete set of temporal plan/epoch/source/opportunity/measurement tables, FKs, CHECK constraints and indexes",
+        "Capture hashes of pg_get_viewdef, pg_get_functiondef, pg_get_triggerdef and enabled guard triggers",
+        "Inspect dependency chain, append-only enforcement, and no factual source/event seeds",
+        "Confirm transactional rollback if any included guard/view creation fails"
+      ],
+      "limitations": [
+        "Empty fixtures cannot prove live factual provenance or temporal eligibility",
+        "Presence of guards without enabled/correct definition is insufficient"
+      ]
+    },
+    {
+      "ordinal": 34,
+      "entrypoint": "database/034_temporal_observation_activation_chronology.sql",
+      "boundary": "NO_WRAPPER_BEGIN_COMMIT_OBSERVED",
+      "includes": [],
+      "source_markers": [
+        "CREATE OR REPLACE FUNCTION maintenance.assert_temporal_epoch_activation_chronology()",
+        "DROP TRIGGER IF EXISTS tr_temporal_epoch_activation_chronology",
+        "CREATE TRIGGER tr_temporal_epoch_activation_chronology"
+      ],
+      "review_candidates": [
+        "Confirm function definition matches expected vetted SQL and the trigger is enabled BEFORE UPDATE OF epoch_status,started_at on temporal_observation_epoch",
+        "Validate trigger function binding and activation chronology behavior using synthetic lifecycle fixtures",
+        "Fault-inject after DROP TRIGGER and before CREATE TRIGGER to demonstrate partial autocommit risk",
+        "Require verified recovery path for a trigger absent or pointing to an outdated function"
+      ],
+      "limitations": [
+        "Autocommit DROP/CREATE can leave missing trigger if execution terminates between statements",
+        "A current trigger may predate the migration or have an unintended definition"
+      ]
+    },
+    {
+      "ordinal": 35,
+      "entrypoint": "database/035_temporal_observation_activation_preflight.sql",
+      "boundary": "NO_WRAPPER_BEGIN_COMMIT_OBSERVED",
+      "includes": [],
+      "source_markers": [
+        "CREATE OR REPLACE FUNCTION maintenance.temporal_activation_preflight(",
+        "CREATE OR REPLACE FUNCTION maintenance.temporal_activation_preflight_state("
+      ],
+      "review_candidates": [
+        "Capture exact signatures/volatility/return types and definition fingerprints for the two functions",
+        "Exercise representative synthetic PASS/WAIT/FAIL and absent-epoch outcomes",
+        "Inject fault after first CREATE OR REPLACE FUNCTION to test mixed old/new definitions"
+      ],
+      "limitations": [
+        "Two function replacements can commit separately in autocommit mode",
+        "Existence without semantic behavior tests is insufficient"
+      ]
+    },
+    {
+      "ordinal": 36,
+      "entrypoint": "database/036_temporal_first_measurement_semantics.sql",
+      "boundary": "NO_WRAPPER_BEGIN_COMMIT_OBSERVED",
+      "includes": [],
+      "source_markers": [
+        "CREATE OR REPLACE FUNCTION maintenance.assert_temporal_first_measurement_semantics()",
+        "DROP TRIGGER IF EXISTS tr_temporal_event_first_measurement_semantics",
+        "CREATE TRIGGER tr_temporal_event_first_measurement_semantics"
+      ],
+      "review_candidates": [
+        "Capture definition fingerprint and prove enabled BEFORE INSERT trigger on temporal_measurement_event",
+        "Test first/subsequent completed-event novelty and attribution constraints with artificial inputs",
+        "Fault-inject after DROP TRIGGER and before CREATE TRIGGER; require manual repair evidence and no blind replay"
+      ],
+      "limitations": [
+        "Trigger recreation is non-atomic at file level under default psql autocommit",
+        "Constraint behavior must be verified, not inferred from SQL source text"
+      ]
+    }
+  ]
+}
