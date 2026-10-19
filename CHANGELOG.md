@@ -4913,5 +4913,5 @@ Documentos:
 - Freshness Gate CP166/HEAD `ab9e7ff7ab64ab8125e073f3f5764ab5257526d6` = identical;
 - run `39278420804`, job `118148257964` e commit testado `7bba5cbd3a5c1cf9d628049b2b00643f8d21b226`; logs/artifact `12199766445` demonstram **25/25 PASS** no harness, PG18.6/psql16.15;
 - SHA ZIP `57dc8e2ba0af83bbfb352735989e48e965cdeafc7111e0725c5a795abadfea9e` verificado, reivindicação concorrente tem um único vencedor, supervisor bloqueou novo SQL após crash e preservou `uncertain` sem applied/retry automáticos;
-- metadados REST de run/job permanecem `queued/conclusion=null`, contraditórios com logs/artifact; não declarar job administrativamente concluído;
+- metadados REST de run/job evoluíram de `queued` para `in_progress` com `conclusion=null` na última verificação, apesar de logs/artifact; não declarar job administrativamente concluído;
 - Documento 123 e CP167; provas exclusivamente sintéticas, sem runner operacional ou Neon writes; B1R1 expirado sem execução e Fase 5 não iniciada; pausa obrigatória.
