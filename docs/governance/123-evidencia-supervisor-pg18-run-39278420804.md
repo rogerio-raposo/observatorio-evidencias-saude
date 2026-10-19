@@ -19,7 +19,7 @@ Comparação `main` ao HEAD CP166 = `identical`, total 0 commits de drift. Ponte
 - ZIP contém dez arquivos, incluindo `checks.tsv`, `harness.log`, `postconditions.json`, `claim-results.json`, `result.txt` e `commit.txt`.
 - `checks.tsv`: **25/25** controles `PASS`. `result.txt`: `SYNTHETIC_SUPERVISOR_PASS_WITH_LIMITATIONS`. O log do job replica os 25 resultados e confirma upload do artifact. Erros de SQL no log são negativos esperados: `RETRY_BLOCKED` e `canceling statement due to user request`.
 
-**Anomalia relevante:** as consultas disponíveis aos metadados REST da execução e do job continuam apresentando `status=queued`, `conclusion=null`, embora logs detalhados e artifact contenham evidência de execução e finalização das etapas. A conclusão administrativa `completed/success` **não foi confirmada** de maneira independente. Preservar ambos os fatos sem promover a inconsistência a PASS global do workflow.
+**Anomalia relevante:** as primeiras consultas REST apresentavam `status=queued`, `conclusion=null`; em leitura posterior, tanto run quanto job avançaram para `status=in_progress`, ainda com `conclusion=null`, embora logs detalhados e artifact contenham evidência de execução dos 25 controles e upload do artifact. A conclusão administrativa `completed/success` **não foi confirmada** de maneira independente. Preservar a evolução dos metadados sem promover a inconsistência temporal a PASS global do workflow.
 
 ## 3. Controles executados e resultados
 
