@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP161 — 2026-10-19**.
+- checkpoint vigente: **CP162 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5278,3 +5278,11 @@ Estado preservado:
 - Documento 117 descreve escopo e limitações; BRG-05 ainda pendente, BRG-06 ledger somente desenho, BRG-07 runner CI preparado/não testado;
 - nenhuma criação de branch, role, schema, migração ou operação no Neon; B1R1 EXPIRED_NOT_EXECUTED; Fase 5 não iniciada;
 - próximo bloco: conferir run manual PG18 e artifacts; pausa obrigatória.
+
+
+### Fase 4 — CI PG18 automática autorizada (Documento 118 / CP162)
+
+- Owner autorizou acionamento automático apenas da CI sintética; workflow PG18 recebeu gatilho push main limitado ao seu próprio arquivo, preservando execução manual;
+- alteração aplicada no commit `0f56b7f69bc5e3abba0fdb235d88cd3ac1e619e5`;
+- run/job/artifact de PG18 ainda não confirmado; nenhum PASS de compatibilidade declarado;
+- nenhuma alteração Neon, branch, ledger ou migration; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; pausa obrigatória.
