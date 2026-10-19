@@ -4888,3 +4888,13 @@ Documentos:
 - artifact `12191953694` recuperado, digest ZIP `6eefdb6ed5986330b05cc03cda2e53abff8a3ca46a17fea12fbe475ddc81622f`, HEAD do teste `2acabe21102774bae5ce86d15858dc434e905bf5`;
 - Documento 120 descreve caminhos candidatos transacional e commit legado com falha incerta: **nenhum runner com lock contínuo, reconciliação ou ledger real foi implementado**;
 - Neon intocado, backup independente pendente, B1R1 expirado sem execução e Fase 5 não iniciada; CP164 e pausa obrigatória.
+
+
+## 2026-10-19 — Guardião persistente PG18 e contraprova de commit após crash (Documento 121 / CP165)
+
+- Freshness Gate CP164 HEAD `2ad4da0fbd725273ed253d88fd3ccc29ed2a2ff8` = identical;
+- publicados script sintético de guardião `scripts/oes_pg18_guardian_synthetic_test.py` e workflow PG18 `.github/workflows/f4-pg18-guardian-synthetic.yml`, sem mutações Neon;
+- runs `39266423818` e `39266711331` FAILED, por lock retido durante `pg_sleep` ativo após SIGKILL e newline incorreto na versão intermediária; falhas preservadas;
+- run `39266780706` SUCCESS no commit `064d970ddbc1e4a4830a44472074eaec5734698b`, 15/15 controles PASS, servidor PostgreSQL 18.6, psql 16.15, artifact `12193207877`, ZIP SHA-256 `867f2189872cbdd3accf12851f6d4d1843a63bbea7b1a5bf4e7f7c62a39f6175`;
+- contraprova: SQL em voo pode fazer commit após perda do guardião, exigindo intenção durável, supervisor, bloqueio de replay e reconciliação pós-condição; lock isolado insuficiente;
+- Documento 121 e CP165; BRG-06/07 modelados/testados sinteticamente, ledger operacional e safety runner NÃO liberados; B1R1 expirado, Fase 5 não iniciada; pausa obrigatória.
