@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP157 — 2026-10-19**
+**CP158 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP157.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP158.md`
 
 Checkpoint anterior:
 
-`CP156`
+`CP157`
 
 Status:
 
@@ -313,3 +313,13 @@ em **Modo Continuidade**.
 - Neon API read-only confirmou projeto Free `free_v3`, dez branches permitidas e única default; billing/consumo do titular pendentes;
 - nenhuma branch, role, schema, migration, backup, fixture factual ou mudança de Epoch; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP157.md`; próximo bloco: prova em checkout integral + preparação synthetic-only PostgreSQL 18/ledger, após novo `Prossiga`; nenhuma mutation Neon automática.
+
+## 2026-10-19 — Inventário offline CI preparado / bloqueio PG18 (Documento 114 / CP158)
+
+- CP157 Freshness Gate `3ecb187d04edc75a9b957bef5c252d746607d76e` = identical;
+- workflow `.github/workflows/f4-neon-offline-preflight.yml` publicado, limitado a checkout read-only, teste Python sintético, inventário de arquivos e artifact de hash;
+- testes sintéticos locais 7/7 OK, mas nenhum run CI/log/artifact comprovado; digest SHA-256 real 50 SQL ainda pendente;
+- checkout local GitHub bloqueado por DNS, sem `psql` ou PostgreSQL 18 para prova de runner/ledger;
+- Documento 114 e checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP158.md` publicados;
+- nenhuma mutação Neon, branch, role, schema, ledger, migration, uso científico factual ou despesa; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco condicionado a novo `Prossiga`: verificar run CI e artifact, depois reavaliar ensaio PG18 sintético. Pausa obrigatória.
