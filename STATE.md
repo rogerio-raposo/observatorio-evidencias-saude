@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP169 — 2026-10-19**.
+- checkpoint vigente: **CP170 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5360,3 +5360,15 @@ Estado preservado:
 - run CI `39297500185`, commit `feb2b9f115e94a09c975b98f61d7a5ffda53438d`, job `118213715729` completed/success, 8/8 testes, artifact `12209110983`, SHA ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`;
 - Documentação 125 e CP169; scanner prova somente integridade textual de 20 fontes. Catálogo principal 36 UNREVIEWED/0 pós-condições validadas, nenhuma autorização de execução/replay/reconciliação automática;
 - BRG-06/07 operacionais pendentes; nenhuma branch ou SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco PG18 descartável para comparação pré/pós e falhas induzidas, modo alto, STOP.
+
+
+### Fase 4 — Prova sintética PG18 de falhas estruturais 031–036 (Documento 126 / CP170)
+
+- Freshness Gate CP169/main = identical, HEAD entrada `f928807e76b74dc32b65fe3a707c72232c721c55`; modo alto;
+- publicado `scripts/oes_f4_pg18_031_036_fault_rehearsal.py` e `.github/workflows/f4-pg18-031-036-fault-rehearsal.yml`; PG18 descartável em GitHub Actions sem Neon;
+- primeira CI `39349451906` FAILED por consulta antecipada do comparador ao objeto `maintenance.contract_epoch` inexistente antes de 031; corrigida prospectivamente; não classificar como erro da migration;
+- run corrigido `39349564581`, job `118390284507`, completed/success, 29/29 checks PASS no commit `46af0a575e30d640dedd97edf84315ebc5f6f310`; artifact `12233090040`, ZIP SHA-256 `6aea06318fb097c66066a75e13b8e03ae23ff52c6c7cf07a9bfffb9009431a3e` conferido;
+- 031–033: rollback de inventário estrutural em erro induzido antes do commit; 034/036: replay negativo deixou trigger ausente após DROP e falha antes do CREATE; 035: primeira função persistiu, segunda ausente após erro;
+- **zero pós-condições operacionalmente validadas, catálogo principal 36 UNREVIEWED**; não houve fixture de registros preexistentes para grandfathering 032, nem prova integral de DML/semântica;
+- Documento 126 e CP170 registrados; BRG-06/07 e BRG-03/08/09 operacionais ainda pendentes; nenhuma migração/branch/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco: grandfathering 032 em PG18 descartável, modo alto, pausa obrigatória.
