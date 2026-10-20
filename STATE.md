@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP204 — 2026-10-20**.
+- checkpoint vigente: **CP205 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5653,3 +5653,9 @@ Estado preservado:
 
 - A1–A4 documentais consolidadas: lacunas de cobertura, AUT-01–AUT-08 subordinados à governança, sem gate paralelo; cenário não executado.
 - 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY e Fase 5 NOT_STARTED. Nenhum SQL, Neon, CI, medição factual ou custo. STOP.
+
+
+### CP205 — Pacote conceitual de evidências e oráculos V033-06/V035-03 (Documento 160)
+
+- A1–A4 consolidaram manifesto documental, registro em três camadas e oito variantes, todas sem observações ou aprovação; AUT-01–AUT-08 continuam auxiliares. Sem mecanismos corretivos.
+- 36 UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED; sem SQL/Neon/CI/fonte factual/custo. STOP.
