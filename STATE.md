@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP185 — 2026-10-20**.
+- checkpoint vigente: **CP186 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5527,3 +5527,11 @@ Estado preservado:
 - Documento 141 seleciona **conferência futura read-only pelo titular** de plano, quotas e riscos de billing Neon Free; **não executada**, G0-D1–D6 PENDING_OWNER. Nenhum dado sensível solicitado, nenhum painel aberto pelo assistente, nenhum ato de cobrança autorizado. Alternativas PG18 repetitivo, mutações Neon ou novo epoch diferidas/bloqueadas.
 - BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles pendentes. B1R1 EXPIRED_NOT_EXECUTED; `NEW_EPOCH=NOT_AUTHORIZED`; Fase 4 documental NOT_READY, M3 bloqueado, Fase 5 NOT_STARTED.
 - Nenhum Neon/SQL/CI/PG18, consulta PubMed/ClinicalTrials ou gasto. CP186 candidato só após Prossiga: obter dados não sensíveis do titular e avaliar lacuna BRG-09; alto apenas antes de decisão substantiva G0. STOP.
+
+
+### Fase 4 — Observação API Neon Free e lacuna de billing (Documento 142 / CP186)
+
+- Freshness Gate CP185/main `8c8eae2f554a1a050bea5d511c89d49dc47d8c6e` identical, 0 ahead/behind; modo médio. `describe_project` via integração Neon read-only: plano `free_v3`, 1 GiB limite lógico por branch, limite de 10 branches, contadores compute/transferência com contexto limitado. Nenhuma informação sensível publicada.
+- BRG-09=PENDING_OWNER_FINANCIAL_CONFIRMATION, G0-D5=PENDING_OWNER; API não comprova cartão, fatura, serviços pagos, custo zero garantido ou cobranças futuras. Próximo ato é resumo manual não sensível pelo titular, sem dados bancários.
+- Nenhum SQL/branch/role/migration/CI/PG18, nenhuma query PubMed/ClinicalTrials ou gasto. BRG-03/06/07/08 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles insatisfeitos. B1R1 EXPIRED_NOT_EXECUTED, NEW_EPOCH NOT_AUTHORIZED, M3 BLOCKED, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
+- CP187 candidato sob novo Prossiga: confrontar somente evidência do titular quando existir; alto antes de autorização de custos/risco. STOP.

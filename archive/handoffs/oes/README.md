@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP185 — 2026-10-20**
+**CP186 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP185.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP186.md`
 
 Checkpoint anterior:
 
-`CP184`
+`CP185`
 
 Status:
 
@@ -514,3 +514,5 @@ em **Modo Continuidade**.
 - **CP184 — 2026-10-20:** Documento 140 prepara pacote G0 do piloto P-B para owner, com seis decisões ainda PENDING e sem autorizar risco/custo/Neon/epoch. Modo médio; alto antes de aprovação substantiva. CP185 candidato somente sob novo Prossiga. STOP.
 
 - **CP185 — 2026-10-20:** Documento 141 escolhe um ato futuro único de baixo risco: verificação read-only pelo titular das quotas/condições de cobrança Neon Free, sem consulta/alteração do projeto nem autorização G0. Repetição PG18 diferida com blockers preservados. CP186 candidato somente após Prossiga. STOP.
+
+- **CP186 — 2026-10-20:** Documento 142 registra leitura API Neon Free (plano free_v3 e contadores parciais), sem SQL ou mudanças. BRG-09 continua PENDING_OWNER_FINANCIAL_CONFIRMATION e G0-D5 PENDING. CP187 candidato somente após Prossiga. STOP.

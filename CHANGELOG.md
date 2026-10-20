@@ -5071,3 +5071,11 @@ Documentos:
 - Freshness Gate CP184/main `c657e6ec1f5d2542ed828d35922046cc52b5d9bf` identical, ahead/behind zero, modo médio; sem operação técnica.
 - Documento 141: selecionada **conferência futura, manual e read-only, pelo titular, do plano/cotas/risco de cobrança no Neon Free** para endereçar evidência BRG-09. Ato não executado; G0-D1–D6 permanecem PENDING_OWNER. Outras provas custosas/repetitivas foram diferidas sem promover gates.
 - BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. B1R1 expirado e novo epoch não autorizado; sem Neon/SQL/CI/PG18/source queries/gastos, M3 bloqueado, Fase 4 não encerrada e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Verificação read-only parcial do Neon Free (Documento 142 / CP186)
+
+- Freshness Gate CP185/main `8c8eae2f554a1a050bea5d511c89d49dc47d8c6e` identical, ahead/behind 0; modo médio.
+- `describe_project` integração Neon read-only: `subscription_type=free_v3`, região aws-sa-east-1, 1 GiB limite lógico por branch, 10 branches limite, contadores de consumo parciais. Nenhuma informação pessoal do owner publicada. Não houve SQL nem mutação.
+- BRG-09 e G0-D5 permanecem PENDING_OWNER_FINANCIAL_CONFIRMATION / PENDING_OWNER; dados de cartão, fatura, upgrade e cobrança não disponíveis nesta API. Documento 142 apresenta checklist mínimo sem exposição de informações privadas.
+- BRG-03/06/07/08 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. B1R1 expirado; novo epoch não autorizado; sem consultas de fonte/custo; M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada. STOP.
