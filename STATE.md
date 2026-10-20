@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP176 — 2026-10-19**.
+- checkpoint vigente: **CP177 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5441,3 +5441,15 @@ Estado preservado:
 - artifact `12236864111`, ZIP SHA256 `d91577ca76868f4612eda88a5a6cb7c9083d243f12afd5574b1490133a8e902c` validado, status: 6/12/4, 36 migrations UNREVIEWED, 36 requisitos de matriz 034–036 NOT_COLLECTED, nenhum SQL/Neon/serviço pago;
 - Documento 132 e CP176; BRG-03/06/07/08/09 não liberados; nenhuma branch, role, DDL ou ledger Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco: somente experimento PG18 descartável de papéis LOGIN, `SET/INHERIT`, elevação e simulação de recibos de logs externos; modo alto, pausa obrigatória.
+
+
+### Fase 4 — LOGIN, SET/INHERIT e recibos CI fora da transação (Documento 133 / CP177)
+
+- Freshness Gate CP176/main `1bed3de41ebc9dd5a670e867d38bc3c2e6825669` identical, modo alto; data do novo checkpoint 2026-10-20;
+- harness `scripts/oes_f4_pg18_login_roles_external_receipt_sim.py` e workflow descartável publicados: autenticação LOGIN de três roles sintéticas, proprietária NOLOGIN, opções `SET/INHERIT`, alteração de owner somente em banco PG18 CI, teste de trigger 034;
+- run inicial `39404590522` FAILED por falta de USAGE no schema pela role proprietária artificial; corrigido sem modificar migrations SQL históricas;
+- run `39404695131`, job `118567684999`, completed/success no commit `39ad812f55fd7b79c70f80766f0a85c3e9ea713c`, **41/41 PASS**, artifact `12256624023` ZIP SHA256 `e40f13a2254d9e8d41e14b87b3c758f6e2f1a0200e1f35a3d96d6aee240c014f` conferido;
+- migrator com membership `SET FALSE/INHERIT FALSE` não pôde assumir owner; credencial com `SET TRUE` pôde, após `SET ROLE`, desabilitar e reabilitar trigger 034 no banco descartável, provando risco de elevação;
+- oito recibos JSONL simulados fora da **transação PG**, armazenados no próprio runner CI; rollback preservou recibo no filesystem; cinco corrupções simuladas detectadas. Não há imutabilidade, independente, cobertura SQL direta/fora do wrapper ou coletor externo;
+- Documento 133/CP177, catálogo 36 UNREVIEWED/0 pós-condições aprovadas, matriz 034–036 36 NOT_COLLECTED, BRG-03/06/07/08/09 operacionais pendentes, nenhum Neon nem serviço pago; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco `ADMIN FALSE`, membership transitiva e limites de comprovantes fora da transação em PG18 descartável, modo alto; pausa obrigatória.
