@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP205 — 2026-10-20**
+**CP206 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP205.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP206.md`
 
 Checkpoint anterior:
 
-`CP204`
+`CP205`
 
 Status:
 
@@ -554,3 +554,5 @@ em **Modo Continuidade**.
 - **CP204 — 2026-10-20:** Documento 159 consolida checklist auxiliar AUT-01–AUT-08 para V033-06/V035-03; sem novo gate ou autoridade, estado bloqueado. STOP.
 
 - **CP205 — 2026-10-20:** Documento 160 consolida oito variantes C01–C04/T01–T04 e pacote documental de evidências; nenhuma execução ou autorização operacional. STOP.
+
+- **CP206 — 2026-10-20:** Documento 161 registra alternativas C04/T03/T04 e decisões semânticas pendentes, sem seleção nem autorização operacional. STOP.
