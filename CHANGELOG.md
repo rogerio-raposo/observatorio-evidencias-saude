@@ -5153,3 +5153,9 @@ Documentos:
 
 - Quatro atividades internas A1–A4 consolidadas: objetos da migração 031 e efeitos sobre update_signal_source; 15 tabelas, 22 funções definidas e 26 triggers esperados, incluindo nove dinâmicos. Pós-condições permanecem propostas sem validação PostgreSQL.
 - BRG-06 e demais bloqueios mantidos; 36 UNREVIEWED e zero pós-condições aprovadas. Nenhuma execução SQL, Neon, CI ou operação factual. STOP.
+
+
+## 2026-10-20 — Matriz documental de pós-condições 032 (Documento 153 / CP198)
+
+- Quatro atividades internas A1–A4 consolidadas: 10 tabelas, 56 funções definidas, 23 triggers (quatro diferíveis) e sete colunas em cinco tabelas anteriores. Catálogo de reconciliação não alterado; nenhum gate aprovado.
+- BRG-06 e demais bloqueios preservados. Nenhum SQL, CI, operação Neon, consulta factual ou custo. STOP.

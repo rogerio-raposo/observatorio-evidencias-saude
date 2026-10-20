@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP197 — 2026-10-20**.
+- checkpoint vigente: **CP198 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5611,3 +5611,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: 15 tabelas, 22 definições de funções e 26 triggers esperados (17 explícitos + 9 dinâmicos), mais alterações de FK/CHECK/coluna em maintenance.update_signal_source. Matriz proposta de DDL, FKs, guards, estado anterior e rollback; nada inspecionado em PostgreSQL nem aprovado.
 - 36/36 UNREVIEWED, zero pós-condições, BRG-03/06/07/08 bloqueados e demais gates inalterados. Sem SQL, Neon, CI, fontes factuais, novo epoch ou custos. Próximo bloco A1: 032a–d, sob Prossiga. STOP.
+
+
+### G1-MIG — Pós-condições documentais da migração 032 (Doc153 / CP198)
+
+- Quatro atividades A1–A4 consolidadas: 10 tabelas, 56 definições de funções, 23 triggers (quatro CONSTRAINT DEFERRABLE INITIALLY DEFERRED), sete colunas adicionadas a cinco tabelas anteriores. Pós-condições propostas não executadas nem aprovadas.
+- 36 migrações UNREVIEWED, zero pós-condições aprovadas, BRG-03/06/07/08 bloqueados, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. Sem Neon/SQL/CI/PG18, fontes factuais, custos ou novo epoch. Próximo bloco A1: 033a–e, sujeito a Prossiga. STOP.
