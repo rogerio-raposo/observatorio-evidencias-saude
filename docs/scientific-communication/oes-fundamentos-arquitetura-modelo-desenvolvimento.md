@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.14 (manuscrito em elaboração)  
+**Versão editorial:** 0.15 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–14 redigidos; Capítulos 15–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–15 redigidos; Capítulo 16 estruturado e pendente de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -1620,17 +1620,170 @@ O aprendizado central do projeto é a necessidade de manter correspondência ent
 
 # 15. Guia para criação de observatórios de evidências em saúde
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 15.1. Avaliação preliminar de viabilidade
 
-- **15.1. Avaliação preliminar de viabilidade:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.2. Delimitação do escopo e do público-alvo:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.3. Constituição da equipe e da governança:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.4. Seleção e adaptação dos referenciais metodológicos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.5. Definição do conjunto inicial de produtos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.6. Construção de um observatório mínimo viável:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.7. Estratégia de validação inicial:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.8. Planejamento da expansão e sustentabilidade:** texto a desenvolver a partir da documentação canônica pertinente.
-- **15.9. Riscos e fatores críticos de sucesso:** texto a desenvolver a partir da documentação canônica pertinente.
+A criação de um observatório de evidências deve começar por uma **avaliação explícita de necessidade, finalidade e capacidade**, anterior à escolha de software ou ao desenho de um portal de consulta. A questão inicial não é se determinado grupo consegue construir uma plataforma, mas **qual lacuna de conhecimento pretende enfrentar e por que os instrumentos já existentes não são suficientes para essa finalidade**. Revisões sistemáticas publicadas, bibliotecas institucionais, núcleos de avaliação de tecnologias em saúde, repositórios de diretrizes e serviços especializados podem atender parte das demandas sem exigir uma nova estrutura permanente.
+
+Uma análise de viabilidade deve examinar a **demanda científica concreta**. Importa saber quem formula as perguntas, com que frequência, quais decisões serão informadas e que consequências pode ter uma resposta insuficiente ou incorreta. Perguntas episódicas, por exemplo, podem ser atendidas por sínteses focais sob demanda; necessidades recorrentes de acompanhar literatura em áreas prioritárias podem justificar um acervo persistente. A presença de grande número de publicações sobre um tema não constitui, por si só, justificativa para criar monitoramento contínuo.
+
+Uma segunda dimensão envolve **disponibilidade das fontes**. Antes de definir uma busca como sistemática ou um produto como atualização viva, o grupo precisa verificar se dispõe de acesso apropriado a bases bibliográficas, registros de estudos, textos completos, literatura regional e fontes complementares relevantes à sua pergunta. A disponibilidade eventual de uma ferramenta de pesquisa não equivale à cobertura metodológica necessária. Também devem ser considerados licenças de conteúdo, limitações de redistribuição e possibilidade de registrar estratégias executadas.
+
+A terceira dimensão é a **capacidade científica e institucional**. Métodos de revisão, avaliação de risco de viés, síntese quantitativa ou qualitativa e julgamentos de certeza demandam formação e experiência compatíveis. A instituição deverá identificar quem realizará as tarefas, como serão examinadas divergências, quais competências não estão disponíveis e se haverá condições de revisão independente. O OES documentou essa necessidade ao reconhecer que a aprovação de seu proprietário não pode ser apresentada como revisão especializada. [Fonte: Documento 04 — Governança de garantia](../governance/04-governanca-garantia-revisao.md).
+
+Também é necessário avaliar **sustentabilidade operacional**: tempo disponível, recursos humanos, custos de acesso e processamento, manutenção de dados, segurança, comunicação e continuidade. Uma solução tecnicamente sofisticada que não dispõe de equipe para atualizar os resultados poderá gerar uma aparência enganosa de atualidade. A viabilidade deve ser proporcional ao escopo; não é preciso planejar todos os serviços futuros para testar a utilidade de um observatório delimitado.
+
+Uma decisão inicial metodologicamente aceitável pode ser **não constituir uma plataforma própria**. O grupo poderá estabelecer um núcleo de síntese de evidências, apoiar-se em infraestrutura institucional existente ou conduzir um piloto circunscrito a poucas perguntas. A adoção do termo *observatório* torna-se mais substantiva quando existe compromisso identificável de produzir, organizar, comunicar e, quando pertinente, acompanhar conhecimento científico segundo procedimentos documentados.
+
+No OES, o princípio de proporcionalidade já estava presente na concepção e na arquitetura N0–N4. A experiência posterior mostrou, porém, que essa proporcionalidade precisa valer também para **governança, documentação e infraestrutura**. A simplificação do desenvolvimento aprovada em outubro de 2026 reafirmou a prioridade de demonstrar a utilidade científica e comunicacional antes de ampliar compromissos operacionais. [Fontes: Documento 02 — Proporcionalidade metodológica](../governance/02-niveis-investigacao-produtos.md) e [estado do projeto](../../STATE.md).
+
+### 15.2. Delimitação do escopo e do público-alvo
+
+Após reconhecer a viabilidade inicial, o grupo precisa formular **um escopo científico suficientemente preciso para orientar decisões metodológicas**. Uma declaração abrangente — por exemplo, acompanhar todas as evidências relevantes para a saúde — dificilmente constitui plano executável para uma equipe pequena. A delimitação deve explicitar tema, classe de perguntas, populações ou cenários prioritários, finalidade de uso, públicos pretendidos e limites do serviço.
+
+A definição do **público-alvo** altera as exigências de comunicação e a criticidade do produto, embora não deva modificar arbitrariamente os resultados científicos. Pesquisadores podem necessitar acesso a protocolos, estudos incluídos e detalhes de síntese; profissionais de saúde podem demandar respostas focalizadas com incerteza e aplicabilidade explícitas; gestores podem priorizar consequências organizacionais, segurança e recursos. Um único produto não precisa atender todos os públicos de maneira idêntica.
+
+A seleção de **domínios temáticos** deve considerar capacidade instalada e relevância científica. Um observatório universitário pode iniciar com área em que seus pesquisadores tenham familiaridade metodológica e acesso às fontes; outro poderá priorizar problemas epidemiológicos ou de políticas de saúde pertinentes ao contexto institucional. O modelo de taxonomia do OES contempla intervenção, segurança, diagnóstico, prognóstico, predição, exposição, prevalência, questões qualitativas, sistemas e mapeamento, mas isso não significa que uma iniciativa deva operar todas essas classes desde seu começo. [Fonte: Documento 01 — Taxonomia das perguntas](../governance/01-taxonomia-perguntas.md).
+
+É importante estabelecer **limites explícitos de responsabilidade**. Um observatório pode apoiar interpretação de evidências sem oferecer diagnóstico individual, prescrição clínica ou recomendação normativa própria. Caso pretenda produzir diretrizes ou recomendações institucionais, precisará de procedimentos adicionais, compatíveis com a finalidade e as consequências das decisões. A distinção entre evidência, interpretação e recomendação deve aparecer na especificação do serviço e na linguagem dos produtos.
+
+A delimitação também envolve o **horizonte de atualização**. Não é necessário assumir que toda pergunta terá monitoramento ativo. Os regimes M0–M3 propostos pelo OES ajudam a separar ausência de vigilância programada, elegibilidade para reavaliação, acompanhamento ativo e evidência viva. Essa última categoria demanda condições específicas de capacidade, frequência e garantia e não deve ser adotada apenas por valor simbólico. [Fonte: Documento 02 — Manutenção M0–M3](../governance/02-niveis-investigacao-produtos.md).
+
+O resultado desta etapa pode ser uma **declaração curta de escopo**, acompanhada de um pequeno conjunto de perguntas candidatas e de critérios de entrada. A capacidade de dizer claramente o que ficará fora do observatório costuma ser tão relevante quanto a identificação dos seus objetos prioritários. A partir daí, será possível escolher os produtos e recursos proporcionais ao trabalho científico efetivamente previsto.
+
+### 15.3. Constituição da equipe e da governança
+
+A estrutura humana de um observatório deve ser derivada **das tarefas e dos riscos científicos que pretende assumir**, e não de um organograma genérico. Mesmo em grupo reduzido, é necessário distinguir a responsabilidade pela pergunta, a execução metodológica, a revisão de julgamentos, a aprovação institucional e a manutenção dos registros. Essas funções podem envolver profissionais diferentes ou ser distribuídas conforme a capacidade disponível, desde que **não se declare independência de revisão quando ela não existir**.
+
+Entre as competências potencialmente necessárias estão **formulação e priorização de perguntas, busca especializada de literatura, triagem de estudos, extração de dados, avaliação crítica, métodos quantitativos ou qualitativos, avaliação de certeza, conhecimento temático e comunicação científica**. A operação de software, a gestão de dados e a segurança institucional acrescentam outras competências. Nem toda pergunta exigirá todos esses perfis em dedicação permanente; a composição dependerá do método, da profundidade e da finalidade do produto.
+
+Uma questão central é **quem poderá validar os julgamentos científicos materiais**. O OES estabelece níveis de garantia A0–A3 para diferenciar elaboração ainda não verificada, verificação assistida por IA, aprovação de governança e revisão especializada independente. Esse sistema foi formulado diante da inexistência, na configuração inicial do projeto, de equipe metodológica humana especializada. Outros grupos poderão dispor dessas competências desde o início e adotar estruturas de garantia mais adequadas à sua realidade; o princípio que deve permanecer é a correspondência verificável entre **competência exercida e aprovação declarada**. [Fonte: Documento 04 — Funções e níveis de garantia](../governance/04-governanca-garantia-revisao.md).
+
+A governança também deve definir **como decisões metodológicas serão tomadas e revistas**. Isso inclui escolha de perguntas, aprovação de protocolos, resolução de discordâncias, tratamento de conflitos de interesse, critérios para reformulação de escopo, liberação de produtos e resposta a erros identificados posteriormente. Não é necessário transformar todas essas atividades em comitês autônomos: regras simples podem ser adequadas quando deixam claro quem decide, em quais condições e onde a justificativa será registrada.
+
+A **independência da revisão** merece atenção especial. A participação de uma pessoa na elaboração e em uma conferência posterior não equivale à realização de duas avaliações independentes. Da mesma forma, utilizar IA para redigir e depois outra ferramenta de IA para revisar pode produzir controle útil, mas não substitui um parecer de pesquisador qualificado. Para produtos formais N3 e N4, o desenho do OES exige garantia A3 e, em N4, controles humanos adicionais em etapas críticas; um grupo interessado nessas modalidades precisa assegurar a competência correspondente antes de anunciar o serviço.
+
+Os **conflitos de interesse** devem ser identificados de forma proporcional e vinculada às perguntas examinadas. Financiadores, instituições e pesquisadores podem possuir interesses profissionais ou financeiros relevantes. A declaração e a gestão desses vínculos precisam ser suficientes para permitir exame da independência, sem criar procedimentos de coleta de dados pessoais que ultrapassem o necessário.
+
+Uma equipe pequena pode, portanto, iniciar com **escopo e produtos limitados pela competência efetivamente disponível**, recorrendo a revisão externa quando pertinente. Se determinada investigação requer especialistas ausentes, a alternativa cientificamente adequada é restringir a finalidade, adiar o produto ou buscar condições reais de revisão, e não reduzir silenciosamente o padrão exigido.
+
+### 15.4. Seleção e adaptação dos referenciais metodológicos
+
+Os referenciais metodológicos devem ser selecionados a partir das **classes de perguntas que o observatório se compromete a responder**. Não existe instrumento único de busca, avaliação crítica ou síntese adequado a todas as investigações em saúde. A adaptação do OES por outros grupos deve, portanto, preservar a relação entre pergunta, método e finalidade, sem importar automaticamente todos os protocolos e campos de dados do projeto.
+
+O núcleo metodológico mínimo compreende **formulação da pergunta, protocolo de investigação, estratégia de busca, regras de elegibilidade, identificação de estudos e relatórios, extração, avaliação crítica quando aplicável, síntese, avaliação de certeza ou confiança quando pertinente e comunicação das limitações**. A extensão de cada procedimento varia segundo o nível de investigação. Um levantamento exploratório não reivindica a completude de uma revisão sistemática; uma síntese formal não pode adotar abreviações silenciosas e apresentar-se como revisão exaustiva. [Fontes: Documento 03 — Roteamento](../governance/03-roteamento-metodologico.md) e [Documentos 10–15 — Manual metodológico](../methodology/10-busca-recuperacao-evidencias.md).
+
+É aconselhável definir **um protocolo de roteamento simples e justificável**. O grupo poderá examinar criticidade, complexidade, maturidade das revisões disponíveis, incerteza, necessidade de completude, aplicabilidade, urgência e velocidade de evolução das evidências. A nomenclatura N0–N4 do OES oferece uma referência possível, mas não constitui requisito externo obrigatório. Mais importante do que reproduzir os nomes é evitar que o nível de investigação seja escolhido depois de verificar quais resultados são convenientes.
+
+Os instrumentos específicos dependem do objeto. **RoB 2**, **ROBINS-I** e outros referenciais podem ser apropriados a desenhos e perguntas diferentes; **GRADE** e **GRADE-CERQual** orientam julgamentos distintos de certeza ou confiança quando aplicáveis. O uso dessas metodologias exige consultar as orientações correspondentes, reconhecer suas unidades de avaliação e documentar o fundamento dos julgamentos. Uma tabela ou formulário preenchido não demonstra, por si só, aplicação correta do instrumento.
+
+Também devem ser consideradas as **normas de condução e relato** pertinentes, inclusive referenciais PRISMA para revisões e buscas quando aplicáveis. É necessário distinguir qualidade do relato de qualidade metodológica: um documento formalmente completo pode resultar de busca insuficiente ou avaliação crítica inadequada. Os requisitos de condução não podem ser substituídos por uma apresentação visual compatível com uma lista de itens.
+
+Uma decisão importante é **não duplicar desnecessariamente sínteses confiáveis**. Quando existe revisão recente, correspondente à pergunta e metodologicamente adequada, um grupo pode produzir resposta focal, ficha estruturada ou atualização delimitada, conforme sua finalidade. A escolha deve registrar qual síntese foi reutilizada e quais julgamentos foram efetivamente produzidos. Ao mesmo tempo, revisões antigas, incompletas ou sobrepostas não devem ser adotadas sem avaliação crítica.
+
+A experiência do OES sugere que a adaptação metodológica deve ser **iterativa e crítica**. A busca insuficiente identificada no caso experimental N3 demonstrou que especificar um protocolo não garante sua execução. Em um novo observatório, casos-piloto devem ser utilizados para identificar ambiguidades, necessidades de ajuste e custos reais dos procedimentos. Alterações materiais devem ser justificadas e registradas, evitando que a evolução metodológica apague decisões anteriores.
+
+### 15.5. Definição do conjunto inicial de produtos
+
+A definição de produtos é uma escolha de **serviço científico e comunicação**, não apenas de formato editorial. Um grupo deve selecionar modalidades que correspondam às perguntas priorizadas, à competência dos profissionais e ao uso pretendido. A taxonomia do OES contempla nove produtos, mas **nenhuma instituição necessita reproduzir todos para constituir um observatório funcional de escopo limitado**. [Fonte: Documento 40 — Taxonomia dos produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+Uma **Resposta de Evidência N1** pode ser apropriada quando há perguntas focais e boas sínteses recentes, com necessidade de resposta objetiva e limites de busca bem declarados. Uma **Ficha de Evidência N2** pode ser preferível quando a mesma pergunta será consultada repetidamente, sendo útil preservar resultados por desfecho, critérios metodológicos, certeza quando aplicável e histórico de versões. Um **Evidence Scan N0** é útil para delimitar um campo, identificar revisões e formular perguntas candidatas, sem alegar exaustividade.
+
+Os produtos de maior profundidade, como **Síntese Rápida N3 e Revisão de Evidências N4**, devem ser incluídos na carteira somente quando existirem fontes, métodos e **revisores qualificados** compatíveis com os requisitos científicos. A experiência N3 do OES mostra que um fluxo de software tecnicamente satisfatório pode não alcançar a cobertura bibliográfica exigida; e a preparação de N4 permaneceu sem abertura formal de caso real por insuficiência de condições humanas e metodológicas. Incorporar essas modalidades prematuramente seria diferente de simplesmente reconhecê-las como possibilidades futuras.
+
+**Mapas de Evidências e Overviews de Revisões** podem atender necessidades transversais, especialmente quando o grupo pretende compreender lacunas, distribuição de estudos ou sobreposição de sínteses existentes. Suas exigências metodológicas próprias devem ser explicitadas. Um mapa de corpus não exaustivo não deve ser chamado de mapeamento sistemático completo; um overview precisa considerar o compartilhamento de estudos primários e a qualidade e atualidade das revisões incluídas.
+
+**Monitor e Alerta** pertencem ao acompanhamento temporal e podem ser úteis em campos com produção científica dinâmica, mas exigem relação com produtos ou investigações identificáveis e capacidade de examinar os sinais encontrados. A adoção de M2 não deve preceder a existência de fontes acessíveis, ciclos definidos e recursos para triagem e avaliação. M3 pressupõe compromisso sustentável ainda mais exigente. A existência de um mecanismo de notificações não confere automaticamente capacidade de evidência viva. [Fonte: Documento 05 — Atualização transversal](../governance/05-protocolo-transversal-atualizacao.md).
+
+Uma carteira inicial poderá conter **um único tipo de produto**, acompanhado de registros metodológicos e revisão proporcionais. A decisão de começar por Ficha N2, por exemplo, decorre no OES de sua utilidade como unidade persistente central, mas não é regra universal. Outro grupo poderá iniciar com respostas N1 submetidas a revisores competentes ou com mapeamento de um campo específico. O critério é demonstrar que o produto escolhido atende à demanda real **sem comunicar autoridade científica superior à obtida**.
+
+A delimitação deve resultar em uma **especificação breve por produto**: pergunta atendida, método, conteúdo mínimo, fonte e data de corte, agentes responsáveis, critérios de revisão, condições de divulgação e eventual política de reavaliação. A padronização será útil na medida em que facilite uma produção científica verificável, evitando multiplicar templates que não correspondam a usos concretos.
+
+### 15.6. Construção de um observatório mínimo viável
+
+Um **observatório mínimo viável** pode ser compreendido como **um processo científico reduzido, executável e examinável**, não necessariamente como uma plataforma web ou aplicação complexa. A expressão não autoriza reduzir critérios de qualidade; significa começar com poucas funções e demonstrar seu valor antes de expandir a infraestrutura. A experiência do OES indica que a construção de muitos contratos, migrações e controles pode preceder a comprovação de que existe capacidade científica e demanda suficientes para utilizá-los.
+
+O ponto de partida é **uma pergunta prioritária claramente formulada**, escolhida por relevância e compatibilidade com a equipe. Essa pergunta é registrada em sua forma original, normalizada segundo a classe metodológica e convertida em protocolo proporcional. É importante definir desde o início qual produto será entregue e para qual público, bem como qual revisão científica será exigida antes da disponibilização.
+
+O percurso mínimo pode conservar **cinco operações essenciais**: (1) delimitação e protocolo da pergunta; (2) recuperação documentada das fontes e seleção das evidências; (3) extração e avaliação crítica na extensão pertinente; (4) síntese e comunicação da incerteza; e (5) revisão, aprovação e registro de versão e data de corte. Essas operações não equivalem a cinco serviços tecnológicos separados. Podem ser realizadas por equipe pequena com ferramentas comuns, desde que as evidências e decisões materiais permaneçam recuperáveis.
+
+Um conjunto inicial de dados deve permitir reconhecer **pergunta, estudo, relatório, resultado, fonte, síntese e produto**, com identificadores consistentes. Mesmo que não exista um banco de dados relacional complexo, é necessário evitar dupla contagem de um estudo com várias publicações e preservar a origem de resultados relevantes. O modelo conceitual da Fase 2 do OES oferece referência para essas distinções, mas sua implementação integral em OES-P1 não é requisito prévio para que outro grupo realize uma investigação focal metodologicamente adequada. [Fonte: Documento 20 — Modelo conceitual](../architecture/20-modelo-conceitual-dados.md).
+
+A apresentação inicial pode consistir em **um documento estruturado** com pergunta, resposta, método, fontes, resultados, limitações, aplicabilidade, data de corte e revisão realizada. A publicação de uma página na internet, a geração de PDFs ou a elaboração de gráficos são decisões secundárias. Seu valor depende de tornar o conteúdo mais compreensível e auditável, não de conferir aparência de serviço já validado.
+
+É útil testar o percurso com **um caso representativo e uma situação adversarial**. O caso principal examina se a equipe consegue produzir e revisar o conteúdo proposto; o cenário adversarial verifica como o processo responde a uma fonte indisponível, estudo não recuperado, dados conflitantes, possível retratação ou ausência de competência para concluir determinado julgamento. A capacidade de registrar uma limitação ou bloquear um produto quando necessário é parte do funcionamento correto do processo.
+
+A avaliação inicial deve distinguir o que foi **executado, documentado e verificado**. Um template funcional não demonstra adequação da busca; uma síntese apoiada em literatura real não prova revisão por pares; e um banco testado não constitui operação sustentada. A distinção pode ser registrada diretamente na saída, sem criar múltiplas matrizes administrativas quando uma descrição curta e verificável for suficiente.
+
+Um exemplo de progressão **ilustrativa, não obrigatória**, é o seguinte:
+
+| Momento | Entrega verificável | Decisão antes de ampliar |
+|---|---|---|
+| **Delimitação** | Pergunta, público, método e limites acordados | Existe necessidade concreta e competência suficiente? |
+| **Primeiro produto** | Uma síntese focal rastreável e revisada conforme a finalidade | Fontes e conclusões são defensáveis? |
+| **Repetição controlada** | Novo caso ou reavaliação, com erros e esforço registrados | O processo é reprodutível e útil em mais de um caso? |
+| **Persistência** | Identidades e versões organizadas para reutilização | A complexidade adicional gera benefício material? |
+| **Acompanhamento** | Regime de manutenção justificado e capacidade demonstrada | É possível cumprir a frequência e revisar os sinais? |
+
+A principal vantagem desse desenho é **tornar reversíveis as escolhas tecnológicas iniciais**, sem comprometer a rastreabilidade científica. O grupo pode ajustar templates, infraestrutura e organização institucional após observar as necessidades reais. A expansão deixa de ser um compromisso presumido e passa a depender de demonstração de utilidade e capacidade.
+
+### 15.7. Estratégia de validação inicial
+
+A validação deve começar **antes de o observatório ser apresentado como fonte cientificamente consolidada**. Isso não exige iniciar com um grande estudo multicêntrico, mas requer especificar o que será examinado, por quem, em quais materiais e com quais critérios. Um piloto interno pode ajudar a identificar erros e dificuldades; sua utilidade é maior quando suas limitações são reconhecidas e suas conclusões não são extrapoladas para contextos não avaliados.
+
+O primeiro nível de verificação envolve **conformidade documental e rastreabilidade**. É possível conferir se a pergunta preserva o enunciado original, se a busca foi registrada, se os estudos e relatórios estão corretamente vinculados, se a extração identifica suas fontes e se a conclusão comunica incerteza e data de corte. Esses controles podem ser realizados com procedimentos relativamente simples e parcialmente assistidos por software, mas não bastam para validar julgamentos científicos.
+
+O segundo nível envolve **revisão metodológica por profissionais competentes**. Os especialistas precisam poder examinar a estratégia de busca, a seleção de estudos, as avaliações críticas, os métodos de síntese e a interpretação de resultados. Deve-se identificar quais decisões foram verificadas independentemente e como foram resolvidas discordâncias. Para N3 e N4 formais, os requisitos específicos de revisão especializada e de avaliações independentes das etapas críticas não devem ser reduzidos por conveniência do piloto. [Fonte: Documento 04 — Garantia e revisão](../governance/04-governanca-garantia-revisao.md).
+
+O terceiro nível consiste em **comparação crítica com referências externas apropriadas**, como revisões sistemáticas recentes e metodologicamente adequadas, protocolos publicados ou avaliações realizadas por pesquisadores qualificados. Essas referências não devem ser tratadas como padrões infalíveis. É necessário verificar se as perguntas, populações, desfechos, datas de busca e critérios são comparáveis. Diferenças legítimas de escopo ou atualização não podem ser automaticamente classificadas como erros de um dos lados.
+
+O quarto nível avalia a **compreensão e a utilidade do produto** para o público pretendido. Uma saída cientificamente correta pode ser pouco útil se os leitores não identificarem suas limitações ou confundirem um resultado incerto com recomendação normativa. Pesquisadores e usuários representativos podem examinar clareza, facilidade de localizar fontes, interpretação de certeza e adequação da forma de comunicação.
+
+Em caso de uso de IA, a avaliação deve ocorrer **por tarefa e por tipo de erro**, incluindo falhas relevantes de recuperação, seleção, extração e interpretação. Uma comparação adequada exigirá registros de referência e revisores qualificados, com atenção especial a falsos negativos em triagem, transcrições incorretas e superestimação da certeza. A concordância entre duas execuções de IA não equivale à revisão científica independente.
+
+Antes de ampliar escopo, o grupo deverá analisar **quais limitações são corrigíveis com ajustes simples e quais exigem mudanças metodológicas, novas fontes ou competências adicionais**. Resultados desfavoráveis ou impossibilidade de concluir determinada investigação podem representar achados importantes de validação. No OES, o bloqueio experimental do caso N3 mostrou que um sistema capaz de renderizar a síntese ainda podia não cumprir o requisito científico de cobertura bibliográfica.
+
+A futura **Fase 6 do OES** está reservada para validação científica e metodológica com procedimentos apropriados, mas **não foi iniciada formalmente** na data de referência. O roteiro deste capítulo descreve **uma estratégia recomendável para avaliação por grupos interessados**, não uma alegação de que tais verificações externas já tenham ocorrido no próprio OES. [Fonte: STATE — Estado das fases](../../STATE.md).
+
+### 15.8. Planejamento da expansão e sustentabilidade
+
+A expansão de um observatório deve depender de **benefício científico demonstrado, capacidade institucional e recursos para manter a qualidade do trabalho**. A conclusão de um caso-piloto pode justificar continuidade delimitada, mas não autoriza inferir que a mesma equipe conseguirá atender grande número de perguntas, produzir revisões de maior profundidade e manter todos os produtos atualizados.
+
+A primeira forma de ampliação é **temática**. Um grupo pode acrescentar perguntas relacionadas a seu domínio inicial quando as competências e fontes necessárias são semelhantes. A expansão para outras classes metodológicas exige reavaliar instrumentos, procedimentos e revisores disponíveis. A arquitetura do OES contempla várias classes de perguntas, mas não demonstrou desempenho validado em todas elas; reproduzir sua amplitude desde o início não é condição de sucesso.
+
+A segunda forma de ampliação é **metodológica**. Uma instituição pode começar com respostas focais ou fichas e, após constituir equipe e cobertura bibliográfica adequadas, incorporar sínteses rápidas ou revisões sistemáticas. A progressão não é automática: **N3 e N4 exigem procedimentos e revisão humana compatíveis**, e uma investigação de menor profundidade não se transforma em revisão completa apenas por acumular dados ao longo do tempo.
+
+A terceira é **temporal**. Produtos inicialmente estáticos ou elegíveis para reavaliação podem passar a monitoramento ativo quando a velocidade de publicação e a relevância das possíveis mudanças justificarem o compromisso. A adoção de M2 requer fontes, critérios, ciclos e capacidade de análise; M3 exige condições ainda mais rigorosas de sustentabilidade e controle. Monitoramento não se resume à emissão de alertas, pois a organização precisa ter condições de avaliar os sinais antes de modificar conclusões. [Fonte: Documento 05 — Atualização transversal](../governance/05-protocolo-transversal-atualizacao.md).
+
+A quarta dimensão é **tecnológica**. Um núcleo de registros estruturados pode ser convertido progressivamente em banco relacional, sistemas de apresentação e interfaces, desde que a transição preserve identidade, proveniência e versões. A separação entre modelo conceitual e implementação física evita dependência precoce de um fornecedor. A arquitetura OES-H1/OES-P1 pode orientar decisões, mas não obriga adotar PostgreSQL, armazenamento de objetos ou múltiplos serviços separados quando o volume real não os justifica.
+
+O planejamento financeiro deve incluir **trabalho científico especializado, acesso e licenciamento de fontes, produção e manutenção de software, proteção de dados, verificação de resultados, infraestrutura e suporte**. Soluções tecnológicas gratuitas podem reduzir despesas diretas, mas não tornam gratuitas as atividades humanas indispensáveis. Um serviço com atualização frequente exige recursos contínuos, inclusive durante períodos em que nenhum resultado científico materialmente novo seja encontrado.
+
+A sustentabilidade organizacional envolve **continuidade dos responsáveis e preservação institucional do conhecimento**. É necessário evitar que decisões metodológicas, senhas, scripts ou documentos críticos dependam exclusivamente da memória ou disponibilidade de um único membro. O registro de protocolos, versões e responsáveis contribui para essa continuidade, mas deve permanecer proporcional: auditoria e manutenção de documentos não podem consumir sistematicamente os recursos destinados à investigação científica.
+
+Por fim, a decisão de escalar deve considerar a possibilidade de **reduzir ou encerrar serviços** quando faltarem justificativa científica, demanda ou capacidade. Uma pergunta pode deixar de necessitar vigilância intensiva; determinado produto pode ser substituído por síntese externa mais adequada; uma linha temática pode demandar competências que a equipe não consegue manter. Rever o escopo é parte de uma governança sustentável, não evidência automática de insucesso.
+
+### 15.9. Riscos e fatores críticos de sucesso
+
+A experiência do OES permite identificar **riscos recorrentes que outros observatórios deveriam avaliar antes de assumir compromissos científicos ou operacionais amplos**. Esses fatores são inferências orientadoras derivadas de um desenvolvimento específico, não estimativas quantitativas de probabilidade de sucesso em instituições diferentes.
+
+O primeiro risco é **definir escopo superior à capacidade disponível**. Um projeto pode estabelecer muitas classes de perguntas, produtos e fontes sem possuir especialistas ou meios de execução suficientes. A mitigação mais direta consiste em limitar a carteira inicial a necessidades concretas, com regras transparentes de entrada, roteamento e recusa de demandas fora do escopo.
+
+O segundo é **confundir documento completo com evidência cientificamente validada**. Templates, tabelas e conclusões bem apresentados podem transmitir aparência de rigor mesmo quando a busca, a extração ou a síntese são insuficientes. A resposta necessária é exigir rastreabilidade dos procedimentos materiais e verificação compatível com o risco, comunicando de maneira explícita a ausência de revisão especializada quando essa for a situação.
+
+O terceiro é **subestimar a competência humana**. A IA pode acelerar diversas tarefas, mas não substitui automaticamente julgamento metodológico qualificado nem independência de revisão. Uma governança adequada distingue produção, verificação interna, aprovação administrativa e avaliação científica externa. No OES, essa distinção foi formalizada em A0–A3 e contribuiu para evitar a publicação de produtos sem garantia suficiente. [Fonte: Documento 04 — Princípio de não simulação](../governance/04-governanca-garantia-revisao.md).
+
+O quarto risco é **supor cobertura suficiente das fontes por conveniência tecnológica**. A impossibilidade de consultar determinada base pode comprometer uma síntese formal e não deve ser compensada por afirmações de completude sem fundamento. A investigação experimental N3 do OES demonstrou a importância de preservar esse limite. A adequação das buscas deve ser examinada segundo a pergunta e a profundidade, não apenas pelo número bruto de referências recuperadas.
+
+O quinto é **tratar atualização como tarefa inteiramente automática**. Encontrar novas publicações não implica mudança de conclusão; um ciclo incompleto não demonstra ausência de evidências; e M3 exige capacidade sustentada. O plano de manutenção precisa distinguir fontes, cobertura, avaliação de relevância, revisão científica, comunicação e versionamento, sem transformar monitoramento ou alertas em revisões fictícias.
+
+O sexto risco é **acumular infraestrutura e burocracia antes de comprovar utilidade**. Uma arquitetura elaborada pode oferecer controles sofisticados, mas também criar dependências e custos desproporcionais. A reorientação do OES para demonstração documental D0, preparação documental de D1 e adiamento de D2 representa uma resposta concreta à complexidade acumulada. A lição transferível não é abandonar controles, e sim **concentrá-los nas decisões que podem alterar a qualidade científica, a integridade dos dados ou a segurança operacional**. [Fonte: continuidade CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
+
+O sétimo risco é **ampliar alegações com base em testes não representativos**. Provas sintéticas podem validar regras de banco de dados; estudos de caso podem demonstrar um percurso real delimitado; revisões independentes podem sustentar determinado produto. Nenhuma dessas evidências autoriza, isoladamente, declarar confiabilidade científica global, segurança de produção ou operação contínua. As afirmações precisam corresponder ao objeto e ao contexto efetivamente avaliados.
+
+Como condições favoráveis ao desenvolvimento, destacam-se **um problema científico bem definido, equipe compatível com o método, protocolos claros e adaptáveis, fontes rastreáveis, produtos limitados e úteis, controles de revisão substanciais, transparência das limitações e expansão condicionada à validação**. Esses elementos não garantem êxito, mas tornam o projeto mais examinável e permitem reconhecer cedo quando uma hipótese ou compromisso não é sustentável.
+
+O guia apresentado neste capítulo não pretende transformar a experiência do OES em receita institucional universal. Seu objetivo é explicitar **quais decisões um grupo de pesquisa precisa tomar para converter interesse em evidências em capacidade científica verificável**, e como essas decisões podem ser organizadas sem reproduzir toda a complexidade acumulada pelo projeto original. A arquitetura do OES fornece um caso documentado, com avanços e limites transparentes; sua adaptação dependerá de avaliação crítica, das competências locais e das necessidades reais de cada instituição.
+
 
 # 16. Discussão e perspectivas
 
@@ -1661,4 +1814,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.14 — a apresentação e os Capítulos 1–14 constituem texto corrido desenvolvido nesta versão. Os Capítulos 15–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.15 — a apresentação e os Capítulos 1–15 constituem texto corrido desenvolvido nesta versão. O Capítulo 16 é um plano estrutural de redação, não conteúdo científico já concluído.*
