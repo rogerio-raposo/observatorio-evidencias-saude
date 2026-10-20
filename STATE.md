@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP211 — 2026-10-20**.
+- checkpoint vigente: **CP212 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5695,3 +5695,9 @@ Estado preservado:
 
 - A1–A4: roteiro em cinco quadros, Ficha dCBT-I N2 A2 (revisão independente ausente), Monitor M2 sintético separado, proveniência/limitações e evidências históricas. D0 documentação apenas; D1 preparo documental, D2 diferido.
 - 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes; BRG-06 BLOCKED; Fase 4 NOT_READY e Fase 5 NOT_STARTED. Sem novas execuções nem gates. STOP.
+
+
+### CP212 — Apresentação editorial D0 para pesquisadores (Documento 167)
+
+- A1–A4: revisão de clareza, texto editorial em cinco partes, conferência de rastreabilidade interna e quatro qualificações críticas (A2 publicação interna, Hwang fonte externa, GRADE OES provisória, Monitor sintético). Documento 167 é material preparatório, não revisão científica independente nem envio externo.
+- D1 permanece apenas documental e D2 diferido. 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY e Fase 5 NOT_STARTED. Sem SQL/Neon/CI, consultas factuais ou custos. STOP.
