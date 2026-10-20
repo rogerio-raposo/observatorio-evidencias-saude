@@ -1,0 +1,70 @@
+name: F4 PG18 LOGIN privilege and out-of-DB receipt simulation (no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-login-and-audit-receipts-synthetic.yml'
+      - 'scripts/oes_f4_pg18_login_roles_external_receipt_sim.py'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  disposable-pg18-login-and-receipts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_cp177_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_cp177_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_cp177_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout fixed SHA without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Prepare Python 3 and local PG18 client
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-cp177-evidence
+          python3 -m py_compile scripts/oes_f4_pg18_login_roles_external_receipt_sim.py
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee f4-pg18-cp177-evidence/client-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-cp177-evidence/server-version.txt
+          grep -q '^18' f4-pg18-cp177-evidence/server-version.txt
+      - name: Verify LOGIN, membership SET/INHERIT and CI runner out-of-DB audit receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_f4_pg18_login_roles_external_receipt_sim.py 2>&1 | tee f4-pg18-cp177-evidence/harness.log
+          grep -Fxq PG18_LOGIN_AUDIT_RECEIPTS_SYNTHETIC_LIMITED_PASS f4-pg18-cp177-evidence/result.txt
+      - name: Retain results on both success and failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-pg18-login-audit-receipts-cp177
+          path: f4-pg18-cp177-evidence/
+          if-no-files-found: warn
