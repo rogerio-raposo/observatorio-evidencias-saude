@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP173 — 2026-10-19**
+**CP174 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP173.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP174.md`
 
 Checkpoint anterior:
 
-`CP172`
+`CP173`
 
 Status:
 
@@ -457,3 +457,13 @@ em **Modo Continuidade**.
 - contraprova de desabilitação de triggers 034 e 036 por **superusuário do ambiente descartável**: registros inválidos confirmados persistem após reabilitação; não prova exploração por roles de produção;
 - Documento 129 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP173.md` preservam 36 UNREVIEWED / 0 pós-condições aprovadas, BRG-03/06/07/08/09 pendentes; nenhum recurso/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo bloco sob `Prossiga`: matriz de suficiência de evidências e risco de privilégio/DDL sem ativação de catálogos, modo alto, STOP.
+
+
+## 2026-10-19 — Matriz provisória bloqueante 034–036 (Documento 130 / CP174)
+
+- Freshness Gate CP173/main `9d39071800343151b917ea7d00862f12f8c00f4a` = identical, 0 drift;
+- matriz em `docs/governance/reconciliation/f4-034-036-evidence-sufficiency-matrix-draft.json`: 3 migrations, **36 controles `NOT_COLLECTED`**, 0 pós-condições operacionais aprovadas, 0 revisões humanas e nenhum replay autorizado;
+- run estático `39357315282`, job `118414984671`, `completed/success`, commit `bce4b359c5658ce94342b457cd79b06f3bab6b32`, **12/12 testes OK**, sem execução SQL; artifact `12235633344` SHA ZIP `6db9387eb7b10476d03ba5403f6b145510f4bbda699da8163b9459c8c7959537`;
+- Documento 130 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP174.md` publicados; política 30 e catálogo principal 36 UNREVIEWED inalterados;
+- BRG-03/06/07/08/09 pendentes, nenhum recurso/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo `Prossiga` em modo alto: plano/teste PG18 descartável de privilégios mínimos, DDL audit e controles de trigger, sem liberação operacional. STOP.
