@@ -5231,3 +5231,8 @@ Documentos:
 ## 2026-10-20 — Apresentação editorial D0 (Documento 167 / CP212)
 
 - Consolidada narrativa externa proposta com rastreabilidade interna, qualificações sobre publicação A2/GRADE/estimativa externa e distinção do Monitor sintético; sem envio, avaliação científica ou execução. STOP.
+
+
+## 2026-10-20 — Apresentação executiva D0 (Documento 168 / CP213)
+
+- Consolidada versão de duas páginas conceituais para apreciação do proprietário e possível interlocução futura com pesquisadores, mantendo ressalvas científicas e operacionais. Nenhum envio externo, revisão científica independente ou execução. STOP.
