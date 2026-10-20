@@ -1,0 +1,382 @@
+{
+  "schema_version": "oes.f4.temporal-evidence-sufficiency.draft.v1",
+  "status": "DRAFT_ONLY_ALL_GATES_BLOCKED",
+  "source_checkpoint": "CP173",
+  "canonical_manifest": "database/f4-neon-sandbox-schema-migration-manifest.txt",
+  "canonical_postcondition_catalog": "database/f4-reconciliation-postconditions-draft.json",
+  "scope": "Sufficiency checklist proposal only. Not a runtime reconciler or migration authorization.",
+  "governance_only": true,
+  "neon_accessed": false,
+  "neon_write_authorized": false,
+  "reviewed_migrations": 0,
+  "approved_postconditions": 0,
+  "automatic_reconciliation_allowed": false,
+  "automatic_replay_allowed": false,
+  "operational_runner_authorized": false,
+  "evaluation_policy": {
+    "decision": "BLOCKED_REQUIRES_HUMAN_REVIEW",
+    "insufficient_or_missing_evidence": "uncertain_requires_reconciliation",
+    "unresolved_drift": "partial_or_drift_requires_manual_decision",
+    "unknown_commit": "never_infer_applied_never_auto_retry",
+    "trigger_reenabled": "never_treat_as_retroactive_validation",
+    "privileged_ddl_without_audit": "BLOCKED",
+    "human_review_required": true,
+    "backup_restore_required": true
+  },
+  "migrations": [
+    {
+      "ordinal": 34,
+      "entrypoint": "database/034_temporal_observation_activation_chronology.sql",
+      "review_status": "UNREVIEWED",
+      "fully_applied_verified": false,
+      "automatic_reconciliation_allowed": false,
+      "automatic_replay_allowed": false,
+      "required_evidence": [
+        {
+          "id": "source_identity",
+          "kind": "file",
+          "need": "Manifest ordinal, immutable source SHA-256 and reviewed dependency closure; ensure no source drift",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "transaction_record",
+          "kind": "ledger",
+          "need": "Correlate durable prepared intent, run ID, immutable attempt journal, SQL hash and any applied receipt; classify unknown commit conservatively",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "catalog_dependency",
+          "kind": "catalog",
+          "need": "Compare schema, signature, dependencies and object owner/ACL with reviewed fixed-commit expectations",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "historical_integrity",
+          "kind": "data",
+          "need": "Inspect all applicable preexisting rows, including those written while guards were disabled, and record unresolved anomalies",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "privilege_separation",
+          "kind": "security",
+          "need": "Independently test owner/migrator/runtime roles, revoke unauthorized ALTER/DROP/SET ROLE/trigger bypass, verify privileged paths",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "ddl_audit",
+          "kind": "audit",
+          "need": "Correlate append-only external DDL/role activity audit, disabled-trigger windows, restoration and privileged changes",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "restore_provenance",
+          "kind": "recovery",
+          "need": "Verify separate backup and restore evidence plus observable pre/post checkpoint and rollback/forward-fix plan",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "independent_review",
+          "kind": "governance",
+          "need": "Human PostgreSQL/security and OES domain reviewer approval tied to evidence hash; separate owner authorization",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "activation_function",
+          "kind": "function",
+          "need": "Exact pg_get_functiondef/identity args/return/volatility and function-body SHA-256 for maintenance.assert_temporal_epoch_activation_chronology()",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "activation_trigger",
+          "kind": "trigger",
+          "need": "tr_temporal_epoch_activation_chronology bound to temporal_observation_epoch BEFORE UPDATE OF epoch_status,started_at; verify tgenabled and def fingerprint",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "epoch_history",
+          "kind": "data",
+          "need": "Audit current and historical epoch activated_at/started_at, first materialized opportunity, authority at started_at and invalidating deviations",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "interrupted_replay",
+          "kind": "fault",
+          "need": "Differentiate first-install, re-execution with DROP committed but trigger absent, and repaired state; no blind replay",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        }
+      ]
+    },
+    {
+      "ordinal": 35,
+      "entrypoint": "database/035_temporal_observation_activation_preflight.sql",
+      "review_status": "UNREVIEWED",
+      "fully_applied_verified": false,
+      "automatic_reconciliation_allowed": false,
+      "automatic_replay_allowed": false,
+      "required_evidence": [
+        {
+          "id": "source_identity",
+          "kind": "file",
+          "need": "Manifest ordinal, immutable source SHA-256 and reviewed dependency closure; ensure no source drift",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "transaction_record",
+          "kind": "ledger",
+          "need": "Correlate durable prepared intent, run ID, immutable attempt journal, SQL hash and any applied receipt; classify unknown commit conservatively",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "catalog_dependency",
+          "kind": "catalog",
+          "need": "Compare schema, signature, dependencies and object owner/ACL with reviewed fixed-commit expectations",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "historical_integrity",
+          "kind": "data",
+          "need": "Inspect all applicable preexisting rows, including those written while guards were disabled, and record unresolved anomalies",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "privilege_separation",
+          "kind": "security",
+          "need": "Independently test owner/migrator/runtime roles, revoke unauthorized ALTER/DROP/SET ROLE/trigger bypass, verify privileged paths",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "ddl_audit",
+          "kind": "audit",
+          "need": "Correlate append-only external DDL/role activity audit, disabled-trigger windows, restoration and privileged changes",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "restore_provenance",
+          "kind": "recovery",
+          "need": "Verify separate backup and restore evidence plus observable pre/post checkpoint and rollback/forward-fix plan",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "independent_review",
+          "kind": "governance",
+          "need": "Human PostgreSQL/security and OES domain reviewer approval tied to evidence hash; separate owner authorization",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "preflight_functions",
+          "kind": "function",
+          "need": "Exact signatures and SHA-256 of both temporal_activation_preflight and temporal_activation_preflight_state bodies, volatility STABLE and return types",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "readonly_semantics",
+          "kind": "behavior",
+          "need": "Synthetic FAIL/WAIT/PASS coverage and no unintended DML; determine any data-dependent mismatch in preflight checks",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "mixed_function_versions",
+          "kind": "fault",
+          "need": "Detect first function replaced while second remains old or absent after commit gap; compare both definitions as one logical pair",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "dependent_status",
+          "kind": "catalog",
+          "need": "Verify privileges/dependencies on epoch, plan, source and measurement tables and on authority/connectivity helper functions",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        }
+      ]
+    },
+    {
+      "ordinal": 36,
+      "entrypoint": "database/036_temporal_first_measurement_semantics.sql",
+      "review_status": "UNREVIEWED",
+      "fully_applied_verified": false,
+      "automatic_reconciliation_allowed": false,
+      "automatic_replay_allowed": false,
+      "required_evidence": [
+        {
+          "id": "source_identity",
+          "kind": "file",
+          "need": "Manifest ordinal, immutable source SHA-256 and reviewed dependency closure; ensure no source drift",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "transaction_record",
+          "kind": "ledger",
+          "need": "Correlate durable prepared intent, run ID, immutable attempt journal, SQL hash and any applied receipt; classify unknown commit conservatively",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "catalog_dependency",
+          "kind": "catalog",
+          "need": "Compare schema, signature, dependencies and object owner/ACL with reviewed fixed-commit expectations",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "historical_integrity",
+          "kind": "data",
+          "need": "Inspect all applicable preexisting rows, including those written while guards were disabled, and record unresolved anomalies",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "privilege_separation",
+          "kind": "security",
+          "need": "Independently test owner/migrator/runtime roles, revoke unauthorized ALTER/DROP/SET ROLE/trigger bypass, verify privileged paths",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "ddl_audit",
+          "kind": "audit",
+          "need": "Correlate append-only external DDL/role activity audit, disabled-trigger windows, restoration and privileged changes",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "restore_provenance",
+          "kind": "recovery",
+          "need": "Verify separate backup and restore evidence plus observable pre/post checkpoint and rollback/forward-fix plan",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "independent_review",
+          "kind": "governance",
+          "need": "Human PostgreSQL/security and OES domain reviewer approval tied to evidence hash; separate owner authorization",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "novelty_function",
+          "kind": "function",
+          "need": "Exact pg_get_functiondef/identity args/return/volatility and function-body SHA-256 for maintenance.assert_temporal_first_measurement_semantics()",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "first_event_trigger",
+          "kind": "trigger",
+          "need": "tr_temporal_event_first_measurement_semantics bound to temporal_measurement_event BEFORE INSERT, tgenabled and exact pg_get_triggerdef",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "event_history",
+          "kind": "data",
+          "need": "Audit prior completed events per epoch_source in deterministic order, novelty_state, new_identifier_count, failure_attribution, and immutable-event enforcement",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        },
+        {
+          "id": "interrupted_replay",
+          "kind": "fault",
+          "need": "Differentiate DROP committed / missing guard and first invalid event inserted while disabled; restoring trigger alone is insufficient",
+          "verification": "NOT_COLLECTED",
+          "independent_reviewer": null,
+          "evidence_artifact": null,
+          "reviewed_sha256": null
+        }
+      ]
+    }
+  ]
+}
