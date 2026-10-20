@@ -4962,3 +4962,12 @@ Documentos:
 - primeiro run `39355352898` FAILED em fixture incompatível de calendário SLA pós-036, sem erro de migration; corrigido na preparação do cenário;
 - run `39355448709`, job `118409046787`, completed/success, SHA testado `d0c378a99b36f331bc1f5df627cd024448a421e1`, PostgreSQL 18.6, **30/30 PASS**, artifact `12235255740`, ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442` conferido;
 - provas limitadas a dados/autoridade artificiais, não ativação factual, ciência ou pós-condições formais; Documento 128 e CP172, catálogo 36 UNREVIEWED / zero aprovadas, sem operações Neon, B1R1 expirado e Fase 5 não iniciada; STOP.
+
+
+## 2026-10-19 — Cenários negativos 034–036 e triggers desabilitados no PG18 (Documento 129 / CP173)
+
+- Freshness Gate CP172/main `f2f89ed65eff43ca38b482506c7106048b805aa4` identical, 0 drift;
+- CI sintética isolada publicada para autoridade ausente/conflitante, conectividade bloqueada, oportunidades incompletas, desvio posterior e controle negativo administrativo de triggers 034/036;
+- run `39356550539`, job `118412553302`, completed/success, SHA testado `b5f0eb3c0b3d95b7e864c3fdbbfb05dfc7baf997`, 27/27 PASS; artifact `12235317764`, ZIP SHA256 `dec06e6b79afe9eb34902e804578eb10aa28fe04d19dab774f4dd6a3ae5fec34`;
+- guards de ausência/conflito/fonte bloqueada/oportunidade incompleta recusaram autorizações; desativar triggers 034/036 por superusuário **somente sintético** permitiu bypass e reabilitação não corrigiu registros retroativamente; reforça BRG-03 ainda pendente;
+- Documento 129, CP173 e proibição de reconciliação automática mantida: catálogo principal 36 UNREVIEWED e zero condições aprovadas; Neon intocado, B1R1 não executado, Fase 5 não iniciada. STOP.
