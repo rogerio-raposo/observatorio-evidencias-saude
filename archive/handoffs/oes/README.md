@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP211 — 2026-10-20**
+**CP212 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP211.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP212.md`
 
 Checkpoint anterior:
 
-`CP210`
+`CP211`
 
 Status:
 
@@ -566,3 +566,5 @@ em **Modo Continuidade**.
 - **CP210 — 2026-10-20:** aprovação expressa da prioridade documental D0/D1, D2 diferido (Documento 165); nenhum gate/ato operacional autorizado. STOP.
 
 - **CP211 — 2026-10-20:** Documento 166 consolida roteiro demonstrativo D0: caso real N2 e Monitor M2 sintético, com limites e evidências; sem execução. STOP.
+
+- **CP212 — 2026-10-20:** Documento 167 consolida versão editorial D0 e rastreabilidade para pesquisadores, sem divulgação ou execução. STOP.
