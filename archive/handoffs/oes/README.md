@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP176 — 2026-10-19**
+**CP177 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP176.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP177.md`
 
 Checkpoint anterior:
 
-`CP175`
+`CP176`
 
 Status:
 
@@ -487,3 +487,14 @@ em **Modo Continuidade**.
 - Documento 132 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP176.md`; nenhum banco acessado neste ensaio, nenhum serviço pago ou log externo habilitado, Neon intocado;
 - catálogo principal 36 UNREVIEWED/0 pós-condições aprovadas; BRG-03/06/07/08/09 sem liberação, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo checkpoint após `Prossiga`: PG18 descartável para LOGIN/SET ROLE/INHERIT, elevação e prova simulada de trilha fora de transação, modo alto, STOP.
+
+
+## 2026-10-20 — LOGIN e ownership sob SET ROLE, recibos simulados fora de transação (Documento 133 / CP177)
+
+- Freshness Gate CP176/main `1bed3de41ebc9dd5a670e867d38bc3c2e6825669` identical, 0 drift;
+- run inicial `39404590522` FAILED por role owner sem USAGE de schema no fixture, corrigido prospectivamente;
+- run PG18 descartável `39404695131`, job `118567684999`, completed/success em `39ad812f55fd7b79c70f80766f0a85c3e9ea713c`, **41/41 PASS**, artifact `12256624023` ZIP SHA `e40f13a2254d9e8d41e14b87b3c758f6e2f1a0200e1f35a3d96d6aee240c014f`;
+- migrator com SET FALSE/INHERIT FALSE não escalou, enquanto login elevado com SET TRUE assumiu owner via SET ROLE e desabilitou/reabilitou guard 034 somente no CI;
+- oito recibos encadeados fora da transação SQL mas **no próprio runner**, cinco adulterações simuladas detectadas, não constituindo auditoria externa independente;
+- Documento 133 e `archive/handoffs/oes/OES_Continuidade_2026-10-20_CP177.md`, catálogo principal 36 UNREVIEWED / 0 aprovadas, BRG-03/06/07/08/09 pendentes, nenhum Neon nem serviço pago, B1R1 expirado e Fase 5 não iniciada;
+- próximo `Prossiga`: testar ADMIN FALSE e membership indireta, simular falha de coleta/anchor adulterado, apenas PG18 descartável, modo alto, STOP.
