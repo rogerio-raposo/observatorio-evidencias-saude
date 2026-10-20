@@ -108,16 +108,16 @@ def main():
               AND NOT rolcanlogin AND NOT rolsuper AND NOT rolcreaterole AND NOT rolcreatedb;""")=="3",
             "all_three_roles_nonlogin_nonsuperuser")
     require(val("""SELECT pg_has_role('oes_ci_runtime','oes_ci_schema_owner','MEMBER')::text
-               ||','||pg_has_role('oes_ci_migrator','oes_ci_schema_owner','MEMBER')::text;""")=="f,f",
+               ||','||pg_has_role('oes_ci_migrator','oes_ci_schema_owner','MEMBER')::text;""")=="false,false",
             "runtime_and_migrator_not_schema_owner_members")
     require(val("""SELECT has_schema_privilege('oes_ci_runtime','maintenance','CREATE')::text
-      ||','||has_schema_privilege('oes_ci_migrator','maintenance','CREATE')::text;""")=="f,f",
+      ||','||has_schema_privilege('oes_ci_migrator','maintenance','CREATE')::text;""")=="false,false",
             "no_create_in_maintenance_schema")
     require(val("""SELECT has_table_privilege('oes_ci_runtime',
-      'maintenance.temporal_observation_epoch','SELECT')::text;""")=="t",
+      'maintenance.temporal_observation_epoch','SELECT')::text;""")=="true",
             "explicit_read_only_grant_for_runtime")
     require(val("""SELECT has_table_privilege('oes_ci_migrator',
-      'maintenance.temporal_measurement_event','SELECT')::text;""")=="t",
+      'maintenance.temporal_measurement_event','SELECT')::text;""")=="true",
             "explicit_read_only_grant_for_migrator")
     require(val("""SET ROLE oes_ci_runtime;
       SELECT current_user||':'||count(*) FROM maintenance.temporal_observation_epoch;""")
@@ -155,7 +155,7 @@ def main():
     deny("migrator_cannot_create_in_maintenance_schema",
          """SET ROLE oes_ci_migrator;
            CREATE TABLE maintenance.synthetic_forbidden_ci_only (id integer);""")
-    require(val("SELECT to_regclass('maintenance.synthetic_forbidden_ci_only') IS NULL;")=="t",
+    require(val("SELECT to_regclass('maintenance.synthetic_forbidden_ci_only') IS NULL;")=="true",
             "forbidden_maintenance_table_not_created")
     require(trigger_state("temporal_observation_epoch",
                           "tr_temporal_epoch_activation_chronology")=="O",
@@ -213,7 +213,7 @@ def main():
     require(val("""SELECT has_table_privilege('oes_ci_runtime',
           'oes_ci_ddl_audit.ddl_events','SELECT')::text
         ||','||has_table_privilege('oes_ci_migrator',
-          'oes_ci_ddl_audit.ddl_events','INSERT')::text;""")=="f,f",
+          'oes_ci_ddl_audit.ddl_events','INSERT')::text;""")=="false,false",
             "no_runtime_or_migrator_access_to_audit_table")
     # Privileged action on genuine 034 guard, on synthetic disposable CI DB.
     sql("""ALTER TABLE maintenance.temporal_observation_epoch
