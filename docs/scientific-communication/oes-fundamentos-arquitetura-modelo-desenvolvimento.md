@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.11 (manuscrito em elaboração)  
+**Versão editorial:** 0.12 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–11 redigidos; Capítulos 12–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–12 redigidos; Capítulos 13–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -1251,17 +1251,133 @@ Em síntese, o OES demonstra que é possível elaborar uma **arquitetura tecnol�
 
 # 12. Estratégia de desenvolvimento do OES
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 12.1. Abordagem incremental
 
-- **12.1. Abordagem incremental:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.2. Fase 0 — Concepção e fundamentos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.3. Fase 1 — Manual Metodológico:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.4. Fase 2 — Modelo de Dados da Evidência:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.5. Fase 3 — Produtos do Observatório:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.6. Fase 4 — Protocolo de Atualização:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.7. Fase 5 — Automação e IA:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.8. Fase 6 — Validação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **12.9. Fase 7 — Operação contínua:** texto a desenvolver a partir da documentação canônica pertinente.
+O Observatório de Evidências em Saúde (OES) foi estruturado como um projeto de desenvolvimento **incremental, orientado por decisões metodológicas e evidências verificáveis**. Em lugar de começar pela disponibilização de uma plataforma e definir posteriormente os métodos que justificariam seus resultados, o projeto organizou um percurso que parte da concepção científica, passa pelos protocolos e pelo modelo de dados, especifica os produtos, formaliza sua atualização e reserva etapas posteriores para automação, validação e operação continuada. [Fonte: Documento 00 — Concepção e fases propostas](../governance/00-documento-de-concepcao.md).
+
+Essa organização distribui o trabalho em **oito fases, numeradas de 0 a 7**. A numeração não deve ser interpretada como escala de maturidade científica obtida automaticamente. A conclusão documental de uma fase não garante que seu conteúdo tenha sido validado independentemente; a execução de testes técnicos não comprova desempenho científico; e a existência de artefatos computacionais antes da Fase 5 não significa que esta tenha sido iniciada formalmente. Cada fase possui escopo e critérios próprios, cuja situação precisa ser avaliada a partir dos registros canônicos.
+
+A **metodologia antes da automação** constitui a principal restrição de arquitetura. A decisão preserva a prioridade da pergunta científica e da unidade correta de evidência sobre as conveniências das ferramentas. Outra decisão importante é separar **produto, profundidade metodológica, regime de manutenção e garantia científica**, pois a aparente completude de um relatório não dispensa revisão qualificada nem transforma testes automatizados em validação externa.
+
+O desenvolvimento também produziu uma disciplina de **continuidade e registro de decisões**. O repositório GitHub é a fonte canônica de documentos e artefatos; o arquivo [STATE.md](../../STATE.md) apresenta o estado do projeto; o [ponteiro de continuidade](../../archive/handoffs/oes/README.md) indica o checkpoint operacional vigente; e o histórico de alterações permite localizar decisões e respectivas versões. Checkpoints são registros de transição, não instrumentos que podem alterar isoladamente o significado dos protocolos.
+
+Essa estrutura é útil para uma iniciativa em evolução, mas possui custo de manutenção. O projeto reconheceu que um excesso de granularidade administrativa pode consumir esforço sem gerar ganho proporcional de segurança. Em outubro de 2026, adotou um **protocolo equilibrado de continuidade**, com verificações de estado antes de ações relevantes, atividades internas delimitadas e checkpoints persistentes concentrados nos marcos necessários. Posteriormente, a Fase 4 recebeu uma decisão explícita de **priorizar demonstração documental D0, preparar documentalmente D1 e diferir D2**, sem autorizar operações de maior risco, alterações de critérios científicos ou serviços pagos. [Fonte: continuidade CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
+
+Para este capítulo, os estados são apresentados **na data de referência de 20 de outubro de 2026**:
+
+| Fase | Finalidade principal | Estado documentado |
+|---|---|---|
+| **0** | Concepção e fundamentos | Base inicial consolidada; documentação passível de evolução |
+| **1** | Manual Metodológico | Base inicial dos Documentos 10–15 consolidada |
+| **2** | Modelo de Dados da Evidência | Concluída no nível de baseline arquitetural |
+| **3** | Produtos do Observatório | Concluída no escopo técnico e taxonômico definido |
+| **4** | Protocolo de Atualização | Em desenvolvimento; condições operacionais pendentes |
+| **5** | Automação e IA | Não iniciada formalmente |
+| **6** | Validação | Não iniciada formalmente |
+| **7** | Operação contínua | Não iniciada formalmente |
+
+A tabela sintetiza o estado corrente e **não declara encerramento científico global** das primeiras fases nem disponibilidade operacional das funções futuras. Uma baseline, um protocolo e um protótipo são resultados distintos e devem permanecer assim identificados. [Fonte: STATE — Estado das fases](../../STATE.md).
+
+### 12.2. Fase 0 — Concepção e fundamentos
+
+A Fase 0 estabeleceu os elementos necessários para responder **por que o OES deveria existir, que problemas científicos pretende enfrentar e quais princípios limitariam seu desenvolvimento**. O Documento 00 registrou missão, visão, objeto de análise, escopo inicial, princípios de transparência e independência, produtos previstos, papel auxiliar da IA e estratégia faseada de implantação. Documentos associados formularam a taxonomia das perguntas, os níveis de investigação e o protocolo de roteamento. [Fontes: Documento 00 — Concepção](../governance/00-documento-de-concepcao.md), [Documento 01 — Perguntas](../governance/01-taxonomia-perguntas.md) e [Documento 03 — Roteamento](../governance/03-roteamento-metodologico.md).
+
+Uma decisão estruturante foi definir que o **corpo de evidências pertinente à pergunta**, e não uma publicação isolada, constitui o objeto científico de análise. A partir disso, foram explicitadas as distinções entre estudo, relatório, resultado, síntese e avaliação de certeza. O projeto também recusou a ideia de uma hierarquia única de desenhos de estudo apropriada a todas as perguntas, reconhecendo diferenças entre investigação de intervenções, prognóstico, diagnóstico, segurança, prevalência, pesquisa qualitativa e sistemas de saúde.
+
+Outra escolha foi criar uma arquitetura de investigação proporcional, com profundidades **N0–N4** e regimes de manutenção **M0–M3** independentes. A concepção também separou **evidência, interpretação e recomendação**, impedindo que uma síntese fosse automaticamente apresentada como prescrição ou diretriz clínica. O método de roteamento passou a exigir justificativa explícita, sem uma pontuação numérica universal que escolhesse automaticamente o nível de investigação.
+
+Na data de referência, a documentação canônica registra a **base inicial de concepção consolidada**, mas não afirma que todos os seus pressupostos tenham sido validados por equipe externa. Isso significa que a fase forneceu um referencial suficientemente organizado para fundamentar as etapas seguintes, ao mesmo tempo que mantém princípios e definições sujeitos a crítica e aperfeiçoamento. Para uma iniciativa replicadora, o aprendizado é começar por uma **formulação científica clara do problema e de seus limites**, sem exigir que todas as especificações se tornem imutáveis.
+
+### 12.3. Fase 1 — Manual Metodológico
+
+A Fase 1 converteu os princípios gerais em **protocolos para produzir e avaliar evidências**. Sua base inicial é composta pelos Documentos 10 a 15: busca e recuperação da literatura; elegibilidade, triagem e seleção; avaliação de risco de viés; extração e estruturação de dados; síntese de evidências; e avaliação de certeza ou confiança. Os documentos descrevem procedimentos, distinções conceituais e instrumentos compatíveis com diferentes classes de pergunta. [Fonte: Documento 10 — Protocolo de busca, início do conjunto metodológico](../methodology/10-busca-recuperacao-evidencias.md).
+
+A organização metodológica parte da **pergunta operacional e de um protocolo prévio**, evitando que métodos sejam escolhidos retrospectivamente porque produziram respostas convenientes. Na recuperação, enfatiza a documentação de fontes, estratégias e datas e o reconhecimento de múltiplos relatos do mesmo estudo. Na seleção, distingue elegibilidade de qualidade metodológica. Na extração, separa valores originalmente relatados de resultados derivados. Na avaliação crítica, diferencia risco de viés dos estudos, certeza do corpo de evidências e aplicabilidade. Na síntese, exige justificar a comparabilidade dos resultados antes de combiná-los quantitativamente.
+
+O Manual estabelece ainda que **GRADE e GRADE-CERQual**, quando aplicáveis, não são etiquetas automáticas associadas a qualquer resultado. Os julgamentos devem considerar suas unidades científicas e seus domínios, com razões verificáveis. Do mesmo modo, ferramentas de risco de viés exigem uso coerente com o desenho de estudo e o instrumento específico, sem redução indiscriminada a um único escore de qualidade.
+
+A conclusão registrada para a fase é a **consolidação da base metodológica inicial**, e não uma demonstração de que cada protocolo tenha sido testado e validado empiricamente em todas as classes científicas previstas. A aplicação a casos reais, a avaliação por especialistas e a análise de desempenho permanecem necessárias. Para pesquisadores interessados em replicação, esta fase oferece **um conjunto de requisitos para examinar criticamente**, não uma metodologia cujo grau de validade já tenha sido demonstrado externamente em sua totalidade.
+
+### 12.4. Fase 2 — Modelo de Dados da Evidência
+
+A Fase 2 investigou **como representar computacionalmente o conhecimento sem perder distinções essenciais ao método científico**. O modelo conceitual identificou perguntas, investigações, buscas, estudos, publicações, resultados, sínteses, avaliações e produtos como objetos relacionados, porém distintos. O modelo lógico traduziu essas relações em identidades, entidades associativas, regras de integridade, proveniência e versionamento. [Fontes: Documento 20 — Modelo conceitual](../architecture/20-modelo-conceitual-dados.md) e [Documento 21 — Modelo lógico](../architecture/21-modelo-logico-dados.md).
+
+A arquitetura de referência, denominada **OES-H1**, reúne núcleo relacional canônico, estruturas documentais controladas, armazenamento de objetos e projeções derivadas. A baseline física **OES-P1** incorpora registro global de entidades, versionamento, entidades tipadas, vínculos relacionais, JSONB controlado, proveniência e relações de dependência. A escolha foi motivada pela necessidade de preservar identidade científica, correções, retratações e linhagem entre resultados e produtos.
+
+Essa etapa incluiu **provas de conceito e validações técnicas delimitadas**. Foram documentados os marcos GATE F2-A e F2-B, seguidos das provas PoC-S4 e PoC-S5. As baterias examinaram integridade referencial, estudo relacionado a múltiplos relatórios, sínteses com diferentes estudos, histórico de alterações, reconstrução de dados e extensões para casos como redes de comparação, predição e achados qualitativos. A matriz final registrou **15 dos 15 critérios de promoção validados**, no escopo da avaliação arquitetural.
+
+Em **4 de outubro de 2026**, o [Documento 38](../architecture/38-decisao-promocao-fechamento-fase2.md) formalizou a promoção de OES-P1 a **baseline arquitetural da Fase 2** e encerrou a fase nesse nível. A decisão esclarece que a baseline serve de referência para extensões posteriores e deve evoluir por alterações controladas. Ela **não congelou um esquema final de produção** e **não selecionou PostgreSQL como tecnologia definitiva de implantação**, embora o tenha utilizado e validado como implementação de referência para desenvolvimento e provas de conceito.
+
+O encerramento dessa fase demonstra maturidade documental e técnica específica, **não validade científica das conclusões eventualmente processadas pelo banco**. Uma estrutura pode preservar corretamente um julgamento metodológico incorreto; a avaliação de sua qualidade depende de competências e procedimentos distintos dos testes de integridade. O principal resultado transferível da Fase 2 é um **contrato de dados fundado no significado científico dos objetos**, não a exigência de replicar exatamente a mesma infraestrutura.
+
+### 12.5. Fase 3 — Produtos do Observatório
+
+A Fase 3 tratou da **transformação de investigações rastreáveis em modalidades de comunicação e manutenção do conhecimento**. O [Documento 40](../products/40-taxonomia-arquitetura-produtos.md) formalizou nove produtos em três famílias: cinco produtos de investigação — Evidence Scan, Resposta de Evidência, Ficha de Evidência, Síntese Rápida e Revisão de Evidências —, dois produtos analíticos transversais — Mapa de Evidências e Overview de Revisões — e dois produtos de manutenção — Monitor e Alerta de Evidência.
+
+Além da taxonomia, foram desenvolvidos em diferentes extensões **contratos de dados, estruturas de apresentação, renderizadores, validadores e testes**. As trilhas iniciais N0, N1 e N2 incluíram casos baseados em literatura científica real, com resultados distintos segundo a garantia obtida. No N2, a Ficha inicial obteve **A2 e publicação interna**, sem revisão especializada independente; uma Resposta N1 também alcançou **A2 e publicação interna**. O Evidence Scan N0 foi concluído como **artefato interno A1, não publicado**, com finalidade exploratória e de roteamento. [Fonte: STATE — Resultados da Fase 3](../../STATE.md).
+
+O desenvolvimento de uma **Síntese Rápida N3** trouxe um aprendizado metodológico especialmente relevante: a implementação do contrato e os testes técnicos tiveram resultados satisfatórios, mas o caso experimental permaneceu **A0 e não publicável** após verificações adversariais que identificaram cobertura bibliográfica insuficiente para a modalidade formal. O registro impediu que a apresentação da síntese como produto final fosse autorizada com base apenas na capacidade técnica. Para **N4**, foram definidos contrato e template com testes, mas o **Infrastructure Readiness Gate** para um caso real formal permaneceu **NOT_READY** por limitações de cobertura e de disponibilidade de revisores qualificados.
+
+As famílias de Mapa, Overview, Monitor e Alerta também receberam especificações e trilhas técnicas no escopo definido para a fase. Isso não implica que existam casos científicos reais validados para todas essas modalidades nem que os mecanismos de monitoramento tenham operado continuamente com fontes factuais. O Monitor M2 possui **testes sintéticos históricos**, que não comprovam vigilância real sustentada.
+
+A **Fase 3 está formalmente concluída no repositório**, em seu escopo técnico, taxonômico e documental. Essa conclusão não equivale à afirmação de que **nove produtos estão em produção**. A diferença é central: a fase estabeleceu padrões e demonstrou determinados mecanismos, enquanto casos reais, controles humanos de especialidade e operação regular permanecem com níveis de prontidão distintos.
+
+Para outras iniciativas, a Fase 3 sugere começar por um **conjunto restrito de produtos de maior utilidade**, com finalidade e profundidade explícitas, evitando multiplicar formatos sem capacidade científica ou operacional correspondente. A Ficha persistente do OES é uma escolha arquitetural preferencial, mas não precisa ser reproduzida sem adaptações institucionais.
+
+### 12.6. Fase 4 — Protocolo de Atualização
+
+A Fase 4 busca transformar a ideia geral de atualidade em **um processo controlado de detecção, avaliação, decisão e eventual alteração de versões científicas**. Sua baseline conceitual distingue versão científica, avaliação de atualidade (*currentness*), regime de manutenção M0–M3 e estados operacionais de Monitor e Alerta. Estabelece também que **um sinal novo não é uma conclusão nova**, que mudanças materiais exigem workflow científico e que uma atualização não herda automaticamente a garantia da versão anterior. [Fonte: Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+Durante essa fase, foram desenvolvidos **contratos e mecanismos técnicos para manutenção, sinais, oportunidades de acompanhamento, tratamento de falhas, regras de versionamento e testes com dados sintéticos**. Parte das atividades examinou comportamentos em ambientes de PostgreSQL descartáveis e integrações experimentais. A documentação também registra uma tentativa de preparar medições factuais com fontes científicas específicas, posteriormente bloqueada por condições de prontidão e infraestrutura. O período experimental **B1R1 expirou sem execução**, não podendo ser apresentado como ensaio factual bem-sucedido de monitoramento contínuo. [Fonte: checkpoint CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
+
+O estado de outubro de 2026 preserva **pendências técnicas e de governança**. O checkpoint CP213 registra, para a liberação operacional pretendida, **36 migrações em estado `UNREVIEWED`**, nenhuma pós-condição aprovada, **36 requisitos de evidência dos componentes 034–036 não coletados** e **12 controles de papéis pendentes**, além de bloqueios e verificações parciais de prontidão. Esses números são um retrato de requisitos de execução e aceitação, **não demonstração de que cada migração possua defeito**, e tampouco anulam os testes históricos realizados em ambientes sintéticos.
+
+A distinção entre **D0, D1 e D2** foi adotada para recuperar proporcionalidade. **D0** prioriza explicação científica, contratos e provas sintéticas ou documentais no escopo autorizado. **D1** compreende preparação de um piloto persistente, ainda **somente documental** no mandato vigente. **D2**, que envolve operações factuais ou automação autoritativa de maior risco, permanece diferido. A orientação explícita não autoriza novos serviços pagos, mudanças em *gates*, execuções SQL/Neon ou consultas externas apenas porque há documentação disponível para esses percursos.
+
+O regime **M3 — evidência viva** permanece formalmente **bloqueado**. Seu uso exigiria capacidade sustentável para localizar, triar e avaliar novas evidências, além dos contratos físicos, revisão metodológica, controles humanos e autorizações correspondentes. A existência de um protocolo de atualização ou de testes sintéticos com o Monitor não equivale a satisfazer esses requisitos.
+
+Na data de referência, portanto, a **Fase 4 está em desenvolvimento e `NOT_READY` para a operação factual pretendida**. O próximo marco não é, automaticamente, uma execução técnica: depende das decisões de governança e das condições de prontidão aplicáveis. O projeto optou, nesse período, por **comunicação e preparação documental proporcionais**, sem relaxar o controle científico ou operacional.
+
+### 12.7. Fase 5 — Automação e IA
+
+A Fase 5 foi prevista para **integrar e avaliar a automação do percurso científico definido nas fases anteriores**. Seu objetivo potencial é apoiar tarefas repetitivas, promover interoperabilidade entre fontes e registros, executar verificações mecânicas, preparar produtos e auxiliar na detecção de novos sinais. A tecnologia deverá implementar procedimentos justificados, conservando suas limitações e a rastreabilidade do trabalho realizado.
+
+O projeto já utiliza IA como **instrumento auxiliar de concepção, redação, verificação documental e desenvolvimento técnico**. Também possui provas de conceito com código, banco de dados e renderização produzidas em fases anteriores. Entretanto, essas atividades **não constituem início formal da Fase 5**, cujo escopo de produção, governança, indicadores e critérios de aceitação ainda deverá ser estabelecido.
+
+A automação prevista precisará diferenciar tarefas de **baixo risco e verificação objetiva**, como validação de formatos, de tarefas científicas de maior risco, como seleção de estudos, avaliação de viés ou certeza e interpretação da materialidade de novas evidências. A IA poderá propor decisões ou organizar informação, mas não será considerada fonte primária da evidência nem substituta automática de revisão especializada. [Fonte: Documento 04 — Limites de autonomia e revisão](../governance/04-governanca-garantia-revisao.md).
+
+A implantação exigirá selecionar processos em que o benefício seja demonstrável e estabelecer **indicadores de completude, erros críticos, tempo, custo, rastreabilidade e necessidade de correção humana**. Não será suficiente comprovar que determinado modelo gera texto plausível ou que um conjunto de testes de software passou. A utilização em contextos de pesquisa ou decisão requer comparação metodológica apropriada, supervisão e transparência sobre falhas e incerteza.
+
+**Estado factual em 20 de outubro de 2026: Fase 5 não iniciada formalmente.** Sua descrição representa uma perspectiva de desenvolvimento, não autorização implícita para contratar serviços, acionar infraestrutura persistente ou promover autonomia decisória de IA.
+
+### 12.8. Fase 6 — Validação
+
+A Fase 6 é destinada a **submeter o modelo do OES a avaliação científica e metodológica externa em condições adequadas**. O objeto dessa validação não se limita ao software: inclui pertinência das perguntas, adequação das buscas, consistência de triagem, fidelidade da extração, uso correto de instrumentos de risco de viés, síntese dos resultados, julgamento de certeza, aplicabilidade e clareza das conclusões.
+
+A avaliação poderá utilizar **questões reais selecionadas por critérios explícitos**, comparações com revisões metodologicamente robustas e diretrizes reconhecidas, análises independentes de concordância e discussão de divergências. Essas comparações não devem considerar uma síntese externa como referência perfeita e definitiva sem avaliar também sua qualidade, sua data de corte e sua pertinência à pergunta operacional. Divergências podem resultar de atualização temporal, diferenças legítimas de escopo ou erro de qualquer uma das avaliações; precisam ser investigadas, não simplesmente classificadas como acertos e falhas automáticas.
+
+Uma estratégia plausível compreende **revisão por pesquisadores e metodologistas com competências complementares**, amostras representativas das classes de perguntas inicialmente priorizadas e análise de erros por etapa. A comparação da atuação da IA com julgamentos humanos qualificados poderá identificar tarefas passíveis de maior automação e situações em que a verificação especializada permanece indispensável. Em investigações N3 e N4, os requisitos humanos de execução e garantia devem continuar atendidos, independentemente dos resultados de automação.
+
+O êxito da fase não deveria ser definido apenas pelo número de documentos gerados, pelo sucesso da integração contínua ou pela aprovação editorial do proprietário. Critérios relevantes incluem **reprodutibilidade das decisões, concordância metodológica, rastreabilidade, detecção de erros materiais, comunicação da incerteza e limites de generalização**. Eventuais resultados positivos precisarão vir acompanhados da descrição do desenho de validação e de suas limitações.
+
+**Estado factual em 20 de outubro de 2026: Fase 6 não iniciada formalmente.** Consequentemente, **não é correto afirmar que o OES já foi cientificamente validado por equipe independente**, embora existam protocolos consolidados, produtos internos e testes técnicos. Essa distinção é particularmente importante para pesquisadores que avaliarão a proposta e poderão sugerir adaptações ou estudos de validação futuros.
+
+### 12.9. Fase 7 — Operação contínua
+
+A Fase 7 corresponde à passagem de um conjunto de protocolos, modelos e mecanismos testados para **um serviço científico sustentado**, capaz de receber demandas, produzir produtos dentro de suas competências e manter procedimentos confiáveis de atualização, comunicação e governança. Trata-se de uma finalidade distinta tanto de uma prova de conceito quanto de um piloto experimental isolado.
+
+Uma operação contínua exigiria **escopo de serviço e público-alvo definidos**, equipe com competências compatíveis com os produtos oferecidos, infraestrutura segura, controle de permissões, fontes bibliográficas com acesso estável, políticas de versionamento e atualização, mecanismos de resposta a falhas e sustentabilidade financeira e organizacional. Esses requisitos precisam ser dimensionados de acordo com a demanda real e com a criticidade das conclusões, não a partir de uma promessa genérica de automação integral.
+
+Também seria necessário demonstrar a **continuidade do processo científico**. Não basta que um Monitor consulte fontes em um dia: deve ser possível documentar ciclos concluídos e incompletos, localizar novos estudos, avaliar materialidade, revisar resultados, aplicar a garantia adequada e comunicar versões sem apagar o histórico. Um produto N2 publicado internamente não prova, por si só, que a estrutura responsável por sua atualização seja operacional.
+
+A expansão poderá ser **progressiva e proporcional**. Um observatório pode começar com poucas perguntas, produtos focalizados e manutenção M0/M1, ampliando a profundidade e a frequência somente após comprovar cobertura de fontes, capacidade de revisão e adequação dos métodos. Essa possibilidade não requer que todos os produtos ou regimes sejam ativados ao mesmo tempo. Ao contrário, restringir a carteira inicial pode proteger qualidade e sustentabilidade.
+
+A governança operacional deve ainda manter a separação entre **decisões científicas, autorizações administrativas e permissões tecnológicas**. Sistemas automatizados não devem possuir capacidade irrestrita para publicar conclusões ou alterar critérios de garantia. A proteção de dados, as licenças de conteúdo, a recuperação de incidentes e os custos de operação precisam ser tratados como condições demonstráveis antes da abertura do serviço ao público.
+
+**Estado factual em 20 de outubro de 2026: Fase 7 não iniciada formalmente.** O OES não deve ser apresentado como serviço público contínuo de vigilância ou plataforma cientificamente homologada. A existência de documentação extensa e de protótipos não altera esse limite.
+
+A trajetória do OES ilustra, assim, **uma estratégia de desenvolvimento orientada por objetos científicos, validações técnicas delimitadas e decisões progressivas de governança**. Sua contribuição potencial a outras iniciativas está na clareza das distinções entre o que foi **concebido, especificado, implementado, testado, revisado cientificamente e operacionalizado**. O cumprimento de uma dessas etapas não presume o cumprimento das demais.
+
 
 # 13. Validação científica, metodológica e tecnológica
 
@@ -1328,4 +1444,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.11 — a apresentação e os Capítulos 1–11 constituem texto corrido desenvolvido nesta versão. Os Capítulos 12–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.12 — a apresentação e os Capítulos 1–12 constituem texto corrido desenvolvido nesta versão. Os Capítulos 13–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
