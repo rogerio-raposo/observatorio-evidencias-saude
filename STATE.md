@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP175 — 2026-10-19**.
+- checkpoint vigente: **CP176 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5429,3 +5429,15 @@ Estado preservado:
 - superusuário sintético desabilitou e reabilitou guard 034; event trigger de auditoria em banco registrou duas alterações DDL **confirmadas**, mas não preservou evento em transação revertida; trilha interna não é log externo independente;
 - Documento 131/CP175; **BRG-03 ainda sem confirmação Neon/TLS/segredos/DDL externo**, BRG-06/07 operacionais não liberados, BRG-08/09 pendentes; catálogo principal 36 UNREVIEWED, 0 pós-condições aprovadas;
 - nenhum SQL/branch/role/ledger Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco modelo offline de roles/auditoria externa, modo alto, pausa obrigatória.
+
+
+### Fase 4 — Modelo-alvo provisório de roles e auditoria DDL externa (Documento 132 / CP176)
+
+- Freshness Gate CP175/main `0d81a9eff96ba545075c4bfe9c5071414f45510c` = identical, ahead/behind 0, modo alto;
+- modelo documental `docs/governance/security/f4-target-roles-external-audit-draft.json`: **6 papéis**, **12 requisitos de segurança não satisfeitos**, **4 alternativas de auditoria sem escolha operacional**, tudo fail-closed;
+- PostgreSQL ownership e possibilidade de `SET ROLE` de membro impedem garantir que migrator elevado à propriedade não possa desabilitar guards apenas por `REVOKE`; requer elevação controlada, hashes, supervisor, auditoria externa e revisão especializada; tais controles ainda não existem;
+- exportação Neon de logs PG para OTLP publicamente descrita, mas disponibilidade Free e eventual cobrança **não verificadas**; nenhuma ativação de serviço pago e nenhuma suposição de auditoria completa a partir de GitHub Actions ou event trigger transacional;
+- validador estático e 16 testes publicados; run `39361692980`, job `118429107779`, completed/success no SHA `fd75b3a41a1cdf9fe23ec1cb2626bb349efdd431`, **16/16 PASS**;
+- artifact `12236864111`, ZIP SHA256 `d91577ca76868f4612eda88a5a6cb7c9083d243f12afd5574b1490133a8e902c` validado, status: 6/12/4, 36 migrations UNREVIEWED, 36 requisitos de matriz 034–036 NOT_COLLECTED, nenhum SQL/Neon/serviço pago;
+- Documento 132 e CP176; BRG-03/06/07/08/09 não liberados; nenhuma branch, role, DDL ou ledger Neon; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco: somente experimento PG18 descartável de papéis LOGIN, `SET/INHERIT`, elevação e simulação de recibos de logs externos; modo alto, pausa obrigatória.
