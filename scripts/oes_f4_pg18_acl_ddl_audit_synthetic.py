@@ -155,7 +155,7 @@ def main():
     deny("migrator_cannot_create_in_maintenance_schema",
          """SET ROLE oes_ci_migrator;
            CREATE TABLE maintenance.synthetic_forbidden_ci_only (id integer);""")
-    require(val("SELECT to_regclass('maintenance.synthetic_forbidden_ci_only') IS NULL;")=="true",
+    require(val("SELECT (to_regclass('maintenance.synthetic_forbidden_ci_only') IS NULL)::text;")=="true",
             "forbidden_maintenance_table_not_created")
     require(trigger_state("temporal_observation_epoch",
                           "tr_temporal_epoch_activation_chronology")=="O",
