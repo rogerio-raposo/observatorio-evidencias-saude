@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP179 — 2026-10-20**.
+- checkpoint vigente: **CP180 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5473,3 +5473,13 @@ Estado preservado:
 - Prioridade imediata: inventário de suficiência científico-funcional do protocolo de atualização, casos manuais/assistidos, revisão humana e lacunas. Novos testes PG18 só se houver decisão dependente e hipótese material nova; achados CP175–178 mantidos em escopo sintético.
 - BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos. 36 migrations UNREVIEWED, zero pós-condições de reconciliação aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos, flags automáticas desabilitadas.
 - Sem Neon SQL/branch/migration/role, sem CI nova, sem serviço pago. B1R1 EXPIRED_NOT_EXECUTED; Fase 5 NOT_STARTED; revisão especializada exigível onde aplicável. STOP.
+
+
+### Fase 4 — Inventário de suficiência científico-funcional (Documento 136 / CP180)
+
+- Freshness Gate CP179/main `cabd12b4ede5a82bcb60cfef4054e2ae88dbe38b` = identical, 0 ahead/behind; modo alto; escopo exclusivamente D0 documental.
+- Documento 136: 14 domínios SF-01–SF-14 classificados sem confundir especificação, validação técnica sintética e suficiência científica real; percurso de referência manual/assistido, doze casos candidatos AT-01–AT-12 e lacunas G1–G6.
+- RESULTADO = INVENTORY_COMPLETED_WITH_MATERIAL_GAPS; prontidão para encerramento documental da Fase 4 = NOT_READY_FOR_PHASE_4_DOCUMENTAL_CLOSURE. Nenhum caso AT declarado testado/validado neste CP.
+- N1/N2 readiness temporal = INSUFFICIENT_EVIDENCE; valores de cadence/SLA normativos NÃO autorizados; B1R1 EXPIRED_NOT_EXECUTED; M3 formal BLOCKED; nenhum início de Fase 5.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 provas históricas. 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos. Sem Neon SQL/branch/role/migration, sem CI ou serviços pagos novos.
+- Próximo ponto mediante novo Prossiga: especificar/confrontar cenários integrados D0, preservar revisão humana qualificada e bloqueios operacionais; pausa obrigatória.

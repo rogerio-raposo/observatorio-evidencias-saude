@@ -5025,3 +5025,11 @@ Documentos:
 - Documento 135: D0 (desenho/testes descartáveis) prioritário para suficiência científica/funcional; D1 (piloto persistente) e D2 (operação real) não autorizados, sem relaxamento de gates. Novas provas PG18 dependem de hipótese nova e decisão concreta.
 - BRG-03/06/07/08/09 bloqueados; BRG-04/05 evidências históricas. 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos.
 - Nenhuma CI nova, nenhum Neon/SQL/branch/migration, nenhum serviço pago; B1R1 expirado e Fase 5 não iniciada. CP179 e documento 135; STOP.
+
+
+## 2026-10-20 — Inventário científico-funcional de prontidão da Fase 4 (Documento 136 / CP180)
+
+- Freshness Gate CP179/main `cabd12b4ede5a82bcb60cfef4054e2ae88dbe38b` identical, ahead/behind=0, modo alto; somente documentação.
+- Documento 136: matriz SF-01–SF-14, doze casos AT-01–AT-12 candidatos, seis lacunas G1–G6 e critérios propostos para futuro gate exclusivamente documental. Resultado INVENTORY_COMPLETED_WITH_MATERIAL_GAPS; PHASE_4_DOCUMENTAL_CLOSURE = NOT_READY; nenhuma execução de cenário AT declarada.
+- Arquitetura/contratos já consolidados e componentes técnicos validados sinteticamente; calibração real N1/N2 insuficiente; provas científicas integradas e revisão humana permanecem por resolver.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles insatisfeitos. Sem PostgreSQL/Neon novos, custo, replay, B1R1 ou Fase 5. STOP.
