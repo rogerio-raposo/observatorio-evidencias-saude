@@ -4989,3 +4989,13 @@ Documentos:
 - runs `39358068414` e `39358143142` FAILED por asserções de saída booleana no harness; run corrigido `39358223730`, job `118417944949`, completed/success no commit `b53897af4e12052c122f5ab1d1c879f1a32c52d1`, **38/38 PASS**;
 - artifact `12236325916` SHA ZIP `44107e32b45fcf7b4698572d736e38005370348d6465d3bd320c2544ec23a408`; duas alterações administrativas de guard 034 foram gravadas no log interno transacional, mas rollback removeu evento não confirmado;
 - Documento 131/CP175; DDL audit externo imutável e privilégio mínimo Neon não demonstrados, BRG-03/06/07/08/09 pendentes; catálogo 36 UNREVIEWED/0 aprovado, Neon sem alteração, B1R1 expirado e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-19 — Modelo-alvo bloqueante de roles e auditoria independente (Documento 132 / CP176)
+
+- Freshness Gate CP175/main idêntico a `0d81a9eff96ba545075c4bfe9c5071414f45510c`;
+- documento 132, modelo estruturado de 6 papéis, 12 controles não satisfeitos e 4 alternativas de log; ownership e `SET ROLE` tratados como riscos de elevação não resolvidos, sem falsa garantia por ACL;
+- publicado validador offline, 16 testes e workflow GitHub Actions estático sem banco; run `39361692980`, job `118429107779`, completed/success no commit `fd75b3a41a1cdf9fe23ec1cb2626bb349efdd431`, **16/16 PASS**;
+- artifact `12236864111`, SHA ZIP `d91577ca76868f4612eda88a5a6cb7c9083d243f12afd5574b1490133a8e902c` íntegro; nenhum SQL, Neon, serviço pago ou auditoria externa configurada;
+- não assumir que exportação Neon de logs seja gratuita; consulta Free/custos e autorização do titular ainda pendentes. Catálogo 36 UNREVIEWED, 0 pós-condições aprovadas, matriz 034–036 36 NOT_COLLECTED; BRG-03/06/07/08/09 pendentes;
+- Documento 132 / CP176, B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
