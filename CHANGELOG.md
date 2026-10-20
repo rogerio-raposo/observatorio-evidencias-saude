@@ -4934,3 +4934,13 @@ Documentos:
 - verificador somente leitura e oito testes sintéticos publicados; CI `39297500185`, job `118213715729`, completed/success no SHA `feb2b9f115e94a09c975b98f61d7a5ffda53438d`, 8/8 OK;
 - artifact `12209110983` SHA ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`; 6 entrypoints, 14 fragmentos e zero pós-condições validadas;
 - Documento 125, CP169; catálogo principal permanece 36 UNREVIEWED, sem replay, sem execução ou reconciliação automática. Neon intocado; B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Fotografia estrutural e falhas induzidas em PG18 031–036 (Documento 126 / CP170)
+
+- Freshness Gate CP169/head `f928807e76b74dc32b65fe3a707c72232c721c55` = identical;
+- script e workflow PG18 descartável criados para baseline 001–030, snapshots pré/pós 031–036 e injeções de falha sem acesso Neon;
+- primeira CI `39349451906` FAILED no comparador (tentativa de consultar `contract_epoch` antes da migração 031); corrigida com consulta condicional, sem ocultar falha;
+- segunda CI `39349564581`, commit `46af0a575e30d640dedd97edf84315ebc5f6f310`, job `118390284507`, completed/success, **29/29 PASS**; artifact `12233090040`, SHA-256 ZIP `6aea06318fb097c66066a75e13b8e03ae23ff52c6c7cf07a9bfffb9009431a3e`;
+- rollback estrutural do wrapper 031/032/033 antes do COMMIT, remoção persistente de trigger sob replay negativo interrompido em 034/036, definição parcial da primeira função em 035;
+- Documento 126 e CP170; zero pós-condições aprovadas e grandfathering populado 032 ainda sem teste; proibição de reexecução automática e escrita Neon mantida; B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
