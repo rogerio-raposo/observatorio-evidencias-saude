@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP171 — 2026-10-19**
+**CP172 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP171.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP172.md`
 
 Checkpoint anterior:
 
-`CP170`
+`CP171`
 
 Status:
 
@@ -437,3 +437,13 @@ em **Modo Continuidade**.
 - Documento 127 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP171.md`; marcador do contrato sem grandfathering mapeado não comprova instalação completa;
 - principal catálogo permanece 36 UNREVIEWED, 0 pós-condições aprovadas; nenhuma branch/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo checkpoint após `Prossiga`: testes sintéticos de funções/triggers 034–036; modo alto, STOP.
+
+
+## 2026-10-19 — Ensaio temporal 034–036 no PostgreSQL 18 sintético (Documento 128 / CP172)
+
+- Freshness Gate CP171 `e8219a04ab322eb51d401ce37177e5f5e33b1cba` = identical; modo alto;
+- fixture artificial e teste de chronology/preflight/primeira medição, sem Neon ou aprovação humana ficticiamente real;
+- run inicial `39355352898` FAILED por reaproveitamento indevido de fixture pré-032; run corrigido `39355448709`, job `118409046787`, completed/success com 30/30 PASS no commit `d0c378a99b36f331bc1f5df627cd024448a421e1`;
+- artifact `12235255740` ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442`, conferido; Documento 128 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP172.md`;
+- catálogo principal 36 UNREVIEWED, zero pós-condições aprovadas; ledger/runner operacionais não implantados, branch/schema/SQL Neon não iniciados, B1R1 expirado e Fase 5 não iniciada;
+- próxima atividade sob `Prossiga`: cobertura negativa adicional 034–036 em PG18 descartável, modo alto; STOP.
