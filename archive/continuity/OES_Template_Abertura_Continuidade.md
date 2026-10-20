@@ -205,6 +205,28 @@ Não é necessário criar checkpoint para pequenas correções editoriais.
 
 ---
 
+## Protocolo equilibrado de continuidade — aprovação do proprietário em CP194
+
+**Decisão expressa:** `APPROVED — OES / Adotar protocolo equilibrado de continuidade: cada Prossiga autoriza uma atividade interna, checkpoint persistente normalmente após 3–5 atividades, antecipado por risco ou decisão, Freshness Gate no início e antes do commit, STATE e CHANGELOG atualizados por relevância. Formalize a mudança canônica em um único checkpoint.`
+
+**Regra vigente a partir do CP194:** o proprietário controla o ritmo: **um `Prossiga` = no máximo uma atividade interna delimitada** e relatório de conclusão em conversa. Uma atividade interna **não** exige documento numerado, novo handoff ou commit. Se houver atividade interrompida, relatar o trabalho realizado e o que falta, sem simular encerramento.
+
+**Persistência normal:** consolidar em um único checkpoint GitHub após **3–5 atividades internas**, ou quando terminar uma unidade técnica coerente, o que for mais apropriado. A faixa é uma diretriz, não uma contagem rígida: evitar fragmentação e evitar juntar trabalhos sem relação. O identificador **CP avança apenas quando houver checkpoint persistente**; atividades podem ser nomeadas `A1`, `A2`, etc. durante o bloco, sem representar novos CPs.
+
+**Persistência antecipada obrigatória:** antes/depois de autorizações substantivas, migrações, alterações em banco, CI com efeitos relevantes, primeiro dado científico factual, epoch, mudança de fase, divergência GitHub ou outro risco material; também sob solicitação expressa do titular, troca iminente de conversa, limitação de contexto, falha recorrente de UI ou acúmulo de resultado cuja perda seja relevante. No contexto de autorizações existentes, operações Neon, novos epochs e solicitações PubMed/ClinicalTrials continuam **não autorizadas** até ordem específica.
+
+**Freshness Gate:** realizar uma vez **na abertura do bloco** e novamente **imediatamente antes de publicar**; revalidar durante o bloco apenas se surgir sinal de alteração concorrente, quebra de pressupostos ou decisão material. Conferir branch `main`, SHA, ponteiro, handoff e arquivos afetados; se houver drift, STOP, diagnosticar e reconciliar sem sobrescrever dados. Em retomada após bug ou nova conversa, gate completo é obrigatório. Não confiar em resumo de conversa como estado persistido.
+
+**Regras de publicação:** documento técnico somente quando entrega consolidada o justificar; handoff imutável + atualização do ponteiro a cada CP persistente; `STATE.md` somente se houver mudança relevante de estado (incluindo checkpoint vigente no topo quando necessário); `CHANGELOG.md` apenas para decisões ou marcos significativos. Não há obrigação automática de cinco arquivos. Commit atômico com SHA esperado e verificação do HEAD, do diff e dos arquivos realmente alterados. Preservar evidência, bloqueios e autorizações.
+
+**Relatório obrigatório de cada atividade:** objetivo, ações/leitura realizadas, resultado, incertezas, estado `NÃO PERSISTIDO` ou `PERSISTIDO`, número de atividades acumuladas e próxima atividade possível. Quando o bloco não estiver persistido, avisar explicitamente que falha da conversa pode perder essas conclusões e que somente o último handoff GitHub é recuperável. Não sugerir que resultados de conversa estão salvos fora dela.
+
+**Retomada em outra conversa:** partir do último ponteiro e handoff persistente, confirmar Freshness Gate e recuperar o que estiver comprovado no GitHub. Qualquer atividade intermediária não gravada deve ser refeita/verificada; jamais inventar progresso intermediário. Caso seja solicitada troca de conversa antes da consolidação, priorizar checkpoint antecipado, se autorizado e tecnicamente disponível.
+
+**Autoridade e modos:** preferência por **modo médio** para inspeções estáticas e documentação; informar antes da necessidade de **modo alto** para decisões e ações materiais. `Prossiga` não aprova gastos, risco, mudanças Neon/roles/migrations, novo epoch nem coleta factual. Não modificar os controles do projeto por força desta regra administrativa.
+
+---
+
 ## 11. Hierarquia operacional
 
 `Documentação canônica → Template canônico → README/pointer → checkpoint vigente → Freshness Gate → Diagnóstico → retomada`

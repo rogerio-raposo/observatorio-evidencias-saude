@@ -5129,3 +5129,9 @@ Documentos:
 - Freshness Gate CP192/main `a7ef8c1a2ae1cde8a3280b302850b34ae0471c17` identical, 0 ahead/behind, modo médio, leitura estática de 021–028.
 - Confirmados `maintenance.monitor_cycle` criado em 021 e `update_policy`/`update_signal`/`update_decision` em 027. 022–026/028 inspecionados quanto a CREATE TABLE/funções, sem concluir dispensa. Closure total e subset P-B seguem UNDETERMINED.
 - 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem Neon, SQL, CI/PG18, fontes reais ou custos; B1R1 expirado, M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Mudança aprovada do protocolo de continuidade (CP194)
+
+- Proprietário autorizou regra equilibrada em que cada `Prossiga` cobre uma atividade interna, com relatório de progresso e persistência GitHub normalmente após 3–5 atividades ou antecipada por risco/decisão/retomada. Freshness Gate na abertura do bloco e antes do commit; STATE/CHANGELOG atualizados por relevância, não automaticamente em toda atividade. Formalizado no template canônico e handoff CP194.
+- Não foram autorizadas nem realizadas alterações Neon, SQL, CI/PG18, novos epochs, coleta PubMed/ClinicalTrials ou custos; estado científico/operacional da Fase 4 permanece inalterado. STOP.

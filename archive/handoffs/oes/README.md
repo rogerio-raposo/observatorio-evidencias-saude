@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP193 — 2026-10-20**
+**CP194 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP193.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP194.md`
 
 Checkpoint anterior:
 
-`CP192`
+`CP193`
 
 Status:
 
@@ -530,3 +530,5 @@ em **Modo Continuidade**.
 - **CP192 — 2026-10-20:** Documento 148 registra arestas confirmadas entre 031–036 e 001/002/027/029/030; outros produtores não conferidos, subset reduzido indeterminado, nenhum SQL/Neon/CI. CP193 candidato sob Prossiga. STOP.
 
 - **CP193 — 2026-10-20:** Documento 149 resolve produtor de monitor_cycle na migration 021 e update_policy/update_signal/update_decision em 027; subset ainda indeterminado, nenhum Neon/SQL/CI. CP194 candidato só após Prossiga. STOP.
+
+- **CP194 — 2026-10-20:** protocolo equilibrado de continuidade expressamente aprovado, agora no template canônico: 1 Prossiga/atividade interna, CP persistente normalmente após 3–5, gatilhos críticos antecipados e Freshness Gate na abertura/antes do commit. Sem mudança operacional. Próximo passo A1 sem commit automático. STOP.
