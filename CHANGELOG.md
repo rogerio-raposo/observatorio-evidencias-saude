@@ -5171,3 +5171,8 @@ Documentos:
 
 - Quatro atividades internas consolidadas: cronologia e autoridade no início do epoch (034), preflight apenas consultivo (035), semântica da primeira conclusão por fonte e risco concorrente não validado (036). Nenhuma execução PostgreSQL, CI ou aprovação do BRG-06.
 - 36 migrações UNREVIEWED, zero pós-condições aprovadas; demais bloqueios preservados. STOP.
+
+
+## 2026-10-20 — Plano transversal BRG-06 (Documento 156 / CP201)
+
+- Quatro atividades A1–A4 consolidadas: classificação de lacunas 031–036, evidências candidatas G1-E01–E06, aceitação e planejamento de reconciliação. Nenhum SQL/Neon/CI, dados científicos ou aprovação de gate; todos os bloqueios mantidos. STOP.
