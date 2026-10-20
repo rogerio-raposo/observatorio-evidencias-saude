@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP174 — 2026-10-19**
+**CP175 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP174.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP175.md`
 
 Checkpoint anterior:
 
-`CP173`
+`CP174`
 
 Status:
 
@@ -467,3 +467,13 @@ em **Modo Continuidade**.
 - Documento 130 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP174.md` publicados; política 30 e catálogo principal 36 UNREVIEWED inalterados;
 - BRG-03/06/07/08/09 pendentes, nenhum recurso/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo `Prossiga` em modo alto: plano/teste PG18 descartável de privilégios mínimos, DDL audit e controles de trigger, sem liberação operacional. STOP.
+
+
+## 2026-10-19 — Prova PG18 sintética de ACL e limite de DDL audit interno (Documento 131 / CP175)
+
+- Freshness Gate CP174/main `8c8a54937f9ef1a697c309d4e7876dd473ff8a8c` = identical;
+- runs `39358068414`, `39358143142` FAILED por comparações booleanas do harness; run corrigido `39358223730`, job `118417944949`, completed/success, **38/38 PASS** no SHA `b53897af4e12052c122f5ab1d1c879f1a32c52d1`;
+- artifact `12236325916` ZIP SHA-256 `44107e32b45fcf7b4698572d736e38005370348d6465d3bd320c2544ec23a408`;
+- roles artificiais sem privilégio de owner foram impedidas de desabilitar triggers 034/036, substituir funções ou criar no schema; superusuário CI alterou trigger e auditoria DDL transacional capturou duas alterações confirmadas, porém nenhuma linha durable externa;
+- Documento 131 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP175.md`; BRG-03 Neon/TLS/segredos/log DDL externo pendentes; catálogos 36 UNREVIEWED/0 aprovado, BRG-06/07/08/09 pendentes;
+- nenhuma mudança Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próxima atividade somente após `Prossiga`: projeto offline de roles e auditoria externa, modo alto, STOP.
