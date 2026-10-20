@@ -4953,3 +4953,12 @@ Documentos:
 - run `39350571819`, job `118393517271`, completed/success, SHA `a060f7055063bf83ce8e880193b08f9c941e46f3`, PostgreSQL 18.6, **19/19 PASS**; artifact `12233056788` ZIP SHA-256 `4191c4936b523b7ea9e2d7e176a14770b5daa6eb618dd6832a23f340b899b339`;
 - as 3 entradas de origem foram preservadas e grandfathered na instalação regular, revertidas antes do COMMIT induzido mantendo fontes, e não registradas quando marker de contrato era artificialmente preexistente;
 - Documento 127/CP171; 36 migrations UNREVIEWED e zero pós-condições operacionais aprovadas, nenhum replay/ledger/runner operacional e nenhuma alteração Neon. B1R1 expirado e Fase 5 não iniciada. Pausa obrigatória.
+
+
+## 2026-10-19 — Ensaio PG18 de comportamento temporal 034–036 (Documento 128 / CP172)
+
+- Freshness Gate CP171/HEAD `e8219a04ab322eb51d401ce37177e5f5e33b1cba` = identical;
+- publicados fixture exclusivamente artificial, harness e workflow PG18 para 034 chronology, 035 preflight (FAIL/WAIT/PASS) e 036 first completed event;
+- primeiro run `39355352898` FAILED em fixture incompatível de calendário SLA pós-036, sem erro de migration; corrigido na preparação do cenário;
+- run `39355448709`, job `118409046787`, completed/success, SHA testado `d0c378a99b36f331bc1f5df627cd024448a421e1`, PostgreSQL 18.6, **30/30 PASS**, artifact `12235255740`, ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442` conferido;
+- provas limitadas a dados/autoridade artificiais, não ativação factual, ciência ou pós-condições formais; Documento 128 e CP172, catálogo 36 UNREVIEWED / zero aprovadas, sem operações Neon, B1R1 expirado e Fase 5 não iniciada; STOP.
