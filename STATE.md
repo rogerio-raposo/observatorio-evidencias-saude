@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP207 — 2026-10-20**.
+- checkpoint vigente: **CP208 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5671,3 +5671,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: SEM-01–SEM-06, alternativas, critérios, evidências e responsabilidades propostas. Nenhuma seleção, parecer especializado, autorização ou teste.
 - 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Sem SQL/Neon/CI/fonte factual/custo. STOP.
+
+
+### CP208 — Pacote de revisão independente SEM-01–SEM-06 (Documento 163)
+
+- A1–A4 consolidadas: partes I–V do pacote, PR-01–PR-06 reconciliados à governança existente, REV-01–REV-09 como inventário auxiliar. Sem revisor designado, parecer, gate novo, decisão semântica ou autorização operacional.
+- 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Nenhuma operação SQL/Neon/CI, fonte factual ou custo. STOP.
