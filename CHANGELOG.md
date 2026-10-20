@@ -5147,3 +5147,9 @@ Documentos:
 
 - Verificado `set -euo pipefail` com `psql -v ON_ERROR_STOP=1 ... | tee` no passo das 36 migrations em validate-s5. Corrigida dúvida sobre mascaramento estático por tee; nenhum ensaio de falha, rollback ou ledger executado.
 - 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED e 12 roles insatisfeitas. Gates e proibições inalterados; nenhuma operação Neon/SQL/CI, source query ou custo. STOP.
+
+
+## 2026-10-20 — Matriz documental de pós-condições 031 (Documento 152 / CP197)
+
+- Quatro atividades internas A1–A4 consolidadas: objetos da migração 031 e efeitos sobre update_signal_source; 15 tabelas, 22 funções definidas e 26 triggers esperados, incluindo nove dinâmicos. Pós-condições permanecem propostas sem validação PostgreSQL.
+- BRG-06 e demais bloqueios mantidos; 36 UNREVIEWED e zero pós-condições aprovadas. Nenhuma execução SQL, Neon, CI ou operação factual. STOP.

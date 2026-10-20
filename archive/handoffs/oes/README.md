@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP196 — 2026-10-20**
+**CP197 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP196.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP197.md`
 
 Checkpoint anterior:
 
-`CP195`
+`CP196`
 
 Status:
 
@@ -536,3 +536,5 @@ em **Modo Continuidade**.
 - **CP195 — 2026-10-20:** Documento 150 consolida A1–A4 G1-MIG, baseline integral de 36 migrations recomendada somente como candidata; nenhuma execução/approval. Próximo bloco inicia A1 sob protocolo equilibrado. STOP.
 
 - **CP196 — 2026-10-20:** Documento 151 consolida A1–A4 de BRG-06; shell do validate-s5 tem set -euo pipefail, sem teste de rollback ou aprovação de migrações. Novo bloco de pós-condições documentais somente após Prossiga. STOP.
+
+- **CP197 — 2026-10-20:** Documento 152 consolida A1–A4; 031 com 15 tabelas, 22 definições de funções e 26 triggers previstos (9 dinâmicos); matriz de pós-condições proposta, sem aprovações. Próximo bloco 032 documental. STOP.

@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP196 — 2026-10-20**.
+- checkpoint vigente: **CP197 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5605,3 +5605,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: 36 migrations UNREVIEWED, 0 pós-condições, 30 boundaries UNREVIEWED; 031–033 BEGIN/COMMIT com 14 fragmentos sem transaction control explícito; 034–036 sem wrapper. Workflow validate-s5 define `set -euo pipefail` no passo das 36 migrations, `ON_ERROR_STOP=1`. Leitura estática não é prova de rollback.
 - BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial; 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. Nenhum Neon/SQL/CI/PG18, queries científicas, gastos ou novo epoch. B1R1 expirado, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Próximo bloco A1 pós-condições documentais. STOP.
+
+
+### G1-MIG — Pós-condições documentais da migração 031 (Doc152 / CP197)
+
+- A1–A4 consolidadas: 15 tabelas, 22 definições de funções e 26 triggers esperados (17 explícitos + 9 dinâmicos), mais alterações de FK/CHECK/coluna em maintenance.update_signal_source. Matriz proposta de DDL, FKs, guards, estado anterior e rollback; nada inspecionado em PostgreSQL nem aprovado.
+- 36/36 UNREVIEWED, zero pós-condições, BRG-03/06/07/08 bloqueados e demais gates inalterados. Sem SQL, Neon, CI, fontes factuais, novo epoch ou custos. Próximo bloco A1: 032a–d, sob Prossiga. STOP.
