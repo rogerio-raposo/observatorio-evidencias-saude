@@ -4980,3 +4980,12 @@ Documentos:
 - linter estático e 12 testes publicados, workflow read-only sem PostgreSQL; run `39357315282`, job `118414984671`, completed/success em `bce4b359c5658ce94342b457cd79b06f3bab6b32`, 12/12 OK;
 - artifact `12235633344` SHA ZIP `6db9387eb7b10476d03ba5403f6b145510f4bbda699da8163b9459c8c7959537` íntegro; conteúdo indica nenhum SQL executado ou Neon acessado e zero pós-condições validadas;
 - Documento 130/CP174, catálogo principal 36 UNREVIEWED, auto flags false, sem ledger/runner operacional, Neon intacto, B1R1 expirado e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-19 — PG18 sintético: roles, permissões negativas e auditoria DDL (Documento 131 / CP175)
+
+- Freshness Gate CP174 `8c8a54937f9ef1a697c309d4e7876dd473ff8a8c` idêntico a main;
+- harness e CI de PostgreSQL 18 descartável com três roles NOLOGIN de teste, grant explícito, denials de alteração de triggers 034/036 e funções temporais, mais event trigger de auditoria transacional;
+- runs `39358068414` e `39358143142` FAILED por asserções de saída booleana no harness; run corrigido `39358223730`, job `118417944949`, completed/success no commit `b53897af4e12052c122f5ab1d1c879f1a32c52d1`, **38/38 PASS**;
+- artifact `12236325916` SHA ZIP `44107e32b45fcf7b4698572d736e38005370348d6465d3bd320c2544ec23a408`; duas alterações administrativas de guard 034 foram gravadas no log interno transacional, mas rollback removeu evento não confirmado;
+- Documento 131/CP175; DDL audit externo imutável e privilégio mínimo Neon não demonstrados, BRG-03/06/07/08/09 pendentes; catálogo 36 UNREVIEWED/0 aprovado, Neon sem alteração, B1R1 expirado e Fase 5 não iniciada. STOP.
