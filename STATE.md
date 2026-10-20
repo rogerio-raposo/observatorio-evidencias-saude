@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP174 — 2026-10-19**.
+- checkpoint vigente: **CP175 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5417,3 +5417,15 @@ Estado preservado:
 - artifact `12235633344` SHA-256 ZIP `6db9387eb7b10476d03ba5403f6b145510f4bbda699da8163b9459c8c7959537` conferido; saída `STATIC_DRAFT_MATRIX_BLOCKED_ONLY`, 0 pós-condições aprovadas, nenhuma permissão de execução/replay/reconciliação automática;
 - Documento 130 e CP174 registrados; **catálogo principal 36 UNREVIEWED**, BRG-03/06/07/08/09 pendentes, ausência de qualquer mudança Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco recomendado: teste sintético de ACL/DDL e segregação de roles em PG18 descartável, modo alto, pausa obrigatória.
+
+
+### Fase 4 — Segregação de roles e auditoria DDL transacional em PostgreSQL 18 sintético (Documento 131 / CP175)
+
+- Freshness Gate CP174/main = identical, HEAD `8c8a54937f9ef1a697c309d4e7876dd473ff8a8c`, sem drift, modo alto;
+- publicados `scripts/oes_f4_pg18_acl_ddl_audit_synthetic.py` e `.github/workflows/f4-pg18-acl-ddl-audit-synthetic.yml`, restritos a PG18 descartável e roles artificiais, sem Neon;
+- runs `39358068414` e `39358143142` FAILED por comparação incorreta do resultado booleano convertido em texto no harness; as permissões e denials já executadas permaneceram coerentes; correções prospectivas;
+- run `39358223730`, job `118417944949`, completed/success no commit `b53897af4e12052c122f5ab1d1c879f1a32c52d1`, **38/38 verificações PASS**, servidor PostgreSQL 18.6;
+- artifact `12236325916`, ZIP SHA256 `44107e32b45fcf7b4698572d736e38005370348d6465d3bd320c2544ec23a408` conferido; runtime e migrator de privilégio limitado foram impedidos de alterar/desabilitar objetos 034–036 no contêiner;
+- superusuário sintético desabilitou e reabilitou guard 034; event trigger de auditoria em banco registrou duas alterações DDL **confirmadas**, mas não preservou evento em transação revertida; trilha interna não é log externo independente;
+- Documento 131/CP175; **BRG-03 ainda sem confirmação Neon/TLS/segredos/DDL externo**, BRG-06/07 operacionais não liberados, BRG-08/09 pendentes; catálogo principal 36 UNREVIEWED, 0 pós-condições aprovadas;
+- nenhum SQL/branch/role/ledger Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco modelo offline de roles/auditoria externa, modo alto, pausa obrigatória.
