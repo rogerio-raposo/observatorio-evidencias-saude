@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.5 (manuscrito em elaboração)  
+**Versão editorial:** 0.6 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–5 redigidos; Capítulos 6–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–6 redigidos; Capítulos 7–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -496,14 +496,146 @@ O processo metodológico descrito neste capítulo constitui, portanto, **um conj
 
 # 6. Arquitetura dos produtos do observatório
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 6.1. Conceito e função dos produtos científicos
 
-- **6.1. Conceito e função dos produtos científicos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **6.2. Produtos de investigação: Evidence Scan, Resposta de Evidência, Ficha de Evidência, Síntese Rápida e Revisão de Evidências:** texto a desenvolver a partir da documentação canônica pertinente.
-- **6.3. Produtos analíticos transversais: Mapa de Evidências e Overview de Revisões:** texto a desenvolver a partir da documentação canônica pertinente.
-- **6.4. Produtos de manutenção: Monitor e Alerta de Evidência:** texto a desenvolver a partir da documentação canônica pertinente.
-- **6.5. Padronização dos produtos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **6.6. Relações e reutilização entre produtos:** texto a desenvolver a partir da documentação canônica pertinente.
+No OES, um **produto de evidências** é a representação organizada e comunicável do conhecimento produzido ou acompanhado segundo uma pergunta e uma finalidade definidas. Ele não se confunde com um artigo científico isolado, com o conjunto bruto de referências recuperadas ou com a própria investigação que lhe deu origem. Sua função é tornar acessíveis os resultados científicos e suas condições de interpretação, preservando as relações com as fontes, os métodos, os julgamentos e as versões relevantes. O princípio arquitetural estabelecido pelo projeto é **pergunta → investigação → objetos científicos → síntese e certeza/confiança, quando aplicáveis → produto**. [Fonte: Documento 40 — Taxonomia e arquitetura dos produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+A arquitetura organiza uma família de **nove produtos**, distribuídos em três grupos. Cinco produtos de investigação correspondem à profundidade metodológica N0–N4: Evidence Scan, Resposta de Evidência, Ficha de Evidência, Síntese Rápida e Revisão de Evidências. Dois produtos analíticos transversais — Mapa de Evidências e Overview de Revisões — têm objetivos próprios e não se enquadram necessariamente em um único nível linear de profundidade. Os outros dois — Monitor e Alerta de Evidência — pertencem ao acompanhamento temporal e não representam novas investigações independentes.
+
+A diversidade de produtos busca evitar que toda demanda seja conduzida como uma revisão sistemática completa ou respondida por um resumo informal da literatura. A escolha deve considerar a pergunta, o grau de completude exigido, a criticidade, a maturidade das sínteses existentes, a finalidade da comunicação e a capacidade de manter o conhecimento atualizado. Assim, **produto e método são decisões relacionadas, mas não intercambiáveis**: o rótulo atribuído à saída não dispensa demonstração de que os procedimentos necessários foram efetivamente realizados. [Fonte: Documento 03 — Roteamento metodológico](../governance/03-roteamento-metodologico.md).
+
+A taxonomia também impede que um instrumento de comunicação assuma funções científicas que não possui. Um Mapa de Evidências pode identificar lacunas sem estabelecer a certeza de um efeito. Um Monitor pode encontrar novos estudos sem produzir uma nova síntese. Um Alerta pode justificar reavaliação sem alterar, por si só, a conclusão de uma Ficha. A distinção entre essas operações protege a rastreabilidade e reduz a possibilidade de que atualizações editoriais sejam confundidas com modificações científicas.
+
+O desenvolvimento da Fase 3 formalizou a arquitetura e os requisitos dos nove produtos. Essa formalização representa um resultado técnico-documental: **não autoriza concluir que os nove produtos foram validados cientificamente por pesquisadores independentes, nem que todos possam ser gerados como serviço operacional contínuo**. As descrições seguintes apresentam suas funções previstas, exigências metodológicas e relações no modelo.
+
+### 6.2. Produtos de investigação
+
+Os produtos de investigação resultam de percursos científicos orientados por uma pergunta definida e por um nível de profundidade N0–N4. Há progressão possível de aprofundamento, mas **não existe obrigação de percorrer todos os níveis**: uma questão exploratória pode terminar em N0, e uma demanda que justifique completude pode iniciar diretamente em N4. A seleção depende da justificativa metodológica e dos requisitos de garantia aplicáveis. [Fonte: Documento 02 — Níveis de investigação e produtos](../governance/02-niveis-investigacao-produtos.md).
+
+#### 6.2.1. Evidence Scan — N0
+
+O **Evidence Scan** é um produto exploratório destinado a conhecer a configuração inicial de um campo de pesquisa. Sua principal contribuição consiste em identificar tipos de evidência disponíveis, sínteses relevantes, termos de busca, concentrações temáticas, controvérsias e lacunas que possam orientar a formulação de perguntas mais precisas. É especialmente útil quando o problema apresentado é amplo ou quando ainda não se conhece a maturidade da literatura existente.
+
+O percurso pode empregar busca seletiva e classificação preliminar das referências. Por isso, o produto deve declarar fontes, período considerado, finalidade do levantamento, principais achados e limites de cobertura. **Não pretende exaustividade, não cria avaliação formal de certeza e não sustenta recomendação normativa.** A identificação de poucas publicações em um escaneamento limitado não deve ser apresentada como demonstração de inexistência de estudos no campo.
+
+Um resultado cientificamente útil do N0 pode ser a recomendação de delimitar a pergunta, aprofundá-la em N1–N4 ou produzir um Mapa de Evidências. Quanto à manutenção, os regimes preferenciais são M0 e M1; monitoramento persistente requer, em regra, reroteamento do objeto para uma modalidade metodologicamente apropriada.
+
+#### 6.2.2. Resposta de Evidência — N1
+
+A **Resposta de Evidência** destina-se a perguntas focais para as quais já existem sínteses recentes e adequadas ou nas quais uma investigação mais abrangente seria desproporcional. Em vez de reconstruir automaticamente toda a literatura primária, prioriza a localização e a avaliação crítica de revisões sistemáticas, meta-análises, diretrizes ou avaliações de tecnologias em saúde pertinentes, podendo incorporar informações adicionais de estudos primários importantes ou posteriores.
+
+A resposta deve tornar explícitos o problema investigado, o método e os limites da busca, as fontes principais, os achados relevantes, a incerteza conhecida, a aplicabilidade e a data de corte. Sua característica distintiva é **responder com objetividade, sem simular completude quando a estratégia adotada foi seletiva**. Quando a certeza da evidência foi avaliada por uma síntese externa, ela só pode ser comunicada no OES com atribuição apropriada e após análise de correspondência entre a pergunta, a data e o corpo de estudos considerado.
+
+O N1 pode ser suficiente para uma demanda específica e não necessita converter-se automaticamente em Ficha persistente. Entretanto, quando o interesse pela pergunta é recorrente ou há expectativa de acompanhamento sistemático, pode ser pertinente estruturar uma Ficha N2 ou vincular a resposta a um percurso de manutenção justificado.
+
+#### 6.2.3. Ficha de Evidência — N2
+
+A **Ficha de Evidência** ocupa posição central na arquitetura do OES porque foi concebida como a **unidade persistente preferencial de conhecimento reutilizável para perguntas focais**. Diferentemente de uma resposta destinada a consulta pontual, a Ficha organiza informações para permitir recuperação, comparação entre versões, monitoramento e atualização sem reconstrução desnecessária de toda a investigação.
+
+Seu conteúdo previsto inclui a pergunta estruturada, o objetivo, a população e o contexto, o método de investigação, as fontes consultadas, os critérios de seleção, os estudos e resultados utilizados, a síntese, as avaliações críticas, a certeza ou confiança quando apropriada, a aplicabilidade, as limitações, a conclusão e a data de corte. Esses elementos são vinculados a registros científicos subjacentes; a Ficha **não substitui** as entidades estudo, relatório, resultado, síntese ou avaliação de certeza. [Fonte: Documento 40 — Ficha de Evidência](../products/40-taxonomia-arquitetura-produtos.md).
+
+Essa organização permite uma relação particularmente relevante para a proposta do observatório: **uma mesma pergunta pode conservar uma síntese documentada ao longo de sucessivos momentos de atualização**. Novas evidências podem desencadear avaliação sem eliminar o conteúdo anterior; mudanças materiais podem resultar em outra versão, com registro do que se alterou e por quê. O regime de manutenção pode variar de M0 a M3, desde que as condições específicas de cada regime sejam cumpridas.
+
+A Ficha também demonstra a importância de separar **profundidade** de **garantia científica**. O modelo de governança admite publicação interna padrão N2 com garantia A2, formada por verificação metodológica assistida por IA e aprovação de governança, desde que a ausência de revisão especializada independente seja explicitamente declarada quando A3 não existir. Isso não significa validação científica por pares. Em situações de maior criticidade, a finalidade pode exigir garantia superior ou investigação mais profunda. [Fonte: Documento 04 — Governança de garantia](../governance/04-governanca-garantia-revisao.md).
+
+O projeto desenvolveu um caso documental de Ficha relacionado a uma intervenção digital para insônia. Esse exemplo reúne registros metodológicos e resultados de sínteses existentes e serve à demonstração da organização do conhecimento. **Os julgamentos produzidos pelo processo OES, incluindo a certeza da evidência, permanecem sem revisão científica independente especializada; a utilização de estimativas externas não equivale à realização de nova meta-análise pelo projeto.** Assim, o caso é um objeto para avaliação crítica, não uma comprovação geral de validade científica do modelo. [Fontes: Documento 54 — Draft da Ficha](../products/54-caso-real-01-draft-ficha.md) e [Documento 67 — Garantia e publicação interna](../products/67-caso-real-01-resultado-validacao-a2-publicacao.md).
+
+#### 6.2.4. Síntese Rápida de Evidências — N3
+
+A **Síntese Rápida** é um produto de investigação formal destinado a questões que requerem resposta científica estruturada, mas para as quais prazos ou critérios de proporcionalidade justificam procedimentos abreviados em comparação com uma revisão sistemática completa. A condição para essa modalidade não é apenas realizar o trabalho rapidamente: é **explicitar antecipadamente quais procedimentos serão abreviados, por que essas adaptações são justificáveis e como podem afetar a confiança nas conclusões**.
+
+O produto pode incluir protocolo, processo de busca e seleção, características dos estudos, avaliação crítica, síntese quantitativa ou narrativa conforme cabível, avaliação de certeza/confiança, limitações metodológicas e data de corte. A extensão e a natureza das abreviações devem ser documentadas. Uma revisão que usa menos bases ou procedimentos simplificados não se torna automaticamente equivalente a uma revisão sistemática exaustiva apenas por apresentar tabelas, fluxograma ou avaliação GRADE.
+
+No OES, a Síntese Rápida formal está sujeita às exigências de revisão humana qualificada e **garantia A3**. A ausência de especialistas capazes de executar a verificação correspondente impede apresentar uma saída experimental ou assistida por IA como produto formal concluído. Essa exigência preserva a distinção entre desenvolvimento de capacidades técnicas e validação científica.
+
+#### 6.2.5. Revisão de Evidências — N4
+
+A **Revisão de Evidências** é a família destinada às investigações de maior profundidade, particularmente quando existe necessidade de busca abrangente, análise complexa, resolução de resultados conflitantes ou suporte a decisões de elevada criticidade. Sua arquitetura admite protocolo detalhado, busca extensa e reproduzível, procedimentos robustos de seleção, extração e avaliação de risco de viés, síntese apropriada ao desenho dos estudos e avaliação da certeza ou confiança.
+
+A nomenclatura foi escolhida para evitar confusão entre a família de produtos e um subtipo específico. O termo **Revisão Sistemática** somente é aplicável se a investigação efetivamente satisfizer os requisitos correspondentes de condução e relato. O uso da palavra “revisão”, por si só, não comprova exaustividade, existência de múltiplos avaliadores independentes ou rigor metodológico compatível com revisões sistemáticas.
+
+O Documento 40 especifica, para N4, **pelo menos dois avaliadores independentes nas etapas críticas exigidas pelos protocolos**, com adjudicação ou consenso documentado e justificativas para julgamentos materiais. A governança exige A3 e os demais controles específicos. Uma infraestrutura que implemente tarefas de busca, extração ou elaboração de síntese por IA não elimina essas responsabilidades científicas.
+
+Os regimes de manutenção M0–M3 são conceitualmente compatíveis com essa família. Em condições apropriadas, uma revisão sistemática N4 associada a M3 poderia constituir uma *revisão sistemática viva*. Entretanto, tal classificação exige tanto o cumprimento dos procedimentos de revisão quanto a existência comprovada de capacidade sustentada de atualização. Na data de referência, M3 permanece bloqueado para operacionalização formal no OES.
+
+### 6.3. Produtos analíticos transversais
+
+Os produtos transversais respondem a necessidades que não se confundem com a simples progressão de profundidade N0–N4. Sua organização é motivada pelo **objeto da análise**: a distribuição da literatura em um campo ou o conjunto de revisões sistemáticas já disponíveis. A profundidade, a cobertura e a garantia adequadas devem ser estabelecidas em seus protocolos específicos, sem atribuir automaticamente um nível N apenas em razão do nome do produto. [Fonte: Documento 40 — Produtos analíticos transversais](../products/40-taxonomia-arquitetura-produtos.md).
+
+#### 6.3.1. Mapa de Evidências
+
+O **Mapa de Evidências** responde principalmente à pergunta: **que evidências existem sobre determinado campo, como estão distribuídas e onde se localizam possíveis lacunas?** Sua finalidade é representar a literatura por dimensões relevantes, como populações, intervenções ou exposições, comparadores, desfechos, desenhos de estudo, regiões geográficas, períodos ou disponibilidade de sínteses.
+
+A organização pode utilizar matrizes, categorias temáticas, tabelas ou representações gráficas, desde que a metodologia de busca, seleção e classificação esteja documentada. O produto pode derivar de estratégias compatíveis com *scoping reviews*, *evidence maps* ou *evidence and gap maps*, conforme a pergunta e os referenciais metodológicos escolhidos. Essas abordagens possuem requisitos próprios e não devem ser tratadas como equivalentes apenas porque resultam em uma visualização.
+
+O mapa é especialmente útil para pesquisadores interessados em identificar áreas concentradas de investigação, tópicos pouco estudados e possibilidades de novas sínteses. Entretanto, **o número de estudos localizados não é indicador suficiente de qualidade, certeza ou magnitude de efeito**. Identificar um agrupamento de ensaios ou revisões em uma categoria não significa que o conjunto apoie determinada intervenção. Se avaliações formais de certeza forem realizadas para subconjuntos específicos, elas devem permanecer vinculadas às respectivas perguntas e resultados, sem gerar uma pontuação global arbitrária do mapa.
+
+A manutenção poderá ser escolhida entre M0 e M3, dependendo da natureza do campo e das condições operacionais comprovadas. Um mapa periodicamente atualizado continua sendo uma representação de distribuição de evidências; não se converte automaticamente em nova síntese causal ou recomendação clínica.
+
+#### 6.3.2. Overview de Revisões
+
+O **Overview de Revisões**, também denominado *umbrella review* em contextos metodológicos apropriados, utiliza **revisões sistemáticas existentes como unidade principal de investigação**. É especialmente pertinente quando múltiplas revisões abordam perguntas relacionadas, apresentam resultados divergentes ou compartilham estudos primários. Pode permitir que os pesquisadores compreendam a estrutura das sínteses disponíveis antes de decidir pela elaboração de uma nova revisão de estudos individuais.
+
+Seu protocolo deve especificar a pergunta, os critérios de inclusão de revisões, a busca, a avaliação crítica das revisões incluídas, a análise de sobreposição dos estudos primários, a atualidade das buscas e os critérios para interpretar resultados concordantes ou conflitantes. A mera reunião de conclusões de revisões não basta: diferentes revisões podem ter incluído as mesmas populações e estudos, utilizado métodos incompatíveis ou apresentado estimativas com datas de corte muito distintas.
+
+Um desafio particular é a **sobreposição de evidências**. Contar revisões como observações independentes, sem examinar os estudos primários compartilhados, pode produzir impressão enganosa de replicação ou consenso. Outro risco é tomar uma síntese antiga como representativa do estado atual do conhecimento. Por isso, a documentação do Overview deve facilitar a identificação dos estudos subjacentes e das escolhas metodológicas que distinguem as revisões consideradas.
+
+A profundidade e o regime de manutenção são declarados conforme a metodologia utilizada. O Overview não recebe automaticamente N4 nem uma avaliação global única de certeza apenas por examinar revisões sistemáticas. Quando houver avaliação de confiança ou certeza, suas unidades, fontes e limitações precisam ser explicitadas.
+
+### 6.4. Produtos de manutenção
+
+Os produtos de manutenção têm função distinta da produção inicial de sínteses. São instrumentos para organizar o **acompanhamento temporal**, identificar informações potencialmente relevantes e comunicar a necessidade de avaliação adicional. Pertencem à dimensão M, sem criar um nível N5 ou substituir os produtos científicos vinculados. [Fontes: Documento 40 — Monitor e Alerta](../products/40-taxonomia-arquitetura-produtos.md) e [Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+#### 6.4.1. Monitor de Evidências
+
+O **Monitor de Evidências** é concebido como produto ou processo de manutenção vinculado a uma investigação e/ou a um produto científico persistente, preferencialmente uma Ficha, Síntese Rápida, Revisão, Mapa ou Overview. Seu objetivo é acompanhar fontes previamente delimitadas e organizar sinais que possam afetar resultados, sínteses, certeza, aplicabilidade, conclusões ou avaliação de atualidade.
+
+O registro de acompanhamento prevê objeto monitorado, pergunta, fontes, estratégia de vigilância, periodicidade, data de execução, referências identificadas, triagem, avaliação preliminar de impacto e decisões subsequentes. O mecanismo deve preservar também **incompletude e falhas de cobertura**: um ciclo com fontes indisponíveis ou execução incompleta não comprova ausência de evidências novas. A ausência de sinal material tampouco exige, por si só, criar uma nova versão científica do produto.
+
+Por definição, a função de Monitor está associada a **M2 (monitoramento ativo)** ou **M3 (evidência viva)**. Essa associação descreve o tipo de compromisso operacional, mas não prova que ele já esteja atendido. No estágio documentado do OES, existem componentes técnicos e testes com dados sintéticos relacionados ao monitoramento. **Não está demonstrada operação factual contínua de um serviço de vigilância de evidências, e M3 permanece formalmente bloqueado.** A distinção entre capacidades testadas e serviço sustentado é indispensável na apresentação do produto.
+
+O Monitor não executa, por sua simples existência, uma nova avaliação de risco de viés, meta-análise ou alteração da conclusão do alvo. Quando uma informação encontrada pode ser material, o sistema deve encaminhar essa ocorrência para as etapas apropriadas de avaliação e decisão, conforme a governança aplicável.
+
+#### 6.4.2. Alerta de Evidência
+
+O **Alerta de Evidência** é um **evento de comunicação** associado à identificação de informação potencialmente modificadora do conhecimento registrado. Pode referir-se, por exemplo, a um novo estudo relevante, correção ou retratação de uma fonte, alteração importante na estimativa de efeito, questão de segurança ou nova informação que afete certeza, aplicabilidade ou conclusão.
+
+A arquitetura prevê categorias preliminares **informativo, relevante e crítico**, cuja aplicação depende de critérios e controles de avaliação definidos no protocolo de atualização. O registro do alerta deve identificar evento, fonte, data, alvo, possível dimensão afetada, justificativa, prioridade de avaliação e situação do encaminhamento. Essas categorias não são equivalentes a um julgamento automático sobre a validade ou a magnitude final de uma mudança científica.
+
+A regra fundamental é: **emitir um alerta não modifica a conclusão de uma Ficha, Revisão ou outro produto**. A incorporação de nova evidência exige avaliar elegibilidade, risco de viés, resultado, impacto sobre a síntese, certeza e aplicabilidade, na extensão apropriada. Somente quando houver mudança científica material e aprovação correspondente poderá ser produzida nova versão do produto, preservando o histórico.
+
+O Alerta e o Monitor podem, assim, contribuir para a atualidade do observatório sem substituir o trabalho científico especializado. A automação de notificações ou a classificação preliminar assistida por IA não deve ser confundida com autorização para atualizar conclusões ou publicar recomendações.
+
+### 6.5. Padronização dos produtos
+
+A existência de modalidades distintas não dispensa uma **estrutura comum de identidade, documentação e apresentação**. Para produtos formais persistentes, o OES estabelece atributos como identificador e versão do produto, vínculo com pergunta e investigação, tipo, finalidade, público-alvo, profundidade N quando aplicável, manutenção M, método, fontes, responsáveis, datas relevantes, limitações, situação editorial e proveniência. Informações não pertinentes ao tipo de produto devem permanecer explicitamente não aplicáveis, em vez de serem preenchidas artificialmente. [Fonte: Documento 40 — Arquitetura comum](../products/40-taxonomia-arquitetura-produtos.md).
+
+A estrutura narrativa comum privilegia a sequência **pergunta e objetivo → resposta ou conclusão → método de busca e avaliação → evidência encontrada → principais resultados → certeza/confiança quando aplicável → limitações e aplicabilidade → data de corte → fontes e rastreabilidade**. A extensão muda entre um Evidence Scan e uma Revisão de Evidências, mas a lógica epistemológica permanece reconhecível. O produto precisa permitir que o leitor identifique tanto o que se afirma quanto as condições necessárias para interpretar corretamente a afirmação.
+
+É igualmente importante distinguir **três tipos de estado**. O **estado editorial** descreve se o produto está em elaboração, revisão, publicado, substituído ou arquivado. O **estado de atualidade** descreve a avaliação temporal do conhecimento de uma versão específica. O **estado da evidência** expressa condições científicas como existência de estudos elegíveis ou impossibilidade de estimar determinado resultado. Confundir esses estados levaria, por exemplo, a tratar um produto publicado como necessariamente atual, ou a apresentar falta de estudos como uma categoria de certeza.
+
+A arquitetura prevê ainda a explicitação dos **níveis de garantia A0–A3**, que devem derivar das verificações e decisões efetivamente registradas. Para N2 padrão, a publicação interna pode seguir o nível A2 quando os requisitos correspondentes são cumpridos, mas precisa declarar a inexistência de revisão independente quando aplicável. Para produtos formais N3 e N4, a garantia A3 e os controles especializados permanecem necessários. A designação de um produto como publicado dentro do OES não significa aprovação por periódico científico ou validação independente da arquitetura global. [Fonte: Documento 04 — Governança e revisão](../governance/04-governanca-garantia-revisao.md).
+
+Todo produto com conclusão científica deve declarar a **data até a qual as evidências foram consideradas**. A data em que um relatório foi publicado não substitui a data da busca; e uma avaliação posterior de atualidade não altera retroativamente o conteúdo científico daquela versão. Para a mesma razão, o OES prevê histórico de mudanças editoriais, inclusão de evidências, correções científicas e alterações materiais em estimativas, certeza, aplicabilidade ou conclusão.
+
+A padronização não equivale à automatização universal. Uma Ficha pode ter template de apresentação e contrato de dados bem definidos sem que todos os seus julgamentos científicos possam ser delegados a software. A tecnologia pode auxiliar na geração de tabelas, organização de informações, verificação de consistência e renderização de narrativas, mas **a presença de uma interface completa não demonstra a confiabilidade científica do conteúdo**.
+
+### 6.6. Relações e reutilização entre produtos
+
+A arquitetura do OES busca transformar investigações individuais em um **acervo de conhecimento relacionado**, e não em uma coleção de documentos isolados. Para isso, estudos, relatórios, resultados, avaliações e sínteses devem manter identificadores e vínculos reutilizáveis. Um mesmo estudo pode contribuir para mais de uma pergunta; uma síntese pode sustentar produtos distintos; e um produto persistente pode ser acompanhado por um Monitor sem que cada ciclo de vigilância reexecute toda a investigação.
+
+Um percurso hipotético ilustra a lógica. Um **Evidence Scan** identifica que determinado campo dispõe de revisões sistemáticas recentes. A partir delas, uma **Resposta de Evidência** pode atender uma questão focal; se houver interesse em consulta recorrente, os resultados são organizados em **Ficha de Evidência**, com rastreabilidade e versionamento. Um **Monitor** poderá futuramente acompanhar fontes e registrar sinais que, quando relevantes, dão origem a um **Alerta** e a uma avaliação de possível atualização. Esse percurso não é obrigatório nem automático: cada transição exige justificativa, adequação metodológica e condições de operação compatíveis.
+
+Também existem relações entre produtos que não seguem uma sequência linear. Uma **Revisão de Evidências** pode subsidiar várias Fichas focalizadas em desfechos ou populações distintas. Um **Overview** pode organizar revisões relacionadas e apontar perguntas para investigação aprofundada. Um **Mapa de Evidências** pode apoiar a priorização de novos estudos ou sínteses ao apresentar lacunas. Essas derivações reduzem duplicações, desde que cada novo produto preserve a procedência do material e declare quais julgamentos foram reutilizados e quais foram produzidos especificamente para a nova finalidade. [Fonte: Documento 40 — Não duplicação e produtos derivados](../products/40-taxonomia-arquitetura-produtos.md).
+
+A reutilização depende da **identificação da versão científica exata** utilizada. Uma Ficha derivada de determinada revisão não deve alterar automaticamente sua conclusão quando essa revisão recebe nova versão. O evento pode gerar necessidade de reavaliação, mas qualquer mudança na Ficha deve ser sustentada por processo científico próprio e por sua garantia correspondente. Do mesmo modo, um sinal identificado por Monitor não deve propagar conclusões de forma silenciosa para todos os produtos relacionados.
+
+A unidade persistente central preferencial, a Ficha de Evidência, favorece essa estratégia porque reúne uma pergunta estável, resultados estruturados e histórico acessível de revisões. Entretanto, a escolha dessa unidade é **uma decisão arquitetural do OES**, não uma exigência universal para qualquer observatório. Em outro contexto institucional, pode ser mais adequado organizar o acervo em torno de revisões, mapas temáticos ou políticas de saúde, desde que a relação entre pergunta, corpo de evidências e versões permaneça verificável.
+
+Para pesquisadores interessados na replicação do modelo, a principal contribuição da arquitetura de produtos reside na separação entre **produção, representação, manutenção e comunicação do conhecimento**. A diversificação das saídas não deve multiplicar arbitrariamente métodos, registros ou controles; deve permitir que um núcleo científico comum sustente formatos adequados a diferentes necessidades. Ao mesmo tempo, cada formato precisa declarar seus limites, seus requisitos de revisão e sua situação de desenvolvimento e validação.
+
+Em síntese, os nove produtos do OES constituem uma **taxonomia científica e informacional formalizada**, com mecanismos previstos de identidade, rastreabilidade, versionamento e atualização. Sua avaliação externa permanece necessária para examinar a suficiência dos métodos, a pertinência da classificação, a clareza das saídas e a confiabilidade de aplicações reais. A taxonomia oferece, portanto, uma base para investigação e aprimoramento, e não um catálogo de serviços já integralmente validados e em produção.
+
 
 # 7. Governança científica e garantia metodológica
 
@@ -651,4 +783,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.5 — a apresentação e os Capítulos 1–5 constituem texto corrido desenvolvido nesta versão. Os Capítulos 6–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.6 — a apresentação e os Capítulos 1–6 constituem texto corrido desenvolvido nesta versão. Os Capítulos 7–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
