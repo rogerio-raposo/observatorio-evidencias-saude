@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP201 — 2026-10-20**.
+- checkpoint vigente: **CP202 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5635,3 +5635,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: lacunas das migrações 031–036, matriz G1-E01–E06 e plano exclusivamente documental, sem execução ou homologação.
 - 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes, BRG-06 BLOCKED e demais gates preservados. Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
+
+
+### CP202 — Rastreabilidade e granularidade 031–036 (Documento 157)
+
+- 46 identificadores documentais originais associados às entradas 31–36; 12 detalhamentos candidatos (corrigida contagem anterior de 11). Catálogo não alterado.
+- 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. BRG-06 bloqueado, Fase 4 NOT_READY e Fase 5 NOT_STARTED. Sem SQL/Neon/CI/fonte factual ou custo. STOP.
