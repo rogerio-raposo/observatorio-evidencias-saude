@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP182 — 2026-10-20**.
+- checkpoint vigente: **CP183 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5502,3 +5502,11 @@ Estado preservado:
 - `F4_EMPIRICAL_FIRST_MEASUREMENTS = STRATEGIC_PENDING_WITH_BLOCKERS`, `NEW_EPOCH = NOT_AUTHORIZED`, B1R1 `EXPIRED_NOT_EXECUTED`, preflight e medições históricas não executados; pacotes Docs 91/94/95 preservados, não reaproveitados como autoridade válida de execução.
 - Neon Free com prova de SELECT histórica apenas, não banco operacional factual aprovado. BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles não satisfeitos.
 - Nenhum SQL/branch/role/migration Neon, nenhuma nova CI/PG18, nenhum request target-specific PubMed/ClinicalTrials, nenhum serviço pago. M3 bloqueado; Fase 5 não iniciada. Próximo candidato CP183 somente após Prossiga: matriz proporcional de mínimo readiness do piloto, documentação sem ações operacionais. STOP.
+
+
+### Fase 4 — Gate mínimo de retomada do piloto factual (Documento 139 / CP183)
+
+- Freshness Gate CP182/main `9e762b1edfd96262b9782d9fe87c1a508da46051` identical, 0 ahead/behind; modo **médio** documental. Alto somente quando riscos, custos, segurança ou autorização operacional justificarem.
+- Documento 139: P-A consulta interface sem persistência (alternativa não selecionada), P-B medições factuais persistidas PubMed/ClinicalTrials (objetivo estratégico mantido, não autorizado), 12 ODBs NOT_READY e trilha G0–G5.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles não satisfeitos. Neon Free SELECT histórico PASS apenas, não factual ready.
+- B1R1 EXPIRED_NOT_EXECUTED, novo epoch NOT_AUTHORIZED, M3 bloqueado, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED; nenhum Neon, PG18, CI, request de fontes ou gastos neste CP. Próximo candidato CP184 G0 somente após Prossiga. STOP.

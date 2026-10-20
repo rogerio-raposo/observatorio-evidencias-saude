@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP182 — 2026-10-20**
+**CP183 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP182.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP183.md`
 
 Checkpoint anterior:
 
-`CP181`
+`CP182`
 
 Status:
 
@@ -508,3 +508,5 @@ em **Modo Continuidade**.
 - **CP181 — 2026-10-20:** Documento 137 especifica e confronta AT-01–AT-12 (9 coerências condicionadas, 3 ressalvas), zero cenários end-to-end executados; encerramento F4 NOT_READY, Neon intocado. CP182 candidato somente após Prossiga: runbook e matriz de evidência manual/assistida D0. STOP.
 
 - **CP182 — 2026-10-20:** Documento 138 publica runbook científico-funcional manual/assistido R0–R8, matriz AT-01–AT-12 sem execuções, e registra PILOT-01–09 para retomada futura PubMed/ClinicalTrials.gov; B1R1 permanece expirado, nenhum Neon/custo. Próximo candidato: matriz mínima de readiness do novo piloto D1, documentação apenas, requer Prossiga. STOP.
+
+- **CP183 — 2026-10-20:** Documento 139 mapeia ODB-01–12 e gates condicionais G0–G5 para novo piloto factual PubMed/ClinicalTrials.gov, mantendo BRGs e B1R1 expirado. Modo médio documental, nenhum Neon ou gasto. Próximo CP184 candidato: pacote de decisão G0, somente após Prossiga. STOP.

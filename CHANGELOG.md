@@ -5049,3 +5049,10 @@ Documentos:
 - Documento 138: R0–R8, matriz AT-01–AT-12 e modelo de ficha de evidência; todos os 12 cenários descritos, **zero execuções** ou julgamentos científicos independentes atribuídos.
 - Frente estratégica PubMed e ClinicalTrials.gov explicitamente preservada com PILOT-01–09, E0–E5 e readout dos Docs 91/94/95/104/110: B1R1 expirado sem execução, sandbox Neon Free testado apenas em leitura, novo epoch e coletas não autorizados. Próxima etapa candidata é decisão documental de prontidão mínima D1/ODB sem Neon SQL.
 - PHASE_4_DOCUMENTAL_CLOSURE NOT_READY; BRG-03/06/07/08/09 bloqueados e BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos. Sem SQL/branch/Neon/CI/custos, M3 bloqueado e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Matriz de prontidão mínima do piloto PubMed/ClinicalTrials (Documento 139 / CP183)
+
+- Modo médio; Freshness Gate CP182/main `9e762b1edfd96262b9782d9fe87c1a508da46051` identical, ahead/behind 0, checkpoint exclusivamente documental.
+- Documento 139 distingue P-A interface não persistente de P-B factual persistente (objetivo estratégico ainda bloqueado); mapeia ODB-01–12 e trilha de decisão/prova G0–G5; nenhuma autoridade adicional concedida.
+- BRG-03/06/07/08/09 continuam bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. B1R1 expirado, Neon sandbox SELECT histórico somente. Sem SQL/Neon/CI/queries/custos. M3 bloqueado; Fase 4 não encerrada, Fase 5 não iniciada. STOP.
