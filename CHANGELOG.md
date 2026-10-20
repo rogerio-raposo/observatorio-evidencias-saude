@@ -4999,3 +4999,12 @@ Documentos:
 - artifact `12236864111`, SHA ZIP `d91577ca76868f4612eda88a5a6cb7c9083d243f12afd5574b1490133a8e902c` íntegro; nenhum SQL, Neon, serviço pago ou auditoria externa configurada;
 - não assumir que exportação Neon de logs seja gratuita; consulta Free/custos e autorização do titular ainda pendentes. Catálogo 36 UNREVIEWED, 0 pós-condições aprovadas, matriz 034–036 36 NOT_COLLECTED; BRG-03/06/07/08/09 pendentes;
 - Documento 132 / CP176, B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-20 — PG18: LOGIN, SET/INHERIT e recibos de auditoria simulados (Documento 133 / CP177)
+
+- Freshness Gate CP176/head `1bed3de41ebc9dd5a670e867d38bc3c2e6825669` identical, modo alto;
+- script e workflow de CI descartável para três credenciais LOGIN artificiais, role owner NOLOGIN, negativas `SET ROLE`/`INHERIT` e demonstração de DDL via elevação temporária sobre trigger 034;
+- primeiro run `39404590522` FAILED por role proprietária sem USAGE no schema; run corrigido `39404695131`, job `118567684999`, completed/success em `39ad812f55fd7b79c70f80766f0a85c3e9ea713c`, **41/41 PASS**;
+- artifact `12256624023` SHA ZIP `e40f13a2254d9e8d41e14b87b3c758f6e2f1a0200e1f35a3d96d6aee240c014f`; 8 recibos em filesystem CI mantidos após SQL rollback, cinco cenários de lacuna/corrupção detectados; **não é audit externo independente/imutável**;
+- Documento 133/CP177; BRG-03/06/07/08/09 continuam sem autorização operacional; catálogo principal 36 UNREVIEWED e 0 pós-condições aprovadas; nenhum Neon nem serviço pago; B1R1 expirado, Fase 5 não iniciada. STOP.
