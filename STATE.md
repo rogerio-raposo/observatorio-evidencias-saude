@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP171 — 2026-10-19**.
+- checkpoint vigente: **CP172 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5383,3 +5383,14 @@ Estado preservado:
 - controle negativo: marcador `TEMPORAL_CALIBRATION_V01` artificialmente preexistente suprime grandfathering, logo marker isolado não comprova migration integral;
 - Documento 127/CP171 publicados; **catálogo 36 UNREVIEWED, zero pós-condições aprovadas**, BRG-06/07 operacionais não implantados, BRG-03/08/09 pendentes;
 - sem Neon branch, SQL ou registro científico; B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada; próximo bloco funções/triggers 034–036 em PG18 descartável, modo alto e pausa obrigatória.
+
+
+### Fase 4 — Testes comportamentais temporais 034–036 em PG18 (Documento 128 / CP172)
+
+- Freshness Gate CP171/main `e8219a04ab322eb51d401ce37177e5f5e33b1cba` = identical, sem drift, modo alto;
+- fixture de plano, fonte, epoch, oportunidades e autoridade **artificiais**, harness `scripts/oes_f4_pg18_034_036_behavior_test.py` e workflow `.github/workflows/f4-pg18-034-036-temporal-behavior.yml` publicados, somente CI PG18 descartável;
+- primeiro run `39355352898` FAILED porque fixture reutilizou calendário pré-032 não aceito pelo schema 036; corrigido sem modificar SQL de migration;
+- run corrigido `39355448709`, job `118409046787`, completed/success, SHA `d0c378a99b36f331bc1f5df627cd024448a421e1`, PostgreSQL 18.6, **30/30 PASS**;
+- artifact `12235255740` ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442` conferido; 034 recusou cronologia inválida/desvio material e aceitou ativação sintética válida; 035 comprovou FAIL/WAIT/PASS sem DML; 036 verificou primeiro e subsequente eventos com novelty/attribution;
+- Documento 128/CP172; autoridade artificial não equivale a aprovação científica/humana; catálogo principal **36 UNREVIEWED, 0 pós-condições operacionais aprovadas**, BRG-06/07 não operacionais;
+- nenhuma branch, SQL, role, migration, ledger ou alteração Neon; BRG-03/08/09 pendentes, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco lacunas de cenários negativos, modo alto, STOP.
