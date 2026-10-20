@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP200 — 2026-10-20**
+**CP201 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP200.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP201.md`
 
 Checkpoint anterior:
 
-`CP199`
+`CP200`
 
 Status:
 
@@ -544,3 +544,5 @@ em **Modo Continuidade**.
 - **CP199 — 2026-10-20:** Documento 154 consolida quatro atividades internas de pós-condições da migration 033 (12 tabelas, 27 funções, 23 triggers, 2 views); lifecycle/autoridade/eventos ainda não validados. Próximo bloco começa na 034, sem autorização operacional. STOP.
 
 - **CP200 — 2026-10-20:** Documento 155 consolida A1–A4 de 034–036: cronologia de ativação, preflight consultivo e primeira medição por fonte. Pós-condições somente propostas, BRG-06 bloqueado. Próximo bloco de lacunas transversais. STOP.
+
+- **CP201 — 2026-10-20:** Documento 156 consolida lacunas 031–036, matriz candidata G1-E01–E06 e planejamento do BRG-06; bloqueios íntegros; próxima rastreabilidade documental. STOP.
