@@ -1,8 +1,23 @@
 -- Synthetic-only behavioral fixture; dummy "human_reviewer" record is NOT human approval.
 -- Executed exclusively in disposable PG18 GitHub Actions databases after 001-036.
 \set ON_ERROR_STOP on
-\ir ../f4-grandfathering-032/seed.sql
 BEGIN;
+-- This test intentionally does NOT reuse the pre-032 SLA/calendar fixture:
+-- those preexisting values are not inputs for temporal 034-036 behavior.
+INSERT INTO core.entity(entity_uuid,oes_id,entity_type,created_by)
+VALUES ('11111111-1111-4111-8111-000000000171','OES-CI-ONLY-TEMPORAL-172','Product','synthetic_ci');
+INSERT INTO core.entity_version(
+  version_uuid,entity_uuid,version_no,version_status,created_by,change_type,change_note)
+VALUES ('22222222-2222-4222-8222-000000000171',
+        '11111111-1111-4111-8111-000000000171',
+        1,'current','synthetic_ci','initial','CI-only artificial entity');
+INSERT INTO product.product(entity_uuid)
+VALUES ('11111111-1111-4111-8111-000000000171');
+INSERT INTO product.product_version(
+  version_uuid,entity_uuid,product_type,title,evidence_cutoff_date,status)
+VALUES ('22222222-2222-4222-8222-000000000171',
+        '11111111-1111-4111-8111-000000000171',
+        'evidence_sheet','SYNTHETIC TEMPORAL TEST','2026-01-01','draft');
 INSERT INTO artifact.artifact(artifact_uuid,artifact_type,storage_key,content_hash,created_by)
 VALUES ('aaaaaaaa-aaaa-4aaa-8aaa-000000000172','synthetic_ci','oes-ci-temporal-172','synthetic-sha256-not-real','synthetic_ci');
 
