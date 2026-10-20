@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP173 — 2026-10-19**.
+- checkpoint vigente: **CP174 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5406,3 +5406,14 @@ Estado preservado:
 - desvio material gravado depois de `started_at` não bloqueou ativação naquele instante; nenhuma decisão de governança para o futuro foi inferida;
 - Documento 129/CP173; catálogo principal 36 UNREVIEWED, zero pós-condições aprovadas, sem ledger/runner operacionais, nenhuma operação Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
 - próximo bloco: matriz de suficiência de evidências e separação de privilégios, modo alto, pausa obrigatória.
+
+
+### Fase 4 — Matriz provisória de suficiência de evidências 034–036 (Documento 130 / CP174)
+
+- Freshness Gate CP173/main `9d39071800343151b917ea7d00862f12f8c00f4a` = identical, sem drift;
+- publicada matriz `docs/governance/reconciliation/f4-034-036-evidence-sufficiency-matrix-draft.json`: **3 migrations, 36 requisitos NOT_COLLECTED**, 0 validações operacionais e 0 revisões independentes. Exige identificação/hash do SQL, ledger/intenção/recibo, dependências, integridade histórica, roles, auditoria DDL, backup/restore e aprovação humana;
+- validador estático `scripts/oes_f4_temporal_sufficiency_matrix_lint.py`, 12 testes e workflow read-only próprios, nenhum SQL executado;
+- run `39357315282`, job `118414984671`, completed/success, commit testado `bce4b359c5658ce94342b457cd79b06f3bab6b32`, **12/12 testes PASS**;
+- artifact `12235633344` SHA-256 ZIP `6db9387eb7b10476d03ba5403f6b145510f4bbda699da8163b9459c8c7959537` conferido; saída `STATIC_DRAFT_MATRIX_BLOCKED_ONLY`, 0 pós-condições aprovadas, nenhuma permissão de execução/replay/reconciliação automática;
+- Documento 130 e CP174 registrados; **catálogo principal 36 UNREVIEWED**, BRG-03/06/07/08/09 pendentes, ausência de qualquer mudança Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo bloco recomendado: teste sintético de ACL/DDL e segregação de roles em PG18 descartável, modo alto, pausa obrigatória.
