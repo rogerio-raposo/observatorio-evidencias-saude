@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP212 — 2026-10-20**.
+- checkpoint vigente: **CP213 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5701,3 +5701,9 @@ Estado preservado:
 
 - A1–A4: revisão de clareza, texto editorial em cinco partes, conferência de rastreabilidade interna e quatro qualificações críticas (A2 publicação interna, Hwang fonte externa, GRADE OES provisória, Monitor sintético). Documento 167 é material preparatório, não revisão científica independente nem envio externo.
 - D1 permanece apenas documental e D2 diferido. 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY e Fase 5 NOT_STARTED. Sem SQL/Neon/CI, consultas factuais ou custos. STOP.
+
+
+### CP213 — Apresentação executiva D0 (Documento 168)
+
+- A1–A4 pós-CP212: diagnóstico de prontidão, texto executivo em duas páginas conceituais, revisão editorial e consolidação no Documento 168. Material para avaliação do proprietário, não diagramado em PDF, não enviado, sem validação científica independente.
+- D0 documental priorizado; D1 apenas documental; D2 diferido. Bloqueios históricos e gates preservados; sem SQL, Neon, CI, consultas externas ou serviços pagos. STOP.
