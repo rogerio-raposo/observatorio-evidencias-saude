@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.8 (manuscrito em elaboração)  
+**Versão editorial:** 0.9 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–8 redigidos; Capítulos 9–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–9 redigidos; Capítulos 10–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -872,15 +872,116 @@ A principal contribuição pretendida pelo modelo de dados é fornecer **continu
 
 # 9. Fluxo operacional do observatório
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 9.1. Visão geral do ciclo de trabalho
 
-- **9.1. Visão geral do ciclo de trabalho:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.2. Recebimento e normalização da demanda:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.3. Planejamento e abertura da investigação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.4. Execução da investigação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.5. Revisão, aprovação e publicação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.6. Comunicação e disponibilização:** texto a desenvolver a partir da documentação canônica pertinente.
-- **9.7. Monitoramento e retroalimentação:** texto a desenvolver a partir da documentação canônica pertinente.
+A arquitetura do Observatório de Evidências em Saúde (OES) procura organizar o percurso entre a **demanda científica inicialmente formulada** e a **disponibilização de um produto de evidências cuja origem, método e limitações possam ser examinados**. Esse percurso não se resume à obtenção automática de publicações ou à geração de um texto: compreende decisões sobre admissibilidade, definição do problema, escolha de métodos, produção científica, verificação, comunicação e eventual acompanhamento temporal. [Fontes: Documento 03 — Protocolo de entrada e roteamento](../governance/03-roteamento-metodologico.md) e [Documento 40 — Arquitetura dos produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+A sequência geral proposta é **demanda → registro e clarificação → pergunta operacional → classificação e roteamento → planejamento da investigação → busca e avaliação das evidências → síntese e interpretação → verificação e aprovação → produto comunicável → manutenção, quando pertinente**. Cada etapa produz informações que alimentam a seguinte e, idealmente, deixam registros suficientes para justificar uma decisão ou identificar o ponto em que surgiu um erro.
+
+Esse ciclo precisa ser compreendido como **arquitetura operacional de referência**, e não como declaração de que o OES já disponibiliza um serviço completo para receber continuamente demandas de usuários. O estado documentado do projeto inclui protocolos, contratos de dados, templates e testes técnicos de determinadas modalidades de produto, inclusive casos de uso baseados em fontes científicas reais. Entretanto, a Fase 4 permanece em desenvolvimento; a Fase 5 de automação e IA não foi iniciada formalmente; e a validação científica independente da arquitetura e de seus resultados ainda não ocorreu. [Fonte: estado canônico do projeto](../../STATE.md).
+
+O fluxo combina elementos comuns com **percursos proporcionais à pergunta**. Um Evidence Scan N0 busca caracterizar preliminarmente o campo e pode terminar com uma proposta de investigação. Uma Resposta de Evidência N1 pode apoiar-se criticamente em sínteses existentes. Uma Ficha N2 organiza conhecimento reutilizável. Produtos formais N3 e N4 demandam procedimentos e garantia especializada compatíveis com sua profundidade. Mapas, Overviews, Monitores e Alertas possuem rotas próprias. Assim, padronizar o ciclo não significa obrigar todas as investigações a percorrerem etapas idênticas com a mesma extensão.
+
+Três dimensões acompanham o processo. A **identidade científica** preserva perguntas, estudos, resultados e sínteses; a **documentação operacional** registra buscas, triagens, avaliações, decisões e correções; e a **representação editorial** organiza o que será apresentado a pesquisadores e demais públicos. Confundir essas dimensões dificultaria a reutilização de evidências e tornaria a atualização excessivamente dependente da reescrita de documentos. A arquitetura de dados do OES separa explicitamente esses objetos. [Fontes: Documento 20 — Modelo conceitual](../architecture/20-modelo-conceitual-dados.md) e [Documento 21 — Modelo lógico](../architecture/21-modelo-logico-dados.md).
+
+Também é importante distinguir o **fluxo científico de um produto** dos mecanismos utilizados para desenvolver e testar o próprio software do OES. Uma execução de integração contínua, uma prova de conceito com dados sintéticos ou a aprovação de um contrato de banco de dados pode demonstrar propriedades técnicas delimitadas; não substitui a investigação científica nem autoriza conferir garantia especializada a um produto. Essa separação orienta a interpretação das capacidades descritas neste capítulo.
+
+### 9.2. Recebimento e normalização da demanda
+
+O ponto de entrada previsto pelo OES é uma **pergunta formulada em linguagem natural**, sem exigir que o solicitante domine previamente estruturas como PICO, métodos de síntese ou instrumentos de avaliação crítica. O trabalho inicial consiste em preservar o enunciado recebido e identificar a intenção que motiva a consulta. Essa preservação permite verificar posteriormente se a investigação respondeu efetivamente ao problema apresentado, em vez de apenas produzir uma análise tecnicamente coerente sobre uma questão diferente. [Fonte: Documento 03 — Etapas E0 a E9](../governance/03-roteamento-metodologico.md).
+
+O protocolo descreve dez marcos identificados de **E0 a E9**. Em E0, a pergunta entra no processo; em E1, ela é registrada. E2 verifica a admissibilidade; E3 esclarece sua finalidade; E4 normaliza sua formulação científica; E5 classifica o tipo metodológico; E6 examina as dimensões do roteamento; E7 admite um escaneamento exploratório quando necessário; E8 define o percurso metodológico; e E9 formaliza a abertura da investigação. Esses marcos são uma especificação de processo, não a demonstração de um sistema público de atendimento automatizado já implantado.
+
+O registro inicial deve conter, conforme a situação, **enunciado original, data, finalidade, contexto, população ou fenômeno, componentes conhecidos da pergunta, urgência e eventual origem da demanda**. A informação registrada precisa ser suficiente para contextualizar a investigação sem coletar dados pessoais desnecessários. Questões direcionadas ao diagnóstico ou à prescrição de um indivíduo não devem ser respondidas pelo observatório como atendimento clínico; quando apropriado, podem ser reformuladas como questões gerais de pesquisa.
+
+A normalização preserva três representações. **Q0** corresponde à pergunta original. **Q1** é a formulação cientificamente estruturada. **Q2** contém critérios operacionais que orientam busca, elegibilidade, desfechos, desenhos de estudo e demais procedimentos. A passagem entre Q0, Q1 e Q2 deve ser justificável: ambiguidades, exclusões de escopo e decisões sobre resultados prioritários precisam permanecer identificáveis. Quando uma solicitação reúne problemas metodologicamente diferentes, pode ser necessário decompor a pergunta em subperguntas, vinculadas à intenção inicial.
+
+A classificação utiliza as dez classes metodológicas previstas pelo OES: intervenção/efetividade, segurança, diagnóstico/rastreamento, prognóstico, predição, etiologia/exposição, prevalência/incidência, pesquisa qualitativa, sistemas/políticas e mapeamento. A classificação precede a escolha dos instrumentos de avaliação e da estratégia de síntese. Essa ordem evita, por exemplo, que uma pergunta de prevalência seja abordada por um método apropriado apenas para avaliar ensaios randomizados.
+
+A admissibilidade e a priorização devem considerar **a consequência de respostas incorretas**, além da importância temática, da incerteza científica e da viabilidade metodológica. Uma demanda pode ser admissível e ainda depender de esclarecimento ou de especialistas não disponíveis. O OES rejeita a seleção automática do nível de investigação com base em um escore universal: a decisão sobre profundidade N0–N4 e manutenção M0–M3 deve ser documentada no registro de roteamento, com justificativa compreensível.
+
+O encerramento da etapa de entrada pode, portanto, produzir resultados diferentes: abertura de investigação, necessidade de reformulação, encaminhamento a escaneamento inicial ou reconhecimento de que a demanda está fora do escopo. **Não abrir uma investigação formal pode ser a decisão metodologicamente adequada**, especialmente quando faltam condições essenciais para responder com segurança e transparência.
+
+### 9.3. Planejamento e abertura da investigação
+
+A abertura formal transforma a pergunta operacional em **uma investigação identificável, orientada por um protocolo e por escolhas metodológicas explícitas**. A definição do nível de profundidade, do tipo de produto e do eventual regime de manutenção precisa decorrer da finalidade científica, e não apenas da disponibilidade imediata de um template ou de um fluxo automatizado.
+
+O planejamento deve registrar, conforme a modalidade, os **objetivos, critérios de elegibilidade, fontes bibliográficas, estratégia de recuperação, método de seleção, abordagem de avaliação crítica, plano de extração, forma de síntese, avaliação de certeza ou confiança e regras de comunicação**. Em investigações formais, decisões relevantes são pré-especificadas para reduzir o risco de selecionar posteriormente procedimentos que favoreçam determinados resultados. O protocolo admite adaptações justificadas, desde que datadas e preservadas no histórico.
+
+Antes de repetir uma investigação extensa, é necessário verificar **se já existe síntese atual e metodologicamente adequada**. Uma revisão sistemática externa ou um produto anterior do OES pode oferecer base suficiente para uma resposta focal, uma Ficha ou uma atualização delimitada. Entretanto, a reutilização requer examinar correspondência entre perguntas, períodos de busca, estudos incluídos, qualidade metodológica e aplicabilidade. Reproduzir conclusões de outra síntese sem essa avaliação não equivale a construir conhecimento novo e validado.
+
+O planejamento também determina **quais verificações científicas serão necessárias**. As exigências diferem entre um levantamento exploratório, uma Ficha persistente e uma Revisão de Evidências. A política de governança prevê níveis de garantia de A0 a A3 e reserva a revisão especializada independente para situações em que ela é obrigatória ou requerida pela criticidade. Essa necessidade deve ser identificada antes de apresentar o trabalho como concluído, evitando que a falta de revisores seja tratada posteriormente como simples formalidade editorial. [Fonte: Documento 04 — Governança e garantia](../governance/04-governanca-garantia-revisao.md).
+
+A arquitetura de informação prevê vínculo entre **Question**, **Investigation**, buscas, estudos, resultados, sínteses, avaliações e produtos. Cada investigação pode ter mais de uma busca e, quando a pergunta exigir, mais de uma subquestão. O registro do planejamento também deve prever data de início e, no momento apropriado, data de corte da evidência. Essas informações permitem distinguir novas investigações de atualizações de trabalhos anteriores. [Fonte: Documento 21 — Modelo lógico de dados](../architecture/21-modelo-logico-dados.md).
+
+O produto de planejamento é, assim, uma **decisão metodológica justificada e auditável**, não apenas um comando para iniciar coleta automatizada de referências. A investigação formal somente deve avançar nas condições autorizadas pela política do produto e pela disponibilidade de recursos e competências necessários.
+
+### 9.4. Execução da investigação
+
+Na execução, os protocolos de investigação são aplicados ao conjunto de fontes selecionadas. A sequência inclui, quando pertinentes, **recuperação da literatura, organização e deduplicação de registros, seleção de estudos, extração de dados, avaliação de risco de viés, síntese e avaliação da certeza ou confiança nas evidências**. O nível N e a classe metodológica determinam a extensão das etapas e os instrumentos empregados. [Fontes: Documentos 10–15, iniciando pelo protocolo de busca](../methodology/10-busca-recuperacao-evidencias.md).
+
+A busca deve registrar fontes, estratégias exatas, datas, filtros e resultados recuperados. A seleção distingue registros bibliográficos, documentos concretos e estudos científicos, evitando que várias publicações de um mesmo ensaio sejam contadas como investigações independentes. Os critérios de elegibilidade precisam ser definidos antecipadamente e as exclusões relevantes devem conservar justificativa. Em produtos de maior profundidade, os controles de seleção e de relato devem ser proporcionais às exigências de revisão sistemática ou de síntese formal adotada.
+
+A extração estrutura dados referentes à população, intervenções ou exposições, comparadores, desfechos, momentos de avaliação e resultados. **Valores originalmente relatados e valores calculados pelo OES permanecem distinguíveis**, com registros das transformações materiais e da origem documental. A avaliação crítica utiliza instrumentos adequados aos desenhos dos estudos e à unidade de julgamento, sem reduzir métodos distintos a um escore universal de qualidade. Um estudo elegível pode apresentar alto risco de viés; elegibilidade e confiabilidade são conceitos diferentes.
+
+A síntese deverá examinar a **comparabilidade clínica, metodológica e estatística** antes de combinar resultados. Quando apropriada, uma meta-análise poderá reunir estimativas sob modelo e hipóteses explicitados; em outras situações, uma síntese sem combinação estatística será cientificamente mais defensável. A avaliação de certeza ou confiança deve incidir sobre a unidade relevante — por exemplo, um desfecho em determinada comparação ou um achado qualitativo — e utilizar referencial compatível, como GRADE ou GRADE-CERQual, quando aplicáveis. **Uma estimativa de efeito não constitui, isoladamente, recomendação clínica.**
+
+O processo pode revelar necessidade de **reroteamento**. Uma busca exploratória pode demonstrar que a pergunta exige subdivisão; revisões robustas podem tornar desnecessária uma síntese duplicada; uma cobertura insuficiente pode impedir a conclusão de um produto formal no nível inicialmente escolhido. Essas mudanças devem ser justificadas e versionadas, preservando o protocolo e o percurso anteriores.
+
+O OES prevê a utilização de ferramentas digitais para apoiar recuperação, classificação, extração, organização e verificação de informações. Entretanto, a capacidade de executar uma etapa computacional **não demonstra por si só que a seleção, a avaliação de viés ou a interpretação científica estejam corretas**. Os contratos técnicos precisam ser avaliados em conjunto com julgamentos científicos adequados; os requisitos de revisão humana qualificada continuam aplicáveis onde forem exigidos.
+
+O histórico do projeto reúne **trilhas iniciais técnicas e exemplos documentados para produtos N0, N1 e N2**, incluindo demonstrações de publicação interna nos níveis de garantia permitidos. Também documenta trabalho experimental para N3 que permaneceu sem autorização de publicação formal após verificações com exigência de revisão e limitações de cobertura. Esses marcos delimitados não devem ser apresentados como validação externa de toda a metodologia ou como evidência de que um serviço de investigação contínua já está disponível ao público. [Fonte: STATE — Fase 3 e reservas](../../STATE.md).
+
+### 9.5. Revisão, aprovação e publicação
+
+Após a elaboração inicial, a investigação passa por **controles de coerência, qualidade e autorização**. A revisão precisa examinar se o produto corresponde à pergunta original, se as fontes sustentam as afirmações, se os métodos empregados são compatíveis com a profundidade declarada e se os limites da evidência foram comunicados sem exagero. A existência de um documento completo não é suficiente para atribuir estado final ou nível de garantia.
+
+O modelo vigente separa **três funções**. A primeira é a verificação metodológica assistida por IA, executada como passagem documentada distinta da elaboração inicial e capaz de registrar `passed`, `revise` ou `failed`. A segunda é a aprovação de governança do proprietário, limitada à pertinência do escopo, clareza, transparência das limitações e autorização no âmbito de sua competência. A terceira é a revisão especializada independente por profissional qualificado, com decisão, data, responsabilidade e conflitos de interesse registrados. **Uma aprovação administrativa não substitui avaliação por metodologista ou revisor independente.** [Fonte: Documento 04 — Funções e níveis de garantia](../governance/04-governanca-garantia-revisao.md).
+
+Os níveis de garantia A0–A3 resultam dessas verificações efetivamente registradas. **A0** corresponde a material ainda sem verificação metodológica concluída; **A1**, a verificação metodológica assistida por IA aprovada; **A2**, à combinação de A1 e aprovação de governança; **A3**, à revisão especializada independente aprovada sobre o conjunto exigido. Uma revisão ativa com pendência ou rejeição não pode ser contabilizada como aprovação. Os registros devem permitir reconstruir os fundamentos de cada nível.
+
+Para **Ficha N2 padrão**, a governança admite publicação interna em **A2**, desde que o produto informe claramente a inexistência de revisão especializada independente quando esse for o caso. **N3 formal exige A3**. **N4 formal exige A3 e controles adicionais de múltiplos revisores qualificados**. Mesmo um produto N2 pode requerer A3 ou aprofundamento quando se destina a decisões de alta criticidade. Nenhum desses requisitos pode ser satisfeito mediante simples geração automatizada de texto.
+
+O estado editorial também precisa ser tratado separadamente da garantia. Um produto pode estar `draft`, `under_review`, `published`, `superseded` ou `archived` conforme sua situação. A atribuição de `published` depende de requisitos específicos do produto e de seu nível de garantia, bem como da ausência de bloqueios relevantes. A **data de publicação** corresponde ao fechamento e à disponibilização daquela versão, enquanto a **data de corte da evidência** indica até quando a literatura foi considerada. Não são datas equivalentes.
+
+A necessidade de revisão também se aplica a alterações científicas futuras. Uma nova versão que introduza estudos, mude estimativas ou reformule conclusões deve passar pelos controles correspondentes. **A garantia de uma ProductVersion anterior não é automaticamente transferida à versão subsequente**. Correções editoriais e mudanças científicas precisam manter histórico diferenciado para preservar a confiança do leitor sobre o que foi efetivamente examinado.
+
+No estágio documentado, o OES possui exemplos de **publicação interna de produtos sob A2** e de produtos experimentais ou internos com garantia inferior. Isso não deve ser interpretado como revisão por pares, disponibilização pública sustentada ou certificação de que o conjunto do observatório está validado para uso científico amplo. A publicação externa para pesquisadores deverá manter explícitos os limites do processo que produziu cada conclusão.
+
+### 9.6. Comunicação e disponibilização
+
+A finalidade de um observatório não se encerra com o registro de dados ou a aprovação de um produto. O conhecimento precisa ser comunicado de forma **cientificamente fiel, acessível ao público pretendido e proporcional às suas limitações**. O OES organiza modalidades distintas de apresentação para atender perguntas exploratórias, respostas focais, fichas reutilizáveis, sínteses formais, mapas, overviews e eventos de manutenção. [Fonte: Documento 40 — Estrutura narrativa comum](../products/40-taxonomia-arquitetura-produtos.md).
+
+Uma estrutura de comunicação recorrente apresenta **pergunta e objetivo, conclusão principal, método empregado, evidências consideradas, resultados relevantes, certeza ou confiança quando avaliadas, limitações, aplicabilidade, data de corte e referências**. A extensão varia por produto. Um Evidence Scan deve comunicar claramente o caráter exploratório e a ausência de busca exaustiva; uma Ficha precisa preservar vínculos com os registros científicos; uma Revisão formal deve oferecer transparência metodológica compatível com seu nível.
+
+A apresentação deve permitir distinguir **resultados originais das fontes**, **interpretações produzidas pelo OES** e **implicações possíveis**, sem converter automaticamente estas últimas em recomendações clínicas ou institucionais. Quando uma estimativa provém de revisão externa, a atribuição deve permanecer inequívoca. Quando uma avaliação GRADE foi elaborada pelo processo OES e ainda não recebeu revisão especializada, essa condição deve ser visível ao leitor. A comunicação da incerteza é parte do conteúdo científico, não um aviso acessório.
+
+Outro componente é a **informação sobre garantia**. Identificar A2 ou A3 por rótulo não basta quando o público não conhece o significado desses níveis. Produtos devem indicar, em linguagem compreensível, o tipo de verificação realizado, a participação da IA, a aprovação de governança e a existência ou não de revisão especializada. Essa transparência permite avaliar a adequação de uso da saída e evita que uma apresentação bem diagramada transmita autoridade científica não demonstrada.
+
+A arquitetura prevê formatos e mecanismos de apresentação reutilizáveis, incluindo **templates, renderização de produtos e vínculos com registros metodológicos**. Contudo, não se deve confundir a existência de um template validado tecnicamente com a presença de um portal público, de canais estáveis de distribuição ou de um processo institucional de atendimento. A escolha definitiva de interfaces, integração com sistemas externos e políticas de disponibilização pertence a decisões futuras e a condições operacionais ainda não integralmente demonstradas.
+
+A disponibilização também deve respeitar **direitos de uso das fontes, confidencialidade e proteção de dados**. Rastreabilidade científica não significa que todo documento recuperado ou informação potencialmente sensível possa ser redistribuído integralmente. O observatório pode comunicar referências, métodos, julgamentos e resultados derivados dentro dos limites legais e institucionais pertinentes, mantendo evidências suficientes para auditoria quando a divulgação integral de uma fonte não for possível.
+
+Para pesquisadores interessados em constituir observatório semelhante, o ponto principal é que **comunicação não é uma fase separada da metodologia**: a organização dos dados, a linguagem da incerteza, a exibição das limitações e o histórico das versões determinam o que uma pessoa pode legitimamente concluir ao consultar o produto.
+
+### 9.7. Monitoramento e retroalimentação
+
+O ciclo do OES pode continuar após a publicação, quando a relevância e a dinâmica do campo justificam **reavaliação da atualidade das evidências**. Essa possibilidade exige separar a produção de uma síntese dos mecanismos que identificam sinais de mudança e encaminham avaliações subsequentes. O Documento 05 estabelece quatro dimensões distintas: versão científica, avaliação de atualidade, regime de manutenção M0–M3 e estado operacional ou comunicacional dos ciclos e alertas. [Fonte: Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+A manutenção pode ocorrer sem vigilância ativa (**M0**), por elegibilidade a reavaliação mediante demanda ou evento (**M1**), por monitoramento prospectivo planejado (**M2**) ou por regime de evidência viva (**M3**), quando todos os requisitos de capacidade operacional, fontes, métodos e garantia forem cumpridos. Esses regimes não representam novos níveis de profundidade N, e um produto metodologicamente aprofundado não está necessariamente submetido a atualização frequente.
+
+Quando um Monitor é aplicável, seu fluxo conceitual inclui **fontes e estratégias definidas, ciclos de execução, registro de cobertura, identificação de referências novas, triagem, avaliação preliminar do possível impacto e decisão subsequente**. Um novo estudo, alteração regulatória relevante, correção ou retratação pode constituir um sinal científico que mereça avaliação. Um erro de execução, uma fonte indisponível ou uma falha de cobertura é um sinal operacional distinto. Ambos requerem registro, mas não devem produzir interpretações científicas idênticas.
+
+O OES prevê uma etapa de **avaliação da materialidade** do sinal. Uma publicação nova pode ser irrelevante à pergunta, repetir informações já incorporadas ou oferecer resultado capaz de modificar a síntese. O julgamento deve considerar correspondência com o protocolo, validade da fonte, implicações para estimativas, risco de viés, certeza e aplicabilidade. **A detecção do sinal não altera automaticamente a conclusão, e um Alerta não substitui uma atualização científica formal.**
+
+Uma mudança de atualidade pode indicar que determinado produto está sob avaliação ou merece atualização **sem criar imediatamente outra versão científica**. Quando houver modificação material da conclusão ou de seus fundamentos, a arquitetura exige revisão do conteúdo, criação de nova versão apropriada e aplicação dos controles de garantia pertinentes. Produtos dependentes devem ser identificados por vínculos de proveniência e linhagem, mas não reescritos silenciosamente. Cada objeto necessita avaliação de impacto coerente com sua finalidade.
+
+O monitoramento também produz **retroalimentação metodológica e operacional**. A recorrência de sinais irrelevantes pode indicar necessidade de refinar a estratégia de vigilância; lacunas de fontes podem exigir revisão do planejamento; dificuldades de classificação podem revelar problemas na pergunta ou nas relações entre estudos. Essas observações podem informar aprimoramentos de protocolos, sem que isso autorize modificar retrospectivamente o método utilizado em versões já publicadas.
+
+A capacidade efetiva de executar o ciclo precisa ser comunicada com rigor. Na data de referência, a Fase 4 possui **desenhos, artefatos técnicos e testes históricos com dados sintéticos**, mas não há demonstração de vigilância factual sustentada como serviço contínuo. A publicação formal em **M3 permanece bloqueada**, e pendências de validação de migrações, controles operacionais e autorizações não podem ser tratadas como concluídas. A prioridade documental adotada pelo projeto não implica aprovação de operações em banco de dados, consultas contínuas a fontes externas ou serviços pagos. [Fonte: STATE — Fase 4 e estado atual](../../STATE.md).
+
+Desse modo, o fluxo operacional completo do OES permanece uma **arquitetura de referência parcialmente demonstrada por componentes e casos de uso**, não uma capacidade integralmente implementada e cientificamente validada. Seu interesse para grupos de pesquisa reside na possibilidade de organizar responsabilidades e decisões ao longo de todo o ciclo de evidências, com pontos explícitos de controle, comunicação e atualização. A efetividade dessa organização ainda precisa ser examinada por especialistas e em condições reais de operação, de acordo com os métodos e os requisitos de garantia pertinentes.
+
 
 # 10. Protocolo de atualização das evidências
 
@@ -989,4 +1090,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.8 — a apresentação e os Capítulos 1–8 constituem texto corrido desenvolvido nesta versão. Os Capítulos 9–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.9 — a apresentação e os Capítulos 1–9 constituem texto corrido desenvolvido nesta versão. Os Capítulos 10–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
