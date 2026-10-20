@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.9 (manuscrito em elaboração)  
+**Versão editorial:** 0.10 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–9 redigidos; Capítulos 10–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–10 redigidos; Capítulos 11–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -985,16 +985,140 @@ Desse modo, o fluxo operacional completo do OES permanece uma **arquitetura de r
 
 # 10. Protocolo de atualização das evidências
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 10.1. Fundamentação da atualização contínua
 
-- **10.1. Fundamentação da atualização contínua:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.2. Estados de atualidade das evidências:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.3. Fontes e sinais de atualização:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.4. Avaliação da relevância das novas informações:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.5. Periodicidade, prioridades e escalonamento:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.6. Atualização científica e versionamento:** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.7. Evidências vivas (Living Evidence):** texto a desenvolver a partir da documentação canônica pertinente.
-- **10.8. Registro e auditoria das atualizações:** texto a desenvolver a partir da documentação canônica pertinente.
+Uma síntese de evidências corresponde ao conhecimento disponível **segundo uma pergunta, um método de busca e uma data de corte definidos**. A qualidade metodológica de sua produção não garante que suas conclusões permaneçam indefinidamente adequadas para orientar novas análises. Estudos posteriores, correções, retratações, reanálises e mudanças no contexto de aplicação podem modificar a interpretação do corpo de evidências. Por isso, a capacidade de **reavaliar a atualidade** de produtos publicados integra a concepção do Observatório de Evidências em Saúde (OES), ao lado de sua capacidade de produzir sínteses iniciais. [Fonte: Documento 00 — Concepção](../governance/00-documento-de-concepcao.md).
+
+Atualizar conhecimento científico, contudo, é uma atividade distinta de apenas localizar referências recentes. Uma publicação nova pode ser irrelevante para a pergunta operacional, reproduzir resultados já considerados, acrescentar precisão sem alterar a conclusão ou revelar um problema suficientemente importante para exigir reavaliação. Inversamente, uma retratação ou correção material pode comprometer uma síntese mesmo sem acrescentar novos estudos. A mera passagem do tempo também não demonstra, por si só, que determinado efeito ou conclusão tenha mudado.
+
+O OES adota, portanto, uma arquitetura de **atualização orientada por sinais, materialidade e decisões documentadas**. Nela, os mecanismos de acompanhamento identificam informações ou condições potencialmente relevantes, enquanto a decisão de atualizar depende de avaliação específica de seu impacto científico. A atualização deve preservar a identidade da pergunta, a rastreabilidade dos resultados anteriores, os métodos utilizados e a garantia atribuída a cada versão. Esses compromissos integram o [Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md), cuja baseline conceitual foi aprovada com decisões arquiteturais durante a Fase 4.
+
+A manutenção tem um eixo próprio, **M0–M3**, distinto da profundidade investigativa **N0–N4** e dos níveis de garantia **A0–A3**. Um produto N2 pode, em princípio, receber acompanhamento ativo, enquanto uma revisão N4 pode permanecer sem vigilância programada. Da mesma forma, manter uma revisão em regime de evidência viva não reduz seus requisitos de avaliação crítica, seleção, síntese ou revisão especializada.
+
+Para evitar ambiguidades, a arquitetura distingue **quatro dimensões**: a versão científica do conteúdo; a avaliação de atualidade de uma versão; o regime de manutenção; e o estado operacional ou comunicacional de ciclos, filas e alertas. Essas dimensões se relacionam, mas não são equivalentes. Um ciclo de Monitor não é uma nova síntese; um Alerta não é uma mudança científica; e uma classificação de atualidade não equivale ao nível de garantia metodológica do produto.
+
+Essa abordagem é especialmente importante para observatórios que desejem utilizar automação. É tecnicamente possível detectar registros bibliográficos novos com frequência elevada sem que exista equipe capaz de avaliar sua relevância e incorporá-los rigorosamente. **A vigilância só pode ser apresentada como capacidade operacional sustentada quando as etapas críticas, os recursos e os controles efetivamente necessários estiverem disponíveis e demonstrados.** No estágio aqui documentado, a Fase 4 permanece em desenvolvimento; há componentes e testes sintéticos relacionados ao Monitor, mas não está comprovado um serviço de vigilância científica factual contínua. [Fonte: estado canônico do OES](../../STATE.md).
+
+### 10.2. Estados de atualidade das evidências
+
+A **atualidade** (*currentness*) expressa um julgamento sobre a adequação temporal de **uma versão concreta de produto científico** para seu uso declarado. Não corresponde a uma propriedade abstrata e permanente da pergunta, tampouco ao estado editorial do documento. A mesma Ficha pode manter sua identidade ao longo de versões, cada uma com evidências, data de corte e avaliação de atualidade próprias. O Documento 05 estabelece uma máquina de estados para **ProductVersion**, vinculada à estrutura canônica `product.currency_state`.
+
+A taxonomia de atualidade possui cinco estados:
+
+| Estado canônico | Significado científico-operacional |
+|---|---|
+| **`current`** | A última avaliação registrada não identificou razão suficiente para considerar aquela versão inadequada ao uso corrente no escopo declarado |
+| **`under_evaluation`** | Existe sinal potencialmente material não resolvido ou avaliação de atualidade em andamento |
+| **`update_recommended`** | A versão ainda pode ser utilizável dentro de limites explícitos, mas há justificativa documentada para atualização científica |
+| **`outdated`** | A versão não deve ser apresentada como síntese atual adequada ao uso declarado sem qualificação substancial ou atualização |
+| **`archived`** | A avaliação de atualidade da versão foi encerrada para uso corrente por substituição, arquivamento ou decisão explícita |
+
+Esses estados descrevem **avaliações justificadas**, não rótulos calculados automaticamente a partir da idade cronológica do produto. Um produto pode permanecer `current` após uma verificação que não identifique mudança material; também pode entrar em `under_evaluation` por informação relevante surgida pouco tempo depois de sua elaboração. A data de corte continua sendo indispensável, mas não é uma regra automática de obsolescência.
+
+A mudança de estado requer **avaliação e decisão registradas**. A detecção de um sinal científico relevante pode levar de `current` a `under_evaluation`; concluída a análise, o produto pode retornar a `current`, passar a `update_recommended` ou ser considerado `outdated`, conforme justificativa. A conclusão de uma atualização científica normalmente produz **nova ProductVersion**, preservando a anterior, em vez de reescrevê-la. Reverter `outdated` para `current` na mesma versão é exceção que exige fundamentação. O estado `archived` é terminal para a finalidade de uso corrente daquela avaliação.
+
+É necessário separar o **`archived` da atualidade** de estados editoriais ou do versionamento de entidades. Um produto pode ser retirado de circulação editorial e conservar histórico científico; sua avaliação de atualidade pode também ter sido arquivada por motivo distinto. Reunir essas decisões em um único campo impediria identificar sua origem e significado.
+
+Também não se deve criar artificialmente um estado `CurrencyState` quando o alvo da atualização é apenas uma **InvestigationVersion** sem produto correspondente. Nesse caso, a arquitetura prevê registrar a avaliação e a decisão de atualização no mecanismo transversal apropriado e versionar a investigação quando houver mudança material. Uma nova ProductVersion somente será criada se um produto científico correspondente também mudar.
+
+A atualidade, por fim, é independente da **certeza da evidência** e do **nível de garantia**. Uma versão pode ser considerada atual mesmo quando o corpo de evidências apresenta baixa certeza; e uma versão cuja conclusão foi revista por especialista pode posteriormente tornar-se desatualizada. Essas categorias respondem a perguntas científicas diferentes e não devem ser apresentadas como sinônimos.
+
+### 10.3. Fontes e sinais de atualização
+
+O protocolo utiliza como unidade inicial um **sinal de atualização** (*update signal*) rastreável, que pode indicar tanto nova informação científica quanto dificuldade operacional para cumprir uma política de acompanhamento. A distinção é necessária porque encontrar um estudo relevante e não conseguir executar uma busca programada são ocorrências de natureza distinta e exigem respostas diferentes. [Fonte: Documento 05 — Sinais e gatilhos](../governance/05-protocolo-transversal-atualizacao.md).
+
+Os **sinais científicos** podem surgir de ciclos de monitoramento, novas buscas, registros de resultados, avaliações de candidatos, alertas, correções, retratações, revisões metodológicas ou solicitações explícitas de reavaliação. O protocolo organiza seus gatilhos em cinco classes. A primeira é **nova evidência**, abrangendo estudos, revisões ou resultados potencialmente relevantes. A segunda é **integridade e validade**, que contempla retratações, correções materiais ou erros detectados em fontes utilizadas. A terceira inclui **segurança e regulação**, quando novas informações de risco ou decisões regulatórias fundamentadas em evidências afetam a interpretação. A quarta é **temporal e operacional**. A quinta deriva de **governança ou demanda**, como alteração de finalidade de uso ou de criticidade.
+
+As fontes científicas a acompanhar dependem da pergunta e da profundidade do produto. Podem abranger bases bibliográficas, repositórios de sínteses, registros de estudos, literatura regional, informações regulatórias e outras fontes justificadas. Não existe uma combinação universal que assegure cobertura suficiente a todas as classes metodológicas. Para um produto específico, é necessário registrar **quais fontes são monitoradas, com quais estratégias, em que período e sob quais limitações**, preservando as diferenças entre fontes consultadas e fontes apenas previstas no desenho. [Fonte: Documento 10 — Busca e recuperação de evidências](../methodology/10-busca-recuperacao-evidencias.md).
+
+Os **sinais operacionais** incluem vencimento de ciclos, indisponibilidade de uma base, execução incompleta, falhas de cobertura ou incapacidade de cumprir o regime de manutenção. Eles exigem inicialmente avaliação de impacto da lacuna. Um ciclo incompleto não prova ausência de evidências novas, mas também **não transforma automaticamente um produto em `outdated` ou `under_evaluation`**. A reavaliação da atualidade ocorrerá quando houver razão documentada para considerar que a deficiência compromete materialmente a sustentação do estado corrente.
+
+Um exemplo ilustra a diferença. Se uma busca programada não consegue consultar uma fonte obrigatória, o registro deve declarar a falha de cobertura e avaliar suas consequências. Se a fonte retorna normalmente e identifica um novo estudo potencialmente elegível, surge um sinal científico a ser triado. Em nenhum caso a ocorrência isolada equivale à atualização de uma conclusão. O exemplo é conceitual, não o relato de operação corrente de fontes externas pelo OES.
+
+A arquitetura prevê ainda **Alertas de Evidência** com categorias comunicacionais preliminares — informativo, relevante e crítico — e prioridades operacionais distintas — rotineira, prioritária e urgente. Essas classificações não se confundem com a avaliação de atualidade: um Alerta crítico não torna automaticamente o produto desatualizado, e um Alerta urgente não estabelece, por si só, prazo normativo de resposta. A classificação automática autoritativa permanece dependente de contrato e autorização futuros.
+
+### 10.4. Avaliação da relevância das novas informações
+
+A transição entre detecção e atualização depende da **avaliação da materialidade**. A questão não é apenas saber se uma informação é nova, mas **se ela pode modificar significativamente a representação científica ou a adequação de uso da versão existente**. O Documento 05 prevê examinar dimensões como benefício, dano, magnitude, precisão, certeza ou confiança, aplicabilidade, conclusão, escopo, integridade, situação regulatória e método.
+
+A avaliação começa verificando a **pertinência à pergunta operacional**. Um estudo pode abordar tema semelhante sem incluir população ou desfecho relevante. Quando a informação corresponde ao escopo, deve-se examinar se integra uma evidência já conhecida, se possui dados novos, se altera estimativas, se afeta julgamentos metodológicos ou se modifica o contexto de aplicação. Correções de fontes e retratações podem exigir reanálise mesmo sem novos participantes. O rigor dessa avaliação deve ser proporcional ao potencial de impacto e à classe científica investigada.
+
+O protocolo distingue resultados de avaliação como **ausência de mudança material identificada**, **mudança potencialmente material**, **mudança material confirmada**, **ameaça à validade ou ao uso corrente** e **informação insuficiente para decidir**. Essas categorias constituem julgamentos científicos e operacionais; não equivalem à categoria comunicacional do Alerta nem dispensam o registro das evidências consideradas.
+
+É especialmente importante evitar dois extremos. O primeiro é **atualizar a síntese a cada publicação**, produzindo trabalho redundante e sucessivas versões sem alteração substantiva. O segundo é **ignorar um sinal relevante** apenas porque uma nova estimativa não altera a direção do efeito: mudanças de precisão, segurança, certeza ou aplicabilidade podem ser materialmente importantes mesmo quando a conclusão principal parece estável.
+
+A decisão resultante pode ser manter o produto sem atualização científica, continuar observação, ajustar somente a avaliação de atualidade, iniciar atualização incremental, promover investigação mais ampla, rerotear a pergunta ou suspender temporariamente a adequação de uso corrente enquanto a revisão é preparada. O Documento 05 não cria uma escala numérica universal U0–Ux para essas escolhas; a decisão deve conservar justificativa científica e registro de responsabilidade.
+
+A **atualização incremental** é apropriada quando o sinal afeta parte delimitada do corpo de evidências e a metodologia anterior continua adequada. Uma atualização ampla pode ser necessária quando mudam a pergunta, a cobertura das fontes, os métodos ou grande parte dos estudos relevantes. Uma reclassificação de profundidade N também pode ser pertinente. Em qualquer caso, alterações de síntese, risco de viés ou certeza continuam sujeitas aos procedimentos científicos do produto e aos requisitos de revisão humana aplicáveis.
+
+A inteligência artificial pode apoiar a identificação de candidatos, a organização de resultados ou a sugestão de materialidade. Entretanto, **sugestões computacionais não são decisões científicas autoritativas por si mesmas**. O uso de IA não autoriza alterar conclusões, promover níveis de garantia ou registrar revisão humana inexistente. Esses limites são essenciais quando o risco de uma atualização incorreta é significativo.
+
+### 10.5. Periodicidade, prioridades e escalonamento
+
+A periodicidade do acompanhamento deve ser **prospectiva, justificável e compatível com a necessidade científica e a capacidade operacional disponível**. O OES evita definir uma frequência única para todos os produtos: diferentes perguntas apresentam velocidades de produção científica, riscos e expectativas de mudança distintos. Também distingue atraso de execução, risco de obsolescência e mudança científica material, que não são eventos equivalentes. [Fonte: Documento 05 — Cadência, SLA e priorização](../governance/05-protocolo-transversal-atualizacao.md).
+
+Nos regimes **M0 e M1**, o compromisso de manutenção é limitado. M0 não estabelece vigilância ativa; M1 permite reavaliação periódica ou acionada por evento ou demanda, sem exigir buscas recorrentes estruturadas. **M2** requer plano de monitoramento ativo com fontes, critérios e intervalos prospectivamente definidos. **M3**, por sua vez, exige frequência e capacidade compatíveis com evidência viva, conforme os requisitos científicos e operacionais detalhados na Seção 10.7.
+
+A política de **cadência** deve documentar regime, data de referência, frequência ou condição de disparo, fontes cobertas, janela temporal, tolerância operacional, conduta em caso de atraso, tratamento de ciclo incompleto e critério para revisar a própria frequência. A arquitetura estabelece essa gramática antes de fixar números. **Não existem, nessa baseline, intervalos universais em dias ou horas ou prazos de serviço quantitativos aprovados para todos os produtos.** Declarar uma frequência como se já tivesse sido implantada seria diferente de simplesmente documentar uma regra candidata.
+
+Para futura avaliação de desempenho temporal, o protocolo diferencia intervalos entre **detecção e triagem**, **triagem e avaliação de materialidade**, **materialidade e decisão**, **decisão e início da atualização**, **início e conclusão do trabalho científico**, e **conclusão científica e revisão/publicação**. Eventuais compromissos de prazo (*service-level agreements*, SLAs) terão de definir início, término, pausas e critérios de criticidade. Um prazo vencido pode produzir débito operacional, mas não se converte automaticamente em julgamento de evidência desatualizada.
+
+A **priorização** considera qualitativamente ameaça à segurança ou integridade, potencial de reversão de conclusão, criticidade do uso pretendido, estado de atualidade, magnitude e certeza de impacto, amplitude das dependências afetadas, urgência regulatória, intervalo desde a data de corte e capacidade de executar a atualização. Nenhum desses fatores determina sozinho a prioridade global; pesos numéricos e fórmulas de pontuação não foram consolidados.
+
+Um sinal de possível dano grave pode merecer avaliação antes de nova publicação de menor relevância, mas isso não significa que o primeiro autorize alteração imediata da conclusão sem revisão. Quando existirem múltiplos produtos potencialmente afetados, o encadeamento entre evidências, sínteses e produtos deverá orientar a identificação de dependências e a avaliação da necessidade de escalonamento.
+
+A intensidade de acompanhamento também pode **aumentar ou diminuir**. Uma pergunta anteriormente M1 pode passar a M2 diante de justificativa científica e capacidade demonstrada; um regime intensivo pode ser reduzido quando deixa de ser necessário ou sustentável. A mudança de M, isoladamente, não cria nova versão científica, não eleva garantia e não modifica automaticamente a avaliação de atualidade. Essas transições devem ser justificadas e preservadas historicamente.
+
+### 10.6. Atualização científica e versionamento
+
+A atualização científica ocorre quando as informações examinadas justificam **modificação material dos resultados, julgamentos ou interpretações registrados**. O processo deve identificar o objeto afetado — uma investigação, uma síntese ou um produto — e seguir os métodos e controles correspondentes. O simples recebimento de evidência, a mudança da periodicidade de monitoramento ou uma avaliação de atualidade não autorizam reescrever silenciosamente a conclusão previamente publicada. [Fonte: Documento 05 — Versionamento e propagação](../governance/05-protocolo-transversal-atualizacao.md).
+
+Para produtos científicos persistentes, o OES prevê **ProductVersion** como unidade de alteração do conteúdo. Mudanças materiais podem receber uma ou mais classes documentadas: **nova evidência**, **correção científica**, **mudança quantitativa**, **mudança de certeza**, **mudança de aplicabilidade** e **mudança de conclusão**. Alterações editoriais são reconhecidas separadamente. A identidade do produto permanece, mas cada versão deve conservar seu conteúdo, origem e relação com a versão anterior. [Fonte: Documento 40 — Versionamento dos produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+É possível incorporar novos estudos sem modificar a conclusão principal; também é possível que uma correção de estimativa ou mudança de avaliação de risco de viés altere a certeza mesmo sem novo estudo. O histórico precisa distinguir essas possibilidades. Por isso, a arquitetura não exige que toda nova referência produza outra versão, nem considera a estabilidade da conclusão prova de que nenhuma mudança científica ocorreu.
+
+Quando a mudança afeta **InvestigationVersion** sem produto correspondente, o processo deve preservar o histórico da investigação. Não se cria uma ProductVersion artificial apenas para simular atualização. Se a investigação alterada sustentar produtos, cada dependente precisa de avaliação própria antes de receber mudança científica ou de atualidade.
+
+As relações de **proveniência e linhagem** são fundamentais para esse controle. Uma correção em um resultado pode afetar múltiplas sínteses e fichas, que devem ser identificadas como potencialmente dependentes. A propagação prevista pelo OES **abre avaliações de impacto**, sem reescrever automaticamente todos os produtos relacionados. Se um Monitor permanecer ligado a uma versão substituída, sua reconfiguração para a versão mais recente requer procedimento explícito de *re-baselining* ou *rebinding*, e não simples mudança silenciosa do identificador observado.
+
+A garantia metodológica também tem natureza **vinculada à versão examinada**. Uma nova ProductVersion não herda automaticamente A2 ou A3 de sua antecessora. A alteração material deve passar pelas verificações aplicáveis, e produtos formais N3/N4 continuam sujeitos a revisão especializada qualificada. A aprovação anterior não pode ser invocada como se tivesse examinado dados e conclusões que ainda não existiam. [Fonte: Documento 04 — Governança de garantia](../governance/04-governanca-garantia-revisao.md).
+
+O percurso de atualização deve, assim, conservar uma cadeia verificável: **sinal → avaliação de relevância → decisão → trabalho científico → revisão/garantia → nova versão ou manutenção justificada da versão vigente**. Essa cadeia constitui uma especificação do modelo de atualização, não prova de que todos os seus componentes tenham sido implantados ou validados cientificamente em produção.
+
+### 10.7. Evidências vivas (*Living Evidence*)
+
+A expressão **evidência viva** designa uma estratégia de produção e atualização de conhecimento na qual existe **compromisso efetivo de identificar, avaliar e incorporar novas informações com frequência compatível com as necessidades do campo**. No OES, essa estratégia corresponde ao regime **M3**, que pertence ao eixo de manutenção e pode ser associado a produtos metodologicamente apropriados. M3 **não é N5**, não equivale automaticamente a uma revisão sistemática e não confere, por si só, maior certeza científica a uma conclusão. [Fonte: Documento 05 — Elegibilidade e controles de M3](../governance/05-protocolo-transversal-atualizacao.md).
+
+A escolha de M3 precisa ser justificada por um conjunto de condições, e não apenas pela importância declarada do tema. A arquitetura exige examinar **criticidade**, **incerteza relevante**, **expectativa plausível de novos estudos**, **potencial de mudança material** e **capacidade operacional sustentável**. Devem existir ainda método compatível com incorporação incremental, fontes e estratégias prospectivas, frequência explícita, governança e garantia proporcionais ao nível N do produto e plano de redução ou encerramento do regime quando seus requisitos deixarem de ser atendidos.
+
+Uma pergunta clínica de elevada importância pode, em princípio, justificar atenção intensiva, mas isso não resolve as restrições de equipe, acesso às fontes e revisão especializada. Quando não há capacidade de buscar, selecionar e avaliar novas evidências de modo sustentado, **a ativação formal de M3 é inadequada**, mesmo que o tema tenha grande relevância científica ou social. A experiência de uma busca bem-sucedida ou de um teste sintético não comprova que uma rotina viva poderá ser mantida ao longo do tempo.
+
+Os requisitos metodológicos do produto original continuam aplicáveis. Uma revisão sistemática viva exige a conformidade científica de uma revisão sistemática e controles apropriados a suas atualizações; a associação a M3 não autoriza substituir seleção independente, avaliação crítica, síntese ou revisão humana quando exigidas. Uma Ficha N2 em M3 também necessitaria garantir que suas novas versões fossem avaliadas e aprovadas segundo o padrão correspondente e sua criticidade.
+
+A operacionalização do regime vivo exige distinguir **captura de informação**, **triagem**, **avaliação de impacto**, **revisão da síntese** e **comunicação da atualização**. A frequência elevada de captura não significa atualização científica automática. Em alguns ciclos, nenhuma mudança material será identificada; em outros, os resultados podem demandar novo julgamento de certeza ou suspensão temporária de uma conclusão. O processo precisa comunicar tanto os achados quanto as lacunas de cobertura.
+
+No estágio de desenvolvimento documentado, **M3 permanece formalmente bloqueado**. O protocolo conceitual, isoladamente, não remove essa restrição; a implantação requer contrato técnico específico, governança explícita, migrações controladas e evidências de execução, testes, reconstrução e regressão compatíveis com o risco. O checkpoint vigente mantém pendências documentais e operacionais relevantes e a Fase 4 não está pronta para liberação de operação factual contínua. A existência de componentes de Monitor com testes sintéticos não equivale à autorização ou demonstração de um serviço de evidências vivas. [Fontes: documento de continuidade CP213](../../archive/handoffs/oes/README.md) e [STATE.md](../../STATE.md).
+
+Essa limitação é relevante para a replicação do modelo: o princípio de evidência viva pode orientar a arquitetura desde o início, mas sua execução deve ser condicionada a **capacidade comprovada**, não à expectativa de que a automação futura resolva por si só as tarefas científicas necessárias.
+
+### 10.8. Registro e auditoria das atualizações
+
+A atualização de evidências precisa ser **auditável em suas decisões científicas e operacionais**. Não basta saber que um produto recebeu nova data de publicação: é necessário compreender qual informação desencadeou a reavaliação, quais estudos ou fontes foram examinados, que julgamentos mudaram, quais responsáveis autorizaram a decisão e como a nova versão se relaciona com a anterior.
+
+O Documento 05 especifica que decisões autoritativas devem registrar, conforme o evento, **objeto afetado, estado anterior, novo estado ou decisão, sinal e fonte, evidências consideradas, ator e tipo de ator, método ou regra aplicada, justificativa, data e hora, verificação pertinente e relação com os registros de suporte**. Essa informação tem valor científico: permite distinguir correção de erro, inclusão de evidência e mudança de interpretação, além de identificar ações que extrapolem a competência do agente responsável.
+
+A auditoria envolve também a **integridade dos ciclos de monitoramento**. Cada ciclo deve permitir verificar se as fontes previstas foram consultadas, se as buscas alcançaram a janela planejada, se houve registros novos, se a triagem foi realizada e se ocorreram falhas. Uma execução incompleta não pode ser representada como prova de ausência de novidades. Quando uma lacuna ameaça a avaliação de atualidade, a decisão correspondente precisa ser fundamentada, sem transformar automaticamente falha operacional em conclusão científica.
+
+Outra dimensão é a **rastreabilidade das alterações entre versões**. A identificação estável de estudos, relatórios, resultados, sínteses e produtos possibilita localizar fontes de alterações e avaliar dependências. A correção de um dado utilizado em várias sínteses deve gerar exame do impacto sobre cada uma, sem reescrita automática de conclusões. Alertas considerados resolvidos devem conservar, quando aplicável, vínculo com a versão ou o estado de atualidade que materializou o desfecho da avaliação.
+
+A governança da auditoria exige separação entre **propostas automatizadas** e **decisões autoritativas**. Na baseline conceitual, IA e automação podem auxiliar a detectar candidatos, verificar consistência, sugerir classificação, organizar prioridades e preparar minutas. Não estão autorizadas a alterar conclusões cientificamente, promover A0–A3, simular revisão humana, publicar novas versões ou promover M2 a M3 sem controles específicos. A documentação do processo precisa permitir identificar claramente onde ocorreu participação da IA e onde houve decisão de agente competente.
+
+A auditabilidade não se confunde com volume documental. Um número elevado de logs, matrizes ou checkpoints não substitui **evidências suficientes para responder às perguntas relevantes**: a busca ocorreu? A fonte foi acessada? O dado foi corretamente extraído? A decisão foi metodologicamente justificável? O produto recebeu a garantia que sua finalidade exige? Para uma implantação proporcional do OES, registros e controles devem ser concentrados nessas verificações substantivas, evitando duplicação de procedimentos que não acrescentem rastreabilidade ou segurança científica.
+
+O estágio corrente do projeto impõe uma ressalva final. A Fase 4 consolidou uma arquitetura de atualização e documentou procedimentos e testes em escopos delimitados, mas **não demonstrou operação contínua com fontes científicas reais nem validação científica externa do fluxo de atualização**. Permanecem pendentes condições técnicas, controles e autorizações descritos no estado canônico. A explicação do protocolo neste capítulo constitui, portanto, **apresentação de um modelo em desenvolvimento**, não certificação de prontidão operacional.
+
+A contribuição potencial dessa arquitetura para grupos de pesquisa está em tratar a atualidade como um **julgamento científico controlado ao longo do tempo**, e não como efeito automático da publicação de novos artigos. Ela organiza a passagem de sinais a decisões, protege as versões anteriores e preserva os limites da automação. Sua utilidade prática e confiabilidade dependerão de implementação proporcional, avaliação por especialistas e demonstrações em condições efetivas de uso.
+
 
 # 11. Infraestrutura tecnológica e automação
 
@@ -1090,4 +1214,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.9 — a apresentação e os Capítulos 1–9 constituem texto corrido desenvolvido nesta versão. Os Capítulos 10–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.10 — a apresentação e os Capítulos 1–10 constituem texto corrido desenvolvido nesta versão. Os Capítulos 11–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
