@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP198 — 2026-10-20**.
+- checkpoint vigente: **CP199 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5617,3 +5617,9 @@ Estado preservado:
 
 - Quatro atividades A1–A4 consolidadas: 10 tabelas, 56 definições de funções, 23 triggers (quatro CONSTRAINT DEFERRABLE INITIALLY DEFERRED), sete colunas adicionadas a cinco tabelas anteriores. Pós-condições propostas não executadas nem aprovadas.
 - 36 migrações UNREVIEWED, zero pós-condições aprovadas, BRG-03/06/07/08 bloqueados, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. Sem Neon/SQL/CI/PG18, fontes factuais, custos ou novo epoch. Próximo bloco A1: 033a–e, sujeito a Prossiga. STOP.
+
+
+### G1-MIG — Migração 033, matriz documental de pós-condições (Doc154 / CP199)
+
+- A1–A4 consolidadas: 12 tabelas, 27 funções, 23 triggers, duas views; verificações futuras de lifecycle, tentativas, autoridade, imutabilidade, FKs e concorrência. Documentação não é validação PostgreSQL.
+- 36 migrações UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. BRG-03/06/07/08 BLOCKED. Nenhuma execução Neon/SQL/CI, consultas factuais, custo ou novo epoch. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Próximo bloco 034. STOP.
