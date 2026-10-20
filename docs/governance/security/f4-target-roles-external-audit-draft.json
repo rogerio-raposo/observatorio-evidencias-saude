@@ -1,0 +1,285 @@
+{
+  "schema_version": "oes.f4.role-audit-target.draft.v1",
+  "source_checkpoint": "CP175",
+  "status": "DRAFT_ONLY_FAIL_CLOSED_NO_OPERATIONAL_AUTHORIZATION",
+  "scope": "Offline architectural candidate; never apply to Neon without separate owner approval and independent review",
+  "permissions_semantics": "DENY_UNLESS_EXPLICITLY_APPROVED_AND_PROVEN",
+  "database_roles_created": false,
+  "neon_accessed": false,
+  "neon_write_authorized": false,
+  "paid_service_approved": false,
+  "external_ddl_audit_enabled": false,
+  "migration_runner_operational": false,
+  "backup_restore_independent": false,
+  "catalog_postconditions_approved": 0,
+  "automatic_replay_allowed": false,
+  "operational_readiness": false,
+  "mandatory_distinctions": [
+    "POSTGRESQL_OBJECT_OWNER_IS_NOT_REVOKABLE_DDL_BOUNDARY",
+    "NEON_CONTROL_PLANE_PERMISSIONS_ARE_DISTINCT_FROM_POSTGRESQL_SQL_ROLES",
+    "AUDIT_INSIDE_TRANSACTION_IS_NOT_EXTERNAL_IMMUTABLE_PROOF",
+    "MIGRATOR_OWNERSHIP_REQUIRES_PRIVILEGED_TIMEBOXED_GATE_AND_EXTERNAL_AUDIT"
+  ],
+  "roles": [
+    {
+      "id": "schema_owner",
+      "plane": "database",
+      "credential": "NOLOGIN",
+      "purpose": "Own protected schema objects and keep ownership inaccessible to routine users",
+      "allowed": [
+        "own_versioned_objects",
+        "grant_scoped_permissions_after_review"
+      ],
+      "prohibited": [
+        "routine_runtime_session",
+        "persistent_shared_login",
+        "direct_automated_migration_from_default_ci"
+      ],
+      "elevation": "BREAK_GLASS_ONLY_APPROVAL_PENDING"
+    },
+    {
+      "id": "runtime",
+      "plane": "database",
+      "credential": "SCOPED_LOGIN_IF_IMPLEMENTED",
+      "purpose": "Read/write only reviewed application relations through narrow grants",
+      "allowed": [
+        "explicit_dml_on_approved_relations",
+        "execute_allowlisted_functions"
+      ],
+      "prohibited": [
+        "object_ownership",
+        "schema_create",
+        "alter_table",
+        "disable_trigger",
+        "alter_function",
+        "set_role_schema_owner",
+        "set_role_migration_elevation",
+        "createrole",
+        "superuser",
+        "bypassrls"
+      ],
+      "elevation": "NEVER"
+    },
+    {
+      "id": "migration_executor",
+      "plane": "database",
+      "credential": "EPHEMERAL_SCOPED_LOGIN_IF_IMPLEMENTED",
+      "purpose": "Execute only approved migration hashes under a supervised, bounded elevation",
+      "allowed": [
+        "read_required_schema_metadata",
+        "execute_approved_sql_only_during_elevation_window"
+      ],
+      "prohibited": [
+        "persistent_owner_membership",
+        "routine_runtime_access",
+        "arbitrary_alter_schema_without_gate",
+        "disable_triggers_outside_approved_change",
+        "unreviewed_replay",
+        "unlogged_manual_sql"
+      ],
+      "elevation": "REQUIRES_SEPARATE_EXPLICIT_OWNER_APPROVAL_AND_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "audit_reader",
+      "plane": "external",
+      "credential": "READ_ONLY_SEPARATE_PRINCIPAL_IF_IMPLEMENTED",
+      "purpose": "Independently verify signed/append-only DDL trail with external retention",
+      "allowed": [
+        "read_external_audit_stream",
+        "verify_integrity_and_gaps"
+      ],
+      "prohibited": [
+        "alter_protected_schema",
+        "modify_audit_records",
+        "control_producer_admin_settings"
+      ],
+      "elevation": "NEVER"
+    },
+    {
+      "id": "backup_operator",
+      "plane": "external",
+      "credential": "SCOPED_SEPARATE_PRINCIPAL_IF_IMPLEMENTED",
+      "purpose": "Perform backup/restore exercises in isolated environment",
+      "allowed": [
+        "request_approved_backup",
+        "read_restore_evidence",
+        "restore_disposable_test_environment"
+      ],
+      "prohibited": [
+        "silent_restore_over_canonical_branch",
+        "disable_audit",
+        "unreviewed_production_mutation",
+        "delete_canonical_backups"
+      ],
+      "elevation": "REQUIRES_SEPARATE_RESTORE_APPROVAL"
+    },
+    {
+      "id": "break_glass_admin",
+      "plane": "control_plane",
+      "credential": "OWNER_CONTROLLED_SHORT_LIVED_IF_IMPLEMENTED",
+      "purpose": "Only actor able to authorize privileged maintenance and role grants",
+      "allowed": [
+        "approve_timeboxed_maintenance",
+        "approve_credential_rotation",
+        "revoke_emergency_access"
+      ],
+      "prohibited": [
+        "delegation_to_ci_by_default",
+        "shared_long_lived_tokens",
+        "unreviewed_mutation",
+        "silencing_external_audit"
+      ],
+      "elevation": "EXPLICIT_ONE_OFF_APPROVAL"
+    }
+  ],
+  "mandatory_controls": [
+    {
+      "id": "no_runtime_owner_path",
+      "required": true,
+      "evidence": "Verify runtime has no ownership, membership inheritance or SET ROLE path to protected owner or privileged intermediary",
+      "state": "NOT_TESTED_NEON"
+    },
+    {
+      "id": "migration_owner_conflict",
+      "required": true,
+      "evidence": "Acknowledge ALTER and DROP are intrinsic object-owner capabilities; a schema-owning executor can bypass guards during its elevation",
+      "state": "UNRESOLVED_DESIGN"
+    },
+    {
+      "id": "bounded_elevation",
+      "required": true,
+      "evidence": "Require reviewed SQL hash, reviewed affected-object allowlist, time limit, separate approval, no shared credential, expiration and postflight",
+      "state": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "external_log_non_transactional",
+      "required": true,
+      "evidence": "Prove outside-DB collector records BEGIN, attempted and failed/rolled-back DDL as well as committed DDL where supported",
+      "state": "NOT_CONFIGURED"
+    },
+    {
+      "id": "external_log_ownership",
+      "required": true,
+      "evidence": "Prove source DB privileged principal cannot alter external collector retention, delete events or replace verification secret",
+      "state": "NOT_CONFIGURED"
+    },
+    {
+      "id": "external_log_integrity",
+      "required": true,
+      "evidence": "End-to-end event continuity, order/sequence, timestamps, event/actor/db identity, durable receipts, integrity checks and loss alert",
+      "state": "NOT_CONFIGURED"
+    },
+    {
+      "id": "audit_coverage_gap",
+      "required": true,
+      "evidence": "Prove no blind spots for privileged manual SQL, changes outside approved controller, errors and transaction rollbacks",
+      "state": "NOT_VERIFIED"
+    },
+    {
+      "id": "neon_plan_and_billing",
+      "required": true,
+      "evidence": "Confirm features available on owner's Free project with no charge; vendor OTLP/log export might require paid Scale and must not be activated",
+      "state": "OWNER_CONFIRMATION_PENDING"
+    },
+    {
+      "id": "control_plane_vs_db",
+      "required": true,
+      "evidence": "Separate Neon org/project editor permissions, API tokens and DB SQL roles; neither alone proves the other is constrained",
+      "state": "NOT_TESTED_NEON"
+    },
+    {
+      "id": "tls_secrets_rotation",
+      "required": true,
+      "evidence": "Verify hostname TLS certificate, secret storage, expiry/revocation and rotation including negative connection tests",
+      "state": "NOT_TESTED_NEON"
+    },
+    {
+      "id": "backup_independence",
+      "required": true,
+      "evidence": "Restore independently outside same database from verified snapshot, not merely branch history or a provider claim",
+      "state": "NOT_CONFIGURED"
+    },
+    {
+      "id": "human_specialist_review",
+      "required": true,
+      "evidence": "Require independent PostgreSQL/security review and scientific-governance approval where domain policy applies",
+      "state": "NOT_REVIEWED"
+    }
+  ],
+  "audit_options": [
+    {
+      "id": "native_neon_log_export",
+      "classification": "CONDITIONAL_NOT_SELECTED",
+      "availability": "Vendor has described PostgreSQL OTLP export as Scale plan; owner Free project and billable capabilities not verified",
+      "capture": "Potential engine logs, scope depends on configured source and statement/audit settings",
+      "risks": [
+        "NOT_ASSUMED_FREE",
+        "NOT_VERIFIED",
+        "NO_ACTIVATION_APPROVED"
+      ]
+    },
+    {
+      "id": "git_actions_commit_and_artifacts",
+      "classification": "SYNTHETIC_CI_EVIDENCE_ONLY",
+      "availability": "GitHub Actions used for disposable rehearsal without new paid resources",
+      "capture": "Controller commands and logs only; cannot observe arbitrary direct SQL to Neon",
+      "risks": [
+        "NOT_COMPLETE_DB_DDL_AUDIT",
+        "NOT_APPEND_ONLY_IMMUTABLE",
+        "RETENTION_LIMITED"
+      ]
+    },
+    {
+      "id": "database_event_trigger",
+      "classification": "SUPPLEMENTAL_TRANSACTION_BOUND_ONLY",
+      "availability": "PG18 test demonstrated committed ALTER TABLE rows in same database",
+      "capture": "DDL event callback within DB transaction; loses rows on ROLLBACK",
+      "risks": [
+        "NOT_INDEPENDENT",
+        "PRIVILEGED_ADMIN_CAN_MODIFY",
+        "NO_ROLLBACK_DURABLE_RECEIPT"
+      ]
+    },
+    {
+      "id": "external_collector_independent",
+      "classification": "REQUIRED_BUT_UNSELECTED",
+      "availability": "Deployment, provider, Free eligibility, source and retention still unverified",
+      "capture": "Attempted/committed/rolled-back DDL plus roles and control-plane changes, with agreed provenance",
+      "risks": [
+        "COST_APPROVAL_PENDING",
+        "COVERAGE_UNVERIFIED",
+        "NO_PROVISIONING_APPROVED"
+      ]
+    }
+  ],
+  "decision": "HOLD_NEON_WRITES_UNTIL_GATES_APPROVED",
+  "next_synthetic_tests": [
+    "PG18 LOGIN credentials with non-owner runtime vs escalated migration principal",
+    "Role membership with SET TRUE/FALSE and INHERIT TRUE/FALSE negative paths",
+    "Schema owner migration privilege conflict and gated ephemeral connection",
+    "External simulated collector receiving failed and rolled-back DDL outside transaction",
+    "Simulated dropped/gapped logs and independent retention verification"
+  ],
+  "sources": [
+    {
+      "label": "PostgreSQL 18 role membership",
+      "url": "https://www.postgresql.org/docs/18/role-membership.html"
+    },
+    {
+      "label": "PostgreSQL 18 object privileges/ownership",
+      "url": "https://www.postgresql.org/docs/18/ddl-priv.html"
+    },
+    {
+      "label": "Neon project-level permission structure Aug 2026",
+      "url": "https://neon.com/blog/neon-now-has-per-project-permissions"
+    },
+    {
+      "label": "Neon log-export architecture",
+      "url": "https://neon.com/blog/logs-open-telemetry"
+    },
+    {
+      "label": "Neon scale plan log export",
+      "url": "https://neon.com/blog/why-we-no-longer-lock-premium-features"
+    }
+  ]
+}
