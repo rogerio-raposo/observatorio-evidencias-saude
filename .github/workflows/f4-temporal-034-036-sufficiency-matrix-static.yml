@@ -1,0 +1,64 @@
+name: F4 temporal 034-036 draft sufficiency matrix controls (no DB)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-temporal-034-036-sufficiency-matrix-static.yml'
+      - 'docs/governance/reconciliation/f4-034-036-evidence-sufficiency-matrix-draft.json'
+      - 'scripts/oes_f4_temporal_sufficiency_matrix_lint.py'
+      - 'tests/test_oes_f4_temporal_sufficiency_matrix_lint.py'
+      - 'database/f4-reconciliation-postconditions-draft.json'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  draft-evidence-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout pinned SHA without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Enforce fail-closed negative unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_oes_f4_temporal_sufficiency_matrix_lint.py' -v
+      - name: Record source-only matrix status and forbidden permissions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-temporal-sufficiency-evidence
+          python scripts/oes_f4_temporal_sufficiency_matrix_lint.py > f4-temporal-sufficiency-evidence/status.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('f4-temporal-sufficiency-evidence/status.json').read_text())
+          assert d['status']=='STATIC_DRAFT_MATRIX_BLOCKED_ONLY'
+          assert (d['migrations'],d['requirements'])==(3,36)
+          assert d['operational_postconditions_validated']==0
+          assert d['independent_reviews_performed']==0
+          assert d['sql_executed'] is False
+          assert d['neon_accessed'] is False
+          assert d['neon_write_authorized'] is False
+          print('DRAFT_EVIDENCE_MATRIX_BLOCKED_NO_OPERATIONAL_PASS')
+          PY
+          printf '%s\n' "$GITHUB_SHA" > f4-temporal-sufficiency-evidence/commit.txt
+          sha256sum f4-temporal-sufficiency-evidence/status.json > f4-temporal-sufficiency-evidence/status-sha256.txt
+      - name: Preserve read-only evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-temporal-sufficiency-matrix-draft
+          path: f4-temporal-sufficiency-evidence/
+          if-no-files-found: warn
