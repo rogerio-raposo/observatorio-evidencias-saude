@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.3 (manuscrito em elaboração)  
+**Versão editorial:** 0.4 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–3 redigidos; Capítulos 4–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–4 redigidos; Capítulos 5–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -254,14 +254,106 @@ Dessa forma, a definição da pergunta não constitui apenas a etapa inicial do 
 
 # 4. Arquitetura de investigação do OES
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 4.1. Organização geral da investigação
 
-- **4.1. Organização geral da investigação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **4.2. Níveis de profundidade metodológica (N0–N4):** texto a desenvolver a partir da documentação canônica pertinente.
-- **4.3. Critérios de escolha da profundidade:** texto a desenvolver a partir da documentação canônica pertinente.
-- **4.4. Regimes de manutenção (M0–M3):** texto a desenvolver a partir da documentação canônica pertinente.
-- **4.5. Independência entre profundidade e manutenção:** texto a desenvolver a partir da documentação canônica pertinente.
-- **4.6. Escalonamento e reclassificação das investigações:** texto a desenvolver a partir da documentação canônica pertinente.
+A arquitetura de investigação do Observatório de Evidências em Saúde (OES) foi concebida para relacionar **a pergunta científica, o método empregado, as evidências examinadas e o produto de comunicação resultante**. Seu objetivo não é impor um procedimento único a questões distintas, mas estabelecer uma estrutura comum dentro da qual decisões metodológicas possam ser justificadas, verificadas e revistas. A pergunta é o ponto de partida: define o objeto da análise e condiciona a escolha das fontes, dos desenhos de estudo, dos instrumentos de avaliação e das formas de síntese. [Fontes: Documento 02 — Níveis de investigação](../governance/02-niveis-investigacao-produtos.md) e [Documento 03 — Roteamento metodológico](../governance/03-roteamento-metodologico.md).
+
+No plano conceitual, a investigação vincula uma pergunta estruturada a um percurso científico identificável. Esse percurso inclui planejamento, recuperação da literatura, seleção, avaliação crítica, organização de resultados, síntese e elaboração de conclusões proporcionais à evidência disponível. O produto final comunica aspectos relevantes desse trabalho, mas não substitui os estudos, resultados, avaliações ou registros que sustentam suas afirmações. A arquitetura dos produtos explicita esse encadeamento: **pergunta → investigação → objetos de evidência → síntese e avaliação de certeza, quando aplicáveis → produto**. [Fonte: Documento 40 — Taxonomia dos produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+O modelo distingue três questões frequentemente confundidas. A **profundidade da investigação**, representada pelos níveis N0–N4, especifica quanto da evidência será procurado, examinado e sintetizado. O **regime de manutenção**, representado por M0–M3, indica se e como o conhecimento produzido deverá ser acompanhado ao longo do tempo. Já o **nível de garantia** A0–A3 caracteriza as verificações e aprovações efetivamente obtidas por um produto. Um trabalho extenso pode carecer de revisão especializada; uma síntese focal pode exigir monitoramento frequente; e a existência de um Monitor não aumenta automaticamente a profundidade metodológica do produto acompanhado. [Fonte: Documento 04 — Governança e garantia](../governance/04-governanca-garantia-revisao.md).
+
+A definição inicial do percurso ocorre no roteamento metodológico. Antes da abertura formal, a demanda é registrada, esclarecida, normalizada e classificada; em seguida, são avaliadas criticidade, complexidade, maturidade da literatura, incerteza, finalidade, necessidade de completude e demais fatores relevantes. A investigação deve conservar a decisão tomada e sua justificativa, de maneira que seja possível compreender por que determinado nível de profundidade foi escolhido e quais limitações decorrem dessa escolha.
+
+Essa organização procura equilibrar dois riscos: a **subinvestigação**, quando o método empregado é insuficiente para a pergunta e para as consequências de uma conclusão incorreta, e a **sobreinvestigação**, quando se exigem procedimentos extensos sem benefício proporcional para a finalidade científica. Não se pressupõe que uma pergunta percorra todos os níveis; o desenho adequado pode ser escolhido diretamente, revisto ou substituído quando o desenvolvimento do trabalho revelar novas necessidades.
+
+A arquitetura documentada oferece regras e objetos para organizar esse ciclo, mas sua descrição não deve ser confundida com a existência de um sistema integralmente automatizado. No estágio de desenvolvimento aqui apresentado, componentes e casos de uso foram submetidos a diferentes formas de teste técnico, enquanto permanecem pendentes a validação científica especializada do modelo e a demonstração de operação contínua do observatório.
+
+### 4.2. Níveis de profundidade metodológica (N0–N4)
+
+Os cinco níveis N0–N4 representam **modalidades de investigação com finalidades e exigências diferentes**. A numeração orienta a escolha da profundidade, mas não constitui uma escala universal de qualidade científica. Em qualquer nível, é necessário declarar o que foi feito, o que não foi feito e quais inferências são justificáveis. [Fonte: Documento 02 — Arquitetura de níveis e produtos](../governance/02-niveis-investigacao-produtos.md).
+
+**N0 — Evidence Scan.** Destina-se ao reconhecimento inicial de um campo. Pode localizar revisões existentes, identificar desenhos predominantes, dimensionar preliminarmente o volume de publicações e reconhecer lacunas ou controvérsias. É particularmente útil quando a pergunta ainda precisa ser delimitada ou quando não está claro se já existe síntese adequada. O N0 **não reivindica busca exaustiva, avaliação completa da certeza ou conclusão definitiva sobre efeitos**. Seu resultado pode ser suficiente para orientar uma pergunta futura ou para decidir que determinada investigação aprofundada não é necessária.
+
+**N1 — Resposta de Evidência.** Destina-se a responder uma pergunta focal mediante busca estruturada, potencialmente seletiva, com prioridade a revisões sistemáticas, meta-análises, diretrizes ou avaliações de tecnologias suficientemente pertinentes. Estudos primários relevantes ou posteriores podem complementar o material encontrado. O produto comunica uma resposta delimitada, indicando fontes, método, resultados, limitações e data de corte. Quando a busca não foi exaustiva, não pode ser apresentada como se tivesse identificado toda a literatura elegível. Uma avaliação de certeza proveniente de revisão anterior somente poderá ser aproveitada quando sua correspondência com a pergunta e com o corpo de evidências estiver justificada.
+
+**N2 — Ficha de Evidência Estruturada.** É concebido como nível central de organização reutilizável do conhecimento sobre perguntas focais. Além da conclusão, a Ficha registra elementos que permitem rastrear pergunta, protocolo, fontes, critérios de elegibilidade, estudos e sínteses considerados, resultados por desfecho, avaliações críticas, incerteza, aplicabilidade e data de corte. Sua natureza persistente e versionada facilita comparação entre versões e vinculação posterior a mecanismos de monitoramento. Essa escolha arquitetural não torna automaticamente cada Ficha equivalente a uma revisão sistemática independente. A garantia científica deve ser identificada separadamente; no padrão N2 do OES, a publicação interna pode alcançar A2 mediante verificação metodológica assistida por IA e aprovação de governança, com declaração explícita da ausência de revisão especializada quando A3 não tiver ocorrido.
+
+**N3 — Síntese Rápida de Evidências.** Corresponde a uma síntese formal, adequada a questões que exigem investigação estruturada, mas nas quais restrições de prazo ou proporcionalidade justificam adaptações em relação a uma revisão sistemática completa. As abreviações metodológicas — por exemplo, cobertura de bases, limites de busca ou procedimentos específicos de seleção — devem ser **pré-definidas, justificadas, documentadas e comunicadas**. A transparência sobre essas restrições é requisito de rigor; o produto não deve ser apresentado como metodologicamente equivalente a uma revisão sistemática completa. A governança do OES exige **garantia A3 para N3 formal**, incluindo avaliação especializada independente.
+
+**N4 — Revisão de Evidências / Síntese Aprofundada.** É indicado quando a relevância da decisão, a extensão ou o conflito da literatura, a necessidade de completude ou a complexidade da síntese demandam procedimentos mais abrangentes. Pode envolver protocolo prospectivo, busca extensiva em múltiplas fontes, avaliação crítica detalhada, análises quantitativas ou narrativas complexas, avaliação de certeza e relato reprodutível. A expressão **revisão sistemática** somente é cabível quando seus requisitos metodológicos específicos forem atendidos; não é um título conferido automaticamente pelo nível N4. Para produtos formais, a governança prevê A3 e os requisitos adicionais de múltiplos revisores qualificados previstos no protocolo pertinente.
+
+O quadro resume as diferenças de finalidade:
+
+| Nível | Produto de investigação | Pergunta orientadora | Limite relevante |
+|---|---|---|---|
+| **N0** | Evidence Scan | Que literatura e sínteses existem neste campo? | Não reivindica exaustividade nem certeza formal |
+| **N1** | Resposta de Evidência | O que fontes adequadas permitem responder sobre uma questão focal? | A busca pode ser seletiva; suas limitações devem ser declaradas |
+| **N2** | Ficha de Evidência | Como registrar e comunicar conhecimento focal de modo estruturado e reutilizável? | Não equivale automaticamente a revisão sistemática ou validação externa |
+| **N3** | Síntese Rápida | Como produzir síntese formal com abreviações explícitas e justificadas? | Exige revisão especializada para produto formal |
+| **N4** | Revisão de Evidências | Que investigação aprofundada é necessária para responder com completude apropriada? | Exige requisitos metodológicos e revisão qualificada compatíveis |
+
+O modelo contempla também **produtos analíticos transversais**, como Mapa de Evidências e Overview de Revisões, que não precisam corresponder linearmente a um único nível N. O Mapa descreve a distribuição de estudos e lacunas em determinado campo; o Overview examina um conjunto de revisões existentes. Essas famílias são detalhadas no Capítulo 6 e precisam ser escolhidas segundo a natureza do objeto científico, não apenas pela quantidade de literatura disponível. [Fonte: Documento 40 — Famílias de produtos](../products/40-taxonomia-arquitetura-produtos.md).
+
+### 4.3. Critérios de escolha da profundidade
+
+A seleção de um nível N0–N4 depende da combinação entre **a pergunta, o uso pretendido da resposta e as exigências científicas necessárias para sustentá-la**. O OES rejeita a atribuição automática de profundidade por simples soma de pontos ou pela suposição de que níveis numericamente superiores são sempre preferíveis. O registro de roteamento deve apresentar uma justificativa metodológica compreensível e passível de revisão. [Fonte: Documento 03 — Dimensões e regras de roteamento](../governance/03-roteamento-metodologico.md).
+
+A primeira dimensão é a **criticidade**: qual seria a consequência de uma conclusão incorreta? Perguntas relacionadas a decisões com potencial de dano significativo, políticas públicas, incorporação ou retirada de tecnologias e recomendações institucionais tendem a demandar maior cautela. A criticidade pode elevar tanto a profundidade necessária quanto o nível de garantia, mas esses efeitos não são automáticos ou idênticos.
+
+A segunda dimensão é a **complexidade metodológica**. Questões envolvendo múltiplas populações, intervenções, comparadores, desfechos, contextos, desenhos e subgrupos podem requerer decomposição antes de serem sintetizadas. Em determinadas situações, uma única revisão ampla produziria uma resposta menos clara do que investigações focais articuladas por um mapa ou uma síntese transversal.
+
+A **maturidade da literatura** e a **incerteza científica** orientam uma terceira avaliação. Quando existe revisão recente, relevante e metodologicamente robusta, poderá ser mais adequado examiná-la criticamente, atualizar seu período de busca ou construir uma Ficha reutilizável do que duplicar todo o trabalho. Em contraste, estudos conflitantes, lacunas de cobertura, limitações graves, imprecisão ou mudanças rápidas na evidência podem justificar investigação adicional. A disponibilidade de revisões, entretanto, não dispensa verificar sua correspondência com a pergunta operacional.
+
+Outras dimensões incluem necessidade de **completude**, exigência de **síntese quantitativa**, aplicabilidade em determinado contexto, **volatilidade** da literatura e **urgência** da demanda. Uma resposta produzida em prazo reduzido pode adotar um método rápido apropriado, mas a urgência não legitima a omissão silenciosa de procedimentos importantes ou a apresentação de confiança superior àquela sustentada pela investigação.
+
+Considere dois exemplos hipotéticos. Uma pergunta focal sobre uma intervenção já abordada por revisão recente e adequada pode justificar inicialmente N1 ou N2, dependendo da necessidade de persistência e de avaliação estruturada. Uma questão destinada a subsidiar diretriz, com resultados contraditórios e múltiplos desfechos críticos, pode exigir N3 ou N4, desde que existam profissionais e recursos compatíveis com os requisitos de método e revisão. Esses exemplos indicam raciocínios possíveis; não são regras de roteamento que determinem automaticamente um nível a partir de palavras-chave.
+
+A viabilidade e a disponibilidade de competências devem ser declaradas sem reduzir artificialmente o padrão científico requerido. Se uma questão exige N3 ou N4 e não existem revisores qualificados para satisfazer a garantia pertinente, o OES não deverá considerá-la concluída como produto formal desses níveis. Poderá manter trabalho em elaboração, restringir a finalidade de uma saída experimental ou reformular justificadamente a pergunta, mas não simular revisão humana especializada. [Fonte: Documento 04 — Relação N0–N4 e A0–A3](../governance/04-governanca-garantia-revisao.md).
+
+### 4.4. Regimes de manutenção (M0–M3)
+
+A produção de uma síntese não determina, por si só, como ela permanecerá atualizada. Para tratar dessa questão, o OES estabelece quatro **regimes de manutenção** que representam compromissos distintos de acompanhamento temporal. A dimensão M0–M3 se refere ao plano de vigilância e atualização, não à profundidade da investigação. Sua definição inicial consta do Documento 02, enquanto a arquitetura transversal e as condições de operação são desenvolvidas na Fase 4. [Fonte: Documento 05 — Protocolo de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+**M0 — Estático.** O produto ou investigação não dispõe de vigilância ativa prevista. Essa condição descreve a ausência de acompanhamento programado, não a qualidade ou a atualidade científica do conteúdo. Um produto estático pode, posteriormente, tornar-se desatualizado ou necessitar de reavaliação em razão de nova demanda ou informação relevante.
+
+**M1 — Elegível para atualização.** O conhecimento pode ser reavaliado em resposta a eventos, necessidades explícitas ou revisão periódica, mas não exige busca recorrente estruturada. A elegibilidade e suas condições precisam estar documentadas. Trata-se de opção proporcional para temas em que não se justifica monitoramento ativo contínuo.
+
+**M2 — Monitoramento ativo.** Prevê um plano prospectivo com fontes, critérios e ciclos definidos de acompanhamento. Um Monitor formal torna-se necessário quando a vigilância persistente é material ao uso do produto. Identificar publicações ou registrar ocorrências não basta: é preciso preservar a relação entre sinais detectados, critérios de avaliação, lacunas de cobertura e decisões subsequentes. A existência de estruturas e testes técnicos para M2 não constitui, sozinha, prova de vigilância factual contínua em operação.
+
+**M3 — Evidência Viva.** Representa um compromisso de vigilância de alta frequência ou contínua, associado à capacidade sustentada de identificar, avaliar e incorporar novas evidências quando necessário. Sua adoção exige justificar importância, incerteza, expectativa de novos estudos, potencial de mudança científica, método incremental apropriado, fontes e periodicidade explícitas, capacidade operacional, garantia metodológica e critérios de redução ou encerramento do regime. **M3 não é um rótulo honorífico nem está formalmente operacionalizado no estágio documentado do OES**.
+
+A passagem de um regime a outro deve registrar estado anterior, novo estado, data, ator, justificativa e consequências esperadas para o acompanhamento. Também é possível reduzir a intensidade da manutenção quando sua necessidade deixa de existir ou quando os recursos disponíveis são insuficientes. Essa flexibilidade é importante porque um compromisso permanente de vigilância, assumido sem capacidade de execução, pode transmitir falsa impressão de atualidade.
+
+O protocolo transversal distingue **regime de manutenção**, **atualidade avaliada**, **versão científica** e **situação dos processos operacionais**. Por exemplo, um produto M2 pode encontrar-se com lacuna de cobertura em determinado ciclo, sem que isso autorize concluir automaticamente que seus resultados científicos estão desatualizados. Da mesma forma, a detecção de um novo estudo pode iniciar avaliação de materialidade sem modificar a versão científica existente. Essas distinções serão examinadas em maior detalhe no Capítulo 10.
+
+### 4.5. Independência entre profundidade e manutenção
+
+A independência conceitual entre N e M evita tratar atualização como um estágio adicional de investigação. O nível **N** responde à pergunta “qual é a extensão e a natureza do trabalho científico realizado?”; o regime **M** responde “como esse conhecimento será acompanhado ao longo do tempo?”. A arquitetura prevê que ambos sejam registrados explicitamente, preservando suas justificativas e suas condições de aplicação. Não existe um nível “N5” correspondente a evidência viva. [Fonte: Documento 40 — Independência entre profundidade e manutenção](../products/40-taxonomia-arquitetura-produtos.md).
+
+Uma **Ficha N2–M1**, por exemplo, pode disponibilizar uma síntese focal persistente, sujeita a reavaliação quando surgir demanda ou evento relevante, sem busca programada recorrente. Uma **Ficha N2–M2** pode, conceitualmente, ser vinculada a um Monitor com ciclos prospectivos, desde que os contratos metodológicos e operacionais estejam atendidos. Uma **Revisão N4–M0** pode permanecer sem vigilância ativa após sua conclusão, desde que a decisão seja explícita e não induza o leitor a acreditar que novas evidências serão continuamente incorporadas.
+
+A combinação N–M, contudo, não é inteiramente livre de condições. O Documento 40 estabelece preferências por produto: um **Evidence Scan N0** é preferencialmente M0 ou M1, pois o monitoramento persistente exige que o objeto seja formalmente rerroteado para além de uma exploração inicial; uma **Resposta N1** costuma ser M0 ou M1, podendo requerer associação a uma Ficha quando a vigilância persistente for justificada. A Ficha N2 e as sínteses formais N3 e N4 admitem diferentes regimes, mas M3 depende sempre dos requisitos específicos de elegibilidade, garantia e capacidade operacional.
+
+Também é necessário separar N e M do eixo **A0–A3**, que representa a garantia efetivamente obtida por um produto. Uma investigação N4 pode ser metodologicamente aprofundada e ainda permanecer sem a revisão especializada necessária para sua publicação formal. Um Monitor M2 não confere automaticamente A3 a uma Ficha N2, e uma atualização científica não herda, sem nova verificação, a garantia de sua versão anterior. Essa terceira dimensão previne a confusão entre complexidade do método, frequência de atualização e validação especializada. [Fonte: Documento 04 — Níveis de garantia](../governance/04-governanca-garantia-revisao.md).
+
+A separação tem implicações práticas para pesquisadores interessados em replicar o modelo. Um observatório de escopo delimitado pode começar com poucas Fichas metodologicamente adequadas e regimes M0 ou M1, em vez de assumir que todos os temas exigirão monitoramento contínuo. Por outro lado, quando determinado domínio apresenta produção científica muito dinâmica e relevância decisória, a manutenção pode tornar-se parte essencial de sua utilidade. Em ambos os casos, o compromisso de atualização precisa ser compatível com os recursos e mecanismos disponíveis.
+
+### 4.6. Escalonamento e reclassificação das investigações
+
+O **roteamento inicial** representa uma decisão fundamentada em informações disponíveis antes da execução completa da investigação. Essas informações podem mudar. A literatura recuperada pode revelar uma revisão robusta não identificada anteriormente, ausência inesperada de estudos, conflitos relevantes entre resultados ou necessidade de examinar novos desfechos. Por isso, o OES admite **escalonamento**, **redução de profundidade** e **reclassificação metodológica**, desde que tais decisões sejam registradas. [Fonte: Documento 03 — Reroteamento e não duplicação](../governance/03-roteamento-metodologico.md).
+
+Um escalonamento pode ocorrer quando uma resposta inicialmente concebida como N1 identifica insuficiência das sínteses disponíveis, exigindo construção de Ficha N2 ou investigação formal mais aprofundada. Em direção inversa, uma proposta N4 pode ser reavaliada após a identificação de revisão sistemática recente que corresponda adequadamente à pergunta, permitindo adoção crítica de seus resultados, complementação temporal ou produção de Ficha. O princípio é evitar tanto insuficiência quanto duplicação desnecessária.
+
+A **reclassificação da pergunta** pode ser tão importante quanto a alteração da profundidade. Uma investigação apresentada inicialmente como avaliação de efetividade pode conter pergunta autônoma sobre segurança, aceitabilidade ou implementação, requerendo divisão em percursos metodológicos diferentes. A reformulação deve preservar a pergunta original, a versão estruturada, os critérios modificados e a justificativa da mudança, impedindo que o produto final pareça ter respondido a uma pergunta diferente sem que isso seja declarado.
+
+O **registro de alteração** deve permitir reconstruir qual era a decisão anterior, quais achados motivaram a revisão, qual novo percurso foi adotado e que implicações surgiram para a elegibilidade, a busca, a síntese, a garantia e o produto. O modelo de dados e as políticas de versionamento do OES buscam oferecer sustentação a esse histórico, mas a extensão em que cada transição foi implementada e testada deve ser verificada em suas provas técnicas específicas.
+
+A mudança do **regime de manutenção** segue lógica própria. Um produto inicialmente M1 pode passar a M2 quando a frequência de novos estudos e a relevância das possíveis mudanças justificarem vigilância ativa; o regime pode também ser reduzido se faltar capacidade operacional ou se o monitoramento deixar de ter utilidade proporcional. Essas transições não equivalem, isoladamente, a nova conclusão científica, mudança de certeza ou nova versão do produto. Quando um sinal de atualização revela alteração material do corpo de evidências, exige-se processo de revisão científica e versionamento apropriado. [Fonte: Documento 05 — Estados e transições de manutenção](../governance/05-protocolo-transversal-atualizacao.md).
+
+Por fim, o escalonamento não constitui mecanismo para dispensar requisitos de revisão humana. A elevação de profundidade a N3 ou N4 pode aumentar a necessidade de competências especializadas e exigir garantia adicional; a adoção de IA para acelerar tarefas não supre essa exigência. A arquitetura deve permitir que uma investigação permaneça em elaboração ou seja limitada a uma demonstração experimental quando faltarem condições de publicação formal.
+
+O resultado esperado dessa organização é uma **arquitetura científica adaptativa, porém auditável**: suficientemente flexível para reconhecer mudanças na pergunta e na evidência, e suficientemente disciplinada para impedir que escolhas metodológicas, regimes temporais ou condições de garantia sejam alterados sem justificativa. Essa é uma propriedade pretendida do modelo OES; sua efetiva realização em múltiplos contextos ainda depende de validação científica e avaliação operacional.
+
 
 # 5. Processo metodológico de produção de evidências
 
@@ -435,4 +527,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.3 — a apresentação e os Capítulos 1–3 constituem texto corrido desenvolvido nesta versão. Os Capítulos 4–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.4 — a apresentação e os Capítulos 1–4 constituem texto corrido desenvolvido nesta versão. Os Capítulos 5–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
