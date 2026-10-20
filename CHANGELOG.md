@@ -5008,3 +5008,12 @@ Documentos:
 - primeiro run `39404590522` FAILED por role proprietária sem USAGE no schema; run corrigido `39404695131`, job `118567684999`, completed/success em `39ad812f55fd7b79c70f80766f0a85c3e9ea713c`, **41/41 PASS**;
 - artifact `12256624023` SHA ZIP `e40f13a2254d9e8d41e14b87b3c758f6e2f1a0200e1f35a3d96d6aee240c014f`; 8 recibos em filesystem CI mantidos após SQL rollback, cinco cenários de lacuna/corrupção detectados; **não é audit externo independente/imutável**;
 - Documento 133/CP177; BRG-03/06/07/08/09 continuam sem autorização operacional; catálogo principal 36 UNREVIEWED e 0 pós-condições aprovadas; nenhum Neon nem serviço pago; B1R1 expirado, Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Cadeias transitivas de privilégio e limites dos recibos (Documento 134 / CP178)
+
+- Freshness Gate CP177/main identical em 73280fd0fdc7f0dd440feee0f741299d1d34e476; modo alto. Scripts/workflow sintéticos PG18 adicionados, sem Neon.
+- Run 39410126403/job 118585562919, commit 909922efd400b237181445c5a206f97b3fcc19e9, completed/success, 40/40 PASS. Artifact 12259205919, ZIP SHA256 4577ddde26943d00c05e7dc9b4143ab288d106aa4692ee5e04a1e641f3be5c46 íntegro.
+- ADMIN FALSE negou tentativas de delegação. SET TRUE em cadeia habilitou SET ROLE owner; INHERIT TRUE em cadeia habilitou DDL owner sem SET ROLE, ambos no banco descartável.
+- Falha simulada do controlador deixou resultado indeterminado; SQL direto fora do wrapper não gerou recibos; adulteração conjunta de arquivo e âncora passou pelo verificador. Não configura auditoria externa imutável.
+- Documento 134/CP178. BRG-03/06/07/08/09 bloqueados, 36 migrations UNREVIEWED/zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos; sem Neon/custos, B1R1 expirado e Fase 5 não iniciada. STOP.

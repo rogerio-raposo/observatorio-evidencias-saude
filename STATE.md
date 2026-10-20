@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 19 de outubro de 2026  
+**Última atualização:** 20 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP177 — 2026-10-20**.
+- checkpoint vigente: **CP178 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5453,3 +5453,14 @@ Estado preservado:
 - oito recibos JSONL simulados fora da **transação PG**, armazenados no próprio runner CI; rollback preservou recibo no filesystem; cinco corrupções simuladas detectadas. Não há imutabilidade, independente, cobertura SQL direta/fora do wrapper ou coletor externo;
 - Documento 133/CP177, catálogo 36 UNREVIEWED/0 pós-condições aprovadas, matriz 034–036 36 NOT_COLLECTED, BRG-03/06/07/08/09 operacionais pendentes, nenhum Neon nem serviço pago; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco `ADMIN FALSE`, membership transitiva e limites de comprovantes fora da transação em PG18 descartável, modo alto; pausa obrigatória.
+
+
+### Fase 4 — ADMIN FALSE, membership transitiva e limites de recibos (Documento 134 / CP178)
+
+- Freshness Gate CP177/main em 73280fd0fdc7f0dd440feee0f741299d1d34e476: identical, ahead/behind 0, modo alto.
+- Harness sintético e workflow PG18 descartável publicados. Run 39410126403, job 118585562919, commit técnico 909922efd400b237181445c5a206f97b3fcc19e9: completed/success, 40/40 PASS confirmados em logs e checks.tsv.
+- Artifact 12259205919, 11 arquivos, ZIP íntegro testzip()=None, SHA256 4577ddde26943d00c05e7dc9b4143ab288d106aa4692ee5e04a1e641f3be5c46 igual ao digest GitHub.
+- Seis memberships artificiais ADMIN FALSE; delegações diretas sem ADMIN negadas. Cadeia SET TRUE transitiva possibilitou SET ROLE owner e alteração temporária do trigger 034; cadeia INHERIT TRUE com SET FALSE possibilitou DDL de owner sem SET ROLE; rollback preservou o trigger.
+- Recibo incompleto simulado foi rejeitado, mas não prova execução de SQL; SQL direto fora do wrapper alterou trigger sem novos recibos; adulteração simultânea de JSONL e anchor SHA256 foi aceita pelo verificador local. Recibos no mesmo runner NÃO são auditoria externa independente/imutável.
+- BRG-03/06/07/08/09 operacionais seguem bloqueados; BRG-04/05 continuam evidências limitadas a commits. 36 migrations UNREVIEWED, zero pós-condições aprovadas e 36 requisitos 034–036 NOT_COLLECTED; 12 controles de roles não satisfeitos.
+- Sem SQL/branch/migration Neon, sem serviço pago. B1R1 EXPIRED_NOT_EXECUTED, Fase 5 NOT_STARTED. Documento 134 e CP178. STOP; próximo checkpoint requer novo Prossiga.

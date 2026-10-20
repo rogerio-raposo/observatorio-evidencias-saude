@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP177 — 2026-10-20**
+**CP178 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP177.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP178.md`
 
 Checkpoint anterior:
 
-`CP176`
+`CP177`
 
 Status:
 
@@ -498,3 +498,5 @@ em **Modo Continuidade**.
 - oito recibos encadeados fora da transação SQL mas **no próprio runner**, cinco adulterações simuladas detectadas, não constituindo auditoria externa independente;
 - Documento 133 e `archive/handoffs/oes/OES_Continuidade_2026-10-20_CP177.md`, catálogo principal 36 UNREVIEWED / 0 aprovadas, BRG-03/06/07/08/09 pendentes, nenhum Neon nem serviço pago, B1R1 expirado e Fase 5 não iniciada;
 - próximo `Prossiga`: testar ADMIN FALSE e membership indireta, simular falha de coleta/anchor adulterado, apenas PG18 descartável, modo alto, STOP.
+
+- **CP178 — 2026-10-20:** ensaio PG18 descartável ADMIN FALSE, SET/INHERIT transitivo e audit receipt failure; 40/40 PASS; nenhum gate operacional promovido, Neon intocado. Retomada após novo Prossiga em arquitetura de contenção de owner e auditoria realmente independente.
