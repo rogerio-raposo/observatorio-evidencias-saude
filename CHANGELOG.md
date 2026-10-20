@@ -5181,3 +5181,8 @@ Documentos:
 ## 2026-10-20 — Rastreabilidade G1-MIG 031–036 (Documento 157 / CP202)
 
 - Consolidação A1–A4 de 46 IDs originais e 12 detalhamentos candidatos; corrigida contagem preliminar de 11. Apenas documento e handoff, sem atualização do catálogo ou aprovação operacional. STOP.
+
+
+## 2026-10-20 — Cenários de verificação 033–035 (Documento 158 / CP203)
+
+- Consolidados 12 cenários documentais candidatos, incluindo concorrência V033-06 e mudança após preflight V035-03; nenhuma execução SQL/Neon/CI, aprovação de gates ou nova autorização. STOP.
