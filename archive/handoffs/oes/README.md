@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP190 — 2026-10-20**
+**CP191 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP190.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP191.md`
 
 Checkpoint anterior:
 
-`CP189`
+`CP190`
 
 Status:
 
@@ -524,3 +524,5 @@ em **Modo Continuidade**.
 - **CP189 — 2026-10-20:** Documento 145 formaliza aprovação expressa PREPARE_G1_DOCUMENTARY_ONLY; nenhum Neon SQL/branch/role/migration, epoch, source query ou serviço pago autorizado. Próximo candidato CP190 G1-MIG estático somente após Prossiga. STOP.
 
 - **CP190 — 2026-10-20:** Documento 146 inventaria cadeia canônica G1-MIG 36/36 com 14 SQL subordinados de wrappers 031–033 e relevância 033–036; nenhuma migration aprovada ou executada. Próximo candidato CP191 análise de closure. STOP.
+
+- **CP191 — 2026-10-20:** Documento 147 mapeia 031–033, suas 14 inclusões e ligações de 033–036; closure 001–030 não provada, nenhuma instalação ou teste executado. Próximo candidato CP192 estático. STOP.

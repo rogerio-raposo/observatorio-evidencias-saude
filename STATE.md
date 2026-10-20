@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP190 — 2026-10-20**.
+- checkpoint vigente: **CP191 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5567,3 +5567,9 @@ Estado preservado:
 - Manifesto 36 entrypoints = catálogo 36 registros UNREVIEWED, zero pós-condições e flags de execução/replay falsas; 031/032/033 incluem 14 SQL subordinados `\\ir`. Documento 146 classifica oito grupos e papel de 033–036. Nenhum subset de instalação ou order de migrations foi aprovado para P-B.
 - BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial. 36 evidências 034–036 NOT_COLLECTED e 12 roles insatisfeitos. Nenhum Neon/SQL/CI/PG18, source query ou custo; B1R1 expirado, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED.
 - CP191 candidato, somente após Prossiga: closure detalhada dos wrappers e 033–036. STOP.
+
+
+### Fase 4 — Closure estática de wrappers e camada temporal (Documento 147 / CP191)
+
+- Freshness Gate CP190/main `53cbd7dad1d21594fe66ba60b589f421d4179de9` identical 0 ahead/behind; modo médio. Documento 147: wrappers 031–033 incluem 14 SQL subordinados, objetos de propagation/rebaseline, calibration/cadence/SLA, observation/measurement e hardening 034–036 mapeados; closure de 001–030 não validada.
+- Migrações 36 UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles pendentes; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem SQL/Neon/PG18/CI, sources reais, custo ou epoch. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. CP192 candidato só sob Prossiga. STOP.

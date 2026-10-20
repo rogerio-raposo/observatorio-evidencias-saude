@@ -5108,3 +5108,10 @@ Documentos:
 - Freshness Gate CP189/main `8a799c86caf900bcf9d149620ee19d91de97c37e` identical, 0 ahead/behind, modo médio e G1 exclusivamente documental.
 - Documento 146: 36 entrypoints canônicos confrontados com 36 entradas UNREVIEWED do catálogo; wrappers 031/032/033 têm 14 arquivos subordinados `\\ir` e camada temporal 033–036 tem requisitos próprios. Nenhum subset aprovado, nenhuma migration ou CI executada.
 - BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial; 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. Sem Neon, SQL, queries PubMed/ClinicalTrials ou gasto; B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY e Fase 5 NOT_STARTED. STOP.
+
+
+## 2026-10-20 — Closure de wrappers G1-MIG e dependências temporais (Documento 147 / CP191)
+
+- Freshness Gate CP190/main `53cbd7dad1d21594fe66ba60b589f421d4179de9` identical, ahead/behind 0, modo médio.
+- Documento 147 inspeciona 031a–e, 032a–d, 033a–e e 034–036: inclusão `\\ir`, objetos cross-schema, guards, chronology, read-only preflight e primeira medição; closure plena 001–030 pendente. Sem replay, SQL, CI/PG18, Neon ou consulta PubMed/ClinicalTrials.
+- 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitas; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
