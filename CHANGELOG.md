@@ -5226,3 +5226,8 @@ Documentos:
 ## 2026-10-20 — Roteiro de demonstração D0 (Documento 166 / CP211)
 
 - Consolidado roteiro documental de cinco quadros com Ficha N2 real A2, Monitor M2 sintético, fontes verificáveis e divulgação expressa de limitações. Nenhuma execução, nova revisão científica, autorização D1 ou mudança de gate. STOP.
+
+
+## 2026-10-20 — Apresentação editorial D0 (Documento 167 / CP212)
+
+- Consolidada narrativa externa proposta com rastreabilidade interna, qualificações sobre publicação A2/GRADE/estimativa externa e distinção do Monitor sintético; sem envio, avaliação científica ou execução. STOP.
