@@ -1,0 +1,65 @@
+name: F4 target roles and external audit draft static gate (no DB/Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-role-audit-target-static.yml'
+      - 'docs/governance/security/f4-target-roles-external-audit-draft.json'
+      - 'scripts/oes_f4_role_audit_target_lint.py'
+      - 'tests/test_oes_f4_role_audit_target_lint.py'
+      - 'database/f4-reconciliation-postconditions-draft.json'
+      - 'docs/governance/reconciliation/f4-034-036-evidence-sufficiency-matrix-draft.json'
+
+permissions:
+  contents: read
+
+jobs:
+  role-audit-draft-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout fixed commit without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify fail-closed static negative tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_oes_f4_role_audit_target_lint.py' -v
+      - name: Enforce zero operational authorizations and preserve result
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-role-audit-target-evidence
+          python scripts/oes_f4_role_audit_target_lint.py > f4-role-audit-target-evidence/status.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('f4-role-audit-target-evidence/status.json').read_text())
+          assert d['state']=='STATIC_ROLE_AUDIT_TARGET_FAIL_CLOSED_DRAFT_ONLY'
+          assert (d['roles'],d['required_controls'],d['audit_options'])==(6,12,4)
+          assert (d['blocked_migrations'],d['uncollected_evidence_items'])==(36,36)
+          assert d['neon_accessed'] is False
+          assert d['neon_write_authorized'] is False
+          assert d['external_collector_enabled'] is False
+          assert d['paid_services_approved'] is False
+          assert d['sql_executed'] is False
+          print('ROLE_AUDIT_MODEL_DRAFT_ONLY_BLOCKED_NOT_AN_OPERATIONAL_PASS')
+          PY
+          printf '%s\n' "$GITHUB_SHA" > f4-role-audit-target-evidence/commit.txt
+          sha256sum f4-role-audit-target-evidence/status.json > f4-role-audit-target-evidence/status-sha256.txt
+      - name: Retain static evidence, even on test failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-role-audit-target-draft-only
+          path: f4-role-audit-target-evidence/
+          if-no-files-found: warn
