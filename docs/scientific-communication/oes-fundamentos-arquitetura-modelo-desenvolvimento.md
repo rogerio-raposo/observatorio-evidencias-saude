@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.1 (manuscrito em elaboração)  
+**Versão editorial:** 0.2 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulo 1 redigidos; Capítulos 2–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–2 redigidos; Capítulos 3–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -79,14 +79,92 @@ A apresentação procura evitar dois extremos: uma narrativa promocional que con
 
 # 2. Fundamentos conceituais e princípios do OES
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 2.1. Missão, visão e objetivos
 
-- **2.1. Missão, visão e objetivos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **2.2. O corpo de evidências como unidade fundamental de análise:** texto a desenvolver a partir da documentação canônica pertinente.
-- **2.3. Princípios científicos e metodológicos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **2.4. Proporcionalidade metodológica:** texto a desenvolver a partir da documentação canônica pertinente.
-- **2.5. Evidência, interpretação e recomendação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **2.6. Atualidade do conhecimento científico:** texto a desenvolver a partir da documentação canônica pertinente.
+O Observatório de Evidências em Saúde (OES) foi concebido para transformar informação científica dispersa em conhecimento estruturado, criticamente avaliado, rastreável e compreensível. Sua **missão** consiste em apoiar a elaboração e a manutenção de sínteses de evidências que possam informar a pesquisa e a tomada de decisões em saúde, reconhecendo que identificar publicações não equivale a determinar o que um conjunto de estudos permite concluir. Essa formulação corresponde à concepção documentada no início do projeto, não à afirmação de que já exista um serviço científico plenamente operacional. [Fonte: Documento 00](../governance/00-documento-de-concepcao.md).
+
+A **visão** é constituir uma estrutura de consulta e acompanhamento da evidência que integre métodos científicos explícitos, organização persistente do conhecimento, atualização temporal, comunicação acessível e recursos computacionais de apoio. No modelo proposto, a continuidade do conhecimento não depende apenas da produção de novos relatórios: depende também da capacidade de relacionar perguntas, estudos, resultados e produtos sucessivos, preservando o que foi analisado anteriormente e por qual método.
+
+O projeto combina três objetivos complementares. O primeiro é **científico**: favorecer avaliações que considerem o corpo de evidências relevante, seus limites e a confiança justificável em suas conclusões. O segundo é **informacional**: registrar os objetos científicos, as fontes e as decisões de maneira que possam ser auditados, recuperados e reutilizados. O terceiro é **operacional**: estabelecer condições para detectar quando surgem informações capazes de justificar reavaliação, sem transformar a chegada de uma nova publicação em alteração automática de uma conclusão.
+
+O OES não pretende substituir a produção de estudos primários, a avaliação clínica individual, os processos de recomendação profissional ou a competência metodológica de pesquisadores. Seu papel é organizar um percurso entre a pergunta e a síntese, preservando a distinção entre o trabalho científico executado, o nível de garantia recebido e a finalidade de uso de cada produto. Em particular, o desenvolvimento de procedimentos assistidos por inteligência artificial não deve ser apresentado como validação científica independente.
+
+A realização desses objetivos dependerá, em graus diferentes, de métodos, pessoas, infraestrutura e validação. Por isso, este documento trata missão e visão como **direções de desenvolvimento** e identifica separadamente os resultados efetivamente demonstrados em cada fase. A utilidade potencial do modelo é uma hipótese a ser examinada por pesquisadores, não um desempenho científico já comprovado.
+
+### 2.2. O corpo de evidências como unidade fundamental de análise
+
+A unidade de referência do OES é o **corpo de evidências pertinente a uma pergunta científica definida**. Essa escolha altera o modo de interpretar a literatura: uma publicação pode conter resultados úteis, mas raramente é suficiente para representar, isoladamente, o conhecimento disponível sobre uma intervenção, condição, exposição ou fenômeno. O conjunto relevante pode abranger estudos com desenhos diferentes, populações não equivalentes, múltiplos desfechos, estimativas divergentes e limitações metodológicas de natureza distinta.
+
+No plano conceitual, é necessário separar três objetos que frequentemente aparecem misturados em apresentações informais: **estudo**, **documento que relata o estudo** e **resultado científico**. Um ensaio clínico, por exemplo, pode ser descrito em um protocolo, um registro de ensaio e mais de um artigo; esses documentos não representam necessariamente ensaios independentes. O mesmo estudo também pode produzir resultados distintos para vários desfechos e tempos de seguimento. Preservar essas identidades permite reduzir a dupla contagem e localizar a origem das informações empregadas nas sínteses. Essa distinção está formalizada no [modelo conceitual de dados do OES (Documento 20)](../architecture/20-modelo-conceitual-dados.md).
+
+A avaliação do corpo de evidências também exige reconhecer que **risco de viés de um estudo não é sinônimo de certeza da conclusão global**. Julgamentos sobre certeza ou confiança dependem da unidade de análise, da pergunta, do desfecho ou achado e do conjunto dos fatores relevantes, incluindo limitações dos estudos, consistência, precisão, evidência indireta e possível ausência seletiva de resultados. Uma síntese quantitativa não se torna confiável apenas porque reúne muitos participantes; inversamente, a existência de alguma limitação nos estudos incluídos não determina mecanicamente o julgamento final. [Fonte: Documento 15 — Certeza da evidência](../methodology/15-certeza-evidencia.md).
+
+A pergunta científica estabelece, portanto, os limites da interpretação: quais populações e contextos interessam, quais intervenções ou exposições estão em exame, quais comparadores são pertinentes e quais desfechos têm importância para a análise. Quando uma pergunta contém objetos metodologicamente heterogêneos, pode ser necessário dividi-la em subperguntas antes de integrar as conclusões. O OES não pressupõe uma hierarquia universal de desenhos de estudo válida para qualquer pergunta; o desenho apropriado varia entre, por exemplo, efetividade terapêutica, prevalência, acurácia diagnóstica e pesquisa qualitativa. [Fonte: Documento 01 — Escopo e taxonomia das perguntas](../governance/01-taxonomia-perguntas.md).
+
+Dessa perspectiva, o produto final — ficha, resposta, mapa ou revisão — é uma **representação comunicável de um processo científico documentado**, não a própria evidência primária. Essa distinção é condição importante para que novos produtos possam reutilizar estudos e sínteses existentes sem apagar a origem dos dados ou confundir uma apresentação editorial com uma avaliação metodológica original.
+
+### 2.3. Princípios científicos e metodológicos
+
+A arquitetura do OES adota a diretriz **metodologia antes da automação**. Isso significa que a escolha dos procedimentos de busca, seleção, avaliação, síntese e atualização deve ser fundamentada na natureza da pergunta científica e nos requisitos da investigação. As ferramentas digitais são meios para apoiar esse percurso, não critérios suficientes para determinar sua validade. Os princípios a seguir sintetizam compromissos presentes na concepção e nos protocolos do projeto. [Fonte: Documento 00](../governance/00-documento-de-concepcao.md).
+
+**Adequação à pergunta.** Métodos e fontes devem corresponder ao fenômeno investigado. Uma estratégia adequada para avaliar ensaios de intervenção não pode ser transferida mecanicamente para estudos qualitativos, de prognóstico ou de diagnóstico. O método escolhido precisa ser justificável antes da seleção dos estudos que eventualmente sustentem uma conclusão.
+
+**Avaliação crítica sem deferência automática à autoridade.** A importância de um periódico, a reputação de uma instituição, a existência de consenso ou a confiança expressa por um sistema de IA não eliminam a necessidade de examinar dados e métodos. Evidências e julgamentos devem ser sustentados por justificativas verificáveis, e não apenas pela posição de quem os apresenta.
+
+**Transparência e rastreabilidade.** A conclusão deve conservar vínculos identificáveis com a pergunta, as fontes consultadas, os critérios de elegibilidade, as decisões de inclusão e exclusão, as avaliações críticas e os resultados empregados. A rastreabilidade não se limita a uma lista de referências: envolve a preservação do encadeamento de decisões que levou ao resultado comunicado.
+
+**Reprodutibilidade proporcional ao produto.** Sempre que o método permitir, outra equipe deve conseguir compreender e reproduzir as etapas relevantes da investigação a partir dos registros disponíveis. Uma exploração inicial de campo não deve alegar exaustividade; já um produto que se identifica como revisão sistemática deve satisfazer exigências mais amplas de protocolo, busca, seleção e relato. A transparência sobre simplificações é obrigatória mesmo quando a profundidade é menor.
+
+**Comunicação explícita da incerteza.** Resultados conflitantes, intervalos amplos, evidência indireta, lacunas de conhecimento e restrições de cobertura devem aparecer nas conclusões com linguagem proporcional à sua importância. A ausência de evidências utilizáveis deve ser distinguida de evidência capaz de sustentar a ausência de determinado efeito. Níveis de certeza, quando formalmente avaliados, não devem ser reduzidos a rótulos intuitivos sem critérios documentados.
+
+**Independência e responsabilidade científica.** Interesses comerciais, institucionais ou pessoais não devem definir previamente os resultados. É necessário distinguir responsabilidades de elaboração, verificação metodológica, aprovação de governança e revisão especializada independente. No OES, a verificação assistida por IA não representa revisão humana ou avaliação por pares; a aprovação de governança também não substitui competência metodológica especializada. [Fonte: Documento 04 — Governança e garantia](../governance/04-governanca-garantia-revisao.md).
+
+**Preservação do histórico.** Informações corrigidas, julgamentos modificados e produtos atualizados devem manter registro das versões anteriores e das razões para a mudança. O compromisso não é declarar uma conclusão imutável, mas tornar verificável o que se sabia, como se avaliou e por que o entendimento mudou.
+
+Esses princípios são requisitos do modelo concebido e critérios pelos quais sua implementação deverá ser examinada. Sua formulação documental não demonstra, isoladamente, cumprimento consistente em todas as aplicações: esse cumprimento precisa ser evidenciado por revisão metodológica, testes apropriados e avaliações científicas externas.
+
+### 2.4. Proporcionalidade metodológica
+
+O OES parte do reconhecimento de que **rigor metodológico e profundidade de investigação não são equivalentes**. Rigor significa executar de maneira consistente e transparente os procedimentos pertinentes à finalidade declarada; profundidade diz respeito à extensão da busca, da avaliação e da síntese necessárias para responder à pergunta. Uma resposta focal pode ser rigorosa sem reproduzir todos os procedimentos de uma revisão sistemática completa, desde que não reivindique completude ou certeza que seu método não pode sustentar.
+
+A arquitetura foi organizada em cinco níveis de investigação, de **N0 a N4**. N0 corresponde à exploração de um campo e ao reconhecimento preliminar da literatura. N1 busca responder objetivamente a uma pergunta focal quando sínteses adequadas estão disponíveis e a completude não é o objetivo. N2 estrutura uma Ficha de Evidência reutilizável e versionada. N3 compreende uma síntese rápida formal, com abreviações metodológicas previamente definidas e declaradas. N4 comporta investigações aprofundadas, incluindo revisões sistemáticas quando todos os seus requisitos forem cumpridos. Os níveis representam diferentes compromissos de método e finalidade; não constituem etapas pelas quais toda pergunta precise passar. [Fonte: Documento 02 — Arquitetura de níveis e produtos](../governance/02-niveis-investigacao-produtos.md).
+
+A escolha deve considerar a consequência de uma conclusão incorreta, a complexidade da pergunta, a maturidade e a heterogeneidade da literatura, a incerteza existente, a necessidade de completude, a finalidade do produto e os recursos metodológicos disponíveis. A urgência de uma demanda pode justificar um método rápido, mas não a omissão silenciosa de suas restrições. Se a pergunta exige métodos ou competências que não estão disponíveis, a limitação precisa ser explicitada e pode impedir a apresentação de um produto como avaliação científica final.
+
+Por exemplo, uma pergunta delimitada, amparada por revisão sistemática recente e metodologicamente apropriada, pode ser respondida com uma síntese focal que cite os limites de sua busca complementar. Já uma questão de segurança com consequências importantes, resultados conflitantes e fontes insuficientemente examinadas pode exigir investigação mais abrangente. Esses exemplos ilustram decisões condicionais, e não regras que substituam o julgamento científico.
+
+A profundidade deve ser decidida mediante **roteamento metodológico documentado**, e não por uma pontuação universal que converta características heterogêneas em um nível automático. O percurso pode ser escalonado ou reduzido quando informações subsequentes demonstrarem que o método inicial era insuficiente ou excessivo, desde que a mudança seja justificada e registrada. [Fonte: Documento 03 — Triagem e roteamento metodológico](../governance/03-roteamento-metodologico.md).
+
+A proporcionalidade também envolve **garantia científica**. Investigações mais profundas ou de maior criticidade podem demandar revisão humana especializada, independentemente de suas possibilidades tecnológicas de automação. A governança do OES já distingue níveis de garantia de A0 a A3 e estabelece requisitos diferenciados para produtos N2, N3 e N4. Assim, capacidade de gerar um produto e autorização para considerá-lo cientificamente validado são questões distintas.
+
+### 2.5. Evidência, interpretação e recomendação
+
+Uma distinção central do OES separa **o que foi observado e relatado**, **o que uma avaliação crítica permite inferir** e **o que alguém deve decidir fazer**. Essas três dimensões estão relacionadas, mas nenhuma decorre automaticamente da anterior.
+
+A **evidência** inclui os dados, estimativas, resultados e achados apresentados por estudos e sínteses, acompanhados de suas condições de produção. Uma diferença entre grupos, uma associação, um achado qualitativo ou uma estimativa de prevalência precisa ser interpretado à luz da população, do desenho, das medidas e das limitações correspondentes. Preservar o resultado original e distingui-lo de transformações posteriores ajuda a evitar que a apresentação esconda escolhas analíticas relevantes.
+
+A **interpretação científica** examina a consistência dos achados, a magnitude e a precisão das estimativas, os riscos de viés, a possibilidade de explicações alternativas e a certeza ou confiança no corpo de evidências. Também considera a distância entre as condições dos estudos e a pergunta de interesse. Essa interpretação pode sustentar conclusões graduadas, como indicação provável de benefício, resultados inconsistentes ou evidência insuficiente; não precisa produzir uma afirmação categórica quando as informações disponíveis não a justificam.
+
+A **recomendação**, por sua vez, exige julgamentos adicionais que podem ultrapassar o escopo de um produto de síntese. Uma conclusão favorável sobre determinado desfecho não resolve, por si só, a ponderação de benefícios e danos, custos, valores e preferências, equidade, aceitabilidade, viabilidade ou prioridades do sistema de saúde. Referenciais de *Evidence to Decision* podem apoiar esse processo quando aplicáveis, mas sua utilização deve ser explícita e não presumida. [Fonte: Documento 00 — Separação entre evidência e recomendação](../governance/00-documento-de-concepcao.md).
+
+Considere uma intervenção associada à melhora de um desfecho clínico em determinado conjunto de estudos. É possível sintetizar o tamanho do efeito e sua incerteza sem concluir que a intervenção deva ser oferecida a todas as pessoas. A decisão de uso pode depender de eventos adversos, alternativas disponíveis, características da população e recursos locais. Essa separação é particularmente importante quando os produtos do observatório serão consultados fora do contexto em que a investigação foi realizada.
+
+Consequentemente, o OES não se apresenta como serviço de diagnóstico individual ou prescrição. Seus produtos devem comunicar **conclusões sobre evidências**, indicando claramente quando critérios de decisão ou recomendações formais não foram avaliados. O desenho das saídas procura reduzir o risco de que uma descrição científica seja interpretada como orientação clínica normativa.
+
+### 2.6. Atualidade do conhecimento científico
+
+Toda conclusão científica é situada no tempo. A busca bibliográfica possui uma data, uma estratégia e um escopo; o conjunto de estudos identificado corresponde a essas condições. A comunicação de resultados sem referência temporal pode levar o leitor a atribuir atualidade indevida a conclusões que talvez tenham sido produzidas antes de mudanças importantes na literatura.
+
+Por isso, o OES prevê o registro da **data de busca**, da **data de corte da evidência** e do **histórico de versões** dos produtos. Essas informações permitem distinguir a produção de uma síntese da avaliação posterior sobre sua atualidade. Uma versão pode ter sido elaborada de maneira adequada e, ainda assim, merecer reavaliação após a publicação de estudos relevantes ou a identificação de problemas em fontes anteriormente incorporadas.
+
+A arquitetura de atualização da Fase 4 distingue quatro dimensões: **versão científica** do conteúdo, **avaliação de atualidade** de uma versão específica, **regime de manutenção** adotado e **estado operacional/comunicacional** dos ciclos de monitoramento e dos alertas. Essa separação evita inferências indevidas. Detectar um novo artigo não significa que a conclusão mudou; emitir um alerta não equivale a executar nova síntese; e o vencimento de um ciclo programado não torna, automaticamente, cientificamente desatualizado o produto observado. [Fonte: Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+O OES prevê quatro regimes de manutenção, de **M0 a M3**: ausência de vigilância ativa, elegibilidade para reavaliação, monitoramento ativo e evidência viva. Esses regimes são independentes da profundidade N0–N4. Uma Ficha de Evidência pode, em princípio, ser acompanhada por um Monitor; uma revisão aprofundada pode permanecer sem monitoramento ativo quando isso for justificável. A escolha depende da importância da pergunta, da probabilidade de novas informações relevantes, do potencial de mudança e da capacidade sustentável de acompanhar e avaliar a literatura.
+
+Uma avaliação de atualização deve determinar se um sinal identificado modifica aspectos como resultados, certeza, aplicabilidade, validade da evidência ou conclusão. Quando a mudança científica é material, a arquitetura exige processo explícito de reavaliação e versionamento, preservando a versão anterior e suas condições de garantia. Quando não existe impacto material demonstrado, o evento pode ser documentado sem criar uma nova conclusão.
+
+A formalização desses conceitos **não prova a existência de um serviço de monitoramento contínuo**. Na data de referência deste manuscrito, a Fase 4 ainda está em desenvolvimento e a operacionalização formal de evidência viva (M3) permanece bloqueada. Há componentes técnicos e testes relacionados ao monitoramento, mas eles não devem ser confundidos com vigilância factual sustentada e cientificamente validada. O compromisso com atualização é, portanto, simultaneamente um princípio metodológico, uma arquitetura em evolução e um requisito a demonstrar nas fases seguintes.
+
 
 # 3. Escopo científico e definição das perguntas
 
@@ -283,4 +361,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.1 — apenas a apresentação e o Capítulo 1 constituem texto corrido desenvolvido nesta versão. Os demais capítulos são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.2 — a apresentação e os Capítulos 1–2 constituem texto corrido desenvolvido nesta versão. Os Capítulos 3–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
