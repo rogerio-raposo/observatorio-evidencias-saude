@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP191 — 2026-10-20**
+**CP192 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP191.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP192.md`
 
 Checkpoint anterior:
 
-`CP190`
+`CP191`
 
 Status:
 
@@ -526,3 +526,5 @@ em **Modo Continuidade**.
 - **CP190 — 2026-10-20:** Documento 146 inventaria cadeia canônica G1-MIG 36/36 com 14 SQL subordinados de wrappers 031–033 e relevância 033–036; nenhuma migration aprovada ou executada. Próximo candidato CP191 análise de closure. STOP.
 
 - **CP191 — 2026-10-20:** Documento 147 mapeia 031–033, suas 14 inclusões e ligações de 033–036; closure 001–030 não provada, nenhuma instalação ou teste executado. Próximo candidato CP192 estático. STOP.
+
+- **CP192 — 2026-10-20:** Documento 148 registra arestas confirmadas entre 031–036 e 001/002/027/029/030; outros produtores não conferidos, subset reduzido indeterminado, nenhum SQL/Neon/CI. CP193 candidato sob Prossiga. STOP.

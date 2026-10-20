@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP191 — 2026-10-20**.
+- checkpoint vigente: **CP192 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5573,3 +5573,9 @@ Estado preservado:
 
 - Freshness Gate CP190/main `53cbd7dad1d21594fe66ba60b589f421d4179de9` identical 0 ahead/behind; modo médio. Documento 147: wrappers 031–033 incluem 14 SQL subordinados, objetos de propagation/rebaseline, calibration/cadence/SLA, observation/measurement e hardening 034–036 mapeados; closure de 001–030 não validada.
 - Migrações 36 UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles pendentes; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem SQL/Neon/PG18/CI, sources reais, custo ou epoch. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. CP192 candidato só sob Prossiga. STOP.
+
+
+### Fase 4 — Dependências prévias parciais G1-MIG (Documento 148 / CP192)
+
+- Freshness Gate CP191/main `9904f4af48dafbc53441c005b4c7531f3ce5e449` identical, 0 ahead/behind, modo médio. Documento 148 identifica produtores 001/002/027/029/030 de objetos usados por 031–036; as migrations 003–026/028 não foram varridas, `monitor_cycle` ainda não tem produtor confirmado. `REDUCED_INSTALLATION_PLAUSIBILITY=UNDETERMINED`.
+- 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles insatisfeitas; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem SQL, Neon, CI, PG18, dados PubMed/ClinicalTrials, custo ou novo epoch. B1R1 EXPIRED_NOT_EXECUTED, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. CP193 candidato só após Prossiga. STOP.

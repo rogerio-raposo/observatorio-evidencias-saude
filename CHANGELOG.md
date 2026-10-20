@@ -5115,3 +5115,10 @@ Documentos:
 - Freshness Gate CP190/main `53cbd7dad1d21594fe66ba60b589f421d4179de9` identical, ahead/behind 0, modo médio.
 - Documento 147 inspeciona 031a–e, 032a–d, 033a–e e 034–036: inclusão `\\ir`, objetos cross-schema, guards, chronology, read-only preflight e primeira medição; closure plena 001–030 pendente. Sem replay, SQL, CI/PG18, Neon ou consulta PubMed/ClinicalTrials.
 - 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitas; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
+
+
+## 2026-10-20 — Mapa parcial das dependências 031–036 para 001–030 (Documento 148 / CP192)
+
+- Freshness Gate CP191/main `9904f4af48dafbc53441c005b4c7531f3ce5e449` identical, ahead/behind 0, modo médio e exclusivamente estático.
+- Documento 148 confirma produtores `poc-s1`, `002`, `027`, `029`, `030` para objetos de 031–036; varredura 003–026/028 não feita por limite da integração; instalação reduzida segue UNDETERMINED. Sem promoção do catálogo, testes ou SQL.
+- BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos NOT_COLLECTED, 12 roles pendentes. Sem Neon/PG18/CI/source requests/custo, B1R1 expirado, M3 BLOCKED, Fase 4 não encerrada e Fase 5 não iniciada. STOP.
