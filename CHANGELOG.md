@@ -5186,3 +5186,8 @@ Documentos:
 ## 2026-10-20 — Cenários de verificação 033–035 (Documento 158 / CP203)
 
 - Consolidados 12 cenários documentais candidatos, incluindo concorrência V033-06 e mudança após preflight V035-03; nenhuma execução SQL/Neon/CI, aprovação de gates ou nova autorização. STOP.
+
+
+## 2026-10-20 — Checklist de preparação V033-06/V035-03 (Documento 159 / CP204)
+
+- Consolidado o checklist auxiliar AUT-01–AUT-08 e sua subordinação à governança canônica; não constitui autorização nem novo gate. Permanecem bloqueios e ausência de evidência executada. STOP.
