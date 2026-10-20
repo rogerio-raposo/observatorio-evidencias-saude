@@ -1,0 +1,70 @@
+name: F4 CP178 PG18 transitive roles and audit adversarial (no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-role-transitivity-audit-adversarial-synthetic.yml'
+      - 'scripts/oes_f4_pg18_role_transitivity_audit_adversarial.py'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  ephemeral-postgresql18-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_cp178_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_cp178_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_cp178_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout immutable source SHA without retained credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Prepare PG18 local validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-cp178-evidence
+          python3 -m py_compile scripts/oes_f4_pg18_role_transitivity_audit_adversarial.py
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee f4-pg18-cp178-evidence/client-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-cp178-evidence/server-version.txt
+          grep -q '^18' f4-pg18-cp178-evidence/server-version.txt
+      - name: Test ADMIN FALSE, transitive SET INHERIT and same-runner receipt failures
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_f4_pg18_role_transitivity_audit_adversarial.py 2>&1 | tee f4-pg18-cp178-evidence/harness.log
+          grep -Fxq CP178_PG18_SYNTHETIC_LIMITED_PASS f4-pg18-cp178-evidence/result.txt
+      - name: Preserve results on success or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-pg18-role-transitivity-audit-cp178
+          path: f4-pg18-cp178-evidence/
+          if-no-files-found: warn
