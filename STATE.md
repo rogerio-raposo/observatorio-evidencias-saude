@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP180 — 2026-10-20**.
+- checkpoint vigente: **CP181 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5483,3 +5483,12 @@ Estado preservado:
 - N1/N2 readiness temporal = INSUFFICIENT_EVIDENCE; valores de cadence/SLA normativos NÃO autorizados; B1R1 EXPIRED_NOT_EXECUTED; M3 formal BLOCKED; nenhum início de Fase 5.
 - BRG-03/06/07/08/09 bloqueados; BRG-04/05 provas históricas. 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos. Sem Neon SQL/branch/role/migration, sem CI ou serviços pagos novos.
 - Próximo ponto mediante novo Prossiga: especificar/confrontar cenários integrados D0, preservar revisão humana qualificada e bloqueios operacionais; pausa obrigatória.
+
+
+### Fase 4 — Doze cenários adversariais de aceitação documental (Documento 137 / CP181)
+
+- Freshness Gate CP180/main `98886a7cb2d710c88fba9f58bd2decb054a0aedd`: identical, ahead/behind=0; modo alto; escopo exclusivamente D0 documental.
+- Documento 137: AT-01–AT-12 **especificados e confrontados textualmente**, 9 leituras coerentes condicionais, 3 ressalvas adversariais AT-05/09/12; **zero cenários integrados executados**, nenhuma validação científica humana, nenhum PASS empírico.
+- G1 parcialmente especificada; G2–G6 permanecem com dependências humanas, temporais, operacionais e de runbook. PHASE_4_DOCUMENTAL_CLOSURE=NOT_READY.
+- BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos, 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles pendentes.
+- Neon intocado, nenhuma CI/PG18/SQL/serviço pago; B1R1 EXPIRED_NOT_EXECUTED; M3 bloqueado, Fase 5 NOT_STARTED. Próximo somente após Prossiga: runbook e matriz de aceitação D0. STOP.

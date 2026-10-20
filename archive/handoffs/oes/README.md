@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP180 — 2026-10-20**
+**CP181 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP180.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP181.md`
 
 Checkpoint anterior:
 
-`CP179`
+`CP180`
 
 Status:
 
@@ -504,3 +504,5 @@ em **Modo Continuidade**.
 - **CP179 — 2026-10-20:** Documento 135, reordenação proporcional das prioridades da Fase 4; D0 científico/funcional antes de provas PG18 redundantes, mantendo bloqueios de D1/D2. Nenhum Neon ou teste novo; retomar em inventário de suficiência científica/funcional. STOP.
 
 - **CP180 — 2026-10-20:** Documento 136 inventaria 14 domínios científico-funcionais e 12 cenários candidatos de aceitação, identifica lacunas G1–G6 e mantém encerramento documental F4 NOT_READY; nenhum PostgreSQL/Neon novo. Próxima retomada: cenários integrados D0 sob novo Prossiga, sem Fase 5. STOP.
+
+- **CP181 — 2026-10-20:** Documento 137 especifica e confronta AT-01–AT-12 (9 coerências condicionadas, 3 ressalvas), zero cenários end-to-end executados; encerramento F4 NOT_READY, Neon intocado. CP182 candidato somente após Prossiga: runbook e matriz de evidência manual/assistida D0. STOP.
