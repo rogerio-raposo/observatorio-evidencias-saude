@@ -4944,3 +4944,12 @@ Documentos:
 - segunda CI `39349564581`, commit `46af0a575e30d640dedd97edf84315ebc5f6f310`, job `118390284507`, completed/success, **29/29 PASS**; artifact `12233090040`, SHA-256 ZIP `6aea06318fb097c66066a75e13b8e03ae23ff52c6c7cf07a9bfffb9009431a3e`;
 - rollback estrutural do wrapper 031/032/033 antes do COMMIT, remoção persistente de trigger sob replay negativo interrompido em 034/036, definição parcial da primeira função em 035;
 - Documento 126 e CP170; zero pós-condições aprovadas e grandfathering populado 032 ainda sem teste; proibição de reexecução automática e escrita Neon mantida; B1R1 expirado e Fase 5 não iniciada; pausa obrigatória.
+
+
+## 2026-10-19 — Grandfathering 032 com registros preexistentes em PG18 sintético (Documento 127 / CP171)
+
+- Freshness Gate CP170/head `238b2a11cf26c94958e075ad852575419958b38e` = identical;
+- publicados fixture constraint-consistente, harness CI-only e workflow `f4-pg18-032-grandfather-synthetic.yml` sem acesso Neon;
+- run `39350571819`, job `118393517271`, completed/success, SHA `a060f7055063bf83ce8e880193b08f9c941e46f3`, PostgreSQL 18.6, **19/19 PASS**; artifact `12233056788` ZIP SHA-256 `4191c4936b523b7ea9e2d7e176a14770b5daa6eb618dd6832a23f340b899b339`;
+- as 3 entradas de origem foram preservadas e grandfathered na instalação regular, revertidas antes do COMMIT induzido mantendo fontes, e não registradas quando marker de contrato era artificialmente preexistente;
+- Documento 127/CP171; 36 migrations UNREVIEWED e zero pós-condições operacionais aprovadas, nenhum replay/ledger/runner operacional e nenhuma alteração Neon. B1R1 expirado e Fase 5 não iniciada. Pausa obrigatória.
