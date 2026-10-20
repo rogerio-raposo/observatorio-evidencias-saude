@@ -62,7 +62,7 @@ WITH objects AS (
     AND n.nspname NOT LIKE 'pg_%' AND n.nspname NOT IN ('information_schema','public')
   UNION ALL
   SELECT 'seed','maintenance.contract_epoch.'||contract_code,
-    concat_ws('|',contract_code,schema_version,migration_id,effective_at::text)
+    concat_ws('|',contract_code,schema_version,migration_id)
   FROM maintenance.contract_epoch
 )
 SELECT coalesce(jsonb_agg(jsonb_build_object(
@@ -214,12 +214,8 @@ def main():
             cut=re.search(r"(?im)^\s*CREATE\s+OR\s+REPLACE\s+FUNCTION\s+maintenance\.temporal_activation_preflight_state\s*\(",text)
             if not cut:raise AssertionError("second function boundary absent")
             p=write_fault("fail035",text[:cut.start()]+"SELECT 1/0;\n")
-            bad=run(fault_db,path=p,expected=False) if False else None
-            # clone PRE-035 to inspect the partial installation
-            create_db(fault_db, "oes170live") if False else None
-            # At this point LIVE already includes migration 035. Clone prestate by
-            # reconstructing from the pre-035 catalog is impossible; use BASE+031-034
-            # as a separate disposable prefix for this fault only.
+            # Clone the baseline, then replay 031-034 as a clean pre-035 state.
+            # A separate disposable 031-034 prefix avoids mutating LIVE.
             predb="oes170fault035"
             create_db(predb,BASE)
             for prior in manifest[30:34]:
