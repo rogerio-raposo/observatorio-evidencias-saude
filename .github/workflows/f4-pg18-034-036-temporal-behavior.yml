@@ -1,0 +1,72 @@
+name: F4 PG18 temporal 034-036 behavior (synthetic-only no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-034-036-temporal-behavior.yml'
+      - 'scripts/oes_f4_pg18_034_036_behavior_test.py'
+      - 'tests/fixtures/f4-temporal-034-036/**'
+      - 'tests/fixtures/f4-grandfathering-032/seed.sql'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  temporal-behavior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_temporal_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_temporal_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_temporal_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout immutable commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Validate fixed PostgreSQL 18
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-temporal-behavior-evidence
+          python3 -m py_compile scripts/oes_f4_pg18_034_036_behavior_test.py
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee f4-pg18-temporal-behavior-evidence/psql-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-temporal-behavior-evidence/server-version.txt
+          grep -q '^18' f4-pg18-temporal-behavior-evidence/server-version.txt
+      - name: Exercise 034 chronology, 035 preflight and 036 completed-event behavior
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_f4_pg18_034_036_behavior_test.py 2>&1 | tee f4-pg18-temporal-behavior-evidence/harness.log
+          grep -Fxq SYNTHETIC_TEMPORAL_034_036_BEHAVIOR_PASS_LIMITED f4-pg18-temporal-behavior-evidence/result.txt
+      - name: Preserve all synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-pg18-034-036-temporal-behavior
+          path: f4-pg18-temporal-behavior-evidence/
+          if-no-files-found: warn
