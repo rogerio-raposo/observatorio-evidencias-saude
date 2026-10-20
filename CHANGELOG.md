@@ -5201,3 +5201,8 @@ Documentos:
 ## 2026-10-20 — Alternativas técnicas e contratos C04/T03/T04 (Documento 161 / CP206)
 
 - Registrada comparação documental de alternativas de sincronização, política temporal e integração do preflight, sem seleção, execução ou alteração de gates. STOP.
+
+
+## 2026-10-20 — Contratos semânticos SEM-01–SEM-06 (Documento 162 / CP207)
+
+- Consolidado quadro documental de decisões futuras, critérios, alternativas e competências de revisão propostas, sem modificar regras, aprovar soluções ou iniciar ensaios. STOP.

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP206 — 2026-10-20**
+**CP207 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP206.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP207.md`
 
 Checkpoint anterior:
 
-`CP205`
+`CP206`
 
 Status:
 
@@ -556,3 +556,5 @@ em **Modo Continuidade**.
 - **CP205 — 2026-10-20:** Documento 160 consolida oito variantes C01–C04/T01–T04 e pacote documental de evidências; nenhuma execução ou autorização operacional. STOP.
 
 - **CP206 — 2026-10-20:** Documento 161 registra alternativas C04/T03/T04 e decisões semânticas pendentes, sem seleção nem autorização operacional. STOP.
+
+- **CP207 — 2026-10-20:** Documento 162 organiza contratos SEM-01–SEM-06 e revisão futura; nenhuma decisão semântica aprovada, nenhum parecer emitido. STOP.

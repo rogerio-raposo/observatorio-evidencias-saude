@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP206 — 2026-10-20**.
+- checkpoint vigente: **CP207 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5665,3 +5665,9 @@ Estado preservado:
 
 - A1–A4 consolidam invariantes, hipóteses e alternativas de concorrência, temporalidade e preflight. Nenhum mecanismo escolhido, implementado ou testado; decisões semânticas pendentes.
 - 36 UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED; sem SQL/Neon/CI/fontes factuais/custo. STOP.
+
+
+### CP207 — Contratos semânticos e deliberação futura (Documento 162)
+
+- A1–A4 consolidadas: SEM-01–SEM-06, alternativas, critérios, evidências e responsabilidades propostas. Nenhuma seleção, parecer especializado, autorização ou teste.
+- 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Sem SQL/Neon/CI/fonte factual/custo. STOP.
