@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP186 — 2026-10-20**.
+- checkpoint vigente: **CP187 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5535,3 +5535,11 @@ Estado preservado:
 - BRG-09=PENDING_OWNER_FINANCIAL_CONFIRMATION, G0-D5=PENDING_OWNER; API não comprova cartão, fatura, serviços pagos, custo zero garantido ou cobranças futuras. Próximo ato é resumo manual não sensível pelo titular, sem dados bancários.
 - Nenhum SQL/branch/role/migration/CI/PG18, nenhuma query PubMed/ClinicalTrials ou gasto. BRG-03/06/07/08 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles insatisfeitos. B1R1 EXPIRED_NOT_EXECUTED, NEW_EPOCH NOT_AUTHORIZED, M3 BLOCKED, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
 - CP187 candidato sob novo Prossiga: confrontar somente evidência do titular quando existir; alto antes de autorização de custos/risco. STOP.
+
+
+### Fase 4 — Declarações financeiras do proprietário reconciliadas (Documento 143 / CP187)
+
+- Freshness Gate CP186/main `3c236159ab6ceb0c7c02f48542688b70f39f8be7` identical, ahead/behind 0; modo médio, registro documental sem operações.
+- Respostas do owner: Free=SIM, serviços pagos=NAO, método de pagamento=NAO, alertas de cobrança/cota=NAO; declaração sem horário de inspeção certificado. API Neon CP186 `free_v3` confirma plano, não certifica negativos financeiros. `BRG-09_OWNER_FINANCIAL_DECLARATION=RECEIVED`; `BRG-09_OPERATIONAL_GATE=NOT_APPROVED`; G0-D5 informational complete, decisão pending.
+- BRG-03/06/07/08 bloqueados, 04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles pendentes. B1R1 expirado, novo epoch não autorizado; nenhuma escrita Neon, custo, consulta PubMed/ClinicalTrials, CI ou PG18. M3 blocked, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
+- CP188 candidato somente com novo Prossiga: consolidar decisão G0, sem repetir perguntas já respondidas. Avisar se alto for necessário para aprovação substantiva. STOP.

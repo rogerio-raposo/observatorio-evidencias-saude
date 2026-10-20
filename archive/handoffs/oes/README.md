@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP186 — 2026-10-20**
+**CP187 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP186.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP187.md`
 
 Checkpoint anterior:
 
-`CP185`
+`CP186`
 
 Status:
 
@@ -516,3 +516,5 @@ em **Modo Continuidade**.
 - **CP185 — 2026-10-20:** Documento 141 escolhe um ato futuro único de baixo risco: verificação read-only pelo titular das quotas/condições de cobrança Neon Free, sem consulta/alteração do projeto nem autorização G0. Repetição PG18 diferida com blockers preservados. CP186 candidato somente após Prossiga. STOP.
 
 - **CP186 — 2026-10-20:** Documento 142 registra leitura API Neon Free (plano free_v3 e contadores parciais), sem SQL ou mudanças. BRG-09 continua PENDING_OWNER_FINANCIAL_CONFIRMATION e G0-D5 PENDING. CP187 candidato somente após Prossiga. STOP.
+
+- **CP187 — 2026-10-20:** Documento 143 registra owner responses sim/não/não/não sobre Free/pagos/cartão/avisos; API free_v3 corrobora plano. BRG-09 parcialmente documentado, não aprovado; G0-D5 ainda PENDING_OWNER. Sem Neon ou novos atos. CP188 candidato sob Prossiga. STOP.

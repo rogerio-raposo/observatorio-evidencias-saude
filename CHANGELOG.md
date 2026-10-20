@@ -5079,3 +5079,11 @@ Documentos:
 - `describe_project` integração Neon read-only: `subscription_type=free_v3`, região aws-sa-east-1, 1 GiB limite lógico por branch, 10 branches limite, contadores de consumo parciais. Nenhuma informação pessoal do owner publicada. Não houve SQL nem mutação.
 - BRG-09 e G0-D5 permanecem PENDING_OWNER_FINANCIAL_CONFIRMATION / PENDING_OWNER; dados de cartão, fatura, upgrade e cobrança não disponíveis nesta API. Documento 142 apresenta checklist mínimo sem exposição de informações privadas.
 - BRG-03/06/07/08 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. B1R1 expirado; novo epoch não autorizado; sem consultas de fonte/custo; M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Reconciliação da declaração financeira do titular Neon (Documento 143 / CP187)
+
+- Freshness Gate CP186/main `3c236159ab6ceb0c7c02f48542688b70f39f8be7` identical, ahead/behind 0, modo médio.
+- Respostas diretas do titular: Free SIM; upgrades/serviços pagos NÃO; método de pagamento NÃO; avisos cobrança/limites NÃO. Plano `free_v3` confirmado separadamente pela API CP186, demais respostas **somente declaração do titular**. Documento 143 registra evidência sem segredos ou dado pessoal.
+- BRG-09 evidência parcial com owner declaration, operacional NOT_APPROVED; G0-D5 informação disponível, aprovação PENDING. Proibido inferir custo zero futuro ou autorização de uso factual.
+- BRG-03/06/07/08 bloqueados, 04/05 históricos, 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. Sem Neon SQL/mutações, custos, fonte científica, CI/PG18; B1R1 expirado, novo epoch não autorizado, Fase 4 não encerrada e Fase 5 não iniciada. STOP.
