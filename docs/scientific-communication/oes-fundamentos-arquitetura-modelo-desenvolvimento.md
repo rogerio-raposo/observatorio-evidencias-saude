@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.4 (manuscrito em elaboração)  
+**Versão editorial:** 0.5 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–4 redigidos; Capítulos 5–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–5 redigidos; Capítulos 6–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -357,18 +357,142 @@ O resultado esperado dessa organização é uma **arquitetura científica adapta
 
 # 5. Processo metodológico de produção de evidências
 
-*Redação pendente — estrutura de tópicos aprovada.*
+O OES organiza a produção de evidências como um **processo científico encadeado**, no qual a conclusão deriva de uma pergunta delimitada, de métodos apropriados e de registros verificáveis. Essa organização é descrita principalmente em seis protocolos — busca, seleção, avaliação crítica, extração, síntese e certeza/confiança — que estabelecem requisitos proporcionais à finalidade e à profundidade da investigação. A existência dos protocolos não demonstra, por si só, que todas as etapas estejam executadas automaticamente, nem que seus resultados tenham sido validados por especialistas independentes. [Fontes: Documentos 10–15, disponíveis em `docs/methodology/`](../methodology/10-busca-recuperacao-evidencias.md).
 
-- **5.1. Planejamento e protocolo de investigação:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.2. Busca e recuperação da literatura:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.3. Triagem e seleção dos estudos:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.4. Avaliação crítica e risco de viés:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.5. Extração e estruturação dos dados:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.6. Síntese das evidências:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.7. Avaliação da certeza ou confiança nas evidências:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.8. Avaliação da aplicabilidade:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.9. Formulação das conclusões científicas:** texto a desenvolver a partir da documentação canônica pertinente.
-- **5.10. Transparência e reprodutibilidade:** texto a desenvolver a partir da documentação canônica pertinente.
+### 5.1. Planejamento e protocolo de investigação
+
+O planejamento começa com uma **pergunta científica operacional**, formalizada antes da busca definitiva. Ela define a população ou fenômeno de interesse, a intervenção, exposição ou teste quando aplicável, os comparadores, os desfechos prioritários, o contexto e o horizonte temporal. Também determina o objetivo analítico da investigação — explorar, descrever, comparar, estimar, explicar ou predizer — e os desenhos de estudo pertinentes. Essa definição protege a investigação contra alterações silenciosas de objetivo após a identificação de resultados convenientes. [Fonte: Documento 03 — Entrada e roteamento](../governance/03-roteamento-metodologico.md).
+
+O **protocolo** registra antecipadamente como a pergunta será respondida. Sua extensão varia conforme o nível N0–N4, mas, em investigações estruturadas, deve esclarecer fontes a consultar, estratégia de busca, critérios de inclusão e exclusão, procedimentos de seleção, instrumentos de avaliação crítica, plano de extração, métodos de síntese e de avaliação da certeza ou confiança. Quando pertinente, contempla também regras para resultados múltiplos, análises de subgrupos, dados ausentes, atualizações e controle de qualidade. A pré-especificação é especialmente relevante nos níveis formais N3 e N4, nos quais decisões posteriores à inspeção dos resultados poderiam favorecer vieses analíticos.
+
+O planejamento deve distinguir **decisões necessárias** de **opções justificáveis**. Nem toda pergunta permite ou exige meta-análise; nem toda exploração demanda busca exaustiva; nem todos os instrumentos são aplicáveis a qualquer desenho de estudo. Entretanto, escolhas que reduzam a cobertura ou a verificação precisam ser declaradas e compatíveis com a finalidade atribuída ao produto. Um método abreviado não será apresentado como equivalente a uma revisão sistemática completa.
+
+Também devem ser definidos os responsáveis por cada etapa e o nível de garantia requerido antes de tratar um produto como concluído. A arquitetura de governança do OES diferencia verificação metodológica assistida por IA, aprovação de governança do proprietário e revisão humana especializada independente. Os requisitos não podem ser satisfeitos mediante substituição nominal de uma função por outra. Em particular, produtos formais N3 e N4 demandam revisão qualificada; a ausência de especialistas limita o estágio de conclusão que o projeto pode declarar. [Fonte: Documento 04 — Governança e garantia](../governance/04-governanca-garantia-revisao.md).
+
+Alterações do protocolo podem ser cientificamente necessárias, mas devem ser **identificadas, justificadas, datadas e preservadas no histórico**. Essa disciplina torna possível separar decisões planejadas de análises exploratórias e avaliar se mudanças de escopo afetaram as conclusões. O objetivo é oferecer flexibilidade metodológica sem perder a capacidade de reconstruir o processo.
+
+### 5.2. Busca e recuperação da literatura
+
+A busca bibliográfica procura identificar o corpo de evidências **potencialmente relevante à pergunta**, utilizando fontes e estratégias coerentes com o tipo de investigação. O protocolo do OES distingue diferentes classes de fontes: bases bibliográficas; repositórios de revisões e sínteses; registros de estudos; literatura regional; literatura cinzenta; fontes regulatórias e institucionais; e descoberta por citações. Nenhuma delas substitui universalmente as demais, e a cobertura apropriada depende da pergunta e do nível metodológico. [Fonte: Documento 10 — Busca e recuperação](../methodology/10-busca-recuperacao-evidencias.md).
+
+Entre as fontes consideradas no desenho inicial estão PubMed/MEDLINE, CENTRAL e bases especializadas pertinentes, além de recursos como Cochrane, Epistemonikos, registros de ensaios e fontes regionais — por exemplo, LILACS/BVS. Relatórios institucionais, documentos regulatórios e resultados não publicados podem ser relevantes em situações específicas, sobretudo em temas de segurança, tecnologias e políticas públicas. A ausência de acesso a uma fonte material para a pergunta precisa ser registrada como limitação de cobertura; a indicação dessas fontes no protocolo **não significa que o OES já disponha de integração operacional com todas elas**.
+
+A estratégia de busca deve traduzir os componentes da pergunta em termos controlados e livres, sinônimos e combinações adequadas a cada base. Filtros de desenho, idioma ou período necessitam justificativa, especialmente quando podem excluir evidências relevantes. Estratégias não devem ser simplesmente copiadas entre plataformas com sintaxes diferentes: precisam ser adaptadas e documentadas. Em investigações aprofundadas, instrumentos e referências como **PRESS** e **PRISMA-S** podem apoiar, respectivamente, a revisão da estratégia e a transparência do relato, quando aplicáveis.
+
+A **reprodutibilidade da busca** depende de registrar bases, interfaces ou serviços consultados, datas, expressões executadas, filtros, resultados recuperados e eventuais buscas complementares. Um total agregado de referências, sem histórico das consultas, não permite verificar quais documentos poderiam ter sido identificados. O OES prevê vínculos entre buscas e registros recuperados, preservando identificadores e proveniência. Sua arquitetura também diferencia a busca original de buscas de atualização realizadas posteriormente.
+
+A deduplicação é necessária porque uma publicação pode aparecer em bases diferentes; entretanto, **duplicatas bibliográficas não se confundem com múltiplos relatos do mesmo estudo**. Um ensaio clínico pode ter registro público, protocolo, artigo principal e análises posteriores. Esses documentos precisam permanecer vinculados à unidade científica subjacente, evitando que várias publicações sejam tratadas como ensaios independentes na síntese.
+
+A inteligência artificial pode auxiliar na expansão de termos, classificação, identificação de sinônimos ou triagem preliminar de referências, mas sua utilização não elimina a necessidade de estratégias e resultados auditáveis. Busca por linguagem natural ou consulta assistida por IA não deve ser descrita como recuperação sistemática exaustiva quando não existir protocolo adequado para sustentar essa alegação.
+
+### 5.3. Triagem e seleção dos estudos
+
+A seleção das evidências ocorre após a recuperação dos registros e deve obedecer a **critérios de elegibilidade definidos antes da decisão final de inclusão**. Esses critérios derivam da pergunta operacional e do protocolo e podem abranger população, condição, intervenção ou exposição, comparador, desenho de estudo, contexto, período, seguimento e outros elementos relevantes. A seleção não pode ser direcionada pela magnitude ou pelo sentido dos resultados encontrados. [Fonte: Documento 11 — Elegibilidade, triagem e seleção](../methodology/11-elegibilidade-triagem-selecao.md).
+
+O OES diferencia pelo menos três níveis informacionais. O **registro** é a entrada recuperada em uma fonte; o **relatório** é o documento que descreve total ou parcialmente uma investigação; o **estudo** é a unidade científica que poderá integrar o corpo de evidências. Consequentemente, as contagens de registros identificados, textos avaliados e estudos incluídos podem ser diferentes. A vinculação de múltiplos relatos a um mesmo estudo impede distorções na contagem e na interpretação dos resultados.
+
+A triagem pode começar pela leitura de títulos e resumos, com encaminhamento de registros potencialmente elegíveis para recuperação de texto completo. Informações insuficientes no resumo não devem resultar, automaticamente, em exclusão indevida. Na avaliação de texto completo, a decisão deve ser acompanhada de justificativa rastreável. Relatórios não recuperados, estudos em andamento, estudos à espera de classificação e estudos elegíveis sem dados utilizáveis devem ser diferenciados de estudos excluídos por critérios científicos. **Elegibilidade não equivale à qualidade metodológica**: um estudo pode atender ao escopo e ainda apresentar risco importante de viés, que será avaliado separadamente.
+
+A extensão da triagem e os procedimentos de verificação são proporcionais ao produto. Investigações N0 ou N1 podem empregar critérios e registros simplificados, sem reivindicar exaustividade. Produtos formais N3 e N4 demandam documentação mais abrangente e verificações humanas qualificadas conforme as respectivas regras. Quando pertinente, um fluxograma conforme **PRISMA 2020**, ou adaptação apropriada ao tipo de síntese, permite apresentar quantas referências avançaram ou foram excluídas em cada etapa. O uso de um fluxograma não substitui a execução adequada da seleção.
+
+Os protocolos reconhecem a possibilidade de assistência computacional na classificação e na priorização de registros, mas não presumem que uma pontuação atribuída por IA autorize excluir automaticamente evidências. É necessário declarar o papel da automação, os controles aplicados, os resultados de eventuais verificações e as limitações de desempenho. Sem essas informações, não seria possível distinguir ganho de eficiência de perda de cobertura.
+
+Discordâncias entre avaliadores, mudanças nos critérios e retriagens devem permanecer documentadas. Essa exigência ganha importância quando uma investigação é atualizada: o registro original permite compreender por que um estudo anteriormente excluído ou aguardando classificação passou a receber outro tratamento.
+
+### 5.4. Avaliação crítica e risco de viés
+
+Após determinar quais estudos integram a investigação, é preciso examinar **em que medida seus resultados podem estar sistematicamente distorcidos**. O risco de viés pode decorrer do desenho, da seleção dos participantes, do processo de intervenção ou exposição, da mensuração de desfechos, de perdas, de análise inadequada ou da seleção de resultados relatados. Sua avaliação deve considerar a pergunta e a unidade analítica relevante, não apenas a reputação do periódico ou a existência de revisão por pares. [Fonte: Documento 12 — Risco de viés e qualidade metodológica](../methodology/12-avaliacao-risco-vies.md).
+
+O protocolo do OES distingue **risco de viés**, **qualidade ou limitações metodológicas**, **qualidade do relato**, **aplicabilidade** e **certeza do corpo de evidências**. Essas dimensões interagem, mas não são equivalentes. Um estudo pode ter relato incompleto sem que todos os seus procedimentos tenham sido inadequados; pode possuir baixo risco de viés e pouca aplicabilidade à população de interesse; e pode contribuir para um corpo de evidências cuja certeza global permanece limitada por outros fatores.
+
+A seleção do instrumento de avaliação segue a natureza dos estudos e de seus resultados. O desenho metodológico contempla ferramentas como **RoB 2** para ensaios randomizados, **ROBINS-I** para intervenções não randomizadas, **ROBINS-E** para estudos de exposições, instrumentos **QUADAS** para acurácia diagnóstica, **QUIPS** para fatores prognósticos, **PROBAST+AI** para modelos de predição e **ROBIS** para risco de viés de revisões sistemáticas. A aplicação concreta deverá respeitar versões, domínios, unidades de avaliação e instruções próprias de cada instrumento; a lista não constitui homologação científica de sua utilização em todos os cenários.
+
+Em muitos casos, o julgamento precisa ser realizado no nível do **resultado ou desfecho**, e não simplesmente no nível de um estudo considerado em bloco. Um ensaio pode apresentar limitações diferentes para desfechos objetivos e autorreferidos, ou para análises sujeitas a padrões distintos de dados ausentes. Os registros devem preservar as perguntas de sinalização, as evidências documentais consideradas, os julgamentos por domínio e a justificativa de conclusão, quando o instrumento assim exigir.
+
+O OES rejeita um **escore numérico universal de qualidade** que reduza instrumentos heterogêneos a uma soma arbitrária de pontos. Também evita considerar automaticamente que financiamento comercial implique alto risco de viés, ou que alto risco de viés determine exclusão posterior de um estudo elegível. Essas circunstâncias precisam ser examinadas segundo critérios apropriados, podendo influenciar a interpretação da síntese e o julgamento de certeza.
+
+A IA pode apoiar a localização de passagens relevantes, a organização de respostas aos instrumentos e a identificação de inconsistências, mas seus julgamentos não devem ser apresentados como equivalentes a uma revisão científica humana qualificada. A documentação atual do OES prevê verificação metodológica assistida por IA como função distinta da revisão especializada independente; essa limitação é particularmente importante para produtos N3 e N4. [Fonte: Documento 04 — Garantia e revisão](../governance/04-governanca-garantia-revisao.md).
+
+### 5.5. Extração e estruturação dos dados
+
+A extração transforma informações de fontes elegíveis em **dados científicos estruturados**, destinados à análise, à síntese e à atualização posterior. Não se trata de copiar indiscriminadamente todas as tabelas e passagens disponíveis, mas de identificar os elementos relevantes para a pergunta: características do estudo, população, intervenções ou exposições, comparadores, desfechos, tempos de acompanhamento, resultados, métodos analíticos e informações de segurança, quando pertinentes. [Fonte: Documento 13 — Extração e estruturação](../methodology/13-extracao-dados.md).
+
+A arquitetura diferencia **Study**, **Report** e **Result**. Um estudo pode gerar múltiplos documentos e vários resultados; cada resultado deve manter relação com a população analisada, o desfecho, a comparação, a medida, o tempo e a análise correspondente. Essa granularidade permite que uma síntese de determinado desfecho use as estimativas corretas sem tratar desfechos ou relatos diferentes como estudos independentes.
+
+Para evitar erros de interpretação, o OES prevê a separação entre **valor originalmente relatado** e **valor derivado** por cálculo ou transformação. Conversões de unidades, reconstruções de medidas de efeito, combinações de grupos ou extrações de gráficos devem preservar a origem, a transformação aplicada, seus parâmetros e o resultado obtido. Um valor derivado não deve substituir silenciosamente o dado-fonte. O mesmo cuidado vale para a distinção entre resultados observados, estimativas ajustadas, análises exploratórias e inferências produzidas durante a revisão.
+
+Os instrumentos de extração precisam ser planejados segundo as necessidades do produto. Um formulário ou *codebook* pode especificar campos, formatos, definições, unidades, regras de priorização de análises e procedimentos para lidar com informações ausentes ou divergentes. A existência de múltiplos relatórios sobre um estudo exige reconciliação documentada, pois resultados de um registro e de uma publicação posterior podem diferir quanto a desfechos, amostras ou períodos de seguimento.
+
+A **proveniência por campo** é especialmente importante para dados que alimentam estimativas quantitativas. Deve ser possível identificar o documento, a página, tabela, figura, registro ou suplemento que sustentou a informação e, quando aplicável, os procedimentos de extração e verificação. Dados ausentes não devem ser transformados arbitrariamente em zeros, nem estimativas imputadas apresentadas como observadas.
+
+A extração assistida por IA pode acelerar a identificação e a transcrição estruturada de informações, mas também pode confundir grupos, escalas, estimativas e tempos de avaliação. Por isso, os dados críticos requerem controles compatíveis com o nível metodológico e com a finalidade da investigação. O protocolo prevê preferência por verificações independentes qualificadas em investigações aprofundadas; a ausência dessa capacidade deve constar das limitações, e não ser ocultada por um fluxo automatizado bem-sucedido.
+
+### 5.6. Síntese das evidências
+
+A síntese procura interpretar os resultados extraídos como **um corpo de evidências relativo à pergunta e aos desfechos de interesse**. Seu objetivo não é necessariamente produzir uma única estimativa numérica. Dependendo da natureza dos estudos, pode ser adequada uma meta-análise, uma síntese estruturada sem combinação estatística, uma síntese de achados qualitativos, uma análise de acurácia diagnóstica, uma abordagem prognóstica ou uma integração de métodos mistos. [Fonte: Documento 14 — Síntese de evidências](../methodology/14-sintese-evidencias.md).
+
+Antes de combinar resultados, é necessário examinar a **comparabilidade clínica, metodológica e estatística** das evidências. Estudos podem diferir substancialmente na população, no comparador, na intensidade de uma intervenção, na definição do desfecho, no tempo de avaliação, no estimando ou no desenho. A existência de medidas numéricas convertíveis não demonstra que uma estimativa combinada seja cientificamente apropriada. O OES prevê decisões explícitas sobre combinar, harmonizar, estratificar, apresentar separadamente ou não sintetizar determinados resultados.
+
+Quando uma meta-análise for justificável, devem ser especificados medida de efeito, modelo estatístico, tratamento da heterogeneidade, dados correlacionados, múltiplos braços e procedimentos para resultados ou eventos raros, conforme o problema. A apresentação pode exigir estimativas relativas e absolutas, intervalos de confiança, análises de sensibilidade e avaliação da variabilidade entre estudos. Medidas como **I²** ou **τ²** auxiliam na descrição da heterogeneidade, mas não fornecem, isoladamente, uma autorização para combinar resultados nem resolvem diferenças clínicas relevantes.
+
+A síntese deve conservar informações sobre o **risco de viés** das evidências incluídas e sobre a possível ausência seletiva de estudos ou resultados. Maior peso estatístico não é sinônimo de maior credibilidade metodológica. Análises por subgrupos e exploração de heterogeneidade requerem cautela, particularmente quando os agrupamentos foram escolhidos após o exame dos resultados. Ausência de significância estatística não significa equivalência entre tratamentos, assim como resultados estatisticamente significativos não garantem relevância clínica.
+
+Em outros contextos, a **síntese sem meta-análise** é a opção mais adequada. Ela deve adotar uma organização explícita dos estudos, da direção e magnitude dos resultados, das limitações e da consistência dos achados, evitando a simples contagem de estudos “positivos” e “negativos” como substituto da interpretação científica. Perguntas qualitativas ou de sistemas de saúde podem exigir métodos de síntese próprios, cuja lógica não deve ser reduzida a medidas convencionais de efeito de ensaios clínicos.
+
+É necessário distinguir ainda entre **síntese original produzida pelo OES** e **síntese existente adotada criticamente**. A utilização de uma estimativa externa, mesmo quando acompanhada de atualização interpretativa, não constitui nova meta-análise realizada pelo projeto. Essa atribuição é importante para a transparência das contribuições e para a revisão posterior do trabalho.
+
+### 5.7. Avaliação da certeza ou confiança nas evidências
+
+A avaliação da certeza pergunta **quanta confiança é justificável na estimativa, associação ou achado sintetizado**, para uma unidade científica claramente definida. Ela ocorre após a identificação e a análise crítica das fontes e utiliza seus resultados, mas não se confunde com a avaliação de risco de viés de um estudo individual. Tampouco exprime automaticamente a força de uma recomendação clínica ou institucional. [Fonte: Documento 15 — Certeza/confiança no corpo de evidências](../methodology/15-certeza-evidencia.md).
+
+Para questões quantitativas em que o referencial seja apropriado, o OES adota **GRADE** como referência central. O julgamento é realizado por desfecho ou por outra unidade relevante de comparação, considerando domínios como risco de viés, inconsistência, evidência indireta, imprecisão e possível ausência seletiva de evidências. A aplicação depende das orientações e versões apropriadas para cada desenho e pergunta. As categorias usuais são **alta, moderada, baixa e muito baixa certeza**, acompanhadas de justificativas explícitas, sem conversão em pontuação universal.
+
+A interpretação da **imprecisão** não deve ser reduzida à existência de um valor de *p* abaixo ou acima de 0,05. Intervalos de confiança, magnitude do efeito, riscos basais, limiares relevantes e decisões que poderiam mudar em diferentes cenários devem ser considerados. Uma estimativa imprecisa pode permitir conclusões distintas daquelas apoiadas por efeito bem delimitado. Da mesma forma, resultados heterogêneos podem exigir investigação da consistência e de suas causas, sem que a redução da certeza decorra de regra numérica automática.
+
+O OES distingue **certeza baixa** de **ausência de evidência utilizável**. Se não foram identificados estudos elegíveis ou não existem informações suficientes para produzir determinada estimativa, a saída precisa registrar essa condição, em vez de atribuir mecanicamente o nível “muito baixa” como substituto de inexistência de dados. A transparência dessa diferença é especialmente importante para pesquisadores que pretendem interpretar lacunas e definir novas agendas de investigação.
+
+Em sínteses qualitativas, a avaliação da confiança poderá utilizar **GRADE-CERQual**, quando aplicável, examinando aspectos pertinentes aos achados sintetizados, como limitações metodológicas, coerência, adequação dos dados e relevância. Outras classes de pergunta, inclusive diagnóstico, predição ou prevalência, exigem avaliação da adequação do referencial escolhido; não se presume que uma versão do GRADE destinada a efeitos de intervenções possa ser transferida diretamente para todas elas.
+
+Os julgamentos devem manter vínculos com o corpo de evidências e as justificativas que os sustentam. A IA pode auxiliar na organização dos domínios e no teste de coerência das explicações, porém não substitui a competência científica exigida para revisão especializada. No atual estágio do OES, classificações de certeza produzidas por processos assistidos por IA devem ser apresentadas com suas limitações e sem alegar validação externa não realizada.
+
+### 5.8. Avaliação da aplicabilidade
+
+Uma conclusão pode ser metodologicamente bem fundamentada e, ainda assim, ter **aplicabilidade restrita** ao contexto em que será utilizada. A avaliação de aplicabilidade examina se a população, a intervenção, o teste, a exposição, os desfechos, a organização assistencial ou outras condições dos estudos correspondem suficientemente à pergunta e ao cenário de interesse. Essa análise não substitui o julgamento sobre risco de viés ou certeza; ela explicita limites de transferência dos resultados. [Fontes: Documento 01 — População e camada Brasil](../governance/01-taxonomia-perguntas.md) e [Documento 12 — Aplicabilidade](../methodology/12-avaliacao-risco-vies.md).
+
+Para uma pergunta clínica, podem importar idade, gravidade, comorbidades, características dos participantes, forma de administração da intervenção, adesão, duração do seguimento e capacidade de reproduzir as condições do estudo. Em diagnóstico, prevalência basal, contexto de atendimento, critérios de seleção e padrão de referência podem modificar a interpretação das medidas de acurácia. Em políticas de saúde, diferenças de cobertura, financiamento, recursos e implementação podem limitar a transferência de achados de um sistema para outro.
+
+No contexto brasileiro, o OES prevê considerar, quando pertinente, epidemiologia nacional, disponibilidade de tecnologias, organização do SUS, regulação e dados locais. A ausência de estudos realizados no Brasil não determina, por si só, a rejeição de evidência internacional, nem justifica automaticamente a redução da certeza. A questão é **se existem diferenças relevantes capazes de modificar a interpretação ou a decisão de uso**. Quando essas diferenças não puderem ser examinadas, a limitação deve ser declarada.
+
+A aplicabilidade também deve ser distinguida de **recomendação**. A identificação de evidência compatível com uma população não resolve automaticamente escolhas sobre custos, equidade, aceitabilidade, valores ou viabilidade. O observatório pode informar esses julgamentos sem reivindicar autoridade para prescrever condutas individualizadas ou estabelecer recomendações normativas que não tenham sido produzidas por procedimento específico.
+
+### 5.9. Formulação das conclusões científicas
+
+A conclusão deve responder à **pergunta que orientou a investigação**, preservando a direção, a magnitude e a incerteza dos achados, além das condições necessárias à sua interpretação. Seu grau de assertividade precisa ser proporcional ao método, à cobertura da busca, ao risco de viés e à confiança atribuída ao corpo de evidências. Uma linguagem categórica pode ser enganosa quando a informação é limitada, inconsistente ou indireta.
+
+O OES privilegia formulações que indiquem o suporte real da literatura, como “a evidência sugere”, “provavelmente reduz”, “os resultados são inconsistentes” ou “a evidência disponível é insuficiente para determinar”. A escolha deve refletir julgamentos metodológicos documentados, não mera preferência editorial por uma expressão de confiança. Quando houver avaliação estruturada de certeza, a terminologia empregada precisa ser compatível com o referencial aplicável. [Fontes: Documento 00 — Linguagem das conclusões](../governance/00-documento-de-concepcao.md) e [Documento 15 — Certeza](../methodology/15-certeza-evidencia.md).
+
+A interpretação deve distinguir **efeito estatístico**, **importância clínica ou contextual** e **consequência para decisões**. Uma diferença estatisticamente detectável pode ser pequena ou pouco relevante; uma estimativa incerta pode abranger benefícios e danos importantes; e a inexistência de estudos elegíveis exige relato da limitação, não uma conclusão artificialmente positiva ou negativa. Quando o método é exploratório ou seletivo, a saída não deve atribuir ao conhecimento disponível uma completude que a investigação não examinou.
+
+Também deve ficar claro **quem realizou a síntese e quais verificações ocorreram**. Uma Ficha elaborada com apoio de IA, aprovada em governança interna e sem revisão científica independente não deve ser apresentada como se tivesse recebido validação por pares. Os requisitos de garantia A0–A3 estabelecidos pelo OES fornecem categorias para comunicar essa condição, mas não eliminam a necessidade de explicar ao leitor o significado prático do nível atribuído.
+
+As conclusões não substituem recomendações assistenciais individuais. Quando uma pergunta diz respeito à melhor decisão clínica ou institucional, a síntese pode oferecer informações essenciais, mas recomendações formais exigem considerar elementos adicionais e seguir métodos compatíveis com essa finalidade.
+
+### 5.10. Transparência e reprodutibilidade
+
+A transparência do OES depende de **rastreabilidade do percurso completo**, e não apenas da disponibilização de uma conclusão acompanhada de referências. Para permitir exame crítico, o projeto procura relacionar pergunta e versões, protocolo, buscas executadas, registros recuperados, critérios de seleção, estudos e relatórios, dados extraídos, avaliações de risco de viés, métodos de síntese, julgamentos de certeza e produto comunicado. Essas relações são parte da arquitetura científica e informacional do observatório.
+
+Os referenciais de relato devem ser utilizados conforme o desenho e a finalidade da investigação. **PRISMA 2020**, **PRISMA-S** e diretrizes correlatas podem apoiar a documentação de revisões e buscas quando aplicáveis, mas **cumprir uma lista de relato não equivale a demonstrar validade metodológica**. A execução dos procedimentos, a completude do registro e a justificativa das decisões continuam sujeitas a verificação. O uso de padrões de publicação não pode funcionar como selo genérico de qualidade científica.
+
+Em análises quantitativas, reprodutibilidade pode exigir especificação do conjunto de dados, medidas de efeito, transformações, software e versões, parâmetros, código ou decisões de modelagem. Em avaliações qualitativas, é necessário preservar descrições suficientes sobre a origem e o tratamento dos achados. Nos dois casos, os materiais disponibilizáveis devem respeitar licenças, direitos autorais, sigilo e outras restrições pertinentes, sem transformar a exigência de auditoria em autorização para divulgar conteúdo protegido ou dados sensíveis.
+
+A **proveniência** também precisa abranger o uso de inteligência artificial. Quando empregada para busca auxiliar, triagem, extração, análise preliminar ou verificação metodológica, sua participação deve ser declarada de modo proporcional ao risco e à materialidade da tarefa. Devem permanecer distinguíveis informações extraídas de fontes, transformações realizadas, inferências produzidas e julgamentos revisados. Uma segunda execução da mesma arquitetura de IA não constitui, por definição, revisão humana independente.
+
+O versionamento permite distinguir **correções editoriais**, **incorporação de novas evidências** e **alterações materiais** em estimativas, certeza, aplicabilidade ou conclusões. A Fase 4 desenvolve mecanismos conceituais e técnicos para que novos sinais não modifiquem silenciosamente produtos existentes. Essa disciplina favorece auditoria temporal, mas sua implantação integral e sua operação contínua ainda dependem de demonstração específica. [Fonte: Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
+
+Por fim, é necessário distinguir **reprodutibilidade técnica**, **aderência documental ao protocolo** e **validade científica externa**. A aprovação de testes automatizados pode demonstrar que determinados contratos e fluxos se comportam conforme especificado, mas não basta para comprovar que interpretações científicas, avaliações de risco de viés ou julgamentos de certeza estejam corretos. Essa distinção é especialmente relevante no OES, cujo desenvolvimento até a data de referência ainda não contou com avaliação científica especializada independente de sua arquitetura e de seus resultados.
+
+O processo metodológico descrito neste capítulo constitui, portanto, **um conjunto documentado de compromissos e procedimentos que organiza a produção de evidências**, cujas capacidades efetivas, controles e limitações deverão ser demonstrados por produto e por aplicação. Seu valor potencial para outros observatórios reside tanto na possibilidade de reutilização da estrutura quanto na necessidade de submetê-la a avaliação crítica, adaptação contextual e validação científica apropriada.
+
 
 # 6. Arquitetura dos produtos do observatório
 
@@ -527,4 +651,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.4 — a apresentação e os Capítulos 1–4 constituem texto corrido desenvolvido nesta versão. Os Capítulos 5–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.5 — a apresentação e os Capítulos 1–5 constituem texto corrido desenvolvido nesta versão. Os Capítulos 6–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
