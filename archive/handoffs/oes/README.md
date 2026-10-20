@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP170 — 2026-10-19**
+**CP171 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP170.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP171.md`
 
 Checkpoint anterior:
 
-`CP169`
+`CP170`
 
 Status:
 
@@ -427,3 +427,13 @@ em **Modo Continuidade**.
 - 031–033 com rollback estrutural observado, 034/036 com trigger ausente sob replay negativo interrompido e 035 com primeira função instalada/segunda ausente; zero pós-condições validadas ou promoção automática;
 - Documento 126 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP170.md`; grandfathering 032 com registros preexistentes permanece não testado;
 - nenhuma branch/SQL/role/ledger Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco grandfathering 032 em PG18 sintético, modo alto, STOP.
+
+
+## 2026-10-19 — Grandfathering 032 sintético comprovado (Documento 127 / CP171)
+
+- Freshness Gate CP170 `238b2a11cf26c94958e075ad852575419958b38e` = identical; modo alto;
+- PostgreSQL 18 descartável com três registros preexistentes respeitando FK/constraints/triggers, cenário de instalação 032, rollback induzido e marker estrutural negativo;
+- run `39350571819` job `118393517271`, completed/success no commit `a060f7055063bf83ce8e880193b08f9c941e46f3`, 19/19 PASS, artifact `12233056788`, ZIP SHA-256 `4191c4936b523b7ea9e2d7e176a14770b5daa6eb618dd6832a23f340b899b339`;
+- Documento 127 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP171.md`; marcador do contrato sem grandfathering mapeado não comprova instalação completa;
+- principal catálogo permanece 36 UNREVIEWED, 0 pós-condições aprovadas; nenhuma branch/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo checkpoint após `Prossiga`: testes sintéticos de funções/triggers 034–036; modo alto, STOP.
