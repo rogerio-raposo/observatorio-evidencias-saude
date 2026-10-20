@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP169 — 2026-10-19**
+**CP170 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP169.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP170.md`
 
 Checkpoint anterior:
 
-`CP168`
+`CP169`
 
 Status:
 
@@ -417,3 +417,13 @@ em **Modo Continuidade**.
 - run `39297500185`, job `118213715729` completed/success, 8 testes sintéticos OK, 20 fontes analisadas, artifact `12209110983`, hash ZIP `ff1c7b237c5b5c1246b60bdb2f3cae19073acb88e5b793b254559169873551f1`;
 - Documento 125 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP169.md`; **36/36 migrations UNREVIEWED e 0 pós-condições validadas**. BRG-06/07 operacionais pendentes;
 - nenhum Neon write, branch, ledger ou migration; B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo checkpoint sob `Prossiga`: ensaio PG18 descartável de pré/pós-condições/falhas, modo alto. STOP.
+
+## 2026-10-19 — Ensaio PG18 sintético de rollback e parcialidade 031–036 (Documento 126 / CP170)
+
+- Freshness Gate CP169/head `f928807e76b74dc32b65fe3a707c72232c721c55` = identical;
+- nova CI PG18 descartável executou 001–030, aplicou 031–036 e provocou falhas em clones, preservando original e sem conexão Neon;
+- primeiro run `39349451906` falhou por erro no comparador que supunha `contract_epoch` antes de 031; foi corrigido, sem alterar SQL histórico;
+- run `39349564581`, job `118390284507`, completed/success em `46af0a575e30d640dedd97edf84315ebc5f6f310`, 29/29 controles PASS, artifact `12233090040`, ZIP SHA-256 `6aea06318fb097c66066a75e13b8e03ae23ff52c6c7cf07a9bfffb9009431a3e`;
+- 031–033 com rollback estrutural observado, 034/036 com trigger ausente sob replay negativo interrompido e 035 com primeira função instalada/segunda ausente; zero pós-condições validadas ou promoção automática;
+- Documento 126 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP170.md`; grandfathering 032 com registros preexistentes permanece não testado;
+- nenhuma branch/SQL/role/ledger Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco grandfathering 032 em PG18 sintético, modo alto, STOP.
