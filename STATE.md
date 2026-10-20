@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP194 — 2026-10-20**.
+- checkpoint vigente: **CP195 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5592,3 +5592,10 @@ Estado preservado:
 
 - Proprietário autorizou expressamente protocolo equilibrado e revisão do template canônico. `Prossiga` passa a liberar uma atividade interna por vez; checkpoint persistente normalmente após 3–5 atividades, antecipado por risco/decisão/troca de conversa; Freshness Gate no começo de bloco e antes de commit, STATE/CHANGELOG por relevância. CP só avança com commit; atividades não persistidas não são fonte canônica.
 - O ponto técnico permanece CP193 / Doc149, com 36 migrations UNREVIEWED, zero pós-condições, 36 evidências 034–036 NOT_COLLECTED, 12 roles pendentes e demais bloqueios. Próxima A1: análise estática da necessidade de 021–028, sem Neon/SQL/CI, fontes, custos ou novo epoch. STOP.
+
+
+### Fase 4 — Consolidação G1-MIG A1–A4 (Documento 150 / CP195)
+
+- Freshness Gate CP194/main `8c89d3ae5b3f1a99fcba26d4422c36b712ae59b5` identical, 0 ahead/behind. Quatro atividades internas consolidadas após análise de 021–028, FKs em 031c/032a/032b e comparação integral versus reduzida.
+- `G1_BASELINE_CANDIDATE=FULL_MANIFEST_36` recomendado exclusivamente para planejamento; `G1_EXECUTION_AUTHORIZATION=NOT_GRANTED`. Nenhuma baseline aprovada, nenhum Neon/SQL/CI ou source query. 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles insatisfeitos. BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. B1R1 expirado, P-B/novo epoch não autorizados, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED.
+- Próximo bloco após CP195: A1 revisão documental de evidências BRG-06, só após novo Prossiga, com mensagens intermediárias de progresso. STOP.

@@ -5135,3 +5135,9 @@ Documentos:
 
 - Proprietário autorizou regra equilibrada em que cada `Prossiga` cobre uma atividade interna, com relatório de progresso e persistência GitHub normalmente após 3–5 atividades ou antecipada por risco/decisão/retomada. Freshness Gate na abertura do bloco e antes do commit; STATE/CHANGELOG atualizados por relevância, não automaticamente em toda atividade. Formalizado no template canônico e handoff CP194.
 - Não foram autorizadas nem realizadas alterações Neon, SQL, CI/PG18, novos epochs, coleta PubMed/ClinicalTrials ou custos; estado científico/operacional da Fase 4 permanece inalterado. STOP.
+
+
+## 2026-10-20 — Consolidação técnica G1-MIG A1–A4 (Documento 150 / CP195)
+
+- Protocolo equilibrado aplicado: quatro atividades internas consolidadas em uma publicação. Verificadas FKs de 031/032, relações com 021–028, comparação de instalação integral versus reduzida. Proposta `FULL_MANIFEST_36` apenas como baseline documental; nenhum gate de execução aprovado.
+- 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles insatisfeitos; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem Neon, SQL, CI/PG18, novos epochs, PubMed/ClinicalTrials ou gasto. STOP.
