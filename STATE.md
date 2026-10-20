@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP183 — 2026-10-20**.
+- checkpoint vigente: **CP184 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5510,3 +5510,12 @@ Estado preservado:
 - Documento 139: P-A consulta interface sem persistência (alternativa não selecionada), P-B medições factuais persistidas PubMed/ClinicalTrials (objetivo estratégico mantido, não autorizado), 12 ODBs NOT_READY e trilha G0–G5.
 - BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles não satisfeitos. Neon Free SELECT histórico PASS apenas, não factual ready.
 - B1R1 EXPIRED_NOT_EXECUTED, novo epoch NOT_AUTHORIZED, M3 bloqueado, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED; nenhum Neon, PG18, CI, request de fontes ou gastos neste CP. Próximo candidato CP184 G0 somente após Prossiga. STOP.
+
+
+### Fase 4 — Pacote de decisão G0 do proprietário (Documento 140 / CP184)
+
+- Freshness Gate CP183/main `dba90c228bc2920f35ef687af368e0bd9a43beda` identical, 0 ahead/behind; modo **médio**, apenas documentação.
+- Documento 140: pacote G0 para piloto futuro P-B PubMed/ClinicalTrials.gov, dez dimensões delimitadoras e seis decisões G0-D1..D6 **PENDING_OWNER**; modelo de deliberação não assinado, sem decisão financeira/operacional inferida. P-A interface não persistente continua alternativa não selecionada.
+- Neon Free somente sandbox synthetic-only, SELECT histórico; factual use não autorizada. BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos, 36 migrations UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles pendentes.
+- B1R1 EXPIRED_NOT_EXECUTED; sem novo epoch, cadastro, branch/migration/role SQL Neon, consulta PubMed/ClinicalTrials.gov, MeasurementEvent, gasto ou autenticação. M3 bloqueado, Fase 4 documental NOT_READY e Fase 5 NOT_STARTED.
+- CP185 candidato condicionado a novo Prossiga: revisão proporcional de dependências e um único próximo ato preparatório; recomendar **modo alto** antes de aprovação G0 substantiva. STOP.

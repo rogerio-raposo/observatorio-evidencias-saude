@@ -5056,3 +5056,11 @@ Documentos:
 - Modo médio; Freshness Gate CP182/main `9e762b1edfd96262b9782d9fe87c1a508da46051` identical, ahead/behind 0, checkpoint exclusivamente documental.
 - Documento 139 distingue P-A interface não persistente de P-B factual persistente (objetivo estratégico ainda bloqueado); mapeia ODB-01–12 e trilha de decisão/prova G0–G5; nenhuma autoridade adicional concedida.
 - BRG-03/06/07/08/09 continuam bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. B1R1 expirado, Neon sandbox SELECT histórico somente. Sem SQL/Neon/CI/queries/custos. M3 bloqueado; Fase 4 não encerrada, Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Pacote de decisão owner G0 para o novo piloto factual (Documento 140 / CP184)
+
+- Freshness Gate CP183/main `dba90c228bc2920f35ef687af368e0bd9a43beda` identical, ahead/behind 0. Modo médio; somente documentação e continuidade.
+- Documento 140: dez dimensões de governança, seis decisões G0-D1..D6 **PENDING_OWNER**, sete critérios propostos de saída, e formulário-modelo **não assinado**. P-B piloto PubMed/ClinicalTrials.gov priorizado no planejamento, sem aprovação de coleta/epoch/Neon e sem alterar P-A.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 evidências 034–036 NOT_COLLECTED, 12 roles pendentes. B1R1 expirado; M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada.
+- Nenhuma CI/PG18, SQL/Neon/branch/role/migration, query target-specific, serviço pago ou geração de MeasurementEvent. CP185 candidato somente após Prossiga; mudança para alto antes de aprovação substantiva. STOP.
