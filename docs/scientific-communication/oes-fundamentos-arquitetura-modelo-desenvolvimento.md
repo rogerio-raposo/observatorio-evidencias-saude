@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.2 (manuscrito em elaboração)  
+**Versão editorial:** 0.3 (manuscrito em elaboração)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–2 redigidos; Capítulos 3–16 estruturados e pendentes de redação  
+**Estado editorial:** apresentação e Capítulos 1–3 redigidos; Capítulos 4–16 estruturados e pendentes de redação  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -168,13 +168,87 @@ A formalização desses conceitos **não prova a existência de um serviço de m
 
 # 3. Escopo científico e definição das perguntas
 
-*Redação pendente — estrutura de tópicos aprovada.*
+### 3.1. Domínios temáticos do observatório
 
-- **3.1. Domínios temáticos do observatório:** texto a desenvolver a partir da documentação canônica pertinente.
-- **3.2. Tipologia das perguntas científicas:** texto a desenvolver a partir da documentação canônica pertinente.
-- **3.3. Formulação e estruturação das perguntas:** texto a desenvolver a partir da documentação canônica pertinente.
-- **3.4. Admissibilidade e priorização das demandas:** texto a desenvolver a partir da documentação canônica pertinente.
-- **3.5. Roteamento metodológico:** texto a desenvolver a partir da documentação canônica pertinente.
+O escopo científico de um observatório de evidências pode ser delimitado por área clínica, problema de saúde pública, população, tecnologia ou finalidade institucional. No OES, a concepção inicial adota uma perspectiva **metodologicamente transversal**: em vez de restringir antecipadamente todas as investigações a determinada especialidade, estabelece uma estrutura capaz de tratar classes diferentes de questões de saúde, com métodos adequados a cada uma. Essa abrangência é uma **possibilidade arquitetural proposta**, não a demonstração de capacidade operacional ou cobertura efetiva de todos os temas. [Fonte: Documento 00 — Concepção](../governance/00-documento-de-concepcao.md).
+
+Os domínios previstos incluem investigação de intervenções preventivas ou terapêuticas, segurança e eventos adversos, testes diagnósticos e rastreamento, prognóstico e predição, exposições e fatores de risco, frequência de condições, experiências de pacientes e profissionais, organização de serviços e políticas de saúde. O OES também contempla perguntas destinadas a caracterizar a distribuição da literatura e suas lacunas, sem necessariamente estimar efeitos clínicos. Esses domínios formam um repertório de problemas científicos, e não uma lista de linhas de pesquisa já implantadas. [Fonte: Documento 01 — Escopo científico e taxonomia](../governance/01-taxonomia-perguntas.md).
+
+A delimitação temática e a delimitação metodológica não são equivalentes. Um observatório dedicado, por exemplo, à saúde mental pode receber perguntas de efetividade terapêutica, segurança, experiência do usuário, prevalência ou implementação de políticas. Embora relacionadas pelo tema, essas perguntas demandam critérios de elegibilidade, desenhos de estudo e instrumentos de avaliação diferentes. Em sentido inverso, uma arquitetura metodológica para síntese de intervenções pode ser adaptada a especialidades distintas, desde que suas premissas sejam reexaminadas no novo contexto.
+
+Para iniciativas que desejem adaptar o modelo, a escolha do escopo deve considerar necessidades dos usuários, disponibilidade de especialistas, fontes bibliográficas relevantes, demanda previsível, recursos e consequências de conclusões incorretas. A amplitude desejada não dispensa decisões realistas de implantação: um observatório com competências restritas pode delimitar um conjunto inicial de perguntas e expandi-lo após demonstrações metodológicas específicas. Essa é uma orientação de planejamento derivada do princípio de proporcionalidade, não uma condição já cumprida pelo OES.
+
+O contexto brasileiro poderá acrescentar uma camada de análise de aplicabilidade relacionada à epidemiologia, à organização do Sistema Único de Saúde, à disponibilidade de intervenções, à regulação e aos recursos existentes. Essa contextualização não transforma resultados internacionais em dados nacionais nem substitui estudos locais; ela ajuda a explicitar em que medida a evidência disponível responde à realidade em que poderá ser utilizada. [Fonte: Documento 01 — Camada Brasil](../governance/01-taxonomia-perguntas.md).
+
+### 3.2. Tipologia das perguntas científicas
+
+O OES organiza as demandas segundo **dez classes metodológicas iniciais**. A classificação precede a escolha de instrumentos e procedimentos, porque não existe uma hierarquia de estudos que seja igualmente apropriada para investigar todos os fenômenos. Um ensaio randomizado pode sustentar inferências sobre efeitos de intervenções; já uma pergunta sobre prevalência requer atenção especial à amostragem e à representatividade, enquanto uma investigação qualitativa examina experiências e significados. [Fonte: Documento 01 — Taxonomia consolidada](../governance/01-taxonomia-perguntas.md).
+
+| Classe | Questão típica | Aspecto metodológico central |
+|---|---|---|
+| **Intervenção e efetividade (INT)** | Uma intervenção produz benefício em relação a determinada alternativa? | Comparadores, desfechos, estimativas de efeito e risco de viés dos estudos |
+| **Segurança e eventos adversos (SAF)** | Quais danos podem ocorrer e com que frequência? | Detecção de eventos raros ou tardios e fontes complementares de segurança |
+| **Diagnóstico e rastreamento (DIA)** | Com que acurácia um teste identifica uma condição? | Teste índice, padrão de referência, população e medidas de acurácia |
+| **Prognóstico (PRO)** | Qual é a evolução esperada de uma condição ao longo do tempo? | População, horizonte temporal e fatores relacionados ao curso clínico |
+| **Predição clínica (PRE)** | Um modelo estima adequadamente a probabilidade de um desfecho? | Validação, discriminação, calibração e utilidade do modelo |
+| **Etiologia e exposição (ETI)** | Uma exposição está causalmente relacionada a determinado resultado? | Confundimento, temporalidade, seleção e interpretações causais |
+| **Frequência (FREQ)** | Qual é a prevalência ou incidência de uma condição? | Definição de caso, população de referência e representatividade |
+| **Experiências e fenômenos qualitativos (QUAL)** | Como um fenômeno é vivido, percebido ou interpretado? | Contexto, adequação da abordagem qualitativa e interpretação dos achados |
+| **Sistemas, políticas e saúde pública (SYS)** | Qual é o efeito ou a implementação de determinada política ou serviço? | Contexto, desenhos de avaliação, implementação e efeitos populacionais |
+| **Mapeamento da evidência (MAP)** | Quais estudos existem e onde estão as lacunas? | Delimitação do campo, caracterização da literatura e cobertura das fontes |
+
+Essa taxonomia não significa que uma demanda real pertença sempre a uma única categoria. Uma investigação sobre uma tecnologia em saúde pode abranger eficácia, segurança, aceitabilidade e implementação. O protocolo do OES prevê a identificação das diferentes classes envolvidas e, quando necessário, sua **decomposição em subperguntas metodologicamente homogêneas**. As análises específicas podem ser posteriormente reunidas em uma apresentação integrada, sem que as exigências próprias de cada classe sejam apagadas.
+
+Cada classe também admite objetivos analíticos distintos, como explorar, descrever, estimar, comparar, explicar, predizer ou investigar relações causais. A expressão vaga “o que se sabe sobre determinada doença?” pode, por exemplo, solicitar um panorama da literatura, uma estimativa epidemiológica ou uma avaliação de tratamentos. A intenção precisa ser identificada para evitar que o sistema apresente uma resposta cientificamente elaborada para uma pergunta diferente daquela que motivou a demanda.
+
+As ferramentas de avaliação crítica são selecionadas conforme os desenhos e as finalidades, não pela adoção de um índice universal de qualidade. Entre os referenciais candidatos documentados no OES estão instrumentos apropriados para ensaios randomizados, intervenções não randomizadas, estudos de exposição, diagnóstico, prognóstico e modelos preditivos. A escolha e o uso corretos dessas ferramentas continuam sujeitos à competência metodológica e à revisão científica pertinente; a presença de seus nomes no protocolo não demonstra aplicação validada para todas as classes.
+
+### 3.3. Formulação e estruturação das perguntas
+
+O processamento científico começa frequentemente com uma **pergunta expressa em linguagem natural**. Essa forma deve ser preservada, inclusive quando contém ambiguidades ou pressupostos não explicitados. A estruturação subsequente não é um simples exercício de reformulação textual: ela define a unidade de análise, orienta a busca bibliográfica, estabelece a elegibilidade dos estudos e delimita o significado das conclusões que poderão ser produzidas.
+
+A arquitetura distingue três representações sucessivas. **Q0** é a pergunta original, armazenada sem reescrita. **Q1** é sua versão normalizada, na qual se tornam explícitos os principais componentes científicos. **Q2** é a pergunta operacional, acompanhada de critérios verificáveis para executar a investigação, como população elegível, fontes, desfechos, recortes temporais, desenhos de estudo e métodos previstos. Manter a relação entre essas representações permite avaliar se o trabalho respondeu à intenção inicial e identificar alterações de escopo. [Fonte: Documento 03 — Entrada, triagem e roteamento](../governance/03-roteamento-metodologico.md).
+
+Para perguntas de intervenção, estruturas como **PICO** ajudam a explicitar população, intervenção, comparador e desfechos, com extensões possíveis para tempo e contexto (*setting*). Nas perguntas diagnósticas, é essencial definir população, teste índice, condição-alvo e padrão de referência. Em estudos de prognóstico ou predição, o horizonte temporal e a população de aplicação precisam estar claros. Para prevalência, importam a condição, a população, o território e o período; para questões qualitativas, a formulação pode ser orientada pelo fenômeno de interesse e por seu contexto. Nenhum desses esquemas deve ser aplicado mecanicamente a todas as classes.
+
+Considere uma demanda hipotética: “A terapia digital melhora a insônia?”. A pergunta original não informa a que população se refere, qual intervenção digital está sendo examinada, com o que será comparada ou quais resultados são relevantes. Uma formulação científica poderia restringir a população a adultos com insônia, definir um tipo específico de terapia digital, explicitar o comparador e distinguir gravidade da insônia, qualidade do sono, adesão e eventos adversos. A versão operacional acrescentaria critérios de elegibilidade, desfechos prioritários, período de busca e desenhos de estudo apropriados. O exemplo ilustra a estruturação; não representa nova investigação ou resultado científico deste manuscrito.
+
+A definição de **desfechos críticos, importantes e exploratórios** é particularmente relevante em perguntas de intervenção. Mudanças em medidas substitutas ou biomarcadores não devem ser interpretadas automaticamente como benefícios clínicos diretamente percebidos pelos pacientes. Também é necessário registrar subgrupos e tempos de seguimento relevantes, diferenciando análises planejadas de explorações posteriores. Esses cuidados reduzem o risco de que a síntese seja conduzida apenas pelos resultados mais favoráveis encontrados na literatura.
+
+A normalização deve preservar incertezas legítimas. Se faltam informações indispensáveis à decisão metodológica, a questão pode precisar de esclarecimento ou de um levantamento exploratório antes da busca definitiva. A concepção do OES estabelece que uma busca aprofundada deverá ocorrer **após** a definição operacional, ressalvadas buscas exploratórias destinadas justamente a compreender o campo e refinar a pergunta. [Fontes: Documentos 01 e 03](../governance/01-taxonomia-perguntas.md).
+
+### 3.4. Admissibilidade e priorização das demandas
+
+Nem toda solicitação dirigida a um observatório deve transformar-se imediatamente em investigação formal. A **admissibilidade** busca determinar se existe uma pergunta científica tratável dentro do escopo e das competências disponíveis. O protocolo do OES distingue demandas admissíveis, admissíveis após reformulação, fora de seu escopo científico e inadequadas como investigação formal. Esse procedimento evita prometer respostas que extrapolem a finalidade do observatório. [Fonte: Documento 03 — Admissibilidade](../governance/03-roteamento-metodologico.md).
+
+Uma demanda referente ao diagnóstico ou à prescrição individual, por exemplo, não deve ser tratada como consulta clínica personalizada. Quando pertinente, pode ser reformulada como pergunta científica geral sobre intervenções, testes ou resultados em uma população definida. Também podem exigir reformulação perguntas excessivamente amplas, formuladas como alegações retóricas ou que misturem fenômenos sem um recorte analítico viável.
+
+A **priorização** responde a problema diferente: entre demandas potencialmente admissíveis, quais devem receber atenção primeiro e com que investimento metodológico? O OES documenta dimensões relevantes para essa decisão, incluindo criticidade, complexidade, maturidade da literatura, incerteza, necessidade de completude, síntese quantitativa, aplicabilidade, volatilidade da evidência e urgência. A consequência de uma conclusão incorreta é um elemento importante: produtos destinados a apoiar decisões com potencial significativo de dano exigem cuidado metodológico e garantia compatíveis.
+
+Urgência e criticidade não são sinônimos. Uma pergunta pode ser urgente e relativamente simples; outra pode ser altamente crítica sem prazo imediato. A urgência poderá justificar métodos rápidos com limitações declaradas, mas não elimina requisitos de qualidade nem autoriza apresentar uma busca seletiva como revisão exaustiva. Além disso, a relevância de uma demanda para pesquisadores ou gestores não demonstra, por si só, que exista capacidade instalada para respondê-la no nível desejado.
+
+O protocolo inicial **não adota pesos numéricos universais nem uma pontuação automática** para ordenar as dimensões ou converter o perfil da pergunta em nível N0–N4. As escolhas dependem de justificativa metodológica registrada. A seleção efetiva de uma carteira de temas, com critérios institucionais de alocação de recursos ou impacto social, precisará ser contextualizada e validada na governança de cada observatório que vier a utilizar o modelo.
+
+A ausência de evidências adequadas também constitui um resultado possível. Uma investigação não deve ser artificialmente aprofundada apenas para produzir uma conclusão positiva. Quando a literatura é incipiente ou fragmentada, identificar limites do conhecimento e formular perguntas de pesquisa adicionais pode ser a resposta científica mais apropriada.
+
+### 3.5. Roteamento metodológico
+
+Após a admissibilidade e a estruturação da demanda, o **roteamento metodológico** define a modalidade de investigação mais adequada à pergunta e à finalidade declarada. No OES, esse fluxo está descrito em etapas sucessivas, da entrada à abertura formal: **E0 — entrada; E1 — registro; E2 — admissibilidade; E3 — clarificação da intenção; E4 — normalização científica; E5 — classificação metodológica; E6 — avaliação de roteamento; E7 — escaneamento preliminar, quando necessário; E8 — definição da rota; e E9 — abertura formal da investigação**. Essa sequência é uma especificação de processo e não deve ser confundida com garantia de sua execução automatizada em produção. [Fonte: Documento 03 — Protocolo de roteamento](../governance/03-roteamento-metodologico.md).
+
+A primeira decisão é identificar o tipo de pergunta e seu objetivo analítico. A segunda consiste em avaliar a profundidade apropriada. Uma investigação exploratória poderá adotar **N0**; uma resposta focal baseada em sínteses existentes, **N1**; uma avaliação estruturada persistente, **N2**; uma síntese rápida formal, **N3**; e uma investigação aprofundada ou revisão sistemática, quando seus requisitos estiverem presentes, **N4**. Mapas de evidências e *overviews* de revisões seguem rotas próprias, compatíveis com a natureza de seus objetos de análise. A progressão N0–N4 não é obrigatória ou automática.
+
+A escolha do nível considera se existem revisões suficientemente recentes e adequadas à pergunta. Antes de iniciar uma investigação extensa, é metodologicamente pertinente verificar a possibilidade de **adotar criticamente uma síntese existente**, complementá-la com estudos posteriores ou desenvolver uma Ficha de Evidência que reúna resultados e julgamentos relevantes. Essa avaliação requer examinar a correspondência da revisão à pergunta operacional, suas buscas, elegibilidade, cobertura, métodos, atualidade e aplicabilidade. O simples título “revisão sistemática” não dispensa avaliação crítica.
+
+O roteamento abrange ainda uma dimensão independente da profundidade: o **regime de manutenção M0–M3**. Ele descreve como determinada investigação ou produto poderá ser acompanhado ao longo do tempo, desde a ausência de vigilância ativa até um regime de evidência viva. A escolha do regime não aumenta automaticamente a profundidade da investigação nem autoriza revisão científica sem os controles correspondentes. Na data de referência, a Fase 4 permanece em desenvolvimento e o regime M3 não deve ser descrito como operacionalizado.
+
+O processo deve gerar um **registro de roteamento** que preserve a identidade da pergunta, sua classe, finalidade, dimensões de avaliação, contexto, nível de profundidade, regime de manutenção, produto e justificativa. O esquema conceitual prevê identificadores relacionados para perguntas e investigações e documentação das decisões relevantes. Esse registro permite auditar por que determinado método foi escolhido e fundamentar uma eventual mudança de rota. [Fonte: Documento 03 — *Routing Record*](../governance/03-roteamento-metodologico.md).
+
+O **reroteamento** pode ser necessário após um escaneamento ou durante a investigação. A descoberta de revisões robustas pode reduzir a necessidade de uma nova síntese aprofundada; a identificação de resultados contraditórios, riscos importantes ou lacunas inesperadas pode justificar aprofundamento. A decisão precisa ser documentada, preservando as versões anteriores e evitando uma alteração retrospectiva invisível do método.
+
+Por fim, o roteamento não equivale a um *gate* de validade científica. Uma ferramenta de IA pode auxiliar na leitura da demanda, sugerir a classe ou identificar ambiguidades, mas essas sugestões não substituem competência especializada quando ela é exigida. Em particular, os produtos formais N3 e N4 mantêm requisitos de revisão humana qualificada; a ausência desses requisitos impede que a simples geração técnica seja apresentada como produto final cientificamente assegurado. [Fonte: Documento 04 — Governança de garantia](../governance/04-governanca-garantia-revisao.md).
+
+Dessa forma, a definição da pergunta não constitui apenas a etapa inicial do OES. Ela funciona como **mecanismo de controle de coerência** ao longo de todo o percurso: orienta a elegibilidade, limita as inferências justificáveis, determina a forma de comunicar resultados e estabelece o objeto que poderá ser monitorado e atualizado.
+
 
 ## PARTE II — ARQUITETURA CIENTÍFICA E METODOLÓGICA
 
@@ -361,4 +435,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.2 — a apresentação e os Capítulos 1–2 constituem texto corrido desenvolvido nesta versão. Os Capítulos 3–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
+*Fim da versão 0.3 — a apresentação e os Capítulos 1–3 constituem texto corrido desenvolvido nesta versão. Os Capítulos 4–16 são um plano estrutural de redação, não conteúdo científico já concluído.*
