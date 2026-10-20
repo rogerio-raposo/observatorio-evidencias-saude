@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP203 — 2026-10-20**
+**CP204 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP203.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP204.md`
 
 Checkpoint anterior:
 
-`CP202`
+`CP203`
 
 Status:
 
@@ -550,3 +550,5 @@ em **Modo Continuidade**.
 - **CP202 — 2026-10-20:** Documento 157 consolida 46 IDs propostos de 031–036 e 12 detalhamentos candidatos; nenhum gate aprovado, novo bloco de critérios documentais 033/034/035. STOP.
 
 - **CP203 — 2026-10-20:** Documento 158 consolida 12 cenários candidatos 033–035, oráculos e limites de concorrência; nenhum teste executado, gates inalterados. STOP.
+
+- **CP204 — 2026-10-20:** Documento 159 consolida checklist auxiliar AUT-01–AUT-08 para V033-06/V035-03; sem novo gate ou autoridade, estado bloqueado. STOP.
