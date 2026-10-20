@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP192 — 2026-10-20**
+**CP193 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP192.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP193.md`
 
 Checkpoint anterior:
 
-`CP191`
+`CP192`
 
 Status:
 
@@ -528,3 +528,5 @@ em **Modo Continuidade**.
 - **CP191 — 2026-10-20:** Documento 147 mapeia 031–033, suas 14 inclusões e ligações de 033–036; closure 001–030 não provada, nenhuma instalação ou teste executado. Próximo candidato CP192 estático. STOP.
 
 - **CP192 — 2026-10-20:** Documento 148 registra arestas confirmadas entre 031–036 e 001/002/027/029/030; outros produtores não conferidos, subset reduzido indeterminado, nenhum SQL/Neon/CI. CP193 candidato sob Prossiga. STOP.
+
+- **CP193 — 2026-10-20:** Documento 149 resolve produtor de monitor_cycle na migration 021 e update_policy/update_signal/update_decision em 027; subset ainda indeterminado, nenhum Neon/SQL/CI. CP194 candidato só após Prossiga. STOP.

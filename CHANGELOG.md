@@ -5122,3 +5122,10 @@ Documentos:
 - Freshness Gate CP191/main `9904f4af48dafbc53441c005b4c7531f3ce5e449` identical, ahead/behind 0, modo médio e exclusivamente estático.
 - Documento 148 confirma produtores `poc-s1`, `002`, `027`, `029`, `030` para objetos de 031–036; varredura 003–026/028 não feita por limite da integração; instalação reduzida segue UNDETERMINED. Sem promoção do catálogo, testes ou SQL.
 - BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos NOT_COLLECTED, 12 roles pendentes. Sem Neon/PG18/CI/source requests/custo, B1R1 expirado, M3 BLOCKED, Fase 4 não encerrada e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Produtores monitor/update 021–028 (Documento 149 / CP193)
+
+- Freshness Gate CP192/main `a7ef8c1a2ae1cde8a3280b302850b34ae0471c17` identical, 0 ahead/behind, modo médio, leitura estática de 021–028.
+- Confirmados `maintenance.monitor_cycle` criado em 021 e `update_policy`/`update_signal`/`update_decision` em 027. 022–026/028 inspecionados quanto a CREATE TABLE/funções, sem concluir dispensa. Closure total e subset P-B seguem UNDETERMINED.
+- 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem Neon, SQL, CI/PG18, fontes reais ou custos; B1R1 expirado, M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada. STOP.
