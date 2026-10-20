@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP184 — 2026-10-20**
+**CP185 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP184.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP185.md`
 
 Checkpoint anterior:
 
-`CP183`
+`CP184`
 
 Status:
 
@@ -512,3 +512,5 @@ em **Modo Continuidade**.
 - **CP183 — 2026-10-20:** Documento 139 mapeia ODB-01–12 e gates condicionais G0–G5 para novo piloto factual PubMed/ClinicalTrials.gov, mantendo BRGs e B1R1 expirado. Modo médio documental, nenhum Neon ou gasto. Próximo CP184 candidato: pacote de decisão G0, somente após Prossiga. STOP.
 
 - **CP184 — 2026-10-20:** Documento 140 prepara pacote G0 do piloto P-B para owner, com seis decisões ainda PENDING e sem autorizar risco/custo/Neon/epoch. Modo médio; alto antes de aprovação substantiva. CP185 candidato somente sob novo Prossiga. STOP.
+
+- **CP185 — 2026-10-20:** Documento 141 escolhe um ato futuro único de baixo risco: verificação read-only pelo titular das quotas/condições de cobrança Neon Free, sem consulta/alteração do projeto nem autorização G0. Repetição PG18 diferida com blockers preservados. CP186 candidato somente após Prossiga. STOP.

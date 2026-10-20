@@ -5064,3 +5064,10 @@ Documentos:
 - Documento 140: dez dimensões de governança, seis decisões G0-D1..D6 **PENDING_OWNER**, sete critérios propostos de saída, e formulário-modelo **não assinado**. P-B piloto PubMed/ClinicalTrials.gov priorizado no planejamento, sem aprovação de coleta/epoch/Neon e sem alterar P-A.
 - BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 evidências 034–036 NOT_COLLECTED, 12 roles pendentes. B1R1 expirado; M3 bloqueado, Fase 4 não encerrada, Fase 5 não iniciada.
 - Nenhuma CI/PG18, SQL/Neon/branch/role/migration, query target-specific, serviço pago ou geração de MeasurementEvent. CP185 candidato somente após Prossiga; mudança para alto antes de aprovação substantiva. STOP.
+
+
+## 2026-10-20 — Ato prioritário proporcional para retomada empírica (Documento 141 / CP185)
+
+- Freshness Gate CP184/main `c657e6ec1f5d2542ed828d35922046cc52b5d9bf` identical, ahead/behind zero, modo médio; sem operação técnica.
+- Documento 141: selecionada **conferência futura, manual e read-only, pelo titular, do plano/cotas/risco de cobrança no Neon Free** para endereçar evidência BRG-09. Ato não executado; G0-D1–D6 permanecem PENDING_OWNER. Outras provas custosas/repetitivas foram diferidas sem promover gates.
+- BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. B1R1 expirado e novo epoch não autorizado; sem Neon/SQL/CI/PG18/source queries/gastos, M3 bloqueado, Fase 4 não encerrada e Fase 5 não iniciada. STOP.

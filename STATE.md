@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP184 — 2026-10-20**.
+- checkpoint vigente: **CP185 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5519,3 +5519,11 @@ Estado preservado:
 - Neon Free somente sandbox synthetic-only, SELECT histórico; factual use não autorizada. BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos, 36 migrations UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles pendentes.
 - B1R1 EXPIRED_NOT_EXECUTED; sem novo epoch, cadastro, branch/migration/role SQL Neon, consulta PubMed/ClinicalTrials.gov, MeasurementEvent, gasto ou autenticação. M3 bloqueado, Fase 4 documental NOT_READY e Fase 5 NOT_STARTED.
 - CP185 candidato condicionado a novo Prossiga: revisão proporcional de dependências e um único próximo ato preparatório; recomendar **modo alto** antes de aprovação G0 substantiva. STOP.
+
+
+### Fase 4 — Priorização de ato único para prontidão do piloto (Documento 141 / CP185)
+
+- Freshness Gate CP184/main `c657e6ec1f5d2542ed828d35922046cc52b5d9bf` identical, zero ahead/behind, modo médio; análise apenas documental.
+- Documento 141 seleciona **conferência futura read-only pelo titular** de plano, quotas e riscos de billing Neon Free; **não executada**, G0-D1–D6 PENDING_OWNER. Nenhum dado sensível solicitado, nenhum painel aberto pelo assistente, nenhum ato de cobrança autorizado. Alternativas PG18 repetitivo, mutações Neon ou novo epoch diferidas/bloqueadas.
+- BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles pendentes. B1R1 EXPIRED_NOT_EXECUTED; `NEW_EPOCH=NOT_AUTHORIZED`; Fase 4 documental NOT_READY, M3 bloqueado, Fase 5 NOT_STARTED.
+- Nenhum Neon/SQL/CI/PG18, consulta PubMed/ClinicalTrials ou gasto. CP186 candidato só após Prossiga: obter dados não sensíveis do titular e avaliar lacuna BRG-09; alto apenas antes de decisão substantiva G0. STOP.
