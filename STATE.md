@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP188 — 2026-10-20**.
+- checkpoint vigente: **CP189 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5551,3 +5551,11 @@ Estado preservado:
 - Documento 144 integra seis pendências G0-D1–D6, informação de Neon Free API e declaração titular de CP187. `G0_OWNER_DECISION=NOT_GRANTED`, `PREPARE_G1_DOCUMENTARY_ONLY=PROPOSED_NOT_AUTHORIZED`; não repetir coleta financeira sem nova justificativa.
 - BRG-03/06/07/08 bloqueados; 04/05 históricos; 09 evidência parcial e gate operacional não aprovado. 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitos. B1R1 expirado, novo epoch não autorizado, sem Neon SQL/branch/migrations/roles, CI ou fonte real. M3 BLOCKED; Fase 4 documental NOT_READY; Fase 5 NOT_STARTED.
 - CP189 candidato: apresentar deliberação owner objetiva (preparar G1 documental, adiar P-B ou ajustar escopo); alto se decisão de risco/custo/custódia efetiva. STOP.
+
+
+### Fase 4 — Mandato limitado G1 documental (Documento 145 / CP189)
+
+- Freshness Gate CP188/main `ee1f7c4c98bbdead73452f093e6d0a924aa64f4b` identical 0 ahead/behind, modo médio.
+- Proprietário aprovou expressamente `APPROVED — CP189 / PREPARE_G1_DOCUMENTARY_ONLY / OES / zero paid services / no Neon SQL, branches, roles or migrations / no new epoch / no source queries`. Documento 145 formaliza escopo e seis pacotes de planejamento; nenhuma implantação/consulta de fonte/SQL autorizada. G0-D1–D5 ainda pendentes; G0-D6 restrito à preparação documental.
+- BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 evidência parcial; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitas. B1R1 expirado; M3 bloqueado; Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
+- Próximo CP190 candidato inventário G1-MIG **estático**, novo Prossiga obrigatório. STOP.

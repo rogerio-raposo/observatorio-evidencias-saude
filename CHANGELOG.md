@@ -5094,3 +5094,10 @@ Documentos:
 - Freshness Gate CP187/main `cea01ebe0aa3fb3721369e1aa80d233d01046e03` identical, 0 ahead/behind; modo médio, apenas documental.
 - Documento 144 unifica G0-D1–D6: escopo P-B, metadados públicos, backup independente, papéis humanos, custo Free apoiado por API CP186 e declarações CP187, e opção de autorização separada PREPARE_G1_DOCUMENTARY_ONLY. Todas as decisões owner continuam pendentes.
 - Sem Neon, SQL, branch, migrations, CI, PG18, source queries ou gastos. BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 não aprovado operacionalmente; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos NOT_COLLECTED, 12 roles pendentes. B1R1 EXPIRED_NOT_EXECUTED, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
+
+
+## 2026-10-20 — Aprovação limitada de preparação G1 documental (Documento 145 / CP189)
+
+- Freshness Gate CP188/main `ee1f7c4c98bbdead73452f093e6d0a924aa64f4b` identical, ahead/behind 0, modo médio.
+- Proprietário aprovou expressamente `PREPARE_G1_DOCUMENTARY_ONLY`, zero serviços pagos e **sem** Neon SQL/branch/role/migrations, novo epoch ou consultas de fontes. Documento 145 formaliza seis pacotes G1 e STOP de escopo; não aprova G1 operacional nem decide G0-D1–D5.
+- BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles insatisfeitas. Nenhuma operação Neon/PG18/CI/source, sem gastos; B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY e Fase 5 NOT_STARTED. STOP.
