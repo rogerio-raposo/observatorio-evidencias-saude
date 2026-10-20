@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP210 — 2026-10-20**.
+- checkpoint vigente: **CP211 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5689,3 +5689,9 @@ Estado preservado:
 
 - Proprietário: `APPROVED — OES / CP209 / SIMPLIFICATION_PRIORITY_D0_D1_DOCUMENTARY_ONLY / Priorizar D0, preparar documentalmente D1, diferir D2; sem execução operacional, sem alteração de gates e sem serviços pagos.`
 - D0 prioridade documental; D1 planejamento documental apenas; D2 diferido. Sem SQL, Neon, CI, fontes factuais, epoch ou custo. 36 UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
+
+
+### CP211 — Roteiro demonstrativo documental D0 (Documento 166)
+
+- A1–A4: roteiro em cinco quadros, Ficha dCBT-I N2 A2 (revisão independente ausente), Monitor M2 sintético separado, proveniência/limitações e evidências históricas. D0 documentação apenas; D1 preparo documental, D2 diferido.
+- 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes; BRG-06 BLOCKED; Fase 4 NOT_READY e Fase 5 NOT_STARTED. Sem novas execuções nem gates. STOP.
