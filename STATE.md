@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP200 — 2026-10-20**.
+- checkpoint vigente: **CP201 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5629,3 +5629,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: 034 trigger/função de cronologia e autoridade em started_at; 035 duas funções STABLE de preflight (10 checks impeditivos e um INFO), sem ativação obrigatória pelo próprio script; 036 função/trigger para primeira conclusão por epoch_source_uuid, concorrência não demonstrada. Matrizes documentais propostas, não executadas nem aprovadas.
 - 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. BRG-03/06/07/08 BLOCKED; sem Neon/SQL/CI, fontes, gastos ou novo epoch. B1R1 expirado, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Próximo bloco lacunas transversais 031–036. STOP.
+
+
+### CP201 — Plano transversal G1-MIG/BRG-06 (Documento 156)
+
+- A1–A4 consolidadas: lacunas das migrações 031–036, matriz G1-E01–E06 e plano exclusivamente documental, sem execução ou homologação.
+- 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes, BRG-06 BLOCKED e demais gates preservados. Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.
