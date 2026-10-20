@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP172 — 2026-10-19**
+**CP173 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP172.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP173.md`
 
 Checkpoint anterior:
 
-`CP171`
+`CP172`
 
 Status:
 
@@ -447,3 +447,13 @@ em **Modo Continuidade**.
 - artifact `12235255740` ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442`, conferido; Documento 128 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP172.md`;
 - catálogo principal 36 UNREVIEWED, zero pós-condições aprovadas; ledger/runner operacionais não implantados, branch/schema/SQL Neon não iniciados, B1R1 expirado e Fase 5 não iniciada;
 - próxima atividade sob `Prossiga`: cobertura negativa adicional 034–036 em PG18 descartável, modo alto; STOP.
+
+
+## 2026-10-19 — Testes negativos temporais 034–036 no PG18 sintético (Documento 129 / CP173)
+
+- Freshness Gate CP172/main = identical ao HEAD `f2f89ed65eff43ca38b482506c7106048b805aa4`;
+- sete variantes em bancos descartáveis PG18; run `39356550539` job `118412553302`, completed/success, 27/27 verificações no commit `b5f0eb3c0b3d95b7e864c3fdbbfb05dfc7baf997`;
+- artifact `12235317764`, SHA-256 ZIP `dec06e6b79afe9eb34902e804578eb10aa28fe04d19dab774f4dd6a3ae5fec34`; ausência/conflito de autoridade, conectividade bloqueada e oportunidades incompletas recusados;
+- contraprova de desabilitação de triggers 034 e 036 por **superusuário do ambiente descartável**: registros inválidos confirmados persistem após reabilitação; não prova exploração por roles de produção;
+- Documento 129 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP173.md` preservam 36 UNREVIEWED / 0 pós-condições aprovadas, BRG-03/06/07/08/09 pendentes; nenhum recurso/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo bloco sob `Prossiga`: matriz de suficiência de evidências e risco de privilégio/DDL sem ativação de catálogos, modo alto, STOP.
