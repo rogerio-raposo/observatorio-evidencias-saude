@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP175 — 2026-10-19**
+**CP176 — 2026-10-19**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP175.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-19_CP176.md`
 
 Checkpoint anterior:
 
-`CP174`
+`CP175`
 
 Status:
 
@@ -477,3 +477,13 @@ em **Modo Continuidade**.
 - roles artificiais sem privilégio de owner foram impedidas de desabilitar triggers 034/036, substituir funções ou criar no schema; superusuário CI alterou trigger e auditoria DDL transacional capturou duas alterações confirmadas, porém nenhuma linha durable externa;
 - Documento 131 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP175.md`; BRG-03 Neon/TLS/segredos/log DDL externo pendentes; catálogos 36 UNREVIEWED/0 aprovado, BRG-06/07/08/09 pendentes;
 - nenhuma mudança Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próxima atividade somente após `Prossiga`: projeto offline de roles e auditoria externa, modo alto, STOP.
+
+
+## 2026-10-19 — Modelo-alvo de privilégio e auditoria externa ainda bloqueado (Documento 132 / CP176)
+
+- Freshness Gate CP175/main `0d81a9eff96ba545075c4bfe9c5071414f45510c` identical, 0 drift;
+- modelo documental `docs/governance/security/f4-target-roles-external-audit-draft.json` com 6 papéis, 12 controles não satisfeitos e 4 mecanismos de auditoria classificados; ownership e elevação de migrator requerem governança além de ACL;
+- run estático `39361692980`, job `118429107779`, completed/success no SHA `fd75b3a41a1cdf9fe23ec1cb2626bb349efdd431`, 16/16 testes PASS; artifact `12236864111`, SHA ZIP `d91577ca76868f4612eda88a5a6cb7c9083d243f12afd5574b1490133a8e902c`;
+- Documento 132 e `archive/handoffs/oes/OES_Continuidade_2026-10-19_CP176.md`; nenhum banco acessado neste ensaio, nenhum serviço pago ou log externo habilitado, Neon intocado;
+- catálogo principal 36 UNREVIEWED/0 pós-condições aprovadas; BRG-03/06/07/08/09 sem liberação, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
+- próximo checkpoint após `Prossiga`: PG18 descartável para LOGIN/SET ROLE/INHERIT, elevação e prova simulada de trilha fora de transação, modo alto, STOP.
