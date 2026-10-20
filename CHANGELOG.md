@@ -5216,3 +5216,8 @@ Documentos:
 ## 2026-10-20 — Revisão estratégica de simplificação (Documento 164 / CP209)
 
 - Registradas alternativas proporcionais D0 documental, D1 sintético e D2 factual, ainda sem adoção canônica; preservados bloqueios, governança e ausência de autorização para execução. STOP.
+
+
+## 2026-10-20 — Aprovação de prioridade documental D0/D1 (Documento 165 / CP210)
+
+- Proprietário aprovou D0 primeiro e preparação documental D1, com D2 diferido. Sem autorização operacional, alteração de gates ou serviços pagos. STOP.
