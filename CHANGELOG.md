@@ -5165,3 +5165,9 @@ Documentos:
 
 - Quatro atividades internas consolidadas: 12 tabelas, 27 funções, 23 triggers e 2 views; regras de lifecycle e eventos formuladas em cenários de teste futuro. Não houve validação SQL nem aprovação de pós-condições.
 - BRG-06 e demais controles seguem bloqueados. Nenhuma operação Neon/CI/SQL, fonte factual ou gasto. STOP.
+
+
+## 2026-10-20 — Matriz documental de pós-condições 034–036 (Documento 155 / CP200)
+
+- Quatro atividades internas consolidadas: cronologia e autoridade no início do epoch (034), preflight apenas consultivo (035), semântica da primeira conclusão por fonte e risco concorrente não validado (036). Nenhuma execução PostgreSQL, CI ou aprovação do BRG-06.
+- 36 migrações UNREVIEWED, zero pós-condições aprovadas; demais bloqueios preservados. STOP.
