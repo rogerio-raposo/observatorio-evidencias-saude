@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP172 — 2026-10-19**.
+- checkpoint vigente: **CP173 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5394,3 +5394,15 @@ Estado preservado:
 - artifact `12235255740` ZIP SHA-256 `a9326e8d6d5aa3a2f282460ed3465be295767f6d2d513c4f2d1986523b8e2442` conferido; 034 recusou cronologia inválida/desvio material e aceitou ativação sintética válida; 035 comprovou FAIL/WAIT/PASS sem DML; 036 verificou primeiro e subsequente eventos com novelty/attribution;
 - Documento 128/CP172; autoridade artificial não equivale a aprovação científica/humana; catálogo principal **36 UNREVIEWED, 0 pós-condições operacionais aprovadas**, BRG-06/07 não operacionais;
 - nenhuma branch, SQL, role, migration, ledger ou alteração Neon; BRG-03/08/09 pendentes, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada; próximo bloco lacunas de cenários negativos, modo alto, STOP.
+
+
+### Fase 4 — Cobertura negativa temporal 034–036 sob PG18 descartável (Documento 129 / CP173)
+
+- Freshness Gate CP172/main = identical, HEAD `f2f89ed65eff43ca38b482506c7106048b805aa4`, 0 drift, modo alto;
+- novos `scripts/oes_f4_pg18_034_036_negative_coverage.py` e `.github/workflows/f4-pg18-034-036-negative-coverage.yml`, sete bancos sintéticos para diferentes estados e nenhum acesso Neon;
+- run `39356550539`, job `118412553302`, completed/success, commit `b5f0eb3c0b3d95b7e864c3fdbbfb05dfc7baf997`, **27/27 verificações PASS**, artifact `12235317764`, ZIP SHA256 `dec06e6b79afe9eb34902e804578eb10aa28fe04d19dab774f4dd6a3ae5fec34` conferido;
+- autoridade ausente/conflitante, conectividade obrigatória bloqueada e oportunidade faltante recusadas pelos guards/preflight;
+- contraprova crítica em **superusuário CI sintético**: desabilitar triggers 034 e 036 permite gravar estados inválidos, não corrigidos retroativamente pela reabilitação; requer segregação de roles, auditoria DDL e validação dos dados históricos, **sem afirmar risco de exploração por usuário comum**;
+- desvio material gravado depois de `started_at` não bloqueou ativação naquele instante; nenhuma decisão de governança para o futuro foi inferida;
+- Documento 129/CP173; catálogo principal 36 UNREVIEWED, zero pós-condições aprovadas, sem ledger/runner operacionais, nenhuma operação Neon, B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada;
+- próximo bloco: matriz de suficiência de evidências e separação de privilégios, modo alto, pausa obrigatória.
