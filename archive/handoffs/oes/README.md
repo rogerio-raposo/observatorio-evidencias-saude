@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP208 — 2026-10-20**
+**CP209 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP208.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP209.md`
 
 Checkpoint anterior:
 
-`CP207`
+`CP208`
 
 Status:
 
@@ -560,3 +560,5 @@ em **Modo Continuidade**.
 - **CP207 — 2026-10-20:** Documento 162 organiza contratos SEM-01–SEM-06 e revisão futura; nenhuma decisão semântica aprovada, nenhum parecer emitido. STOP.
 
 - **CP208 — 2026-10-20:** Documento 163 organiza encaminhamento de revisão independente SEM-01–SEM-06 e lacunas REV-01–REV-09; sem parecer, gate novo ou decisão. STOP.
+
+- **CP209 — 2026-10-20:** Documento 164 inventaria simplificação D0/D1/D2 proposta, sem seleção canônica nem autorização operacional. STOP.

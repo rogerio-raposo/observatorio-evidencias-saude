@@ -5211,3 +5211,8 @@ Documentos:
 ## 2026-10-20 — Pacote para revisão independente SEM-01–SEM-06 (Documento 163 / CP208)
 
 - Consolidada preparação documental do encaminhamento, correspondência com a governança e inventário REV-01–REV-09, sem designação de especialistas, pareceres ou autorizações. STOP.
+
+
+## 2026-10-20 — Revisão estratégica de simplificação (Documento 164 / CP209)
+
+- Registradas alternativas proporcionais D0 documental, D1 sintético e D2 factual, ainda sem adoção canônica; preservados bloqueios, governança e ausência de autorização para execução. STOP.
