@@ -5141,3 +5141,9 @@ Documentos:
 
 - Protocolo equilibrado aplicado: quatro atividades internas consolidadas em uma publicação. Verificadas FKs de 031/032, relações com 021–028, comparação de instalação integral versus reduzida. Proposta `FULL_MANIFEST_36` apenas como baseline documental; nenhum gate de execução aprovado.
 - 36 migrations UNREVIEWED, 0 pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles insatisfeitos; BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. Sem Neon, SQL, CI/PG18, novos epochs, PubMed/ClinicalTrials ou gasto. STOP.
+
+
+## 2026-10-20 — Consolidação BRG-06 A1–A4 (Documento 151 / CP196)
+
+- Verificado `set -euo pipefail` com `psql -v ON_ERROR_STOP=1 ... | tee` no passo das 36 migrations em validate-s5. Corrigida dúvida sobre mascaramento estático por tee; nenhum ensaio de falha, rollback ou ledger executado.
+- 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED e 12 roles insatisfeitas. Gates e proibições inalterados; nenhuma operação Neon/SQL/CI, source query ou custo. STOP.

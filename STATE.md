@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP195 — 2026-10-20**.
+- checkpoint vigente: **CP196 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5599,3 +5599,9 @@ Estado preservado:
 - Freshness Gate CP194/main `8c89d3ae5b3f1a99fcba26d4422c36b712ae59b5` identical, 0 ahead/behind. Quatro atividades internas consolidadas após análise de 021–028, FKs em 031c/032a/032b e comparação integral versus reduzida.
 - `G1_BASELINE_CANDIDATE=FULL_MANIFEST_36` recomendado exclusivamente para planejamento; `G1_EXECUTION_AUTHORIZATION=NOT_GRANTED`. Nenhuma baseline aprovada, nenhum Neon/SQL/CI ou source query. 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles roles insatisfeitos. BRG-03/06/07/08 bloqueados, 04/05 históricos, 09 parcial. B1R1 expirado, P-B/novo epoch não autorizados, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED.
 - Próximo bloco após CP195: A1 revisão documental de evidências BRG-06, só após novo Prossiga, com mensagens intermediárias de progresso. STOP.
+
+
+### Fase 4 — BRG-06, evidência de transações/CI (Documento 151 / CP196)
+
+- A1–A4 consolidadas: 36 migrations UNREVIEWED, 0 pós-condições, 30 boundaries UNREVIEWED; 031–033 BEGIN/COMMIT com 14 fragmentos sem transaction control explícito; 034–036 sem wrapper. Workflow validate-s5 define `set -euo pipefail` no passo das 36 migrations, `ON_ERROR_STOP=1`. Leitura estática não é prova de rollback.
+- BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial; 36 requisitos 034–036 NOT_COLLECTED e 12 roles pendentes. Nenhum Neon/SQL/CI/PG18, queries científicas, gastos ou novo epoch. B1R1 expirado, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Próximo bloco A1 pós-condições documentais. STOP.
