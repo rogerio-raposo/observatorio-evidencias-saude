@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP208 — 2026-10-20**.
+- checkpoint vigente: **CP209 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5677,3 +5677,9 @@ Estado preservado:
 
 - A1–A4 consolidadas: partes I–V do pacote, PR-01–PR-06 reconciliados à governança existente, REV-01–REV-09 como inventário auxiliar. Sem revisor designado, parecer, gate novo, decisão semântica ou autorização operacional.
 - 36 UNREVIEWED, 0 pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Nenhuma operação SQL/Neon/CI, fonte factual ou custo. STOP.
+
+
+### CP209 — Revisão estratégica de simplificação (Documento 164)
+
+- A1–A4 consolidadas: inventário de ativos F2/F3 e Monitor, proposta D0 documental, D1 sintético e D2 factual posterior, critérios S1–S6. Reorientação estratégica e execução NÃO aprovadas; somente revisão documental autorizada. Nenhum gate alterado.
+- 36 UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 papéis pendentes; BRG-06 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED. Sem SQL/Neon/CI/fonte factual/custo. STOP.
