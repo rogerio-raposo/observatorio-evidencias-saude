@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP189 — 2026-10-20**.
+- checkpoint vigente: **CP190 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5559,3 +5559,11 @@ Estado preservado:
 - Proprietário aprovou expressamente `APPROVED — CP189 / PREPARE_G1_DOCUMENTARY_ONLY / OES / zero paid services / no Neon SQL, branches, roles or migrations / no new epoch / no source queries`. Documento 145 formaliza escopo e seis pacotes de planejamento; nenhuma implantação/consulta de fonte/SQL autorizada. G0-D1–D5 ainda pendentes; G0-D6 restrito à preparação documental.
 - BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 evidência parcial; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitas. B1R1 expirado; M3 bloqueado; Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
 - Próximo CP190 candidato inventário G1-MIG **estático**, novo Prossiga obrigatório. STOP.
+
+
+### Fase 4 — Inventário estático G1-MIG (Documento 146 / CP190)
+
+- Freshness Gate CP189/main `8a799c86caf900bcf9d149620ee19d91de97c37e` identical, ahead/behind 0, modo médio, somente documentação.
+- Manifesto 36 entrypoints = catálogo 36 registros UNREVIEWED, zero pós-condições e flags de execução/replay falsas; 031/032/033 incluem 14 SQL subordinados `\\ir`. Documento 146 classifica oito grupos e papel de 033–036. Nenhum subset de instalação ou order de migrations foi aprovado para P-B.
+- BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 parcial. 36 evidências 034–036 NOT_COLLECTED e 12 roles insatisfeitos. Nenhum Neon/SQL/CI/PG18, source query ou custo; B1R1 expirado, M3 BLOCKED, Fase 4 NOT_READY, Fase 5 NOT_STARTED.
+- CP191 candidato, somente após Prossiga: closure detalhada dos wrappers e 033–036. STOP.
