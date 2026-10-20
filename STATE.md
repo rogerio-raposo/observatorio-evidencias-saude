@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP170 — 2026-10-19**.
+- checkpoint vigente: **CP171 — 2026-10-19**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5372,3 +5372,14 @@ Estado preservado:
 - **zero pós-condições operacionalmente validadas, catálogo principal 36 UNREVIEWED**; não houve fixture de registros preexistentes para grandfathering 032, nem prova integral de DML/semântica;
 - Documento 126 e CP170 registrados; BRG-06/07 e BRG-03/08/09 operacionais ainda pendentes; nenhuma migração/branch/SQL Neon, B1R1 EXPIRED_NOT_EXECUTED, Fase 5 não iniciada;
 - próximo bloco: grandfathering 032 em PG18 descartável, modo alto, pausa obrigatória.
+
+
+### Fase 4 — Grandfathering 032 com fontes sintéticas preexistentes (Documento 127 / CP171)
+
+- Freshness Gate CP170/main idêntico ao HEAD `238b2a11cf26c94958e075ad852575419958b38e`; modo alto, sem mudança Neon;
+- fixture com três fontes preexistentes constraint-consistentes: `update_policy`, `sla_calendar_version` e `sla_rule`, vinculadas a core/product artificiais; harness PG18 descartável e workflow CI sintético publicados;
+- run `39350571819` job `118393517271`, completed/success, commit `a060f7055063bf83ce8e880193b08f9c941e46f3`, servidor PG18.6, **19/19 verificações PASS**;
+- artifact `12233056788` ZIP SHA-256 `4191c4936b523b7ea9e2d7e176a14770b5daa6eb618dd6832a23f340b899b339` conferido com GitHub; 3 entradas grandfathered na primeira instalação, fontes preservadas, rollback antes COMMIT retorna ao estado estrutural anterior;
+- controle negativo: marcador `TEMPORAL_CALIBRATION_V01` artificialmente preexistente suprime grandfathering, logo marker isolado não comprova migration integral;
+- Documento 127/CP171 publicados; **catálogo 36 UNREVIEWED, zero pós-condições aprovadas**, BRG-06/07 operacionais não implantados, BRG-03/08/09 pendentes;
+- sem Neon branch, SQL ou registro científico; B1R1 EXPIRED_NOT_EXECUTED e Fase 5 não iniciada; próximo bloco funções/triggers 034–036 em PG18 descartável, modo alto e pausa obrigatória.
