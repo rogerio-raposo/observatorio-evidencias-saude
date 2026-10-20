@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP178 — 2026-10-20**
+**CP179 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP178.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP179.md`
 
 Checkpoint anterior:
 
-`CP177`
+`CP178`
 
 Status:
 
@@ -500,3 +500,5 @@ em **Modo Continuidade**.
 - próximo `Prossiga`: testar ADMIN FALSE e membership indireta, simular falha de coleta/anchor adulterado, apenas PG18 descartável, modo alto, STOP.
 
 - **CP178 — 2026-10-20:** ensaio PG18 descartável ADMIN FALSE, SET/INHERIT transitivo e audit receipt failure; 40/40 PASS; nenhum gate operacional promovido, Neon intocado. Retomada após novo Prossiga em arquitetura de contenção de owner e auditoria realmente independente.
+
+- **CP179 — 2026-10-20:** Documento 135, reordenação proporcional das prioridades da Fase 4; D0 científico/funcional antes de provas PG18 redundantes, mantendo bloqueios de D1/D2. Nenhum Neon ou teste novo; retomar em inventário de suficiência científica/funcional. STOP.

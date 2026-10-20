@@ -5017,3 +5017,11 @@ Documentos:
 - ADMIN FALSE negou tentativas de delegação. SET TRUE em cadeia habilitou SET ROLE owner; INHERIT TRUE em cadeia habilitou DDL owner sem SET ROLE, ambos no banco descartável.
 - Falha simulada do controlador deixou resultado indeterminado; SQL direto fora do wrapper não gerou recibos; adulteração conjunta de arquivo e âncora passou pelo verificador. Não configura auditoria externa imutável.
 - Documento 134/CP178. BRG-03/06/07/08/09 bloqueados, 36 migrations UNREVIEWED/zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos; sem Neon/custos, B1R1 expirado e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Proporcionalidade e sequenciamento científico-funcional (Documento 135 / CP179)
+
+- Freshness Gate CP178/main `e78821cc4f377bb51b8640fda7d9c1cd9b538585`: identical, ahead/behind=0; modo alto; sem operações técnicas.
+- Documento 135: D0 (desenho/testes descartáveis) prioritário para suficiência científica/funcional; D1 (piloto persistente) e D2 (operação real) não autorizados, sem relaxamento de gates. Novas provas PG18 dependem de hipótese nova e decisão concreta.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 evidências históricas. 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos.
+- Nenhuma CI nova, nenhum Neon/SQL/branch/migration, nenhum serviço pago; B1R1 expirado e Fase 5 não iniciada. CP179 e documento 135; STOP.

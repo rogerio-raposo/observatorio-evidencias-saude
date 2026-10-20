@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP178 — 2026-10-20**.
+- checkpoint vigente: **CP179 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5464,3 +5464,12 @@ Estado preservado:
 - Recibo incompleto simulado foi rejeitado, mas não prova execução de SQL; SQL direto fora do wrapper alterou trigger sem novos recibos; adulteração simultânea de JSONL e anchor SHA256 foi aceita pelo verificador local. Recibos no mesmo runner NÃO são auditoria externa independente/imutável.
 - BRG-03/06/07/08/09 operacionais seguem bloqueados; BRG-04/05 continuam evidências limitadas a commits. 36 migrations UNREVIEWED, zero pós-condições aprovadas e 36 requisitos 034–036 NOT_COLLECTED; 12 controles de roles não satisfeitos.
 - Sem SQL/branch/migration Neon, sem serviço pago. B1R1 EXPIRED_NOT_EXECUTED, Fase 5 NOT_STARTED. Documento 134 e CP178. STOP; próximo checkpoint requer novo Prossiga.
+
+
+### Fase 4 — Proporcionalidade e priorização científico-funcional (Documento 135 / CP179)
+
+- Freshness Gate CP178/main `e78821cc4f377bb51b8640fda7d9c1cd9b538585` identical, ahead/behind=0. Modo alto; decisão somente documental.
+- Três camadas analíticas: D0 desenho/testes efêmeros, D1 piloto persistente (não autorizado), D2 operação real e automação autoritativa (não autorizadas). Nenhum BRG ou gate alterado.
+- Prioridade imediata: inventário de suficiência científico-funcional do protocolo de atualização, casos manuais/assistidos, revisão humana e lacunas. Novos testes PG18 só se houver decisão dependente e hipótese material nova; achados CP175–178 mantidos em escopo sintético.
+- BRG-03/06/07/08/09 bloqueados; BRG-04/05 históricos. 36 migrations UNREVIEWED, zero pós-condições de reconciliação aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos, flags automáticas desabilitadas.
+- Sem Neon SQL/branch/migration/role, sem CI nova, sem serviço pago. B1R1 EXPIRED_NOT_EXECUTED; Fase 5 NOT_STARTED; revisão especializada exigível onde aplicável. STOP.
