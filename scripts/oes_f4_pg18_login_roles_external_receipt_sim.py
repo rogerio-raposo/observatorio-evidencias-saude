@@ -156,7 +156,7 @@ def main():
     CREATE ROLE oes_ci_elevated_login LOGIN NOSUPERUSER NOCREATEROLE NOCREATEDB
        PASSWORD 'ci_elevated_synthetic_only';
     GRANT USAGE ON SCHEMA maintenance
-       TO oes_ci_runtime_login,oes_ci_migrator_login,oes_ci_elevated_login;
+       TO oes_ci_runtime_login,oes_ci_migrator_login,oes_ci_elevated_login,oes_ci_guard_owner;
     GRANT SELECT ON maintenance.temporal_observation_epoch
        TO oes_ci_runtime_login,oes_ci_migrator_login;
     GRANT oes_ci_guard_owner TO oes_ci_migrator_login
