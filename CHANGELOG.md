@@ -5176,3 +5176,8 @@ Documentos:
 ## 2026-10-20 — Plano transversal BRG-06 (Documento 156 / CP201)
 
 - Quatro atividades A1–A4 consolidadas: classificação de lacunas 031–036, evidências candidatas G1-E01–E06, aceitação e planejamento de reconciliação. Nenhum SQL/Neon/CI, dados científicos ou aprovação de gate; todos os bloqueios mantidos. STOP.
+
+
+## 2026-10-20 — Rastreabilidade G1-MIG 031–036 (Documento 157 / CP202)
+
+- Consolidação A1–A4 de 46 IDs originais e 12 detalhamentos candidatos; corrigida contagem preliminar de 11. Apenas documento e handoff, sem atualização do catálogo ou aprovação operacional. STOP.
