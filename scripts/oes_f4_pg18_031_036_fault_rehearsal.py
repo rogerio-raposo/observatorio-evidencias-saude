@@ -60,10 +60,6 @@ WITH objects AS (
   FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
   WHERE p.prokind IN ('f','p')
     AND n.nspname NOT LIKE 'pg_%' AND n.nspname NOT IN ('information_schema','public')
-  UNION ALL
-  SELECT 'seed','maintenance.contract_epoch.'||contract_code,
-    concat_ws('|',contract_code,schema_version,migration_id)
-  FROM maintenance.contract_epoch
 )
 SELECT coalesce(jsonb_agg(jsonb_build_object(
    'kind',kind,'key',key,'sha256',md5(definition))
@@ -106,6 +102,15 @@ def snapshot(db,label):
     records = {x["kind"]+":"+x["key"]:x["sha256"] for x in obj}
     if len(records)!=len(obj):
         raise AssertionError("duplicate catalog object keys")
+    # contract_epoch is first created by migration 031; its absence in
+    # pre-031 snapshots is valid and must not cause a query failure.
+    if value(db,"SELECT to_regclass('maintenance.contract_epoch') IS NOT NULL;") == "t":
+        rows=run(db,sql="SELECT row_to_json(x) FROM (SELECT contract_code,schema_version,migration_id "
+                          "FROM maintenance.contract_epoch ORDER BY contract_code) x;").stdout.splitlines()
+        for line in rows:
+            seed=json.loads(line)
+            records["seed:maintenance.contract_epoch."+seed["contract_code"]]=hashlib.sha256(
+                json.dumps(seed,sort_keys=True).encode("utf8")).hexdigest()
     (OUT / f"{label}.json").write_text(json.dumps(records,sort_keys=True,indent=2),encoding="utf8")
     return records
 
