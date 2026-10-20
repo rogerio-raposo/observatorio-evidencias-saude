@@ -5087,3 +5087,10 @@ Documentos:
 - Respostas diretas do titular: Free SIM; upgrades/serviços pagos NÃO; método de pagamento NÃO; avisos cobrança/limites NÃO. Plano `free_v3` confirmado separadamente pela API CP186, demais respostas **somente declaração do titular**. Documento 143 registra evidência sem segredos ou dado pessoal.
 - BRG-09 evidência parcial com owner declaration, operacional NOT_APPROVED; G0-D5 informação disponível, aprovação PENDING. Proibido inferir custo zero futuro ou autorização de uso factual.
 - BRG-03/06/07/08 bloqueados, 04/05 históricos, 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles pendentes. Sem Neon SQL/mutações, custos, fonte científica, CI/PG18; B1R1 expirado, novo epoch não autorizado, Fase 4 não encerrada e Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Consolidação de proposta G0 para piloto factual (Documento 144 / CP188)
+
+- Freshness Gate CP187/main `cea01ebe0aa3fb3721369e1aa80d233d01046e03` identical, 0 ahead/behind; modo médio, apenas documental.
+- Documento 144 unifica G0-D1–D6: escopo P-B, metadados públicos, backup independente, papéis humanos, custo Free apoiado por API CP186 e declarações CP187, e opção de autorização separada PREPARE_G1_DOCUMENTARY_ONLY. Todas as decisões owner continuam pendentes.
+- Sem Neon, SQL, branch, migrations, CI, PG18, source queries ou gastos. BRG-03/06/07/08 bloqueados, BRG-04/05 históricos, BRG-09 não aprovado operacionalmente; 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos NOT_COLLECTED, 12 roles pendentes. B1R1 EXPIRED_NOT_EXECUTED, M3 bloqueado, Fase 4 NOT_READY, Fase 5 NOT_STARTED. STOP.

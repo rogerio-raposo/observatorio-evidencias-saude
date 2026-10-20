@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP187 — 2026-10-20**.
+- checkpoint vigente: **CP188 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5543,3 +5543,11 @@ Estado preservado:
 - Respostas do owner: Free=SIM, serviços pagos=NAO, método de pagamento=NAO, alertas de cobrança/cota=NAO; declaração sem horário de inspeção certificado. API Neon CP186 `free_v3` confirma plano, não certifica negativos financeiros. `BRG-09_OWNER_FINANCIAL_DECLARATION=RECEIVED`; `BRG-09_OPERATIONAL_GATE=NOT_APPROVED`; G0-D5 informational complete, decisão pending.
 - BRG-03/06/07/08 bloqueados, 04/05 históricos; 36 migrations UNREVIEWED, 0 pós-condições, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles pendentes. B1R1 expirado, novo epoch não autorizado; nenhuma escrita Neon, custo, consulta PubMed/ClinicalTrials, CI ou PG18. M3 blocked, Fase 4 documental NOT_READY, Fase 5 NOT_STARTED.
 - CP188 candidato somente com novo Prossiga: consolidar decisão G0, sem repetir perguntas já respondidas. Avisar se alto for necessário para aprovação substantiva. STOP.
+
+
+### Fase 4 — Consolidação da proposta G0 (Documento 144 / CP188)
+
+- Freshness Gate CP187/main `cea01ebe0aa3fb3721369e1aa80d233d01046e03` identical, 0 ahead/behind; modo médio e documental.
+- Documento 144 integra seis pendências G0-D1–D6, informação de Neon Free API e declaração titular de CP187. `G0_OWNER_DECISION=NOT_GRANTED`, `PREPARE_G1_DOCUMENTARY_ONLY=PROPOSED_NOT_AUTHORIZED`; não repetir coleta financeira sem nova justificativa.
+- BRG-03/06/07/08 bloqueados; 04/05 históricos; 09 evidência parcial e gate operacional não aprovado. 36 migrations UNREVIEWED, zero pós-condições, 36 requisitos 034–036 NOT_COLLECTED, 12 roles não satisfeitos. B1R1 expirado, novo epoch não autorizado, sem Neon SQL/branch/migrations/roles, CI ou fonte real. M3 BLOCKED; Fase 4 documental NOT_READY; Fase 5 NOT_STARTED.
+- CP189 candidato: apresentar deliberação owner objetiva (preparar G1 documental, adiar P-B ou ajustar escopo); alto se decisão de risco/custo/custódia efetiva. STOP.
