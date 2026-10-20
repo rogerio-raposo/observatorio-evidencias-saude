@@ -5196,3 +5196,8 @@ Documentos:
 ## 2026-10-20 — Pacote documental de evidências e oráculos (Documento 160 / CP205)
 
 - Consolidadas oito variantes candidatas C01–C04/T01–T04, registros conceituais de fixtures e critérios auxiliares de classificação, sem qualquer ensaio executado, autorização operacional ou mudança de gate. STOP.
+
+
+## 2026-10-20 — Alternativas técnicas e contratos C04/T03/T04 (Documento 161 / CP206)
+
+- Registrada comparação documental de alternativas de sincronização, política temporal e integração do preflight, sem seleção, execução ou alteração de gates. STOP.
