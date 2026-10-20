@@ -5041,3 +5041,11 @@ Documentos:
 - Documento 137: 12 roteiros AT-01–AT-12 especificados; revisão textual encontrou 9 coerências condicionadas e 3 ressalvas AT-05/09/12. **Zero cenários executados end-to-end; nenhum 12/12 PASS empírico**, nenhuma revisão humana especializada simulada.
 - G1 apenas parcialmente especificada; G2–G6 não fechadas; PHASE_4_DOCUMENTAL_CLOSURE NOT_READY.
 - BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles pendentes. Nenhum Neon/PG18/CI/serviço pago novo; B1R1 expirado; Fase 5 não iniciada. STOP.
+
+
+## 2026-10-20 — Runbook de atualização e retenção da frente de medições empíricas (Documento 138 / CP182)
+
+- Freshness Gate CP181/main `148355f845d4c3307738b251924db43cd80c14a1` identical, ahead/behind=0; modo alto, checkpoint documental.
+- Documento 138: R0–R8, matriz AT-01–AT-12 e modelo de ficha de evidência; todos os 12 cenários descritos, **zero execuções** ou julgamentos científicos independentes atribuídos.
+- Frente estratégica PubMed e ClinicalTrials.gov explicitamente preservada com PILOT-01–09, E0–E5 e readout dos Docs 91/94/95/104/110: B1R1 expirado sem execução, sandbox Neon Free testado apenas em leitura, novo epoch e coletas não autorizados. Próxima etapa candidata é decisão documental de prontidão mínima D1/ODB sem Neon SQL.
+- PHASE_4_DOCUMENTAL_CLOSURE NOT_READY; BRG-03/06/07/08/09 bloqueados e BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles não satisfeitos. Sem SQL/branch/Neon/CI/custos, M3 bloqueado e Fase 5 não iniciada. STOP.

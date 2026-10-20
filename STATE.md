@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP181 — 2026-10-20**.
+- checkpoint vigente: **CP182 — 2026-10-20**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -5492,3 +5492,13 @@ Estado preservado:
 - G1 parcialmente especificada; G2–G6 permanecem com dependências humanas, temporais, operacionais e de runbook. PHASE_4_DOCUMENTAL_CLOSURE=NOT_READY.
 - BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos, 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos 034–036 NOT_COLLECTED, 12 controles de roles pendentes.
 - Neon intocado, nenhuma CI/PG18/SQL/serviço pago; B1R1 EXPIRED_NOT_EXECUTED; M3 bloqueado, Fase 5 NOT_STARTED. Próximo somente após Prossiga: runbook e matriz de aceitação D0. STOP.
+
+
+### Fase 4 — Runbook manual/assistido, aceitação e piloto empírico estratégico (Documento 138 / CP182)
+
+- Freshness Gate CP181/main `148355f845d4c3307738b251924db43cd80c14a1`: identical, ahead/behind=0; modo alto; somente D0/documentação.
+- Documento 138: runbook R0–R8; matriz AT-01–AT-12 com evidências e oráculos, **12 especificados, zero executados**; template de registro futuro e STOP por ausência de autoridade, ciência, integridade ou recuperação.
+- **Duas frentes de planejamento preservadas:** (1) suficiência científico-funcional documental (G1–G6 ainda pendentes, sem encerramento da Fase 4); (2) piloto empírico futuro PubMed/ClinicalTrials.gov com nove dependências PILOT-01–PILOT-09 e sequência proposta E0–E5, sem autorização de execução.
+- `F4_EMPIRICAL_FIRST_MEASUREMENTS = STRATEGIC_PENDING_WITH_BLOCKERS`, `NEW_EPOCH = NOT_AUTHORIZED`, B1R1 `EXPIRED_NOT_EXECUTED`, preflight e medições históricas não executados; pacotes Docs 91/94/95 preservados, não reaproveitados como autoridade válida de execução.
+- Neon Free com prova de SELECT histórica apenas, não banco operacional factual aprovado. BRG-03/06/07/08/09 bloqueados, BRG-04/05 históricos; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 evidências 034–036 NOT_COLLECTED, 12 controles roles não satisfeitos.
+- Nenhum SQL/branch/role/migration Neon, nenhuma nova CI/PG18, nenhum request target-specific PubMed/ClinicalTrials, nenhum serviço pago. M3 bloqueado; Fase 5 não iniciada. Próximo candidato CP183 somente após Prossiga: matriz proporcional de mínimo readiness do piloto, documentação sem ações operacionais. STOP.
