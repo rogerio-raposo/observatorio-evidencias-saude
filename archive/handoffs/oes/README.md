@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP202 — 2026-10-20**
+**CP203 — 2026-10-20**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP202.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP203.md`
 
 Checkpoint anterior:
 
-`CP201`
+`CP202`
 
 Status:
 
@@ -548,3 +548,5 @@ em **Modo Continuidade**.
 - **CP201 — 2026-10-20:** Documento 156 consolida lacunas 031–036, matriz candidata G1-E01–E06 e planejamento do BRG-06; bloqueios íntegros; próxima rastreabilidade documental. STOP.
 
 - **CP202 — 2026-10-20:** Documento 157 consolida 46 IDs propostos de 031–036 e 12 detalhamentos candidatos; nenhum gate aprovado, novo bloco de critérios documentais 033/034/035. STOP.
+
+- **CP203 — 2026-10-20:** Documento 158 consolida 12 cenários candidatos 033–035, oráculos e limites de concorrência; nenhum teste executado, gates inalterados. STOP.
