@@ -1,0 +1,71 @@
+name: F4 PG18 temporal negative coverage 034-036 (no Neon)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f4-pg18-034-036-negative-coverage.yml'
+      - 'scripts/oes_f4_pg18_034_036_negative_coverage.py'
+      - 'tests/fixtures/f4-temporal-034-036/seed.sql'
+      - 'database/f4-neon-sandbox-schema-migration-manifest.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  temporal-negative:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: synthetic_ci_only
+          POSTGRES_DB: oes_f4_temporal_neg_synthetic
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oes_f4_temporal_neg_synthetic"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: synthetic_ci_only
+      PGDATABASE: oes_f4_temporal_neg_synthetic
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout pinned SHA without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Prepare local PostgreSQL 18 client and Python syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p f4-pg18-temporal-negative-evidence
+          python3 -m py_compile scripts/oes_f4_pg18_034_036_negative_coverage.py
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version | tee f4-pg18-temporal-negative-evidence/psql-version.txt
+          psql -X -v ON_ERROR_STOP=1 -Atc 'SHOW server_version;' | tee f4-pg18-temporal-negative-evidence/server-version.txt
+          grep -q '^18' f4-pg18-temporal-negative-evidence/server-version.txt
+      - name: Exercise missing authority, conflicts, blocked source and trigger negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_f4_pg18_034_036_negative_coverage.py 2>&1 | tee f4-pg18-temporal-negative-evidence/harness.log
+          grep -Fxq PG18_TEMPORAL_NEGATIVE_COVERAGE_ONLY f4-pg18-temporal-negative-evidence/result.txt
+      - name: Upload all results, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f4-pg18-034-036-negative-coverage
+          path: f4-pg18-temporal-negative-evidence/
+          if-no-files-found: warn
