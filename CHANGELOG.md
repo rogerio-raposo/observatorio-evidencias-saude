@@ -5221,3 +5221,8 @@ Documentos:
 ## 2026-10-20 — Aprovação de prioridade documental D0/D1 (Documento 165 / CP210)
 
 - Proprietário aprovou D0 primeiro e preparação documental D1, com D2 diferido. Sem autorização operacional, alteração de gates ou serviços pagos. STOP.
+
+
+## 2026-10-20 — Roteiro de demonstração D0 (Documento 166 / CP211)
+
+- Consolidado roteiro documental de cinco quadros com Ficha N2 real A2, Monitor M2 sintético, fontes verificáveis e divulgação expressa de limitações. Nenhuma execução, nova revisão científica, autorização D1 ou mudança de gate. STOP.
