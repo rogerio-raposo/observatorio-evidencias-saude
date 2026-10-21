@@ -10,7 +10,7 @@
 
 A inserção de elementos visuais é recomendada quando **substituir explicações repetidas**, **tornar relações ou decisões inequívocas** ou **impedir interpretações indevidas sobre validação e operação**. Não há indicação de acrescentar gráficos quantitativos de desempenho sem dados observacionais comparáveis e método de mensuração adequado.
 
-**Conjunto-base: oito figuras**, cobrindo panorama, taxonomias, processo de produção, portfólio, atualização, trajetória, tipos de verificação e casos. **Até duas figuras opcionais** somente se testes de leitura mostrarem lacuna real: proveniência científica de dados (Cap. 8) e síntese crítica final (Cap. 16). Nenhuma figura é requisito de conformidade científica.
+**Conjunto-base: oito elementos visuais (sete figuras e um quadro)**, cobrindo panorama, taxonomias, processo de produção, portfólio, atualização, trajetória, tipos de verificação e casos. **Até dois elementos opcionais** somente se testes de leitura mostrarem lacuna real: proveniência científica de dados (Cap. 8) e síntese crítica final (Cap. 16). Nenhuma figura é requisito de conformidade científica.
 
 As tabelas já existentes no manuscrito devem ser preservadas quando oferecem definições precisas: N0–N4 (§4.2), A0–A3 (§7.3), estados de atualidade (§10.2), fases (§12.1), indicadores (§13.6), resultados (§14.1) e marcos do observatório mínimo viável (§15). Uma figura nova deve acrescentar **estrutura relacional ou fluxo**, não copiar o conteúdo dessas tabelas.
 
@@ -79,7 +79,7 @@ As tabelas já existentes no manuscrito devem ser preservadas quando oferecem de
 - **Não representar:** A3 cumprido em produtos não submetidos a revisão humana independente, ou todos os critérios de aceitação operacional satisfeitos.
 - **Prioridade:** P1.
 
-### Figura 8 — Casos documentados: produto, resultado e limite
+### Quadro 1 — Casos documentados: produto, resultado e limite
 - **Inserção:** §14.2 — *Exemplos de aplicação*, **antes** da descrição individual dos casos.
 - **Tipo:** quadro-síntese comparativo; preferencialmente tabela acessível, não “placar” ou ranking de desempenho.
 - **Conteúdo mínimo:** N0 (A1, não publicável); N1 (A2, publicação interna); N2 (A2, publicação interna, certeza provisória); N3 (A0 experimental, bloqueado); N4 (real formal não iniciado; gate NOT_READY, **não atribuir garantia artificial**); MAP-01 (A1 interno, sob revisão); OVR-01 (A1 interno, sob revisão); Monitor/Alerta (testes técnicos/sintéticos, sem vigilância factual contínua, M3 bloqueado). Colunas: objeto, uso demonstrado, estado/garantia quando cabível, limite científico.
@@ -90,14 +90,14 @@ As tabelas já existentes no manuscrito devem ser preservadas quando oferecem de
 
 ## 3. Figuras opcionais — somente mediante necessidade editorial confirmada
 
-### Figura opcional 9 — Proveniência: estudo, relatório, resultado e produto
+### Figura opcional 8 — Proveniência: estudo, relatório, resultado e produto
 - **Possível inserção:** §8.2 ou §8.3, sem tentar reproduzir o esquema PostgreSQL.
 - **Tipo:** grafo conceitual mínimo com Study, Report, Result, Synthesis, Investigation e ProductVersion, com ligações semanticamente verificáveis na documentação de arquitetura.
 - **Valor incremental:** impedir confusão entre unidade científica e publicação e esclarecer reutilização.
-- **Legenda sugerida:** “Figura 9 — Exemplo simplificado de relações de proveniência no OES. A figura não substitui o modelo canônico de dados nem esgota suas entidades e invariantes.”
+- **Legenda sugerida:** “Figura 8 — Exemplo simplificado de relações de proveniência no OES. A figura não substitui o modelo canônico de dados nem esgota suas entidades e invariantes.”
 - **Decisão:** produzir somente se uma leitura de teste indicar dificuldade real com o Capítulo 8; otherwise, preferir referência a figuras anteriores.
 
-### Figura opcional 10 — Contribuições, limitações e agenda de avaliação
+### Quadro opcional 2 — Contribuições, limitações e agenda de avaliação
 - **Possível inserção:** §16.5, na passagem de síntese final.
 - **Tipo:** três colunas textuais enxutas; sem gráfico de desempenho.
 - **Valor incremental:** explicitar a distinção entre contribuição conceitual documentada, limitações comprovadas e questões ainda não avaliadas.
