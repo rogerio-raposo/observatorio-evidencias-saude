@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1414" viewBox="0 0 1000 1414" role="img" aria-labelledby="title description">
+<title id="title">Figura 7 — Alcance inferencial das verificações e requisitos do OES</title>
+<desc id="description">Matriz conceitual em seis linhas: revisão documental, engenharia e PoC, verificação adversarial por IA, governança A2, revisão especializada A3 e prontidão operacional. Três colunas apresentam objeto, evidência ou situação registrada e limite inferencial. A3 não foi demonstrado nos casos descritos; operação factual permanece NOT_READY. PASS técnico não equivale à validação científica e A2 não equivale a A3. Retrato documental de 20 de outubro de 2026.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#203749}.h{font-size:25px;font-weight:700}.sub{font-size:15px}.top{font-size:16px;font-weight:700}.rtitle{font-size:19px;font-weight:700}.rstatus{font-size:14px}.cell{font-size:15px}.foot{font-size:14px}</style>
+<rect width="1000" height="1414" fill="#fff"/>
+<text x="500" y="47" text-anchor="middle" class="h">O que cada verificação demonstra — e não demonstra</text>
+<text x="500" y="78" text-anchor="middle" class="sub">Estado documentado em 20/10/2026 · Controles distintos, não uma escala de qualidade</text>
+<rect x="35" y="115" width="930" height="48" rx="6" fill="#E7EEF2"/>
+<text x="190" y="146" text-anchor="middle" class="top">OBJETO / REQUISITO</text>
+<text x="500" y="146" text-anchor="middle" class="top">REGISTRO / SITUAÇÃO</text>
+<text x="810" y="146" text-anchor="middle" class="top">LIMITE DE INFERÊNCIA</text>
+<g id="control-1" role="group" aria-label="01 · Revisão documental. Realizada em escopos delimitados">
+<rect x="35" y="181" width="930" height="171" rx="9" fill="#F4F7F9" stroke="#607588" stroke-width="2" />
+<text x="56" y="211" class="rtitle">01 · Revisão documental</text>
+<text x="56" y="237" class="rstatus">Realizada em escopos delimitados</text>
+<path d="M345 251 V334" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 251 V334" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="285" text-anchor="middle" class="cell">Protocolos, conceitos</text>
+<text x="190" y="308" text-anchor="middle" class="cell">e taxonomia</text>
+<text x="500" y="285" text-anchor="middle" class="cell">Decisões e revisões</text>
+<text x="500" y="308" text-anchor="middle" class="cell">internas documentadas</text>
+<text x="810" y="285" text-anchor="middle" class="cell">Não certifica validade</text>
+<text x="810" y="308" text-anchor="middle" class="cell">de conclusões científicas</text>
+</g>
+<g id="control-2" role="group" aria-label="02 · Engenharia e PoC. Testes em escopos delimitados">
+<rect x="35" y="366" width="930" height="171" rx="9" fill="#F4F7F9" stroke="#607588" stroke-width="2" />
+<text x="56" y="396" class="rtitle">02 · Engenharia e PoC</text>
+<text x="56" y="422" class="rstatus">Testes em escopos delimitados</text>
+<path d="M345 436 V519" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 436 V519" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="470" text-anchor="middle" class="cell">Contratos, dados e</text>
+<text x="190" y="493" text-anchor="middle" class="cell">cenários técnicos</text>
+<text x="500" y="470" text-anchor="middle" class="cell">PASS técnico em</text>
+<text x="500" y="493" text-anchor="middle" class="cell">testes específicos</text>
+<text x="810" y="470" text-anchor="middle" class="cell">Não é PASS científico</text>
+<text x="810" y="493" text-anchor="middle" class="cell">nem operação factual</text>
+</g>
+<g id="control-3" role="group" aria-label="03 · Verificação por IA. Adversarial; resultados por caso">
+<rect x="35" y="551" width="930" height="171" rx="9" fill="#F4F7F9" stroke="#607588" stroke-width="2" />
+<text x="56" y="581" class="rtitle">03 · Verificação por IA</text>
+<text x="56" y="607" class="rstatus">Adversarial; resultados por caso</text>
+<path d="M345 621 V704" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 621 V704" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="655" text-anchor="middle" class="cell">Consistência e</text>
+<text x="190" y="678" text-anchor="middle" class="cell">rastreabilidade</text>
+<text x="500" y="655" text-anchor="middle" class="cell">passed ou revise</text>
+<text x="500" y="678" text-anchor="middle" class="cell">conforme o caso</text>
+<text x="810" y="655" text-anchor="middle" class="cell">Não é revisão humana</text>
+<text x="810" y="678" text-anchor="middle" class="cell">especializada independente</text>
+</g>
+<g id="control-4" role="group" aria-label="04 · Governança A2. Registrada em N1 e N2 internos">
+<rect x="35" y="736" width="930" height="171" rx="9" fill="#F4F7F9" stroke="#607588" stroke-width="2" />
+<text x="56" y="766" class="rtitle">04 · Governança A2</text>
+<text x="56" y="792" class="rstatus">Registrada em N1 e N2 internos</text>
+<path d="M345 806 V889" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 806 V889" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="840" text-anchor="middle" class="cell">Escopo, transparência</text>
+<text x="190" y="863" text-anchor="middle" class="cell">e autorização</text>
+<text x="500" y="840" text-anchor="middle" class="cell">A2 conforme requisitos</text>
+<text x="500" y="863" text-anchor="middle" class="cell">e decisões vigentes</text>
+<text x="810" y="840" text-anchor="middle" class="cell">Não equivale a A3</text>
+<text x="810" y="863" text-anchor="middle" class="cell">nem valida GRADE</text>
+</g>
+<g id="control-5" role="group" aria-label="05 · Revisão A3. Aprovação não demonstrada nos casos">
+<rect x="35" y="921" width="930" height="171" rx="9" fill="#FFF" stroke="#7B8792" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="56" y="951" class="rtitle">05 · Revisão A3</text>
+<text x="56" y="977" class="rstatus">Aprovação não demonstrada nos casos</text>
+<path d="M345 991 V1074" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 991 V1074" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="1025" text-anchor="middle" class="cell">Exame independente</text>
+<text x="190" y="1048" text-anchor="middle" class="cell">por especialista</text>
+<text x="500" y="1025" text-anchor="middle" class="cell">Requisito previsto; A3</text>
+<text x="500" y="1048" text-anchor="middle" class="cell">não demonstrado</text>
+<text x="810" y="1025" text-anchor="middle" class="cell">Não inferir A3 de</text>
+<text x="810" y="1048" text-anchor="middle" class="cell">A2 ou IA</text>
+</g>
+<g id="control-6" role="group" aria-label="06 · Prontidão operacional. Operação factual: NOT_READY">
+<rect x="35" y="1106" width="930" height="171" rx="9" fill="#FFF" stroke="#7B8792" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="56" y="1136" class="rtitle">06 · Prontidão operacional</text>
+<text x="56" y="1162" class="rstatus">Operação factual: NOT_READY</text>
+<path d="M345 1176 V1259" stroke="#C5CED6" stroke-width="1.5"/>
+<path d="M655 1176 V1259" stroke="#C5CED6" stroke-width="1.5"/>
+<text x="190" y="1210" text-anchor="middle" class="cell">Fontes factuais, acesso</text>
+<text x="190" y="1233" text-anchor="middle" class="cell">e sustentação</text>
+<text x="500" y="1210" text-anchor="middle" class="cell">M2 sintético; Fase 4</text>
+<text x="500" y="1233" text-anchor="middle" class="cell">NOT_READY; M3 bloqueado</text>
+<text x="810" y="1210" text-anchor="middle" class="cell">Sem monitoramento</text>
+<text x="810" y="1233" text-anchor="middle" class="cell">factual sustentado</text>
+</g>
+<path d="M35 1308 H965" stroke="#B8C3CC" stroke-width="1.5"/>
+<text x="500" y="1332" text-anchor="middle" class="foot">PASS técnico ≠ validação científica · A2 ≠ A3 · A3 depende de especialista independente</text>
+<text x="500" y="1355" text-anchor="middle" class="foot">M2 sintético ≠ operação factual · Fase 6 não iniciada formalmente</text>
+</svg>
