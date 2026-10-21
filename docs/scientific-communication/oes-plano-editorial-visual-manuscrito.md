@@ -1,5 +1,9 @@
 # OES — Plano editorial visual do manuscrito científico
 
+> **Atualização de execução editorial — 21 de outubro de 2026.** O conjunto-base planejado encontra-se **incorporado ao manuscrito editorial v0.54**: Figuras 1–7 em SVG com legendas e textos alternativos, e Quadro 1 em tabela Markdown acessível. A conferência estrutural está documentada na [auditoria editorial consolidada](oes-auditoria-editorial-elementos-visuais-v054.md), realizada sobre o manuscrito v0.54. A integração **não constitui validação científica independente, aprovação externa, prova de paginação do manuscrito completo ou liberação operacional**. Permanecem pendentes correções editoriais pontuais e prova de composição integral antes de circulação externa. A data factual do manuscrito continua **20 de outubro de 2026**.
+
+> **Registro histórico preservado:** as declarações abaixo sobre figuras ainda não produzidas, a referência à versão **0.46** e a situação original ao encerrar o plano descrevem **somente o momento da elaboração inicial deste planejamento**. Não representam o estado editorial atual nem devem ser interpretadas como reversão da integração realizada.
+
 **Status:** proposta editorial de planejamento; figuras **não produzidas, não inseridas nem aprovadas**.
 **Data de referência:** 20 de outubro de 2026.
 **Manuscrito de referência:** [Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento](oes-fundamentos-arquitetura-modelo-desenvolvimento.md), versão editorial **0.46**, `main`, HEAD inicial `ff912e95570f1fc47f2b02bc91d9e98f868afae8`.
