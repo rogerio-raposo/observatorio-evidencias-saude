@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1273" viewBox="0 0 900 1273" role="img" aria-labelledby="figTitle figDesc">
+<title id="figTitle">Figura 3 — Fluxo metodológico de produção e revisão de evidências no OES</title>
+<desc id="figDesc">Fluxo conceitual vertical: pergunta e protocolo; busca; elegibilidade; extração; avaliação crítica; síntese e interpretação; conclusão e produto proposto; decisão sobre revisão e garantia. Em caso afirmativo, liberação apenas no escopo autorizado. Em caso negativo, correção das etapas pertinentes ou bloqueio. Faixa transversal de transparência e proveniência. Não representa execução obrigatória idêntica nem validação independente alcançada.</desc>
+<defs><marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#4E6278"/></marker></defs>
+<rect width="900" height="1273" fill="#FFFFFF"/>
+<rect x="38" y="35" width="824" height="100" rx="12" fill="#F0F4F8" stroke="none" stroke-width="1.7" />
+<text x="58" y="67" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="700" fill="#3D516B" text-anchor="start">FIGURA 3  |  OBSERVATÓRIO DE EVIDÊNCIAS EM SAÚDE</text>
+<text x="58" y="105" font-family="DejaVu Sans, Arial, sans-serif" font-size="25" font-weight="700" fill="#1A2D43" text-anchor="start">Fluxo metodológico de referência</text>
+<rect x="93" y="161" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="188" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Pergunta e protocolo</text>
+<text x="366" y="213" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Definição do escopo e da modalidade investigativa</text>
+<path d="M366 230 V247" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="247" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="274" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Busca documentada</text>
+<text x="366" y="299" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Cobertura compatível com a pergunta e o método</text>
+<path d="M366 316 V333" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="333" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="360" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Elegibilidade e seleção</text>
+<text x="366" y="385" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Distinguir registros, relatórios e estudos</text>
+<path d="M366 402 V419" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="419" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="446" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Extração e organização</text>
+<text x="366" y="471" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Preservar dados, origem e unidades de análise</text>
+<path d="M366 488 V505" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="505" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="532" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Avaliação crítica</text>
+<text x="366" y="557" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Risco de viés conforme o desenho e a pergunta</text>
+<path d="M366 574 V591" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="591" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="618" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Síntese e interpretação</text>
+<text x="366" y="643" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Certeza e aplicabilidade, quando cabíveis</text>
+<path d="M366 660 V677" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<rect x="93" y="677" width="546" height="69" rx="10" fill="#F2F6F9" stroke="#53667C" stroke-width="1.7" />
+<text x="366" y="704" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#263549" text-anchor="middle">Conclusão e produto proposto</text>
+<text x="366" y="729" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Limites, proveniência e data de corte</text>
+<rect x="667" y="319" width="197" height="299" rx="11" fill="#FAFBFC" stroke="#66788B" stroke-width="1.7" stroke-dasharray="7 5"/>
+<text x="765" y="350" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700" fill="#263549" text-anchor="middle">CONTROLES</text>
+<text x="765" y="376" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700" fill="#263549" text-anchor="middle">TRANSVERSAIS</text>
+<text x="765" y="415" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Protocolo</text>
+<text x="765" y="449" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Proveniência</text>
+<text x="765" y="483" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Versionamento</text>
+<text x="765" y="517" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Responsabilidades</text>
+<text x="765" y="551" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Transparência</text>
+<text x="765" y="585" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#263549" text-anchor="middle">Auditoria</text>
+<path d="M667 368 H651 V368 H641" fill="none" stroke="#61768C" stroke-width="1.8" stroke-dasharray="6 5"/>
+<path d="M667 590 H651 V676 H641" fill="none" stroke="#61768C" stroke-width="1.8" stroke-dasharray="6 5"/>
+<path d="M366 746 V782" fill="none" stroke="#4E6278" stroke-width="2.2"  marker-end="url(#arr)"/>
+<polygon points="366,784 545,847 366,910 187,847" fill="#FFFFFF" stroke="#53667C" stroke-width="2"/>
+<text x="366" y="837" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="700" fill="#263549" text-anchor="middle">Revisão e garantia</text>
+<text x="366" y="861" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="700" fill="#263549" text-anchor="middle">exigidas atendidas?</text>
+<path d="M187 847 H168 V948" fill="none" stroke="#4E6278" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M545 847 H728 V948" fill="none" stroke="#4E6278" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="143" y="917" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="700" fill="#263549" text-anchor="middle">SIM</text>
+<text x="750" y="917" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="700" fill="#263549" text-anchor="middle">NÃO</text>
+<rect x="48" y="958" width="342" height="116" rx="12" fill="#EFF5F8" stroke="#53667C" stroke-width="1.7" />
+<text x="219" y="990" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="700" fill="#263549" text-anchor="middle">Liberação / publicação</text>
+<text x="219" y="1019" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Somente no escopo autorizado</text>
+<text x="219" y="1047" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" fill="#263549" text-anchor="middle">e com garantia efetivamente obtida</text>
+<rect x="495" y="958" width="342" height="116" rx="12" fill="#FFFFFF" stroke="#53667C" stroke-width="1.7" stroke-dasharray="7 5"/>
+<text x="666" y="990" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700" fill="#263549" text-anchor="middle">Corrigir ou manter bloqueado</text>
+<text x="666" y="1019" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="middle">Reabrir apenas etapas pertinentes</text>
+<text x="666" y="1047" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" fill="#263549" text-anchor="middle">e registrar decisões e pendências</text>
+<rect x="42" y="1106" width="816" height="105" rx="10" fill="#F4F6F8" stroke="#9BA6B3" stroke-width="1.7" />
+<text x="61" y="1134" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="700" fill="#39485C" text-anchor="start">LIMITES DE INTERPRETAÇÃO</text>
+<text x="61" y="1159" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="start">Etapas proporcionais ao nível N; sequência de extração e crítica pode variar.</text>
+<text x="61" y="1184" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" fill="#263549" text-anchor="start">A2 não substitui A3; testes técnicos não equivalem à validação científica.</text>
+<text x="45" y="1245" font-family="DejaVu Sans, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4B596B" text-anchor="start">Fonte: Documentos 03, 04, 10–15 e 40. Representação conceitual, não comprovação operacional.</text>
+</svg>
