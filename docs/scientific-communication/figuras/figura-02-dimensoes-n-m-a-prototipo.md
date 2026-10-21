@@ -6,35 +6,27 @@
 **Local de inserção proposto:** §4.5 — *Independência entre profundidade e manutenção*.
 **Objetivo:** permitir identificar **qual pergunta cada eixo responde** sem sugerir equivalência entre profundidade, atualidade e garantia.
 
-## Esquema-fonte editável (Mermaid)
+## Esquema-fonte editável — versão revisada para composição A4
 
-Três painéis em paralelo lógico: as ligações partem do conceito de **caracterização de um produto**, mas **não há setas entre N, M e A**, pois um eixo não determina automaticamente outro. A conveniência da orientação gráfica definitiva (painéis verticais ou lado a lado) será avaliada na renderização A4.
+Três painéis **sem qualquer ligação direta entre si**, vinculados por traços simples a uma mesma caracterização científica. O esquema prioriza a **pergunta respondida por cada dimensão** e não reproduz as listas normativas das §§4.2 e 7.3. O uso de traços sem setas é intencional: não há progressão automática, dependência causal ou escala única de qualidade entre N, M e A.
 
 ```mermaid
 flowchart TB
-    P["Caracterização de uma investigação<br/>e de seu produto de evidências"]
-    P --- N["N — Profundidade investigativa<br/>N0–N4<br/>Qual método e extensão de investigação?"]
-    P --- M["M — Regime de manutenção<br/>M0–M3<br/>Qual compromisso de acompanhamento?"]
-    P --- A["A — Garantia efetivamente obtida<br/>A0–A3<br/>Que verificações e aprovações ocorreram?"]
+    P["Investigação e produto de evidências"]
 
-    N --- NL["N0: exploração<br/>N1: resposta focal<br/>N2: ficha estruturada<br/>N3: síntese rápida formal<br/>N4: revisão aprofundada"]
-    M --- ML["M0: estático<br/>M1: elegível à atualização<br/>M2: monitoramento ativo<br/>M3: evidência viva — bloqueado no OES"]
-    A --- AL["A0: não verificado<br/>A1: verificação assistida por IA<br/>A2: aprovação de governança interna<br/>A3: revisão especializada independente"]
+    P --- N["N — MODALIDADE / PROFUNDIDADE<br/>N0–N4<br/>Qual investigação foi planejada e realizada?"]
+    P --- M["M — MANUTENÇÃO<br/>M0–M3<br/>Qual acompanhamento foi previsto?<br/>M3: bloqueado no OES"]
+    P --- A["A — GARANTIA<br/>A0–A3<br/>Quais verificações foram concluídas?<br/>A2: aprovação interna; A3: revisão independente"]
 
-    L["Os eixos são distintos:<br/>N não determina M ou A;<br/>M não confere A;<br/>as combinações dependem de requisitos por produto."]
-    NL --- L
-    ML --- L
-    AL --- L
-
-    classDef main fill:#F1F5F9,stroke:#475569,color:#0F172A,stroke-width:1.5px
-    classDef panel fill:#F8FAFC,stroke:#475569,color:#0F172A
-    classDef note fill:#FFFFFF,stroke:#64748B,color:#0F172A,stroke-dasharray:4 3
-    class P main
-    class N,M,A,NL,ML,AL panel
-    class L note
+    classDef central fill:#EDF2F7,stroke:#475569,color:#0F172A,stroke-width:1.5px
+    classDef axis fill:#FFFFFF,stroke:#475569,color:#0F172A,stroke-width:1.5px
+    class P central
+    class N,M,A axis
 ```
 
-**Leitura obrigatória:** as ligações **sem setas** ilustram associação descritiva, não transição, causalidade, escala de mérito ou autorização para combinações arbitrárias. A representação dos códigos N/M/A é uma taxonomia **própria do OES**, não norma externa. Os níveis N3 e N4 têm requisitos formais de garantia humana especializada; para N4 há controles humanos adicionais. Um N4 aprofundado pode continuar A0 ou A1 enquanto não satisfizer o gate de publicação; isso **não o torna publicável**. A2 é aprovação interna, não revisão por pares nem A3. M3 está bloqueado no estado factual documentado, e a existência de contratos ou testes sintéticos em M2 não demonstra monitoramento factual sustentado.
+**Leitura correta:** a disposição paralela indica que os três atributos caracterizam aspectos distintos de uma investigação e/ou de seu produto. **Não se deve interpretar os traços como setas ou caminhos de progressão**. A descrição abreviada “N0–N4” remete à tabela metodológica da §4.2; “A0–A3” remete à tabela de garantia da §7.3. Uma classificação N4 não autoriza publicação A0/A1; N3 formal requer A3, e N4 formal requer A3 e controles adicionais de revisores qualificados. O rótulo A3 só é legítimo após revisão humana especializada independente aprovativa. O regime M3 está bloqueado no estado documentado, e testes técnicos em M2 não equivalem a vigilância factual sustentada. **Certeza GRADE e garantia A são julgamentos diferentes**. A seleção de combinações depende da política própria de cada produto, e não de livre escolha entre todas as possibilidades matemáticas.
+
+**Avaliação gráfica preliminar:** quatro caixas e três conexões diretas reduzem o risco de colisões, cruzamentos e fontes minúsculas. A orientação gráfica prevista é **vertical em página A4**, com três painéis de largura semelhante dispostos sob um cabeçalho; a configuração exata será definida na etapa SVG. **A legibilidade renderizada ainda não foi verificada**, portanto esta revisão não constitui aceite da figura final.
 
 ## Legenda científica proposta
 
@@ -42,7 +34,7 @@ flowchart TB
 
 ## Texto alternativo proposto
 
-“Diagrama de três ramos que partem de uma investigação e seu produto. O ramo N descreve a profundidade ou modalidade investigativa, de N0 exploratório a N4 revisão aprofundada; M descreve manutenção, de M0 estático a M3 evidência viva, atualmente bloqueado; A descreve garantia efetivamente obtida, de A0 não verificado a A3 revisão humana especializada independente. Uma nota conecta os três ramos para afirmar que N não determina M ou A, que M não confere garantia e que políticas próprias dos produtos restringem as combinações. Não existem setas de progressão entre os eixos.”
+“Diagrama conceitual com um bloco central denominado investigação e produto de evidências, ligado por traços simples, sem setas, a três painéis independentes. O painel N indica modalidade e profundidade investigativa N0–N4. O painel M indica regime de manutenção M0–M3 e registra M3 bloqueado. O painel A indica garantia A0–A3, distinguindo A2, aprovação interna, de A3, revisão humana especializada independente. Os painéis não se ligam entre si; a figura não representa progressão de mérito, validação científica geral nem combinações automaticamente permitidas.”
 
 ## Conferências para a etapa gráfica
 
@@ -55,4 +47,4 @@ flowchart TB
 - [ ] Não modificar a tabela normativa de A0–A3 do Capítulo 7 nem a classificação N0–N4 da seção 4.2.
 - [ ] Inserir no manuscrito somente após conferência semântica, legibilidade e aprovação editorial.
 
-**Limite desta entrega:** esquema Mermaid editável e legenda propostos; nenhuma figura final, alteração no manuscrito, autorização operacional ou validação científica adicional.
+**Resultado desta revisão:** semântica dos eixos e composição foram simplificadas no esquema editável; não se identificou fundamento para alterar os requisitos científicos do modelo. **Pendente:** renderização em SVG, inspeção de legibilidade em A4 e aprovação editorial anterior à inserção. Nenhuma alteração no manuscrito, autorização operacional ou validação científica adicional.
