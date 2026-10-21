@@ -5273,3 +5273,9 @@ Documentos:
 - Proprietário aprovou `OES / D1-T1 / SYNTHETIC_LOCAL_TECHNICAL_CLOSURE`: T1 concluído somente como núcleo Python sintético local, com 36 testes PASS e rastreabilidade S1–S6; Documento 173 reproduz decisão e limitações.
 - Fonte: `prototypes/d1/`, base executada `768e2190ecde8a8713b80fd2bb378449f2d49033`, documentação consolidada no HEAD pré-CP218 `908e3f65b4507ec2cb74b428b9d381c80d864e92`. Esta atividade foi somente documental, sem reteste.
 - T2 permanece não autorizado; nenhuma SQL, Neon, CI, nuvem, dado factual, serviço pago ou alteração de gates. D1 atual, D0 documental fechado, D2 e governança operacional completa posteriores. STOP.
+
+## 2026-10-21 — CP219: autorização restrita de T2-A1
+
+- Proprietário aprovou `OES / D1-T2-A1 / PYTHON_IN_MEMORY_REPOSITORY_BOUNDARY_ONLY`, formalizado no Documento 192. T2-A1 autoriza interface Python de repositório/Unit of Work **exclusivamente em memória**, com testes locais, diretório separado, preservação do T1 (36 testes) e versionamento GitHub com Freshness Gate.
+- Continuam excluídos SQL, PostgreSQL, Neon, drivers, CI remota, cloud, API pública, dados reais/factuais, serviços pagos, migrations, gates e T2-A2. T1 continua fechado tecnicamente e D1 é prioridade atual.
+- A presente atividade só formalizou a decisão: **nenhum código, teste ou serviço foi executado**. Primeiro incremento T2-A1 condicionado a novo `Prossiga`. STOP.

@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP218 — 2026-10-21**.
+- checkpoint vigente: **CP219 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -59,6 +59,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Evidência: Python sintético em memória, `prototypes/d1/`, 36 testes locais PASS reportados na revisão `768e2190ecde8a8713b80fd2bb378449f2d49033` e `TRACEABILITY.md`; sem reteste nesta formalização. Avaliações T1 anteriores dos Documentos 171–172 são snapshots históricos anteriores à aprovação de encerramento.
 - D1 permanece prioritário; **T2 NÃO AUTORIZADO**. Próximo `Prossiga`: preparar requisitos e autorização de T2 documentalmente, sem PostgreSQL, Neon, SQL, CI, nuvem, API pública, consultas factuais, serviços pagos ou alteração de gates.
 - D0 documental encerrado → D1 (T1 fechado) → D2 factual condicionado → governança operacional completa posterior.
+
+## 1F. D1-T2/A1 — autorização expressa restrita (CP219)
+
+- `APPROVED — OES / D1-T2-A1 / PYTHON_IN_MEMORY_REPOSITORY_BOUNDARY_ONLY` recebido e formalizado no Documento 192; **T2-A1 autorizado mas ainda não iniciado**.
+- Permitido apenas: refatoração e testes Python locais de fronteira repositório/Unit of Work com adaptador em memória, diretório experimental separado, T1 e seus 36 testes intactos, GitHub/Freshness Gate.
+- Exclusões expressas: SQL/PostgreSQL/Neon/drivers, CI remota, cloud/deploy/API pública, consultas factuais, dados reais, serviços pagos, migrações, gates e T2-A2. Sem mudança silenciosa de semântica `create_scenario`/`pending`.
+- Próximo `Prossiga`: primeiro incremento T2-A1 do contrato Python em memória com testes locais, uma atividade delimitada e verificação de HEAD.
 
 ## 2. Estado das fases
 
