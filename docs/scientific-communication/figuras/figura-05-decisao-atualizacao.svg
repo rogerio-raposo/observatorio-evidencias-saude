@@ -12,31 +12,31 @@ text{font-family:Arial,Helvetica,sans-serif;fill:#20364A}
 <rect width="1200" height="2200" fill="#fff"/>
 <text x="600" y="43" text-anchor="middle" class="heading">Decisão de reavaliar e atualizar evidências</text>
 <text x="600" y="70" text-anchor="middle" class="annotation">Modelo conceitual proposto — fluxos não automatizados</text>
-<g id="connections"><path d="M600 193 V235" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M600 323 V372" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M360 417 H200 V535" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="231" y="403" class="edgeLabel">Lacuna</text>
-<path d="M650 462 V535" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="675" y="505" class="edgeLabel">Sinal pertinente</text>
-<path d="M360 441 H290 V1090 H184 V1162" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="26" y="1082" class="edgeLabel">Não pertinente</text>
-<path d="M200 640 V725" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M363 775 H490" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="369" y="762" class="edgeLabel">Impacto justificado</text>
-<path d="M200 829 V1105 H184 V1162" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="54" y="1099" class="edgeLabel">Sem impacto</text>
-<path d="M665 639 V725" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M665 830 V945" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="680" y="881" class="edgeLabel">Suficiente</text>
-<path d="M840 783 H875 V930" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="869" y="860" class="edgeLabel">Inconclusivo</text>
-<path d="M840 408 H1080 V930" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="902" y="400" class="edgeLabel">Triagem insuficiente</text>
-<path d="M363 795 H408 V1000 H875" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="410" y="900" class="edgeLabel">Indeterminado</text>
-<path d="M665 1040 V1162" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="684" y="1109" class="edgeLabel">Investigar</text>
-<path d="M840 990 H915 V1152" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="923" y="1110" class="edgeLabel">Atualidade / uso</text>
-<path d="M490 995 H406 V1210 H343" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="355" y="1142" class="edgeLabel">Sem mudança</text>
-<path d="M840 1020 H995 V930" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="1005" y="1068" class="edgeLabel">Reavaliar</text>
-<path d="M665 1282 V1375" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M665 1483 V1570" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/>
-<path d="M490 1619 H392 V1222 H343" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="349" y="1600" class="edgeLabel">Não</text>
-<path d="M840 1619 H1120 V1055" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="984" y="1599" class="edgeLabel">Inconclusivo</text>
-<path d="M665 1670 V1760" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="680" y="1718" class="edgeLabel">Sim</text>
-<path d="M840 1817 H870" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="842" y="1798" class="edgeLabel">Não</text>
-<path d="M665 1870 V1980" fill="none" stroke="#536B7E" stroke-width="2.5"  marker-end="url(#arrow)"/><text x="680" y="1935" class="edgeLabel">Sim</text>
-<path d="M1014 930 V675 H1154 V430 H840" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="995" y="667" class="edgeLabel">Retomar triagem</text></g>
+<g id="connections"><path d="M600 193 V235" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M600 323 V372" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M360 417 H200 V535" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="190" y="399" class="edgeLabel">Lacuna operacional</text>
+<path d="M665 462 V535" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="687" y="504" class="edgeLabel">Sinal pertinente</text>
+<path d="M360 442 H16 V1118 H185 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="24" y="1087" class="edgeLabel">Não pertinente</text>
+<path d="M200 640 V725" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M363 775 H490" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="368" y="761" class="edgeLabel">Impacto justificado</text>
+<path d="M200 829 V1120 H185 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="41" y="1108" class="edgeLabel">Sem impacto</text>
+<path d="M665 639 V725" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M665 830 V945" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="684" y="888" class="edgeLabel">Avaliação suficiente</text>
+<path d="M840 785 H858 V922 H875 V947" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="865" y="874" class="edgeLabel">Inconclusiva</text>
+<path d="M840 411 H1180 V890 H1080 V930" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="904" y="397" class="edgeLabel">Triagem insuficiente</text>
+<path d="M363 807 H449 V888 H995 V930" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="459" y="873" class="edgeLabel">Indeterminado</text>
+<path d="M665 1040 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="680" y="1107" class="edgeLabel">Investigar</text>
+<path d="M840 1030 H856 V1217 H875" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="885" y="1120" class="edgeLabel">Atualidade / uso</text>
+<path d="M490 1003 H414 V1222 H343" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="344" y="1109" class="edgeLabel">Sem mudança</text>
+<path d="M840 961 H858 V907 H955 V930" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="892" y="901" class="edgeLabel">Reavaliar</text>
+<path d="M665 1282 V1375" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M665 1483 V1570" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M490 1620 H382 V1250 H343" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="388" y="1594" class="edgeLabel">Não</text>
+<path d="M840 1620 H1188 V1088 H1114 V1055" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="1027" y="1597" class="edgeLabel">Inconclusivo</text>
+<path d="M665 1670 V1760" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="681" y="1720" class="edgeLabel">Sim</text>
+<path d="M840 1816 H870" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="843" y="1794" class="edgeLabel">Não</text>
+<path d="M665 1870 V1980" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="680" y="1936" class="edgeLabel">Sim</text>
+<path d="M1020 930 V892 H1192 V342 H841 V417" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="974" y="881" class="edgeLabel">Retomar triagem</text></g>
 <g id="steps"><g id="node-I" role="group" aria-label="ALVO E REGIME DE MANUTENÇÃO. Pergunta, versão, fontes e regime M aplicável"><rect x="360" y="105" width="480" height="88" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="600" y="144.5" class="nodeText"><tspan x="600" dy="0" font-weight="700">ALVO E REGIME DE MANUTENÇÃO</tspan><tspan x="600" dy="21" >Pergunta, versão, fontes e regime M aplicável</tspan></text></g>
 <g id="node-S" role="group" aria-label="SINAL OU GATILHO REGISTRADO. Evidência, correção, segurança, demanda ou lacuna"><rect x="360" y="235" width="480" height="88" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="600" y="274.5" class="nodeText"><tspan x="600" dy="0" font-weight="700">SINAL OU GATILHO REGISTRADO</tspan><tspan x="600" dy="21" >Evidência, correção, segurança, demanda ou lacuna</tspan></text></g>
 <g id="node-P" role="group" aria-label="TRIAGEM. Classe, pertinência e proveniência"><rect x="360" y="372" width="480" height="90" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="600" y="412.5" class="decisionText"><tspan x="600" dy="0" font-weight="700">TRIAGEM</tspan><tspan x="600" dy="21" >Classe, pertinência e proveniência</tspan></text></g>
