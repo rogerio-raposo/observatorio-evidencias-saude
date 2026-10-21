@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.30 (correspondência metodológica e referências externas revisadas no Capítulo 7)  
+**Versão editorial:** 0.31 (vinculação seletiva de fontes metodológicas no Capítulo 8)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas seletivamente às afirmações metodológicas dos Capítulos 2–7; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
+**Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas seletivamente às afirmações metodológicas dos Capítulos 2–8; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -787,7 +787,7 @@ A **Ficha de Evidência** ocupa uma posição distinta das entidades científica
 
 ### 8.3. Distinção entre estudo, publicação e resultado
 
-Uma das decisões mais relevantes do modelo é a separação entre **Study**, **Report** e **Result**. Na comunicação científica cotidiana, o termo “artigo” costuma representar informalmente tanto um estudo quanto seus resultados. Essa simplificação torna-se problemática quando se pretende sintetizar evidências, porque publicações e estudos não mantêm necessariamente relação de um para um. [Fontes: Documento 20 — Entidades científicas](../architecture/20-modelo-conceitual-dados.md) e [Documento 13 — Extração e estruturação de dados](../methodology/13-extracao-dados.md).
+Uma das decisões mais relevantes do modelo é a separação entre **Study**, **Report** e **Result**. Na comunicação científica cotidiana, o termo “artigo” costuma representar informalmente tanto um estudo quanto seus resultados. Essa simplificação torna-se problemática quando se pretende sintetizar evidências, porque publicações e estudos não mantêm necessariamente relação de um para um. A distinção entre registros, relatórios e estudos está também explicitada no [PRISMA 2020, item 2](https://doi.org/10.1136/bmj.n71); as entidades e relações computacionais descritas adiante são especificações próprias do OES. [Fontes: Documento 20 — Entidades científicas](../architecture/20-modelo-conceitual-dados.md) e [Documento 13 — Extração e estruturação de dados](../methodology/13-extracao-dados.md).
 
 **Study** representa a investigação científica subjacente. Um ensaio clínico, uma coorte ou um estudo qualitativo conserva sua identidade mesmo quando são produzidos documentos diferentes sobre seus métodos, participantes e achados. A identificação de estudos é particularmente importante para evitar que resultados de uma mesma população sejam contabilizados como evidências independentes.
 
@@ -805,7 +805,7 @@ A identificação de objetos científicos é uma condição necessária à quali
 
 Os objetos científicos descrevem **sobre o que** o OES produz conhecimento; os registros metodológicos descrevem **como** esse conhecimento foi elaborado. A arquitetura prevê uma camada de registros que acompanha o percurso entre a pergunta inicial e o produto final, sem confundir ações do processo com entidades de evidência. [Fonte: Documento 20 — Registros operacionais](../architecture/20-modelo-conceitual-dados.md).
 
-O **Question Record** e o **Routing Record** preservam a pergunta original, suas normalizações, a classificação metodológica, a finalidade, o nível N selecionado, o regime M e a justificativa do percurso. O **Search Record** identifica fontes, estratégias, filtros, datas e resultados da recuperação bibliográfica. Ocorrências individuais de recuperação são registradas por **SearchHit**, permitindo saber em quais consultas uma referência foi localizada e quais decisões de deduplicação se seguiram.
+O **Question Record** e o **Routing Record** preservam a pergunta original, suas normalizações, a classificação metodológica, a finalidade, o nível N selecionado, o regime M e a justificativa do percurso. O **Search Record** identifica fontes, estratégias, filtros, datas e resultados da recuperação bibliográfica. Ocorrências individuais de recuperação são registradas por **SearchHit**, permitindo saber em quais consultas uma referência foi localizada e quais decisões de deduplicação se seguiram. O [PRISMA-S, item 3](https://doi.org/10.1186/s13643-020-01542-z) oferece orientação externa para a transparência do relato das buscas sistemáticas, mas não define a entidade SearchHit nem demonstra a completude das buscas do OES.
 
 O **Screening Record** documenta as decisões de elegibilidade, inclusive exclusões, dúvidas, documentos não recuperados e vinculações entre relatos e estudos. O **Extraction Record** registra os dados coletados, sua localização na fonte e eventuais transformações. O **Risk Assessment Record** preserva o instrumento e a unidade de julgamento apropriados. Registros de síntese e de avaliação da certeza mantêm os procedimentos e decisões que produziram interpretações científicas posteriores.
 
@@ -819,7 +819,7 @@ Os registros de manutenção previstos na Fase 4 acrescentam sinais de atualiza�
 
 **Proveniência** designa a capacidade de identificar de onde veio determinada informação, em quais condições foi produzida ou extraída e quais transformações lhe foram aplicadas. **Linhagem** descreve o encadeamento de relações pelo qual dados e julgamentos alimentaram análises, sínteses e produtos posteriores. No OES, esses requisitos são transversais: não podem ser tratados como simples campos opcionais de referência bibliográfica. [Fontes: Documento 20 — Proveniência](../architecture/20-modelo-conceitual-dados.md) e [Documento 21 — ProvenanceRecord](../architecture/21-modelo-logico-dados.md).
 
-Para um resultado quantitativo, a proveniência deve permitir recuperar o relatório que forneceu os dados, a localização relevante — por exemplo, tabela, figura, página ou suplemento —, o valor originalmente informado, a transformação eventualmente realizada, o agente responsável e o momento do registro. Para julgamentos metodológicos materiais, deve ser possível identificar o instrumento e os fundamentos que sustentaram a avaliação. Esses vínculos permitem revisar um erro de extração sem perder a relação com a fonte original.
+Para um resultado quantitativo, a proveniência deve permitir recuperar o relatório que forneceu os dados, a localização relevante — por exemplo, tabela, figura, página ou suplemento —, o valor originalmente informado, a transformação eventualmente realizada, o agente responsável e o momento do registro. Para julgamentos metodológicos materiais, deve ser possível identificar o instrumento e os fundamentos que sustentaram a avaliação. Esses vínculos permitem revisar um erro de extração sem perder a relação com a fonte original. O [*Cochrane Handbook*, item 1, capítulo 5](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-05) orienta a coleta estruturada, a identificação de múltiplos relatórios de um mesmo estudo e a reconciliação de dados divergentes; a granularidade de ProvenanceRecord continua sendo escolha arquitetural própria do OES.
 
 O modelo lógico prevê **ProvenanceRecord** com identificação do objeto e da versão afetados, caminho do campo, origem, localização, valor-fonte, processo de transformação, ator e data. A granularidade deve ser proporcional à relevância científica: informações capazes de modificar estimativas, sínteses, certeza ou conclusão requerem documentação mais fina; metadados triviais podem admitir proveniência mais agregada.
 
@@ -2035,4 +2035,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.30 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural das 54 referências, os Capítulos 2–7 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas, mantendo explícitas as categorias próprias do OES. A revisão de citações nos demais capítulos, a normalização editorial final e a avaliação científica independente continuam pendentes.*
+*Fim da versão 0.31 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural das 54 referências, os Capítulos 2–8 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas, mantendo explícitas as categorias próprias do OES. A revisão de citações nos demais capítulos, a normalização editorial final e a avaliação científica independente continuam pendentes.*
