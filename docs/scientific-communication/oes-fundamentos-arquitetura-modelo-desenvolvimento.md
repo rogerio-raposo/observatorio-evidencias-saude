@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.39 (precisão das conclusões e fundamentação de evidência viva revisadas no Capítulo 16)  
+**Versão editorial:** 0.40 (fundamentação da introdução e sincronização do estado editorial)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas seletivamente às afirmações metodológicas dos Capítulos 2–11; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
+**Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -37,7 +37,7 @@ A exposição distingue cinco situações: **(i)** definição conceitual ou met
 
 A expansão e a diversificação da literatura científica em saúde ampliam as possibilidades de pesquisa e de fundamentação de decisões, mas também tornam mais complexa a identificação do conjunto de evidências relevante para uma pergunta definida. A informação está distribuída entre periódicos, bases bibliográficas, registros de estudos, relatórios técnicos, revisões, diretrizes e outras fontes. Essas fontes não são intercambiáveis: variam em finalidade, cobertura, atualização e grau de avaliação metodológica.
 
-O desafio não se reduz à quantidade de documentos. Estudos que parecem abordar uma mesma questão podem diferir na população investigada, na intervenção ou exposição considerada, nos comparadores, nos desfechos, no tempo de acompanhamento e no risco de viés. Resultados divergentes podem refletir diferenças reais entre contextos, imprecisão estatística, limitações metodológicas ou variação aleatória. Além disso, diferentes publicações podem descrever um mesmo estudo; tratá-las como investigações independentes distorceria a representação do corpo de evidências.
+O desafio não se reduz à quantidade de documentos. Estudos que parecem abordar uma mesma questão podem diferir na população investigada, na intervenção ou exposição considerada, nos comparadores, nos desfechos, no tempo de acompanhamento e no risco de viés. Resultados divergentes podem refletir diferenças reais entre contextos, imprecisão estatística, limitações metodológicas ou variação aleatória. Além disso, diferentes publicações podem descrever um mesmo estudo; tratá-las como investigações independentes distorceria a representação do corpo de evidências. A distinção entre registros, relatórios e estudos é explicitada no [PRISMA 2020, item 2](https://doi.org/10.1136/bmj.n71); sua correta vinculação no OES continua dependente de decisões de identificação verificáveis.
 
 Em paralelo, a dimensão temporal é incontornável. Uma síntese pode ser adequada na data em que foi produzida e necessitar de reavaliação quando novos resultados, correções, retratações ou informações de segurança se tornam disponíveis. Portanto, recuperar documentos constitui apenas uma parte do trabalho necessário para manter conhecimento científico utilizável.
 
@@ -47,7 +47,7 @@ Transformar publicações em conhecimento utilizável exige formular uma pergunt
 
 Nesse percurso, a organização da informação precisa preservar o caminho percorrido entre a fonte e a conclusão. Uma afirmação sintética será mais verificável se o leitor puder reconhecer quais estudos a sustentam, como foram selecionados, quais resultados contribuíram, que julgamentos metodológicos foram feitos e até que data a literatura foi considerada. A documentação desses vínculos é central para detectar erros, revisar conclusões e reutilizar avaliações já realizadas.
 
-É igualmente importante comunicar incerteza sem convertê-la em respostas artificiosamente definitivas. A inexistência de estudos elegíveis não demonstra ausência de efeito; uma estimativa estatisticamente precisa não garante aplicabilidade universal; e uma revisão metodologicamente estruturada não produz automaticamente uma recomendação clínica. Recomendações requerem julgamentos adicionais sobre benefícios, danos, valores, recursos, equidade e contexto.
+É igualmente importante comunicar incerteza sem convertê-la em respostas artificiosamente definitivas. A inexistência de estudos elegíveis não demonstra ausência de efeito; uma estimativa estatisticamente precisa não garante aplicabilidade universal; e uma revisão metodologicamente estruturada não produz automaticamente uma recomendação clínica. Recomendações requerem julgamentos adicionais sobre benefícios, danos, valores, recursos, equidade e contexto. O [GRADE, item 5](https://doi.org/10.1136/bmj.39489.470347.AD) é um referencial externo para distinguir certeza da evidência e força de recomendações; sua menção não constitui avaliação GRADE independente de qualquer produto OES.
 
 ### 1.3. O conceito de observatório de evidências científicas
 
@@ -55,7 +55,7 @@ Neste documento, **observatório de evidências** designa uma estrutura organiza
 
 Um observatório não se confunde com uma biblioteca de artigos, um buscador bibliográfico ou um painel de indicadores. Esses recursos podem integrar sua infraestrutura, mas a função distintiva proposta é manter relações explícitas entre perguntas, investigações, fontes, julgamentos de qualidade, sínteses, conclusões, datas e revisões subsequentes. Tampouco todos os produtos precisam seguir o mesmo grau de aprofundamento: uma exploração inicial do campo tem finalidade e requisitos distintos de uma revisão sistemática.
 
-O acompanhamento temporal acrescenta outra dimensão. Identificar uma nova publicação é um sinal potencialmente relevante, mas não altera, por si só, a conclusão anterior. É necessário decidir se a informação merece avaliação, se muda a atualidade atribuída ao produto e se exige uma atualização científica formal. Assim, vigilância, interpretação e atualização são atividades relacionadas, porém distintas.
+O acompanhamento temporal acrescenta outra dimensão. Identificar uma nova publicação é um sinal potencialmente relevante, mas não altera, por si só, a conclusão anterior. É necessário decidir se a informação merece avaliação, se muda a atualidade atribuída ao produto e se exige uma atualização científica formal. Assim, vigilância, interpretação e atualização são atividades relacionadas, porém distintas. A avaliação do momento apropriado para atualizar revisões é discutida por [Garner et al., item 55](https://doi.org/10.1136/bmj.i3507); os estados e regimes de manutenção do OES permanecem definições próprias do projeto.
 
 ### 1.4. Apresentação do OES
 
@@ -2044,4 +2044,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.39 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 2–11, 13, 15 e 16 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; os Capítulos 12 e 14 passaram por revisão crítica de coerência e proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A revisão de citações nos capítulos restantes, a normalização editorial final e a avaliação científica independente continuam pendentes.*
+*Fim da versão 0.40 — os Capítulos 1–16 foram redigidos e individualmente revisados nesta rodada; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 1–11, 13, 15 e 16 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; os Capítulos 12 e 14 passaram por revisão crítica de coerência e proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A revisão de citações nos capítulos restantes, a normalização editorial final e a avaliação científica independente continuam pendentes.*
