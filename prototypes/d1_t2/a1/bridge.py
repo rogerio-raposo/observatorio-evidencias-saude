@@ -92,6 +92,14 @@ class SyntheticCommandBridge:
                  decision=decision, impacts=impacts, rationale=rationale,
                  scenario_actor=scenario_actor, request_id=request_id))
 
+    def close_cycle(self, scenario_id: str, *, cycle_no: int, decision: str,
+                    rationale: str, scenario_actor: str, request_id: str) -> dict:
+        payload = {'action': 'close', 'cycle_no': cycle_no, 'decision': decision,
+                   'rationale': rationale, 'scenario_actor': scenario_actor}
+        return self._execute(scenario_id, request_id, payload, 'close_cycle',
+            dict(scenario_id=scenario_id, cycle_no=cycle_no, decision=decision,
+                 rationale=rationale, scenario_actor=scenario_actor, request_id=request_id))
+
     def snapshot(self, scenario_id: str) -> dict:
         record = self.repo.read_snapshot(scenario_id)
         if record is None:

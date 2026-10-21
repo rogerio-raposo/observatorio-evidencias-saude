@@ -177,5 +177,66 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
         self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'missing'))
 
+    def test_full_flow_close_parity_and_conclusion_immutable(self):
+        self.assessment_setup()
+        assessment = dict(cycle_no=1, signal_id='s1', decision='retained_for_impact',
+                          impacts=['certainty', 'scope'], rationale='fictional',
+                          scenario_actor='fictional-actor', request_id='assess')
+        for service in (self.bridge, self.legacy):
+            service.record_assessment('case-synthetic', **assessment)
+        close = dict(cycle_no=1, decision='evaluate_update', rationale='fictional',
+                     scenario_actor='fictional-actor', request_id='close')
+        result = self.bridge.close_cycle('case-synthetic', **close)
+        self.assertEqual(result, self.legacy.close_cycle('case-synthetic', **close))
+        snap = self.bridge.snapshot('case-synthetic')
+        self.assertEqual(snap, self.legacy.snapshot('case-synthetic'))
+        self.assertEqual(snap['target']['scientific_conclusion'], 'Fictional')
+        self.assertEqual(snap['target']['currency_status'], 'under_evaluation')
+        self.assertEqual(len(self.bridge.repo.list_events('case-synthetic')), 5)
+        self.assertEqual(self.bridge.close_cycle('case-synthetic', **close), result)
+
+    def test_close_rejects_unassessed_signal_atomically(self):
+        self.assessment_setup()
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(DomainError):
+            self.bridge.close_cycle('case-synthetic', cycle_no=1, decision='no_update_needed',
+                rationale='fictional', scenario_actor='fictional-actor', request_id='bad-close')
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'bad-close'))
+
+    def test_close_rejects_pending_and_retained_no_update(self):
+        for decision, impacts, close_decision in [
+            ('pending', [], 'evaluate_update'),
+            ('retained_for_impact', ['validity'], 'no_update_needed')]:
+            with self.subTest(decision=decision):
+                bridge = SyntheticCommandBridge()
+                bridge.create_scenario(**self.args)
+                bridge.start_cycle('case-synthetic', cycle_no=1, window_start='2026-10-02',
+                                   window_end='2026-10-03', request_id='cycle')
+                bridge.register_signal('case-synthetic', cycle_no=1, signal_id='s1',
+                                       kind='search_hit', source='synthetic:hit', request_id='sig')
+                bridge.record_assessment('case-synthetic', cycle_no=1, signal_id='s1',
+                    decision=decision, impacts=impacts, rationale='fictional',
+                    scenario_actor='fictional-actor', request_id='assess')
+                before = bridge.snapshot('case-synthetic')
+                with self.assertRaises(DomainError):
+                    bridge.close_cycle('case-synthetic', cycle_no=1, decision=close_decision,
+                        rationale='fictional', scenario_actor='fictional-actor', request_id='close')
+                self.assertEqual(bridge.snapshot('case-synthetic'), before)
+                self.assertIsNone(bridge.repo.read_receipt('case-synthetic', 'close'))
+
+    def test_close_rejects_request_conflict_without_new_event(self):
+        self.assessment_setup()
+        self.bridge.record_assessment('case-synthetic', cycle_no=1, signal_id='s1',
+            decision='excluded', impacts=[], rationale='fictional',
+            scenario_actor='fictional-actor', request_id='assess')
+        close = dict(cycle_no=1, decision='no_update_needed', rationale='fictional',
+                     scenario_actor='fictional-actor', request_id='close')
+        self.bridge.close_cycle('case-synthetic', **close)
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(RepositoryConflict):
+            self.bridge.close_cycle('case-synthetic', **dict(close, decision='outdated'))
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+
 if __name__ == '__main__':
     unittest.main()
