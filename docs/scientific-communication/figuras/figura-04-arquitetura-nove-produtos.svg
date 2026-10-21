@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1273" viewBox="0 0 900 1273" role="img" aria-labelledby="title description">
+<title id="title">Figura 4 — Famílias dos nove produtos de evidências do OES</title>
+<desc id="description">Base científica compartilhada ligada a três painéis: cinco produtos de investigação N0 a N4, Mapa e Overview como produtos analíticos transversais, e Monitor e Alerta como produtos temporais condicionais. Não há sequência obrigatória ou transferência automática de conclusões, garantia ou versões. Não representa produtos todos operacionais.</desc>
+<rect width="900" height="1273" fill="#fff"/>
+<rect x="40" y="32" width="820" height="98" rx="12" fill="#F2F5F8" stroke="none" stroke-width="1.7"/>
+<text x="58" y="65" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="start" fill="#3F5065">FIGURA 4  |  OBSERVATÓRIO DE EVIDÊNCIAS EM SAÚDE</text>
+<text x="58" y="101" font-family="DejaVu Sans,Arial,sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#172E47">Arquitetura conceitual dos nove produtos</text>
+<rect x="89" y="155" width="723" height="120" rx="12" fill="#EAF0F5" stroke="#52647B" stroke-width="1.7"/>
+<text x="451" y="187" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#233448">BASE CIENTÍFICA COMPARTILHADA</text>
+<text x="451" y="217" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="400" text-anchor="middle" fill="#233448">Perguntas e investigações documentadas</text>
+<text x="451" y="243" font-family="DejaVu Sans,Arial,sans-serif" font-size="14.5" font-weight="400" text-anchor="middle" fill="#233448">Fontes, estudos, relatórios, resultados, sínteses e versões pertinentes</text>
+<path d="M89 214 H54 V969" stroke="#60748B" stroke-width="2.1" fill="none"/>
+<rect x="80" y="307" width="742" height="308" rx="12" fill="#F7F9FB" stroke="#657386" stroke-width="1.7"/>
+<text x="451" y="341" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#233448">FAMÍLIA 1  |  INVESTIGAÇÃO — N0–N4</text>
+<path d="M106 360 H796" stroke="#CDD4DC" stroke-width="1.2"/>
+<text x="451" y="389" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">N0 · Evidence Scan</text>
+<text x="451" y="433" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">N1 · Resposta de Evidência</text>
+<text x="451" y="477" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">N2 · Ficha de Evidência</text>
+<text x="451" y="521" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">N3 · Síntese Rápida de Evidências</text>
+<text x="451" y="565" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">N4 · Revisão de Evidências</text>
+<path d="M54 470 H80" stroke="#60748B" stroke-width="2.2" fill="none"/>
+<rect x="80" y="660" width="742" height="176" rx="12" fill="#F7F9FB" stroke="#657386" stroke-width="1.7"/>
+<text x="451" y="694" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#233448">FAMÍLIA 2  |  ANÁLISE TRANSVERSAL</text>
+<path d="M106 713 H796" stroke="#CDD4DC" stroke-width="1.2"/>
+<text x="451" y="742" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">Mapa de Evidências</text>
+<text x="451" y="786" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">Overview de Revisões</text>
+<path d="M54 758 H80" stroke="#60748B" stroke-width="2.2" fill="none"/>
+<rect x="80" y="870" width="742" height="176" rx="12" fill="#fff" stroke="#657386" stroke-width="1.7" stroke-dasharray="7 5"/>
+<text x="451" y="904" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#233448">FAMÍLIA 3  |  MANUTENÇÃO CONDICIONAL</text>
+<path d="M106 923 H796" stroke="#CDD4DC" stroke-width="1.2"/>
+<text x="451" y="952" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">Monitor de Evidências</text>
+<text x="451" y="996" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="#233448">Alerta de Evidência</text>
+<path d="M54 969 H80" stroke="#60748B" stroke-width="2.2" stroke-dasharray="7 5" fill="none"/>
+<rect x="89" y="1082" width="723" height="126" rx="12" fill="#F4F6F8" stroke="#99A6B5" stroke-width="1.7"/>
+<text x="451" y="1115" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#233448">REUTILIZAÇÃO POSSÍVEL, NÃO AUTOMÁTICA</text>
+<text x="451" y="1144" font-family="DejaVu Sans,Arial,sans-serif" font-size="16" font-weight="400" text-anchor="middle" fill="#233448">Identificar fonte, escopo e versão científica exata.</text>
+<text x="451" y="1172" font-family="DejaVu Sans,Arial,sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#233448">Conclusões e garantia não são transferidas sem nova avaliação.</text>
+<text x="451" y="1195" font-family="DejaVu Sans,Arial,sans-serif" font-size="13.5" font-weight="400" text-anchor="middle" fill="#233448">Fluxos de monitoramento não indicam operação factual contínua.</text>
+<text x="50" y="1245" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="400" text-anchor="start" fill="#506074">Fonte: Documento 40; Documentos 02, 04, 05; STATE e CP213 (20/10/2026).</text>
+</svg>
