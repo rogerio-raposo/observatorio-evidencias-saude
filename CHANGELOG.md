@@ -5318,3 +5318,8 @@ Documentos:
 - Documento 200 registra autorização expressa do proprietário para provisionar novo projeto `oes-d1-t2-a2-synthetic`, ID `tiny-pond-20086371`, PostgreSQL 18, plano Free, São Paulo, branch `synthetic-main`, banco `oes_t2a2_synthetic`. Projeto `oes-sandbox` anterior não modificado.
 - Primeira tentativa com ajuste de suspensão recusada HTTP 412, sem criação; segunda operação com padrão do plano concluída. Endpoint read_write ativo na consulta, conexões públicas não bloqueadas e branch não protegida; preflight de segurança e custo ainda necessário.
 - **T2-A2 não autorizado**; sem SQL, DDL, tabelas, dados, testes, CI ou alteração de gates. T1/T2-A1 históricos preservados. STOP.
+
+
+## 2026-10-21 — CP226
+
+N1 preparação por metadados e N1-B criação autorizada do papel `oes_t2a2_runtime` no Neon Free sintético. Documento 201; nenhum SQL, GRANT, senha, teste ou promoção T2-A2.

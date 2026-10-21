@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP225 — 2026-10-21**.
+- checkpoint vigente: **CP226 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -106,6 +106,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Documento 200 registra autorização expressa e criação verificada de `oes-d1-t2-a2-synthetic`, ID `tiny-pond-20086371`, Free, região São Paulo, PostgreSQL 18, branch `synthetic-main`, banco `oes_t2a2_synthetic`, separado do `oes-sandbox` histórico.
 - **T2-A2 NOT_AUTHORIZED**: nenhum SQL, DDL, tabela, dados sintéticos, adaptador, testes, CI ou migrations canônicas. Conexões públicas não bloqueadas, branch não protegida e suspensão `0` exigem parecer de segurança/custo antes do uso.
 - T1/T2-A1 e bloqueios científicos/operacionais preservados. Próximo `Prossiga`: análise documental de riscos e minuta específica de autorização para uso seguro do novo projeto Neon.
+
+## 1M. CP226 — N1/N1-B Neon
+
+Identidade `oes_t2a2_runtime` criada com autorização específica; nenhuma concessão, SQL ou conexão; T2-A2 NOT_AUTHORIZED. Documento 201.
 
 ## 2. Estado das fases
 
