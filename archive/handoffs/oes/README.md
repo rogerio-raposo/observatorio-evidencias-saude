@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP216 — 2026-10-21**
+**CP217 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP216.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP217.md`
 
 Checkpoint anterior:
 
-`CP215`
+`CP216`
 
 Status:
 
@@ -576,3 +576,5 @@ em **Modo Continuidade**.
 - **CP215 — 2026-10-21:** Documento 170 consolida atividades D1-A3–A5, auditoria estática do Monitor e proposta técnica T1–T4, sem execução nem aprovação operacional; próxima D1-A6 = solicitar autorização específica de T1, sob `Prossiga`. STOP.
 
 - **CP216 — 2026-10-21:** Documento 171 consolida T1 sintético aprovado e publicado, 13 testes locais históricos PASS, matriz S1–S6 parcial e critérios de encerramento pendentes. Próximo: endurecer atomicidade/imutabilidade T1, sem T2/Neon/CI/cloud. STOP.
+
+- **CP217 — 2026-10-21:** Documento 172 consolida incrementos T1 publicados (32 testes locais históricos PASS, não reexecutados nesta atividade), confirma sequência estratégica e autorização T1, identifica baseline sintético/documentação/evidência de encerramento pendentes. Próximo: baseline sintético sob `Prossiga`. STOP.

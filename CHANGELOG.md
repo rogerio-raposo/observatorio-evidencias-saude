@@ -5260,3 +5260,10 @@ Documentos:
 - Registrados incrementos versionados em `prototypes/d1/`, com cenário M2, sinais, avaliações, decisões explícitas, impacto múltiplo, idempotência, log/replay e controles adicionais de integridade/proveniência; último HEAD pré-checkpoint `c4c1e4aaaa2b00d3394e98f0e66148e891a93d1d`.
 - Os 13 testes PASS referem-se à execução local histórica, sem novo reteste durante o CP216. Documento 171 identifica S1–S6 como **PARCIAIS**, riscos e condições necessárias para fechar T1; não há homologação ou equivalência da View SQL canônica.
 - T1 permanece aberto; T2/T3/D2 não autorizados. Governança e bloqueios históricos preservados. STOP.
+
+## 2026-10-21 — CP217: consolidação do avanço T1 e estratégia vigente
+
+- Ratificada a sequência oficial D0 documental concluído → D1 sintético funcional → D2 factual condicionado → governança operacional completa posterior. Documentos 169–171 e autorização T1 preservados; T2/T3 não autorizados.
+- Consolidado inventário versionado `prototypes/d1/`, HEAD pré-CP217 `bbd0d61d7270cf139c1a895503fc29dd0ec043ab`, e resultados históricos de testes locais 18→21→26→32 PASS; nenhum teste reexecutado nesta consolidação.
+- Documento 172 registra matriz S1–S6 PARCIAL, ausência de baseline inicial no demonstrador, README ainda descrevendo 21 testes, rastreabilidade a consolidar e critérios de encerramento T1 pendentes.
+- Sem SQL, Neon, CI remota, nuvem, serviços pagos, consultas factuais, alteração de migrations/gates ou encerramento de T1. STOP.

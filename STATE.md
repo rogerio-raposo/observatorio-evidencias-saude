@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP216 — 2026-10-21**.
+- checkpoint vigente: **CP217 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -45,6 +45,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Código: `prototypes/d1/monitor.py`, `test_monitor.py`, `README.md`; HEAD pré-CP216 `c4c1e4aaaa2b00d3394e98f0e66148e891a93d1d`. Resultado histórico dos testes locais: **13/13 PASS**, não retestado neste checkpoint.
 - Documento 171 contém matriz S1–S6 (**todas PARCIAIS**), riscos e critérios A–F de encerramento; `oes.d1.monitor_snapshot/0.1` não é View SQL original; T1 **NOT_CLOSED**.
 - Próximo passo sob `Prossiga`: testes e correções de atomicidade/imutabilidade no núcleo Python, mantendo o escopo T1.
+
+## 1D. D1-T1 — consolidação de incrementos CP217
+
+- Decisão estratégica confirmada: D0 documental concluído → D1 funcional sintético atual → D2 factual posterior → governança operacional completa posterior (Documento 169). Python modular, preferência cloud e software gratuito (Documentos 169–170).
+- Autorização expressa T1, registrada no Documento 171, permanece vigente apenas para Python em memória, testes locais, renderer e GitHub. SQL/Neon/CI/cloud/API pública/consultas factuais/serviços pagos/gates excluídos.
+- Incrementos até HEAD pré-CP217 `bbd0d61d7270cf139c1a895503fc29dd0ec043ab`: teste local histórico 32/32 PASS, testes adversariais S1–S6, rollback sequencial e renderer próprio. README do protótipo ainda relata 21 testes; correção documental pendente.
+- Documento 172: critérios S1–S6 PARCIAIS e T1 NOT_CLOSED. Próximo `Prossiga`: baseline sintético explícito com testes e versionamento, sem expansão de escopo.
 
 ## 2. Estado das fases
 
