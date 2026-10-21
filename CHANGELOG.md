@@ -5252,3 +5252,11 @@ Documentos:
 - Identificadas diferenças de enumeração entre contratos SQL e mapa editorial: tipos de candidatos, dimensões de impacto e códigos de decisão; exigido mapeamento testado sem alterar os códigos canônicos. Fixture com IA/owner sintéticos não comprova revisões efetivas.
 - Definido **como proposta** o contrato demonstrativo `oes.d1.monitor_snapshot/0.1` e uma sequência T1 Python sintético/testes isolados → T2 PostgreSQL isolado → T3 nuvem gratuita → T4 conformidade canônica. Nenhuma etapa operacional aprovada, realizada ou financiada.
 - Critérios S1–S6 traduzidos em ensaios futuros; documento de solicitação T1 preparado, aguardando aprovação expressa. D1 prioritário; D0 encerrado documentalmente; D2 e governança completa diferidos; bloqueios e gates preservados. STOP.
+
+
+## 2026-10-21 — CP216: avanço sintético D1-T1 e cobertura S1–S6
+
+- Reconhecida a autorização expressa do proprietário para T1: núcleo Python e testes locais, em memória, apresentação demonstrativa e versionamento, sem SQL/Neon/CI/nuvem/serviços pagos/consultas factuais/migrations/gates.
+- Registrados incrementos versionados em `prototypes/d1/`, com cenário M2, sinais, avaliações, decisões explícitas, impacto múltiplo, idempotência, log/replay e controles adicionais de integridade/proveniência; último HEAD pré-checkpoint `c4c1e4aaaa2b00d3394e98f0e66148e891a93d1d`.
+- Os 13 testes PASS referem-se à execução local histórica, sem novo reteste durante o CP216. Documento 171 identifica S1–S6 como **PARCIAIS**, riscos e condições necessárias para fechar T1; não há homologação ou equivalência da View SQL canônica.
+- T1 permanece aberto; T2/T3/D2 não autorizados. Governança e bloqueios históricos preservados. STOP.

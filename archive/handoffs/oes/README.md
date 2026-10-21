@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP215 — 2026-10-21**
+**CP216 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP215.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP216.md`
 
 Checkpoint anterior:
 
-`CP214`
+`CP215`
 
 Status:
 
@@ -574,3 +574,5 @@ em **Modo Continuidade**.
 - **CP214 — 2026-10-21:** Governança 169 formaliza prioridade D1, preservando Documento 165 histórico; arquitetura Python/PostgreSQL candidata e preferência expressa por nuvem/software gratuito. Sem execução, serviços pagos ou alteração de gates. Próximo D1-A3 documental sob `Prossiga`. STOP.
 
 - **CP215 — 2026-10-21:** Documento 170 consolida atividades D1-A3–A5, auditoria estática do Monitor e proposta técnica T1–T4, sem execução nem aprovação operacional; próxima D1-A6 = solicitar autorização específica de T1, sob `Prossiga`. STOP.
+
+- **CP216 — 2026-10-21:** Documento 171 consolida T1 sintético aprovado e publicado, 13 testes locais históricos PASS, matriz S1–S6 parcial e critérios de encerramento pendentes. Próximo: endurecer atomicidade/imutabilidade T1, sem T2/Neon/CI/cloud. STOP.

@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP215 — 2026-10-21**.
+- checkpoint vigente: **CP216 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -38,6 +38,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Snapshot demonstrativo `oes.d1.monitor_snapshot/0.1` é proposta distinta da View SQL canônica; validações S5 históricas **não** demonstram execução atual ou equivalência.
 - Artefato S5 run `37558043092`, id `11455658237`, tem expiração histórica prevista para 2026-11-06; ZIP ainda não foi inspecionado/preservado.
 - **Próxima atividade D1-A6 após novo `Prossiga`:** submeter solicitação explícita para T1 sem iniciar implementação antes de aprovação. Estado dos gates, Fase 4/5 e demais pendências inalterado.
+
+## 1C. D1-T1 — execução sintética autorizada e avaliação CP216
+
+- Autorização expressa `OES / D1-T1 / PYTHON_SYNTHETIC_DOMAIN_ONLY`: Python, testes locais em memória, renderer e GitHub. Exclui SQL, Neon, CI remota, cloud, APIs públicas, busca factual, serviços pagos, migrations e mudança de gates.
+- Código: `prototypes/d1/monitor.py`, `test_monitor.py`, `README.md`; HEAD pré-CP216 `c4c1e4aaaa2b00d3394e98f0e66148e891a93d1d`. Resultado histórico dos testes locais: **13/13 PASS**, não retestado neste checkpoint.
+- Documento 171 contém matriz S1–S6 (**todas PARCIAIS**), riscos e critérios A–F de encerramento; `oes.d1.monitor_snapshot/0.1` não é View SQL original; T1 **NOT_CLOSED**.
+- Próximo passo sob `Prossiga`: testes e correções de atomicidade/imutabilidade no núcleo Python, mantendo o escopo T1.
 
 ## 2. Estado das fases
 
