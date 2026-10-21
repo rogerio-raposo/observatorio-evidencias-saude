@@ -258,20 +258,40 @@ class SyntheticMonitorService:
 
 
 def render_demo(snapshot: dict) -> str:
-    """Small demonstrator, not the canonical EvidenceMonitorView template."""
-    if snapshot.get('schema_version') != 'oes.d1.monitor_snapshot/0.1' or not snapshot.get('synthetic'):
+    """Read-only D1 demonstrator. Never impersonates the canonical SQL view."""
+    if snapshot.get('schema_version') != 'oes.d1.monitor_snapshot/0.1' or snapshot.get('synthetic') is not True:
         raise DomainError('only synthetic D1 snapshots supported')
+    disclosure = snapshot['execution_disclosure']
+    if any(disclosure.get(k) is not False for k in ('canonical_sql_view_executed',
+            'factual_search_performed', 'scientific_review_performed', 'publication_gate_assessed')):
+        raise DomainError('demonstrator cannot assert external or scientific execution')
+    target, monitor = snapshot['target'], snapshot['monitor']
     lines = ['# OES D1 — Monitor M2 sintético', '',
              '**DEMONSTRAÇÃO SINTÉTICA — NÃO É MONITOR CIENTÍFICO REAL**', '',
              'Cenário: ' + snapshot['scenario_id'],
-             'Monitor: ' + snapshot['monitor']['product_version_uuid'],
-             'Produto-alvo: ' + snapshot['target']['product_version_uuid'],
-             'Currentness do alvo: ' + snapshot['target']['currency_status'],
-             'Conclusão científica sintética (inalterada): ' + snapshot['target']['scientific_conclusion'], '']
+             'Origem da fixture: ' + snapshot['fixture_source'],
+             'Monitor: ' + monitor['product_version_uuid'],
+             'Produto-alvo: ' + target['product_version_uuid'], '',
+             'Estado editorial do Monitor: ' + monitor['editorial_status'],
+             'Estado operacional do Monitor: ' + monitor['operational_status'],
+             'Currentness do Monitor: ' + monitor['currency_status'],
+             'Currentness do alvo: ' + target['currency_status'],
+             'Baseline de evidência do Monitor: não registrado neste contrato D1',
+             'Conclusão científica sintética (inalterada): ' + target['scientific_conclusion'],
+             'Hash da conclusão: ' + target['scientific_conclusion_hash'], '']
     for c in snapshot['cycles']:
         lines += [f"## Ciclo {c['cycle_no']} — {c['status']}",
-                  f"Janela: {c['window_start']} a {c['window_end']}",
-                  f"Sinais: {len(c['signals'])}; avaliações: {len(c['assessments'])}",
-                  'Decisão: ' + (c['decision']['value'] if c['decision'] else 'pendente'), '']
-    lines += ['*Sem buscas factuais, revisão científica, gate de publicação ou execução da View SQL canônica.*']
+                  f"Janela e cutoff sintéticos do ciclo: {c['window_start']} a {c['window_end']}",
+                  f"Sinais: {len(c['signals'])}; avaliações: {len(c['assessments'])}"]
+        for signal in c['signals']:
+            lines.append(f"- Sinal {signal['signal_id']} ({signal['kind']}): {signal['source']}")
+        for assessment in c['assessments']:
+            impacts = ', '.join(assessment['impacts']) if assessment['impacts'] else 'nenhum'
+            lines.append(f"- Avaliação de {assessment['signal_id']}: {assessment['decision']}; impactos: {impacts}; motivo: {assessment['rationale']}; ator fictício: {assessment['scenario_actor']}; verificação: {assessment['verification']}")
+        decision = c['decision']
+        lines.append('Decisão: ' + (decision['value'] + '; motivo: ' + decision['rationale'] + '; ator fictício: ' + decision['scenario_actor'] if decision else 'pendente'))
+        lines.append('')
+    lines += [f"Eventos do histórico: {len(snapshot['event_log'])}",
+              'Execução efetiva: serviço Python demonstrativo',
+              '*Sem buscas factuais, revisão científica, gate de publicação ou execução da View SQL canônica.*']
     return '\n'.join(lines) + '\n'

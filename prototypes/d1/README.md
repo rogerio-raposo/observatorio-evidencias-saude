@@ -10,7 +10,7 @@ Protótipo de aplicação em Python puro e biblioteca padrão, sem dependências
 
 Criação idempotente de cenário, identidade do produto/Monitor, ciclos M2 e janelas temporais, sinais fictícios de `search_hit`/`evidence_event`, avaliação explícita com múltiplos impactos, decisão de manutenção, `target_currency` independente da conclusão científica, snapshot `oes.d1.monitor_snapshot/0.1`, visualização textual demonstrativa, event log sequencial e reconstrução determinística com detecção de divergências.
 
-Testes locais da revisão: **18 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
+Testes locais da revisão: **21 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
 
 ## Limites
 
@@ -38,3 +38,7 @@ A origem obrigatória de um cenário deve usar o prefixo `synthetic:` e o identi
 ## Falhas injetadas e rollback T1 em memória
 
 Os comandos agora restauram o estado do cenário se uma exceção ocorrer após uma mutação e antes da conclusão do registro de evento. Cinco testes de falha injetada validam criação, início, sinal, avaliação e fechamento, incluindo ausência de recibo e replay sem divergência. Essa garantia limita-se ao fluxo sequencial em memória: **não há atomicidade transacional entre processos, isolamento de concorrência nem persistência durável**.
+
+## Projeção demonstrativa fiel ao escopo
+
+O renderer exibe separadamente estado editorial e operacional do Monitor, currency do Monitor e do alvo, proveniência fictícia, janelas/cutoffs sintéticos, impactos múltiplos, decisões e histórico. O baseline científico do Monitor **não é registrado** no contrato atual: a apresentação declara essa ausência sem fabricar dado. Divulgação de busca factual, revisão científica ou View SQL executadas é rejeitada pelo renderer. Três novos testes de apresentação; não há equivalência à View SQL canônica.

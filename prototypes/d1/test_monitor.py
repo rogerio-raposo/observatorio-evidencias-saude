@@ -214,3 +214,44 @@ class AtomicCommandFailureTests(unittest.TestCase):
         self.assert_append_failure_is_atomic(lambda: self.service.close_cycle('ATOMIC-FAIL', cycle_no=1,
             decision='no_update_needed', rationale='synthetic no update', scenario_actor='fixture',
             request_id='close'), 'close')
+
+
+class PresentationDisclosureTests(unittest.TestCase):
+    def setUp(self):
+        self.s = SyntheticMonitorService()
+        self.s.create_scenario(scenario_id='RENDER', target_version='target-version',
+            monitor_version='monitor-version', scientific_conclusion='Synthetic original',
+            fixture_source='synthetic:render-fixture', request_id='create')
+
+    def test_four_distinct_states_and_missing_baseline(self):
+        text = render_demo(self.s.snapshot('RENDER'))
+        for fragment in ('Estado editorial do Monitor: draft',
+                         'Estado operacional do Monitor: active',
+                         'Currentness do Monitor: current',
+                         'Currentness do alvo: current',
+                         'Baseline de evidência do Monitor: não registrado',
+                         'Origem da fixture: synthetic:render-fixture'):
+            self.assertIn(fragment, text)
+
+    def test_renders_multiple_impacts_and_explicit_decision(self):
+        self.s.start_cycle('RENDER', cycle_no=1, window_start='2026-10-02',
+            window_end='2026-10-03', request_id='start')
+        self.s.register_signal('RENDER', cycle_no=1, signal_id='test-hit', kind='search_hit',
+            source='synthetic:test-hit', request_id='signal')
+        self.s.record_assessment('RENDER', cycle_no=1, signal_id='test-hit',
+            decision='retained_for_impact', impacts=['quantitative', 'certainty'],
+            rationale='possible synthetic effect', scenario_actor='fictional-actor', request_id='assess')
+        self.s.close_cycle('RENDER', cycle_no=1, decision='evaluate_update',
+            rationale='evaluate synthetic change', scenario_actor='fictional-actor', request_id='close')
+        text = render_demo(self.s.snapshot('RENDER'))
+        for fragment in ('Currentness do alvo: under_evaluation',
+                         'quantitative, certainty', 'fictional-actor',
+                         'Decisão: evaluate_update', 'motivo: evaluate synthetic change',
+                         'Eventos do histórico: 5'):
+            self.assertIn(fragment, text)
+
+    def test_rejects_disclosure_of_unperformed_operation(self):
+        snapshot = self.s.snapshot('RENDER')
+        snapshot['execution_disclosure']['factual_search_performed'] = True
+        with self.assertRaises(DomainError):
+            render_demo(snapshot)
