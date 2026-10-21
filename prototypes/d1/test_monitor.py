@@ -8,7 +8,7 @@ class SyntheticM2Tests(unittest.TestCase):
         self.service = SyntheticMonitorService()
         self.service.create_scenario(scenario_id='D1-M2', target_version='target-v1',
             monitor_version='monitor-v1', scientific_conclusion='Original synthetic conclusion',
-            fixture_source='synthetic:f3-monitor-m2', request_id='create')
+            fixture_source='synthetic:f3-monitor-m2', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
 
     def test_cycle_and_scientific_conclusion(self):
         s = self.service
@@ -81,7 +81,7 @@ class HardenedIntegrityTests(unittest.TestCase):
     def setUp(self):
         self.s = SyntheticMonitorService()
         self.params = dict(scenario_id='SYN-02', target_version='target-v1', monitor_version='monitor-v1',
-            scientific_conclusion='Synthetic immutable', fixture_source='synthetic:fixture-m2', request_id='create')
+            scientific_conclusion='Synthetic immutable', fixture_source='synthetic:fixture-m2', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
         self.s.create_scenario(**self.params)
 
     def test_create_idempotency_and_conflict(self):
@@ -131,7 +131,7 @@ class AtomicRejectionTests(unittest.TestCase):
         service = SyntheticMonitorService()
         service.create_scenario(scenario_id='ATOMIC', target_version='target-v1',
             monitor_version='monitor-v1', scientific_conclusion='Immutable synthetic conclusion',
-            fixture_source='synthetic:test', request_id='create')
+            fixture_source='synthetic:test', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
         service.start_cycle('ATOMIC', cycle_no=1, window_start='2026-10-02',
             window_end='2026-10-03', request_id='start')
         service.repo.scenarios['ATOMIC']['scientific_conclusion'] = 'unauthorized mutation'
@@ -149,7 +149,7 @@ class ScenarioProvenanceTests(unittest.TestCase):
         svc = SyntheticMonitorService()
         with self.assertRaisesRegex(DomainError, 'provenance must be synthetic'):
             svc.create_scenario(scenario_id='NOPE', target_version='target', monitor_version='monitor',
-                scientific_conclusion='Fixture', fixture_source='https://example.org/real', request_id='one')
+                scientific_conclusion='Fixture', fixture_source='https://example.org/real', baseline_evidence_cutoff_date='2026-10-01', request_id='one')
         self.assertEqual(svc.repo.scenarios, {})
         self.assertEqual(svc.repo.receipts, {})
 
@@ -157,7 +157,7 @@ class ScenarioProvenanceTests(unittest.TestCase):
         svc = SyntheticMonitorService()
         with self.assertRaisesRegex(DomainError, 'distinct version identities'):
             svc.create_scenario(scenario_id='SAME', target_version='same-v1', monitor_version='same-v1',
-                scientific_conclusion='Fixture', fixture_source='synthetic:fixture', request_id='one')
+                scientific_conclusion='Fixture', fixture_source='synthetic:fixture', baseline_evidence_cutoff_date='2026-10-01', request_id='one')
         self.assertEqual(svc.repo.scenarios, {})
         self.assertEqual(svc.repo.receipts, {})
 
@@ -167,7 +167,7 @@ class AtomicCommandFailureTests(unittest.TestCase):
         self.service = SyntheticMonitorService()
         self.service.create_scenario(scenario_id='ATOMIC-FAIL', target_version='target',
             monitor_version='monitor', scientific_conclusion='Synthetic conclusion',
-            fixture_source='synthetic:fixture', request_id='create')
+            fixture_source='synthetic:fixture', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
 
     def assert_append_failure_is_atomic(self, call, request_id):
         before = self.service.snapshot('ATOMIC-FAIL')
@@ -185,7 +185,7 @@ class AtomicCommandFailureTests(unittest.TestCase):
         with patch.object(SyntheticMonitorService, '_append', side_effect=RuntimeError('simulated append failure')):
             with self.assertRaises(RuntimeError):
                 s.create_scenario(scenario_id='NEW', target_version='target', monitor_version='monitor',
-                    scientific_conclusion='Synthetic', fixture_source='synthetic:fixture', request_id='create')
+                    scientific_conclusion='Synthetic', fixture_source='synthetic:fixture', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
         self.assertEqual(s.repo.scenarios, {})
         self.assertEqual(s.repo.receipts, {})
 
@@ -221,7 +221,7 @@ class PresentationDisclosureTests(unittest.TestCase):
         self.s = SyntheticMonitorService()
         self.s.create_scenario(scenario_id='RENDER', target_version='target-version',
             monitor_version='monitor-version', scientific_conclusion='Synthetic original',
-            fixture_source='synthetic:render-fixture', request_id='create')
+            fixture_source='synthetic:render-fixture', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
 
     def test_four_distinct_states_and_missing_baseline(self):
         text = render_demo(self.s.snapshot('RENDER'))
@@ -229,7 +229,7 @@ class PresentationDisclosureTests(unittest.TestCase):
                          'Estado operacional do Monitor: active',
                          'Currentness do Monitor: current',
                          'Currentness do alvo: current',
-                         'Baseline de evidência do Monitor: não registrado',
+                         'Baseline de evidência sintético do Monitor: 2026-10-01',
                          'Origem da fixture: synthetic:render-fixture'):
             self.assertIn(fragment, text)
 

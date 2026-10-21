@@ -9,7 +9,7 @@ class S1S5AdversarialTests(unittest.TestCase):
         self.s = SyntheticMonitorService()
         self.s.create_scenario(scenario_id='S1-S5', target_version='target-v1',
             monitor_version='monitor-v1', scientific_conclusion='Immutable synthetic conclusion',
-            fixture_source='synthetic:adversarial-fixture', request_id='create')
+            fixture_source='synthetic:adversarial-fixture', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
 
     def start(self):
         return self.s.start_cycle('S1-S5', cycle_no=1, window_start='2026-10-02',
@@ -92,7 +92,7 @@ class S1S5AdversarialTests(unittest.TestCase):
         self.assertFalse(snap['execution_disclosure']['canonical_sql_view_executed'])
         output = render_demo(snap)
         for expected in ('validity, scope', 'fictional-actor',
-                         'Baseline de evidência do Monitor: não registrado',
+                         'Baseline de evidência sintético do Monitor: 2026-10-01',
                          'Sem buscas factuais'):
             self.assertIn(expected, output)
         counterfeit = deepcopy(snap)

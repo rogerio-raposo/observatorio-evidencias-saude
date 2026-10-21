@@ -65,18 +65,26 @@ class SyntheticMonitorService:
         s['events'].append({'sequence': len(s['events']) + 1, 'kind': kind, 'data': json.loads(encoded(data))})
 
     def create_scenario(self, *, scenario_id: str, target_version: str, monitor_version: str,
-                        scientific_conclusion: str, fixture_source: str, request_id: str) -> dict:
+                        scientific_conclusion: str, fixture_source: str,
+                        baseline_evidence_cutoff_date: str, request_id: str) -> dict:
         if not all((scenario_id, target_version, monitor_version, scientific_conclusion, fixture_source)):
             raise DomainError('identities, scientific conclusion and provenance are mandatory')
         if not fixture_source.startswith('synthetic:'):
             raise DomainError('fixture provenance must be synthetic')
         if target_version == monitor_version:
             raise DomainError('monitor and target must have distinct version identities')
+        try:
+            baseline_date = date.fromisoformat(baseline_evidence_cutoff_date)
+        except (ValueError, TypeError):
+            raise DomainError('baseline must be a valid ISO date') from None
+        if baseline_date.isoformat() != baseline_evidence_cutoff_date:
+            raise DomainError('baseline must use canonical ISO date')
         if not request_id:
             raise DomainError('request_id is required')
         create_payload = {'action': 'create', 'target_version': target_version,
                           'monitor_version': monitor_version, 'scientific_conclusion': scientific_conclusion,
-                          'fixture_source': fixture_source}
+                          'fixture_source': fixture_source,
+                          'baseline_evidence_cutoff_date': baseline_evidence_cutoff_date}
         fingerprint = digest(encoded(create_payload))
         key = (scenario_id, request_id)
         if key in self.repo.receipts:
@@ -87,6 +95,7 @@ class SyntheticMonitorService:
             raise DomainError('scenario already exists')
         s = {'scenario_id': scenario_id, 'synthetic': True, 'fixture_source': fixture_source,
              'target_version': target_version, 'monitor_version': monitor_version,
+             'baseline_evidence_cutoff_date': baseline_evidence_cutoff_date,
              'scientific_conclusion': scientific_conclusion, 'conclusion_hash': digest(scientific_conclusion),
              'target_currency': 'current', 'monitor_currency': 'current',
              'monitor_operational_status': 'active', 'monitor_editorial_status': 'draft',
@@ -95,6 +104,7 @@ class SyntheticMonitorService:
         try:
             self._append(s, 'scenario_created', {'target_version': target_version, 'monitor_version': monitor_version,
                                              'fixture_source': fixture_source, 'scientific_conclusion': scientific_conclusion,
+                                             'baseline_evidence_cutoff_date': baseline_evidence_cutoff_date,
                                              'executed_by': 'python_service'})
         except Exception:
             self.repo.scenarios.pop(scenario_id, None)
@@ -123,6 +133,8 @@ class SyntheticMonitorService:
                 start_day, end_day = date.fromisoformat(window_start), date.fromisoformat(window_end)
             except (ValueError, TypeError):
                 raise DomainError('cycle dates must be valid ISO dates') from None
+            if start_day <= date.fromisoformat(s['baseline_evidence_cutoff_date']):
+                raise DomainError('cycle window must start after synthetic baseline')
             if cycle_no != len(s['cycles']) + 1 or start_day > end_day:
                 raise DomainError('invalid cycle number or time window')
             if s['cycles'] and (s['cycles'][-1]['status'] != 'completed'
@@ -221,7 +233,8 @@ class SyntheticMonitorService:
             if kind == 'scenario_created':
                 fresh.create_scenario(scenario_id=scenario_id, target_version=d['target_version'],
                     monitor_version=d['monitor_version'], scientific_conclusion=d['scientific_conclusion'],
-                    fixture_source=d['fixture_source'], request_id=rid)
+                    fixture_source=d['fixture_source'],
+                    baseline_evidence_cutoff_date=d['baseline_evidence_cutoff_date'], request_id=rid)
             elif kind == 'cycle_started':
                 fresh.start_cycle(scenario_id, cycle_no=d['cycle_no'], window_start=d['window_start'],
                     window_end=d['window_end'], request_id=rid)
@@ -247,6 +260,7 @@ class SyntheticMonitorService:
         s = self._scenario(scenario_id)
         return json.loads(encoded({'schema_version': 'oes.d1.monitor_snapshot/0.1', 'synthetic': True,
              'scenario_id': s['scenario_id'], 'fixture_source': s['fixture_source'],
+             'baseline_evidence_cutoff_date': s['baseline_evidence_cutoff_date'],
              'target': {'product_version_uuid': s['target_version'], 'scientific_conclusion': s['scientific_conclusion'],
                         'scientific_conclusion_hash': s['conclusion_hash'], 'currency_status': s['target_currency']},
              'monitor': {'product_version_uuid': s['monitor_version'], 'editorial_status': s['monitor_editorial_status'],
@@ -276,7 +290,7 @@ def render_demo(snapshot: dict) -> str:
              'Estado operacional do Monitor: ' + monitor['operational_status'],
              'Currentness do Monitor: ' + monitor['currency_status'],
              'Currentness do alvo: ' + target['currency_status'],
-             'Baseline de evidência do Monitor: não registrado neste contrato D1',
+             'Baseline de evidência sintético do Monitor: ' + snapshot['baseline_evidence_cutoff_date'],
              'Conclusão científica sintética (inalterada): ' + target['scientific_conclusion'],
              'Hash da conclusão: ' + target['scientific_conclusion_hash'], '']
     for c in snapshot['cycles']:

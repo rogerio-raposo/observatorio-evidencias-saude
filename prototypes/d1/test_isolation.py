@@ -9,7 +9,7 @@ class IsolationAndDisposalTests(unittest.TestCase):
         return service.create_scenario(
             scenario_id=scenario_id, target_version=f'{scenario_id}-target',
             monitor_version=f'{scenario_id}-monitor', scientific_conclusion=f'{scenario_id} fiction',
-            fixture_source='synthetic:s6-isolation', request_id='create')
+            fixture_source='synthetic:s6-isolation', baseline_evidence_cutoff_date='2026-10-01', request_id='create')
 
     def test_independent_repositories_do_not_share_mutations_or_receipts(self):
         left, right = SyntheticMonitorService(), SyntheticMonitorService()

@@ -42,3 +42,7 @@ Os comandos agora restauram o estado do cenário se uma exceção ocorrer após 
 ## Projeção demonstrativa fiel ao escopo
 
 O renderer exibe separadamente estado editorial e operacional do Monitor, currency do Monitor e do alvo, proveniência fictícia, janelas/cutoffs sintéticos, impactos múltiplos, decisões e histórico. O baseline científico do Monitor **não é registrado** no contrato atual: a apresentação declara essa ausência sem fabricar dado. Divulgação de busca factual, revisão científica ou View SQL executadas é rejeitada pelo renderer. Três novos testes de apresentação; não há equivalência à View SQL canônica.
+
+## Baseline sintético explícito (incremento T1)
+
+A criação do cenário exige `baseline_evidence_cutoff_date` ISO válido e imutável, declarado como conteúdo sintético e armazenado no evento de criação; as janelas dos ciclos devem começar depois do cutoff inicial. O snapshot e o renderer apresentam separadamente o baseline e os cutoffs dos ciclos. Não houve consulta real a fontes científicas.
