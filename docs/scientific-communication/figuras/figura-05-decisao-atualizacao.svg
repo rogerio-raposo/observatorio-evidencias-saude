@@ -1,59 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2200" viewBox="0 0 1200 2200" role="img" aria-labelledby="title description">
-<title id="title">Figura 5 — Fluxo de reavaliação e atualização das evidências no OES</title>
-<desc id="description">Diagrama conceitual de sinais, triagem, avaliação de lacunas operacionais, materialidade, decisões de manutenção ou atualização, confirmação de mudança científica e verificação de garantia antes de uma nova versão. Setas pontilhadas representam retorno para reavaliação, não automação. Não demonstra vigilância factual contínua nem M3 operacional.</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#536B7E"/></marker></defs>
-<style>
-text{font-family:Arial,Helvetica,sans-serif;fill:#20364A}
-.nodeText{font-size:17px}.decisionText{font-size:17px}
-.edgeLabel{font-size:14px;fill:#405569}
-.annotation{font-size:17px;fill:#405569}
-.heading{font-size:24px;font-weight:700}
-</style>
-<rect width="1200" height="2200" fill="#fff"/>
-<text x="600" y="43" text-anchor="middle" class="heading">Decisão de reavaliar e atualizar evidências</text>
-<text x="600" y="70" text-anchor="middle" class="annotation">Modelo conceitual proposto — fluxos não automatizados</text>
-<g id="connections"><path d="M600 193 V235" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M600 323 V372" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M360 417 H200 V535" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="190" y="399" class="edgeLabel">Lacuna operacional</text>
-<path d="M665 462 V535" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="687" y="504" class="edgeLabel">Sinal pertinente</text>
-<path d="M360 442 H16 V1118 H185 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="24" y="1087" class="edgeLabel">Não pertinente</text>
-<path d="M200 640 V725" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M363 775 H490" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="368" y="761" class="edgeLabel">Impacto justificado</text>
-<path d="M200 829 V1120 H185 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="41" y="1108" class="edgeLabel">Sem impacto</text>
-<path d="M665 639 V725" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M665 830 V945" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="684" y="888" class="edgeLabel">Avaliação suficiente</text>
-<path d="M840 785 H858 V922 H875 V947" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="865" y="874" class="edgeLabel">Inconclusiva</text>
-<path d="M840 411 H1180 V890 H1080 V930" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="904" y="397" class="edgeLabel">Triagem insuficiente</text>
-<path d="M363 807 H449 V888 H995 V930" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="459" y="873" class="edgeLabel">Indeterminado</text>
-<path d="M665 1040 V1162" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="680" y="1107" class="edgeLabel">Investigar</text>
-<path d="M840 1030 H856 V1217 H875" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="885" y="1120" class="edgeLabel">Atualidade / uso</text>
-<path d="M490 1003 H414 V1222 H343" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="344" y="1109" class="edgeLabel">Sem mudança</text>
-<path d="M840 961 H858 V907 H955 V930" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="892" y="901" class="edgeLabel">Reavaliar</text>
-<path d="M665 1282 V1375" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M665 1483 V1570" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/>
-<path d="M490 1620 H382 V1250 H343" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="388" y="1594" class="edgeLabel">Não</text>
-<path d="M840 1620 H1188 V1088 H1114 V1055" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="1027" y="1597" class="edgeLabel">Inconclusivo</text>
-<path d="M665 1670 V1760" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="681" y="1720" class="edgeLabel">Sim</text>
-<path d="M840 1816 H870" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="843" y="1794" class="edgeLabel">Não</text>
-<path d="M665 1870 V1980" fill="none" stroke="#536B7E" stroke-width="2.5" marker-end="url(#arrow)"/><text x="680" y="1936" class="edgeLabel">Sim</text>
-<path d="M1020 930 V892 H1192 V342 H841 V417" fill="none" stroke="#536B7E" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow)"/><text x="974" y="881" class="edgeLabel">Retomar triagem</text></g>
-<g id="steps"><g id="node-I" role="group" aria-label="ALVO E REGIME DE MANUTENÇÃO. Pergunta, versão, fontes e regime M aplicável"><rect x="360" y="105" width="480" height="88" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="600" y="144.5" class="nodeText"><tspan x="600" dy="0" font-weight="700">ALVO E REGIME DE MANUTENÇÃO</tspan><tspan x="600" dy="21" >Pergunta, versão, fontes e regime M aplicável</tspan></text></g>
-<g id="node-S" role="group" aria-label="SINAL OU GATILHO REGISTRADO. Evidência, correção, segurança, demanda ou lacuna"><rect x="360" y="235" width="480" height="88" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="600" y="274.5" class="nodeText"><tspan x="600" dy="0" font-weight="700">SINAL OU GATILHO REGISTRADO</tspan><tspan x="600" dy="21" >Evidência, correção, segurança, demanda ou lacuna</tspan></text></g>
-<g id="node-P" role="group" aria-label="TRIAGEM. Classe, pertinência e proveniência"><rect x="360" y="372" width="480" height="90" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="600" y="412.5" class="decisionText"><tspan x="600" dy="0" font-weight="700">TRIAGEM</tspan><tspan x="600" dy="21" >Classe, pertinência e proveniência</tspan></text></g>
-<g id="node-O" role="group" aria-label="LACUNA OPERACIONAL. Registrar falha e examinar. o impacto da cobertura"><rect x="38" y="535" width="325" height="105" rx="11" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="7 5"/><text text-anchor="middle" x="200.5" y="572.5" class="nodeText"><tspan x="200.5" dy="0" font-weight="700">LACUNA OPERACIONAL</tspan><tspan x="200.5" dy="21" >Registrar falha e examinar</tspan><tspan x="200.5" dy="21" >o impacto da cobertura</tspan></text></g>
-<g id="node-Q" role="group" aria-label="AVALIAÇÃO DA LACUNA. Compromete a sustentação. da atualidade?"><rect x="38" y="725" width="325" height="104" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="200.5" y="762" class="decisionText"><tspan x="200.5" dy="0" font-weight="700">AVALIAÇÃO DA LACUNA</tspan><tspan x="200.5" dy="21" >Compromete a sustentação</tspan><tspan x="200.5" dy="21" >da atualidade?</tspan></text></g>
-<g id="node-C" role="group" aria-label="SINAL PERTINENTE. Vincular pergunta, fontes,. data e versão-alvo"><rect x="490" y="535" width="350" height="104" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="665" y="572" class="nodeText"><tspan x="665" dy="0" font-weight="700">SINAL PERTINENTE</tspan><tspan x="665" dy="21" >Vincular pergunta, fontes,</tspan><tspan x="665" dy="21" >data e versão-alvo</tspan></text></g>
-<g id="node-M" role="group" aria-label="MATERIALIDADE. Impacto científico e adequação. de uso suficientemente avaliados?"><rect x="490" y="725" width="350" height="105" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="665" y="762.5" class="decisionText"><tspan x="665" dy="0" font-weight="700">MATERIALIDADE</tspan><tspan x="665" dy="21" >Impacto científico e adequação</tspan><tspan x="665" dy="21" >de uso suficientemente avaliados?</tspan></text></g>
-<g id="node-U" role="group" aria-label="AVALIAÇÃO PENDENTE. Informação insuficiente:. documentar incerteza. e complementar dados"><rect x="875" y="930" width="290" height="125" rx="11" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="7 5"/><text text-anchor="middle" x="1020" y="967" class="nodeText"><tspan x="1020" dy="0" font-weight="700">AVALIAÇÃO PENDENTE</tspan><tspan x="1020" dy="21" >Informação insuficiente:</tspan><tspan x="1020" dy="21" >documentar incerteza</tspan><tspan x="1020" dy="21" >e complementar dados</tspan></text></g>
-<g id="node-D" role="group" aria-label="DECISÃO DOCUMENTADA. Avaliação e responsabilidade registradas"><rect x="490" y="945" width="350" height="95" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="665" y="988" class="decisionText"><tspan x="665" dy="0" font-weight="700">DECISÃO DOCUMENTADA</tspan><tspan x="665" dy="21" >Avaliação e responsabilidade registradas</tspan></text></g>
-<g id="node-N" role="group" aria-label="MANTER SEM NOVA VERSÃO. Justificar manutenção, observação. ou pendência operacional"><rect x="28" y="1162" width="315" height="120" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="185.5" y="1207" class="nodeText"><tspan x="185.5" dy="0" font-weight="700">MANTER SEM NOVA VERSÃO</tspan><tspan x="185.5" dy="21" >Justificar manutenção, observação</tspan><tspan x="185.5" dy="21" >ou pendência operacional</tspan></text></g>
-<g id="node-R" role="group" aria-label="USO OU ATUALIDADE. Avaliação própria e decisão. registrada; sem atualizar. a ciência automaticamente"><rect x="875" y="1152" width="290" height="130" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="1020" y="1191.5" class="nodeText"><tspan x="1020" dy="0" font-weight="700">USO OU ATUALIDADE</tspan><tspan x="1020" dy="21" >Avaliação própria e decisão</tspan><tspan x="1020" dy="21" >registrada; sem atualizar</tspan><tspan x="1020" dy="21" >a ciência automaticamente</tspan></text></g>
-<g id="node-A" role="group" aria-label="INVESTIGAR OU ATUALIZAR. Definir escopo incremental/amplo. e rerotear, quando necessário"><rect x="490" y="1162" width="350" height="120" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="665" y="1207" class="nodeText"><tspan x="665" dy="0" font-weight="700">INVESTIGAR OU ATUALIZAR</tspan><tspan x="665" dy="21" >Definir escopo incremental/amplo</tspan><tspan x="665" dy="21" >e rerotear, quando necessário</tspan></text></g>
-<g id="node-W" role="group" aria-label="TRABALHO CIENTÍFICO. Busca, seleção, avaliação crítica,. síntese e certeza, se aplicáveis"><rect x="490" y="1375" width="350" height="108" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="665" y="1414" class="nodeText"><tspan x="665" dy="0" font-weight="700">TRABALHO CIENTÍFICO</tspan><tspan x="665" dy="21" >Busca, seleção, avaliação crítica,</tspan><tspan x="665" dy="21" >síntese e certeza, se aplicáveis</tspan></text></g>
-<g id="node-K" role="group" aria-label="MUDANÇA MATERIAL. Efetivamente confirmada?"><rect x="490" y="1570" width="350" height="100" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="665" y="1615.5" class="decisionText"><tspan x="665" dy="0" font-weight="700">MUDANÇA MATERIAL</tspan><tspan x="665" dy="21" >Efetivamente confirmada?</tspan></text></g>
-<g id="node-G" role="group" aria-label="REVISÃO E GARANTIA. Requisitos da nova versão. efetivamente satisfeitos?"><rect x="490" y="1760" width="350" height="110" rx="18" fill="#fff" stroke="#506578" stroke-width="2.5"/><text text-anchor="middle" x="665" y="1800" class="decisionText"><tspan x="665" dy="0" font-weight="700">REVISÃO E GARANTIA</tspan><tspan x="665" dy="21" >Requisitos da nova versão</tspan><tspan x="665" dy="21" >efetivamente satisfeitos?</tspan></text></g>
-<g id="node-B" role="group" aria-label="CORRIGIR OU BLOQUEAR. Não publicar sem cumprir. os requisitos aplicáveis"><rect x="870" y="1780" width="295" height="112" rx="11" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="7 5"/><text text-anchor="middle" x="1017.5" y="1821" class="nodeText"><tspan x="1017.5" dy="0" font-weight="700">CORRIGIR OU BLOQUEAR</tspan><tspan x="1017.5" dy="21" >Não publicar sem cumprir</tspan><tspan x="1017.5" dy="21" >os requisitos aplicáveis</tspan></text></g>
-<g id="node-V" role="group" aria-label="NOVA VERSÃO APROVADA. ProductVersion ou InvestigationVersion. Preservar proveniência e histórico"><rect x="445" y="1980" width="440" height="120" rx="11" fill="#EFF4F7" stroke="#5E7182" stroke-width="2" /><text text-anchor="middle" x="665" y="2025" class="nodeText"><tspan x="665" dy="0" font-weight="700">NOVA VERSÃO APROVADA</tspan><tspan x="665" dy="21" >ProductVersion ou InvestigationVersion</tspan><tspan x="665" dy="21" >Preservar proveniência e histórico</tspan></text></g></g>
-<path d="M80 2150 H1120" stroke="#B3BEC8" stroke-width="1"/>
-<text x="600" y="2175" text-anchor="middle" font-size="15">Sinal ≠ mudança científica · Alerta ≠ atualização · garantia não é herdada · M3 não operacional</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1720" viewBox="0 0 1100 1720" role="img" aria-labelledby="title description">
+<title id="title">Figura 5 — Fluxo decisório de atualização do OES</title>
+<desc id="description">Fluxo conceitual: sinal, triagem, distinção entre lacuna operacional e sinal científico, avaliação de materialidade, decisão de manter, reavaliar ou investigar, confirmação de mudança material e revisão e garantia antes de nova versão. Alertas e sinais não alteram automaticamente conclusões; M3 não operacional.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#526779"/></marker></defs>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#223747}.h{font-size:20px;font-weight:700}.b{font-size:16px}.label{font-size:15px;fill:#344c60}</style>
+<rect width="1100" height="1720" fill="white"/>
+<text x="550" y="42" text-anchor="middle" font-size="23" font-weight="700">Reavaliação e atualização de evidências</text>
+<text x="550" y="72" text-anchor="middle" font-size="16">Modelo proposto — não demonstra vigilância factual contínua</text>
+<path d="M550 202 V235" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<path d="M550 327 V360" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<path d="M430 452 V475 H270 V505" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="290" y="486" class="label">Lacuna</text>
+<path d="M670 452 V475 H830 V505" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="835" y="486" class="label">Sinal pertinente</text>
+<path d="M270 615 V665 H480 V700" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="286" y="654" class="label">Impacto avaliado</text>
+<path d="M830 615 V665 H620 V700" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<path d="M550 792 V835" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<path d="M550 927 V965 H197 V1010" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="224" y="980" class="label">Manter</text>
+<path d="M550 927 V1010" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="560" y="973" class="label">Reavaliar</text>
+<path d="M550 927 V965 H903 V1010" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="911" y="980" class="label">Investigar</text>
+<path d="M903 1120 V1200" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<path d="M903 1310 V1385" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="916" y="1356" class="label">Se confirmada</text>
+<path d="M903 1495 V1570" fill="none" stroke="#526779" stroke-width="2.4" marker-end="url(#arr)"/>
+<text x="915" y="1538" class="label">Se satisfeitos</text>
+<g id="step-1"><rect x="300" y="110" width="500" height="92" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="147" class="h">Objeto e regime</text>
+<text text-anchor="middle" x="550" y="176" class="b">Pergunta, versão-alvo, fontes e manutenção M</text></g>
+<g id="step-2"><rect x="300" y="235" width="500" height="92" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="272" class="h">Sinal documentado</text>
+<text text-anchor="middle" x="550" y="301" class="b">Evidência, correção, segurança, demanda ou lacuna</text></g>
+<g id="step-3"><rect x="300" y="360" width="500" height="92" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="397" class="h">Triagem e proveniência</text>
+<text text-anchor="middle" x="550" y="426" class="b">Pertinência e natureza da ocorrência</text></g>
+<g id="step-4"><rect x="55" y="505" width="430" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="270" y="542" class="h">Lacuna operacional</text>
+<text text-anchor="middle" x="270" y="571" class="b">Registrar falha e avaliar impacto na atualidade</text></g>
+<g id="step-5"><rect x="615" y="505" width="430" height="110" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="830" y="542" class="h">Sinal científico pertinente</text>
+<text text-anchor="middle" x="830" y="571" class="b">Vincular pergunta, fonte, data e versão-alvo</text></g>
+<g id="step-6"><rect x="300" y="700" width="500" height="92" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="737" class="h">Avaliação de materialidade</text>
+<text text-anchor="middle" x="550" y="766" class="b">Impacto científico, validade e adequação de uso</text></g>
+<g id="step-7"><rect x="300" y="835" width="500" height="92" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="872" class="h">Decisão documentada</text>
+<text text-anchor="middle" x="550" y="901" class="b">Responsabilidade, justificativa e objeto afetado</text></g>
+<g id="step-8"><rect x="42" y="1010" width="310" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="197" y="1047" class="h">Manter versão</text>
+<text text-anchor="middle" x="197" y="1076" class="b">Não atualizar; documentar a justificativa</text></g>
+<g id="step-9"><rect x="395" y="1010" width="310" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="550" y="1047" class="h">Reavaliar uso/atualidade</text>
+<text text-anchor="middle" x="550" y="1076" class="b">Completar dados; não alterar automaticamente</text></g>
+<g id="step-10"><rect x="748" y="1010" width="310" height="110" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="903" y="1047" class="h">Investigar ou atualizar</text>
+<text text-anchor="middle" x="903" y="1076" class="b">Definir escopo e executar trabalho científico</text></g>
+<g id="step-11"><rect x="705" y="1200" width="350" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="880" y="1237" class="h">Mudança material confirmada?</text>
+<text text-anchor="middle" x="880" y="1266" class="b">Caso contrário, manter ou reavaliar</text></g>
+<g id="step-12"><rect x="705" y="1385" width="350" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="880" y="1422" class="h">Revisão e garantia satisfeitas?</text>
+<text text-anchor="middle" x="880" y="1451" class="b">Caso contrário, corrigir ou bloquear</text></g>
+<g id="step-13"><rect x="705" y="1570" width="350" height="94" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
+<text text-anchor="middle" x="880" y="1607" class="h">Nova versão aprovada</text>
+<text text-anchor="middle" x="880" y="1636" class="b">Preservar histórico e proveniência</text></g>
+<text x="550" y="1698" font-size="14" text-anchor="middle">Sinal ≠ mudança científica · Alerta ≠ atualização · Garantia não herdada · M3 bloqueado</text></svg>
