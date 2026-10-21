@@ -5304,3 +5304,10 @@ Documentos:
 - Consolidados P1 (autorizado apenas para leitura), P2-A (autorizado apenas para leitura), P2-B (seleção documental) e P2-C1 (minuta **NÃO APROVADA**), preservando P2-C2/P3/P4 bloqueados.
 - Relatos de inventário local carecem de logs técnicos brutos persistidos e exigem revalidação antes de instalação. PostgreSQL 17/Psycopg 3 permanecem candidatos; nenhum componente, SQL, PostgreSQL, Neon, CI, serviço ou dado factual foi operado neste CP.
 - T2-A2 segue NOT_AUTHORIZED; T1/T2-A1, gates e bloqueios intactos. Próxima atividade documental: pacote de decisão P2-C1 sob novo `Prossiga`. STOP.
+
+
+## 2026-10-21 — CP224: decisão de ambiente P2-C1 ainda pendente (Documento 199)
+
+- Consolidadas três atividades documentais pós-CP223: pacote final P2-C1, ressalvas de persistência do ambiente e comparação entre ambiente local persistente A e temporário reproduzível B.
+- **Nenhum ambiente selecionado, P2-C1 NOT_APPROVED e T2-A2 NOT_AUTHORIZED**; nenhuma instalação, teste, PostgreSQL/SQL, Neon, CI, cloud, dado factual ou gasto.
+- Evidências locais prévias permanecem relatos não acompanhados de logs brutos persistidos. T1/T2-A1 e gates intactos; retomada documental mediante novo `Prossiga`. STOP.

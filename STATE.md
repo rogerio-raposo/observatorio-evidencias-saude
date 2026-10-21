@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP223 — 2026-10-21**.
+- checkpoint vigente: **CP224 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -93,6 +93,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - **P2-C1 NÃO APROVADO**; P2-C2/P3/P4 e T2-A2 igualmente não autorizados. Nenhuma instalação, driver, servidor, SQL, Neon, CI, cloud, fonte factual ou gasto foi executado neste checkpoint documental.
 - T1/T2-A1 encerrados de modo restrito, 36/75 testes somente históricos; nenhuma mudança semântica, migração, gate ou fase.
 - Próximo `Prossiga`: preparar apenas pacote final de decisão P2-C1 com origem/versões, caminhos, isolamento, rollback e critérios de parada.
+
+## 1K. D1-T2/A2 — decisão de ambiente ainda pendente (CP224)
+
+- Documento 199 consolida três atividades documentais: pacote P2-C1, revisão da persistência em `/mnt/data` e alternativas A persistente versus B temporária.
+- **Ambiente de destino não escolhido; P2-C1 não aprovado; T2-A2 NOT_AUTHORIZED.** Nenhuma instalação ou execução PostgreSQL/SQL/Neon/CI/cloud, teste ou despesa nesta formalização.
+- Relatos de inventário e persistência local ainda não possuem logs brutos canônicos; revalidar antes de autorização concreta.
+- Próximo `Prossiga`: matriz documental de decisão A/B; preservar T1/T2-A1 e todos os gates.
 
 ## 2. Estado das fases
 
