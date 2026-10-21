@@ -73,5 +73,46 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.bridge.repo.read_snapshot('other').revision,1)
         self.assertEqual(self.bridge.repo.read_snapshot('case-synthetic').revision,1)
 
+    def test_signal_parity_and_receipt(self):
+        self.create()
+        args = dict(cycle_no=1, window_start='2026-10-02',
+                    window_end='2026-10-03', request_id='cycle')
+        self.bridge.start_cycle('case-synthetic', **args)
+        self.legacy.start_cycle('case-synthetic', **args)
+        sig = dict(cycle_no=1, signal_id='s1', kind='search_hit',
+                   source='synthetic:hit', request_id='sig')
+        result = self.bridge.register_signal('case-synthetic', **sig)
+        self.assertEqual(result, self.legacy.register_signal('case-synthetic', **sig))
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), self.legacy.snapshot('case-synthetic'))
+        self.assertEqual(self.bridge.register_signal('case-synthetic', **sig), result)
+        self.assertEqual(len(self.bridge.repo.list_events('case-synthetic')), 3)
+
+    def test_signal_invalid_source_has_no_side_effects(self):
+        self.create()
+        self.bridge.start_cycle('case-synthetic', cycle_no=1,
+            window_start='2026-10-02', window_end='2026-10-03', request_id='cycle')
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(DomainError):
+            self.bridge.register_signal('case-synthetic', cycle_no=1,
+                signal_id='bad', kind='search_hit', source='https://example.org', request_id='bad')
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'bad'))
+
+    def test_signal_request_conflict_and_duplicate_id(self):
+        self.create()
+        self.bridge.start_cycle('case-synthetic', cycle_no=1,
+            window_start='2026-10-02', window_end='2026-10-03', request_id='cycle')
+        self.bridge.register_signal('case-synthetic', cycle_no=1,
+            signal_id='s1', kind='search_hit', source='synthetic:hit', request_id='sig')
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(RepositoryConflict):
+            self.bridge.register_signal('case-synthetic', cycle_no=1,
+                signal_id='s2', kind='search_hit', source='synthetic:hit', request_id='sig')
+        with self.assertRaises(DomainError):
+            self.bridge.register_signal('case-synthetic', cycle_no=1,
+                signal_id='s1', kind='search_hit', source='synthetic:hit', request_id='new')
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'new'))
+
 if __name__ == '__main__':
     unittest.main()

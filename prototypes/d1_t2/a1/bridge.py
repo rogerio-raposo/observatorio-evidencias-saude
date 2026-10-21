@@ -72,6 +72,14 @@ class SyntheticCommandBridge:
                  window_start=window_start, window_end=window_end,
                  request_id=request_id))
 
+    def register_signal(self, scenario_id: str, *, cycle_no: int, signal_id: str,
+                        kind: str, source: str, request_id: str) -> dict:
+        payload = {'action': 'signal', 'cycle_no': cycle_no,
+                   'signal_id': signal_id, 'kind': kind, 'source': source}
+        return self._execute(scenario_id, request_id, payload, 'register_signal',
+            dict(scenario_id=scenario_id, cycle_no=cycle_no, signal_id=signal_id,
+                 kind=kind, source=source, request_id=request_id))
+
     def snapshot(self, scenario_id: str) -> dict:
         record = self.repo.read_snapshot(scenario_id)
         if record is None:
