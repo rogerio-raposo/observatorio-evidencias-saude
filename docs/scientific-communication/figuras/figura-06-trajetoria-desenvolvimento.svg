@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1273" viewBox="0 0 900 1273" role="img" aria-labelledby="title description">
+<title id="title">Figura 6 — Trajetória e estado documentado das oito fases do OES em 20 de outubro de 2026</title>
+<desc id="description">Oito fases em dois segmentos de quatro. Fases 0 e 1 com bases iniciais consolidadas; fase 2 concluída como baseline arquitetural; fase 3 concluída no escopo técnico e taxonômico; fase 4 em desenvolvimento e NOT_READY para operação factual; fases 5 a 7 não iniciadas formalmente. Linhas pontilhadas indicam etapas planejadas, não execução. A figura não representa percentuais, validação científica independente ou prontidão para operação sustentada.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#526778"/></marker></defs>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#223849}.header{font-size:25px;font-weight:700}.sub{font-size:16px}.phase{font-size:24px;font-weight:700}.name{font-size:16px;font-weight:600}.state{font-size:15px;font-weight:700}.note{font-size:15px}.small{font-size:14px}</style>
+<rect width="900" height="1273" fill="white"/>
+<text x="450" y="52" text-anchor="middle" class="header">Desenvolvimento do OES: oito fases</text>
+<text x="450" y="84" text-anchor="middle" class="sub">Estado documentado em 20/10/2026 — não é uma escala de maturidade</text>
+<text x="55" y="144" class="state">MARCOS DOCUMENTADOS · FASES 0–3</text>
+<text x="55" y="662" class="state">FASE EM DESENVOLVIMENTO E ETAPAS PLANEJADAS</text>
+<g id="phase-0" role="group" aria-label="FASE 0. Concepção e fundamentos. BASE INICIAL. CONSOLIDADA"><rect x="48" y="195" width="380" height="170" rx="13" fill="#F3F6F9" stroke="#50677C" stroke-width="2"/>
+<text x="70" y="235" class="phase">FASE 0</text>
+<text x="70" y="270" class="name">Concepção e fundamentos</text>
+<text x="70" y="307" class="state">BASE INICIAL</text>
+<text x="70" y="331" class="note">CONSOLIDADA</text>
+</g>
+<g id="phase-1" role="group" aria-label="FASE 1. Manual Metodológico. BASE INICIAL CONSOLIDADA. Documentos 10–15"><rect x="472" y="195" width="380" height="170" rx="13" fill="#F3F6F9" stroke="#50677C" stroke-width="2"/>
+<text x="494" y="235" class="phase">FASE 1</text>
+<text x="494" y="270" class="name">Manual Metodológico</text>
+<text x="494" y="307" class="state">BASE INICIAL CONSOLIDADA</text>
+<text x="494" y="331" class="note">Documentos 10–15</text>
+</g>
+<g id="phase-2" role="group" aria-label="FASE 2. Modelo de Dados. BASELINE ARQUITETURAL. CONCLUÍDA"><rect x="48" y="405" width="380" height="170" rx="13" fill="#EDF2F5" stroke="#50677C" stroke-width="2"/>
+<text x="70" y="445" class="phase">FASE 2</text>
+<text x="70" y="480" class="name">Modelo de Dados</text>
+<text x="70" y="517" class="state">BASELINE ARQUITETURAL</text>
+<text x="70" y="541" class="note">CONCLUÍDA</text>
+</g>
+<g id="phase-3" role="group" aria-label="FASE 3. Produtos do Observatório. CONCLUÍDA NO ESCOPO. TÉCNICO E TAXONÔMICO"><rect x="472" y="405" width="380" height="170" rx="13" fill="#EDF2F5" stroke="#50677C" stroke-width="2"/>
+<text x="494" y="445" class="phase">FASE 3</text>
+<text x="494" y="480" class="name">Produtos do Observatório</text>
+<text x="494" y="517" class="state">CONCLUÍDA NO ESCOPO</text>
+<text x="494" y="541" class="note">TÉCNICO E TAXONÔMICO</text>
+</g>
+<g id="phase-4" role="group" aria-label="FASE 4. Protocolo de Atualização. EM DESENVOLVIMENTO. Operação factual: NOT_READY"><rect x="48" y="720" width="380" height="170" rx="13" fill="#FFFFFF" stroke="#50677C" stroke-width="3"/>
+<text x="70" y="760" class="phase">FASE 4</text>
+<text x="70" y="795" class="name">Protocolo de Atualização</text>
+<text x="70" y="832" class="state">EM DESENVOLVIMENTO</text>
+<text x="70" y="856" class="note">Operação factual: NOT_READY</text>
+</g>
+<g id="phase-5" role="group" aria-label="FASE 5. Automação e IA. NÃO INICIADA. FORMALMENTE"><rect x="472" y="720" width="380" height="170" rx="13" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="494" y="760" class="phase">FASE 5</text>
+<text x="494" y="795" class="name">Automação e IA</text>
+<text x="494" y="832" class="state">NÃO INICIADA</text>
+<text x="494" y="856" class="note">FORMALMENTE</text>
+</g>
+<g id="phase-6" role="group" aria-label="FASE 6. Validação. NÃO INICIADA. FORMALMENTE"><rect x="48" y="930" width="380" height="170" rx="13" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="70" y="970" class="phase">FASE 6</text>
+<text x="70" y="1005" class="name">Validação</text>
+<text x="70" y="1042" class="state">NÃO INICIADA</text>
+<text x="70" y="1066" class="note">FORMALMENTE</text>
+</g>
+<g id="phase-7" role="group" aria-label="FASE 7. Operação contínua. NÃO INICIADA. FORMALMENTE"><rect x="472" y="930" width="380" height="170" rx="13" fill="#FFFFFF" stroke="#7A8794" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="494" y="970" class="phase">FASE 7</text>
+<text x="494" y="1005" class="name">Operação contínua</text>
+<text x="494" y="1042" class="state">NÃO INICIADA</text>
+<text x="494" y="1066" class="note">FORMALMENTE</text>
+</g>
+<path d="M428 280 H472" fill="none" stroke="#526778" stroke-width="2.5"  marker-end="url(#arrow)"/>
+<path d="M662 365 V386 H238 V405" fill="none" stroke="#526778" stroke-width="2.5"  marker-end="url(#arrow)"/>
+<path d="M428 490 H472" fill="none" stroke="#526778" stroke-width="2.5"  marker-end="url(#arrow)"/>
+<path d="M662 575 V634 H238 V720" fill="none" stroke="#526778" stroke-width="2.5"  marker-end="url(#arrow)"/>
+<path d="M428 805 H472" fill="none" stroke="#526778" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<path d="M662 890 V911 H238 V930" fill="none" stroke="#526778" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<path d="M428 1015 H472" fill="none" stroke="#526778" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<text x="450" y="1148" text-anchor="middle" class="note">Linhas contínuas: sucessão documental até a Fase 4.</text>
+<text x="450" y="1176" text-anchor="middle" class="note">Linhas pontilhadas: fases futuras ainda não formalmente iniciadas.</text>
+<path d="M48 1202 H852" stroke="#B7C1CB"/>
+<text x="450" y="1230" text-anchor="middle" class="small">Conclusão documental/técnica ≠ validação científica independente.</text>
+<text x="450" y="1254" text-anchor="middle" class="small">M2 sintético não comprova monitoramento factual contínuo; M3 permanece bloqueado.</text>
+</svg>
