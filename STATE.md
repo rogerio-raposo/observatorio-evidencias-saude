@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 20 de outubro de 2026  
+**Última atualização:** 21 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP213 — 2026-10-20**.
+- checkpoint vigente: **CP214 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,14 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## 1A. Prioridade vigente e diretriz arquitetural — CP214
+
+- **Ordem prospectiva aprovada:** D0 documental/editorial concluído → **D1 protótipo sintético funcional prioritário** → D2 factual posterior → governança operacional completa posteriormente. O Documento 165 conserva a decisão histórica restrita a D0/D1 documental.
+- **Preferência expressa do proprietário:** solução na nuvem e softwares gratuitos, sem uso de serviços pagos ou compromisso com fornecedor.
+- **Arquitetura técnica em avaliação:** separar regras de domínio/processo da integridade de persistência; Python/monólito modular e FastAPI são candidatos; PostgreSQL permanece implementação de referência validada para PoC, não escolha final de produção. Não há implantação ou API autorizada.
+- **Base canônica suplementar:** `docs/governance/169-prioridade-d1-stack-referencia-cp214.md`. **D1-A2 = somente consolidação documental**; D1-A3 = análise documental de dependências, fixtures e alternativas de execução, exclusivamente após novo `Prossiga`.
+- **Gates/pendências permanecem integralmente inalterados:** Fase 4 NOT_READY; Fase 5 NOT_STARTED; nenhuma autorização adicional para SQL, Neon, CI, fontes factuais, cloud provisioning, contratação ou publicação.
 
 ## 2. Estado das fases
 

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP213 — 2026-10-20**
+**CP214 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP214.md`
 
 Checkpoint anterior:
 
-`CP212`
+`CP213`
 
 Status:
 
@@ -570,3 +570,5 @@ em **Modo Continuidade**.
 - **CP212 — 2026-10-20:** Documento 167 consolida versão editorial D0 e rastreabilidade para pesquisadores, sem divulgação ou execução. STOP.
 
 - **CP213 — 2026-10-20:** Documento 168 consolida apresentação executiva D0 em duas páginas conceituais, sem envio externo. STOP.
+
+- **CP214 — 2026-10-21:** Governança 169 formaliza prioridade D1, preservando Documento 165 histórico; arquitetura Python/PostgreSQL candidata e preferência expressa por nuvem/software gratuito. Sem execução, serviços pagos ou alteração de gates. Próximo D1-A3 documental sob `Prossiga`. STOP.

@@ -5236,3 +5236,11 @@ Documentos:
 ## 2026-10-20 — Apresentação executiva D0 (Documento 168 / CP213)
 
 - Consolidada versão de duas páginas conceituais para apreciação do proprietário e possível interlocução futura com pesquisadores, mantendo ressalvas científicas e operacionais. Nenhum envio externo, revisão científica independente ou execução. STOP.
+
+
+## 2026-10-21 — Repriorização D1 e arquitetura evolutiva (Governança 169 / CP214)
+
+- Nova sequência prospectiva registrada: D0 documental/editorial concluído; D1 protótipo sintético funcional como prioridade; D2 factual depois; governança operacional completa posteriormente. Preservado o Documento 165 como registro histórico do escopo documental original.
+- Proprietário explicitou preferência por execução em nuvem e softwares gratuitos, sem serviços pagos. Análise crítica identificou indício de acoplamento entre regras de processo e funções SQL, sem declarar causalidade provada.
+- Python/monólito modular, FastAPI candidato e PostgreSQL como persistência preferencial permanecem **alternativas em estudo**, não stack de produção homologada nem ordem de implantação. D1-A3 avaliará contratos legados e menores dependências, após `Prossiga`.
+- Nenhuma operação SQL/Neon/CI, consulta factual, provisionamento, serviço pago, execução de protótipo ou alteração de gate; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos NOT_COLLECTED, 12 controles de papéis pendentes e demais bloqueios mantidos. STOP.
