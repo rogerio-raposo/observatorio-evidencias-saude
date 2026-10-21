@@ -114,5 +114,68 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
         self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'new'))
 
+    def assessment_setup(self):
+        self.create()
+        start = dict(cycle_no=1, window_start='2026-10-02',
+                     window_end='2026-10-03', request_id='cycle')
+        signal = dict(cycle_no=1, signal_id='s1', kind='search_hit',
+                      source='synthetic:hit', request_id='sig')
+        for service in (self.bridge, self.legacy):
+            service.start_cycle('case-synthetic', **start)
+            service.register_signal('case-synthetic', **signal)
+
+    def test_assessment_multivalued_impacts_parity_and_receipt(self):
+        self.assessment_setup()
+        params = dict(cycle_no=1, signal_id='s1', decision='retained_for_impact',
+                      impacts=['certainty', 'scope'], rationale='synthetic-only',
+                      scenario_actor='fictional-actor', request_id='assess')
+        result = self.bridge.record_assessment('case-synthetic', **params)
+        self.assertEqual(result, self.legacy.record_assessment('case-synthetic', **params))
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), self.legacy.snapshot('case-synthetic'))
+        self.assertEqual(self.bridge.record_assessment('case-synthetic', **params), result)
+        self.assertEqual(len(self.bridge.repo.list_events('case-synthetic')), 4)
+
+    def test_assessment_invalid_impact_is_atomic(self):
+        self.assessment_setup()
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(DomainError):
+            self.bridge.record_assessment('case-synthetic', cycle_no=1,
+                signal_id='s1', decision='retained_for_impact',
+                impacts=['certainty', 'certainty'], rationale='synthetic',
+                scenario_actor='fictional-actor', request_id='invalid-impact')
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'invalid-impact'))
+
+    def test_assessment_pending_preserves_t1_no_reassessment_semantics(self):
+        self.assessment_setup()
+        pending = dict(cycle_no=1, signal_id='s1', decision='pending', impacts=[],
+                       rationale='synthetic pending', scenario_actor='fictional-actor',
+                       request_id='pending')
+        self.assertEqual(self.bridge.record_assessment('case-synthetic', **pending),
+                         self.legacy.record_assessment('case-synthetic', **pending))
+        before = self.bridge.snapshot('case-synthetic')
+        amended = dict(pending, decision='excluded', request_id='second')
+        with self.assertRaises(DomainError):
+            self.bridge.record_assessment('case-synthetic', **amended)
+        with self.assertRaises(DomainError):
+            self.legacy.record_assessment('case-synthetic', **amended)
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), self.legacy.snapshot('case-synthetic'))
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'second'))
+
+    def test_assessment_request_conflict_and_missing_signal(self):
+        self.assessment_setup()
+        params = dict(cycle_no=1, signal_id='s1', decision='excluded', impacts=[],
+                      rationale='fictional', scenario_actor='fictional-actor',
+                      request_id='assess')
+        self.bridge.record_assessment('case-synthetic', **params)
+        before = self.bridge.snapshot('case-synthetic')
+        with self.assertRaises(RepositoryConflict):
+            self.bridge.record_assessment('case-synthetic', **dict(params, rationale='changed'))
+        with self.assertRaises(DomainError):
+            self.bridge.record_assessment('case-synthetic', **dict(params, signal_id='missing', request_id='missing'))
+        self.assertEqual(self.bridge.snapshot('case-synthetic'), before)
+        self.assertIsNone(self.bridge.repo.read_receipt('case-synthetic', 'missing'))
+
 if __name__ == '__main__':
     unittest.main()
