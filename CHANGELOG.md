@@ -5244,3 +5244,11 @@ Documentos:
 - Proprietário explicitou preferência por execução em nuvem e softwares gratuitos, sem serviços pagos. Análise crítica identificou indício de acoplamento entre regras de processo e funções SQL, sem declarar causalidade provada.
 - Python/monólito modular, FastAPI candidato e PostgreSQL como persistência preferencial permanecem **alternativas em estudo**, não stack de produção homologada nem ordem de implantação. D1-A3 avaliará contratos legados e menores dependências, após `Prossiga`.
 - Nenhuma operação SQL/Neon/CI, consulta factual, provisionamento, serviço pago, execução de protótipo ou alteração de gate; 36 migrations UNREVIEWED, zero pós-condições aprovadas, 36 requisitos NOT_COLLECTED, 12 controles de papéis pendentes e demais bloqueios mantidos. STOP.
+
+
+## 2026-10-21 — D1-A3–A5: especificação funcional e compatibilidade (Governança 170 / CP215)
+
+- Consolidada revisão estática de migrations 021–023, fixture M2, renderer, validador e run histórico S5; não houve reexecução SQL nem inspeção do ZIP do artefato 11455658237 (expiração prevista 2026-11-06).
+- Identificadas diferenças de enumeração entre contratos SQL e mapa editorial: tipos de candidatos, dimensões de impacto e códigos de decisão; exigido mapeamento testado sem alterar os códigos canônicos. Fixture com IA/owner sintéticos não comprova revisões efetivas.
+- Definido **como proposta** o contrato demonstrativo `oes.d1.monitor_snapshot/0.1` e uma sequência T1 Python sintético/testes isolados → T2 PostgreSQL isolado → T3 nuvem gratuita → T4 conformidade canônica. Nenhuma etapa operacional aprovada, realizada ou financiada.
+- Critérios S1–S6 traduzidos em ensaios futuros; documento de solicitação T1 preparado, aguardando aprovação expressa. D1 prioritário; D0 encerrado documentalmente; D2 e governança completa diferidos; bloqueios e gates preservados. STOP.

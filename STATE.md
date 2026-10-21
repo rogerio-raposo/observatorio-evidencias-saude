@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP214 — 2026-10-21**.
+- checkpoint vigente: **CP215 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -30,6 +30,14 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - **Arquitetura técnica em avaliação:** separar regras de domínio/processo da integridade de persistência; Python/monólito modular e FastAPI são candidatos; PostgreSQL permanece implementação de referência validada para PoC, não escolha final de produção. Não há implantação ou API autorizada.
 - **Base canônica suplementar:** `docs/governance/169-prioridade-d1-stack-referencia-cp214.md`. **D1-A2 = somente consolidação documental**; D1-A3 = análise documental de dependências, fixtures e alternativas de execução, exclusivamente após novo `Prossiga`.
 - **Gates/pendências permanecem integralmente inalterados:** Fase 4 NOT_READY; Fase 5 NOT_STARTED; nenhuma autorização adicional para SQL, Neon, CI, fontes factuais, cloud provisioning, contratação ou publicação.
+
+## 1B. D1-A3–A5 — preparação técnica documental (CP215)
+
+- `docs/governance/170-especificacao-minima-d1-a3-a5-cp215.md` consolida diagnóstico, plano mínimo S1–S6, incompatibilidades de vocabulário SQL/presentação e **pedido de autorização T1 ainda NÃO CONCEDIDO**.
+- Execução proposta T1: serviços Python e testes isolados estritamente sintéticos; sem SQL, Neon, CI remota, deploy, APIs públicas, consultas factuais ou serviços pagos. T2 banco sintético e T3 cloud exigem aprovações separadas.
+- Snapshot demonstrativo `oes.d1.monitor_snapshot/0.1` é proposta distinta da View SQL canônica; validações S5 históricas **não** demonstram execução atual ou equivalência.
+- Artefato S5 run `37558043092`, id `11455658237`, tem expiração histórica prevista para 2026-11-06; ZIP ainda não foi inspecionado/preservado.
+- **Próxima atividade D1-A6 após novo `Prossiga`:** submeter solicitação explícita para T1 sem iniciar implementação antes de aprovação. Estado dos gates, Fase 4/5 e demais pendências inalterado.
 
 ## 2. Estado das fases
 
