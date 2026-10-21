@@ -35,7 +35,7 @@ A elaboração deste documento pode ocorrer **antes do encerramento da Fase 4**,
 
 ## Organização
 
-Os futuros arquivos-fonte (por exemplo, Markdown), versões para circulação (por exemplo, PDF) e eventuais anexos poderão ser mantidos neste diretório com nomes identificáveis e versionamento explícito.
+Os arquivos-fonte em Markdown e as versões derivadas em DOCX editável poderão ser mantidos neste diretório com nomes e versões identificáveis. Para **todos os documentos de apresentação do OES, mesmo fora deste diretório**, aplica-se a [política transversal MD → DOCX → revisão manual no Word](politica-editorial-transversal-md-docx.md). A eventual conversão final para PDF será feita pelo proprietário no Microsoft Word, após revisão; não é etapa automática padrão do assistente. O Markdown permanece canônico e os formatos nativos de artefatos técnicos não são afetados.
 
 **Fonte canônica para o estado do projeto:** [STATE.md](../../STATE.md).  
 **Ponteiro de continuidade operacional:** [archive/handoffs/oes/README.md](../../archive/handoffs/oes/README.md).
