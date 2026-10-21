@@ -57,6 +57,10 @@ class SyntheticMonitorService:
                         scientific_conclusion: str, fixture_source: str, request_id: str) -> dict:
         if not all((scenario_id, target_version, monitor_version, scientific_conclusion, fixture_source)):
             raise DomainError('identities, scientific conclusion and provenance are mandatory')
+        if not fixture_source.startswith('synthetic:'):
+            raise DomainError('fixture provenance must be synthetic')
+        if target_version == monitor_version:
+            raise DomainError('monitor and target must have distinct version identities')
         if not request_id:
             raise DomainError('request_id is required')
         create_payload = {'action': 'create', 'target_version': target_version,

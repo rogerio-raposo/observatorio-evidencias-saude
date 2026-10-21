@@ -141,3 +141,21 @@ class AtomicRejectionTests(unittest.TestCase):
         self.assertEqual(service.snapshot('ATOMIC'), before)
         self.assertEqual(service.snapshot('ATOMIC')['cycles'][0]['status'], 'running')
         self.assertNotIn(('ATOMIC', 'close'), service.repo.receipts)
+
+
+class ScenarioProvenanceTests(unittest.TestCase):
+    def test_rejects_non_synthetic_fixture_source(self):
+        svc = SyntheticMonitorService()
+        with self.assertRaisesRegex(DomainError, 'provenance must be synthetic'):
+            svc.create_scenario(scenario_id='NOPE', target_version='target', monitor_version='monitor',
+                scientific_conclusion='Fixture', fixture_source='https://example.org/real', request_id='one')
+        self.assertEqual(svc.repo.scenarios, {})
+        self.assertEqual(svc.repo.receipts, {})
+
+    def test_rejects_same_monitor_and_target_identity(self):
+        svc = SyntheticMonitorService()
+        with self.assertRaisesRegex(DomainError, 'distinct version identities'):
+            svc.create_scenario(scenario_id='SAME', target_version='same-v1', monitor_version='same-v1',
+                scientific_conclusion='Fixture', fixture_source='synthetic:fixture', request_id='one')
+        self.assertEqual(svc.repo.scenarios, {})
+        self.assertEqual(svc.repo.receipts, {})
