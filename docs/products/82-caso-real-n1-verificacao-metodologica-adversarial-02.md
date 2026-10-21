@@ -130,3 +130,21 @@ Não significa:
 ---
 
 **Resultado final: PASSED.**
+
+---
+
+## Adendo documental posterior — qualificação da interpretação de arredondamento (20/10/2026)
+
+**Natureza:** esclarecimento superveniente ao PASSED de 05/10/2026. O resultado histórico, o escopo da verificação adversarial assistida por IA, os requisitos de garantia e a cadeia de decisões **não são reescritos nem reaprovados** por este adendo.
+
+Na **seção 6** deste Documento 82, a diferença entre **−0,72 e −0,73** foi descrita como *arredondamento interno* da publicação de **Stoop et al. (2026)**. A conferência posterior do texto integral da [fonte primária — PMID 41294333](https://pmc.ncbi.nlm.nih.gov/articles/PMC12959583/), DOI [10.1213/ANE.0000000000007815](https://doi.org/10.1213/ANE.0000000000007815), identificou:
+
+- **Resumo (*Abstract*):** SMD **−0,72**, IC95% **−0,92 a −0,53**;
+- **Corpo (*Results*, *Number Needed to Treat*, associado à Figura 2):** SMD **−0,73**, IC95% **−0,94 a −0,53**;
+- **Extração histórica OES:** SMD aproximadamente **−0,73**, IC95% **−0,94 a −0,53**, correspondentes ao **corpo do artigo**, como documentado também no [adendo ao Documento 78](78-caso-real-n1-musica-ansiedade-sintese.md).
+
+**Qualificação da seção 6:** *arredondamento* é uma hipótese **insuficiente para explicar toda a discrepância**, porque também varia o limite inferior do IC95%. A diferença está **no próprio relato da publicação**; a origem estatística não foi esclarecida nem submetida a recálculo independente. **Não se demonstrou erro de transcrição dos números extraídos pelo OES**, mas tampouco se validou independentemente a meta-análise.
+
+O **PASSED** histórico da seção 11 continua registrando que o segundo exame adversarial considerou resolvidas as questões então avaliadas, especialmente a **separação das estimativas de Stoop e Yu** e a descrição não exaustiva da checagem pós-corte. **Não deve ser lido como certificação de que os dois conjuntos de números publicados por Stoop sejam intercambiáveis, nem como resolução da diferença estatística.** Este adendo não executa nova revisão adversarial, reavaliação ROBIS ou avaliação GRADE.
+
+A **ProductVersion 2** do Caso N1-01 foi publicada internamente em **A2**, conforme o [Documento 85](85-caso-real-n1-resultado-validacao-a2-publicacao.md), sem revisão independente especializada. **Essa publicação e suas decisões de garantia não são modificadas neste registro.**
