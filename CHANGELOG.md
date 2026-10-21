@@ -5279,3 +5279,8 @@ Documentos:
 - Proprietário aprovou `OES / D1-T2-A1 / PYTHON_IN_MEMORY_REPOSITORY_BOUNDARY_ONLY`, formalizado no Documento 192. T2-A1 autoriza interface Python de repositório/Unit of Work **exclusivamente em memória**, com testes locais, diretório separado, preservação do T1 (36 testes) e versionamento GitHub com Freshness Gate.
 - Continuam excluídos SQL, PostgreSQL, Neon, drivers, CI remota, cloud, API pública, dados reais/factuais, serviços pagos, migrations, gates e T2-A2. T1 continua fechado tecnicamente e D1 é prioridade atual.
 - A presente atividade só formalizou a decisão: **nenhum código, teste ou serviço foi executado**. Primeiro incremento T2-A1 condicionado a novo `Prossiga`. STOP.
+
+## 2026-10-21 — CP220: revisão técnica T2-A1
+
+- Documento 193: cinco comandos integrados, 63 testes locais PASS históricos, riscos de replay, atomicidade e documentação ainda abertos.
+- T2-A1 permanece em desenvolvimento, T2-A2 não autorizado; sem serviços externos, SQL, Neon ou alteração de gates. Nenhum teste reexecutado nesta atividade documental. STOP.

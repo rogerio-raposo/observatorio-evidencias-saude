@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP219 — 2026-10-21**.
+- checkpoint vigente: **CP220 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -66,6 +66,12 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Permitido apenas: refatoração e testes Python locais de fronteira repositório/Unit of Work com adaptador em memória, diretório experimental separado, T1 e seus 36 testes intactos, GitHub/Freshness Gate.
 - Exclusões expressas: SQL/PostgreSQL/Neon/drivers, CI remota, cloud/deploy/API pública, consultas factuais, dados reais, serviços pagos, migrações, gates e T2-A2. Sem mudança silenciosa de semântica `create_scenario`/`pending`.
 - Próximo `Prossiga`: primeiro incremento T2-A1 do contrato Python em memória com testes locais, uma atividade delimitada e verificação de HEAD.
+
+## 1G. D1-T2/A1 — consolidação CP220
+
+- Cinco comandos integrados em memória; 19 testes ponte, 8 repositório e 36 T1 PASS historicamente; nenhum reteste no CP220.
+- Documento 193: pendências de replay, falhas injetadas, documentação e cópia T1. T2-A1 não encerrado. T2-A2, PostgreSQL/SQL/Neon/CI/cloud não autorizados.
+- Próximo `Prossiga`: testes locais de replay/atomicidade, com Freshness Gate.
 
 ## 2. Estado das fases
 
