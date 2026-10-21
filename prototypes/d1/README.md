@@ -10,7 +10,7 @@ Protótipo de aplicação em Python puro e biblioteca padrão, sem dependências
 
 Criação idempotente de cenário, identidade do produto/Monitor, ciclos M2 e janelas temporais, sinais fictícios de `search_hit`/`evidence_event`, avaliação explícita com múltiplos impactos, decisão de manutenção, `target_currency` independente da conclusão científica, snapshot `oes.d1.monitor_snapshot/0.1`, visualização textual demonstrativa, event log sequencial e reconstrução determinística com detecção de divergências.
 
-Testes locais da revisão: **21 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
+Testes locais da revisão: **36 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
 
 ## Limites
 
@@ -23,7 +23,7 @@ Testes locais da revisão: **21 testes passando**. Os arquivos do pacote foram e
 
 ## Composição
 
-`monitor.py` — núcleo e apresentação sintética. `test_monitor.py` — unittest local.
+`monitor.py` — núcleo e apresentação sintética. `test_monitor.py`, `test_isolation.py`, `test_s1_s5_adversarial.py` e `test_baseline.py` — suíte `unittest` local. Consulte `TRACEABILITY.md` para a correspondência entre S1–S6, testes e limites.
 
 O repositório principal permanece fonte de verdade dos contratos OES; este diretório não altera as migrations, a taxonomia, os gates ou os documentos históricos.
 
@@ -46,3 +46,7 @@ O renderer exibe separadamente estado editorial e operacional do Monitor, curren
 ## Baseline sintético explícito (incremento T1)
 
 A criação do cenário exige `baseline_evidence_cutoff_date` ISO válido e imutável, declarado como conteúdo sintético e armazenado no evento de criação; as janelas dos ciclos devem começar depois do cutoff inicial. O snapshot e o renderer apresentam separadamente o baseline e os cutoffs dos ciclos. Não houve consulta real a fontes científicas.
+
+## Validação integral documentada
+
+Na revisão de código do HEAD `768e2190ecde8a8713b80fd2bb378449f2d49033`, os seis arquivos publicados foram conferidos por hash Git com a cópia local; o comando `python -m unittest discover -s . -p 'test_*.py' -v` retornou `Ran 36 tests` e `OK` (0 falhas). O resultado vale para o protótipo sintético local; não é validação SQL, cloud, CI ou revisão científica. T1 permanece sujeito à decisão expressa de encerramento.
