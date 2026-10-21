@@ -7,63 +7,39 @@
 **Inserção proposta:** §6.1 — *Conceito e função dos produtos científicos*.
 **Finalidade:** mostrar as três famílias e suas funções sem transformar os nove produtos em escada única, serviços já operacionais ou níveis automáticos de qualidade.
 
-## Esquema-fonte editável (Mermaid)
+## Esquema-fonte editável — revisão semântica para A4
 
-O desenho distingue **uma base científica compartilhada** dos **produtos de comunicação/representação**. As ligações entre a base e as famílias indicam dependência informacional, não que cada produto empregue necessariamente todos os tipos de objeto ou procedimentos de síntese.
+A representação foi simplificada para **uma base compartilhada e três painéis de produtos**. Cada painel apresenta a família e todos os seus integrantes, sem setas internas. Assim, a estrutura não sugere progressão N0 → N4, dependência entre famílias ou a necessidade de percorrer previamente a Ficha N2 para produzir um Mapa, uma Revisão ou um Overview. Uma nota separada explica a reutilização eventual de objetos e versões.
 
 ```mermaid
 flowchart TB
-    Q["Pergunta e investigação documentadas<br/>Fontes, estudos, relatórios, resultados,<br/>avaliações, sínteses e versões, conforme aplicável"]
+    Q["BASE CIENTÍFICA COMPARTILHADA<br/>Perguntas e investigações documentadas<br/>Fontes, estudos, relatórios, resultados,<br/>sínteses e versões, quando aplicáveis"]
 
-    subgraph F1["FAMÍLIA 1 — INVESTIGAÇÃO · N0–N4"]
-      direction TB
-      N0["N0 · Evidence Scan"]
-      N1["N1 · Resposta de Evidência"]
-      N2["N2 · Ficha de Evidência"]
-      N3["N3 · Síntese Rápida de Evidências"]
-      N4["N4 · Revisão de Evidências"]
-    end
+    F1["INVESTIGAÇÃO — N0–N4<br/>N0 · Evidence Scan<br/>N1 · Resposta de Evidência<br/>N2 · Ficha de Evidência<br/>N3 · Síntese Rápida de Evidências<br/>N4 · Revisão de Evidências"]
+    F2["ANÁLISE TRANSVERSAL<br/>Mapa de Evidências<br/>Overview de Revisões"]
+    F3["MANUTENÇÃO / COMUNICAÇÃO TEMPORAL<br/>Monitor de Evidências<br/>Alerta de Evidência<br/>Acompanhamento somente quando autorizado"]
 
-    subgraph F2["FAMÍLIA 2 — ANÁLISE TRANSVERSAL"]
-      direction TB
-      MAP["Mapa de Evidências"]
-      OVR["Overview de Revisões"]
-    end
+    Q --- F1
+    Q --- F2
+    Q -. "Uso condicional de fontes e versões" .-> F3
 
-    subgraph F3["FAMÍLIA 3 — MANUTENÇÃO / COMUNICAÇÃO TEMPORAL"]
-      direction TB
-      MON["Monitor de Evidências"]
-      ALT["Alerta de Evidência"]
-    end
-
-    Q --- N0
-    Q --- N1
-    Q --- N2
-    Q --- N3
-    Q --- N4
-    Q --- MAP
-    Q --- OVR
-    Q -. "Acompanhamento somente quando previsto<br/>e com condições operacionais atendidas" .-> MON
-    MON -. "Sinais avaliados e comunicáveis" .-> ALT
-
-    D["Reutilização de objetos e versões:<br/>possível entre produtos; nunca implica<br/>transferência automática de conclusão ou garantia"]
-    N2 -.- D
-    MAP -.- D
-    OVR -.- D
+    D["REUTILIZAÇÃO POSSÍVEL<br/>Identificar fonte, escopo e versão exata.<br/>Não transferir conclusões nem garantia automaticamente."]
 
     classDef base fill:#EDF2F7,stroke:#475569,color:#0F172A,stroke-width:1.5px
-    classDef product fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:1px
+    classDef family fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:1.5px
     classDef conditional fill:#FFFFFF,stroke:#64748B,color:#0F172A,stroke-dasharray:4 3
     class Q base
-    class N0,N1,N2,N3,N4,MAP,OVR product
-    class MON,ALT,D conditional
+    class F1,F2 family
+    class F3,D conditional
 ```
 
-**Critério semântico:** as conexões sólidas sem ponta de seta representam relação entre o acervo científico e os produtos. As conexões pontilhadas **não** demonstram passagem obrigatória entre famílias, nem produção automática de Alertas. O desenho não contém ligações N0 → N1 → N2 → N3 → N4 porque essa sequência é **possível, não obrigatória**. Monitor e Alerta são produtos da família de manutenção, **não níveis N adicionais**. Mapa e Overview são produtos transversais, com métodos próprios, e **não** correspondem necessariamente a um nível de profundidade N0–N4.
+**Critério semântico:** ligações sólidas **sem ponta de seta** representam o vínculo informacional dos produtos de investigação e dos analíticos com os objetos científicos; não indicam ordem, pré-requisito sequencial, validação ou disponibilidade operacional. O vínculo pontilhado com a família de manutenção indica **funções previstas e condicionadas à autorização e à capacidade de acompanhamento**, sem afirmar que M2 execute vigilância factual contínua ou que M3 esteja liberado. A figura **não desenha ligação direta Monitor → Alerta**: um Alerta pode decorrer de um sinal cientificamente relevante avaliado e comunicado segundo seu contrato, e não constitui consequência automática de todo ciclo de Monitor.
 
-A Ficha N2 é a unidade persistente preferencial do projeto, mas essa decisão não reduz o valor científico de outras formas de produção; objetos, sínteses e versões podem ser reutilizados somente com rastreabilidade de fonte, escopo, julgamento e **versão exata**. Um novo sinal do Monitor não modifica conclusões automaticamente. A vigência de M3 continua bloqueada, enquanto os testes sintéticos de M2 **não comprovam vigilância factual contínua**. A2 representa aprovação interna e **não** a revisão científica independente A3; os produtos formais N3/N4 mantêm exigências próprias de garantia e revisão humana.
+**Produtos e métodos:** N0–N4 são modalidades de investigação com finalidades próprias, **não cinco passos obrigatórios**. MAP e OVR pertencem à análise transversal e não são níveis N adicionais. Monitor e Alerta pertencem à manutenção/comunicação temporal, e não criam N5. A Ficha N2 é a unidade persistente preferencial do OES, mas não é requisito universal para que os demais produtos existam. A base informacional é **compartilhável, não necessariamente idêntica**: cada produto utiliza apenas objetos pertinentes a seu método. Reutilização de evidências exige identificação da versão científica exata e reexame da adequação à nova pergunta; conclusões e garantias não se propagam automaticamente.
 
-**Alerta de precisão:** a arquitetura técnica e documental de nove produtos foi formalizada na Fase 3; isso não demonstra que todos estejam disponíveis ao público, tenham sido validados cientificamente ou operem de modo contínuo. A figura retrata o **portfólio conceitual**, não o inventário de produtos operacionalmente liberados.
+**Estado e garantia:** a arquitetura dos nove produtos foi formalizada documentalmente na Fase 3; **não** se conclui daí que todos estejam operacionais ou validados cientificamente. M3 permanece bloqueado; testes sintéticos de M2 não constituem comprovação de acompanhamento factual sustentado. A2 é aprovação interna e não equivale à revisão científica independente A3. Os produtos formais N3/N4 conservam os requisitos específicos de revisão especializada.
+
+**Avaliação gráfica preliminar:** quatro nós principais e três conexões reduzem cruzamentos em comparação às nove linhas individuais do primeiro protótipo. Na versão vetorial, recomenda-se usar **três painéis independentes sob a base científica**, cada um com título e inventário próprio. A nota de reutilização pode permanecer em quadro separado **sem conectores**, preservando sua natureza geral. A disposição definitiva será avaliada em proporção A4, preto e branco, após renderização; esta revisão de estrutura **não equivale à inspeção do SVG**.
 
 ## Legenda científica proposta
 
@@ -71,13 +47,13 @@ A Ficha N2 é a unidade persistente preferencial do projeto, mas essa decisão n
 
 ## Texto alternativo proposto
 
-“Diagrama com base científica compartilhada composta por pergunta, investigação, fontes, estudos, relatórios, resultados, avaliações, sínteses e versões quando pertinentes. A base relaciona-se a três famílias: cinco produtos de investigação N0 Evidence Scan, N1 Resposta de Evidência, N2 Ficha de Evidência, N3 Síntese Rápida e N4 Revisão; dois produtos transversais Mapa de Evidências e Overview de Revisões; dois produtos temporais Monitor e Alerta. Linhas pontilhadas identificam acompanhamento condicional e possibilidades de reutilização de objetos com rastreabilidade, sem impor sequência ou progressão científica.”
+“Diagrama com base informacional científica compartilhada no topo. Três conexões independentes levam às famílias: investigação, com Evidence Scan N0, Resposta N1, Ficha N2, Síntese Rápida N3 e Revisão N4; análise transversal, com Mapa de Evidências e Overview de Revisões; manutenção temporal, com Monitor e Alerta, apenas quando previstos e autorizados. Os cinco níveis N são modalidades, não etapas obrigatórias. Um quadro separado informa que objetos e versões podem ser reutilizados mediante rastreabilidade, sem transmitir automaticamente conclusões ou garantia. A figura não comprova operação contínua nem validação externa.”
 
 ## Conferências antes de produzir o SVG
 
 - [ ] Conferir todos os **nove nomes** e agrupamentos com o Documento 40.
 - [ ] Verificar visualmente a independência das três famílias, evitando hierarquia de qualidade e progressão N0 → N4.
-- [ ] Avaliar se as ligações da base compartilhada criam cruzamentos excessivos; no SVG, priorizar **um barramento comum por família** em vez de nove linhas diretas.
+- [x] Reduzir a ligação da base compartilhada a **um vínculo por família**; no SVG, manter três painéis sem conexões internas ou hierarquia entre produtos.
 - [ ] Preservar o vínculo condicional entre Monitor e Alerta; Alerta não equivale automaticamente à nova síntese.
 - [ ] Não representar todos os produtos como ativos em produção nem sugerir M3 liberado.
 - [ ] Não confundir nível N de investigação, regime M de manutenção e garantia A de revisão.
@@ -85,4 +61,4 @@ A Ficha N2 é a unidade persistente preferencial do projeto, mas essa decisão n
 - [ ] Manter fontes editáveis, SVG com título/descrição acessíveis e prova de renderização antes da inserção.
 - [ ] Após a conferência gráfica e aprovação editorial, inserir apenas na §6.1 e verificar a íntegra das 56 referências do manuscrito.
 
-**Limite desta atividade:** somente protótipo conceitual editável e especificação científica. Sem SVG produzido, modificação do manuscrito, validação externa ou operação de produtos.
+**Resultado desta revisão:** classificação e funções dos nove produtos preservadas; conectividade simplificada para três famílias, com reutilização representada sem dependências artificiais. **Pendências:** gerar SVG, inspecionar a renderização A4 e obter aprovação editorial antes de integrar o manuscrito. Nenhuma modificação do manuscrito, validação externa ou operação de produtos.
