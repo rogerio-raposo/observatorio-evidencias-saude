@@ -5290,3 +5290,10 @@ Documentos:
 - Proprietário aprovou `OES / D1-T2-A1 / SYNTHETIC_IN_MEMORY_TECHNICAL_CLOSURE`; Documento 196 registra encerramento técnico somente da fronteira Python em memória, com cinco comandos e 75 testes locais históricos PASS (39 T2-A1 + 36 T1).
 - T1, semânticas históricas, restrições S1–S6, gates e bloqueios científicos inalterados. Nenhum teste foi reexecutado na ativação do checkpoint.
 - T2-A2, PostgreSQL, SQL, Neon, drivers, CI remota, nuvem, implantação, API pública, dados factuais e serviços pagos não autorizados. Retomada apenas documental. STOP.
+
+
+## 2026-10-21 — CP222: proposta técnica documental T2-A2 (Documento 197)
+
+- Consolidadas A1–A3: proposta PostgreSQL local sintética mínima, revisão adversarial F01–F05 e especificação candidata com requisitos E01–E12, testes futuros, preflight e STOP conditions.
+- **T2-A2 NOT_AUTHORIZED**; nenhum código/teste/SQL/PostgreSQL/Neon/driver/CI/cloud/fonte factual ou gasto executado. T1 (36) e T2-A1 (75) PASS apenas históricos, sem reteste; semânticas, gates e bloqueios preservados.
+- Após novo `Prossiga`: revisão documental final e preparação de pacote de decisão, sem implementação. STOP.
