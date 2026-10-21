@@ -312,3 +312,26 @@ Construir o draft da Resposta de Evidência N1 com:
 - método;
 - fontes-chave;
 - assurance ainda A0 antes da verificação metodológica.
+
+
+---
+
+## Adendo documental posterior — conferência de proveniência em 20/10/2026
+
+**Natureza:** esclarecimento bibliográfico posterior ao Documento 78, de 05/10/2026. **Não é substituição da extração histórica, nova síntese, correção automática de ProductVersion, reavaliação ROBIS ou decisão de garantia.**
+
+A publicação de **Stoop et al. (2026)**, DOI [10.1213/ANE.0000000000007815](https://doi.org/10.1213/ANE.0000000000007815), PMID **41294333**, apresenta estimativas diferentes para o mesmo resultado global de ansiedade perioperatória:
+
+| Passagem da fonte primária | SMD | IC95% |
+|---|---:|---|
+| Resumo (*Abstract*, seção Results) | −0,72 | −0,92 a −0,53 |
+| Corpo do artigo (*Results*, subseção *Number Needed to Treat*, associado à Figura 2) | −0,73 | −0,94 a −0,53 |
+| Extração registrada neste Documento 78 (seções 3 e 14) | aproximadamente −0,73 | aproximadamente −0,94 a −0,53 |
+
+**Reconciliação da proveniência:** a extração do Documento 78 corresponde à **subseção de resultados do artigo**, que remete à Figura 2, e não à estimativa apresentada no resumo. A presença de ambas as combinações numéricas na própria publicação foi conferida na [versão integral disponível em PubMed Central](https://pmc.ncbi.nlm.nih.gov/articles/PMC12959583/).
+
+**Limite:** a origem analítica/estatística da divergência **não foi determinada**. Como não é apenas a estimativa pontual que difere, mas também o limite inferior do IC95%, não é adequado atribuir toda a divergência exclusivamente a arredondamento sem documentação adicional dos autores. Não houve recálculo independente da meta-análise, consulta de autores ou avaliação independente de métodos/risco de viés nesta atividade.
+
+**Sequência histórica preservada:** a formulação candidata da seção 13 deste documento apresenta conjuntamente os valores de Stoop e Yu como uma faixa. Essa redação foi **substituída no percurso N1** após o Documento 80 (REVISE): a versão corrigida no [Documento 81](81-caso-real-n1-musica-ansiedade-draft-corrigido.md) expõe as estimativas de cada revisão separadamente; o [Documento 82](82-caso-real-n1-verificacao-metodologica-adversarial-02.md) documenta o PASSED interno; e o [Documento 85](85-caso-real-n1-resultado-validacao-a2-publicacao.md) registra a publicação interna **A2** da **ProductVersion 2**, sem revisão científica especializada independente. Assim, **a seção 13 do Documento 78 não deve ser tomada como o texto publicado vigente**.
+
+**Efeito do adendo:** somente esclarecimento de fonte e status histórico; **sem alteração da estimativa registrada, conclusão científica, data de corte, nível de garantia, versão publicada, gates ou estado operacional**.
