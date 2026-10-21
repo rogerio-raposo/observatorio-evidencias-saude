@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.52 (inserção editorial da Figura 6 na Seção 12.1)  
+**Versão editorial:** 0.53 (inserção editorial da Figura 7 na Seção 13.1)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
@@ -1444,6 +1444,12 @@ A quinta dimensão diz respeito à **prontidão e ao desempenho operacional**. E
 Essas dimensões também devem ser distinguidas dos **níveis de garantia A0–A3**. A classificação A1 registra verificação metodológica assistida por IA; A2 acrescenta aprovação de governança do proprietário; A3 exige revisão especializada independente aprovada, conforme os requisitos pertinentes. O nível de garantia de um produto comunica verificações realizadas naquela versão e **não equivale à validação científica de toda a plataforma, nem substitui os controles humanos específicos de N3 e N4**. [Fonte: Documento 04 — Níveis A0–A3](../governance/04-governanca-garantia-revisao.md).
 
 A avaliação rigorosa do OES deve, portanto, declarar **qual dimensão foi examinada, em qual versão, com quais dados e métodos, por quem e com que resultado**. Na data de referência deste manuscrito, há evidências documentais e técnicas expressivas, casos experimentais e produtos internos, mas **a Fase 6 de validação científica independente ainda não foi formalmente iniciada**.
+
+A **Figura 7** sintetiza o alcance inferencial de seis tipos de controle documentados no OES. Diferentemente das cinco dimensões de validação discutidas nesta seção, suas linhas representam registros de verificação ou requisitos ainda não demonstrados; não constituem uma escala cumulativa de qualidade ou uma sequência automática de aprovação.
+
+![Figura 7 — Matriz de seis controles com três campos: objeto ou requisito, registro ou situação documentada e limite inferencial. Revisão documental e engenharia geram resultados delimitados; verificação por IA não equivale a revisão humana; governança A2 não equivale à revisão independente A3, cuja aprovação não foi demonstrada nos casos examinados. Prontidão factual permanece NOT_READY, apesar de testes sintéticos M2; M3 está bloqueado.](figuras/figura-07-alcance-validacoes.svg)
+
+*Figura 7 — Alcance inferencial das verificações e dos requisitos documentados no OES até 20 de outubro de 2026.* A matriz relaciona o objeto ou requisito examinado, o registro disponível ou a situação documentada e os limites das inferências possíveis em seis categorias: revisão documental, testes tecnológicos, verificação adversarial assistida por IA, aprovação de governança do proprietário (A2), revisão especializada independente (A3) e prontidão operacional. Os quatro primeiros controles tiveram aplicações delimitadas; **a aprovação A3 não está demonstrada nos casos examinados e a prontidão para operação factual permanece NOT_READY**. Um `PASS` técnico não valida uma síntese científica; A2 não equivale a A3; e testes sintéticos não demonstram monitoramento factual sustentado. Essas categorias não equivalem às cinco dimensões de validação científica e **não demonstram o início formal da Fase 6**. **Fonte:** elaboração editorial baseada no [Documento 04](../governance/04-governanca-garantia-revisao.md), no [STATE.md](../../STATE.md) e no [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
 
 ### 13.2. Provas de conceito e testes automatizados
 
