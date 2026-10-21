@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from monitor import DomainError, SyntheticMonitorService, render_demo
 
 
@@ -159,3 +160,57 @@ class ScenarioProvenanceTests(unittest.TestCase):
                 scientific_conclusion='Fixture', fixture_source='synthetic:fixture', request_id='one')
         self.assertEqual(svc.repo.scenarios, {})
         self.assertEqual(svc.repo.receipts, {})
+
+
+class AtomicCommandFailureTests(unittest.TestCase):
+    def setUp(self):
+        self.service = SyntheticMonitorService()
+        self.service.create_scenario(scenario_id='ATOMIC-FAIL', target_version='target',
+            monitor_version='monitor', scientific_conclusion='Synthetic conclusion',
+            fixture_source='synthetic:fixture', request_id='create')
+
+    def assert_append_failure_is_atomic(self, call, request_id):
+        before = self.service.snapshot('ATOMIC-FAIL')
+        receipts_before = dict(self.service.repo.receipts)
+        with patch.object(SyntheticMonitorService, '_append', side_effect=RuntimeError('simulated append failure')):
+            with self.assertRaisesRegex(RuntimeError, 'simulated append failure'):
+                call()
+        self.assertEqual(before, self.service.snapshot('ATOMIC-FAIL'))
+        self.assertEqual(receipts_before, self.service.repo.receipts)
+        self.assertNotIn(('ATOMIC-FAIL', request_id), self.service.repo.receipts)
+        self.service.replay_snapshot('ATOMIC-FAIL')
+
+    def test_create_failure_leaves_no_scenario_or_receipt(self):
+        s = SyntheticMonitorService()
+        with patch.object(SyntheticMonitorService, '_append', side_effect=RuntimeError('simulated append failure')):
+            with self.assertRaises(RuntimeError):
+                s.create_scenario(scenario_id='NEW', target_version='target', monitor_version='monitor',
+                    scientific_conclusion='Synthetic', fixture_source='synthetic:fixture', request_id='create')
+        self.assertEqual(s.repo.scenarios, {})
+        self.assertEqual(s.repo.receipts, {})
+
+    def test_start_failure_is_atomic(self):
+        self.assert_append_failure_is_atomic(lambda: self.service.start_cycle('ATOMIC-FAIL', cycle_no=1,
+            window_start='2026-10-02', window_end='2026-10-03', request_id='start'), 'start')
+
+    def test_signal_failure_is_atomic(self):
+        self.service.start_cycle('ATOMIC-FAIL', cycle_no=1, window_start='2026-10-02',
+            window_end='2026-10-03', request_id='start')
+        self.assert_append_failure_is_atomic(lambda: self.service.register_signal('ATOMIC-FAIL', cycle_no=1,
+            signal_id='sig', kind='search_hit', source='synthetic:sig', request_id='signal'), 'signal')
+
+    def test_assessment_failure_is_atomic(self):
+        self.service.start_cycle('ATOMIC-FAIL', cycle_no=1, window_start='2026-10-02',
+            window_end='2026-10-03', request_id='start')
+        self.service.register_signal('ATOMIC-FAIL', cycle_no=1, signal_id='sig', kind='search_hit',
+            source='synthetic:sig', request_id='signal')
+        self.assert_append_failure_is_atomic(lambda: self.service.record_assessment('ATOMIC-FAIL', cycle_no=1,
+            signal_id='sig', decision='excluded', impacts=[], rationale='synthetic exclusion',
+            scenario_actor='fixture', request_id='assessment'), 'assessment')
+
+    def test_close_failure_is_atomic(self):
+        self.service.start_cycle('ATOMIC-FAIL', cycle_no=1, window_start='2026-10-02',
+            window_end='2026-10-03', request_id='start')
+        self.assert_append_failure_is_atomic(lambda: self.service.close_cycle('ATOMIC-FAIL', cycle_no=1,
+            decision='no_update_needed', rationale='synthetic no update', scenario_actor='fixture',
+            request_id='close'), 'close')

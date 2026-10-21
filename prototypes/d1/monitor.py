@@ -5,6 +5,7 @@ Not an implementation of product.evidence_monitor_view/0.1 or a scientific revie
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from copy import deepcopy
 from hashlib import sha256
 import json
 from datetime import date
@@ -45,7 +46,17 @@ class SyntheticMonitorService:
             if old != fingerprint:
                 raise DomainError('request_id reused with different payload')
             return json.loads(encoded(result))
-        result = action()
+        # Atomic in-memory command boundary: undo all scenario mutations if a
+        # later step (including event append) raises. No database guarantees.
+        before = deepcopy(self.repo.scenarios.get(scenario_id))
+        try:
+            result = action()
+        except Exception:
+            if before is None:
+                self.repo.scenarios.pop(scenario_id, None)
+            else:
+                self.repo.scenarios[scenario_id] = before
+            raise
         self.repo.receipts[key] = (fingerprint, json.loads(encoded(result)))
         return json.loads(encoded(result))
 
@@ -81,9 +92,13 @@ class SyntheticMonitorService:
              'monitor_operational_status': 'active', 'monitor_editorial_status': 'draft',
              'cycles': [], 'events': []}
         self.repo.scenarios[scenario_id] = s
-        self._append(s, 'scenario_created', {'target_version': target_version, 'monitor_version': monitor_version,
+        try:
+            self._append(s, 'scenario_created', {'target_version': target_version, 'monitor_version': monitor_version,
                                              'fixture_source': fixture_source, 'scientific_conclusion': scientific_conclusion,
                                              'executed_by': 'python_service'})
+        except Exception:
+            self.repo.scenarios.pop(scenario_id, None)
+            raise
         self.repo.receipts[key] = (fingerprint, scenario_id)
         return self.snapshot(scenario_id)
 
