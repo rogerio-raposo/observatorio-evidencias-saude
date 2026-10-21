@@ -5297,3 +5297,10 @@ Documentos:
 - Consolidadas A1–A3: proposta PostgreSQL local sintética mínima, revisão adversarial F01–F05 e especificação candidata com requisitos E01–E12, testes futuros, preflight e STOP conditions.
 - **T2-A2 NOT_AUTHORIZED**; nenhum código/teste/SQL/PostgreSQL/Neon/driver/CI/cloud/fonte factual ou gasto executado. T1 (36) e T2-A1 (75) PASS apenas históricos, sem reteste; semânticas, gates e bloqueios preservados.
 - Após novo `Prossiga`: revisão documental final e preparação de pacote de decisão, sem implementação. STOP.
+
+
+## 2026-10-21 — CP223: preparação documental P2-C1 de T2-A2 (Documento 198)
+
+- Consolidados P1 (autorizado apenas para leitura), P2-A (autorizado apenas para leitura), P2-B (seleção documental) e P2-C1 (minuta **NÃO APROVADA**), preservando P2-C2/P3/P4 bloqueados.
+- Relatos de inventário local carecem de logs técnicos brutos persistidos e exigem revalidação antes de instalação. PostgreSQL 17/Psycopg 3 permanecem candidatos; nenhum componente, SQL, PostgreSQL, Neon, CI, serviço ou dado factual foi operado neste CP.
+- T2-A2 segue NOT_AUTHORIZED; T1/T2-A1, gates e bloqueios intactos. Próxima atividade documental: pacote de decisão P2-C1 sob novo `Prossiga`. STOP.

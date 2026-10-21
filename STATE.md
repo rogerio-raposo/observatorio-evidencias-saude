@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP222 — 2026-10-21**.
+- checkpoint vigente: **CP223 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -86,6 +86,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - **T2-A2 = NOT_AUTHORIZED.** Proposta de autorização no documento é apenas minuta; preflight operacional, instalação, driver, SQL, PostgreSQL, Neon, CI, cloud, consultas factuais e custos permanecem sem autorização.
 - T1 e T2-A1 encerrados tecnicamente de modo restrito, com evidência histórica 36 e 75 PASS, sem reteste. Gates, migrations, BRGs, papéis e fases inalterados.
 - Próximo `Prossiga`: revisão documental final e pacote deliberativo; nenhuma implementação.
+
+## 1J. D1-T2/A2 — preparação local escalonada P1/P2 (CP223)
+
+- Documento 198 consolida autorizações de **P1 e P2-A somente leitura**, pacote P1–P4 e candidatos PostgreSQL 17/Psycopg 3; observações de inventário relatadas na conversa carecem de logs técnicos brutos persistidos, devendo ser revalidadas.
+- **P2-C1 NÃO APROVADO**; P2-C2/P3/P4 e T2-A2 igualmente não autorizados. Nenhuma instalação, driver, servidor, SQL, Neon, CI, cloud, fonte factual ou gasto foi executado neste checkpoint documental.
+- T1/T2-A1 encerrados de modo restrito, 36/75 testes somente históricos; nenhuma mudança semântica, migração, gate ou fase.
+- Próximo `Prossiga`: preparar apenas pacote final de decisão P2-C1 com origem/versões, caminhos, isolamento, rollback e critérios de parada.
 
 ## 2. Estado das fases
 

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP222 — 2026-10-21**
+**CP223 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP222.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP223.md`
 
 Checkpoint anterior:
 
-`CP221`
+`CP222`
 
 Status:
 
@@ -588,3 +588,5 @@ em **Modo Continuidade**.
 - **CP221 — 2026-10-21:** Documento 196 formaliza a aprovação expressa de encerramento técnico restrito T2-A1 (Python/memória, 75 testes locais históricos PASS). T2-A2 continua não autorizado. Retomada: proposta T2-A2 somente documental. STOP.
 
 - **CP222 — 2026-10-21:** Documento 197 consolida A1–A3 da especificação documental T2-A2 e revisão adversarial; nenhum PostgreSQL/SQL/Neon executado, T2-A2 não autorizado. Próximo: revisão documental final e pacote deliberativo, sob `Prossiga`. STOP.
+
+- **CP223 — 2026-10-21:** Documento 198 consolida P1/P2-A somente leitura, P2-B documental e minuta P2-C1 não aprovada; evidência local a revalidar. T2-A2 permanece NOT_AUTHORIZED. Próximo pacote P2-C1 documental após `Prossiga`. STOP.
