@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.28 (atribuição de referências metodológicas revisada nos Capítulos 2–4)  
+**Versão editorial:** 0.29 (atribuição seletiva de referências científicas no Capítulo 6)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas às afirmações metodológicas dos Capítulos 2–5; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
+**Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas seletivamente às afirmações metodológicas dos Capítulos 2–6; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -528,7 +528,7 @@ Um resultado cientificamente útil do N0 pode ser a recomendação de delimitar 
 
 A **Resposta de Evidência** destina-se a perguntas focais para as quais já existem sínteses recentes e adequadas ou nas quais uma investigação mais abrangente seria desproporcional. Em vez de reconstruir automaticamente toda a literatura primária, prioriza a localização e a avaliação crítica de revisões sistemáticas, meta-análises, diretrizes ou avaliações de tecnologias em saúde pertinentes, podendo incorporar informações adicionais de estudos primários importantes ou posteriores.
 
-A resposta deve tornar explícitos o problema investigado, o método e os limites da busca, as fontes principais, os achados relevantes, a incerteza conhecida, a aplicabilidade e a data de corte. Sua característica distintiva é **responder com objetividade, sem simular completude quando a estratégia adotada foi seletiva**. Quando a certeza da evidência foi avaliada por uma síntese externa, ela só pode ser comunicada no OES com atribuição apropriada e após análise de correspondência entre a pergunta, a data e o corpo de estudos considerado.
+A resposta deve tornar explícitos o problema investigado, o método e os limites da busca, as fontes principais, os achados relevantes, a incerteza conhecida, a aplicabilidade e a data de corte. Sua característica distintiva é **responder com objetividade, sem simular completude quando a estratégia adotada foi seletiva**. Quando a certeza da evidência foi avaliada por uma síntese externa, ela só pode ser comunicada no OES com atribuição apropriada e após análise de correspondência entre a pergunta, a data e o corpo de estudos considerado. Para a avaliação do risco de viés da própria revisão sistemática, o [ROBIS, item 13](https://doi.org/10.1016/j.jclinepi.2015.06.005) constitui um referencial metodológico pertinente, sem que sua menção implique aplicação efetiva pelo OES.
 
 O N1 pode ser suficiente para uma demanda específica e não necessita converter-se automaticamente em Ficha persistente. Entretanto, quando o interesse pela pergunta é recorrente ou há expectativa de acompanhamento sistemático, pode ser pertinente estruturar uma Ficha N2 ou vincular a resposta a um percurso de manutenção justificado.
 
@@ -570,7 +570,7 @@ Os produtos transversais respondem a necessidades que não se confundem com a si
 
 O **Mapa de Evidências** responde principalmente à pergunta: **que evidências existem sobre determinado campo, como estão distribuídas e onde se localizam possíveis lacunas?** Sua finalidade é representar a literatura por dimensões relevantes, como populações, intervenções ou exposições, comparadores, desfechos, desenhos de estudo, regiões geográficas, períodos ou disponibilidade de sínteses.
 
-A organização pode utilizar matrizes, categorias temáticas, tabelas ou representações gráficas, desde que a metodologia de busca, seleção e classificação esteja documentada. O produto pode derivar de estratégias compatíveis com *scoping reviews*, *evidence maps* ou *evidence and gap maps*, conforme a pergunta e os referenciais metodológicos escolhidos. Essas abordagens possuem requisitos próprios e não devem ser tratadas como equivalentes apenas porque resultam em uma visualização.
+A organização pode utilizar matrizes, categorias temáticas, tabelas ou representações gráficas, desde que a metodologia de busca, seleção e classificação esteja documentada. O produto pode derivar de estratégias compatíveis com *scoping reviews*, *evidence maps* ou *evidence and gap maps*, conforme a pergunta e os referenciais metodológicos escolhidos. Essas abordagens possuem requisitos próprios e não devem ser tratadas como equivalentes apenas porque resultam em uma visualização. Para os *evidence and gap maps* formais, a [orientação Campbell, item 50](https://doi.org/10.1002/cl2.1125) descreve procedimentos de escopo, busca, seleção e codificação; sua citação não significa que o mapa experimental do OES tenha executado integralmente esses procedimentos.
 
 O mapa é especialmente útil para pesquisadores interessados em identificar áreas concentradas de investigação, tópicos pouco estudados e possibilidades de novas sínteses. Entretanto, **o número de estudos localizados não é indicador suficiente de qualidade, certeza ou magnitude de efeito**. Identificar um agrupamento de ensaios ou revisões em uma categoria não significa que o conjunto apoie determinada intervenção. Se avaliações formais de certeza forem realizadas para subconjuntos específicos, elas devem permanecer vinculadas às respectivas perguntas e resultados, sem gerar uma pontuação global arbitrária do mapa.
 
@@ -582,7 +582,7 @@ O **Overview de Revisões**, também denominado *umbrella review* em contextos m
 
 Seu protocolo deve especificar a pergunta, os critérios de inclusão de revisões, a busca, a avaliação crítica das revisões incluídas, a análise de sobreposição dos estudos primários, a atualidade das buscas e os critérios para interpretar resultados concordantes ou conflitantes. A mera reunião de conclusões de revisões não basta: diferentes revisões podem ter incluído as mesmas populações e estudos, utilizado métodos incompatíveis ou apresentado estimativas com datas de corte muito distintas.
 
-Um desafio particular é a **sobreposição de evidências**. Contar revisões como observações independentes, sem examinar os estudos primários compartilhados, pode produzir impressão enganosa de replicação ou consenso. Outro risco é tomar uma síntese antiga como representativa do estado atual do conhecimento. Por isso, a documentação do Overview deve facilitar a identificação dos estudos subjacentes e das escolhas metodológicas que distinguem as revisões consideradas.
+Um desafio particular é a **sobreposição de evidências**. Contar revisões como observações independentes, sem examinar os estudos primários compartilhados, pode produzir impressão enganosa de replicação ou consenso. Outro risco é tomar uma síntese antiga como representativa do estado atual do conhecimento. Por isso, a documentação do Overview deve facilitar a identificação dos estudos subjacentes e das escolhas metodológicas que distinguem as revisões consideradas. O [estudo metodológico sobre sobreposição, item 53](https://doi.org/10.1016/j.jclinepi.2013.11.007) e o [capítulo Cochrane sobre *overviews*, item 54](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-v) fundamentam esses cuidados; não certificam os cálculos ou julgamentos produzidos no OES.
 
 A profundidade e o regime de manutenção são declarados conforme a metodologia utilizada. O Overview não recebe automaticamente N4 nem uma avaliação global única de certeza apenas por examinar revisões sistemáticas. Quando houver avaliação de confiança ou certeza, suas unidades, fontes e limitações precisam ser explicitadas.
 
@@ -2035,4 +2035,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.28 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural das 54 referências, os Capítulos 2–5 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas, mantendo explícitas as categorias próprias do OES. A revisão de citações nos demais capítulos, a normalização editorial final e a avaliação científica independente continuam pendentes.*
+*Fim da versão 0.29 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural das 54 referências, os Capítulos 2–6 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas, mantendo explícitas as categorias próprias do OES. A revisão de citações nos demais capítulos, a normalização editorial final e a avaliação científica independente continuam pendentes.*
