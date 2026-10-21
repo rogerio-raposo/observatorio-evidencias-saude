@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP217 — 2026-10-21**
+**CP218 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP217.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP218.md`
 
 Checkpoint anterior:
 
-`CP216`
+`CP217`
 
 Status:
 
@@ -578,3 +578,5 @@ em **Modo Continuidade**.
 - **CP216 — 2026-10-21:** Documento 171 consolida T1 sintético aprovado e publicado, 13 testes locais históricos PASS, matriz S1–S6 parcial e critérios de encerramento pendentes. Próximo: endurecer atomicidade/imutabilidade T1, sem T2/Neon/CI/cloud. STOP.
 
 - **CP217 — 2026-10-21:** Documento 172 consolida incrementos T1 publicados (32 testes locais históricos PASS, não reexecutados nesta atividade), confirma sequência estratégica e autorização T1, identifica baseline sintético/documentação/evidência de encerramento pendentes. Próximo: baseline sintético sob `Prossiga`. STOP.
+
+- **CP218 — 2026-10-21:** Documento 173 registra aprovação expressa de encerramento técnico restrito T1 (Python sintético local, 36 testes PASS, S1–S6), sem autorizar T2 ou alterar gates. Próximo: T2 documental, sujeito a `Prossiga`. STOP.

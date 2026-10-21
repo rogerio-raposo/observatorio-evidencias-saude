@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP217 — 2026-10-21**.
+- checkpoint vigente: **CP218 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -52,6 +52,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Autorização expressa T1, registrada no Documento 171, permanece vigente apenas para Python em memória, testes locais, renderer e GitHub. SQL/Neon/CI/cloud/API pública/consultas factuais/serviços pagos/gates excluídos.
 - Incrementos até HEAD pré-CP217 `bbd0d61d7270cf139c1a895503fc29dd0ec043ab`: teste local histórico 32/32 PASS, testes adversariais S1–S6, rollback sequencial e renderer próprio. README do protótipo ainda relata 21 testes; correção documental pendente.
 - Documento 172: critérios S1–S6 PARCIAIS e T1 NOT_CLOSED. Próximo `Prossiga`: baseline sintético explícito com testes e versionamento, sem expansão de escopo.
+
+## 1E. D1-T1 — encerramento técnico restrito aprovado (CP218)
+
+- Aprovação literal: `APPROVED — OES / D1-T1 / SYNTHETIC_LOCAL_TECHNICAL_CLOSURE`. **T1 CLOSED_SYNTHETIC_LOCAL_ONLY**, sem homologação científica ou operacional (Documento 173).
+- Evidência: Python sintético em memória, `prototypes/d1/`, 36 testes locais PASS reportados na revisão `768e2190ecde8a8713b80fd2bb378449f2d49033` e `TRACEABILITY.md`; sem reteste nesta formalização. Avaliações T1 anteriores dos Documentos 171–172 são snapshots históricos anteriores à aprovação de encerramento.
+- D1 permanece prioritário; **T2 NÃO AUTORIZADO**. Próximo `Prossiga`: preparar requisitos e autorização de T2 documentalmente, sem PostgreSQL, Neon, SQL, CI, nuvem, API pública, consultas factuais, serviços pagos ou alteração de gates.
+- D0 documental encerrado → D1 (T1 fechado) → D2 factual condicionado → governança operacional completa posterior.
 
 ## 2. Estado das fases
 

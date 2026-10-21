@@ -5267,3 +5267,9 @@ Documentos:
 - Consolidado inventário versionado `prototypes/d1/`, HEAD pré-CP217 `bbd0d61d7270cf139c1a895503fc29dd0ec043ab`, e resultados históricos de testes locais 18→21→26→32 PASS; nenhum teste reexecutado nesta consolidação.
 - Documento 172 registra matriz S1–S6 PARCIAL, ausência de baseline inicial no demonstrador, README ainda descrevendo 21 testes, rastreabilidade a consolidar e critérios de encerramento T1 pendentes.
 - Sem SQL, Neon, CI remota, nuvem, serviços pagos, consultas factuais, alteração de migrations/gates ou encerramento de T1. STOP.
+
+## 2026-10-21 — CP218: aprovação explícita de encerramento técnico restrito D1-T1
+
+- Proprietário aprovou `OES / D1-T1 / SYNTHETIC_LOCAL_TECHNICAL_CLOSURE`: T1 concluído somente como núcleo Python sintético local, com 36 testes PASS e rastreabilidade S1–S6; Documento 173 reproduz decisão e limitações.
+- Fonte: `prototypes/d1/`, base executada `768e2190ecde8a8713b80fd2bb378449f2d49033`, documentação consolidada no HEAD pré-CP218 `908e3f65b4507ec2cb74b428b9d381c80d864e92`. Esta atividade foi somente documental, sem reteste.
+- T2 permanece não autorizado; nenhuma SQL, Neon, CI, nuvem, dado factual, serviço pago ou alteração de gates. D1 atual, D0 documental fechado, D2 e governança operacional completa posteriores. STOP.
