@@ -5284,3 +5284,9 @@ Documentos:
 
 - Documento 193: cinco comandos integrados, 63 testes locais PASS históricos, riscos de replay, atomicidade e documentação ainda abertos.
 - T2-A1 permanece em desenvolvimento, T2-A2 não autorizado; sem serviços externos, SQL, Neon ou alteração de gates. Nenhum teste reexecutado nesta atividade documental. STOP.
+
+## 2026-10-21 — CP221: encerramento técnico restrito de T2-A1
+
+- Proprietário aprovou `OES / D1-T2-A1 / SYNTHETIC_IN_MEMORY_TECHNICAL_CLOSURE`; Documento 196 registra encerramento técnico somente da fronteira Python em memória, com cinco comandos e 75 testes locais históricos PASS (39 T2-A1 + 36 T1).
+- T1, semânticas históricas, restrições S1–S6, gates e bloqueios científicos inalterados. Nenhum teste foi reexecutado na ativação do checkpoint.
+- T2-A2, PostgreSQL, SQL, Neon, drivers, CI remota, nuvem, implantação, API pública, dados factuais e serviços pagos não autorizados. Retomada apenas documental. STOP.

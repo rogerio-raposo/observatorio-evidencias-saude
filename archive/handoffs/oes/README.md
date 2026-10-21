@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP220 — 2026-10-21**
+**CP221 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP220.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP221.md`
 
 Checkpoint anterior:
 
-`CP219`
+`CP220`
 
 Status:
 
@@ -584,3 +584,5 @@ em **Modo Continuidade**.
 - **CP219 — 2026-10-21:** Documento 192 registra aprovação expressa T2-A1 limitada a Python local e Unit of Work em memória, sem execução nesta formalização; T1 mantido. Próximo: primeiro incremento em diretório separado sob `Prossiga`. STOP.
 
 - **CP220 — 2026-10-21:** cinco comandos T2-A1 em memória; histórico 63 testes PASS. Documento 193 revisa riscos; T2-A1 não encerrado, T2-A2 não autorizado. Próximo: replay e atomicidade sob `Prossiga`. STOP.
+
+- **CP221 — 2026-10-21:** Documento 196 formaliza a aprovação expressa de encerramento técnico restrito T2-A1 (Python/memória, 75 testes locais históricos PASS). T2-A2 continua não autorizado. Retomada: proposta T2-A2 somente documental. STOP.

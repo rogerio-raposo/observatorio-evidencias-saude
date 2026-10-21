@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP220 — 2026-10-21**.
+- checkpoint vigente: **CP221 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -72,6 +72,13 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - Cinco comandos integrados em memória; 19 testes ponte, 8 repositório e 36 T1 PASS historicamente; nenhum reteste no CP220.
 - Documento 193: pendências de replay, falhas injetadas, documentação e cópia T1. T2-A1 não encerrado. T2-A2, PostgreSQL/SQL/Neon/CI/cloud não autorizados.
 - Próximo `Prossiga`: testes locais de replay/atomicidade, com Freshness Gate.
+
+## 1H. D1-T2/A1 — encerramento técnico restrito aprovado (CP221)
+
+- Decisão expressa `OES / D1-T2-A1 / SYNTHETIC_IN_MEMORY_TECHNICAL_CLOSURE`, registrada no Documento 196: **T2-A1 = CLOSED_SYNTHETIC_IN_MEMORY_ONLY**.
+- Cinco comandos sintéticos integrados em Python/memória, evidência local histórica de 39 testes T2-A1 e 36 testes T1 PASS; não reexecutados nesta atualização.
+- T1 preservado e encerrado restritamente; diferenças de exceções, semânticas de criação e `pending`, limitações científicas e todos os gates mantidos.
+- **T2-A2 NOT_AUTHORIZED**. Sem SQL, PostgreSQL, Neon, CI remota, cloud, implantação, API pública, dados reais, serviços pagos ou promoção científica/operacional. Próximo `Prossiga`: exclusivamente proposta documental para T2-A2.
 
 ## 2. Estado das fases
 
