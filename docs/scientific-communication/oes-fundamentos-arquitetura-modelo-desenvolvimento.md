@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.46 (diferenciação entre aprendizados, guia de implantação e transferibilidade)  
+**Versão editorial:** 0.47 (inserção editorial da Figura 1 na Seção 1.4)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
@@ -60,6 +60,13 @@ O acompanhamento temporal acrescenta outra dimensão. Identificar uma nova publi
 ### 1.4. Apresentação do OES
 
 O OES foi concebido para converter literatura científica dispersa em conhecimento estruturado, rastreável e comunicável, preservando a transparência das limitações e da incerteza. Seu desenho organiza os problemas em perguntas científicas, investigações metodológicas e produtos de evidência, sustentados por registros de fontes, avaliações e decisões. A natureza da pergunta orienta a escolha dos métodos; a criticidade e a finalidade orientam a profundidade da investigação. [Fontes: Documentos 00, 01 e 02](../governance/00-documento-de-concepcao.md).
+
+A **Figura 1** resume o percurso conceitual entre a pergunta, a investigação, os objetos científicos e o produto de evidências. O acompanhamento temporal ilustrado é **condicional**: sinais novos demandam avaliação, e uma nova versão científica depende de análise, garantia e aprovações pertinentes.
+
+![Figura 1 — Percurso conceitual do OES: pergunta científica, investigação proporcional, fontes e objetos rastreáveis, síntese e produto; controles transversais e ramo condicional de avaliação de atualidade com manutenção ou nova versão após aprovação.](figuras/figura-01-visao-geral-oes.svg)
+
+*Figura 1 — Organização conceitual proposta para o Observatório de Evidências em Saúde (OES).* Os blocos representam funções metodológicas, **não serviços necessariamente disponíveis em operação**. A atualização é condicional; a Fase 4 permanece em desenvolvimento, M3 está bloqueado e a validação científica independente do modelo ainda não foi realizada na data de referência (20 de outubro de 2026). **Fonte:** elaboração editorial a partir dos [Documentos 02](../governance/02-niveis-investigacao-produtos.md), [04](../governance/04-governanca-garantia-revisao.md) e [40](../products/40-taxonomia-arquitetura-produtos.md), do [estado canônico](../../STATE.md) e do [checkpoint CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
+
 
 A arquitetura estabelece cinco níveis de profundidade (N0–N4), que vão da exploração de um campo até investigações aprofundadas. Distingue, ainda, a profundidade da investigação dos regimes de manutenção do conhecimento (M0–M3). A taxonomia inicial compreende nove produtos: Evidence Scan, Resposta de Evidência, Ficha de Evidência, Síntese Rápida, Revisão de Evidências, Mapa de Evidências, Overview de Revisões, Monitor de Evidências e Alerta de Evidência. [Fonte: Documento 40](../products/40-taxonomia-arquitetura-produtos.md).
 
@@ -2012,4 +2019,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.46 — os Capítulos 1–16 foram redigidos e individualmente revisados nesta rodada; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 1–11, 13, 15 e 16 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; os Capítulos 12 e 14 passaram por revisão crítica de coerência e proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A normalização transversal das citações e referências, a revisão editorial integral e a avaliação científica independente continuam pendentes.*
+*Fim da versão 0.47 — os Capítulos 1–16 foram redigidos e individualmente revisados nesta rodada; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 1–11, 13, 15 e 16 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; os Capítulos 12 e 14 passaram por revisão crítica de coerência e proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A normalização transversal das citações e referências, a revisão editorial integral e a avaliação científica independente continuam pendentes.*
