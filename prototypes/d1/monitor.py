@@ -176,14 +176,16 @@ class SyntheticMonitorService:
                 raise DomainError('all signals require terminal assessment')
             if decision == 'no_update_needed' and any(a['decision'] == 'retained_for_impact' for a in c['assessments']):
                 raise DomainError('retained impact requires a nontrivial decision')
+            # Fail before any mutation; a corrupt target conclusion must not
+            # leave a terminal cycle or append an event on rejection.
+            if digest(s['scientific_conclusion']) != s['conclusion_hash']:
+                raise DomainError('scientific conclusion integrity violation')
             c['decision'] = {'value': decision, 'rationale': rationale, 'scenario_actor': scenario_actor,
                              'executed_by': 'python_service', 'verification': 'not_performed'}
             c['status'] = 'completed'
             s['target_currency'] = mapping[decision]
             self._append(s, 'cycle_closed', {'cycle_no': cycle_no, 'decision': dict(c['decision']),
                                              'target_currency': s['target_currency']})
-            if digest(s['scientific_conclusion']) != s['conclusion_hash']:
-                raise DomainError('scientific conclusion integrity violation')
             return {'cycle_no': cycle_no, 'status': 'completed', 'target_currency': s['target_currency']}
         return self._idempotent(scenario_id, request_id, p, run)
 

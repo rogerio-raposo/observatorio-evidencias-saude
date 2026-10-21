@@ -123,3 +123,21 @@ class HardenedIntegrityTests(unittest.TestCase):
         row['status'] = 'tampered'
         again = self.s.start_cycle('SYN-02', cycle_no=1, window_start='2026-10-02', window_end='2026-10-03', request_id='start')
         self.assertEqual(again['status'], 'running')
+
+
+class AtomicRejectionTests(unittest.TestCase):
+    def test_corrupt_conclusion_rejects_close_without_side_effects(self):
+        service = SyntheticMonitorService()
+        service.create_scenario(scenario_id='ATOMIC', target_version='target-v1',
+            monitor_version='monitor-v1', scientific_conclusion='Immutable synthetic conclusion',
+            fixture_source='synthetic:test', request_id='create')
+        service.start_cycle('ATOMIC', cycle_no=1, window_start='2026-10-02',
+            window_end='2026-10-03', request_id='start')
+        service.repo.scenarios['ATOMIC']['scientific_conclusion'] = 'unauthorized mutation'
+        before = service.snapshot('ATOMIC')
+        with self.assertRaisesRegex(DomainError, 'scientific conclusion integrity violation'):
+            service.close_cycle('ATOMIC', cycle_no=1, decision='no_update_needed',
+                rationale='No signal', scenario_actor='synthetic-actor', request_id='close')
+        self.assertEqual(service.snapshot('ATOMIC'), before)
+        self.assertEqual(service.snapshot('ATOMIC')['cycles'][0]['status'], 'running')
+        self.assertNotIn(('ATOMIC', 'close'), service.repo.receipts)

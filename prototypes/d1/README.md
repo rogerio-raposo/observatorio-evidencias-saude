@@ -10,7 +10,7 @@ Protótipo de aplicação em Python puro e biblioteca padrão, sem dependências
 
 Criação idempotente de cenário, identidade do produto/Monitor, ciclos M2 e janelas temporais, sinais fictícios de `search_hit`/`evidence_event`, avaliação explícita com múltiplos impactos, decisão de manutenção, `target_currency` independente da conclusão científica, snapshot `oes.d1.monitor_snapshot/0.1`, visualização textual demonstrativa, event log sequencial e reconstrução determinística com detecção de divergências.
 
-Testes locais da revisão: **10 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
+Testes locais da revisão: **11 testes passando**. Os arquivos do pacote foram executados localmente; nenhuma execução remota foi acionada.
 
 ## Limites
 
@@ -26,3 +26,7 @@ Testes locais da revisão: **10 testes passando**. Os arquivos do pacote foram e
 `monitor.py` — núcleo e apresentação sintética. `test_monitor.py` — unittest local.
 
 O repositório principal permanece fonte de verdade dos contratos OES; este diretório não altera as migrations, a taxonomia, os gates ou os documentos históricos.
+
+## Endurecimento local posterior ao primeiro upload
+
+Correção do fechamento de ciclo: verificar a integridade da conclusão científica **antes** de qualquer mutação. Novo teste adversarial de rejeição atômica em caso de adulteração interna. Nenhuma nova integração ou dependência.
