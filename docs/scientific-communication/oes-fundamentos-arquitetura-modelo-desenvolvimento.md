@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.36 (precisão metodológica e remissões internas revisadas no Capítulo 13)  
+**Versão editorial:** 0.37 (coerência de remissões e síntese crítica revisadas no Capítulo 14)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos; fontes externas vinculadas seletivamente às afirmações metodológicas dos Capítulos 2–11; revisão de citações nos demais capítulos, normalização final e validação científica independente pendentes  
@@ -1591,7 +1591,7 @@ Por fim, a atualização temporal revelou dificuldade metodológica própria: **
 
 A implementação tecnológica trouxe um desafio de **traduzir relações científicas complexas em contratos persistentes sem converter o modelo de dados em finalidade autônoma**. Identidade de estudos e relatórios, versões de síntese, derivação de resultados, correções, retratações e dependências entre produtos demandaram estruturas específicas. A baseline OES-H1/OES-P1 permitiu exercitar esses vínculos em testes, mas sua evolução por sucessivas migrações aumentou o número de condições a verificar antes de qualquer implantação operacional.
 
-Na Fase 4, transações, concorrência, histórico e permissões ampliaram os requisitos de verificação. Houve testes sintéticos, mas a aceitação para execução persistente não foi demonstrada. **O inventário de pendências do CP213 é apresentado uma única vez, na Seção 12.6**, sem atribuir defeitos não demonstrados às migrações. [Fonte: CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
+Na Fase 4, transações, concorrência, histórico e permissões ampliaram os requisitos de verificação. Houve testes sintéticos, mas a aceitação para execução persistente não foi demonstrada. **O inventário detalhado de pendências permanece no CP213 e é resumido na Seção 12.6**, sem atribuir defeitos não demonstrados às migrações. [Fonte: CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md).
 
 O projeto também enfrentou **restrições de acesso e infraestrutura para fontes científicas**. Algumas buscas experimentais não conseguiram utilizar interfaces ou bases complementares conforme o necessário. Na preparação de medições factuais da Fase 4, um período de execução identificado como **B1R1** expirou sem que a operação fosse efetivamente realizada. Consequentemente, os registros não demonstram sucesso ou falha científica de um ciclo de vigilância real: demonstram que as condições para executá-lo e validar suas evidências não foram satisfeitas. A continuidade sem esse esclarecimento poderia transformar planejamento e simulação em supostos resultados empíricos.
 
@@ -1601,7 +1601,7 @@ Houve ainda um problema de **sustentabilidade da própria governança de desenvo
 
 Como resposta, foi adotado um **protocolo de continuidade mais equilibrado**, concentrando checkpoints persistentes em atividades e decisões relevantes, sem eliminar as verificações de estado necessárias antes de alterações significativas. Em seguida, a decisão de simplificação aprovada no marco **CP210** priorizou **D0 documental**, restringiu D1 à preparação documental e diferiu D2, sem mudanças em gates e sem serviços pagos. Essa reorientação não comprovou que a arquitetura técnica seja desnecessária, mas estabeleceu que **sua expansão deve ser subordinada a necessidades científicas, operacionais e comunicacionais efetivamente demonstradas**. [Fonte: STATE — CP209 a CP213](../../STATE.md).
 
-A consequência prática foi deslocar o esforço imediato para **materiais que explicam a proposta e suas evidências de desenvolvimento de forma inteligível a pesquisadores**, preservando simultaneamente os bloqueios da infraestrutura. Essa escolha é coerente com o propósito do presente manuscrito: favorecer apreciação científica do modelo antes de assumir compromissos operacionais desproporcionais à capacidade atual.
+A consequência prática foi deslocar o esforço imediato para **materiais que explicam a proposta e suas evidências de desenvolvimento de forma inteligível a pesquisadores**, preservando simultaneamente os bloqueios da infraestrutura. Os identificadores de checkpoints e as prioridades D0–D2 são registros internos de gestão do desenvolvimento, e não critérios científicos de qualidade transferíveis automaticamente a outros observatórios. Essa escolha é coerente com o propósito do presente manuscrito: favorecer apreciação científica do modelo antes de assumir compromissos operacionais desproporcionais à capacidade atual.
 
 ### 14.5. Limitações do estágio atual de desenvolvimento
 
@@ -2044,4 +2044,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.36 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 2–11 e 13 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; o Capítulo 12 passou por revisão histórica e de proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A revisão de citações nos capítulos restantes, a normalização editorial final e a avaliação científica independente continuam pendentes.*
+*Fim da versão 0.37 — os Capítulos 1–16 estão redigidos; após a auditoria estrutural inicial de 54 referências e a verificação externa dos dois itens metodológicos acrescentados (total de 56 entradas), os Capítulos 2–11 e 13 receberam vinculações seletivas entre afirmações metodológicas e fontes científicas externas; os Capítulos 12 e 14 passaram por revisão crítica de coerência e proporcionalidade editorial. As seções revisadas preservam as categorias próprias do OES. A revisão de citações nos capítulos restantes, a normalização editorial final e a avaliação científica independente continuam pendentes.*
