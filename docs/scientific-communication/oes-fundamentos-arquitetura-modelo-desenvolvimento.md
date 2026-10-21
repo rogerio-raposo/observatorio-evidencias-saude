@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.54 (integração editorial do Quadro 1 na Seção 14.2)  
+**Versão editorial:** 0.55 (remissões e posicionamento editorial de Figuras 3, 5, 6 e 7)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
@@ -718,6 +718,8 @@ A relação entre profundidade e garantia varia conforme o produto. Para N0, a p
 
 Essa estrutura não confere autonomia científica ilimitada ao OES. Ao contrário: procura impedir que se obtenha um rótulo de conclusão mediante procedimentos que não satisfaçam os requisitos aplicáveis. **Um produto pode estar estruturalmente completo e ainda não reunir as condições necessárias para ser apresentado como cientificamente assegurado.**
 
+A [Figura 7](#131-dimensões-de-validação) distingue os controles efetivamente exercitados dos requisitos de revisão especializada e de prontidão operacional ainda não demonstrados; sua matriz não substitui os níveis de garantia desta seção.
+
 ### 7.4. Requisitos de revisão humana
 
 O requisito de revisão humana depende do **tipo de produto, da criticidade, da finalidade e do método utilizado**. A arquitetura evita a premissa de que a presença nominal de qualquer pessoa satisfaz uma verificação especializada: revisar uma síntese de estudos requer conhecimentos e competências que não podem ser inferidos de uma autorização administrativa. O conteúdo e a independência da revisão precisam corresponder à natureza do julgamento que se pretende validar.
@@ -918,6 +920,8 @@ Três dimensões acompanham o processo. A **identidade científica** preserva pe
 
 Também é importante distinguir o **fluxo científico de um produto** dos mecanismos utilizados para desenvolver e testar o próprio software do OES. Uma execução de integração contínua, uma prova de conceito com dados sintéticos ou a aprovação de um contrato de banco de dados pode demonstrar propriedades técnicas delimitadas; não substitui a investigação científica nem autoriza conferir garantia especializada a um produto. Essa separação orienta a interpretação das capacidades descritas neste capítulo.
 
+O percurso metodológico de referência é apresentado na [Figura 3](#51-planejamento-e-protocolo-de-investigação); sua representação esquemática não implica execução integral em todas as modalidades.
+
 ### 9.2. Recebimento e normalização da demanda
 
 O ponto de entrada previsto pelo OES é uma **pergunta formulada em linguagem natural**, sem exigir que o solicitante domine previamente estruturas como PICO, métodos de síntese ou instrumentos de avaliação crítica. O trabalho inicial consiste em preservar o enunciado recebido e identificar a intenção que motiva a consulta. Essa preservação permite verificar posteriormente se a investigação respondeu efetivamente ao problema apresentado, em vez de apenas produzir uma análise tecnicamente coerente sobre uma questão diferente. [Fonte: Documento 03 — Etapas E0 a E9](../governance/03-roteamento-metodologico.md).
@@ -1056,6 +1060,8 @@ A mudança de estado requer **avaliação e decisão registradas**. A detecção
 Também não se deve criar artificialmente um estado `CurrencyState` quando o alvo da atualização é apenas uma **InvestigationVersion** sem produto correspondente. Nesse caso, a arquitetura prevê registrar a avaliação e a decisão de atualização no mecanismo transversal apropriado e versionar a investigação quando houver mudança material. Uma nova ProductVersion somente será criada se um produto científico correspondente também mudar.
 
 A atualidade, por fim, é independente da **certeza da evidência** e do **nível de garantia**. Uma versão pode ser considerada atual mesmo quando o corpo de evidências apresenta baixa certeza; e uma versão cuja conclusão foi revista por especialista pode posteriormente tornar-se desatualizada. Essas categorias respondem a perguntas científicas diferentes e não devem ser apresentadas como sinônimos.
+
+A [Figura 5](#104-avaliação-da-relevância-das-novas-informações) ilustra decisões de reavaliação e eventual atualização, sem implicar transições automáticas ou monitoramento factual contínuo.
 
 ### 10.3. Fontes e sinais de atualização
 
@@ -1316,13 +1322,13 @@ Para este capítulo, os estados são apresentados **na data de referência de 20
 | **6** | Validação | Não iniciada formalmente |
 | **7** | Operação contínua | Não iniciada formalmente |
 
+A tabela sintetiza o estado corrente e **não declara encerramento científico global** das primeiras fases nem disponibilidade operacional das funções futuras. Uma baseline, um protocolo e um protótipo são resultados distintos e devem permanecer assim identificados. [Fonte: STATE — Estado das fases](../../STATE.md).
+
 A **Figura 6** apresenta a sequência dessas oito fases em dois segmentos e explicita seus estados na data de referência. As conexões contínuas indicam a sucessão documental até a Fase 4, enquanto as pontilhadas indicam apenas etapas planejadas. O desenho não representa progresso percentual ou prontidão científica e operacional.
 
 ![Figura 6 — Trajetória de oito fases do OES em dois segmentos. As fases 0 e 1 possuem bases iniciais consolidadas; a Fase 2 tem baseline arquitetural concluída e a Fase 3 está concluída no escopo técnico e taxonômico. A Fase 4 permanece em desenvolvimento, sem prontidão para operação factual (NOT_READY). As fases 5, 6 e 7 não foram iniciadas formalmente. Setas pontilhadas representam planejamento, não execução.](figuras/figura-06-trajetoria-desenvolvimento.svg)
 
 *Figura 6 — Trajetória documental e técnica do desenvolvimento do Observatório de Evidências em Saúde (OES), segundo o estado registrado em 20 de outubro de 2026.* As fases 0 e 1 apresentam bases iniciais consolidadas; a Fase 2 foi concluída no nível de baseline arquitetural; e a Fase 3, no escopo técnico e taxonômico definido. A Fase 4 permanece em desenvolvimento, com prontidão para operação factual **NOT_READY**, enquanto as fases 5–7 não foram formalmente iniciadas. As setas contínuas mostram a sucessão documentada até a Fase 4; as pontilhadas, a sequência prevista. **A figura não representa intervalos medidos, percentuais de maturidade, validação científica independente ou operação contínua demonstrada.** **Fonte:** elaboração editorial baseada no [STATE.md](../../STATE.md), no [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md) e no [Documento 00 — Concepção](../governance/00-documento-de-concepcao.md).
-
-A tabela sintetiza o estado corrente e **não declara encerramento científico global** das primeiras fases nem disponibilidade operacional das funções futuras. Uma baseline, um protocolo e um protótipo são resultados distintos e devem permanecer assim identificados. [Fonte: STATE — Estado das fases](../../STATE.md).
 
 ### 12.2. Fase 0 — Concepção e fundamentos
 
@@ -1506,6 +1512,8 @@ Produtos com alta criticidade ou finalidade normativa podem demandar condições
 A **liberação operacional da Fase 4** continua condicionada a evidências de prontidão não satisfeitas. A **Seção 12.6** apresenta o estado factual, o período B1R1 expirado sem execução e a decisão de priorizar D0 documental, preparar D1 apenas documentalmente e diferir D2; o inventário quantitativo permanece no [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md). **Nenhum desses registros substitui a comprovação dos requisitos, modifica gates científicos ou autoriza operações persistentes.**
 
 É desejável que os critérios de aceitação sejam **poucos, substantivos, auditáveis e proporcionais ao risco**. Multiplicar formulários ou checkpoints não garante qualidade se as verificações centrais — fontes efetivamente consultadas, dados corretamente extraídos, decisões científicas justificáveis, competências reais e pré-condições operacionais — permanecerem sem demonstração. Para a replicação do OES, a definição de condições de liberação deve favorecer clareza e evidência verificável, evitando criar camadas de aprovação que apenas reproduzam informações já registradas.
+
+A [Figura 7](#131-dimensões-de-validação) resume, para diferentes controles, o objeto verificado, a evidência documentada e seus limites inferenciais; não deve ser interpretada como um *gate* único de aprovação.
 
 ### 13.6. Indicadores de desempenho e qualidade
 
