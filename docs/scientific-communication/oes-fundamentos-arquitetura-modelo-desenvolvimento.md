@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.17 (primeira revisão editorial; revisão bibliográfica e científica pendente)  
+**Versão editorial:** 0.18 (primeira bibliografia científica externa verificada; revisão bibliográfica final e científica pendente)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** apresentação e Capítulos 1–16 redigidos; primeira rodada de concisão e consistência realizada; revisão bibliográfica, editorial final e científica pendentes  
+**Estado editorial:** capítulos 1–16 redigidos; primeira revisão de concisão e seleção inicial de referências externas conferidas; revisão bibliográfica integral, editorial final e científica pendentes  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -405,7 +405,7 @@ Após determinar quais estudos integram a investigação, é preciso examinar **
 
 O protocolo do OES distingue **risco de viés**, **qualidade ou limitações metodológicas**, **qualidade do relato**, **aplicabilidade** e **certeza do corpo de evidências**. Essas dimensões interagem, mas não são equivalentes. Um estudo pode ter relato incompleto sem que todos os seus procedimentos tenham sido inadequados; pode possuir baixo risco de viés e pouca aplicabilidade à população de interesse; e pode contribuir para um corpo de evidências cuja certeza global permanece limitada por outros fatores.
 
-A seleção do instrumento de avaliação segue a natureza dos estudos e de seus resultados. O desenho metodológico contempla ferramentas como **RoB 2** para ensaios randomizados, **ROBINS-I** para intervenções não randomizadas, **ROBINS-E** para estudos de exposições, instrumentos **QUADAS** para acurácia diagnóstica, **QUIPS** para fatores prognósticos, **PROBAST+AI** para modelos de predição e **ROBIS** para risco de viés de revisões sistemáticas. A aplicação concreta deverá respeitar versões, domínios, unidades de avaliação e instruções próprias de cada instrumento; a lista não constitui homologação científica de sua utilização em todos os cenários.
+A seleção do instrumento de avaliação segue a natureza dos estudos e de seus resultados. O desenho metodológico contempla ferramentas como **RoB 2** para ensaios randomizados, **ROBINS-I** para intervenções não randomizadas, **ROBINS-E** para estudos de exposições, **QUADAS-3** para acurácia diagnóstica, **QUIPS** para fatores prognósticos, **PROBAST+AI** para modelos de predição e **ROBIS** para risco de viés de revisões sistemáticas. A aplicação concreta deverá respeitar versões, domínios, unidades de avaliação e instruções próprias de cada instrumento; a lista não constitui homologação científica de sua utilização em todos os cenários.
 
 Em muitos casos, o julgamento precisa ser realizado no nível do **resultado ou desfecho**, e não simplesmente no nível de um estudo considerado em bloco. Um ensaio pode apresentar limitações diferentes para desfechos objetivos e autorreferidos, ou para análises sujeitas a padrões distintos de dados ausentes. Os registros devem preservar as perguntas de sinalização, as evidências documentais consideradas, os julgamentos por domínio e a justificativa de conclusão, quando o instrumento assim exigir.
 
@@ -1527,7 +1527,7 @@ A principal característica desses avanços é que **as próprias limitações p
 
 Os exemplos de aplicação permitem observar como o modelo responde a perguntas e condições diferentes. É necessário distinguir **informações extraídas de literatura real**, **decisões metodológicas produzidas pelo OES**, **casos experimentais** e **dados inteiramente sintéticos utilizados para testar contratos de software**. A presença de estudos científicos reais em um produto não demonstra, isoladamente, que os julgamentos do observatório tenham sido validados por especialistas.
 
-O caso inicial de **Ficha de Evidência N2**, sobre terapia cognitivo-comportamental digital para insônia (*dCBT-I*), constitui uma demonstração da possibilidade de organizar uma pergunta focal, representar fontes, resultados e interpretações e disponibilizar uma versão persistente. O produto alcançou **A2 e publicação interna** em 4 de outubro de 2026, após verificação metodológica assistida por IA e aprovação de governança. A estimativa proveniente da meta-análise de **Hwang e colaboradores (2025)** é **fonte externa**, não resultado de uma meta-análise original conduzida pelo OES. O julgamento de certeza moderada produzido no processo OES é **provisório e não recebeu revisão especializada independente**. Esse caso demonstra um percurso de organização e publicação interna, não uma validação científica definitiva da conclusão. [Fonte: STATE — Caso Real 01 N2](../../STATE.md).
+O caso inicial de **Ficha de Evidência N2**, sobre terapia cognitivo-comportamental digital para insônia (*dCBT-I*), constitui uma demonstração da possibilidade de organizar uma pergunta focal, representar fontes, resultados e interpretações e disponibilizar uma versão persistente. O produto alcançou **A2 e publicação interna** em 4 de outubro de 2026, após verificação metodológica assistida por IA e aprovação de governança. A estimativa proveniente da meta-análise de **[Hwang e colaboradores (2025)](https://doi.org/10.1038/s41746-025-01514-4)** é **fonte externa**, não resultado de uma meta-análise original conduzida pelo OES. O julgamento de certeza moderada produzido no processo OES é **provisório e não recebeu revisão especializada independente**. Esse caso demonstra um percurso de organização e publicação interna, não uma validação científica definitiva da conclusão. [Fonte: STATE — Caso Real 01 N2](../../STATE.md).
 
 A **Resposta de Evidência N1** forneceu outro percurso com **A2 e publicação interna**, concluído após correção solicitada em uma primeira verificação adversarial e nova verificação com resultado favorável. A sequência é relevante porque expõe que a revisão assistida por IA foi tratada como processo registrado, e não apenas como declaração automática de qualidade. A aprovação, porém, permaneceu **interna** e não equivaleu à avaliação por um corpo independente de pesquisadores.
 
@@ -1888,7 +1888,7 @@ Em última análise, a contribuição pretendida pelo OES não é automatizar re
 
 ## Referências e documentação de base (seleção inicial)
 
-As referências científicas externas ainda requerem verificação e normalização em revisão bibliográfica do manuscrito. A lista abaixo identifica **fontes internas do projeto**, não substituindo bibliografia científica externa.
+Esta seção separa **fontes canônicas internas do OES** de uma **seleção inicial de referências científicas externas verificadas**. A conferência bibliográfica do manuscrito completo permanece em andamento; a lista externa não substitui uma revisão sistemática da literatura.
 
 - [Documento 00 — Concepção](../governance/00-documento-de-concepcao.md)
 - [Documento 01 — Escopo e taxonomia das perguntas](../governance/01-taxonomia-perguntas.md)
@@ -1898,6 +1898,35 @@ As referências científicas externas ainda requerem verificação e normalizaç
 - [STATE — Estado corrente e histórico documentado](../../STATE.md)
 - [Continuidade operacional](../../archive/handoffs/oes/README.md)
 
+### Referências científicas externas verificadas — seleção inicial
+
+As referências abaixo foram conferidas em fontes primárias (periódicos, bases bibliográficas oficiais ou documentação dos responsáveis pelos métodos) para identificar **autoria, título, ano, publicação e DOI ou versão do manual**. Elas fundamentam os referenciais explicitamente citados neste manuscrito, mas **não representam revisão bibliográfica exaustiva, endosso à aplicação concreta dos instrumentos no OES ou validação externa das conclusões dos produtos**.
+
+**Métodos gerais de revisão, busca e relato**
+
+1. Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA, eds. *Cochrane Handbook for Systematic Reviews of Interventions*. Versão 6.5, 2024. [Manual oficial](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current).
+2. Page MJ, McKenzie JE, Bossuyt PM, et al. The PRISMA 2020 statement: an updated guideline for reporting systematic reviews. *BMJ*. 2021;372:n71. [DOI: 10.1136/bmj.n71](https://doi.org/10.1136/bmj.n71).
+3. Rethlefsen ML, Kirtley S, Waffenschmidt S, et al.; PRISMA-S Group. PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews. *Systematic Reviews*. 2021;10:39. [DOI: 10.1186/s13643-020-01542-z](https://doi.org/10.1186/s13643-020-01542-z).
+4. McGowan J, Sampson M, Salzwedel DM, Cogo E, Foerster V, Lefebvre C. PRESS Peer Review of Electronic Search Strategies: 2015 Guideline Statement. *Journal of Clinical Epidemiology*. 2016;75:40–46. [DOI: 10.1016/j.jclinepi.2016.01.021](https://doi.org/10.1016/j.jclinepi.2016.01.021). **Nota:** “2015” integra o nome da diretriz; o artigo foi publicado em 2016.
+
+**Certeza, confiança e avaliação crítica**
+
+5. Guyatt GH, Oxman AD, Vist GE, et al.; GRADE Working Group. GRADE: an emerging consensus on rating quality of evidence and strength of recommendations. *BMJ*. 2008;336:924–926. [DOI: 10.1136/bmj.39489.470347.AD](https://doi.org/10.1136/bmj.39489.470347.AD).
+6. Lewin S, Booth A, Glenton C, et al. Applying GRADE-CERQual to qualitative evidence synthesis findings: introduction to the series. *Implementation Science*. 2018;13(Suppl 1):2. [DOI: 10.1186/s13012-017-0688-3](https://doi.org/10.1186/s13012-017-0688-3).
+7. Sterne JAC, Savović J, Page MJ, et al. RoB 2: a revised tool for assessing risk of bias in randomised trials. *BMJ*. 2019;366:l4898. [DOI: 10.1136/bmj.l4898](https://doi.org/10.1136/bmj.l4898).
+8. Sterne JAC, Hernán MA, Reeves BC, et al. ROBINS-I: a tool for assessing risk of bias in non-randomised studies of interventions. *BMJ*. 2016;355:i4919. [DOI: 10.1136/bmj.i4919](https://doi.org/10.1136/bmj.i4919).
+9. Higgins JPT, Morgan RL, Rooney AA, et al. A tool to assess risk of bias in non-randomized follow-up studies of exposure effects (ROBINS-E). *Environment International*. 2024;186:108602. [DOI: 10.1016/j.envint.2024.108602](https://doi.org/10.1016/j.envint.2024.108602).
+10. Whiting PF, Tomlinson E, Rutjes AWS, et al. QUADAS-3: a revised tool for the quality assessment of diagnostic test accuracy studies. *Annals of Internal Medicine*. 2026;179(4):548–555. [DOI: 10.7326/ANNALS-25-02104](https://doi.org/10.7326/ANNALS-25-02104).
+11. Hayden JA, van der Windt DA, Cartwright JL, Côté P, Bombardier C. Assessing bias in studies of prognostic factors. *Annals of Internal Medicine*. 2013;158(4):280–286. [DOI: 10.7326/0003-4819-158-4-201302190-00009](https://doi.org/10.7326/0003-4819-158-4-201302190-00009). Referência ao instrumento QUIPS.
+12. Moons KGM, Damen JAA, Kaul T, et al. PROBAST+AI: an updated quality, risk of bias, and applicability assessment tool for prediction models using regression or artificial intelligence methods. *BMJ*. 2025;388:e082505. [DOI: 10.1136/bmj-2024-082505](https://doi.org/10.1136/bmj-2024-082505).
+13. Whiting P, Savović J, Higgins JPT, et al. ROBIS: a new tool to assess risk of bias in systematic reviews was developed. *Journal of Clinical Epidemiology*. 2016;69:225–234. [DOI: 10.1016/j.jclinepi.2015.06.005](https://doi.org/10.1016/j.jclinepi.2015.06.005).
+
+**Estudo externo explicitamente citado na experiência do OES**
+
+14. Hwang JW, Lee GE, Woo JH, Kim SM, Kwon JY. Systematic review and meta-analysis on fully automated digital cognitive behavioral therapy for insomnia. *npj Digital Medicine*. 2025;8:157. [DOI: 10.1038/s41746-025-01514-4](https://doi.org/10.1038/s41746-025-01514-4). **PMID: 40075149**. Revisão externa de 29 ensaios randomizados e 9.475 participantes; a referência **não implica que o OES tenha conduzido a meta-análise ou validado independentemente seus julgamentos GRADE**.
+
+**Pendências bibliográficas:** completar a conferência de estudos primários e revisões adicionais utilizados nos casos do OES, atribuir fontes científicas externas a outras afirmações metodológicas pertinentes e finalizar a padronização bibliográfica do conjunto. As referências acima devem ser vinculadas explicitamente aos trechos correspondentes na revisão final.
+
 **Nota editorial:** a apresentação executiva D0 (Documento 168) é um artefato separado, com finalidade distinta, e não substitui esta descrição de 16 capítulos.
 
 ## Apêndices previstos
@@ -1906,4 +1935,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.17 — os Capítulos 1–16 estão redigidos e passaram por uma primeira revisão de concisão e consistência. A revisão bibliográfica, a revisão editorial final e a avaliação científica independente permanecem pendentes.*
+*Fim da versão 0.18 — os Capítulos 1–16 estão redigidos, com primeira revisão de concisão e seleção inicial de referências externas verificadas. A conferência bibliográfica integral, a revisão editorial final e a avaliação científica independente permanecem pendentes.*
