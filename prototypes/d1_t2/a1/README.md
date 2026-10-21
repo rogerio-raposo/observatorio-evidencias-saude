@@ -1,9 +1,9 @@
-# OES D1-T2/A1 — Fronteira experimental Python em memória
+# OES D1-T2/A1 — Ponte experimental de comandos sintéticos
 
-Primeiro incremento autorizado de T2-A1, **sem banco, driver, SQL, Neon, CI, cloud, rede ou serviços pagos**. Código independente em `prototypes/d1_t2/a1/`; o T1 em `prototypes/d1/` permanece inalterado. Esta fronteira ainda não foi integrada ao serviço de domínio T1.
+Incremento experimental publicado em `prototypes/d1_t2/a1/`. `bridge.py` integra apenas `create_scenario` e `start_cycle` à `MemoryUnitOfWork` do primeiro incremento T2-A1. As demais operações permanecem fora desta ponte e não são declaradas integradas.
 
-O contrato experimental define `ScenarioRepository` e `MemoryUnitOfWork`, com estado, um evento e recibo confirmados juntos por atribuição de registro em memória sob `RLock`. Retornos são cópias defensivas. Não há persistência durável, concorrência multiprocesso, isolamento SQL nem interface pública.
+`repository.py` é a versão T2-A1 publicada anteriormente. `t1_monitor_reference.py` é cópia exata do núcleo T1 para validação isolada; a fonte canônica do T1 permanece em `prototypes/d1/monitor.py` e não foi modificada. Na integração futura, resolver a referência canônica sem manter implementações divergentes.
 
-Testes locais: `python -m unittest discover -s . -p 'test_*.py' -v`. Rodar separadamente a regressão T1 em `prototypes/d1/`. O comportamento T1 de repetição da criação (snapshot corrente) e `pending` não foi modificado; o adaptador ainda não possui comandos de domínio. Qualquer mudança dessas semânticas exige decisão específica.
+Teste local: `python -m unittest discover -s . -p 'test_bridge.py' -q` (8 testes). Executar também `test_repository.py` (8 testes) e a suíte T1 (36 testes) nos respectivos diretórios. Resultado histórico do incremento: 52/52 PASS no total das três suítes locais.
 
-**Próximo incremento somente sob `Prossiga`:** adaptar, de modo incremental, os comandos sintéticos à fronteira em memória e verificar paridade contra T1, sem modificar arquivos T1 e sem ativar T2-A2.
+Preserva a resposta histórica da criação repetida (snapshot atual); os outros recibos preservam a resposta original. Sem PostgreSQL, SQL, Neon, CI, nuvem, rede, dados factuais ou serviços pagos. O lock é somente intraprocesso, não transação durável.
