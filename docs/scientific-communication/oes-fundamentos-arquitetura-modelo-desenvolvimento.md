@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.56 (concisão editorial das legendas das Figuras 5–7)  
+**Versão editorial:** 0.57 (normalização editorial dos nove quadros)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
@@ -193,6 +193,8 @@ O contexto brasileiro poderá acrescentar uma camada de análise de aplicabilida
 
 O OES organiza as demandas segundo **dez classes metodológicas iniciais**. A classificação precede a escolha de instrumentos e procedimentos, porque não existe uma hierarquia de estudos que seja igualmente apropriada para investigar todos os fenômenos. Um ensaio randomizado pode sustentar inferências sobre efeitos de intervenções; já uma pergunta sobre prevalência requer atenção especial à amostragem e à representatividade, enquanto uma investigação qualitativa examina experiências e significados. [Fonte: Documento 01 — Taxonomia consolidada](../governance/01-taxonomia-perguntas.md).
 
+**Quadro 1 — Tipologia das perguntas científicas.**
+
 | Classe | Questão típica | Aspecto metodológico central |
 |---|---|---|
 | **Intervenção e efetividade (INT)** | Uma intervenção produz benefício em relação a determinada alternativa? | Comparadores, desfechos, estimativas de efeito e risco de viés dos estudos |
@@ -205,6 +207,8 @@ O OES organiza as demandas segundo **dez classes metodológicas iniciais**. A cl
 | **Experiências e fenômenos qualitativos (QUAL)** | Como um fenômeno é vivido, percebido ou interpretado? | Contexto, adequação da abordagem qualitativa e interpretação dos achados |
 | **Sistemas, políticas e saúde pública (SYS)** | Qual é o efeito ou a implementação de determinada política ou serviço? | Contexto, desenhos de avaliação, implementação e efeitos populacionais |
 | **Mapeamento da evidência (MAP)** | Quais estudos existem e onde estão as lacunas? | Delimitação do campo, caracterização da literatura e cobertura das fontes |
+
+**Fonte:** elaboração editorial com base no [Documento 01 — Taxonomia de perguntas](../governance/01-taxonomia-perguntas.md).
 
 Essa taxonomia não significa que uma demanda real pertença sempre a uma única categoria. Uma investigação sobre uma tecnologia em saúde pode abranger eficácia, segurança, aceitabilidade e implementação. O protocolo do OES prevê a identificação das diferentes classes envolvidas e, quando necessário, sua **decomposição em subperguntas metodologicamente homogêneas**. As análises específicas podem ser posteriormente reunidas em uma apresentação integrada, sem que as exigências próprias de cada classe sejam apagadas.
 
@@ -293,6 +297,8 @@ Os cinco níveis N0–N4 representam **modalidades de investigação com finalid
 
 O quadro resume as diferenças de finalidade:
 
+**Quadro 2 — Níveis de profundidade metodológica N0–N4.**
+
 | Nível | Produto de investigação | Pergunta orientadora | Limite relevante |
 |---|---|---|---|
 | **N0** | Evidence Scan | Que literatura e sínteses existem neste campo? | Não reivindica exaustividade nem certeza formal |
@@ -300,6 +306,8 @@ O quadro resume as diferenças de finalidade:
 | **N2** | Ficha de Evidência | Como registrar e comunicar conhecimento focal de modo estruturado e reutilizável? | Não equivale automaticamente a revisão sistemática ou validação externa |
 | **N3** | Síntese Rápida | Como produzir síntese formal com abreviações explícitas e justificadas? | Exige revisão especializada para produto formal |
 | **N4** | Revisão de Evidências | Que investigação aprofundada é necessária para responder com completude apropriada? | Exige requisitos metodológicos e revisão qualificada compatíveis |
+
+**Fonte:** elaboração editorial com base nos [Documentos 02](../governance/02-niveis-investigacao-produtos.md) e [40](../products/40-taxonomia-arquitetura-produtos.md).
 
 O modelo contempla também **produtos analíticos transversais**, como Mapa de Evidências e Overview de Revisões, que não precisam corresponder linearmente a um único nível N. O Mapa descreve a distribuição de estudos e lacunas em determinado campo; o Overview examina um conjunto de revisões existentes. Essas famílias são detalhadas no Capítulo 6 e precisam ser escolhidas segundo a natureza do objeto científico, não apenas pela quantidade de literatura disponível. [Fonte: Documento 40 — Famílias de produtos](../products/40-taxonomia-arquitetura-produtos.md).
 
@@ -703,12 +711,16 @@ Por fim, a responsabilidade institucional permanece relevante mesmo quando parte
 
 Para tornar explícita a diferença entre **profundidade da investigação** e **garantia obtida**, o OES adota quatro níveis de garantia, de A0 a A3. Eles não atribuem, por si só, uma nota científica universal ao produto nem substituem a avaliação do risco de viés das fontes ou a certeza do corpo de evidências. Sua função é representar quais etapas de verificação, aprovação e revisão foram efetivamente satisfeitas. [Fonte: Documento 04 — Níveis de garantia](../governance/04-governanca-garantia-revisao.md).
 
+**Quadro 3 — Níveis de garantia A0–A3.**
+
 | Nível | Denominação funcional | Condição principal | Interpretação e limite |
 |---|---|---|---|
 | **A0** | Não verificado (`unverified`) | Verificação metodológica ainda não concluída | Produto em elaboração; não publicável como produto científico final |
 | **A1** | Revisado metodologicamente por IA (`ai_methodological_reviewed`) | Verificação assistida por IA ativa com `passed`, sem decisão ativa impeditiva | Controle interno documentado; não representa aprovação do proprietário nem revisão independente |
 | **A2** | Aprovado pelo proprietário (`owner_approved`) | A1 e aprovação ativa de governança, sem decisões impeditivas | Autoriza publicação interna quando a política do produto permitir; **não equivale a validação especializada** |
 | **A3** | Revisão especializada independente (`expert_independent_reviewed`) | A2 e revisão independente qualificada ativa com `approved`, sem revisão impeditiva | Registra revisão científica especializada; não substitui rastreabilidade nem demais requisitos do método |
+
+**Fonte:** elaboração editorial com base no [Documento 04 — Governança e garantia](../governance/04-governanca-garantia-revisao.md).
 
 O nível de garantia deve ser **derivado das decisões documentadas**, e não armazenado como declaração autônoma que possa divergir dos registros. Por exemplo, uma aprovação de governança sem a verificação metodológica exigida não cria automaticamente A2. Da mesma forma, uma revisão especializada com pedido de correções não deve ser apresentada como A3 aprovado. Registros ativos de `revise`, `failed` ou `rejected`, conforme a função, exigem tratamento coerente com as regras de bloqueio.
 
@@ -1043,6 +1055,8 @@ A **atualidade** (*currentness*) expressa um julgamento sobre a adequação temp
 
 A taxonomia de atualidade possui cinco estados:
 
+**Quadro 4 — Estados de atualidade das evidências.**
+
 | Estado canônico | Significado científico-operacional |
 |---|---|
 | **`current`** | A última avaliação registrada não identificou razão suficiente para considerar aquela versão inadequada ao uso corrente no escopo declarado |
@@ -1050,6 +1064,8 @@ A taxonomia de atualidade possui cinco estados:
 | **`update_recommended`** | A versão ainda pode ser utilizável dentro de limites explícitos, mas há justificativa documentada para atualização científica |
 | **`outdated`** | A versão não deve ser apresentada como síntese atual adequada ao uso declarado sem qualificação substancial ou atualização |
 | **`archived`** | A avaliação de atualidade da versão foi encerrada para uso corrente por substituição, arquivamento ou decisão explícita |
+
+**Fonte:** elaboração editorial com base no [Documento 05 — Protocolo transversal de atualização](../governance/05-protocolo-transversal-atualizacao.md).
 
 Esses estados descrevem **avaliações justificadas**, não rótulos calculados automaticamente a partir da idade cronológica do produto. Um produto pode permanecer `current` após uma verificação que não identifique mudança material; também pode entrar em `under_evaluation` por informação relevante surgida pouco tempo depois de sua elaboração. A data de corte continua sendo indispensável, mas não é uma regra automática de obsolescência.
 
@@ -1311,6 +1327,8 @@ A experiência revelou também a necessidade de manter **proporcionais os contro
 
 Para este capítulo, os estados são apresentados **na data de referência de 20 de outubro de 2026**:
 
+**Quadro 5 — Fases do desenvolvimento do OES.**
+
 | Fase | Finalidade principal | Estado documentado |
 |---|---|---|
 | **0** | Concepção e fundamentos | Base inicial consolidada; documentação passível de evolução |
@@ -1321,6 +1339,8 @@ Para este capítulo, os estados são apresentados **na data de referência de 20
 | **5** | Automação e IA | Não iniciada formalmente |
 | **6** | Validação | Não iniciada formalmente |
 | **7** | Operação contínua | Não iniciada formalmente |
+
+**Fonte:** elaboração editorial baseada no [STATE.md](../../STATE.md) e no [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md); estados na data de referência de 20 de outubro de 2026.
 
 A tabela sintetiza o estado corrente e **não declara encerramento científico global** das primeiras fases nem disponibilidade operacional das funções futuras. Uma baseline, um protocolo e um protótipo são resultados distintos e devem permanecer assim identificados. [Fonte: STATE — Estado das fases](../../STATE.md).
 
@@ -1519,6 +1539,8 @@ A [Figura 7](#131-dimensões-de-validação) resume, para diferentes controles, 
 
 Um programa de validação científica e tecnológica precisa estabelecer **indicadores que correspondam às propriedades que pretende demonstrar**. O número de documentos produzidos, a velocidade de geração de texto ou a aprovação de uma bateria técnica não são, isoladamente, medidas suficientes da qualidade do conhecimento comunicado. O OES ainda não dispõe de resultados externos consolidados para um conjunto geral de indicadores de desempenho; o quadro abaixo apresenta **dimensões candidatas para estudos futuros**, não medições já realizadas.
 
+**Quadro 6 — Dimensões e indicadores candidatos de desempenho e qualidade.**
+
 | Dimensão | Exemplos de indicadores candidatos | Condição de interpretação |
 |---|---|---|
 | **Cobertura de busca** | Proporção de estudos relevantes identificados em amostra de referência; completude das fontes previstas | Requer conjunto de comparação justificado e avaliação das lacunas |
@@ -1530,6 +1552,8 @@ Um programa de validação científica e tecnológica precisa estabelecer **indi
 | **Rastreabilidade** | Proporção de afirmações materiais com fonte e decisão recuperáveis | Medir possibilidade real de reconstruir a cadeia científica |
 | **Atualização** | Cobertura e completude dos ciclos; latência entre sinal e decisão; alterações materiais identificadas | Distinguir falha operacional de mudança científica |
 | **Segurança e operação** | Integridade, recuperação após falha, permissões efetivas e custo por percurso | Exige ensaio no ambiente e na configuração a que a conclusão se aplica |
+
+**Fonte:** elaboração editorial a partir da proposta de validação da seção 13.6; indicadores candidatos, não medições realizadas.
 
 A seleção de indicadores deve ocorrer mediante **protocolo de validação prospectivo**, com perguntas prioritárias, unidades de análise, critérios de aceitação e procedimentos de revisão. Indicadores não precisam ser multiplicados indiscriminadamente. Para uma Ficha N2 inicial, pode ser mais importante demonstrar a correspondência entre pergunta, fontes, extração e conclusão do que medir a capacidade de processamento em escala. Para um Monitor M2, são centrais a completude dos ciclos, a capacidade de identificar sinais relevantes e o tratamento de falhas. Para uma Revisão N4, os critérios de busca, seleção independente, avaliação crítica e revisão qualificada tornam-se determinantes.
 
@@ -1562,6 +1586,8 @@ O quinto resultado foi a **arquitetura de atualização**, ainda em desenvolvime
 
 O conjunto desses resultados pode ser resumido por uma distinção de maturidade:
 
+**Quadro 7 — Resultados documentados e limites de interpretação.**
+
 | Dimensão | Resultado demonstrado | Limite de interpretação |
 |---|---|---|
 | Concepção e métodos | Bases documentais e protocolos iniciais consolidados | Sem revisão científica externa global |
@@ -1571,13 +1597,17 @@ O conjunto desses resultados pode ser resumido por uma distinção de maturidade
 | Atualização | Arquitetura conceitual e testes sintéticos delimitados | Sem monitoramento factual contínuo demonstrado; M3 bloqueado |
 | Operação | Decisões e instrumentos de preparação controlada | Fase 4 ainda `NOT_READY`; Fases 5–7 não iniciadas formalmente |
 
+**Fonte:** elaboração editorial baseada nos resultados e limites descritos na seção 14.1 e no [STATE.md](../../STATE.md).
+
 A principal característica desses avanços é que **as próprias limitações passaram a fazer parte do resultado documentado**. A arquitetura não foi tratada como empreendimento concluído apenas porque suas partes formais podiam ser descritas. Esse cuidado amplia a possibilidade de escrutínio por outros pesquisadores, embora não substitua o escrutínio ainda não realizado.
 
 ### 14.2. Exemplos de aplicação
 
 Os casos documentados ilustram resultados de natureza distinta: **produtos internos apoiados em literatura científica real**, **investigações experimentais impedidas de publicação**, **exercícios de organização e reutilização de evidências** e **testes sintéticos de contratos tecnológicos**. Essas categorias não são intercambiáveis. A utilização de estudos publicados não significa validação independente dos julgamentos feitos pelo OES, e um teste técnico satisfatório não certifica um produto científico. Os registros de origem e os limites de cada percurso constam da [documentação canônica](../../STATE.md).
 
-O **Quadro 1** sintetiza o uso demonstrado e os limites científicos dos oito percursos, sem hierarquizar seus resultados.
+O **Quadro 8** sintetiza o uso demonstrado e os limites científicos dos oito percursos, sem hierarquizar seus resultados.
+
+**Quadro 8 — Casos e percursos documentados no OES até 20 de outubro de 2026.**
 
 | Objeto e tema | Uso ou resultado demonstrado | Estado/garantia documentado(a) | Limite científico e operacional |
 |---|---|---|---|
@@ -1590,7 +1620,9 @@ O **Quadro 1** sintetiza o uso demonstrado e os limites científicos dos oito pe
 | **OVR-01 — Overview de Revisões**: dCBT-I | Organização de três revisões externas e análise documental preparatória de sobreposição | **A1 interno**, sob revisão, **não publicável**; rota formal `NOT_READY` | 59 identidades candidatas a estudos únicos não comprovam independência dos estudos entre revisões; ROBIS e associações sem revisão humana independente; não houve metanálise original do OES |
 | **Monitor de Evidências / Alerta de Evidência** | Contratos de monitoramento e alerta e cenários técnicos/sintéticos historicamente exercitados, inclusive em **M2** | **Testes técnicos/sintéticos**, sem classificação A de produto científico; **M3 bloqueado** | Não comprova vigilância factual persistente, coleta sustentada de fontes reais ou disponibilidade operacional; B1R1 = `EXPIRED_NOT_EXECUTED` |
 
-**Quadro 1 — Casos e percursos documentados no OES até 20 de outubro de 2026.** Os estados A0–A3 descrevem garantias de versões específicas e M2–M3 indicam regimes de manutenção, não certeza científica. Publicação interna A2 não equivale a revisão especializada independente nem divulgação externa. A tabela não compara eficácia ou desempenho. **Fontes:** [STATE.md](../../STATE.md), [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md), [Documento 04](../governance/04-governanca-garantia-revisao.md) e registros de casos descritos nesta seção.
+**Fonte:** [STATE.md](../../STATE.md), [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md), [Documento 04](../governance/04-governanca-garantia-revisao.md) e registros dos casos descritos nesta seção.
+
+**Nota ao Quadro 8.** Os estados A0–A3 descrevem garantias de versões específicas e M2–M3 indicam regimes de manutenção, não certeza científica. Publicação interna A2 não equivale a revisão especializada independente nem divulgação externa. A tabela não compara eficácia ou desempenho. **Fontes:** [STATE.md](../../STATE.md), [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md), [Documento 04](../governance/04-governanca-garantia-revisao.md) e registros de casos descritos nesta seção.
 
 A **Ficha de Evidência N2** sobre terapia cognitivo-comportamental digital para insônia (*dCBT-I*) recebeu **A2 e publicação interna** em 4 de outubro de 2026, após verificação assistida por IA e aprovação de governança, **sem revisão científica especializada independente**. Sua estrutura organiza pergunta, fontes, resultados e interpretação. A meta-análise de [Hwang et al. (2025)](https://doi.org/10.1038/s41746-025-01514-4) é **fonte externa**, não síntese quantitativa originalmente conduzida pelo OES; o julgamento interno de certeza moderada permanece **provisório**. O caso demonstra elaboração e disponibilização interna, não validação científica da conclusão. A bibliografia reúne também **cinco ensaios clínicos de contexto (itens 16–20)**, cuja identificação não equivale a nova busca sistemática, revisão independente ou reanálise efetuada pelo OES. [Fonte: STATE — Caso N2](../../STATE.md).
 
@@ -1768,6 +1800,8 @@ A avaliação inicial deve distinguir o que foi **executado, documentado e verif
 
 Um exemplo de progressão **ilustrativa, não obrigatória**, é o seguinte:
 
+**Quadro 9 — Progressão ilustrativa de um observatório mínimo viável.**
+
 | Momento | Entrega verificável | Decisão antes de ampliar |
 |---|---|---|
 | **Delimitação** | Pergunta, público, método e limites acordados | Existe necessidade concreta e competência suficiente? |
@@ -1775,6 +1809,8 @@ Um exemplo de progressão **ilustrativa, não obrigatória**, é o seguinte:
 | **Repetição controlada** | Novo caso ou reavaliação, com erros e esforço registrados | O processo é reprodutível e útil em mais de um caso? |
 | **Persistência** | Identidades e versões organizadas para reutilização | A complexidade adicional gera benefício material? |
 | **Acompanhamento** | Regime de manutenção justificado e capacidade demonstrada | É possível cumprir a frequência e revisar os sinais? |
+
+**Fonte:** elaboração editorial da seção 15.6; progressão ilustrativa, não obrigatória.
 
 A principal vantagem desse desenho é **tornar reversíveis as escolhas tecnológicas iniciais**, sem comprometer a rastreabilidade científica. O grupo pode ajustar templates, infraestrutura e organização institucional após observar as necessidades reais. A expansão deixa de ser um compromisso presumido e passa a depender de demonstração de utilidade e capacidade.
 
