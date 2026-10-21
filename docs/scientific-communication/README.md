@@ -33,6 +33,13 @@ A elaboração deste documento pode ocorrer **antes do encerramento da Fase 4**,
 - Identificar como planejadas as capacidades ainda não demonstradas.
 - Manter uma perspectiva descritiva e replicável, sem transformar a publicação em material de recrutamento.
 
+## Apresentações para pesquisadores — versões derivadas
+
+- [Apresentação executiva do OES](oes-apresentacao-executiva-pesquisadores.md) — versão editorial 1.0; primeira interlocução científica; deriva do [Documento 168](../governance/168-apresentacao-executiva-oes-d0-cp213.md).
+- [Caso demonstrativo e fundamentos metodológicos](oes-caso-demonstrativo-fundamentos-metodologicos.md) — versão editorial 1.0; leitura aprofundada e avaliação crítica; deriva do [Documento 167](../governance/167-apresentacao-editorial-d0-cp212.md).
+
+Os Documentos 167 e 168 **permanecem inalterados em `docs/governance`** como registros históricos e fontes rastreáveis. As versões acima são novas fontes editoriais em Markdown. Sua conversão para DOCX e eventual circulação seguem a [política transversal](politica-editorial-transversal-md-docx.md); aprovação editorial **não equivale** a revisão científica independente nem liberação operacional.
+
 ## Organização
 
 Os arquivos-fonte em Markdown e as versões derivadas em DOCX editável poderão ser mantidos neste diretório com nomes e versões identificáveis. Para **todos os documentos de apresentação do OES, mesmo fora deste diretório**, aplica-se a [política transversal MD → DOCX → revisão manual no Word](politica-editorial-transversal-md-docx.md). A eventual conversão final para PDF será feita pelo proprietário no Microsoft Word, após revisão; não é etapa automática padrão do assistente. O Markdown permanece canônico e os formatos nativos de artefatos técnicos não são afetados.
