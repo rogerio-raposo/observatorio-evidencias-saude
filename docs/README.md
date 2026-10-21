@@ -67,6 +67,10 @@ Os Documentos 20–38 registram o modelo conceitual/lógico, os gates F2-A/F2-B,
 
 Referência de fechamento: [38 — Decisão de Promoção e Fechamento da Fase 2](architecture/38-decisao-promocao-fechamento-fase2.md).
 
+## Política transversal de documentos de apresentação
+
+Para **qualquer documento destinado a apresentação ou circulação** (não apenas o manuscrito científico), aplicar a [política MD → DOCX editável → revisão manual no Microsoft Word → eventual PDF exportado pelo usuário](scientific-communication/politica-editorial-transversal-md-docx.md). O Markdown segue canônico; não gerar PDF automaticamente por padrão. Artefatos técnicos nativos e controles operacionais permanecem fora desse fluxo.
+
 ## Regra editorial
 
 A documentação do repositório é a fonte canônica. Conversas podem desenvolver e revisar conteúdo, mas decisões persistentes devem ser consolidadas aqui.
