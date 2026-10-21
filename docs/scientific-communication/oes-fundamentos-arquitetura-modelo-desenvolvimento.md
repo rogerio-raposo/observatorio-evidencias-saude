@@ -1,10 +1,10 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.18 (primeira bibliografia científica externa verificada; revisão bibliográfica final e científica pendente)  
+**Versão editorial:** 0.19 (referências científicas do caso N2 conferidas; revisão bibliográfica integral e científica pendente)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
-**Estado editorial:** capítulos 1–16 redigidos; primeira revisão de concisão e seleção inicial de referências externas conferidas; revisão bibliográfica integral, editorial final e científica pendentes  
+**Estado editorial:** capítulos 1–16 redigidos; primeira revisão de concisão e referências externas do caso N2 conferidas; revisão bibliográfica integral, editorial final e científica pendentes  
 **Validação científica independente do manuscrito:** não realizada  
 **Natureza:** documento descritivo e metodológico; não é convite de recrutamento, parecer científico ou declaração de prontidão operacional
 
@@ -1925,7 +1925,16 @@ As referências abaixo foram conferidas em fontes primárias (periódicos, bases
 
 14. Hwang JW, Lee GE, Woo JH, Kim SM, Kwon JY. Systematic review and meta-analysis on fully automated digital cognitive behavioral therapy for insomnia. *npj Digital Medicine*. 2025;8:157. [DOI: 10.1038/s41746-025-01514-4](https://doi.org/10.1038/s41746-025-01514-4). **PMID: 40075149**. Revisão externa de 29 ensaios randomizados e 9.475 participantes; a referência **não implica que o OES tenha conduzido a meta-análise ou validado independentemente seus julgamentos GRADE**.
 
-**Pendências bibliográficas:** completar a conferência de estudos primários e revisões adicionais utilizados nos casos do OES, atribuir fontes científicas externas a outras afirmações metodológicas pertinentes e finalizar a padronização bibliográfica do conjunto. As referências acima devem ser vinculadas explicitamente aos trechos correspondentes na revisão final.
+15. Gao K, Zhao Y, Zhang X, Su K, Jia J, Xu Y. Efficacy of fully automated digital cognitive behavioral therapy for insomnia in adults: a systematic review and meta-analysis. *Sleep and Breathing*. 2026;30(3):177. [DOI: 10.1007/s11325-026-03723-x](https://doi.org/10.1007/s11325-026-03723-x). **PMID: 42240717**. Síntese externa de 15 ensaios (N=3.507), SMD global de −0,82; utilizada pelo OES como triangulação, não como meta-análise própria.
+16. Sweetman A, Reynolds C, Richardson C. Digital cognitive behavioural therapy for insomnia versus digital sleep education control in an Australian community-based sample: a randomised controlled trial. *Internal Medicine Journal*. 2024;54(11):1838–1848. [DOI: 10.1111/imj.16521](https://doi.org/10.1111/imj.16521). **PMID: 39257295**. Ensaio com 62 participantes; diferença ajustada no ISI de 7,32 pontos (IC95% 5,0–9,6) favorecendo o grupo de intervenção no seguimento de oito semanas.
+17. Prather AA, Krystal AD, Emsley R, et al. The Effectiveness of Digital Cognitive Behavioral Therapy to Treat Insomnia Disorder in US Adults: Nationwide Decentralized Randomized Controlled Trial. *JMIR Mental Health*. 2025;12:e84323. [DOI: 10.2196/84323](https://doi.org/10.2196/84323). **PMID: 41343796**. Ensaio SleepioRx (N=336): d de Cohen de 0,60 no ISI na semana 10, com seguimento nas semanas 16 e 24.
+18. Ritterband LM, Shaffer KM, Thorndike FP, et al. A randomized controlled trial of a digital cognitive behavioral therapy for insomnia for older adults. *npj Digital Medicine*. 2025;8:458. [DOI: 10.1038/s41746-025-01847-0](https://doi.org/10.1038/s41746-025-01847-0). **PMID: 40681664**. SHUTi OASIS: 311 participantes randomizados, de 55–95 anos; na condição sem apoio escalonado, resposta no pós-tratamento de 38% versus 5% e remissão de 30% versus 2%, comparadas à educação online.
+19. Shin J, Kim S, Lee J, et al. Efficacy of Mobile App-Based Cognitive Behavioral Therapy for Insomnia: Multicenter, Single-Blind Randomized Clinical Trial. *Journal of Medical Internet Research*. 2024;26:e50555. [DOI: 10.2196/50555](https://doi.org/10.2196/50555). **PMID: 39058549**. Ensaio Somzz: 98 participantes randomizados, ISI no pós-intervenção de 9,0 versus 12,8; publicado após o corte de busca de março de 2024 informado por Hwang et al.
+20. Vedaa Ø, Kallestad H, Scott J, et al. Effects of digital cognitive behavioural therapy for insomnia on insomnia severity: a large-scale randomised controlled trial. *The Lancet Digital Health*. 2020;2(8):e397–e406. [DOI: 10.1016/S2589-7500(20)30135-7](https://doi.org/10.1016/S2589-7500(20)30135-7). **PMID: 33328044**. Ensaio norueguês anterior ao corte de busca de Hwang: 1.721 participantes randomizados, com comparação à educação online sobre sono.
+
+**Escopo da conferência do caso N2 (20/10/2026):** confirmaram-se a correspondência entre os sete PMIDs do Documento 54 e os registros bibliográficos, os DOIs, os anos, a autoria inicial e resultados selecionados publicados. **Não se realizou nova busca sistemática, reconciliação exaustiva das relações entre os ensaios e as revisões, reextração independente dos desfechos, nova meta-análise, avaliação de risco de viés ou revisão GRADE independente.** As referências 14–20 são publicações científicas de terceiros; não constituem análises originais do OES. O Documento 54 é o *draft* histórico A1; o Documento 67 registra a aprovação de governança e a publicação interna posterior em **A2**, sem revisão especializada independente.
+
+**Pendências bibliográficas:** concluir a conferência de referências das demais aplicações e de afirmações metodológicas ao longo do manuscrito; reconciliar posteriormente, mediante avaliação científica própria, eventuais sobreposições de estudos entre revisões e estudos primários do caso N2; e finalizar a normalização bibliográfica do conjunto. A verificação de referências do caso N2 **não modifica a conclusão científica nem o nível de garantia**.
 
 **Nota editorial:** a apresentação executiva D0 (Documento 168) é um artefato separado, com finalidade distinta, e não substitui esta descrição de 16 capítulos.
 
@@ -1935,4 +1944,4 @@ A. Glossário técnico completo; B. Visão geral da arquitetura do OES; C. Matri
 
 ---
 
-*Fim da versão 0.18 — os Capítulos 1–16 estão redigidos, com primeira revisão de concisão e seleção inicial de referências externas verificadas. A conferência bibliográfica integral, a revisão editorial final e a avaliação científica independente permanecem pendentes.*
+*Fim da versão 0.19 — os Capítulos 1–16 estão redigidos, com primeira revisão de concisão e verificação bibliográfica das sete publicações principais do caso N2. A conferência bibliográfica integral, a revisão editorial final e a avaliação científica independente permanecem pendentes.*
