@@ -5311,3 +5311,10 @@ Documentos:
 - Consolidadas três atividades documentais pós-CP223: pacote final P2-C1, ressalvas de persistência do ambiente e comparação entre ambiente local persistente A e temporário reproduzível B.
 - **Nenhum ambiente selecionado, P2-C1 NOT_APPROVED e T2-A2 NOT_AUTHORIZED**; nenhuma instalação, teste, PostgreSQL/SQL, Neon, CI, cloud, dado factual ou gasto.
 - Evidências locais prévias permanecem relatos não acompanhados de logs brutos persistidos. T1/T2-A1 e gates intactos; retomada documental mediante novo `Prossiga`. STOP.
+
+
+## 2026-10-21 — CP225: novo projeto Neon Free sintético, sem execução T2-A2
+
+- Documento 200 registra autorização expressa do proprietário para provisionar novo projeto `oes-d1-t2-a2-synthetic`, ID `tiny-pond-20086371`, PostgreSQL 18, plano Free, São Paulo, branch `synthetic-main`, banco `oes_t2a2_synthetic`. Projeto `oes-sandbox` anterior não modificado.
+- Primeira tentativa com ajuste de suspensão recusada HTTP 412, sem criação; segunda operação com padrão do plano concluída. Endpoint read_write ativo na consulta, conexões públicas não bloqueadas e branch não protegida; preflight de segurança e custo ainda necessário.
+- **T2-A2 não autorizado**; sem SQL, DDL, tabelas, dados, testes, CI ou alteração de gates. T1/T2-A1 históricos preservados. STOP.

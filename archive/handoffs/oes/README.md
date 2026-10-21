@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP224 — 2026-10-21**
+**CP225 — 2026-10-21**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP224.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-21_CP225.md`
 
 Checkpoint anterior:
 
-`CP223`
+`CP224`
 
 Status:
 
@@ -592,3 +592,5 @@ em **Modo Continuidade**.
 - **CP223 — 2026-10-21:** Documento 198 consolida P1/P2-A somente leitura, P2-B documental e minuta P2-C1 não aprovada; evidência local a revalidar. T2-A2 permanece NOT_AUTHORIZED. Próximo pacote P2-C1 documental após `Prossiga`. STOP.
 
 - **CP224 — 2026-10-21:** Documento 199: alternativas persistente A / temporária B, decisão pendente, P2-C1 não aprovado, T2-A2 não autorizado. Próximo: matriz documental A/B sob `Prossiga`. STOP.
+
+- **CP225 — 2026-10-21:** Documento 200 registra novo projeto Neon Free sintético provisionado, sem SQL e sem autorização T2-A2; preflight de segurança/custo e decisão operacional pendentes. Próximo parecer documental sob `Prossiga`. STOP.
