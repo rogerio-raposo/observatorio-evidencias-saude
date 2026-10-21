@@ -38,10 +38,10 @@
 <text text-anchor="middle" x="550" y="426" class="b">Pertinência e natureza da ocorrência</text></g>
 <g id="step-4"><rect x="55" y="505" width="430" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="270" y="542" class="h">Lacuna operacional</text>
-<text text-anchor="middle" x="270" y="571" class="b">Registrar falha e avaliar impacto na atualidade</text></g>
+<text text-anchor="middle" x="270" y="568" class="b"><tspan x="270">Registrar falha e avaliar impacto</tspan><tspan x="270" dy="22">na atualidade</tspan></text></g>
 <g id="step-5"><rect x="615" y="505" width="430" height="110" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="830" y="542" class="h">Sinal científico pertinente</text>
-<text text-anchor="middle" x="830" y="571" class="b">Vincular pergunta, fonte, data e versão-alvo</text></g>
+<text text-anchor="middle" x="830" y="568" class="b"><tspan x="830">Vincular pergunta, fonte, data</tspan><tspan x="830" dy="22">e versão-alvo</tspan></text></g>
 <g id="step-6"><rect x="300" y="700" width="500" height="92" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="550" y="737" class="h">Avaliação de materialidade</text>
 <text text-anchor="middle" x="550" y="766" class="b">Impacto científico, validade e adequação de uso</text></g>
@@ -50,13 +50,13 @@
 <text text-anchor="middle" x="550" y="901" class="b">Responsabilidade, justificativa e objeto afetado</text></g>
 <g id="step-8"><rect x="42" y="1010" width="310" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="197" y="1047" class="h">Manter versão</text>
-<text text-anchor="middle" x="197" y="1076" class="b">Não atualizar; documentar a justificativa</text></g>
+<text text-anchor="middle" x="197" y="1073" class="b"><tspan x="197">Não atualizar; documentar</tspan><tspan x="197" dy="22">a justificativa</tspan></text></g>
 <g id="step-9"><rect x="395" y="1010" width="310" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="550" y="1047" class="h">Reavaliar uso/atualidade</text>
-<text text-anchor="middle" x="550" y="1076" class="b">Completar dados; não alterar automaticamente</text></g>
+<text text-anchor="middle" x="550" y="1073" class="b"><tspan x="550">Completar dados; não alterar</tspan><tspan x="550" dy="22">automaticamente</tspan></text></g>
 <g id="step-10"><rect x="748" y="1010" width="310" height="110" rx="12" fill="#eff4f7" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="903" y="1047" class="h">Investigar ou atualizar</text>
-<text text-anchor="middle" x="903" y="1076" class="b">Definir escopo e executar trabalho científico</text></g>
+<text text-anchor="middle" x="903" y="1073" class="b"><tspan x="903">Definir escopo e executar</tspan><tspan x="903" dy="22">trabalho científico</tspan></text></g>
 <g id="step-11"><rect x="705" y="1200" width="350" height="110" rx="12" fill="#fff" stroke="#607588" stroke-width="2"/>
 <text text-anchor="middle" x="880" y="1237" class="h">Mudança material confirmada?</text>
 <text text-anchor="middle" x="880" y="1266" class="b">Caso contrário, manter ou reavaliar</text></g>
