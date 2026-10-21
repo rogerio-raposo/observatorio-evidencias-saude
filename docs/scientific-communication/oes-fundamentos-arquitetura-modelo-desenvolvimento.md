@@ -1,7 +1,7 @@
 # Observatório de Evidências em Saúde (OES)
 ## Fundamentos científicos, arquitetura metodológica e modelo de desenvolvimento de um sistema de produção, síntese e atualização de evidências
 
-**Versão editorial:** 0.51 (inserção editorial da Figura 5 na Seção 10.4)  
+**Versão editorial:** 0.52 (inserção editorial da Figura 6 na Seção 12.1)  
 **Data de referência:** 20 de outubro de 2026  
 **Público-alvo:** pesquisadores e grupos da área da saúde interessados em compreender e desenvolver observatórios de evidências  
 **Estado editorial:** capítulos 1–16 redigidos e individualmente revisados nesta rodada; vínculos seletivos com fontes científicas externas nos Capítulos 1–11, 13, 15 e 16; Capítulos 12 e 14 revisados quanto à coerência histórica e editorial; normalização global de citações, revisão integral de conteúdo e validação científica independente pendentes  
@@ -1315,6 +1315,12 @@ Para este capítulo, os estados são apresentados **na data de referência de 20
 | **5** | Automação e IA | Não iniciada formalmente |
 | **6** | Validação | Não iniciada formalmente |
 | **7** | Operação contínua | Não iniciada formalmente |
+
+A **Figura 6** apresenta a sequência dessas oito fases em dois segmentos e explicita seus estados na data de referência. As conexões contínuas indicam a sucessão documental até a Fase 4, enquanto as pontilhadas indicam apenas etapas planejadas. O desenho não representa progresso percentual ou prontidão científica e operacional.
+
+![Figura 6 — Trajetória de oito fases do OES em dois segmentos. As fases 0 e 1 possuem bases iniciais consolidadas; a Fase 2 tem baseline arquitetural concluída e a Fase 3 está concluída no escopo técnico e taxonômico. A Fase 4 permanece em desenvolvimento, sem prontidão para operação factual (NOT_READY). As fases 5, 6 e 7 não foram iniciadas formalmente. Setas pontilhadas representam planejamento, não execução.](figuras/figura-06-trajetoria-desenvolvimento.svg)
+
+*Figura 6 — Trajetória documental e técnica do desenvolvimento do Observatório de Evidências em Saúde (OES), segundo o estado registrado em 20 de outubro de 2026.* As fases 0 e 1 apresentam bases iniciais consolidadas; a Fase 2 foi concluída no nível de baseline arquitetural; e a Fase 3, no escopo técnico e taxonômico definido. A Fase 4 permanece em desenvolvimento, com prontidão para operação factual **NOT_READY**, enquanto as fases 5–7 não foram formalmente iniciadas. As setas contínuas mostram a sucessão documentada até a Fase 4; as pontilhadas, a sequência prevista. **A figura não representa intervalos medidos, percentuais de maturidade, validação científica independente ou operação contínua demonstrada.** **Fonte:** elaboração editorial baseada no [STATE.md](../../STATE.md), no [CP213](../../archive/handoffs/oes/OES_Continuidade_2026-10-20_CP213.md) e no [Documento 00 — Concepção](../governance/00-documento-de-concepcao.md).
 
 A tabela sintetiza o estado corrente e **não declara encerramento científico global** das primeiras fases nem disponibilidade operacional das funções futuras. Uma baseline, um protocolo e um protótipo são resultados distintos e devem permanecer assim identificados. [Fonte: STATE — Estado das fases](../../STATE.md).
 
