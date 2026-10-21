@@ -15,18 +15,17 @@ flowchart TB
     Q["Pergunta operacional e finalidade<br/>Definir modalidade N e protocolo proporcional"]
     B["Busca e recuperação documentadas<br/>Cobertura conforme o método e a pergunta"]
     E["Elegibilidade e seleção<br/>Distinguir registros, relatórios e estudos"]
-    X["Extração / organização das evidências<br/>Preservar dados, origens e unidades"]
-    R["Avaliação crítica e risco de viés<br/>Instrumentos conforme desenho"]
+    X["Extração e organização das evidências<br/>Preservar dados, origens e unidades"]
+    R["Avaliação crítica / risco de viés<br/>Procedimentos conforme a pergunta e o desenho"]
     S["Síntese e interpretação<br/>Certeza/confiança e aplicabilidade, quando cabíveis"]
     C["Conclusão e produto proposto<br/>Limites, data de corte e proveniência"]
     G{"Revisão e garantia<br/>requeridas foram satisfeitas?"}
     P["Liberação / publicação no escopo autorizado<br/>com garantia efetivamente obtida"]
-    K["Corrigir, completar ou manter bloqueado<br/>Registrar pendências e decisões"]
+    K["Corrigir, completar ou manter bloqueado<br/>Reabrir só etapas pertinentes e registrar decisões"]
 
     Q --> B --> E --> X --> R --> S --> C --> G
     G -- "Sim: requisitos e aprovação cabíveis" --> P
     G -- "Não: insuficiência ou revisão pendente" --> K
-    K -. "Reavaliar etapas necessárias;<br/>não implica aprovação automática" .-> Q
 
     T["Requisitos transversais:<br/>protocolo, rastreabilidade, versionamento,<br/>responsabilidades, transparência e auditoria"]
     T -.-> E
@@ -40,7 +39,7 @@ flowchart TB
     class K,T caution
 ```
 
-**Interpretação obrigatória:** as caixas expressam funções científicas que devem ser **adaptadas à pergunta, ao desenho, à cobertura e à modalidade N**. Avaliação crítica, síntese, certeza/confiança e aplicabilidade têm escopos distintos: a figura não declara GRADE obrigatório, busca exaustiva ou meta-análise em N0/N1. Seleção, extração e avaliação podem exigir retornos locais antes da emissão do produto; o retorno pontilhado de K para Q simplifica essa reabertura e **não prescreve recomeçar toda investigação**.
+**Interpretação obrigatória:** as caixas expressam funções científicas que devem ser **adaptadas à pergunta, ao desenho, à cobertura e à modalidade N**. Avaliação crítica, síntese, certeza/confiança e aplicabilidade têm escopos distintos: a figura não declara GRADE obrigatório, busca exaustiva ou meta-análise em N0/N1. A ordem de extração e avaliação crítica é **esquemática**, podendo variar ou incluir iterações conforme o método; nenhum resultado de risco de viés se reduz a uma nota de qualidade genérica. O bloco de correção **não determina retorno obrigatório ao início**: a equipe identifica quais etapas devem ser reabertas e documenta a decisão. Um produto com revisão insuficiente permanece bloqueado, independentemente de sua completude editorial.
 
 O ponto de controle G verifica **requisitos específicos do produto e decisões documentadas**, não um único selo universal. A0 não é publicável como produto científico final. A2 é aprovação **interna** e não representa avaliação científica independente; **N3 formal exige A3**, e **N4 formal exige A3 mais os controles humanos adicionais previstos**. A IA pode auxiliar a revisão interna A1; não substitui o avaliador humano qualificado exigido para A3. Testes de engenharia e um `PASS` isolado não autorizam inferências sobre qualidade científica ou operação sustentada. **A publicação só ocorre quando e no escopo em que a política do produto a permitir.**
 
@@ -52,7 +51,7 @@ A proveniência deve acompanhar **todas as etapas**; as linhas do bloco T apenas
 
 ## Texto alternativo proposto
 
-“Fluxograma vertical conceitual: pergunta científica e protocolo; busca documentada; elegibilidade e seleção; extração e organização; avaliação crítica; síntese e interpretação, com avaliação de certeza e aplicabilidade quando cabíveis; conclusão e produto proposto. Em seguida, um losango pergunta se as revisões e os níveis de garantia exigidos foram efetivamente satisfeitos. Se sim, há liberação no escopo autorizado; se não, registrar pendência, corrigir ou bloquear. Uma conexão pontilhada representa possível reabertura de etapas pertinentes, não repetição obrigatória de todo o processo. Controles de rastreabilidade e transparência se aplicam transversalmente.”
+“Fluxograma vertical conceitual: pergunta científica e protocolo; busca documentada; elegibilidade e seleção; extração e organização; avaliação crítica; síntese e interpretação, com avaliação de certeza e aplicabilidade quando cabíveis; conclusão e produto proposto. Em seguida, um losango pergunta se a revisão e a garantia exigidas foram efetivamente satisfeitas. Se sim, há liberação no escopo autorizado; se não, corrigir, completar ou manter bloqueado, reabrindo apenas as etapas pertinentes. A sequência de extração e avaliação crítica é esquemática e pode incluir iterações. Controles de rastreabilidade e transparência se aplicam transversalmente.”
 
 ## Conferências antes do SVG e da inserção
 
@@ -67,4 +66,4 @@ A proveniência deve acompanhar **todas as etapas**; as linhas do bloco T apenas
 - [ ] Preparar SVG acessível com título e descrição; manter o Markdown como fonte de edição conceitual.
 - [ ] Inserir no manuscrito apenas depois de avaliação gráfica/editorial; não modificar `STATE.md`, o banco, as fases ou os gates.
 
-**Limite desta entrega:** somente esquema Mermaid e especificações editoriais; não há SVG da Figura 3, alteração do manuscrito, aprovação científica ou execução operacional adicional.
+**Resultado da revisão:** ajustados o retorno após bloqueio e o caráter adaptável da sequência entre extração e avaliação crítica, sem alterar critérios científicos. **Pendente:** renderização e inspeção visual em A4, além de aprovação editorial antes da incorporação. Ainda não há SVG da Figura 3, alteração do manuscrito, aprovação científica ou execução operacional adicional.
