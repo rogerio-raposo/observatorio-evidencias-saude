@@ -100,6 +100,17 @@ class SyntheticCommandBridge:
             dict(scenario_id=scenario_id, cycle_no=cycle_no, decision=decision,
                  rationale=rationale, scenario_actor=scenario_actor, request_id=request_id))
 
+    def replay_snapshot(self, scenario_id: str) -> dict:
+        """Read-only event reconstruction; no external I/O or receipt mutations."""
+        record = self.repo.read_snapshot(scenario_id)
+        if record is None:
+            raise DomainError('unknown scenario')
+        if record.data['events'] != self.repo.list_events(scenario_id):
+            raise DomainError('stored events disagree with scenario state')
+        service = SyntheticMonitorService(InMemoryRepository(
+            scenarios={scenario_id: deepcopy(record.data)}))
+        return service.replay_snapshot(scenario_id)
+
     def snapshot(self, scenario_id: str) -> dict:
         record = self.repo.read_snapshot(scenario_id)
         if record is None:
