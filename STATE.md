@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP233 — 2026-10-22**.
+- checkpoint vigente: **CP234 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP234 — Proposta restrita de allowlist P1
+
+Documento 209 consolida atividades documentais A1–A3 pós-CP233: P1 com somente describe_project, get_branch e get_postgres_database, parâmetros fixos e sem repetição automática; endpoints excluídos, achados R1–R4 e condição financeira prévia obrigatória. Minuta P1 NÃO APROVADA; P2/E e T2-A2 NOT_AUTHORIZED. A2-G1 aprovação apenas documental condicionada; F01–F07 somente endereçados documentalmente, L1–L4, PA-01–PA-08 e O-01–O-10 preservados. Nenhum Neon, SQL, CI, DDL/DML, GRANT, teste, adaptador ou gasto. T1 36 PASS e T2-A1 75 PASS históricos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrações UNREVIEWED. Próximo passo apenas avaliar minuta e pré-condições para decisão eventual P1.
 
 ## CP233 — Protocolo de preflight A2-G2/P e revisão adversarial
 

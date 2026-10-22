@@ -5358,3 +5358,8 @@ Documento 207 registra decisão do proprietário de aprovar a arquitetura candid
 ## 2026-10-22 — CP233: protocolo A2-G2/P e parecer adversarial
 
 Documento 208 consolida atividades documentais A1–A3 pós-CP232: separação P1 metadados Neon / P2 catálogos SQL somente leitura / E criação futura com autorizações independentes, matriz PF-01–PF-10, riscos PA-01–PA-08 (2 críticos, 4 altos, 2 moderados) e critérios AC-01–AC-10. Resultado REVISE_BEFORE_OPERATIONAL_AUTHORIZATION. A2-G1 continua aprovado apenas documentalmente, P1/P2/E e T2-A2 não autorizados; nenhuma conexão Neon, SQL, CI, GRANT, DDL/DML, implementação, teste ou custo novo. Gates e histórico preservados. STOP.
+
+
+## 2026-10-22 — CP234: allowlist P1 e minuta sem autorização
+
+Documento 209 consolida A1–A3 pós-CP233, com três operações Neon de leitura de metadados candidatas (describe_project, get_branch, get_postgres_database), parâmetros fixos, uma chamada cada, exclusão inicial das ferramentas de endpoints, revisão R1–R4 e bloqueio diante de condição financeira não comprovada. P1/P2/E e T2-A2 NOT_AUTHORIZED; A2-G1 permanece aprovação exclusivamente documental condicionada. Nenhum Neon, SQL, CI, teste, GRANT, DDL/DML, implementação ou gasto foi realizado. STOP.
