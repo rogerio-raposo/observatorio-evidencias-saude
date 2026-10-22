@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP247 — 2026-10-22**.
+- checkpoint vigente: **CP248 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP248 — Preservação segregada do código experimental A2-G4 (sem promoção)
+
+Documento 223 formaliza a decisão expressa do proprietário de preservar os **seis arquivos exatos** de `prototypes/d1_t2/a2/` em branch separada: `preservation/oes-d1-t2-a2-g4-cp247-unvalidated`, commit fixo `96f16ec908b3f0f28199d841c90da471aa9e0ce1`, descendente direto do CP247 `7f3b25aa5563455a98e01c7c358118dfe9c38546`. Comparação branch/commit `identical` no preflight; bytes e objetos Git descritos no Documento 223; hashes SHA-256 locais no Documento 222. **`main` não contém o código A2-G4** e não deve recebê-lo por merge/PR/execução sem decisão separada; branch não protegida explicitamente contra exclusão. Não presumir presença do staging entre conversas; recuperar pelo commit Git. Esta é uma preservação técnica, **não aceitação estática, teste ou autorização operacional**. SA-05 global ABERTA/ALTA, SA05-R1/R2/R3 mitigadas só estaticamente; SA-02 dependente de SA-05; SA-03 parcial; SA-06/07/08/10 abertas; SA-11/12 apenas mitigadas estaticamente. A2-G4 escrita de fonte aprovada mas não aceita; A2-G5/T2-A2 operacional NOT_AUTHORIZED. T1 36/T2-A1 75 PASS históricos, Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrações UNREVIEWED; D1 sintético prioritário. Próximo `Prossiga`: triagem estritamente estática SA-07/JSONB, sem importação, execução, SQL, CI ou Neon.
 
 ## CP247 — A2-G4: fábrica dedicada e SA05-R1/R2/R3 somente estáticos
 

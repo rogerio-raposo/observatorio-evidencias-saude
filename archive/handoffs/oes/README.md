@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP247 — 2026-10-22**
+**CP248 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP247.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP248.md`
 
 Checkpoint anterior:
 
-`CP246`
+`CP247`
 
 Status:
 
@@ -631,3 +631,5 @@ em **Modo Continuidade**.
 - **CP246 — 2026-10-22:** Documento 221 consolida A1–A6 pós-CP245 e revisões/correções SA-11/SA-12/SA-06 somente estáticas. SA-11/12 mitigadas textualmente; SA-06 parcialmente mitigada e aberta; SA-05/07/08/10 abertas e SA-03 parcial. **Seis arquivos A2-G4 só em staging local, nenhum publicado**. A2-G5/runtime NOT_AUTHORIZED. Próximo Prossiga: triagem estática SA-05, sem testes, SQL/Neon nem ampliação de escopo. STOP.
 
 - **CP247 — 2026-10-22:** Documento 222 consolida A1–A7 pós-CP246: fábrica `DedicatedConnectionFactory`, mitigação estática SA05-R1/R2/R3 e revisão independente de R3; SA-05 continua ABERTA/ALTA (exclusividade/identidade/configuração não comprovadas). SA-03 parcial; SA-06/07/08/10 abertas. Seis arquivos A2-G4 continuam somente em staging, **nenhum publicado**. A2-G5/T2-A2 operacional NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-07 JSONB, sem execução/SQL/Neon. STOP.
+
+- **CP248 — 2026-10-22:** Documento 223 formaliza a preservação **segregada e não validada** dos seis arquivos A2-G4 na branch `preservation/oes-d1-t2-a2-g4-cp247-unvalidated`, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. Nenhum código do adaptador em `main`; não houve merge, testes, SQL, Neon ou promoção técnica. A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-07 pelo commit preservado, com Freshness Gate. STOP.
