@@ -43,6 +43,7 @@ jobs:
           password = os.environ["OES_N1E3_DB_PASSWORD"]
           if not host.endswith(".neon.tech") or host.startswith(".") or "/" in host or ":" in host or "-pooler" in host:
               raise SystemExit("N1-E3 BLOCKED: invalid or pooled Neon host")
+          phase = "connection"
           try:
               with psycopg.connect(
                   host=host, port=5432, dbname="oes_t2a2_synthetic",
@@ -51,6 +52,7 @@ jobs:
                   connect_timeout=10,
                   options="-c default_transaction_read_only=on",
               ) as conn:
+                  phase = "query"
                   with conn.cursor() as cur:
                       cur.execute("""
                           SELECT current_database(), current_user,
@@ -59,12 +61,38 @@ jobs:
                           WHERE s.pid = pg_backend_pid()
                       """)
                       result = cur.fetchone()
-              if (not result or result[0] != "oes_t2a2_synthetic"
-                  or result[1] != "oes_t2a2_app" or result[2] is not True
-                  or not result[3] or not result[4]):
-                  raise RuntimeError("Unexpected identity or TLS state")
+              phase = "postcondition"
+              if not result or result[0] != "oes_t2a2_synthetic" or result[1] != "oes_t2a2_app":
+                  raise SystemExit("N1-E3 FAIL: IDENTITY_MISMATCH")
+              if result[2] is not True or not result[3] or not result[4]:
+                  raise SystemExit("N1-E3 FAIL: TLS_STATE_MISMATCH")
+          except psycopg.Error as exc:
+              # Categorize locally, never print the underlying exception or connection string.
+              state = exc.sqlstate or ""
+              if state in ("28P01", "28000"):
+                  category = "AUTH_REJECTED"
+              elif state == "42501":
+                  category = "SQL_PERMISSION"
+              elif phase == "query":
+                  category = "SQL_UNCLASSIFIED"
+              else:
+                  detail = str(exc).lower()
+                  if any(t in detail for t in ("certificate verify failed", "certificate has expired",
+                                                "hostname mismatch", "certificate validation failed",
+                                                "ssl error: certificate")):
+                      category = "TLS_VERIFICATION"
+                  elif any(t in detail for t in ("name or service not known",
+                                                 "temporary failure in name resolution",
+                                                 "could not translate host name",
+                                                 "connection timed out",
+                                                 "network is unreachable",
+                                                 "connection refused")):
+                      category = "DNS_NETWORK"
+                  else:
+                      category = "CONNECTION_UNCLASSIFIED"
+              raise SystemExit("N1-E3 FAIL: " + category) from None
           except Exception:
-              # Do not dump driver exceptions: they can contain connection parameters.
-              raise SystemExit("N1-E3 FAIL: connection or read-only verification unsuccessful") from None
+              category = "SQL_UNCLASSIFIED" if phase == "query" else "CONNECTION_UNCLASSIFIED"
+              raise SystemExit("N1-E3 FAIL: " + category) from None
           print("N1-E3 PASS: database, restricted identity, verified TLS and read-only query")
           PY
