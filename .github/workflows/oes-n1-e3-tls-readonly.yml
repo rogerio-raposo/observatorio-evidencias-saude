@@ -41,6 +41,9 @@ jobs:
 
           host = os.environ["OES_N1E3_DB_HOST"].strip()
           password = os.environ["OES_N1E3_DB_PASSWORD"]
+          ca_bundle = "/etc/ssl/certs/ca-certificates.crt"
+          if not os.path.isfile(ca_bundle) or os.path.getsize(ca_bundle) == 0:
+              raise SystemExit("N1-E3 BLOCKED: trusted CA bundle unavailable")
           if not host.endswith(".neon.tech") or host.startswith(".") or "/" in host or ":" in host or "-pooler" in host:
               raise SystemExit("N1-E3 BLOCKED: invalid or pooled Neon host")
           phase = "connection"
@@ -48,7 +51,7 @@ jobs:
               with psycopg.connect(
                   host=host, port=5432, dbname="oes_t2a2_synthetic",
                   user="oes_t2a2_app", password=password,
-                  sslmode="verify-full", sslrootcert="system",
+                  sslmode="verify-full", sslrootcert=ca_bundle,
                   connect_timeout=10,
                   options="-c default_transaction_read_only=on",
               ) as conn:
