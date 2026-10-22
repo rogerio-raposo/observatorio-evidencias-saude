@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP244 — 2026-10-22**.
+- checkpoint vigente: **CP245 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP245 — A2-G4: SA-11 bloqueia aceitação estática, sem publicação técnica
+
+Documento 220 consolida A1–A6 pós-CP244 e a publicação **somente documental** A7. Seis arquivos A2-G4 estão apenas no staging local, com hashes no Documento 220; **nenhum arquivo `prototypes/d1_t2/a2/` integra o GitHub**. SA-02 mitigada no fluxo textual, condicionada a SA-05; SA-06 mitigada parcialmente por comunicação tipada de falha de limpeza pós-COMMIT. **SA-11 novo BLOQUEADOR ALTO**: exceção anterior a COMMIT seguida de rollback falho em `__exit__` pode não comunicar rollback não confirmado por tipo estruturado. SA-05/07/08/10 abertas; SA-03 parcial. A2-G4 autorizado só para código estático pelo Documento 218, mas ainda **não aceito nem publicado tecnicamente**; A2-G5/T2-A2 operacional NOT_AUTHORIZED. Sem import/execução/compilação, driver, testes, CI, SQL, Neon, grants, dados ou custos; T1 36/T2-A1 75 PASS históricos, F01–F07 documentais, L1–L4/O-01–O-10 pendentes, Fase 4 NOT_READY, Fase 5 NOT_STARTED e 36 migrações UNREVIEWED. Próximo `Prossiga`: correção estática SA-11, não publicar automaticamente código.
 
 ## CP244 — A2-G4: código apenas em staging, publicação técnica bloqueada
 
