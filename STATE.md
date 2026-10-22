@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP232 — 2026-10-22**.
+- checkpoint vigente: **CP233 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP233 — Protocolo de preflight A2-G2/P e revisão adversarial
+
+Documento 208 consolida três atividades somente documentais desde CP232: D0 histórico, P1 metadados Neon, P2 catálogos SQL read-only e E estrutura futura, todos com autorizações separadas; PF-01–PF-10, PA-01–PA-08 (2 CRITICAL, 4 HIGH, 2 MODERATE), AC-01–AC-10. Parecer A2-G2/P_REVISE_BEFORE_OPERATIONAL_AUTHORIZATION. A2-G1 CONDITIONAL_DOCUMENTARY_DESIGN_APPROVED; **P1, P2, E e T2-A2 NOT_AUTHORIZED**. Sem operações Neon, SQL, CI, GRANT, DDL/DML, adaptador, testes remotos ou gastos. F01–F07 só endereçados documentalmente, L1–L4 vigentes, O-01–O-10 não executados. N1-E3 TLS externo cliente comprovado e backend SSL_FALSE observado. T1 36 e T2-A1 75 testes PASS apenas históricos; Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima atividade: minuta documental P1 exclusivamente, sob novo Prossiga.
 
 ## CP232 — Decisão expressa A2-G1 documental condicionada
 

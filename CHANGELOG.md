@@ -5353,3 +5353,8 @@ Documento 206 consolida pós-CP230 A1–A3: resoluções propostas F01–F07, L1
 ## 2026-10-22 — CP232: decisão expressa A2-G1 exclusivamente documental
 
 Documento 207 registra decisão do proprietário de aprovar a arquitetura candidata A2-G1 **como referência documental condicionada**, sem aprovação operacional de T2-A2. F01–F07 apenas endereçados no desenho; L1–L4 vinculantes e O-01–O-10 não executados. T2-A2 NOT_AUTHORIZED; nenhuma implementação, SQL, DDL/DML/GRANT, CI ou conexão Neon nesta atividade; demais gates, fases e limitações N1-E3 preservados. Próximo passo exclusivamente documental A2-G2. STOP.
+
+
+## 2026-10-22 — CP233: protocolo A2-G2/P e parecer adversarial
+
+Documento 208 consolida atividades documentais A1–A3 pós-CP232: separação P1 metadados Neon / P2 catálogos SQL somente leitura / E criação futura com autorizações independentes, matriz PF-01–PF-10, riscos PA-01–PA-08 (2 críticos, 4 altos, 2 moderados) e critérios AC-01–AC-10. Resultado REVISE_BEFORE_OPERATIONAL_AUTHORIZATION. A2-G1 continua aprovado apenas documentalmente, P1/P2/E e T2-A2 não autorizados; nenhuma conexão Neon, SQL, CI, GRANT, DDL/DML, implementação, teste ou custo novo. Gates e histórico preservados. STOP.
