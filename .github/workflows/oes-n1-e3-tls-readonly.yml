@@ -1,0 +1,70 @@
+name: OES N1-E3 direct TLS read-only probe (synthetic-only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-n1-e3-manual-probe
+  cancel-in-progress: false
+
+jobs:
+  n1e3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      OES_N1E3_DB_HOST: ${{ secrets.OES_N1E3_DB_HOST }}
+      OES_N1E3_DB_PASSWORD: ${{ secrets.OES_N1E3_DB_PASSWORD }}
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - name: Check secret presence without disclosure
+        shell: bash
+        run: |
+          if [[ -z "$OES_N1E3_DB_HOST" || -z "$OES_N1E3_DB_PASSWORD" ]]; then
+            echo "N1-E3 BLOCKED: required secrets not configured"
+            exit 1
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install isolated database client
+        shell: bash
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Validate restricted identity and verified TLS (read-only)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+
+          host = os.environ["OES_N1E3_DB_HOST"].strip()
+          password = os.environ["OES_N1E3_DB_PASSWORD"]
+          if not host.endswith(".neon.tech") or host.startswith(".") or "/" in host or ":" in host or "-pooler" in host:
+              raise SystemExit("N1-E3 BLOCKED: invalid or pooled Neon host")
+          try:
+              with psycopg.connect(
+                  host=host, port=5432, dbname="oes_t2a2_synthetic",
+                  user="oes_t2a2_app", password=password,
+                  sslmode="verify-full", sslrootcert="system",
+                  connect_timeout=10,
+                  options="-c default_transaction_read_only=on",
+              ) as conn:
+                  with conn.cursor() as cur:
+                      cur.execute("""
+                          SELECT current_database(), current_user,
+                                 s.ssl, s.version, s.cipher
+                          FROM pg_stat_ssl s
+                          WHERE s.pid = pg_backend_pid()
+                      """)
+                      result = cur.fetchone()
+              if (not result or result[0] != "oes_t2a2_synthetic"
+                  or result[1] != "oes_t2a2_app" or result[2] is not True
+                  or not result[3] or not result[4]):
+                  raise RuntimeError("Unexpected identity or TLS state")
+          except Exception:
+              # Do not dump driver exceptions: they can contain connection parameters.
+              raise SystemExit("N1-E3 FAIL: connection or read-only verification unsuccessful") from None
+          print("N1-E3 PASS: database, restricted identity, verified TLS and read-only query")
+          PY
