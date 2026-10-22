@@ -5333,3 +5333,8 @@ Documento 202 consolida N1-C/N1-D1 (somente leitura): `oes_t2a2_runtime` possui 
 ## 2026-10-22 — CP228
 
 Documento 203: papel `oes_t2a2_app` criado e verificado em Neon Free sintético após aprovação N1-D3. N1-D2 permanece não concluído. N1-E e T2-A2 não autorizados; gates preservados.
+
+
+## 2026-10-22 — CP229: N1-E3 TLS externo validado
+
+Documento 204 consolida execuções GitHub Actions 39732456492, 39734959697, 39735977591, 39736779486 (FAIL, diagnósticos progressivos) e 39737616716 (PASS, TLS do cliente `verify-full`, CA explícita, papel/banco corretos, uma consulta read-only). `pg_stat_ssl` permaneceu `SSL_FALSE` sem versão/cifra, registrado separadamente, sem afirmar transporte interno seguro. N1-E3 concluído estritamente para autenticação e TLS externo; T2-A2 segue NOT_AUTHORIZED.

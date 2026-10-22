@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP228 — 2026-10-22**.
+- checkpoint vigente: **CP229 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP229 — N1-E3 autenticação e TLS externo
+
+Documento 204: cinco execuções controladas de CI, com quinta execução PASS (run 39737616716, SHA 36f519f795331ffd83d5ef574f3d188b4921f2ea). Psycopg com `sslmode=verify-full` e CA confiável conectou como `oes_t2a2_app` ao banco `oes_t2a2_synthetic`, consulta read-only bem-sucedida. `pg_stat_ssl.ssl=false`, sem versão/cifra: observação interna divergente; não concluir segurança dos segmentos internos do Neon. N1-E3 encerrada **somente** para conexão externa verificada; T2-A2 NOT_AUTHORIZED.
 
 ## 1A. Prioridade vigente e diretriz arquitetural — CP214
 
