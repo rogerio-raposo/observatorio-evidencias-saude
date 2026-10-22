@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP236 — 2026-10-22**.
+- checkpoint vigente: **CP237 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP237 — Preflight P1 autorizado e concluído administrativamente
+
+Documento 212 registra aprovação expressa de P1 e consultas administrativas Neon read-only. Projeto, branch, banco e owner nominal confirmados; branch não protegida, rede pública não bloqueada, endpoint read_write idle configurado em 0,25 CU, tempo compute reportado 1376s. Consumo não prova billing, e owner não prova CREATE/ACL SQL. P1 COMPLETED_WITH_LIMITATIONS, P2/E/T2-A2 NOT_AUTHORIZED; sem SQL, CI, alteração infra, GRANT ou implementação. Política Free Doc 211 permanece, sem novos gastos. T1 36 e T2-A1 75 PASS somente históricos; Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima atividade apenas proposta documental P2.
 
 ## CP236 — Política transversal de recursos gratuitos e despesas
 

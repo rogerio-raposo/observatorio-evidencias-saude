@@ -5373,3 +5373,8 @@ Documento 210 registra manifestação do proprietário sobre capacidade gratuita
 ## 2026-10-22 — CP236: política transversal para serviços gratuitos
 
 Documento 211 formaliza, por decisão do proprietário, utilização proporcional de recursos Free em serviços previamente autorizados: sem aprovação financeira por consulta, execução ou consumo ordinário; repetição justificada permitida, sem loops; acompanhamento de quotas e STOP em limite material; upgrade/serviços pagos/cartão/cobrança exigem autorização expressa. Precedência prospectiva financeira sobre restrições pontuais Docs 208–210, preservando história e gates. P1/P2/E/T2-A2 continuam NOT_AUTHORIZED, nenhuma operação Neon/SQL/CI nesta publicação. STOP.
+
+
+## 2026-10-22 — CP237: decisão expressa e evidências Neon P1
+
+Documento 212 formaliza aprovação do proprietário A2-G2/P1 e execução administrativa proporcional de leitura via plugin Neon: projeto/branch/banco confirmados, owner nominal, endpoint/branch/rede e consumo observados, sem segredos. Limites: billing/quotas, privilégios SQL, ACL e TLS interno não comprovados. P1 COMPLETED_WITH_LIMITATIONS; P2/E/T2-A2 NOT_AUTHORIZED; nenhum SQL, DDL/DML/GRANT, alteração de infraestrutura, CI, testes ou gasto pago. Próxima etapa documental P2. STOP.

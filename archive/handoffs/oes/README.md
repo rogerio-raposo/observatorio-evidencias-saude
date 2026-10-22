@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP236 — 2026-10-22**
+**CP237 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP236.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP237.md`
 
 Checkpoint anterior:
 
-`CP235`
+`CP236`
 
 Status:
 
@@ -609,3 +609,5 @@ em **Modo Continuidade**.
 - **CP235 — 2026-10-22:** Documento 210 formaliza a simplificação proporcional da governança financeira para Neon Free, preservando proibição de serviços pagos e autorizações independentes; minuta P1 segue NOT_AUTHORIZED. Próxima atividade: avaliação final e eventual deliberação P1. STOP.
 
 - **CP236 — 2026-10-22:** Documento 211 estabelece política transversal de uso proporcional dos planos gratuitos; contratação/upgrade/cartão/cobrança requer aprovação, não há limite universal de três consultas ou uma chamada. Permissões técnicas independentes preservadas; P1/P2/E/T2-A2 não autorizados. STOP.
+
+- **CP237 — 2026-10-22:** Documento 212 registra aprovação expressa e execução Neon read-only de P1 com limitações, identidades, parâmetros e riscos observados. P2/E/T2-A2 não autorizados; próxima atividade documentação de P2, sem SQL. STOP.
