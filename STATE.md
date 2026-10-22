@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP226 — 2026-10-21**.
+- checkpoint vigente: **CP227 — 2026-10-21**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -110,6 +110,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 ## 1M. CP226 — N1/N1-B Neon
 
 Identidade `oes_t2a2_runtime` criada com autorização específica; nenhuma concessão, SQL ou conexão; T2-A2 NOT_AUTHORIZED. Documento 201.
+
+## 1N. CP227 — segurança Neon N1-C/N1-D1
+
+Documento 202: consultas SQL somente leitura autorizadas identificaram CREATE, CREATEDB, CREATEROLE e membership em neon_superuser no papel experimental. `pg_stat_ssl` false não prova segurança ou insegurança do transporte externo. Correção N1-D2 não autorizada. T2-A2 NOT_AUTHORIZED.
 
 ## 2. Estado das fases
 

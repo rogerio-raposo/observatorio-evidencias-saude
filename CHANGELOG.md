@@ -5323,3 +5323,8 @@ Documentos:
 ## 2026-10-21 — CP226
 
 N1 preparação por metadados e N1-B criação autorizada do papel `oes_t2a2_runtime` no Neon Free sintético. Documento 201; nenhum SQL, GRANT, senha, teste ou promoção T2-A2.
+
+
+## 2026-10-21 — CP227: auditoria autorizada de privilégios Neon
+
+Documento 202 consolida N1-C/N1-D1 (somente leitura): `oes_t2a2_runtime` possui CREATEDB/CREATEROLE, membership em neon_superuser e CREATE efetivo. `pg_stat_ssl.ssl=false` na sessão não demonstra ausência de TLS externo. Nenhuma correção, escrita, senha, ou alteração de gate; T2-A2 segue não autorizado.
