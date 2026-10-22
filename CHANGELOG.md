@@ -5393,3 +5393,7 @@ Documento 214 consolida aprovação expressa, Freshness Gate, preflight owner/sc
 ## 2026-10-22 — CP240: A2-G3 permissões mínimas autorizadas, executadas e verificadas
 
 Documento 215 formaliza decisão expressa, Freshness Gate e execução Neon de cinco GRANTs estritamente para oes_t2a2_app; pós-verificação demonstrou permissões positivas e negativas, restrição UPDATE por coluna e tabelas vazias. Sem DDL novo, DML, REVOKE, ALTER ROLE, CI, adaptador ou dados. A2-G4/G5/T2-A2 NOT_AUTHORIZED; próxima atividade documental A2-G4. STOP.
+
+## 2026-10-22 — CP241: contrato candidato A2-G4 consolidado documentalmente
+
+Documento 216 consolida quatro atividades documentais A1–A4 pós-CP240: interface Repository/UoW PostgreSQL, isolamento/concorrência e criação por colisão, estado/evento/recibo atômicos, idempotência, confirmação incerta, replay, compatibilidade Python/JSONB e mínimo privilégio. Revisão adversarial RA-01–RA-10 e ajustes RF-01–RF-05 permanecem hipóteses/condições **não validadas operacionalmente**. Parecer suficiente para persistência documental, **não para implementação**. Sem código, SQL, Neon, drivers, CI, fixtures, novos grants ou custos; A2-G4/G5/T2-A2 `NOT_AUTHORIZED`, T1 36/T2-A1 75 apenas PASS históricos, Fase4 NOT_READY, Fase5 NOT_STARTED e 36 migrations UNREVIEWED. Próxima atividade sob novo Prossiga: proposta documental estrita de decisão A2-G4; STOP.

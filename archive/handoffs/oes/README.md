@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP240 — 2026-10-22**
+**CP241 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP240.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP241.md`
 
 Checkpoint anterior:
 
-`CP239`
+`CP240`
 
 Status:
 
@@ -617,3 +617,5 @@ em **Modo Continuidade**.
 - **CP239 — 2026-10-22:** Documento 214 registra aprovação e execução de A2-G2/E, criação de schema e três tabelas vazias em Neon, com pós-verificação estrutural PASS. A2-G3–G5 e T2-A2 não autorizados. STOP.
 
 - **CP240 — 2026-10-22:** Documento 215 registra autorização e execução A2-G3 de cinco GRANTs mínimos, verificações de permissões efetivas por tabela/coluna, negativas de segurança e tabelas vazias; A2-G4/G5/T2-A2 ainda não autorizados. STOP.
+
+- **CP241 — 2026-10-22:** Documento 216 consolida quatro atividades A1–A4 documentais e revisão adversarial RA-01–RA-10/RF-01–RF-05 do contrato candidato A2-G4; nenhuma implementação, SQL, Neon, CI, dado ou autorização operacional. A2-G4/G5/T2-A2 NOT_AUTHORIZED. Retomada somente em minuta documental de decisão A2-G4, sob novo Prossiga. STOP.

@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP240 — 2026-10-22**.
+- checkpoint vigente: **CP241 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP241 — A2-G4: contrato documental do adaptador consolidado (sem autorização)
+
+Documento 216 consolida A1–A4 pós-CP240 (desenho de adaptador Python/PostgreSQL, adversarial RA-01–RA-10, ajustes RF-01–RF-05 e suficiência exclusivamente documental). UoW transacional, concorrência por cenário, criação com colisão e rechecagem, idempotência/replay, confirmação incerta e limites JSONB permanecem **especificações candidatas não executadas**. A2-G4/G5 e implementação T2-A2 `NOT_AUTHORIZED`; nenhum código, SQL, Neon, CI, driver, dados, GRANT ou gates alterados. F01–F07 apenas documentais, L1–L4/O-01–O-10 pendentes. T1 36/T2-A1 75 históricos PASS; Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrations UNREVIEWED. Próximo: minuta estrita de deliberação A2-G4, somente documental sob `Prossiga`.
 
 ## CP240 — A2-G3: concessões mínimas de aplicação verificadas
 
