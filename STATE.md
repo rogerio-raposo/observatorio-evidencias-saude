@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP243 — 2026-10-22**.
+- checkpoint vigente: **CP244 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP244 — A2-G4: código apenas em staging, publicação técnica bloqueada
+
+Documento 219 registra A1–A6 pós-CP243: seis arquivos experimentais **em staging local e não publicados**; revisões SA-01–SA-10, mitigação estática parcial SA-01/03/04/09 e **SA-02 REABERTO, BLOQUEADOR CRÍTICO** — lógica de retry por `23505` sem confirmação inequívoca de rollback após falha de limpeza. SA-05/06/08 pendentes ALTA; SA-07/10 MODERADA. Autorização do Documento 218 permanece válida **somente para código-fonte estático** com Psycopg 3.3.6 como referência, mas **A2-G4 NÃO ACEITO NEM PUBLICADO TECNICAMENTE**; nenhum dos seis arquivos `a2/` integra o GitHub. Nenhuma execução, instalação, SQL, Neon, CI ou testes. A2-G5/T2-A2 operacional NOT_AUTHORIZED. T1 36 e T2-A1 75 PASS apenas históricos; F01–F07 documentais, L1–L4/O-01–O-10 pendentes, Fase4 NOT_READY, Fase5 NOT_STARTED e 36 migrações UNREVIEWED. Próximo `Prossiga`: correção estática SA-02, sem publicar código.
 
 ## CP243 — A2-G4: autorização expressa de código estático, ainda não implementado
 

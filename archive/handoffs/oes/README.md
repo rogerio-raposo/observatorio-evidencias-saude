@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP243 — 2026-10-22**
+**CP244 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP243.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP244.md`
 
 Checkpoint anterior:
 
-`CP242`
+`CP243`
 
 Status:
 
@@ -623,3 +623,5 @@ em **Modo Continuidade**.
 - **CP242 — 2026-10-22:** Documento 217 consolida minuta documental **não aprovada** A2-G4 para seis arquivos estáticos isolados, AA-01–AA-09/AF-01–AF-05, com AF-03 pendente de decisão explícita. Sem implementação, SQL, Neon, CI, testes ou ampliação de grants. A2-G4/G5/T2-A2 NOT_AUTHORIZED; próxima atividade somente documental de deliberação, sob novo Prossiga. STOP.
 
 - **CP243 — 2026-10-22:** Documento 218 formaliza aprovação expressa apenas da implementação **estática** A2-G4 dos seis arquivos Python com Psycopg 3.3.6 como referência de API. Código não iniciado; sem SQL, Neon, CI, testes, drivers ou custos. A2-G5/runtime T2-A2 NOT_AUTHORIZED. Próximo Prossiga: uma atividade interna de código estático. STOP.
+
+- **CP244 — 2026-10-22:** Documento 219 consolida seis atividades de código **somente em staging local** e duas revisões adversariais; SA-02 (rollback não confirmado com retry de 23505) continua bloqueador crítico e SA-05–SA-08/SA-10 pendentes. **Nenhum dos seis arquivos do adaptador foi publicado.** A2-G4 código estático aprovado, ainda não aceito/publicado; A2-G5/runtime NOT_AUTHORIZED. Próximo Prossiga: correção estática SA-02 sob novo Freshness Gate. STOP.
