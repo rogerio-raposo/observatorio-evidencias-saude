@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP234 — 2026-10-22**
+**CP235 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP234.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP235.md`
 
 Checkpoint anterior:
 
-`CP233`
+`CP234`
 
 Status:
 
@@ -605,3 +605,5 @@ em **Modo Continuidade**.
 - **CP233 — 2026-10-22:** Documento 208 reúne A1–A3 pós-CP232: protocolo D0/P1/P2/E para preflight A2-G2/P, PF-01–PF-10, achados PA-01–PA-08 e critérios AC-01–AC-10; REVISE_BEFORE_OPERATIONAL_AUTHORIZATION. P1/P2/E/T2-A2 não autorizados; A2-G1 apenas documental condicionalmente aprovado. Próximo Prossiga: avaliar suficiência de minuta documental P1 sem execução. STOP.
 
 - **CP234 — 2026-10-22:** Documento 209 consolida A1–A3 pós-CP233: allowlist P1 restrita de três ferramentas de metadados, revisão R1–R4, condição financeira prévia; nenhuma aprovação P1/P2/E/T2-A2 ou acesso Neon. Próximo Prossiga: avaliação documental de suficiência da eventual decisão P1. STOP.
+
+- **CP235 — 2026-10-22:** Documento 210 formaliza a simplificação proporcional da governança financeira para Neon Free, preservando proibição de serviços pagos e autorizações independentes; minuta P1 segue NOT_AUTHORIZED. Próxima atividade: avaliação final e eventual deliberação P1. STOP.

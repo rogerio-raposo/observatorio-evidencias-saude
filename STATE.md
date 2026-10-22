@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP234 — 2026-10-22**.
+- checkpoint vigente: **CP235 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP235 — Controle financeiro proporcional Neon Free e proposta P1
+
+Documento 210 consolida correção de circularidade C0/C1/C2 e manifestação do proprietário de que controles financeiros prévios para cada GET P1 são desproporcionais no Neon Free sem cartão. Regra prospectiva: Free apenas, sem cartão/upgrade/serviços pagos, acompanhar quotas proporcionalmente e STOP em risco material; não exigir prova individual de zero custo por chamada. P1 ainda NOT_AUTHORIZED (3 consultas de metadados, uma cada); P2, E e T2-A2 NOT_AUTHORIZED. A2-G1 aprovação somente documental, F01–F07 sem validação, L1–L4 e O-01–O-10 pendentes. Nenhum Neon, SQL, CI, teste ou gasto neste checkpoint. T1 36 PASS e T2-A1 75 PASS somente históricos. Próximo passo: avaliação e deliberação expressa P1.
 
 ## CP234 — Proposta restrita de allowlist P1
 

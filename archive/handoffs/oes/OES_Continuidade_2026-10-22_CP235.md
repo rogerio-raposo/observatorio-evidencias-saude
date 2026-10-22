@@ -1,0 +1,9 @@
+# OES — Continuidade CP235
+
+**2026-10-22 | anterior CP234 | CONTROLE FINANCEIRO SIMPLIFICADO | P1 APPROVAL_PENDING | T2-A2 NOT_AUTHORIZED**
+
+**Documento 210:** `docs/governance/210-d1-t2-a2-neon-free-financial-proportionality-p1-cp235.md`. Consolida A1–A3 pós-CP234 (circularidade C0, especificação C0/C1/C2, fontes oficiais do Free), acrescidas da objeção expressa do proprietário à burocracia financeira, com esclarecimento de limites do Free e ausência de cartão. Regra nova prospectiva: sem prova de custo zero para cada GET de metadados, sem alteração dos Docs 208–209, mas sem upgrade, cartão, contratos ou serviços pagos; acompanhamento proporcional de consumo e STOP se limites/risco material. C0 não impede genericamente futura consulta P1, C2 permanece para SQL/compute em decisão futura.
+
+P1 ainda **NOT_AUTHORIZED**. Sua proposta contém somente `describe_project`, `get_branch`, `get_postgres_database`, projeto `tiny-pond-20086371`, branch `br-divine-grass-b63wlpcb`, banco `oes_t2a2_synthetic`, uma chamada cada, sem repetição automática; respostas filtradas para evidência, sem segredos, sem endpoint inventory nem SQL/Neon modificador. A2-G1 `CONDITIONAL_DOCUMENTARY_DESIGN_APPROVED`; P2/E e T2-A2 `NOT_AUTHORIZED`. N1-E3 TLS cliente→endpoint verificado, backend ssl=false observado sem garantia interna. Runtime privilegiado não usar; `oes-sandbox` intocado. T1 36 PASS e T2-A1 75 PASS somente históricos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED; L1–L4 e F01–F07 com limites prévios.
+
+**Retomada sob novo Prossiga:** revisão final da minuta P1 e apresentação à deliberação expressa; nenhum acesso Neon/SQL/CI até aprovação independente. Freshness Gate, uma atividade por Prossiga, checkpoint por necessidade ou a cada ~3–5 atividades; único ponteiro `archive/handoffs/oes/README.md`. STOP.

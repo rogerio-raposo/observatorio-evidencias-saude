@@ -5363,3 +5363,8 @@ Documento 208 consolida atividades documentais A1–A3 pós-CP232: separação P
 ## 2026-10-22 — CP234: allowlist P1 e minuta sem autorização
 
 Documento 209 consolida A1–A3 pós-CP233, com três operações Neon de leitura de metadados candidatas (describe_project, get_branch, get_postgres_database), parâmetros fixos, uma chamada cada, exclusão inicial das ferramentas de endpoints, revisão R1–R4 e bloqueio diante de condição financeira não comprovada. P1/P2/E e T2-A2 NOT_AUTHORIZED; A2-G1 permanece aprovação exclusivamente documental condicionada. Nenhum Neon, SQL, CI, teste, GRANT, DDL/DML, implementação ou gasto foi realizado. STOP.
+
+
+## 2026-10-22 — CP235: simplificação de controle financeiro Free e minuta P1
+
+Documento 210 registra manifestação do proprietário sobre capacidade gratuita do plano Neon Free e ausência de cartão; substitui prospectivamente a condição de provar gratuidade de cada consulta GET por governança proporcional (sem contratação, upgrade, cartão ou serviço pago; monitorar quotas e STOP diante de custo ou limite). Conserva Docs 208–209 históricos. Minuta P1 de três operações administrativas de leitura permanece NOT_AUTHORIZED; P2/E/T2-A2 não autorizados; nenhum acesso Neon/SQL/CI ou implementação nesta publicação. STOP.
