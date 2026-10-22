@@ -1,0 +1,9 @@
+# OES — Continuidade CP236
+
+**2026-10-22 | anterior CP235 | POLÍTICA TRANSVERSAL DE RECURSOS GRATUITOS ADOTADA | P1 NOT_AUTHORIZED | T2-A2 NOT_AUTHORIZED**
+
+**Documento 211:** `docs/governance/211-politica-transversal-recursos-gratuitos-autorizacao-despesas-cp236.md`. Após manifestação do proprietário e `Prossiga`, formalizada regra transversal: serviços **previamente autorizados** em plano gratuito podem consumir quotas ordinárias e realizar consultas/repetições justificadas, quando a atividade técnica estiver autorizada, sem novas aprovações financeiras por GET, chamada, job ou unidade de recurso. Sem loops, varreduras excessivas ou segredos. Acompanhamento proporcional a risco e proximidade de limite; STOP se limite atingido, cobrança, cartão, contratação ou upgrade necessário; toda despesa requer consentimento expresso. Política vale para Neon Free, GitHub Actions e outros Free autorizados. Não autoriza novos serviços nem novos poderes técnicos, SQL/DDL/DML/GRANT, acesso a dados reais, alterações de papéis/rede, CI de finalidade não aprovada, adaptações ou gates.
+
+Docs 208–210 permanecem imutáveis como história; limites anteriores de três chamadas e uma chamada por operação não constituem regra geral. **P1 ainda NÃO AUTORIZADO operacionalmente**; deve-se revisar e submeter minuta técnica específica à decisão expressa, com proporcionalidade. A2-G1 `CONDITIONAL_DOCUMENTARY_DESIGN_APPROVED`; P2/E/T2-A2 `NOT_AUTHORIZED`. TLS N1-E3 restrito cliente→endpoint, backend ssl=false sem garantia interna; runtime elevado NÃO USAR. T1 36 e T2-A1 75 PASS somente históricos; Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrações UNREVIEWED; `oes-sandbox` fora do escopo.
+
+**Próximo Prossiga:** revisar documentalmente a autorização P1 proporcional e apresentá-la ao proprietário, sem acessar Neon/SQL/CI nesta autorização de continuidade. Freshness Gate, uma atividade por Prossiga, checkpoints equilibrados, ponteiro único README. **STOP.**

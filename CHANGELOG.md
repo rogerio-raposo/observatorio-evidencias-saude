@@ -5368,3 +5368,8 @@ Documento 209 consolida A1–A3 pós-CP233, com três operações Neon de leitur
 ## 2026-10-22 — CP235: simplificação de controle financeiro Free e minuta P1
 
 Documento 210 registra manifestação do proprietário sobre capacidade gratuita do plano Neon Free e ausência de cartão; substitui prospectivamente a condição de provar gratuidade de cada consulta GET por governança proporcional (sem contratação, upgrade, cartão ou serviço pago; monitorar quotas e STOP diante de custo ou limite). Conserva Docs 208–209 históricos. Minuta P1 de três operações administrativas de leitura permanece NOT_AUTHORIZED; P2/E/T2-A2 não autorizados; nenhum acesso Neon/SQL/CI ou implementação nesta publicação. STOP.
+
+
+## 2026-10-22 — CP236: política transversal para serviços gratuitos
+
+Documento 211 formaliza, por decisão do proprietário, utilização proporcional de recursos Free em serviços previamente autorizados: sem aprovação financeira por consulta, execução ou consumo ordinário; repetição justificada permitida, sem loops; acompanhamento de quotas e STOP em limite material; upgrade/serviços pagos/cartão/cobrança exigem autorização expressa. Precedência prospectiva financeira sobre restrições pontuais Docs 208–210, preservando história e gates. P1/P2/E/T2-A2 continuam NOT_AUTHORIZED, nenhuma operação Neon/SQL/CI nesta publicação. STOP.

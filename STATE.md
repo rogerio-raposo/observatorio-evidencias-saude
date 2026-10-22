@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP235 — 2026-10-22**.
+- checkpoint vigente: **CP236 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP236 — Política transversal de recursos gratuitos e despesas
+
+Documento 211 registra decisão de governança transversal aplicável a serviços gratuitos previamente autorizados: consumo ordinário, consultas e repetições justificadas sem aprovação financeira por chamada; rate limits e controles técnicos preservados; acompanhar quotas conforme risco, STOP em limites materiais; qualquer upgrade, contratação, cartão ou cobrança exige aprovação expressa. Limites pontuais de três chamadas e uma por operação de P1 não se generalizam. **P1/P2/E e T2-A2 permanecem NOT_AUTHORIZED para atos técnicos**; A2-G1 permanece aprovação documental. Nenhuma nova operação Neon/SQL/CI nesta decisão; T1 36 e T2-A1 75 PASS somente históricos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED.
 
 ## CP235 — Controle financeiro proporcional Neon Free e proposta P1
 
