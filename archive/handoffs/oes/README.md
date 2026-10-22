@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP230 — 2026-10-22**
+**CP231 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP230.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP231.md`
 
 Checkpoint anterior:
 
-`CP229`
+`CP230`
 
 Status:
 
@@ -597,3 +597,5 @@ em **Modo Continuidade**.
 
 - **CP226–CP229 — 2026-10-21/22:** Neon sintético e role app restrita; runtime legado excessivamente privilegiado; N1-E3 confirmou TLS do cliente e observou SSL_FALSE no backend; T2-A2 não autorizado.
 - **CP230 — 2026-10-22:** Documento 205 consolida A1–A3 documentais e F01–F07 REVISE, sem SQL/CI/GRANT/implementação; próxima atividade: fechamento documental dos achados sob Prossiga. STOP.
+
+- **CP231 — 2026-10-22:** Documento 206 consolida F01–F07, L1–L4 e oráculos O-01–O-10, minuta A2-G1 não aprovada; somente documentação, sem SQL/Neon/CI/GRANT/implementação e T2-A2 NOT_AUTHORIZED. Próximo passo: avaliar deliberação documental expressa A2-G1, sem operações. STOP.

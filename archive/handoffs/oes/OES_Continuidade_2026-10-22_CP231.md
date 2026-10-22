@@ -1,0 +1,7 @@
+# OES — Continuidade CP231
+
+**2026-10-22 | anterior CP230 | DESIGN_DELIBERATION_PACKAGE_READY | A2-G1 NOT_APPROVED | T2-A2 NOT_AUTHORIZED**
+
+Documento 206: `docs/governance/206-d1-t2-a2-a2g1-conditional-design-package-cp231.md`, consolida pós-CP230 A1–A3: propostas de resolução documental F01–F07, lacunas L1–L4, oráculos futuros O-01–O-10 e minuta de A2-G1 **NÃO APROVADA**. Documento 205 permanece histórico; nenhuma nova execução/teste/DDL/GRANT/CI, nenhuma mudança no Neon. Modelo três tabelas `scenario/event/receipt` é candidato; contrato T1/T2-A1 deve ser preservado, inclusive fingerprint Python, criação repetida que retorna snapshot corrente, exceções explícitas, `pending` e log de eventos. Estado T1 CLOSED_SYNTHETIC_LOCAL_ONLY (36 PASS históricos), T2-A1 CLOSED_SYNTHETIC_IN_MEMORY_ONLY (75 PASS históricos); T2-A2 NOT_AUTHORIZED, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Neon Free sintético não constitui autorização operacional; `oes_t2a2_runtime` NÃO UTILIZAR. N1-E3 verificou TLS do cliente, mas backend `pg_stat_ssl.ssl=false` e segmentos internos não comprovados. D1 prioridade após D0 editorial; D2 factual posterior.
+
+**Retomada exata:** após novo Prossiga, avaliação restrita de suficiência/minuta A2-G1 para decisão expressa do proprietário; não presumir aprovação, não executar SQL, Neon, CI, GRANT, adaptador nem qualquer gate. Freshness Gate inicial e antes de publicação; uma atividade por Prossiga, checkpoint equilibrado. Handoff imutável, ponteiro único no README. STOP.

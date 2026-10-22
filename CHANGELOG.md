@@ -5343,3 +5343,8 @@ Documento 204 consolida execuções GitHub Actions 39732456492, 39734959697, 397
 ## 2026-10-22 — CP230: fronteira PostgreSQL D1/T2-A2 documental
 
 Documento 205 consolida A1–A3: modelo físico candidato com Scenario/Event/Receipt, matriz de ACL e autorizações, revisão adversarial F01–F07 = REVISE_BEFORE_IMPLEMENTATION_AUTHORIZATION. Nenhum SQL, Neon, CI, GRANT ou implementação. T2-A2 NOT_AUTHORIZED; gates, fases e limitações TLS N1-E3 inalterados. STOP.
+
+
+## 2026-10-22 — CP231: pacote A2-G1 somente documental
+
+Documento 206 consolida pós-CP230 A1–A3: resoluções propostas F01–F07, L1–L4, oráculos futuros O-01–O-10 e minuta de aprovação documental condicionada A2-G1 expressamente NÃO APROVADA. T2-A2 NOT_AUTHORIZED, nenhuma execução SQL, Neon, CI, GRANT, adaptador ou alteração de gates. STOP.
