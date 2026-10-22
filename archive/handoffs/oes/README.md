@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP239 — 2026-10-22**
+**CP240 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP239.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP240.md`
 
 Checkpoint anterior:
 
-`CP238`
+`CP239`
 
 Status:
 
@@ -615,3 +615,5 @@ em **Modo Continuidade**.
 - **CP238 — 2026-10-22:** Documento 213 registra autorização e execução SQL read-only P2, confirmação de namespace ausente e achados de privilégios/ACL; E e implementação T2-A2 continuam não autorizados. STOP.
 
 - **CP239 — 2026-10-22:** Documento 214 registra aprovação e execução de A2-G2/E, criação de schema e três tabelas vazias em Neon, com pós-verificação estrutural PASS. A2-G3–G5 e T2-A2 não autorizados. STOP.
+
+- **CP240 — 2026-10-22:** Documento 215 registra autorização e execução A2-G3 de cinco GRANTs mínimos, verificações de permissões efetivas por tabela/coluna, negativas de segurança e tabelas vazias; A2-G4/G5/T2-A2 ainda não autorizados. STOP.

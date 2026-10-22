@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP239 — 2026-10-22**.
+- checkpoint vigente: **CP240 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP240 — A2-G3: concessões mínimas de aplicação verificadas
+
+Documento 215 registra autorização expressa e execução de A2-G3 no Neon sintético: USAGE do schema ao app, SELECT/INSERT nas três tabelas, UPDATE por coluna apenas revision/state em scenario. Verificação READ ONLY confirmou ausência de CREATE, DELETE/TRUNCATE, UPDATE irrestrito, privilégios adicionais e acesso PUBLIC, com zero linhas nas três tabelas. Owner administrativo elevado permanece risco, runtime proibido, TLS externo N1-E3 com limites. A2-G3 COMPLETED_MINIMAL_GRANTS_VERIFIED; A2-G4/G5 e T2-A2 NOT_AUTHORIZED. T1 36 e T2-A1 75 históricos PASS, Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima atividade apenas proposta documental A2-G4.
 
 ## CP239 — A2-G2/E: criação estrutural aprovada e verificada
 

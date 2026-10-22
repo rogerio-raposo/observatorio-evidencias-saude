@@ -5388,3 +5388,8 @@ Documento 213 consolida autorização expressa e resultados Q01–Q07 em Neon Po
 ## 2026-10-22 — CP239: execução estrutural A2-G2/E documentada
 
 Documento 214 consolida aprovação expressa, Freshness Gate, preflight owner/schema, transação de DDL somente para schema e três tabelas vazias e verificações de ownership, constraints, PK/FK, índices implícitos, zero registros e ACL restrita. DDL compatível com contrato genérico T2-A1, sem CHECK events obrigatório ou formato SHA256 universal. Nenhum GRANT/REVOKE, dado sintético ou real, CI, adaptador ou alteração de infraestrutura. A2-G3–G5/T2-A2 NOT_AUTHORIZED; STOP.
+
+
+## 2026-10-22 — CP240: A2-G3 permissões mínimas autorizadas, executadas e verificadas
+
+Documento 215 formaliza decisão expressa, Freshness Gate e execução Neon de cinco GRANTs estritamente para oes_t2a2_app; pós-verificação demonstrou permissões positivas e negativas, restrição UPDATE por coluna e tabelas vazias. Sem DDL novo, DML, REVOKE, ALTER ROLE, CI, adaptador ou dados. A2-G4/G5/T2-A2 NOT_AUTHORIZED; próxima atividade documental A2-G4. STOP.
