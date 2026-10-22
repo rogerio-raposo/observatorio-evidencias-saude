@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP248 — 2026-10-22**.
+- checkpoint vigente: **CP249 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP249 — Política numérica JSONB SA-07 somente documental
+
+Documento 224 consolida A1–A5 pós-CP248 e checkpoint documental A6: SA07-N1/N2/N3 abertos (finitude/faixa, precisão/round-trip, serializer Psycopg). Quatro comandos T1 declaram `cycle_no: int`; `True`, `1` e `1.0` podem ser comparáveis mas não identicamente codificados. Política candidata: preservar `SHA-256(encoded(payload).encode("utf-8"))`, não introduzir coerções, distinguir domínio/idempotência/persistência; atenção às leituras SQL antes de qualquer escrita e ao fingerprint que pode falhar antes do codec. AV-01–AV-08 revisadas somente estaticamente, sem PASS operacional. **SA-07 ABERTA/MODERADA**. Seis arquivos A2-G4 somente na branch `preservation/oes-d1-t2-a2-g4-cp247-unvalidated`, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`; não publicados em `main`. A2-G5/runtime NOT_AUTHORIZED, SA-05 aberta/alta, SA-03 parcial, SA-06/08/10 abertas; T1 36/T2-A1 75 PASS históricos. Próximo `Prossiga`: triagem SA-08 estática.
 
 ## CP248 — Preservação segregada do código experimental A2-G4 (sem promoção)
 
