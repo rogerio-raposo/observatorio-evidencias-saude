@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 21 de outubro de 2026  
+**Última atualização:** 22 de outubro de 2026  
 **Fase atual:** Fase 4 — Protocolo de Atualização  
 **Status geral:** em desenvolvimento
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP229 — 2026-10-22**.
+- checkpoint vigente: **CP230 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP230 — Fronteira PostgreSQL pós-conexão exclusivamente documental
+
+Documento 205 consolida A1–A3 e sete achados F01–F07 em REVISE_BEFORE_IMPLEMENTATION_AUTHORIZATION. Modelo de três tabelas, privilégios e transações permanecem candidatos, não executados. Nenhum SQL/Neon/CI/GRANT/implementação; T2-A2 NOT_AUTHORIZED. T1 36 PASS/T2-A1 75 PASS históricos; Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima: fechamento documental F01–F07 sob novo Prossiga.
 
 ## CP229 — N1-E3 autenticação e TLS externo
 

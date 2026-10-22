@@ -5338,3 +5338,8 @@ Documento 203: papel `oes_t2a2_app` criado e verificado em Neon Free sintético 
 ## 2026-10-22 — CP229: N1-E3 TLS externo validado
 
 Documento 204 consolida execuções GitHub Actions 39732456492, 39734959697, 39735977591, 39736779486 (FAIL, diagnósticos progressivos) e 39737616716 (PASS, TLS do cliente `verify-full`, CA explícita, papel/banco corretos, uma consulta read-only). `pg_stat_ssl` permaneceu `SSL_FALSE` sem versão/cifra, registrado separadamente, sem afirmar transporte interno seguro. N1-E3 concluído estritamente para autenticação e TLS externo; T2-A2 segue NOT_AUTHORIZED.
+
+
+## 2026-10-22 — CP230: fronteira PostgreSQL D1/T2-A2 documental
+
+Documento 205 consolida A1–A3: modelo físico candidato com Scenario/Event/Receipt, matriz de ACL e autorizações, revisão adversarial F01–F07 = REVISE_BEFORE_IMPLEMENTATION_AUTHORIZATION. Nenhum SQL, Neon, CI, GRANT ou implementação. T2-A2 NOT_AUTHORIZED; gates, fases e limitações TLS N1-E3 inalterados. STOP.

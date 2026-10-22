@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP229 — 2026-10-22**
+**CP230 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP229.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP230.md`
 
 Checkpoint anterior:
 
-`CP228`
+`CP229`
 
 Status:
 
@@ -594,3 +594,6 @@ em **Modo Continuidade**.
 - **CP224 — 2026-10-21:** Documento 199: alternativas persistente A / temporária B, decisão pendente, P2-C1 não aprovado, T2-A2 não autorizado. Próximo: matriz documental A/B sob `Prossiga`. STOP.
 
 - **CP225 — 2026-10-21:** Documento 200 registra novo projeto Neon Free sintético provisionado, sem SQL e sem autorização T2-A2; preflight de segurança/custo e decisão operacional pendentes. Próximo parecer documental sob `Prossiga`. STOP.
+
+- **CP226–CP229 — 2026-10-21/22:** Neon sintético e role app restrita; runtime legado excessivamente privilegiado; N1-E3 confirmou TLS do cliente e observou SSL_FALSE no backend; T2-A2 não autorizado.
+- **CP230 — 2026-10-22:** Documento 205 consolida A1–A3 documentais e F01–F07 REVISE, sem SQL/CI/GRANT/implementação; próxima atividade: fechamento documental dos achados sob Prossiga. STOP.
