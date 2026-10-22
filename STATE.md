@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP245 — 2026-10-22**.
+- checkpoint vigente: **CP246 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP246 — A2-G4: revisão SA-11/SA-12, SA-06 parcialmente mitigada; fonte somente local
+
+Documento 221 consolida A1–A6 pós-CP245 e checkpoint A7 **exclusivamente documental**. Seis arquivos do adaptador em staging local, hashes SHA-256 registrados no Documento 221; **nenhum `prototypes/d1_t2/a2/` publicado no GitHub**. SA-11 (falha de rollback pré-COMMIT) e SA-12 (falha de fechamento após rollback que retornou) mitigadas/revisadas **somente por inspeção textual**. SA-06 mitigada parcialmente: `CommitOutcomeUnknown` armazena falhas de fechamento na saída canônica do contexto, mas reconciliação, resultados do servidor e cobertura adicional continuam abertos. SA-02 condicionada a SA-05. SA-05 ALTA, SA-07 MODERADA, SA-08 ALTA, SA-10 MODERADA **abertas**, SA-03 parcial; não há testes novos ou aceitação A2-G4. A2-G4 **aprovada apenas para código estático**, sem publicação técnica; A2-G5/T2-A2 operacional `NOT_AUTHORIZED`. Sem importação, compilação, execução, Psycopg instalado, CI, SQL, Neon, grants, dados reais, custos ou deploy. T1 36/T2-A1 75 PASS apenas históricos; F01–F07 documentais, L1–L4/O-01–O-10 pendentes, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Próximo `Prossiga`: triagem adversarial estática SA-05 após Freshness Gate.
 
 ## CP245 — A2-G4: SA-11 bloqueia aceitação estática, sem publicação técnica
 
