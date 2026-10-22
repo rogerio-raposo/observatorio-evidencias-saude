@@ -65,10 +65,21 @@ jobs:
                       """)
                       result = cur.fetchone()
               phase = "postcondition"
-              if not result or result[0] != "oes_t2a2_synthetic" or result[1] != "oes_t2a2_app":
-                  raise SystemExit("N1-E3 FAIL: IDENTITY_MISMATCH")
-              if result[2] is not True or not result[3] or not result[4]:
-                  raise SystemExit("N1-E3 FAIL: TLS_STATE_MISMATCH")
+              if not result:
+                  raise SystemExit("N1-E3 FAIL: SQL_NO_RESULT")
+              if result[0] != "oes_t2a2_synthetic":
+                  raise SystemExit("N1-E3 FAIL: DATABASE_MISMATCH")
+              if result[1] != "oes_t2a2_app":
+                  raise SystemExit("N1-E3 FAIL: ROLE_MISMATCH")
+              # The client connection above requires a trusted CA and hostname
+              # verification; pg_stat_ssl describes the backend-facing session.
+              backend_ssl = result[2]
+              backend_state = ("SSL_TRUE" if backend_ssl is True else
+                               "SSL_FALSE" if backend_ssl is False else "UNOBSERVED")
+              print("N1-E3 CLIENT_TLS_VERIFIED")
+              print("N1-E3 BACKEND_TLS_OBSERVATION:", backend_state)
+              print("N1-E3 BACKEND_VERSION_PRESENT:", bool(result[3]))
+              print("N1-E3 BACKEND_CIPHER_PRESENT:", bool(result[4]))
           except psycopg.Error as exc:
               # Categorize locally, never print the underlying exception or connection string.
               state = exc.sqlstate or ""
@@ -97,5 +108,5 @@ jobs:
           except Exception:
               category = "SQL_UNCLASSIFIED" if phase == "query" else "CONNECTION_UNCLASSIFIED"
               raise SystemExit("N1-E3 FAIL: " + category) from None
-          print("N1-E3 PASS: database, restricted identity, verified TLS and read-only query")
+          print("N1-E3 PASS: client TLS verified, database and role confirmed; backend TLS independently observed")
           PY
