@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP231 — 2026-10-22**.
+- checkpoint vigente: **CP232 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP232 — Decisão expressa A2-G1 documental condicionada
+
+Documento 207 registra aprovação expressa do proprietário exclusivamente da referência arquitetural documental condicionada A2-G1, conforme Documentos 205–206. F01–F07 somente endereçados documentalmente, L1–L4 condicionantes, O-01–O-10 não executados. A2-G2 e posteriores NÃO AUTORIZADOS; T2-A2 NOT_AUTHORIZED para implementação/execução. Nenhum SQL, DDL/DML/GRANT, CI, Neon, teste remoto ou adaptador. N1-E3 TLS cliente verificado e backend SSL_FALSE observado; papel privilegiado oes_t2a2_runtime NÃO USAR. T1 36 PASS e T2-A1 75 PASS históricos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrações UNREVIEWED. Próximo Prossiga: somente preparação documental A2-G2.
 
 ## CP231 — Pacote deliberativo documental A2-G1 sem aprovação
 

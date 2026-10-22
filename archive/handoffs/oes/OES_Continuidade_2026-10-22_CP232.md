@@ -1,0 +1,9 @@
+# OES — Continuidade CP232
+
+**2026-10-22 | anterior CP231 | DECISÃO EXPRESSA A2-G1: CONDITIONAL_DOCUMENTARY_DESIGN_APPROVED | T2-A2 NOT_AUTHORIZED**
+
+Documento 207: `docs/governance/207-d1-t2-a2-a2g1-decisao-condicionada-cp232.md`, registra a resposta expressa **"Aprovado"** do proprietário à minuta A2-G1 apresentada após CP231. A aprovação é **somente arquitetural/documental condicionada**, para referência de planejamento conforme Documentos 205–206 (namespace `oes_t2a2_proto`, três entidades candidatas `scenario/event/receipt`, cinco comandos e contratos Python preservados). F01–F07 endereçados documentalmente, **não validados**; L1–L4 permanecem condições; oráculos O-01–O-10 **não executados**. **T2-A2 NOT_AUTHORIZED**: sem adaptador, SQL/DDL/DML/GRANT, novos papéis/conexões Neon/CI, drivers, testes ou implementação. A2-G2 e posteriores exigem aprovações independentes, nenhuma transição automática.
+
+N1-E3 cliente Psycopg verify-full autenticado; backend `pg_stat_ssl.ssl=false` sem comprovação TLS interno; `oes_t2a2_runtime` privilegiado NÃO USAR. Projeto Neon Free `oes-d1-t2-a2-synthetic` não autoriza novas operações, `oes-sandbox` intocado. T1 36 PASS históricos CLOSED_SYNTHETIC_LOCAL_ONLY; T2-A1 75 PASS históricos CLOSED_SYNTHETIC_IN_MEMORY_ONLY; Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. D0 editorial fechado → D1 prioridade → D2 factual futuro → governança posterior. Nenhuma execução ou teste novo na decisão.
+
+**Ponto exato de retomada sob `Prossiga`:** preparar documentalmente preflight, riscos, autorização possível e pós-condições para A2-G2, **sem** propor que esteja aprovado e sem SQL, Neon, CI, DDL/DML/GRANT, adaptador, drivers, dados reais, custos ou gate alterado. Freshness Gate na abertura e antes de qualquer publicação; uma atividade por Prossiga, checkpoint equilibrado ou por decisão relevante. Handoff imutável e ponteiro único `archive/handoffs/oes/README.md`. **STOP.**

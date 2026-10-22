@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP231 — 2026-10-22**
+**CP232 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP231.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP232.md`
 
 Checkpoint anterior:
 
-`CP230`
+`CP231`
 
 Status:
 
@@ -599,3 +599,5 @@ em **Modo Continuidade**.
 - **CP230 — 2026-10-22:** Documento 205 consolida A1–A3 documentais e F01–F07 REVISE, sem SQL/CI/GRANT/implementação; próxima atividade: fechamento documental dos achados sob Prossiga. STOP.
 
 - **CP231 — 2026-10-22:** Documento 206 consolida F01–F07, L1–L4 e oráculos O-01–O-10, minuta A2-G1 não aprovada; somente documentação, sem SQL/Neon/CI/GRANT/implementação e T2-A2 NOT_AUTHORIZED. Próximo passo: avaliar deliberação documental expressa A2-G1, sem operações. STOP.
+
+- **CP232 — 2026-10-22:** Documento 207 registra decisão expressa A2-G1 CONDITIONAL_DOCUMENTARY_DESIGN_APPROVED, somente referência arquitetural; T2-A2 NOT_AUTHORIZED; F01–F07 documentais, L1–L4 pendentes, O-01–O-10 não executados. Próximo Prossiga: preparação documental A2-G2, sem execução ou aprovação implícita. STOP.
