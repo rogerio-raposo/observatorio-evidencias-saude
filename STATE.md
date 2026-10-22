@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP246 — 2026-10-22**.
+- checkpoint vigente: **CP247 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP247 — A2-G4: fábrica dedicada e SA05-R1/R2/R3 somente estáticos
+
+Documento 222 consolida A1–A7 pós-CP246 e publicação A8 **exclusivamente documental**. `DedicatedConnectionFactory` nominal, uso único da Unit of Work em falha de aquisição, exceção `ConnectionAcquisitionError` e exigência dos métodos `execute/rollback/commit/close`; SA05-R1/R2/R3 mitigadas textualmente e R3 revisada adversarialmente. **SA-05 GLOBAL ABERTA/ALTA:** exclusividade, conexão nova, role, banco, TLS e configuração operacional não comprovados. SA-02 depende de SA-05; SA-03 parcial; SA-06/07/08/10 abertas; SA-11/12 mitigadas/revisadas somente estaticamente. Seis arquivos técnicos `prototypes/d1_t2/a2/` **não publicados**, só staging local, hashes no Documento 222; A2-G4 não aceita tecnicamente. Sem import/compilação/execução, Psycopg instalado, testes, CI, SQL, Neon, grants, dados reais ou custos; A2-G5/T2-A2 operacional `NOT_AUTHORIZED`. T1 36/T2-A1 75 PASS históricos, F01–F07 documentais, L1–L4/O-01–O-10 pendentes, Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrações UNREVIEWED. Próximo `Prossiga`: triagem adversarial estritamente estática SA-07/JSONB após Freshness Gate.
 
 ## CP246 — A2-G4: revisão SA-11/SA-12, SA-06 parcialmente mitigada; fonte somente local
 
