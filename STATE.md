@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP237 — 2026-10-22**.
+- checkpoint vigente: **CP238 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP238 — P2 SQL catálogos, achados de privilégios
+
+Documento 213 registra autorização expressa e execução Neon P2 somente leitura sob `oes_t2a2_app`, `REPEATABLE READ READ ONLY`, Q01–Q07. Schema `oes_t2a2_proto` e objetos não encontrados, owner CREATE efetivo verdadeiro e app falso; owner/runtime com CREATEDB/CREATEROLE/REPLICATION/BYPASSRLS e associação `neon_superuser`; ACL PUBLIC CONNECT/TEMP e não CREATE; transação, identidade e timeouts confirmados. P2 `COMPLETED_WITH_SECURITY_FINDINGS`, E/T2-A2 `NOT_AUTHORIZED`; TLS do plugin não demonstrado ponta a ponta. Não houve DDL, DML, GRANT, CI ou implementação; T1 36 e T2-A1 75 PASS históricos, Fase4 NOT_READY, Fase5 NOT_STARTED. Próximo passo documental: proposta A2-G2/E.
 
 ## CP237 — Preflight P1 autorizado e concluído administrativamente
 

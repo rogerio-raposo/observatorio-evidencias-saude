@@ -5378,3 +5378,8 @@ Documento 211 formaliza, por decisão do proprietário, utilização proporciona
 ## 2026-10-22 — CP237: decisão expressa e evidências Neon P1
 
 Documento 212 formaliza aprovação do proprietário A2-G2/P1 e execução administrativa proporcional de leitura via plugin Neon: projeto/branch/banco confirmados, owner nominal, endpoint/branch/rede e consumo observados, sem segredos. Limites: billing/quotas, privilégios SQL, ACL e TLS interno não comprovados. P1 COMPLETED_WITH_LIMITATIONS; P2/E/T2-A2 NOT_AUTHORIZED; nenhum SQL, DDL/DML/GRANT, alteração de infraestrutura, CI, testes ou gasto pago. Próxima etapa documental P2. STOP.
+
+
+## 2026-10-22 — CP238: P2 autorizado e executado somente leitura
+
+Documento 213 consolida autorização expressa e resultados Q01–Q07 em Neon PostgreSQL, com role app restrito, transação READ ONLY/REPEATABLE READ, namespace/objetos ausentes e CREATE efetivo do owner. Achados: privilégios elevados de owner/runtime, PUBLIC CONNECT/TEMP, limitações de TLS e de visibilidade. A2-G2/E e T2-A2 NOT_AUTHORIZED; nenhum DDL/DML/GRANT, CI ou alteração de infraestrutura nesta publicação. STOP.

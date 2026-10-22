@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP237 — 2026-10-22**
+**CP238 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP237.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP238.md`
 
 Checkpoint anterior:
 
-`CP236`
+`CP237`
 
 Status:
 
@@ -611,3 +611,5 @@ em **Modo Continuidade**.
 - **CP236 — 2026-10-22:** Documento 211 estabelece política transversal de uso proporcional dos planos gratuitos; contratação/upgrade/cartão/cobrança requer aprovação, não há limite universal de três consultas ou uma chamada. Permissões técnicas independentes preservadas; P1/P2/E/T2-A2 não autorizados. STOP.
 
 - **CP237 — 2026-10-22:** Documento 212 registra aprovação expressa e execução Neon read-only de P1 com limitações, identidades, parâmetros e riscos observados. P2/E/T2-A2 não autorizados; próxima atividade documentação de P2, sem SQL. STOP.
+
+- **CP238 — 2026-10-22:** Documento 213 registra autorização e execução SQL read-only P2, confirmação de namespace ausente e achados de privilégios/ACL; E e implementação T2-A2 continuam não autorizados. STOP.
