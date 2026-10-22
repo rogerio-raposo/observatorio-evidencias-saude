@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP241 — 2026-10-22**.
+- checkpoint vigente: **CP242 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP242 — A2-G4: minuta de autorização estática proposta, não aprovada
+
+Documento 217 consolida A1–A4 pós-CP241 e formula somente `PROPOSED_NOT_APPROVED / ISOLATED_POSTGRESQL_ADAPTER_CODE_ONLY`: seis arquivos técnicos candidatos em `prototypes/d1_t2/a2/`, sem execução de código, SQL, Neon, CI ou testes. Revisão AA-01–AA-09 e ajustes AF-01–AF-05 endereçados **documentalmente**; AF-03 requer decisão expressa sobre versão/distribuição de Psycopg 3 ou exceção estática antes da implementação. Identidade de classes entre contextos de importação não é garantida; commit explícito sem confirmação implícita é exigência; `CommitOutcomeUnknown` continua candidato. **A2-G4/G5 e T2-A2 NOT_AUTHORIZED**. Nenhum arquivo técnico criado, nenhum grant/schema/data alterado. F01–F07 apenas documentais, L1–L4/O-01–O-10 pendentes; T1 36 e T2-A1 75 históricos PASS; Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrations UNREVIEWED. Próximo: deliberação preparatória AF-03 apenas documental sob novo `Prossiga`.
 
 ## CP241 — A2-G4: contrato documental do adaptador consolidado (sem autorização)
 
