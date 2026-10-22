@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP242 — 2026-10-22**
+**CP243 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP242.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP243.md`
 
 Checkpoint anterior:
 
-`CP241`
+`CP242`
 
 Status:
 
@@ -621,3 +621,5 @@ em **Modo Continuidade**.
 - **CP241 — 2026-10-22:** Documento 216 consolida quatro atividades A1–A4 documentais e revisão adversarial RA-01–RA-10/RF-01–RF-05 do contrato candidato A2-G4; nenhuma implementação, SQL, Neon, CI, dado ou autorização operacional. A2-G4/G5/T2-A2 NOT_AUTHORIZED. Retomada somente em minuta documental de decisão A2-G4, sob novo Prossiga. STOP.
 
 - **CP242 — 2026-10-22:** Documento 217 consolida minuta documental **não aprovada** A2-G4 para seis arquivos estáticos isolados, AA-01–AA-09/AF-01–AF-05, com AF-03 pendente de decisão explícita. Sem implementação, SQL, Neon, CI, testes ou ampliação de grants. A2-G4/G5/T2-A2 NOT_AUTHORIZED; próxima atividade somente documental de deliberação, sob novo Prossiga. STOP.
+
+- **CP243 — 2026-10-22:** Documento 218 formaliza aprovação expressa apenas da implementação **estática** A2-G4 dos seis arquivos Python com Psycopg 3.3.6 como referência de API. Código não iniciado; sem SQL, Neon, CI, testes, drivers ou custos. A2-G5/runtime T2-A2 NOT_AUTHORIZED. Próximo Prossiga: uma atividade interna de código estático. STOP.

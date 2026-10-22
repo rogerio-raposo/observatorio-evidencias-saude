@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP242 — 2026-10-22**.
+- checkpoint vigente: **CP243 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP243 — A2-G4: autorização expressa de código estático, ainda não implementado
+
+Documento 218 registra `APPROVED / ISOLATED_POSTGRESQL_ADAPTER_CODE_ONLY / PSYCOPG_3_3_6_STATIC_REFERENCE` concedido expressamente pelo proprietário. Limitado a seis arquivos técnicos em `prototypes/d1_t2/a2/`, sem modificar T1/T2-A1, usando Psycopg 3.3.6 exclusivamente como referência de API. **A2-G4 estático aprovado, código NÃO INICIADO neste checkpoint**; nenhuma instalação, execução/import operacional, SQL, Neon, CI, testes, DDL, grant ou custo. A2-G5 e T2-A2 operacional NOT_AUTHORIZED. T1 36/T2-A1 75 PASS históricos, F01–F07 só documentais, L1–L4 e O-01–O-10 pendentes; Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima atividade código estático restrito sob novo `Prossiga`.
 
 ## CP242 — A2-G4: minuta de autorização estática proposta, não aprovada
 
