@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP238 — 2026-10-22**.
+- checkpoint vigente: **CP239 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP239 — A2-G2/E: criação estrutural aprovada e verificada
+
+Documento 214 registra aprovação expressa e execução Neon sob owner para criação transacional do namespace `oes_t2a2_proto` e três tabelas vazias `scenario`, `event`, `receipt`. Pós-verificação SQL somente leitura PASS para schema/tabelas, três PK, FK, CHECK/NOT NULL, propriedade de `oes_t2a2_owner`, zero registros, PUBLIC e app sem USAGE/CREATE schema. Sem GRANT, inserções, CI ou adaptador; owner administrativo elevado segue risco explícito. A2-G3–G5/T2-A2 NOT_AUTHORIZED; T1 36 e T2-A1 75 PASS históricos, Fase4 NOT_READY, Fase5 NOT_STARTED, 36 migrations UNREVIEWED. Próxima atividade: proposta documental A2-G3.
 
 ## CP238 — P2 SQL catálogos, achados de privilégios
 

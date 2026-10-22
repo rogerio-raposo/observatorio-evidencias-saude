@@ -5383,3 +5383,8 @@ Documento 212 formaliza aprovação do proprietário A2-G2/P1 e execução admin
 ## 2026-10-22 — CP238: P2 autorizado e executado somente leitura
 
 Documento 213 consolida autorização expressa e resultados Q01–Q07 em Neon PostgreSQL, com role app restrito, transação READ ONLY/REPEATABLE READ, namespace/objetos ausentes e CREATE efetivo do owner. Achados: privilégios elevados de owner/runtime, PUBLIC CONNECT/TEMP, limitações de TLS e de visibilidade. A2-G2/E e T2-A2 NOT_AUTHORIZED; nenhum DDL/DML/GRANT, CI ou alteração de infraestrutura nesta publicação. STOP.
+
+
+## 2026-10-22 — CP239: execução estrutural A2-G2/E documentada
+
+Documento 214 consolida aprovação expressa, Freshness Gate, preflight owner/schema, transação de DDL somente para schema e três tabelas vazias e verificações de ownership, constraints, PK/FK, índices implícitos, zero registros e ACL restrita. DDL compatível com contrato genérico T2-A1, sem CHECK events obrigatório ou formato SHA256 universal. Nenhum GRANT/REVOKE, dado sintético ou real, CI, adaptador ou alteração de infraestrutura. A2-G3–G5/T2-A2 NOT_AUTHORIZED; STOP.
