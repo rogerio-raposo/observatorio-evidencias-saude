@@ -56,3 +56,26 @@ Esta atividade **não** atualiza a Ficha N2 `OES-P-2026-000401`, GRADE, assuranc
 **Próximo `Prossiga` recomendado:** obter **somente** identificação confiável de Zhou/Nazem na Tabela 1 e no subgrupo Hwang (sem nova busca ampla ou revisão do desfecho) e formular decisão proporcional sobre necessidade de appraisal formal. Exigir autorização específica se houver novo escopo de avaliação científica material. Evitar repetir as verificações de intervenção/controle que já estão resolvidas.
 
 **STOP — triagem dirigida executada, sem promoção científica/operacional.**
+
+## 7. Aditamento dirigido de sobreposição Hwang/Zhou/Nazem (23/10/2026, após CP257)
+
+Consulta exclusivamente à síntese Hwang 2025 e à tabela de estudos incluídos de Nazari 2025/2026, sem nova busca sistemática, appraisal ou modificação do produto.
+
+**Fontes primárias de síntese:**
+- Hwang et al. 2025, `npj Digital Medicine`, DOI `10.1038/s41746-025-01514-4`, https://www.nature.com/articles/s41746-025-01514-4 (texto disponível em trechos estruturados, mas Table 1 e Forest Fig. 4 não verificáveis linha a linha nesta sessão; tentativas de abertura direta do PMC e da Nature resultaram em bloqueio ou sem tabela individual).
+- Nazari et al., `Effectiveness of Digital Cognitive Behavioral Therapy for Insomnia: A Meta-Analysis of Randomized Controlled Trials`, PMID `41798736`, https://pmc.ncbi.nlm.nih.gov/articles/PMC12965280/ . **Tabela 1 textual recuperada**, com linhas separadas para **Nazem, 2023** e **Zhou, 2022**: ambos fazem parte da revisão Nazari, que não é a síntese-base Hwang.
+
+**Reconciliação específica:**
+
+| Estudo | Evidência confirmável | Estado em Hwang e incerteza |
+|---|---|---|
+| **Zhou 2022** | Tabela 1 Nazari identifica Zhou 2022, intervenção SHUTi adaptada, educação de sono como controle. A descrição textual da **Figura 3 de Hwang** menciona nominalmente os contrastes `SHUTi` e `SHUTi-BWHS` versus educação de sono; esse desenho é compatível com o ensaio de Zhou, que possui tais braços. | **Strong study-level link / subgroup exact membership NOT_VERIFIED**: a ligação a Hwang é fortemente sustentada pela nomenclatura única dos braços, mas a Tabela 1 e as linhas individuais da Figura 4 não foram recuperadas para confirmar autoria, contraste e peso exatos no subgrupo `k=10`. Não rotular como definitivamente novo nem como comprovadamente ausente. |
+| **Nazem 2023** | Tabela 1 Nazari identifica Nazem 2023, SHUTi autoguiado, `Insomnia Education Website` e estudo anterior ao corte Hwang 2024-03-31. | **Hwang study and subgroup membership NOT_VERIFIED**: elegibilidade temática e inclusão em outra revisão não provam participação na síntese Hwang. Não inferir presença da ausência de citação individual, nem ausência por falha de acesso. |
+
+Hwang informa 29 RCTs, 32 contrastes na análise geral e subgrupo `online education about sleep` com `k=10`, SMD=-0,93. O número `k=10` não significa que os dez RCTs Shaffer sejam idênticos aos dez contrastes Hwang: desenhos, intervenções e critérios de comparação diferem; Hwang inclui outros programas dCBT-I além de SHUTi.
+
+**Conclusão dirigida:** informações anteriores ao baseline do OES podem exigir reconciliação em corpus documental, mas não são novos ensaios publicados pós-baseline. Evidência independente estabelece que os dois RCTs já haviam sido considerados em outra revisão. **Não** é metodologicamente justificável iniciar appraisal ou nova meta-análise por inferência apenas porque não se conseguiu ler a Tabela 1 de Hwang. A pendência do cruzamento individual com Hwang deve ser **mantida transparente e proporcional**, sem ciclo indefinido de tentativas da mesma fonte.
+
+**Próximo gate, apenas se houver benefício científico material:** avaliação deliberativa sobre se a Ficha N2 necessita appraisal suplementar de algum destes estudos à luz da cobertura já existente; autorização expressa exigida antes de RoB 2, reestimativa, mudança de síntese ou produto. Este adendo **não** promove GRADE, assurance, currentness, ProductVersion, Fase 4/5 ou CI.
+
+**STOP — D2-E3/A2 adendo de sobreposição; CP257 permanece vigente.**
