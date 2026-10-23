@@ -1,5 +1,7 @@
 # Documento 232 — D2-E3/A1: Triagem científica dirigida de Shaffer (2026)
 
+> **Atualização de rastreabilidade (23/10/2026):** a restrição de acesso ao suplemento descrita abaixo foi superada mediante arquivo enviado pelo proprietário. A identificação dos dez estudos e a matriz corrigida constam no [Documento 233](233-d2-e3-a1-reconciliacao-suplemento-shaffer.md). O texto abaixo permanece como registro histórico da triagem antes do recebimento do suplemento; não utilizar seu estado `UNRESOLVED_OVERLAP` como situação mais recente.
+
 **OES | 2026-10-23 | TARGETED_SHAFFER_ELIGIBILITY_AND_OVERLAP_SCREENING | PRELIMINARY / UNRESOLVED_OVERLAP**
 
 ## 1. Mandato e limites
