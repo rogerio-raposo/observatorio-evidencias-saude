@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP254 — 2026-10-23**
+**CP255 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP254.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP255.md`
 
 Checkpoint anterior:
 
-`CP253`
+`CP254`
 
 Status:
 
@@ -644,3 +644,5 @@ em **Modo Continuidade**.
 - **CP253 — 2026-10-23:** Documento 228 e handoff CP253 consolidam D1-R1/R2/R3 e a aprovação expressa do encerramento **exclusivamente do demonstrador sintético D1 reescopado**, `CLOSED_SYNTHETIC_IN_MEMORY_DEMONSTRATOR_ONLY`. T1/T2-A1 mantidos (36/75 PASS históricos), A2-G4 diferido/não aceito, branch preservada sem merge, riscos SA abertos/diferidos, sem testes novos ou promoção de gates. Próximo `Prossiga`: propor a prioridade do marco seguinte, sem iniciar execução. STOP.
 
 - **CP254 — 2026-10-23:** Documento 229 e handoff CP254 consolidam aprovação documental D2-P0 e A1–A3: candidato N2 dCBT-I, escopo científico mínimo e parecer de viabilidade condicionada a autorização própria. D2-E1 é somente PROPOSED/NOT_AUTHORIZED; não houve consultas factuais, execução ou promoção de gates. Próximo `Prossiga`: proposta de autorização D2-E1 para decisão expressa. STOP.
+
+- **CP255 — 2026-10-23:** Documento 230 e handoff CP255 registram D2-E1 parcialmente executado: PMIDs identificados individualmente, mas busca PubMed estruturada/contagem/export não verificadas; sem conclusão científica ou alteração da Ficha. ChatGPT Work excluído. Próximo Prossiga: avaliar procedimento de export nativo por navegador comum, sem executar por inferência. STOP.
