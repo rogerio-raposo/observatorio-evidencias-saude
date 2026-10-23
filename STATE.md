@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP251 — 2026-10-22**.
+- checkpoint vigente: **CP252 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP252 — Reescopo aprovado: A2-G4 diferido, demonstrador D1 preservado
+
+Documento 227 registra aprovação expressa do reescopo: interromper antecipação da infraestrutura PostgreSQL. T1 `CLOSED_SYNTHETIC_LOCAL_ONLY` e T2-A1 `CLOSED_SYNTHETIC_IN_MEMORY_ONLY` mantidos; T2-A2/A2-G4 `DEFERRED_BY_APPROVED_RESCOPE / NOT_TECHNICALLY_ACCEPTED`; A2-G5/runtime NOT_AUTHORIZED; D1 global `RESCOPED_NOT_GLOBALLY_CLOSED`. Riscos SA-05/06/07/08/10 permanecem abertos para futura integração por stack definida, não declarados resolvidos. Branch preservada `preservation/oes-d1-t2-a2-g4-cp247-unvalidated`, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`; `main` sem A2. T1 36 e T2-A1 75 PASS históricos. Próximo `Prossiga`: inventário de entregas e lacunas do demonstrador reescopado.
 
 ## CP251 — Reorientação proporcional aprovada do método de trabalho
 
