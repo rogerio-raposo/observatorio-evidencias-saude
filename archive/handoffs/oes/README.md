@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP262 — 2026-10-23**
+**CP263 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP262.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP263.md`
 
 Checkpoint anterior:
 
-`CP261`
+`CP262`
 
 Status:
 
@@ -660,3 +660,5 @@ em **Modo Continuidade**.
 - **CP261 — 2026-10-23:** decisão expressa do proprietário **“Minuta aprovada.”** efetivou o gate `F4-FINAL-GATE/PASS_DOCUMENTARY_ONLY`, registrado no Documento 240 com **C1–C6** do Documento 239. **Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`**; readiness operacional `NOT_READY`, M3 `BLOCKED`, Fase 5 `NOT_STARTED`. Sem A3/validação operacional ou alteração da Ficha N2, assurance, currentness, BRGs/SA, Neon/SQL/CI. Próximo `Prossiga`: proposta de prioridades pós-Fase 4, com decisão separada antes de executar. Conversa aberta. STOP.
 
 - **CP262 — 2026-10-23:** proprietário autorizou primeira consulta pública ClinicalTrials.gov; ferramenta de abertura de URL não forneceu resposta HTTP/JSON da API. Documento 243 registra `STOP/INDETERMINATE`, sem NCT, `totalCount`, resultado clínico, atribuição de API indisponível, ou lookups NCT adicionais. Docs.241–242 preservam a prioridade/preflight; D2 continua parcial; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`. Próxima atividade apenas deliberação entre meio alternativo explicitamente autorizado, export oficial ou diferimento. Conversa aberta; STOP.
+
+- **CP263 — 2026-10-23:** proprietário autorizou uma tentativa HTTP direta ClinicalTrials.gov; `curl GET` executado uma vez resultou **exit=6 — DNS do ambiente não resolveu o host**; HTTP de origem/JSON não observados. Documento 244 preserva parâmetros e stop sem confundir com falha do canal de abertura anterior Doc.243. Nenhuma NCT recuperada, sem retry, CI, Neon/SQL, modificação de Ficha ou serviço pago. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 factual parcial, Fase 5 `NOT_STARTED`. Próximo `Prossiga`: deliberação proporcional por ambiente externo autorizado, export oficial ou diferimento. Conversa aberta; STOP.
