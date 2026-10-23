@@ -1,0 +1,30 @@
+name: OES D2-E2/A2 single NCBI connected probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-d2-e2-a2-single-manual
+  cancel-in-progress: false
+
+jobs:
+  ncbi-probe:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout public repository (no persisted credentials)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Offline unit tests
+        run: python -m unittest discover -s prototypes/d2_e2 -p 'test_*.py' -v
+      - name: Single bounded NCBI read-only probe
+        run: python prototypes/d2_e2/run_connected_probe.py
