@@ -1,8 +1,8 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 22 de outubro de 2026  
-**Fase atual:** Fase 4 — Protocolo de Atualização  
-**Status geral:** em desenvolvimento
+**Última atualização:** 23 de outubro de 2026  
+**Fase atual:** Fase 4 — Protocolo de Atualização (readiness operacional `NOT_READY`)  
+**Status geral:** em desenvolvimento; demonstrador sintético D1 reescopado encerrado restritamente
 
 ## 1. Fonte canônica e continuidade
 
@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP252 — 2026-10-22**.
+- checkpoint vigente: **CP253 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP253 — Encerramento restrito aprovado do demonstrador sintético D1 reescopado
+
+Documento 228 e handoff CP253 consolidam D1-R1 (inventário de entregas/lacunas), D1-R2 (suficiência estática do código T1/T2-A1) e D1-R3 (proposta **expressamente aprovada** pelo proprietário). Estado do **demonstrador sintético D1 reescopado**: `CLOSED_SYNTHETIC_IN_MEMORY_DEMONSTRATOR_ONLY`; o plano D1 originalmente mais amplo **não foi homologado globalmente**. T1 `CLOSED_SYNTHETIC_LOCAL_ONLY` (36 PASS históricos) e T2-A1 `CLOSED_SYNTHETIC_IN_MEMORY_ONLY` (39 próprios + 36 T1 = 75 PASS históricos) inalterados; S1–S6 somente nos limites sintéticos locais. Nenhum teste foi reexecutado e nenhum código modificado. T2-A2/A2-G4 `DEFERRED_BY_APPROVED_RESCOPE / NOT_TECHNICALLY_ACCEPTED`, A2-G5/runtime `NOT_AUTHORIZED`. Riscos SA-05/06/07/08/10 permanecem abertos/diferidos, SA-02 condicionada, SA-03 parcial, SA-11/12 apenas mitigadas estaticamente. Branch A2 preservada `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` no commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`, sem merge em `main`. D2 factual diferido; Fase 4 `NOT_READY`, Fase 5 `NOT_STARTED`, 36 migrações `UNREVIEWED`; nenhuma autorização nova para SQL/Neon/CI/nuvem/deploy/API/fonte factual/serviços pagos/gates. **Próximo `Prossiga`: propor decisão proporcional de prioridade do marco seguinte; não iniciar nova implementação automaticamente.**
 
 ## CP252 — Reescopo aprovado: A2-G4 diferido, demonstrador D1 preservado
 
