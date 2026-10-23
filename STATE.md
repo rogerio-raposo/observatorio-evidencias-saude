@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP263 — 2026-10-23**.
+- checkpoint vigente: **CP264 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP264 — Workflow D2-CTGOV-E3 autorizado/criado; despacho manual ainda pendente
+
+Proprietário declarou **“Workflow aprovado.”** sobre pacote `D2-CTGOV-E3/ONE_SHOT_GITHUB_ACTIONS_PUBLIC_GET` do Documento 245, autorizando um workflow manual e **uma única execução pública GET**. Criado `.github/workflows/d2-ctgov-single-public-get.yml` no commit `aaebd17b4246c2623c36954d8bedc01795eb4912`, leitura sem segredos/checkout/Neon/SQL, um único GET sem retry/redirect, 20 registros máximo, relatório mínimo UTC/HTTP/NCT. O **Documento 246** `docs/governance/246-d2-ctgov-e3-workflow-criado-despacho-pendente.md` registra aprovação e **limite da integração GitHub: não expõe disparo workflow_dispatch**. Nenhum job foi acionado pelo assistente, nenhum HTTP/JSON da API CTgov foi observado, `DISPATCH_PENDING` — não anunciar `PASS`. **CP264 vigente**, `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP264.md`. Próximo ato único: titular clicar **Run workflow** uma vez na branch `main` em `https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/workflows/d2-ctgov-single-public-get.yml` e compartilhar link da execução; então verificar run/logs e registrar resultado, sem rerun. Fase 4 documental encerrada, D2 parcial, Fase 5 `NOT_STARTED`, readiness operacional `NOT_READY`; Ficha e gates científicos/BRGs/SA/migrations preservados. Conversa aberta.
 
 ## CP263 — D2 ClinicalTrials.gov: HTTP direto autorizado interrompido por DNS
 
