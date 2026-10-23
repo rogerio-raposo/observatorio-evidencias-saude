@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP249 — 2026-10-22**
+**CP250 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP249.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP250.md`
 
 Checkpoint anterior:
 
-`CP248`
+`CP249`
 
 Status:
 
@@ -635,3 +635,5 @@ em **Modo Continuidade**.
 - **CP248 — 2026-10-22:** Documento 223 formaliza a preservação **segregada e não validada** dos seis arquivos A2-G4 na branch `preservation/oes-d1-t2-a2-g4-cp247-unvalidated`, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. Nenhum código do adaptador em `main`; não houve merge, testes, SQL, Neon ou promoção técnica. A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-07 pelo commit preservado, com Freshness Gate. STOP.
 
 - **CP249 — 2026-10-22:** Documento 224 consolida A1–A5 pós-CP248 e política estática SA-07 numérica/JSONB, sem coerção silenciosa e mantendo fingerprint T1. SA-07 ABERTA/MODERADA; sem testes. Branch de preservação `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` inalterada, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. Código A2 não em `main`; A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-08. STOP.
+
+- **CP250 — 2026-10-22:** Documento 225 consolida A1–A5 pós-CP249, SA-08 recibos/idempotência/replay; sete invariantes I-01–I-07 e revisão adversarial. SA-08 ABERTA/ALTA, nenhuma alteração técnica ou PASS operacional. Branch de preservação `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` intacta, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-10 SQLSTATE. STOP.

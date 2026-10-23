@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP249 — 2026-10-22**.
+- checkpoint vigente: **CP250 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP250 — SA-08 recibos e replay, exclusivamente documental
+
+Documento 225 consolida A1–A5 pós-CP249. SA08-R1/R2/R3; sete invariantes I-01–I-07; adversarial AV08-01/02/03 e mitigação proporcional A4/A5 sem implementação. Estrutura (contagem, sequência e revisão) **não prova** semântica dos recibos. Sem payload original, fingerprints históricos não são genericamente reconstruíveis. Criação repetida retorna snapshot corrente; quatro comandos não-create repetidos retornam respostas históricas. Replay T1 do estado não é auditoria independente de todos os recibos. **SA-08 ABERTA/ALTA**; branch `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` no commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`, sem alteração; `main` não contém `a2/`. A2-G4 não aceita, A2-G5/runtime NOT_AUTHORIZED, SA-05 alta aberta, SA-06 aberta, SA-07 moderada aberta, SA-10 aberta, SA-03 parcial; T1 36/T2-A1 75 PASS apenas históricos. Próximo `Prossiga`: triagem estática SA-10/SQLSTATE.
 
 ## CP249 — Política numérica JSONB SA-07 somente documental
 
