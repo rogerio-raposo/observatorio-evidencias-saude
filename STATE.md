@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP253 — 2026-10-23**.
+- checkpoint vigente: **CP254 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP254 — Preparação científica D2-P0 aprovada e viabilidade delimitada
+
+Documento 229 registra aprovação expressa `D2-P0 / SCIENTIFIC_PILOT_SCOPING_ONLY`, exclusivamente documental, e consolida A1 (comparação N2/N1/N0/N3; candidato N2 dCBT-I produto `OES-P-2026-000401` A2 interno), A2 (PICO/baseline de 2026-10-04, elegibilidade, fontes e registro mínimo) e A3 (parecer `FEASIBLE_WITH_BOUNDED_OPERATIONAL_AUTHORIZATION`, **sem prontidão operacional comprovada**). D2-E1 `FIRST_FACTUAL_RETRIEVAL_READ_ONLY` permanece **PROPOSTO / NOT_AUTHORIZED**: nenhuma consulta PubMed/ClinicalTrials/BVS ou registro factual novo. Próximo `Prossiga`: preparar proposta objetiva de autorização D2-E1 e submeter decisão, sem execução. D1 sintético encerrado no escopo CP253; T2-A2/A2-G4 diferido/não aceito, A2-G5/runtime NOT_AUTHORIZED; branch experimental preservada sem merge. SA-05/06/07/08/10 abertas/diferidas; Fase 4 `NOT_READY`, Fase 5 `NOT_STARTED`, 36 migrations `UNREVIEWED`; nenhum código, teste, SQL, Neon, CI, deploy, serviço pago, alteração de conclusão/assurance/currentness ou promoção de gates.
 
 ## CP253 — Encerramento restrito aprovado do demonstrador sintético D1 reescopado
 
