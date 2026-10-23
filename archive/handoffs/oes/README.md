@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP256 — 2026-10-23**
+**CP257 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP256.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP257.md`
 
 Checkpoint anterior:
 
-`CP255`
+`CP256`
 
 Status:
 
@@ -648,3 +648,5 @@ em **Modo Continuidade**.
 - **CP255 — 2026-10-23:** Documento 230 e handoff CP255 registram D2-E1 parcialmente executado: PMIDs identificados individualmente, mas busca PubMed estruturada/contagem/export não verificadas; sem conclusão científica ou alteração da Ficha. ChatGPT Work excluído. Próximo Prossiga: avaliar procedimento de export nativo por navegador comum, sem executar por inferência. STOP.
 
 - **CP256 — 2026-10-23:** Documento 231 e handoff CP256 consolidam Python NCBI E-utilities e run manual 39977371270 SUCCESS (11 testes PASS, quatro sementes, query estruturada count=1/um registro Shaffer PMID 42841437). PASS técnico de recuperação, não validação científica. Próximo Prossiga: delimitar para aprovação específica triagem/overlap; sem consulta ou mudança de gate automática. STOP.
+
+- **CP257 — 2026-10-23:** Checkpoint preventivo de continuidade, sem mudar de conversa. Documentos 232/233 e handoff CP257 consolidam leitura de suplemento Shaffer, 10 estudos/12 contrastes e elegibilidade ainda parcial; ZIP original preservado na Biblioteca pessoal (`/OES/source-supplements/supplementary_material_zsag264.zip`, SHA-256 `d361ebf72e0b37c7d0bb0cb4adda0d61fac336e152e9371620278c419c8c7140`). Sem nova CI, novo dado factual, atualização de Ficha ou gate. Próximo Prossiga: preparar decisão focal de elegibilidade/aplicabilidade, sem executar appraisal por inferência. STOP.
