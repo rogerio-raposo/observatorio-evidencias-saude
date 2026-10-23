@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP263 — 2026-10-23**
+**CP264 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP263.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP264.md`
 
 Checkpoint anterior:
 
-`CP262`
+`CP263`
 
 Status:
 
@@ -662,3 +662,5 @@ em **Modo Continuidade**.
 - **CP262 — 2026-10-23:** proprietário autorizou primeira consulta pública ClinicalTrials.gov; ferramenta de abertura de URL não forneceu resposta HTTP/JSON da API. Documento 243 registra `STOP/INDETERMINATE`, sem NCT, `totalCount`, resultado clínico, atribuição de API indisponível, ou lookups NCT adicionais. Docs.241–242 preservam a prioridade/preflight; D2 continua parcial; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`. Próxima atividade apenas deliberação entre meio alternativo explicitamente autorizado, export oficial ou diferimento. Conversa aberta; STOP.
 
 - **CP263 — 2026-10-23:** proprietário autorizou uma tentativa HTTP direta ClinicalTrials.gov; `curl GET` executado uma vez resultou **exit=6 — DNS do ambiente não resolveu o host**; HTTP de origem/JSON não observados. Documento 244 preserva parâmetros e stop sem confundir com falha do canal de abertura anterior Doc.243. Nenhuma NCT recuperada, sem retry, CI, Neon/SQL, modificação de Ficha ou serviço pago. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 factual parcial, Fase 5 `NOT_STARTED`. Próximo `Prossiga`: deliberação proporcional por ambiente externo autorizado, export oficial ou diferimento. Conversa aberta; STOP.
+
+- **CP264 — 2026-10-23:** proprietário **“Workflow aprovado.”** para um único GET ClinicalTrials.gov com GitHub Actions, e criado workflow `.github/workflows/d2-ctgov-single-public-get.yml`, commit `aaebd17b4246c2623c36954d8bedc01795eb4912`. **Dispatch não realizado:** conexão GitHub atual não expõe ação para iniciar workflow; Documento 246 registra `WORKFLOW_CREATED_DISPATCH_PENDING`, sem HTTP/JSON, sem NCT e sem resultado clínico. Próximo ato: um disparo manual `Run workflow` em `main` pelo proprietário e fornecer link do run; depois consultar logs, sem rerun. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, D2 factual parcial, gates/controles inalterados. Conversa aberta. STOP.
