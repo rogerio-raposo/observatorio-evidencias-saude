@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP255 — 2026-10-23**.
+- checkpoint vigente: **CP256 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP256 — Prova conectada NCBI D2-E2 tecnicamente PASS
+
+Documento 231 e handoff CP256 consolidam cliente Python em `prototypes/d2_e2/`, workflow manual e execução conectada [GitHub Actions 39977371270](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/39977371270) concluída `success`: 11/11 testes PASS, 4/4 PMIDs-semente identificados em ESearch de controle; query PubMed limitada a 2026-10-05–2026-10-23 com `count=1`, um PMID recuperado e ESummary (Shaffer 2026, PMID 42841437). `D2_E2_CONNECTED_NCBI_RETRIEVAL_PASS` somente **técnico e restrito à query**, sem busca exaustiva, appraisal, avaliação de sobreposição, certeza, conclusão ou alteração da Ficha N2. CP255 registra falha do mecanismo anterior, agora superada com Python/E-utilities. D1 reescopado encerrado, A2-G4 diferido/não aceito, A2-G5/runtime não autorizado; SA-05/06/07/08/10 abertos/diferidos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Sem Work, Neon, SQL, serviços pagos, novas execuções de CI ou gates. Próximo `Prossiga`: preparar delimitação científica da triagem do candidato Shaffer para aprovação específica, sem executá-la por inferência.
 
 ## CP255 — D2-E1 factual parcialmente executado; cobertura não verificada
 
