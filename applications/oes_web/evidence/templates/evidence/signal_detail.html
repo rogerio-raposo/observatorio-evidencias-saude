@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Sinal demonstrativo</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main>
+<p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
+<h1>Sinal de evidência: {{ signal.nct }}</h1>
+<dl><dt>Estado documental</dt><dd>{{ signal.identity_state }}</dd>
+<dt>Estudo</dt><dd>{{ signal.study_label|default:"Não reconciliado" }}</dd>
+<dt>Relatórios documentados</dt><dd>{% if signal.reports %}<ul>{% for report in signal.reports %}<li>{{ report }}</li>{% endfor %}</ul>{% else %}Nenhum vínculo estabelecido{% endif %}</dd>
+<dt>Proveniência</dt><dd>{{ signal.provenance }}</dd>
+<dt>Limites</dt><dd>{{ signal.limitation }}</dd>
+<dt>Encaminhamento</dt><dd>Avaliação humana pendente; nenhum julgamento executado nesta interface.</dd></dl>
+<nav aria-label="Exemplos"><a href="/signals/NCT01438697/">Identidade conhecida</a> · <a href="/signals/NCT07836491/">Identidade indeterminada</a></nav>
+</main></body></html>

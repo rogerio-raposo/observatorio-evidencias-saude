@@ -1,0 +1,21 @@
+[
+  {
+    "nct": "NCT01438697",
+    "identity_state": "KNOWN_DOCUMENTED",
+    "study_label": "Um estudo documentado; não contabilizar dois RCTs",
+    "reports": [
+      "Ritterband 2017 (relatório primário)",
+      "Shaffer 2020 (relatório relacionado)"
+    ],
+    "provenance": "OES Documento 248, com referências históricas aos Documentos 232 e products/154.",
+    "limitation": "Correspondência documental histórica; nenhuma nova avaliação de elegibilidade ou revisão científica independente."
+  },
+  {
+    "nct": "NCT07836491",
+    "identity_state": "NOT_IDENTIFIED_IN_SCOPED_INVENTORY",
+    "study_label": null,
+    "reports": [],
+    "provenance": "OES Documento 247 (identificador recuperado) e Documento 248 (inventário delimitado).",
+    "limitation": "Não identificado no corpus examinado; identidade clínica, elegibilidade e novidade NÃO avaliadas."
+  }
+]
