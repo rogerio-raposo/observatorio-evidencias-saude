@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP257 — 2026-10-23**.
+- checkpoint vigente: **CP258 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP258 — Avaliação metodológica focal D2-E3/A3 e continuidade
+
+Após CP257, Documento 234 registrou triagem de Zhou/Nazem/OASIS/Verlinden/Malarkey e sobreposição com Hwang/Nazari delimitada. O proprietário autorizou avaliações, e o Documento 235 registra pré-appraisal cinco domínios tipo RoB 2 para Zhou e Nazem no ISI pós-tratamento (~9 semanas): **pelo menos algumas preocupações**, dados ausentes relevantes, avaliação **não formalmente validada**; Nazem ISI pós 91/116 SHUTi vs 98/115 IEW; Zhou não resposta possivelmente ligada à adesão; nenhum indício comprovado de reversão da direção favorável. Discrepância de limite superior no resumo PubMed de Nazem (seguimento 1 ano) registrada. **Sem alteração de Ficha, ProductVersion, GRADE, currentness, assurance ou gates**. Evidência binária original Shaffer persiste em Biblioteca pessoal conforme CP257. Handoff vigente `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP258.md`; CP258 preventivo/proporcional, não encerramento de conversa. D1 sintético reescopado, T2-A2/A2-G4 diferido, runtime não autorizado, SA abertos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. Próximo `Prossiga`: decidir se **adendo documental restrito ao corpus N2** é útil; exigir autorização expressa antes de editar documento de produto; não reabrir buscas/appraisal sem materialidade.
 
 ## CP257 — Checkpoint preventivo de continuidade D2-E3/A1
 
