@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP261 — 2026-10-23**
+**CP262 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP261.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP262.md`
 
 Checkpoint anterior:
 
-`CP260`
+`CP261`
 
 Status:
 
@@ -658,3 +658,5 @@ em **Modo Continuidade**.
 - **CP260 — 2026-10-23:** Proprietário formalizou **encerramento metodológico-documental como marco determinante da Fase 4**, preservando gates técnicos futuros. Documento 237 define critérios `F4-C01–F4-C06`, parecer integrado e aprovação final específica; **fase não encerrada** apenas por esta decisão, operacional `NOT_READY`, Fase 5 `NOT_STARTED`. Handoff CP260, STATE e CHANGELOG consolidados. Próximo `Prossiga`: matriz de evidências e lacunas documentais, sem criar operação/pesquisa/CI por inferência. Conversa aberta. STOP.
 
 - **CP261 — 2026-10-23:** decisão expressa do proprietário **“Minuta aprovada.”** efetivou o gate `F4-FINAL-GATE/PASS_DOCUMENTARY_ONLY`, registrado no Documento 240 com **C1–C6** do Documento 239. **Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`**; readiness operacional `NOT_READY`, M3 `BLOCKED`, Fase 5 `NOT_STARTED`. Sem A3/validação operacional ou alteração da Ficha N2, assurance, currentness, BRGs/SA, Neon/SQL/CI. Próximo `Prossiga`: proposta de prioridades pós-Fase 4, com decisão separada antes de executar. Conversa aberta. STOP.
+
+- **CP262 — 2026-10-23:** proprietário autorizou primeira consulta pública ClinicalTrials.gov; ferramenta de abertura de URL não forneceu resposta HTTP/JSON da API. Documento 243 registra `STOP/INDETERMINATE`, sem NCT, `totalCount`, resultado clínico, atribuição de API indisponível, ou lookups NCT adicionais. Docs.241–242 preservam a prioridade/preflight; D2 continua parcial; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`. Próxima atividade apenas deliberação entre meio alternativo explicitamente autorizado, export oficial ou diferimento. Conversa aberta; STOP.
