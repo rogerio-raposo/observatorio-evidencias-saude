@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP259 — 2026-10-23**.
+- checkpoint vigente: **CP260 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP260 — Marco determinante de encerramento metodológico e documental da Fase 4
+
+**Decisão expressa do proprietário (23/10/2026):** adotar **o encerramento metodológico e documental como marco determinante de conclusão da Fase 4**, segundo **Documento 237** (`docs/governance/237-decisao-criterio-encerramento-metodologico-documental-fase4-cp260.md`). **Critério aprovado, encerramento NÃO concedido.** Estado `PHASE_4_DOCUMENTARY_METHODOLOGICAL_EXIT_CRITERION_APPROVED / PHASE_4_CLOSURE_PENDING / OPERATIONAL_NOT_READY`. Condições de saída `F4-C01–F4-C06`: rastreabilidade SF-01–SF-14; confronto documental integrado R0–R8 e AT-01–AT-12, com ressalvas AT-05/09/12; governança N/A e revisão humana; limites temporais/currentness/M3; ledger de riscos operacionais diferidos; parecer final e aprovação expressa. **Não exigir** Neon, migrations, M3 ou produção para o encerramento exclusivamente documental; **não dispensar** BRGs/SA antes da operação aplicável. D1 sintético e D2 factual restrito são evidências de escopo limitado, não homologação operacional. Sem alteração de Ficha N2, GRADE, assurance, currentness, gates científicos ou Fase 5. Próximo `Prossiga`: montar matriz de evidências e lacunas documentais F4-C01–F4-C06, sem execução factual/CI/SQL/Neon. Ponteiro de continuidade CP260; conversa atual aberta.
 
 ## CP259 — Encerramento técnico-documental restrito D2-E3
 
