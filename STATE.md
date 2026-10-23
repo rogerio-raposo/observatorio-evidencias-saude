@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP256 — 2026-10-23**.
+- checkpoint vigente: **CP257 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP257 — Checkpoint preventivo de continuidade D2-E3/A1
+
+Handoff `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP257.md` consolida a reconciliação do suplemento Shaffer em `docs/governance/233-d2-e3-a1-reconciliacao-suplemento-shaffer.md` após a triagem preliminar histórica no Doc 232. A fonte original `supplementary_material_zsag264.zip` foi preservada **na Biblioteca pessoal do ChatGPT** (fora do GitHub público): `/OES/source-supplements/supplementary_material_zsag264.zip`, SHA-256 `d361ebf72e0b37c7d0bb0cb4adda0d61fac336e152e9371620278c419c8c7140`. Identificados 10 estudos/12 estimativas no conjunto SHUTi vs controle educacional; Christensen/HealthWatch é não aderente ao comparador de sono, braços Zhou e OASIS compartilham controle, estudos com populações especiais exigem exame. Status **`D2_E3_A1_SHAFFER_STUDY_SET_RECONCILED / PICO_ELIGIBILITY_PARTIAL / SCIENTIFIC_MATERIALITY_NOT_ASSESSED`**. CP257 **não** autoriza modificar Ficha, GRADE, certainty, currentness, assurance ou gates; D2-E2 prova NCBI PASS técnico no run 39977371270 permanece histórica, sem nova CI. D1 reescopado, A2-G4 diferido, A2-G5/runtime não autorizado; SA abertos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, 36 migrations UNREVIEWED. **Não utilizar ChatGPT Work.** Próximo `Prossiga`: preparar decisão focal de elegibilidade e sobreposição dos estudos indicados, sem avaliação material automática. Conversa atual continua aberta.
 
 ## CP256 — Prova conectada NCBI D2-E2 tecnicamente PASS
 
