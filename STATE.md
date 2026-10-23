@@ -1,8 +1,9 @@
 # STATE — Estado Atual do Projeto OES
 
 **Última atualização:** 23 de outubro de 2026  
-**Fase atual:** Fase 4 — Protocolo de Atualização (readiness operacional `NOT_READY`)  
-**Status geral:** em desenvolvimento; demonstrador sintético D1 reescopado encerrado restritamente
+**Fase 4 — Protocolo de Atualização:** `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY` (readiness operacional `NOT_READY`)  
+**Fase 5:** `NOT_STARTED`  
+**Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 ## 1. Fonte canônica e continuidade
 
@@ -12,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP260 — 2026-10-23**.
+- checkpoint vigente: **CP261 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP261 — Encerramento metodológico-documental aprovado da Fase 4
+
+Em resposta à **minuta final Documento 239**, o proprietário manifestou **“Minuta aprovada.”** em 23/10/2026. O **Documento 240** `docs/governance/240-decisao-final-gate-f4-encerramento-metodologico-documental-cp261.md` registra **`APPROVED — OES / F4-FINAL-GATE / PASS_DOCUMENTARY_ONLY`**, condicionado a **C1–C6** do Doc. 239. **Estado Fase 4: `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`.** Sua aceitação abrange os critérios `F4-C01–F4-C06` e desenho documental `SF-01–14/R0–R8/AT-01–12`, com 9 cenários coerentes sem ressalvas adicionais, 3 condicionados (AT-05/09/12), **zero end-to-end executados** na matriz e **nenhuma revisão científica independente**. A2 não equivale a A3; invalidar sinal científico exige revisor humano apropriado; alterações editoriais respeitam proveniência/versionamento. **Readiness operacional `NOT_READY`; M3 `BLOCKED`; Fase 5 `NOT_STARTED`.** Gates BRG/SA, 36 migrations `UNREVIEWED`, riscos de persistência, auditoria, recuperação e calibração normativa continuam exigíveis **antes das operações respectivas**, não dispensados. D0 documental encerrado; D1 sintético memória restrito; D2 factual parcial, D2-E3 documental restrito encerrado; Ficha N2 e GRADE, ProductVersion, currentness e assurance não alterados. **Handoff vigente CP261**, `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP261.md`. Próximo `Prossiga`: avaliar prioridades pós-Fase 4, sem iniciar Fase 5/infra/pilotos por inferência. Conversa aberta.
 
 ## CP260 — Marco determinante de encerramento metodológico e documental da Fase 4
 
