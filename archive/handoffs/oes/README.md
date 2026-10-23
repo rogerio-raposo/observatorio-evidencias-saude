@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP253 — 2026-10-23**
+**CP254 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP253.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP254.md`
 
 Checkpoint anterior:
 
-`CP252`
+`CP253`
 
 Status:
 
@@ -642,3 +642,5 @@ em **Modo Continuidade**.
 
 - **CP252 — 2026-10-22:** Documento 227 formaliza reescopo D1 aprovado: T1 e T2-A1 encerrados restritamente, A2-G4 suspenso/diferido sem aceitação; persistência durável reavaliada após definição da stack. D1 global NÃO encerrado; A2-G5/runtime NOT_AUTHORIZED. Branch de preservação intacta. Próximo `Prossiga`: inventário de entregas/lacunas do demonstrador sintético reescopado. STOP.
 - **CP253 — 2026-10-23:** Documento 228 e handoff CP253 consolidam D1-R1/R2/R3 e a aprovação expressa do encerramento **exclusivamente do demonstrador sintético D1 reescopado**, `CLOSED_SYNTHETIC_IN_MEMORY_DEMONSTRATOR_ONLY`. T1/T2-A1 mantidos (36/75 PASS históricos), A2-G4 diferido/não aceito, branch preservada sem merge, riscos SA abertos/diferidos, sem testes novos ou promoção de gates. Próximo `Prossiga`: propor a prioridade do marco seguinte, sem iniciar execução. STOP.
+
+- **CP254 — 2026-10-23:** Documento 229 e handoff CP254 consolidam aprovação documental D2-P0 e A1–A3: candidato N2 dCBT-I, escopo científico mínimo e parecer de viabilidade condicionada a autorização própria. D2-E1 é somente PROPOSED/NOT_AUTHORIZED; não houve consultas factuais, execução ou promoção de gates. Próximo `Prossiga`: proposta de autorização D2-E1 para decisão expressa. STOP.
