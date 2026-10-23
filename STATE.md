@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP261 — 2026-10-23**.
+- checkpoint vigente: **CP262 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP262 — D2 ClinicalTrials.gov: tentativa conectada sem resposta verificável da API
+
+Após prioridade D2 multifonte aprovada (Doc. 241) e preflight documental (Doc. 242), proprietário declarou **“Aprovada a primeira consulta conectada.”** O **Documento 243** (`docs/governance/243-d2-ctgov-e1-consulta-conectada-indeterminada-stop.md`) registra a tentativa de `GET ClinicalTrials.gov /api/v2/studies` em um canal de abertura pública. A ferramenta retornou **URL inacessível por esse mecanismo**, sem status HTTP originário, payload, `totalCount`, `returned_count`, NCT ou resposta UTC. Um primeiro endereço com delimitadores `&` mal codificados, seguido de um endereço correto, não resultou em resposta da fonte. **`STOP / INDETERMINATE / SOURCE_RESPONSE_NOT_OBSERVED`**; não afirmar API inoperante nem zero registros e não efetuar retries ou três lookups NCT. **CP262 vigente** `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP262.md`; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, D2 factual parcial e Ficha N2 intacta, BRGs/SA/migrations preservados. Próximo `Prossiga`: deliberação sobre um caminho alternativo único autorizado de leitura pública, export oficial fornecido pelo proprietário ou diferimento da consulta, **sem ação externa por inferência**.
 
 ## Pós-CP261 — Prioridade D2 multifonte aprovada; ClinicalTrials.gov preflight documental preparado (2026-10-23)
 
