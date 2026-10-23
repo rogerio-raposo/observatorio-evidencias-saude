@@ -418,3 +418,34 @@ Nova síntese quantitativa somente será executada se:
 ---
 
 **Status:** busca N2 executada em extensão suficiente para iniciar appraisal; triagem permanece documentada e poderá ser ampliada se surgir evidência contraditória ou lacuna material.
+
+---
+
+## 14. Adendo de rastreabilidade D2-E3 — Zhou (2022) e Nazem (2023)
+
+**Data do adendo:** 23 de outubro de 2026. **Autorização:** proprietário, após CP258 — `Autorizado. Prossiga.`, especificamente para acrescentar referências rastreáveis ao **inventário documental N2**, sem alterar estimativas, conclusões, GRADE, currentness, assurance, ProductVersion ou gates.
+
+Este adendo **não modifica a data de corte de 04/10/2026 nem reescreve a busca histórica registrada acima**. É resultado de uma verificação bibliográfica e apreciação metodológica focal posterior, derivada da identificação da meta-análise Shaffer (2026) e de seu suplemento; **não** é uma nova busca sistemática, não estabelece nova cobertura global e não cria uma versão científica atualizada da Ficha.
+
+### 14.1 Registros bibliográficos rastreáveis
+
+| Unidade de estudo | Identificadores e fonte primária | PICO e estrutura de comparação | Estado de sobreposição e julgamento preliminar |
+|---|---|---|---|
+| **Zhou et al. (2022)** | PMID **35442432**; DOI `10.1001/jamapsychiatry.2022.0653`; **NCT03613519**; [artigo primário](https://jamanetwork.com/journals/jamapsychiatry/fullarticle/2791249) | Um RCT, N=333, mulheres negras adultas com insônia; **SHUTi n=108**, **SHUTi-BWHS n=110**, educação digital sobre sono **n=115**; **ISI no pós-tratamento (~9 semanas)**. Dois contrastes, **um controle compartilhado**. A característica demográfica não é, por si, motivo de exclusão do PICO. | **Candidato diretamente aderente, sem nova inclusão quantitativa.** A revisão **Nazari** inclui o estudo; descrição de braços na **Figura 3 de Hwang** sustenta vínculo forte, mas a contribuição exata ao subgrupo `k=10` de educação sobre sono **não foi auditada**. Appraisal focal preliminar: ao menos **algumas preocupações** (sobretudo dados ausentes potencialmente relacionados à adesão); RoB 2 formal, independente, **não validado**. |
+| **Nazem et al. (2023)** | PMID **37999953**; DOI `10.2196/50516`; **NCT03366870**; [artigo primário](https://pmc.ncbi.nlm.nih.gov/articles/PMC10709797/) | Um RCT, N=231, veteranos adultos com insônia DSM-5; **SHUTi autoguiado n=116** versus **Insomnia Education Website n=115**; **ISI no pós (~9 semanas)**. Ser veterano não estabelece automaticamente indireção clínica. | **Candidato diretamente aderente, sem nova inclusão quantitativa.** A revisão **Nazari** inclui o estudo; presença na revisão e no subgrupo Hwang permanece **`NOT_VERIFIED`**, não `ABSENT`. Appraisal focal preliminar: ao menos **algumas preocupações**; ISI pós disponível para **91/116** versus **98/115**, com possibilidade de não resposta informativa. RoB 2 formal, independente, **não validado**. |
+
+**Ambos os RCTs foram publicados antes do baseline OES de 04/10/2026.** A publicação nova de Shaffer em 07/10/2026 não deve ser equiparada à publicação de novos estudos primários após o baseline. A presença de estudos nas revisões **Shaffer** e **Nazari** não determina automaticamente a composição ou o peso do subgrupo quantitativo de **Hwang**.
+
+### 14.2 Vínculos metodológicos e restrições
+
+- Identificação e elegibilidade: [Documento 233](../governance/233-d2-e3-a1-reconciliacao-suplemento-shaffer.md) (estudos no suplemento Shaffer) e [Documento 234](../governance/234-d2-e3-a2-triagem-focal-pico-estudos-shaffer.md) (triagem PICO, comparação com revisões e incertezas de sobreposição).
+- Pré-appraisal por domínio, com limitações explícitas: [Documento 235](../governance/235-d2-e3-a3-avaliacao-metodologica-focal-zhou-nazem.md). **Não** converter os apontamentos em julgamentos oficiais do produto, inferência GRADE ou avaliação independente.
+- Síntese-base histórica: Hwang et al. 2025, PMID **40075149**, subgrupo `online education about sleep` `k=10`. Síntese complementar: Nazari et al., PMID **41798736**. Referência de detecção: Shaffer et al. 2026, PMID **42841437**, DOI `10.1093/sleep/zsag264`.
+- A unidade de deduplicação é o **ensaio**, e não cada publicação ou contraste. Em Zhou, a eventual análise conjunta de dois braços ativos exigirá política explícita para controle compartilhado; **nenhuma reanálise é autorizada por este adendo**.
+- Não foi demonstrada reversão da direção do benefício com base na avaliação focal; **tampouco** está demonstrada alteração material de magnitude, certeza ou necessidade de meta-análise. Incertezas de risco de viés permanecem relevantes e não foram resolvidas por revisão independente.
+
+**Resultado deste adendo:** `TRACEABILITY_ONLY / PRE_BASELINE_PRIMARY_STUDIES / HWANG_SUBGROUP_MEMBERSHIP_PARTIALLY_UNVERIFIED / PRELIMINARY_APPRAISAL_ONLY`.
+
+**Preservações explícitas:** nenhuma alteração do conteúdo dos Documentos 52/53, da Ficha N2 `OES-P-2026-000401`, dos resultados publicados atribuídos a Hwang, de RoB 2/GRADE formal, conclusão clínica, `currentness`, assurance, `ProductVersion` ou gates. A fonte suplementar binária de Shaffer permanece preservada na Biblioteca pessoal conforme handoff CP258, não neste repositório público.
+
+**STOP — adendo documental autorizado, sem promoção científica.**
