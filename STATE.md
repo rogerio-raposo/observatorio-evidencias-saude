@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP264 — 2026-10-23**.
+- checkpoint vigente: **CP265 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP265 — D2 ClinicalTrials.gov: primeira página recuperada e verificada, sucesso técnico parcial
+
+Proprietário forneceu o [run 40021883998](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40021883998) do workflow manual aprovado `D2-CTGOV-E3`. GitHub confirmou `workflow_dispatch`, `run_attempt=1`, `completed/success`, job `clinicaltrials-one-get` success e **API HTTP 200** em 2026-10-23T20:47:12Z, JSON `630386` bytes, **20 NCTs únicos retornados de `totalCount=87` na consulta literal, `nextPageToken=true`**, resultado de rotina **`PARTIAL_FIRST_PAGE_ONLY`**. O **Documento 247** `docs/governance/247-d2-ctgov-e3-primeira-recuperacao-estruturada-parcial-cp265.md` preserva URL, horários, 20 IDs e evidências: Zhou `NCT03613519`, OASIS `NCT03213132`, Verlinden `NCT04564807` já conhecidos; Nazem `NCT03366870` não aparece **na primeira página**, não inferir ausência global. **A autorização de um único disparo está consumida**; nenhuma paginação/lookup adicional, deduplicação científica, appraisal, mudança da Ficha N2, GRADE/currentness/assurance ou gate. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 factual global ainda parcial, readiness operacional `NOT_READY`, Fase 5 `NOT_STARTED`, M3 bloqueado; BRG/SA/36 migrations preservados. Handoff vigente **CP265**, `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP265.md`. Próximo `Prossiga`: conciliação **documental sem nova consulta** dos 20 NCT com inventário existente, expondo limitações de dados; STOP. Conversa aberta.
 
 ## CP264 — Workflow D2-CTGOV-E3 autorizado/criado; despacho manual ainda pendente
 
