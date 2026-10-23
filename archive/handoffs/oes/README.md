@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP255 — 2026-10-23**
+**CP256 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP255.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP256.md`
 
 Checkpoint anterior:
 
-`CP254`
+`CP255`
 
 Status:
 
@@ -646,3 +646,5 @@ em **Modo Continuidade**.
 - **CP254 — 2026-10-23:** Documento 229 e handoff CP254 consolidam aprovação documental D2-P0 e A1–A3: candidato N2 dCBT-I, escopo científico mínimo e parecer de viabilidade condicionada a autorização própria. D2-E1 é somente PROPOSED/NOT_AUTHORIZED; não houve consultas factuais, execução ou promoção de gates. Próximo `Prossiga`: proposta de autorização D2-E1 para decisão expressa. STOP.
 
 - **CP255 — 2026-10-23:** Documento 230 e handoff CP255 registram D2-E1 parcialmente executado: PMIDs identificados individualmente, mas busca PubMed estruturada/contagem/export não verificadas; sem conclusão científica ou alteração da Ficha. ChatGPT Work excluído. Próximo Prossiga: avaliar procedimento de export nativo por navegador comum, sem executar por inferência. STOP.
+
+- **CP256 — 2026-10-23:** Documento 231 e handoff CP256 consolidam Python NCBI E-utilities e run manual 39977371270 SUCCESS (11 testes PASS, quatro sementes, query estruturada count=1/um registro Shaffer PMID 42841437). PASS técnico de recuperação, não validação científica. Próximo Prossiga: delimitar para aprovação específica triagem/overlap; sem consulta ou mudança de gate automática. STOP.
