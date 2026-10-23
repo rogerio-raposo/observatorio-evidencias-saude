@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP259 — 2026-10-23**
+**CP260 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP259.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP260.md`
 
 Checkpoint anterior:
 
-`CP258`
+`CP259`
 
 Status:
 
@@ -654,3 +654,5 @@ em **Modo Continuidade**.
 - **CP258 — 2026-10-23:** Documento 234 registra triagem focada de cinco RCTs de Shaffer e overlap Hwang parcialmente incerto; Documento 235 contém pré-appraisal autorizado de RoB 2 por domínio para Zhou e Nazem no ISI pós, ambos com pelo menos algumas preocupações. N2, GRADE, assurance, currentness, ProductVersion e gates **não alterados**; sem atualização do corpus do produto por inferência. ZIP Shaffer na Biblioteca pessoal conforme CP257. Checkpoint proporcional preventivo, **conversa atual continua aberta**. Próximo Prossiga: deliberar benefício de adendo de rastreabilidade restrito aos documentos de produto, antes de autorização expressa para editá-los. STOP.
 
 - **CP259 — 2026-10-23:** Documento 49 recebeu adendo autorizado Zhou/Nazem apenas para rastreabilidade; Documento 236 encerra documentalmente **somente D2-E3** após a reconciliação Shaffer, triagem focal e pré-appraisal sem revisão independente. **Nenhuma alteração** de Ficha N2, síntese, GRADE, currentness, assurance, ProductVersion ou gates. ZIP original na Biblioteca pessoal conforme CP257/258; Fase 4 NOT_READY e demais bloqueios preservados. Próximo `Prossiga`: decisão de prioridade para próximo avanço factual proporcional D2, sem novas buscas/CI/banco por inferência. Conversa permanece aberta. STOP.
+
+- **CP260 — 2026-10-23:** Proprietário formalizou **encerramento metodológico-documental como marco determinante da Fase 4**, preservando gates técnicos futuros. Documento 237 define critérios `F4-C01–F4-C06`, parecer integrado e aprovação final específica; **fase não encerrada** apenas por esta decisão, operacional `NOT_READY`, Fase 5 `NOT_STARTED`. Handoff CP260, STATE e CHANGELOG consolidados. Próximo `Prossiga`: matriz de evidências e lacunas documentais, sem criar operação/pesquisa/CI por inferência. Conversa aberta. STOP.
