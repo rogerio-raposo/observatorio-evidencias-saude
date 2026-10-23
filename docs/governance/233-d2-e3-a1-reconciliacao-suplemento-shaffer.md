@@ -1,5 +1,7 @@
 # Documento 233 — D2-E3/A1: Reconciliação da meta-análise Shaffer com suplemento original
 
+> **Complemento metodológico D2-E3/A2 (23/10/2026):** [Documento 234](234-d2-e3-a2-triagem-focal-pico-estudos-shaffer.md) contém a triagem dos cinco ensaios pelos artigos primários. Corrige a caracterização excessivamente forte de **OASIS + stepped support**: o apoio descrito no relatório vinculado ao mesmo NCT foi de **engajamento**, sem suporte clínico/terapêutico, e não deve ser classificado automaticamente como tratamento assistido. O braço sem apoio continua preferencial para comparabilidade. O Doc 234 prevalece para elegibilidade/aplicabilidade, sem alterar a reconciliação dos dez estudos deste documento.
+
 **OES | 2026-10-23 | SUPPLEMENT_RECEIVED_STUDY_SET_IDENTIFIED / FOCAL_PICO_SCREENING_PROVISIONAL / SCIENTIFIC_GATES_UNCHANGED**
 
 **Natureza:** adendo de evidência ao Documento 232 (triagem preliminar sem suplemento). O Documento 232 deve ser lido como fotografia histórica **superada quanto à indisponibilidade do suplemento e à identidade dos dez estudos**. O adendo não substitui os critérios científicos do protocolo N2, não aprova atualização da Ficha nem dispensa avaliação independente.
