@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP258 — 2026-10-23**.
+- checkpoint vigente: **CP259 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP259 — Encerramento técnico-documental restrito D2-E3
+
+O proprietário autorizou adendo de rastreabilidade no inventário N2; `docs/products/49-caso-real-01-busca-triagem-inicial.md`, seção 14, registra Zhou 2022 (PMID 35442432, NCT03613519) e Nazem 2023 (PMID 37999953, NCT03366870) como candidatos PICO diretos, anteriores ao baseline 2026-10-04, com vinculação quantitativa a Hwang ainda parcial/não verificada e pré-appraisal não formal. **Documento 236** `docs/governance/236-d2-e3-encerramento-restrito-rastreabilidade-shaffer-cp259.md` encerra **apenas** as atividades D2-E3 de recuperação, reconciliação, triagem e rastreabilidade: `D2_E3_CLOSED_RESTRICTED_DOCUMENTARY_RECONCILIATION_ONLY`. **Não** indica validação científica, fechamento de D2, busca exaustiva, novo RCT pós-baseline ou prontidão de Fase 4. Sem mudança Ficha, síntese Docs. 52/53, RoB2 formal, GRADE, ProductVersion, currentness, assurance ou gates. Fonte ZIP original em Biblioteca pessoal conforme CP257/258, não no GitHub. D1 sintético, T2-A2/A2-G4 diferido, A2-G5/runtime não autorizado, SA abertos, Fase 4 NOT_READY, Fase 5 NOT_STARTED, migrations UNREVIEWED. Handoff vigente `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP259.md`. Próximo `Prossiga`: decidir prioridade do próximo avanço factual proporcional de D2 **sem executar** ações científicas/operacionais por inferência. Conversa aberta.
 
 ## CP258 — Avaliação metodológica focal D2-E3/A3 e continuidade
 
