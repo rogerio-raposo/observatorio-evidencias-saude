@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP254 — 2026-10-23**.
+- checkpoint vigente: **CP255 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP255 — D2-E1 factual parcialmente executado; cobertura não verificada
+
+Documento 230 registra autorização expressa de D2-E1 PubMed somente leitura, relato de quatro estudos-semente identificados individualmente, cinco referências exploratórias e candidato Shaffer 2026 PMID 42841437, **sem export verificável da busca combinada**. Acesso E-utilities/interface estruturada não demonstrado; resultado `D2_E1_PARTIAL_RETRIEVAL_SEARCH_REPRODUCIBILITY_NOT_VERIFIED`, sem PASS de cobertura, sem alegação científica nova e sem atualização da Ficha. Proprietário **não utilizará ChatGPT Work**. Não repetir o mesmo acesso malsucedido; alternativa futura condicionada: export PubMed por navegador comum/manual ou mecanismo aprovado, com consulta literal, filtros, contagem, data e PMIDs. A tentativa D2-E1 está encerrada PARCIAL, não homologada. D1/CP253 e limites D2-P0/CP254, A2-G4 diferido, riscos abertos, Fase 4 NOT_READY, Fase 5 NOT_STARTED e 36 migrations UNREVIEWED inalterados. Próximo `Prossiga`: orientação/procedimento proporcional para mecanismo alternativo, sem executar coleta por inferência.
 
 ## CP254 — Preparação científica D2-P0 aprovada e viabilidade delimitada
 
