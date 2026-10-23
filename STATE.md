@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP262 — 2026-10-23**.
+- checkpoint vigente: **CP263 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP263 — D2 ClinicalTrials.gov: HTTP direto autorizado interrompido por DNS
+
+O proprietário autorizou **“Execução http autorizada”** para nova via **direta** após CP262. Uma única tentativa `curl GET` com os parâmetros do Doc. 242 terminou em 2026-10-23T20:33:01Z com **exit=6, `Could not resolve host: clinicaltrials.gov`**; `curl http_code=000` indica **ausência de HTTP observado**, não código real da fonte. Nenhum resultado JSON, `totalCount`, NCT ou hora da fonte. **Documento 244** `docs/governance/244-d2-ctgov-e2-http-direto-dns-stop.md` distingue DNS do canal HTTP de E1 (Doc. 243); não houve retry, lookup NCT, CI, código novo, Neon/SQL ou resultado científico. Estado `D2_CTGOV_E2_STOP_DNS_IN_EXECUTOR / SOURCE_AVAILABILITY_UNVERIFIED`. **CP263** `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP263.md` vigente; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 factual parcial, Fase 5 `NOT_STARTED`, Ficha N2 e BRGs/SA inalterados. Próximo `Prossiga`: decidir entre um **único** ambiente alternativo com aprovação separada, export oficial ou diferimento; não repetir chamada no ambiente sem DNS. Conversa aberta.
 
 ## CP262 — D2 ClinicalTrials.gov: tentativa conectada sem resposta verificável da API
 
