@@ -6,7 +6,7 @@ O **Observatório de Evidências em Saúde — OES** é um projeto para identifi
 
 ## Estado do projeto
 
-**Fase atual:** Fase 4 — Protocolo de Atualização. A Fase 3 foi encerrada com 9/9 produtos formalizados; a baseline conceitual da Fase 4 está nos Documentos 05–06.
+**Estado atual:** Fase 4 — Protocolo de Atualização **encerrada exclusivamente no escopo metodológico e documental** (`PASS_DOCUMENTARY_ONLY`, Documento 240); prontidão operacional `NOT_READY`; Fase 5 `NOT_STARTED`. A Fase 3 foi encerrada com 9/9 produtos formalizados; a baseline conceitual da Fase 4 está nos Documentos 05–06. Controles operacionais futuros e revisão científica independente não foram dispensados.
 
 **Painel de estado vivo:** [STATE.md](STATE.md)
 
