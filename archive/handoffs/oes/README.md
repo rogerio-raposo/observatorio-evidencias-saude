@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP250 — 2026-10-22**
+**CP251 — 2026-10-22**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP250.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-22_CP251.md`
 
 Checkpoint anterior:
 
-`CP249`
+`CP250`
 
 Status:
 
@@ -637,3 +637,5 @@ em **Modo Continuidade**.
 - **CP249 — 2026-10-22:** Documento 224 consolida A1–A5 pós-CP248 e política estática SA-07 numérica/JSONB, sem coerção silenciosa e mantendo fingerprint T1. SA-07 ABERTA/MODERADA; sem testes. Branch de preservação `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` inalterada, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. Código A2 não em `main`; A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-08. STOP.
 
 - **CP250 — 2026-10-22:** Documento 225 consolida A1–A5 pós-CP249, SA-08 recibos/idempotência/replay; sete invariantes I-01–I-07 e revisão adversarial. SA-08 ABERTA/ALTA, nenhuma alteração técnica ou PASS operacional. Branch de preservação `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` intacta, commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1`. A2-G5/runtime NOT_AUTHORIZED. Próximo `Prossiga`: triagem estática SA-10 SQLSTATE. STOP.
+
+- **CP251 — 2026-10-22:** usuário aprovou reorientação proporcional, Documento 226: eliminar revisão adversarial repetitiva por risco, distinguir decisões/correções/testes reais de mera documentação. Próximo `Prossiga`: avaliação integrada única de pendências de A2-G4; substituir triagem isolada SA-10. Branch preservada intacta, A2-G5/runtime NOT_AUTHORIZED. STOP.

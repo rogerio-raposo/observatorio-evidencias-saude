@@ -12,7 +12,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP250 — 2026-10-22**.
+- checkpoint vigente: **CP251 — 2026-10-22**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -22,6 +22,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP251 — Reorientação proporcional aprovada do método de trabalho
+
+Documento 226: interromper sequência redundante por risco (triagem, invariantes, revisão adversarial, não correção, revisão da não correção, checkpoint). Priorizar análise integrada do caminho mínimo até conclusão **estática** A2-G4, com riscos classificados uma vez em correção comprovável, dependência de testes e decisão de contrato. KPI passa a ser decisão/entrega técnica verificável, não volume documental. Próximo `Prossiga`: avaliação integrada SA-05/06/07/08/10, não triagem isolada SA-10. **Gates e autorização por atividade preservados**. A2-G4 ainda não aceita; A2-G5/runtime NOT_AUTHORIZED. Branch `preservation/oes-d1-t2-a2-g4-cp247-unvalidated` commit `96f16ec908b3f0f28199d841c90da471aa9e0ce1` intacta, `main` sem `a2/`. SA-05 e SA-08 abertas/altas, SA-07 moderada/aberta; T1 36/T2-A1 75 PASS só históricos.
 
 ## CP250 — SA-08 recibos e replay, exclusivamente documental
 
