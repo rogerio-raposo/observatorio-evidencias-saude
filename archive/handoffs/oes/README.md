@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP260 — 2026-10-23**
+**CP261 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP260.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP261.md`
 
 Checkpoint anterior:
 
-`CP259`
+`CP260`
 
 Status:
 
@@ -656,3 +656,5 @@ em **Modo Continuidade**.
 - **CP259 — 2026-10-23:** Documento 49 recebeu adendo autorizado Zhou/Nazem apenas para rastreabilidade; Documento 236 encerra documentalmente **somente D2-E3** após a reconciliação Shaffer, triagem focal e pré-appraisal sem revisão independente. **Nenhuma alteração** de Ficha N2, síntese, GRADE, currentness, assurance, ProductVersion ou gates. ZIP original na Biblioteca pessoal conforme CP257/258; Fase 4 NOT_READY e demais bloqueios preservados. Próximo `Prossiga`: decisão de prioridade para próximo avanço factual proporcional D2, sem novas buscas/CI/banco por inferência. Conversa permanece aberta. STOP.
 
 - **CP260 — 2026-10-23:** Proprietário formalizou **encerramento metodológico-documental como marco determinante da Fase 4**, preservando gates técnicos futuros. Documento 237 define critérios `F4-C01–F4-C06`, parecer integrado e aprovação final específica; **fase não encerrada** apenas por esta decisão, operacional `NOT_READY`, Fase 5 `NOT_STARTED`. Handoff CP260, STATE e CHANGELOG consolidados. Próximo `Prossiga`: matriz de evidências e lacunas documentais, sem criar operação/pesquisa/CI por inferência. Conversa aberta. STOP.
+
+- **CP261 — 2026-10-23:** decisão expressa do proprietário **“Minuta aprovada.”** efetivou o gate `F4-FINAL-GATE/PASS_DOCUMENTARY_ONLY`, registrado no Documento 240 com **C1–C6** do Documento 239. **Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`**; readiness operacional `NOT_READY`, M3 `BLOCKED`, Fase 5 `NOT_STARTED`. Sem A3/validação operacional ou alteração da Ficha N2, assurance, currentness, BRGs/SA, Neon/SQL/CI. Próximo `Prossiga`: proposta de prioridades pós-Fase 4, com decisão separada antes de executar. Conversa aberta. STOP.
