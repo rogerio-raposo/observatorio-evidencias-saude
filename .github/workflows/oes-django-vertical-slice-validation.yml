@@ -1,0 +1,35 @@
+name: OES Django vertical slice - manual test
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  django-read-only-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact dispatched revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: applications/oes_web/requirements.txt
+
+      - name: Install Django dependency
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Check Django application configuration
+        working-directory: applications/oes_web
+        run: python manage.py check
+
+      - name: Execute existing Django tests (no database)
+        working-directory: applications/oes_web
+        run: python manage.py test evidence.tests --verbosity 2
