@@ -1,0 +1,138 @@
+name: OES D2-CTGOV-E3 single public GET
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-d2-ctgov-e3-single
+  cancel-in-progress: false
+
+jobs:
+  clinicaltrials-one-get:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: One public GET with fail-closed JSON summary
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          """D2-CTGOV-E3: one authorized public GET; no retry, redirects or extra NCT lookups."""
+          import json
+          import os
+          import re
+          import sys
+          from datetime import datetime, timezone
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import quote, urlencode
+          from urllib.request import HTTPRedirectHandler, Request, build_opener
+
+          def utc():
+              return datetime.now(timezone.utc).isoformat()
+
+          params = [
+              ("query.cond", "Insomnia"),
+              ("query.term", 'SHUTi OR "internet cognitive behavioral therapy" OR "digital cognitive behavioral therapy"'),
+              ("sort", "@relevance"),
+              ("pageSize", "20"),
+              ("countTotal", "true"),
+              ("format", "json"),
+          ]
+          url = "https://clinicaltrials.gov/api/v2/studies?" + urlencode(params, quote_via=quote)
+          result = {
+              "activity": "OES/D2-CTGOV-E3",
+              "source": "ClinicalTrials.gov API v2",
+              "mode": "one_shot_public_read_only",
+              "requested_url": url,
+              "started_at_utc": utc(),
+              "status": "STOP_INDETERMINATE",
+              "source_http_status": None,
+              "total_count": None,
+              "returned_count": None,
+              "next_page_token_present": None,
+              "nct_ids": [],
+              "limitations": [
+                  "Only one exploratory first page of at most 20 public records",
+                  "No recall or systematic coverage claim",
+                  "No study eligibility or materiality assessment",
+                  "No product, GRADE, assurance or currentness update",
+              ],
+          }
+
+          class BlockRedirects(HTTPRedirectHandler):
+              def redirect_request(self, request, fp, code, msg, headers, newurl):
+                  return None
+
+          exit_code = 2
+          try:
+              request = Request(url, method="GET", headers={
+                  "Accept": "application/json",
+                  "User-Agent": "OES-D2-CTGOV-E3/0.1 (one public metadata GET)",
+              })
+              opener = build_opener(BlockRedirects())
+              with opener.open(request, timeout=20) as response:
+                  result["source_http_status"] = response.status
+                  result["response_content_type"] = response.headers.get("Content-Type", "")
+                  if response.status != 200:
+                      raise ValueError("Unexpected source HTTP status")
+                  if "application/json" not in result["response_content_type"].lower():
+                      raise ValueError("Source content type is not JSON")
+                  raw = response.read(2_000_001)
+                  if len(raw) > 2_000_000:
+                      raise ValueError("Response exceeds the 2 MB cap")
+                  result["response_bytes"] = len(raw)
+              payload = json.loads(raw.decode("utf-8"))
+              if not isinstance(payload, dict) or not isinstance(payload.get("studies"), list):
+                  raise ValueError("Unexpected API JSON structure")
+              studies = payload["studies"]
+              if len(studies) > 20:
+                  raise ValueError("API returned more than 20 records")
+              ids = []
+              for study in studies:
+                  if not isinstance(study, dict):
+                      raise ValueError("Invalid study object")
+                  nct = study.get("protocolSection", {}).get("identificationModule", {}).get("nctId")
+                  if not isinstance(nct, str) or not re.fullmatch(r"NCT[0-9]{8}", nct):
+                      raise ValueError("Missing or invalid NCT ID")
+                  ids.append(nct)
+              if len(set(ids)) != len(ids):
+                  raise ValueError("Duplicate NCT IDs in response")
+              total = payload.get("totalCount")
+              if total is not None and (type(total) is not int or total < len(ids)):
+                  raise ValueError("Invalid totalCount")
+              token = payload.get("nextPageToken")
+              if token is not None and not isinstance(token, str):
+                  raise ValueError("Invalid nextPageToken")
+              result["nct_ids"] = ids
+              result["total_count"] = total
+              result["returned_count"] = len(ids)
+              result["next_page_token_present"] = bool(token)
+              result["status"] = ("PARTIAL_FIRST_PAGE_ONLY"
+                                  if bool(token) or total is None or (total is not None and total > len(ids))
+                                  else "PASS_TECHNICAL_QUERY_ONLY")
+              exit_code = 0
+          except HTTPError as exc:
+              result["source_http_status"] = exc.code
+              result["failure_kind"] = "HTTP_ERROR_OR_REDIRECT"
+              result["failure_detail"] = "Unexpected HTTP status or blocked redirect; no retry"
+          except (URLError, TimeoutError, OSError) as exc:
+              result["failure_kind"] = "NETWORK_OR_TLS"
+              result["failure_detail"] = type(exc).__name__
+          except (ValueError, TypeError, UnicodeError, KeyError, json.JSONDecodeError) as exc:
+              result["failure_kind"] = "SCHEMA_OR_RESPONSE"
+              result["failure_detail"] = str(exc)[:180]
+          finally:
+              result["completed_at_utc"] = utc()
+              report = json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True)
+              print(report, flush=True)
+              summary = os.environ.get("GITHUB_STEP_SUMMARY")
+              if summary:
+                  with open(summary, "a", encoding="utf-8") as out:
+                      out.write("## OES D2-CTGOV-E3 — one public GET\n")
+                      out.write("Technical provenance only; not scientific validation.\n")
+                      out.write("\x60\x60\x60json\n" + report + "\n\x60\x60\x60\n")
+          sys.exit(exit_code)
+          PY
