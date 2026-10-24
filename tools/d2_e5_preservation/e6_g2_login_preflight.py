@@ -31,6 +31,7 @@ def run():
             with psycopg.connect(
                 host=host, dbname="oes_sandbox", user=login,
                 password=os.environ[secret_name], sslmode="verify-full",
+                channel_binding="require",
                 connect_timeout=8, autocommit=False,
                 options="-c statement_timeout=5000",
             ) as connection:
