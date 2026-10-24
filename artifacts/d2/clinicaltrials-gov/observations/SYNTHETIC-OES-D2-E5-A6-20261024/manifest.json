@@ -1,0 +1,53 @@
+{
+  "activity_id": "OES/D2-E5-A6/SYNTHETIC-ARCHIVAL-DEMONSTRATION",
+  "api_version_if_observed": null,
+  "completed_at_utc": "2026-10-24T00:00:01+00:00",
+  "github_run_id": 1,
+  "limitations": [
+    "SYNTHETIC demonstration only; no HTTP request was executed",
+    "HTTP 200, run ID and timestamps are artificial fixture placeholders, not historical execution claims",
+    "NCT00000001 is a fabricated placeholder and must not be interpreted as an actual ClinicalTrials.gov record",
+    "No scientific assessment or durable archival warranty",
+    "Not proof of search completeness"
+  ],
+  "method": "GET",
+  "nct_ids_in_return_order": [
+    "NCT00000001"
+  ],
+  "next_page_token_present": false,
+  "observation_id": "SYNTHETIC-OES-D2-E5-A6-20261024",
+  "publication_review": "SYNTHETIC_ONLY_MANUALLY_REVIEWED",
+  "raw_sha256": "eec9389a274b0b2c8957ad57bbbab35c3b038342130e1c9c23ac78fdef673091",
+  "repository_commit_sha": "1eda2a14e3774d1d5f71394cdaddfe6c2f0a7301",
+  "requested_parameters": [
+    {
+      "name": "query.cond",
+      "value": "Insomnia"
+    },
+    {
+      "name": "query.term",
+      "value": "synthetic"
+    },
+    {
+      "name": "pageSize",
+      "value": "20"
+    },
+    {
+      "name": "format",
+      "value": "json"
+    }
+  ],
+  "requested_url_exact": "https://clinicaltrials.gov/api/v2/studies?query.cond=Insomnia&query.term=synthetic&pageSize=20&format=json",
+  "response_bytes": 264,
+  "response_content_type": "application/json",
+  "returned_count": 1,
+  "run_attempt": 1,
+  "schema_version": "oes.d2.e5.evidence/1",
+  "scientific_appraisal_performed": false,
+  "scope_status": "PASS_TECHNICAL_QUERY_ONLY",
+  "source_http_status": 200,
+  "source_name": "ClinicalTrials.gov API v2",
+  "started_at_utc": "2026-10-24T00:00:00+00:00",
+  "synthetic_fixture": true,
+  "total_count_if_provided": 1
+}

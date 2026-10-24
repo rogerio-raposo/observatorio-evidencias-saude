@@ -1,0 +1,10 @@
+{
+  "github_publication": "NOT_PERFORMED_AT_GENERATION",
+  "observation_id": "SYNTHETIC-OES-D2-E5-A6-20261024",
+  "raw_sha256": "eec9389a274b0b2c8957ad57bbbab35c3b038342130e1c9c23ac78fdef673091",
+  "returned_count": 1,
+  "schema_version": "oes.d2.e5.evidence/1",
+  "scientific_appraisal_performed": false,
+  "status": "PASS_TECHNICAL_QUERY_ONLY",
+  "synthetic_fixture": true
+}
