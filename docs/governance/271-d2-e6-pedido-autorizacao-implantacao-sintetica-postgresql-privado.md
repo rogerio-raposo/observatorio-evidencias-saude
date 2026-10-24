@@ -72,3 +72,15 @@ Alvo: `weathered-boat-65779510 / br-gentle-hall-b6jaxehf / oes_sandbox`. Antes d
 Freshness Gate: CP274 vigente e workflow factual com `if: ${{ false }}`. Consulta somente leitura, branch sintética `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`: `current_user = session_user = oes_sandbox_owner`; `pg_has_role(current_user, 'oes_e6_writer', 'SET') = false`; `pg_has_role(current_user, 'oes_e6_verifier', 'SET') = false`; tabela `oes_raw_private.source_observation` com **0 linhas**.
 
 **Decisão fail-closed:** não executar `SET ROLE` sem autorização efetiva; não alterar membership, papéis, credenciais ou grants por inferência. Testes writer/verifier sob identidade efetiva permanecem **BLOCKED**. Uma autorização separada deverá delimitar eventual associação temporária de teste e sua revogação, ou alternativa de execução segura. Nenhum GET factual, DDL, DML ou mudança no banco foi realizado nesta atividade.
+
+## 9. Testes sintéticos de constraints e SHA-256 — 2026-10-24
+
+Branch autorizada `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`, apenas valores sintéticos, workflow factual bloqueado. Estado inicial da tabela privada: **0 linhas**.
+
+- **Duplicidade — PASS:** duas inserções da mesma `observation_id = SYNTH-DUP` em uma transação produziram `duplicate key value violates unique constraint source_observation_pkey`. Rollback observado: **0 linhas**.
+- **Divergência entre tamanho declarado e payload — PASS:** tentativa de 2 bytes declarados como 3 foi rejeitada por `raw_byte_length_matches`, **0 linhas**.
+- **Limite de 2 MB reais — PASS:** tentativa com `convert_to(repeat('x',2000001),'UTF8')` e tamanho declarado 2.000.001 foi rejeitada por `source_observation_payload_bytes_check`. O ensaio anterior com tamanho declarado 2.000.001 e payload de 2 bytes falhou por `raw_byte_length_matches` e **não** foi contado como prova do limite; o teste específico posterior foi.
+- **Digest independente — PASS para fixture conhecida, não para gravação runtime:** consulta SQL `encode(sha256(decode('7b2273796e746865746963223a747275657d','hex')),'hex')` retornou `a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558`, coincidente com digest de teste anterior. Isso prova cálculo independente do digest em SQL para esses bytes, **não** impõe validação automática de `payload_sha256` pela tabela (a restrição ainda verifica apenas formato, comprimento e tamanho em bytes). A aplicação futura deve conferir digest antes e depois de persistir; avaliar controle adicional proporcional sem nova extensão.
+- **Estado final:** 0 linhas em `oes_raw_private.source_observation`; fixture PG-A4 preservada (2 estudos, 2 relatórios, 3 vínculos, 1 proveniência). Nenhum papel ou grant alterado nesta atividade.
+
+**Pendências ainda relevantes:** autenticação operacional das identidades separadas de execução, revisão/adaptação do workflow para persistência PostgreSQL sem artifact bruto, testes desse fluxo e gate executivo independente antes de um GET factual. `E6_G1_FACTUAL_BLOCKED`.
