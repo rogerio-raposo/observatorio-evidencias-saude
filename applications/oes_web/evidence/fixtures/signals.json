@@ -9,6 +9,29 @@
     ],
     "provenance": "OES Documento 248, com referências históricas aos Documentos 232 e products/154.",
     "limitation": "Correspondência documental histórica; nenhuma nova avaliação de elegibilidade ou revisão científica independente.",
+    "documentary_identity": {
+      "study": {
+        "label": "Um estudo documentado; não contabilizar dois RCTs"
+      },
+      "links": [
+        {
+          "report_label": "Ritterband 2017 (relatório primário)",
+          "source": {
+            "document_path": "docs/products/154-reconciliacao-listas-artigos-clusters-reports-ovr01-dcbti.md",
+            "locator": "seção 5.5",
+            "category": "documentary_reference"
+          }
+        },
+        {
+          "report_label": "Shaffer 2020 (relatório relacionado)",
+          "source": {
+            "document_path": "docs/products/154-reconciliacao-listas-artigos-clusters-reports-ovr01-dcbti.md",
+            "locator": "seção 5.5",
+            "category": "documentary_reference"
+          }
+        }
+      ]
+    },
     "milestones": [
       {
         "event_type": "SOURCE_RETRIEVAL",
@@ -40,6 +63,10 @@
     "reports": [],
     "provenance": "OES Documento 247 (identificador recuperado) e Documento 248 (inventário delimitado).",
     "limitation": "Não identificado no corpus examinado; identidade clínica, elegibilidade e novidade NÃO avaliadas.",
+    "documentary_identity": {
+      "study": null,
+      "links": []
+    },
     "milestones": [
       {
         "event_type": "SOURCE_RETRIEVAL",
