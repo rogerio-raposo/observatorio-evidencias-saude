@@ -59,3 +59,11 @@ Adapter e suíte atualizados em `tools/d2_e5_preservation/`; verificação adici
 Atualizado o adaptador em `860b2cdb` para validar Content-Type como media type exato `application/json` (parâmetros aceitos), timestamps com offsets efetivos e limite 1..2.000.000 bytes também no registro preparado. Ampliados testes em `d08e823d` com cinco casos de conteúdo falso, data sem timezone, metadado de origem inválido, tamanho adulterado e fusos horários distintos. **Total nominal: 18 testes**. **Não há execução verificável de 18/18 nesta atividade:** tentativa de baixar arquivos para o runtime local falhou por DNS de `raw.githubusercontent.com`. Suíte anterior de 13 testes teve execução local PASS, mas era referente à versão anterior. Não promover resultado de teste antes de execução reproduzível. Não houve Neon, secrets ou GET; workflow factual mantido `if: ${{ false }}`.
 
 **Estado:** `OFFLINE_HARDENING_COMMITTED / 18_TESTS_DEFINED_NOT_EXECUTED / E6_G1_BLOCKED`.
+
+## 9. Evidência CI remota — 2026-10-24
+
+GitHub Actions **run 40125394727** (`d2-e5-a3-offline-tests.yml`, `workflow_dispatch`, branch `main`) foi executado sobre **HEAD `2894fda7a973d499e563fedb982fcb9a6d25d551`**, com status `completed`, conclusão `success`. Job `e5-a3-offline-unittest` (ID `120965609871`) **PASS**. Logs lidos: `Ran 57 tests in 0.040s` / `OK`; os **18 testes** de `test_e6_private_pg_offline` constam nominalmente como `ok`; os demais **39** pertencem às suítes offline preexistentes. Link: https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40125394727 . Avisos de depreciação Node 20 em actions v4/v5 são não bloqueantes e separados do resultado Python.
+
+**Escopo validado:** suite offline sem Neon, secrets, GET ou conexão PostgreSQL. **Não validado:** INSERT conectado sob identidade mínima, leitura independente, comparação do digest após persistência e adaptação do workflow factual. O job factual permanece bloqueado; não confundir 57 PASS com autorização operacional.
+
+**Estado:** `OFFLINE_CI_57_OF_57_PASS / PRIVATE_ADAPTER_18_OF_18_PASS / ONLINE_INTEGRATION_NOT_VALIDATED / E6_G1_FACTUAL_BLOCKED`.
