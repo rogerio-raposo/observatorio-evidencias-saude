@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP268 — D2-E5-A3 módulo de preservação sintética implementado (2026-10-23 local)
+
+Sob autorização específica, foi criado `tools/d2_e5_preservation/` com módulo `preserve.py`, testes unittest sintéticos e README. Recebe bytes e proveniência fornecidos pelo chamador, valida forma/limites/NCTs, preserva `response.raw.json` exato, produz manifesto SHA-256 e resumo, prepara em diretório temporário e publica por rename local somente depois de verificações. **Nenhuma rede, consulta ClinicalTrials.gov, CI, SQL, Neon, modificação do workflow E3 ou prova científica.** Estado `D2_E5_A3_OFFLINE_IMPLEMENTED / TEST_EXECUTION_NOT_CLAIMED / CONNECTED_USE_NOT_AUTHORIZED`. Testes incluídos, não executados neste ato; próximos passos: verificação técnica autorizada de testes sintéticos e decisão independente de retenção durável antes de coleta real. CP268, Fase 4 documental encerrada, Fase 5 não iniciada, readiness NOT_READY e gates preservados.
+
 ## Pós-CP268 — D2-E5-A2 contrato de preservação especificado (2026-10-23 local)
 
 Documento 253 `docs/governance/253-d2-e5-a2-contrato-preservacao-metadados-clinicaltrials.md` formaliza o contrato mínimo de evidência (JSON bruto exato, manifesto de proveniência/SHA-256, resumo técnico), critérios de falha fechada e distinção entre artifact GitHub de 7 dias e preservação durável ainda não aprovada. Reconhece que `clinicaltrials-interface-v2.json` não é a consulta literal E3 e que o JSON histórico E3 não pode ser reconstruído. Classificação `D2_E5_A2_CONTRACT_SPECIFIED / NO_COLLECTION / IMPLEMENTATION_NOT_AUTHORIZED`. Próximo passo recomendado: decidir escopo de implementação mínima offline/sintética e política de destino durável antes de qualquer coleta factual. Sem CI, API, código ou promoção de gates; CP268 e prontidão operacional `NOT_READY` preservados.
