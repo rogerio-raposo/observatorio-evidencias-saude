@@ -1,0 +1,46 @@
+# Documento 268 — D2-E6-G1: proposta decisória, sem autorização executiva
+
+**OES | 2026-10-24 | Base CP273, Documentos 255 e 267 | HEAD de preparação `9cde5b46a89d1a9479209df4b25eb92cc00b7d9e` | `E6_G1_PROPOSAL_PREPARED / NOT_APPROVED / FACTUAL_CAPTURE_BLOCKED`**
+
+## 1. Objeto estrito da futura decisão
+Deliberar **uma única captura factual** de metadados públicos no endpoint de estudos da API v2 ClinicalTrials.gov, com guarda de **até sete dias** em GitHub Actions artifact potencialmente acessível ao público. **Esta minuta não autoriza a captura, o upload, o desbloqueio do workflow, execução conectada ou commit de evidência.**
+
+A operação proposta utiliza método GET único, sem retry/redirect/paginação, timeout 20 s, no máximo 2.000.000 bytes e 20 estudos, exigindo HTTP 200 e JSON. Resultado `PARTIAL_FIRST_PAGE_ONLY` quando pertinente; jamais alegar busca exaustiva.
+
+**URL literal de referência, idêntica ao contrato do teste offline:**
+
+```text
+https://clinicaltrials.gov/api/v2/studies?query.cond=Insomnia&query.term=SHUTi%20OR%20%22internet%20cognitive%20behavioral%20therapy%22%20OR%20%22digital%20cognitive%20behavioral%20therapy%22&sort=%40relevance&pageSize=20&countTotal=true&format=json
+```
+
+Antes de qualquer futura execução, verificar HEAD do commit efetivamente despachado e igualdade literal URL/código.
+
+## 2. Evidência técnica e controles
+- [GitHub Actions 40113643586](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40113643586), revisão `9cde5b46a89d1a9479209df4b25eb92cc00b7d9e`: **39/39 testes offline PASS**, incluindo igualdade completa da URL e ordem dos parâmetros.
+- [Run 40112908037](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40112908037): 38/38 testes de preupload PASS; Documento 267 registra histórico.
+- Captura controlada por `tools/d2_e5_preservation/e6_capture.py`; classificação conservadora `HOLD`, integridade SHA-256, proveniência, preservação dos bytes, rótulos `RAW_SOURCE_DATA / NOT_SCIENTIFICALLY_REVIEWED / TEMPORARY_ARTIFACT` e passo bloqueante `--verify-upload` imediatamente antes do artifact.
+- `.github/workflows/d2-e6-a2-gated-capture.yml`: **job `if: ${{ false }}` confirmado** nesta preparação. Nenhuma consulta factual realizada aqui. Um simples input no dispatch não equivale à autorização do proprietário.
+
+## 3. Condições externas e governança
+NLM informa que a API v2 é mecanismo oficial de acesso programático aos registros, conforme:
+- https://www.nlm.nih.gov/pubs/techbull/ma24/ma24_clinicaltrials_api.html
+- https://www.nlm.nih.gov/pubs/techbull/ja25/ja25_clinical_trials_screen-scraping.html
+- https://data.nih.gov/data-sources/clinicaltrialsgov-api
+
+Os **termos específicos** e possíveis direitos sobre material de terceiros devem ser conferidos a partir de https://clinicaltrials.gov/about-site/terms-conditions antes do aceite final. O acesso automatizado público é documentado, mas **não constitui autorização irrestrita para qualquer reutilização ou garantia de ausência de informação pessoal**. A página dinâmica de termos não foi recuperada integralmente nesta verificação; portanto, **TERMS_FULL_REVIEW_PENDING**.
+
+A política vigente, revisada no Documento 255, exige **validação automatizada e revisão humana apenas por exceção**. Não há inspeção humana integral obrigatória de cada JSON. Respostas inesperadas/duvidosas são `HOLD` **antes** do upload, sem corpo em logs; se o bloqueio não puder ser resolvido, não publicar artifact. `ALLOW` é técnico, não certificação científica.
+
+**PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: PENDING.** O proprietário deve aceitar explicitamente, em gate próprio, que um artifact temporário no repositório GitHub público possa ser baixado por terceiros antes de E6-G2; expiração/exclusão não apagam cópias. A resposta pode conter contatos pessoais que a fonte já tornou públicos. Não tornar staging privado condição absoluta sem necessidade demonstrada.
+
+## 4. Condições para apresentação de pedido executivo E6-G1
+1. Confirmar termos aplicáveis e limites para redistribuição/reuso do pacote bruto, inclusive eventuais conteúdos de terceiros, sem alegar liberação universal.
+2. Obter do proprietário **aceite explícito de exposição pública temporária**, escopo e cautelas.
+3. Congelar URL, revisão `main`, duração de retenção (7 dias), falha fechada e plano de tratamento de exceções.
+4. Submeter **pedido separado de autorização E6-G1 para um GET factual único**. Somente depois, nova autorização/atividade delimitada para desbloquear o job e execução única, com Freshness Gate.
+5. E6-G2 de incorporação/arquivamento factual durável segue independente e não autorizado.
+
+## 5. Restrições inalteradas
+D2 `PARTIAL`; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; readiness `NOT_READY`; Fase 5 `NOT_STARTED`; CP273 vigente; Neon e fixtures PG-A4 não tocados; nenhum acesso a produção, mudança de permissões, GET factual, postagem pública, commit factual ou serviço pago.
+
+**STOP — documento deliberativo apenas.**
