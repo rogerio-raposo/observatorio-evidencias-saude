@@ -1,3 +1,5 @@
+> **EXECUÇÃO AUTORIZADA — 2026-10-24:** o proprietário aprovou expressamente `APPROVED — OES / D2-E6 / PG_RAW_SYNTHETIC_ONLY_SCHEMA_ROLES_AND_TESTS / branch br-gentle-hall-b6jaxehf / no factual GET / no public JSON / no paid services / fail closed`. A condição `OWNER_APPROVAL_PENDING` abaixo descreve apenas o estado histórico pré-aprovação. O progresso técnico está registrado na seção 6. A aprovação sintética não inclui E6-G1 factual.
+
 # Documento 271 — Pedido de autorização restrita para implantação sintética do armazenamento privado D2-E6
 
 **OES — 2026-10-24 | Referências: Documentos 269 e 270, CP273 | HEAD da proposta: `016b44f138cb3c4073ca370d1341dd24db9a7959`**  
@@ -31,4 +33,22 @@ O arquivo `.github/workflows/d2-e6-a2-gated-capture.yml` continua com job `if: $
 
 **Esta redação é sugestão de autorização, não uma autorização emitida.** Implementação futura deverá usar o gate e a análise técnica do momento da execução; se houver mudança material de modelo de privilégios, apresentar revisão antes de executar.
 
-**STOP — aguardando aprovação explícita do proprietário.**
+## 6. Execução sintética limitada — 2026-10-24
+
+**Alvo:** Neon Free `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`; preflight de catálogo `oes_raw_private` ausente, papéis novos ausentes e 0 default ACL adicionais para o proprietário. Fixture prévia: 2 estudos, 2 relatórios, 3 vínculos, 1 proveniência.
+
+**DDL/ACL aplicado em uma transação:** criação de `oes_raw_private`, `source_observation`, `oes_e6_writer NOLOGIN NOINHERIT` e `oes_e6_verifier NOLOGIN NOINHERIT`; revogação de privilégios `PUBLIC` no schema/tabela; `USAGE` para ambos; `INSERT` na tabela somente ao writer, `SELECT` somente ao verifier. Nenhum papel com login/credencial nova; sem alteração das permissões PG-A4.
+
+**ACL verificada por `has_schema_privilege` / `has_table_privilege`:**
+- `oes_e6_writer`: USAGE e INSERT; sem SELECT, UPDATE ou DELETE;
+- `oes_e6_verifier`: USAGE e SELECT; sem INSERT, UPDATE ou DELETE;
+- `oes_pg_a4_reader`: sem USAGE e sem SELECT, INSERT, UPDATE ou DELETE;
+- proprietário conserva privilégios administrativos por definição.
+
+**Prova sintética:** inserção por proprietário de `SYNTH-E6-PRIVATE-001` com payload de **18 bytes** `{"synthetic":true}`, SHA-256 pré-calculado `a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558`. Leitura confirmou tamanho = 18 e paridade exata dos bytes e do digest fornecido. O teste **não computou digest independentemente no banco**, tampouco comprovou acesso real por credenciais separadas. Remoção do registro na mesma transação, com zero linhas residuais; consulta de confirmação pós-transação indica tabela vazia. Fixture pós-teste inalterada (2/2/3/1).
+
+**Itens NÃO comprovados (pendentes):** tentativa negativa de consulta como identidade PG-A4 efetiva; conectividade de writer/verifier com autenticação e segregação de credenciais; rejeição transacional de inserção duplicada e payload acima do limite; rollback de falha induzida; imutabilidade sob acesso normal; adaptação do workflow sem artifact bruto; ausência de payload em logs de uma execução GitHub. Não registrar fechamento técnico completo até superar gates proporcionais.
+
+**Status:** `SYNTHETIC_SCHEMA_CREATED / CATALOG_ACL_CHECK_PASS / BYTE_PARITY_PASS / ZERO_RAW_ROWS / NEGATIVE_RUNTIME_TESTS_PENDING / FACTUAL_CAPTURE_BLOCKED`.
+
+**STOP — implantação sintética parcial; E6-G1 factual ainda não autorizado.**
