@@ -1,3 +1,11 @@
+## 2026-10-24 — CP277: G1 leitor privado offline e regressão 68/68 PASS
+
+- G1-A1 autorizado pelo proprietário para implementação apenas offline (sintético, mocks e conexão injetável; sem Neon, rede, credenciais ou liberação factual).
+- G1-A2 implementou o leitor privado parametrizado `e6_private_reader_offline.py` e cinco testes no commit `78a2d3a9bef2c203c9a9b2f3e6068610e061dcd8`; sem conexão/driver PostgreSQL ou alterações de ACL/workflow.
+- G1-A3 verificou estrutura da tupla (id, sha256, bytes, payload) e relatou 5/5 testes locais, mantendo a suíte integral pendente até a execução remota.
+- G1-A4: execução oficial GitHub Actions [40133419311](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40133419311), job `120989797624`, commit `78a2d3a9bef2c203c9a9b2f3e6068610e061dcd8`, `python -m unittest discover -s tests -v`: **68 testes PASS, 0 falhas, 0 erros**. Cinco novos casos listados individualmente nos logs. Não demonstra conexão, autenticação independente ou GET factual.
+- CP277 vigente; próxima atividade: compatibilidade da proveniência e integração offline do leitor com o orquestrador, sob a autorização G1 já aprovada e um `Prossiga` por atividade; G2 permanece sem autorização.
+
 ## 2026-10-24 — CP276: proveniência PG-A4 reconciliada, B2 delimitado, integração proposta
 
 - A1: fonte exata do registro de proveniência identificada em `database/fixtures/pg_a4_g2b_synthetic.sql` (`provenance.record`, UUID `a4300000-0000-4000-8000-000000000001`) e consulta `applications/oes_web/evidence/synthetic_pg_reader.py`. A assertiva conectada histórica do run `40110909348` testava essa tabela; `evidence.result_source=0` não demonstra perda. Persistência atual do registro não reatestada.

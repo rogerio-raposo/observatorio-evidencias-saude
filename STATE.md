@@ -6,7 +6,15 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP276 — 2026-10-24 (vigente)
+## Marco de continuidade CP277 — 2026-10-24 (vigente)
+
+- **G1-A1:** proprietário aprovou expressamente `G1_MINIMAL_OFFLINE_PYTHON_POSTGRES_INTEGRATION`, exclusivamente dados sintéticos, conexões injetadas e mocks, sem Neon/rede/credenciais/GET/workflow factual.
+- **G1-A2:** criados `tools/d2_e5_preservation/e6_private_reader_offline.py` e `tests/test_e6_private_reader_offline.py` no commit `78a2d3a9bef2c203c9a9b2f3e6068610e061dcd8`. SELECT parametrizado com conexão injetada e exceções sanitizadas; sem driver, sem autenticação real. Nenhum outro código modificado.
+- **G1-A3:** análise de compatibilidade estrutural com `verify_private_readback()`; validação local reportada de cinco testes, sem resultado canônico de CI até A4. Nenhuma alteração remota.
+- **G1-A4:** GitHub Actions run [40133419311](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40133419311) sob `78a2d3a9bef2c203c9a9b2f3e6068610e061dcd8`, Python 3.12, **68/68 PASS, zero erros/falhas**, incluindo os cinco testes novos e regressão anterior de 63. Evidência de contrato **offline**, não de autenticação ou execução PostgreSQL conectada.
+- **Próxima fronteira:** compatibilizar proveniência (`source_name`, timestamps aware) e integrar o leitor com o orquestrador usando mocks/injeção; G2 conectado exige aprovação própria. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 `PARTIAL`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`; E6-G1 factual bloqueado, workflow `if: ${{ false }}`, sem JSON bruto público.
+
+## Marco de continuidade CP276 — 2026-10-24 (histórico)
 
 - **A1 / PG-A4:** o quarto invariante tem origem identificada em `provenance.record`, UUID `a4300000-0000-4000-8000-000000000001`, por `LEFT JOIN` com versão corrente de Study. A execução histórica `40110909348` confirmou a associação; `evidence.result_source=0` não é teste desse invariante. **Presença atual do UUID ainda não foi reatestada por SQL**.
 - **A2 / B2:** encerramento técnico **restrito recomendado**, sobre demonstração positiva previamente documentada (um INSERT de 18 bytes, verificação SHA-256, limpeza, restauração dos grants), sem declarar identidade de login independente, integração por Python/driver ou preservação atual do quarto invariante.
