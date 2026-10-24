@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Catálogo demonstrativo de sinais</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main>
+<p class="notice">CATÁLOGO DEMONSTRATIVO — duas fixtures documentais locais; não é inventário completo, seleção científica ou atualização de evidências.</p>
+<h1>Catálogo documental de sinais</h1>
+<p>Identificadores e estados conforme registros documentais delimitados. Consulte cada sinal para suas fontes e limites.</p>
+<section aria-labelledby="signals-heading"><h2 id="signals-heading">Sinais representados</h2>
+<ul class="catalog">
+{% for entry in entries %}
+<li><h3><a href="{% url 'signal-detail' entry.signal.nct %}">{{ entry.signal.nct }}</a></h3>
+<p>Estado documental: {{ entry.identity_label }}</p>
+{% if entry.signal.study_label %}<p>Estudo: {{ entry.signal.study_label }}</p>{% else %}<p>Estudo: identidade não reconciliada</p>{% endif %}
+<p>Relatórios vinculados: {% if entry.signal.reports %}{{ entry.signal.reports|length }} relatórios documentados para o mesmo estudo{% else %}nenhum vínculo estabelecido{% endif %}</p>
+<p class="boundary">Limite: {{ entry.signal.limitation }}</p>
+</li>
+{% empty %}<li>Nenhum sinal demonstrativo disponível.</li>{% endfor %}
+</ul></section>
+<p>Nenhum julgamento científico novo é realizado nesta interface.</p>
+</main></body></html>
