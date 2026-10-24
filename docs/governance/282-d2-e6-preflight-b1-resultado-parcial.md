@@ -26,3 +26,11 @@ Não atribuir as cinco rejeições a uma negação SQL de privilégio: foram blo
 **Estado:** `B1_PARTIAL / PRIVATE_ROWS_ZERO / ACL_NOT_REVERIFIED / B2_NOT_AUTHORIZED / E6_G1_BLOCKED`.
 
 **STOP — aguardar decisão sobre como obter evidência de ACL por via autorizada, mantendo B2 bloqueada.**
+
+## Disposição técnica proporcional após revisão documental
+
+A revisão dos Documentos 271, 272 e 276 encontrou evidência histórica suficiente de constraints, testes ACL negativos com roles efetivas e limpeza das memberships temporárias, além de desativação comprovada do login de captura. **Não repetir a bateria histórica para resolver apenas a limitação atual da ferramenta.** O ponto ainda não verificável é a configuração **presente** de ACL/roles, e sua eventual mudança desde esses registros, antes de qualquer ensaio positivo.
+
+Encaminhamento mínimo: obter confirmação contemporânea **somente leitura** por via aprovada e controlada pelo proprietário (por exemplo, consulta pontual de metadados no SQL Editor, sem senha, sem payload e sem resultados sensíveis). Se obtida, registrar apenas as propriedades necessárias: LOGIN desabilitado, membership do login ausente, writer INSERT/sem SELECT, verifier SELECT/sem INSERT e USAGE adequado no schema, identificando branch e banco. Não há necessidade de nova identidade, objeto, grants ou secrets para essa constatação. Caso não seja possível verificar por via permitida, manter `B1_PARTIAL` e `B2_NOT_AUTHORIZED`, sem contornar bloqueios.
+
+**Estado:** `HISTORICAL_ACL_EVIDENCE_REUSED / CURRENT_ACL_READ_ONLY_ATTESTATION_PENDING / B2_NOT_AUTHORIZED / E6_G1_BLOCKED`.
