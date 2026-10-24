@@ -54,7 +54,7 @@ def capture_once(opener=None):
 
 # Unknown fields trigger HOLD before packaging, not a privacy guarantee.
 _TOP_LEVEL = {"studies", "totalCount", "nextPageToken"}
-_STUDY = {"protocolSection", "derivedSection", "hasResults"}
+_STUDY = {"protocolSection", "derivedSection", "hasResults", "resultsSection", "documentSection"}
 _SECTIONS = {"identificationModule", "statusModule", "sponsorCollaboratorsModule",
     "oversightModule", "descriptionModule", "conditionsModule", "designModule",
     "armsInterventionsModule", "outcomesModule", "eligibilityModule",
