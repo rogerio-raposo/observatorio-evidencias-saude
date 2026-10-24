@@ -47,3 +47,21 @@ Aprovar **somente um desenho executivo e preflight de viabilidade sem alteraçõ
 **Segurança e simplificação:** não criar novo workflow nem camada de armazenamento para executar esse único ensaio; tentar resolver a comprovação por meios operacionais já disponíveis e expressamente autorizados. Caso a ferramenta impeça INSERT autenticado por política, **não contornar**: registrar `BLOCKED` e reavaliar utilidade do ensaio antes de novas alterações.
 
 **Decisão resultante:** falta comprovar uma rota autorizada de **duas sessões autenticadas de menor privilégio**, e fixar um plano preciso de criação/revogação, antes de pedir autorização para modificar papéis ou inserir dados. Não existem novas evidências conectadas nesta avaliação. `B2_NOT_READY_FOR_EXECUTION / B2_SQL_NOT_AUTHORIZED / E6_G1_BLOCKED`.
+
+## Comparação de alternativas de identidade — desenho sem alteração (2026-10-24)
+
+Documentação oficial Neon consultada: https://neon.com/docs/manage/roles . **Papéis criados via Console/CLI/API recebem tipicamente associação automática a `neon_superuser`; para menor privilégio, criar por SQL**, com permissões explicitamente limitadas, é a via recomendada pelo fornecedor. Papéis são específicos à branch.
+
+| Alternativa | Benefício | Limitação | Decisão |
+|---|---|---|---|
+| Sessão administrativa única com `SET ROLE` alternado | Não exige novo login; testes de ACL pontuais já ocorreram no Documento 272 | Não prova duas **autenticações independentes**; conta administrativa continua privilegiada | Não usar como evidência final de B2 |
+| Reativar `oes_e6_capture_login` e criar outro login leitor por SQL | Reaproveita identidade conhecida e requer só um papel adicional | Reabre senha antiga, demanda higienização, rotacionar antes de ativar e gerir novas concessões | Possível, mas não preferencial |
+| Dois logins efêmeros criados **por SQL** sem privilégios automáticos, associados separadamente a `oes_e6_writer` e `oes_e6_verifier` | Sessões autenticadas independentes e ACL segregada, sem elevar papel administrativo | Exige duas credenciais e mudanças temporárias autorizadas | **Preferida apenas se a prova de duas sessões for indispensável** |
+
+**Juízo de proporcionalidade:** os testes anteriores já provaram isolamento negativo de writer e verifier. A única lacuna material da B2 é a **escrita positiva e recuperação de bytes persistidos com isolamento real**. Antes de criar logins, avaliar se a comprovação estrita de duas autenticações diferentes é requisito de aceite do piloto; se não for, um ensaio transacional sintético sob identidades efetivas controladas, acompanhado de ressalva metodológica explícita, pode ser suficiente. A escolha precisa ser decidida em gate antes de qualquer SQL. Não transformar B2 em implantação do sistema de autenticação de produção.
+
+**Condição de viabilidade:** o conector já bloqueou INSERT positivo em tentativa anterior. Não executar variações para burlar esse bloqueio. Se houver autorização específica, a operação deverá ocorrer por canal aprovado (por exemplo, SQL Editor do proprietário) e documentar a identidade efetiva, sem expor senha ou JSON bruto. O SQL Editor não constitui, por si, autenticação independente da conta proprietária.
+
+**Próxima decisão, sem executar agora:** escolher entre (I) evidência sintética pragmática sob troca de papel, com limitação de autenticação registrada; ou (II) ensaio estrito de duas sessões efêmeras SQL-only, mais complexo. Nenhuma nova conta, credencial, DML ou alteração de workflow autorizada por esta comparação.
+
+**Estado:** `B2_ALTERNATIVES_EVALUATED / IDENTITY_DESIGN_DECISION_PENDING / B2_SQL_NOT_AUTHORIZED / E6_G1_BLOCKED`.
