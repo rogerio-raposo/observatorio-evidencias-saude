@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP267 — 2026-10-23**
+**CP268 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP267.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP268.md`
 
 Checkpoint anterior:
 
-`CP266`
+`CP267`
 
 Status:
 
@@ -670,3 +670,5 @@ em **Modo Continuidade**.
 - **CP266 — 2026-10-23:** consolida cruzamento documental D2/Documento 248, primeiro vertical slice Django, B1 e UX-02 com runs de 8/8, 16/16 e 20/20 PASS; validação em navegador Django pendente não bloqueante somente ao protótipo. Fase 4 documental fechada, D2 parcial, Fase 5 não iniciada, gates inalterados. Próximo `Prossiga`: análise comparativa do próximo incremento substantivo; sem implementação por inferência. Conversa aberta. STOP.
 
 - **CP267 — 2026-10-23:** consolida C1 catálogo (run 40048357640: 25/25 PASS) e C2 referências tipadas Study/Report (run 40049293022: 30/30 PASS), sem banco ou julgamentos novos. Navegador Django real pendente; readiness NOT_READY, Fase 5 NOT_STARTED, D2 parcial, gates intactos. Próximo `Prossiga`: decidir proporcionalmente próxima capacidade substantiva ou pausa no demonstrador, sem implementação automática. Conversa aberta; STOP.
+
+- **CP268 — 2026-10-23:** análise de prontidão sem pesquisadores (Doc. 252), prioridade de estabilização aprovada, workflow manual de Chromium e Django real (run 40054002708: 9/9 PASS, artifact 12544582293); sem produção, ciência nova ou promoção de gates. Próximo `Prossiga`: avaliar finalidade concreta do demonstrador, sem implementação automática. Conversa aberta; STOP.

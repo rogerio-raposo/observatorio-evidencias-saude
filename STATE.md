@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP267 — 2026-10-23**.
+- checkpoint vigente: **CP268 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP268 — consolidação do navegador real (2026-10-23 local / 2026-10-24 UTC)
+
+O proprietário autorizou a execução única da validação Django/Chromium. [Run 40054002708](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40054002708), commit testado `1c7400c909d1af74ed17c1d42ba16b24de7026d9`, `completed/success`; Django `manage.py check` sem erros, **9/9 páginas/viewport PASS**, navegação e CSS via Django real verificados, `BROWSER_VALIDATION_STATUS=PASS`. Artifact `oes-django-real-browser-evidence` (ID 12544582293, nove screenshots, relatório JSON e log, retenção limitada). Classificação `REAL_DJANGO_BROWSER_VALIDATION_PASS_9_OF_9 / FUNCTIONAL_SCOPE_PARTIAL`; não comprova segurança, acessibilidade integral ou ciência. O CP268 em `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP268.md` consolida esse marco, a análise integrada Doc. 252 e a prioridade de estabilização aprovada. As notas anteriores de navegador pendente são **históricas**. O workflow de 30 testes não foi reexecutado nesta run. Readiness `NOT_READY`, Fase 5 `NOT_STARTED`, D2 parcial, M3 bloqueado e BRG/SA inalterados. Próximo passo: decidir finalidade concreta do demonstrador estabilizado sem iniciar desenvolvimento automaticamente.
 
 ## Pós-CP267 — workflow de navegador Django implementado, execução pendente (2026-10-23 local)
 
