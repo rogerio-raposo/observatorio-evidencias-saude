@@ -37,3 +37,13 @@ Revisão do diff, testes locais PASS, demonstração de que dados de teste são 
 **Estado:** `OFFLINE_ADAPTER_GATE_PREPARED / CODE_NOT_APPROVED / FACTUAL_GET_BLOCKED`.
 
 **STOP — aguardar autorização específica.**
+
+## 6. Implementação e verificação local — 2026-10-24
+
+Autorização para implementação offline recebida do proprietário. Criados em `main` os arquivos `tools/d2_e5_preservation/e6_private_pg_offline.py` e `tools/d2_e5_preservation/tests/test_e6_private_pg_offline.py`, HEAD `29ea47348b672a52eb79d1a189ac70d52c6561b1`.
+
+**Execução:** cópia local do conteúdo dos dois arquivos recuperados pelo conector GitHub (acesso HTTPS direto do ambiente de execução indisponível). Comando executado na cópia: `python -m unittest -v test_e6_private_pg_offline`. Resultado observado: **9 testes, 9 PASS, 0 falhas, 0 erros**. Testes exclusivamente sintéticos com conexão simulada; não ocorreu consulta ou escrita no Neon. O workflow factual continua bloqueado por `if: ${{ false }}`.
+
+**Limites da evidência:** a execução foi da reprodução local do conteúdo recuperado, não de um checkout autenticado; não houve execução remota da CI. Os mocks não simulam ainda especificamente erro de duplicidade e divergência de SHA informado, e não provam ACL ou recuperação posterior; a implementação marca explicitamente `PRIVATE_PERSISTED_UNVERIFIED`. Não conectar a operação factual sem revisão complementar e aprovação distinta.
+
+**Estado:** `OFFLINE_UNIT_TESTS_9_OF_9_PASS_LOCAL_COPY / REMAINING_NEGATIVE_TESTS_PENDING / NEON_NOT_ACCESSED / E6_G1_BLOCKED`.
