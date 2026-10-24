@@ -106,3 +106,13 @@ Sob autorização explícita do Documento 275 e aceitação posterior do risco d
 **Pendente de ação exclusivamente no Neon SQL Editor pelo proprietário:** gerar senha descartável forte fora do chat e executar `ALTER ROLE oes_e6_capture_login WITH PASSWORD '<SEGREDO_EXCLUSIVO_DE_TESTE>' LOGIN;` substituindo o marcador privado antes de executar; nunca fornecer senha no chat ou GitHub. O risco de histórico é aceito somente nesse escopo sintético. Antes de alterar a senha, confirmar que o SQL Editor aponta para o branch e banco corretos. Depois, informar aqui apenas `Senha configurada`, sem qualquer valor secreto. Nenhum GitHub Secret, teste autenticado, workflow factual ou GET foi ativado nesta atividade.
 
 **Estado:** `CAPTURE_LOGIN_CREATED_NOLOGIN_NO_PASSWORD / LEAST_PRIVILEGE_CATALOG_PASS / OWNER_SECRET_CONFIGURATION_PENDING / E6_G1_FACTUAL_BLOCKED`.
+
+## 8. Autenticação conectada efetiva — 2026-10-24
+
+Após confirmação manual do proprietário de habilitação de LOGIN, consulta de catálogo na branch experimental `br-gentle-hall-b6jaxehf` constatou `rolcanlogin=true`, `NOINHERIT`, ausência de `SUPERUSER`, `CREATEDB`, `CREATEROLE`, `REPLICATION` ou `neon_superuser`; associação exclusiva a `oes_e6_writer` com `ADMIN FALSE`, `INHERIT FALSE`, `SET TRUE`.
+
+A conexão autenticada pelo conector Neon usando explicitamente `role_name=oes_e6_capture_login` **funcionou**: `current_user=session_user=oes_e6_capture_login`. Testes negativos reais, ainda sem SET ROLE: `SELECT` e `INSERT` na tabela privada negados (`permission denied for schema oes_raw_private`), e SELECT da fixture `evidence.study` negado (`permission denied for schema evidence`). `pg_has_role(current_user,'oes_e6_writer','SET')=true`. Nenhuma senha ou JSON bruto foi exibido. Não houve INSERT efetivo nem GET factual.
+
+**Pendências:** teste positivo sintético transacional como writer, validação independente do SHA na leitura e limpeza; desativação/rotação da credencial após a bateria de testes, com verificação de estado final. Workflow factual continua bloqueado.
+
+**Estado:** `AUTHENTICATED_MIN_PRIVILEGE_LOGIN_PASS / NEGATIVE_ACCESS_PASS / POSITIVE_SYNTHETIC_WRITE_PENDING / E6_G1_FACTUAL_BLOCKED`.
