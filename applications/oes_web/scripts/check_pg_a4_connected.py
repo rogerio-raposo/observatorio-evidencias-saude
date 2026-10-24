@@ -6,6 +6,10 @@ Never copy environment credentials into workflow, shell history or logs.
 """
 import os
 import sys
+from pathlib import Path
+
+# Executed as scripts/check_pg_a4_connected.py: add Django project root.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 if os.getenv("OES_PG_A4_ENABLED") != "1":
     sys.exit("NOT_RUN: opt-in PG-A4 connection is disabled")
