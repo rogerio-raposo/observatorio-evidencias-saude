@@ -1,0 +1,44 @@
+name: OES PG-A4 synthetic Django connected smoke - manual
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-pg-a4-connected-smoke
+  cancel-in-progress: false
+
+jobs:
+  reader-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment: oes-pg-a4-synthetic
+    if: github.ref == 'refs/heads/main' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude'
+    env:
+      OES_PG_A4_ENABLED: '1'
+      OES_PG_A4_HOST: ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech
+      OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_PASSWORD }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Require temporary password secret
+        shell: bash
+        run: |
+          if [ -z "$OES_PG_A4_PASSWORD" ]; then
+            echo "::error::Missing temporary OES_PG_A4_PASSWORD secret"
+            exit 1
+          fi
+      - name: Checkout reviewed main revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Django and PostgreSQL driver
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Execute one read-only connected Django smoke test
+        working-directory: applications/oes_web
+        run: python scripts/check_pg_a4_connected.py
