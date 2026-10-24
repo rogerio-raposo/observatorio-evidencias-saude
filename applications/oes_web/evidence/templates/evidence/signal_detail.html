@@ -6,20 +6,32 @@
 <body><main>
 <p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
 <h1>Sinal de evidência: {{ signal.nct }}</h1>
-<dl><dt>Estado documental</dt><dd>{{ signal.identity_state }}</dd>
+<section aria-labelledby="identity-title">
+<h2 id="identity-title">Identidade e relatórios</h2>
+<dl><dt>Estado documental</dt><dd>{{ identity_label }}</dd>
 <dt>Estudo</dt><dd>{{ signal.study_label|default:"Não reconciliado" }}</dd>
-<dt>Relatórios documentados</dt><dd>{% if signal.reports %}<ul>{% for report in signal.reports %}<li>{{ report }}</li>{% endfor %}</ul>{% else %}Nenhum vínculo estabelecido{% endif %}</dd>
-<dt>Proveniência</dt><dd>{{ signal.provenance }}</dd>
+<dt>Relatórios documentados</dt><dd>{% if signal.reports %}<ul>{% for report in signal.reports %}<li>{{ report }}</li>{% endfor %}</ul>{% else %}Nenhum vínculo estabelecido{% endif %}</dd></dl>
+<p>Um estudo pode possuir vários relatórios; a contagem de relatórios não é contagem de estudos.</p>
+</section>
+<section aria-labelledby="trajectory-title">
+<h2 id="trajectory-title">Trajetória documental retrospectiva</h2>
+<p>Marcos de documentação em ordem de apresentação; não são eventos operacionais executados pela aplicação.</p>
+<ol class="timeline">{% for entry in milestones %}
+<li><strong>{{ entry.item.description }}</strong>
+<p>Fonte: {{ entry.item.source_ref }}</p>
+{% if entry.links %}<p class="source-links">Documentos: {% for link in entry.links %}<a href="{{ link.url }}" rel="noopener noreferrer" target="_blank">{{ link.label }}</a>{% if not forloop.last %}; {% endif %}{% endfor %}</p>{% endif %}
+{% if entry.item.event_date %}<p>Data documentada: {{ entry.item.event_date }}</p>{% endif %}
+<p class="boundary">Limite: {{ entry.item.certainty_boundary }}</p></li>
+{% endfor %}</ol>
+</section>
+<section aria-labelledby="limits-title">
+<h2 id="limits-title">Limitações e avaliação científica</h2>
+<dl><dt>Proveniência</dt><dd>{{ signal.provenance }}
+{% for link in provenance_links %}<a href="{{ link.url }}" rel="noopener noreferrer" target="_blank">{{ link.label }}</a>{% if not forloop.last %}; {% endif %}{% endfor %}
+</dd>
 <dt>Limites</dt><dd>{{ signal.limitation }}</dd>
 <dt>Encaminhamento</dt><dd>Avaliação humana pendente; nenhum julgamento executado nesta interface.</dd></dl>
-<section aria-labelledby="trajectory-title"><h2 id="trajectory-title">Trajetória documental retrospectiva</h2>
-<p>Marcos de documentação, não eventos operacionais registrados por esta aplicação.</p>
-<ol>{% for milestone in signal.milestones %}
-<li><strong>{{ milestone.description }}</strong>
-<p>Fonte: {{ milestone.source_ref }}</p>
-{% if milestone.event_date %}<p>Data documentada: {{ milestone.event_date }}</p>{% endif %}
-<p>Limite: {{ milestone.certainty_boundary }}</p></li>
-{% endfor %}</ol>
-<p>Nenhuma avaliação científica nova foi realizada nesta trajetória.</p></section>
+<p>Nenhuma avaliação científica nova foi realizada nesta trajetória.</p>
+</section>
 <nav aria-label="Exemplos"><a href="/signals/NCT01438697/">Identidade conhecida</a> · <a href="/signals/NCT07836491/">Identidade indeterminada</a></nav>
 </main></body></html>
