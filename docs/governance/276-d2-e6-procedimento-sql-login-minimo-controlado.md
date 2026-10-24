@@ -58,3 +58,20 @@ A documentação https://neon.com/docs/manage/roles confirma que papéis criados
 **Revisão do procedimento:** a seção 1 com marcador de senha é exclusivamente histórica/de preparação e **não deve ser executada pelo usuário no SQL Editor do Neon** enquanto não houver método validado para não expor credenciais em histórico/logs. A opção mais compatível é um cliente SQL confiável com entrada interativa de senha ou mecanismo externo que mantenha o segredo fora do texto de SQL persistido; a disponibilidade prática desse cliente para o usuário **ainda não foi confirmada**. O conector atual também não fornece canal comprovadamente secreto de provisionamento e transferência da senha. Não pedir ao usuário que envie senha ao chat.
 
 **Resultado:** `NEON_SQL_EDITOR_PASSWORD_HISTORY_RISK_CONFIRMED / MIN_PRIVILEGE_SQL_ROLE_SUPPORTED / SAFE_SECRET_HANDOFF_NOT_VERIFIED / NO_ROLE_CREATED / E6_G1_BLOCKED`. Sem alterações no Neon ou no workflow.
+
+
+## 4. Alternativa verificada: \password do psql — 2026-10-24
+
+**Fonte primária:** documentação oficial PostgreSQL 18, https://www.postgresql.org/docs/18/app-psql.html , seção de meta-comandos, entrada \`\\password [ username ]\`; referência complementar Neon https://neon.com/docs/manage/roles . O meta-comando pede a senha interativamente, cifra antes de enviar ao servidor e evita a senha em texto puro no comando SQL/histórico; isso não dispensa proteger o terminal, a própria senha, a conexão e o computador utilizado.
+
+**Substituição recomendada do procedimento da seção 1, que não deve ser executado com senha literal no SQL Editor:**
+
+1. Pela interface administrativa SQL autenticada, com branch e banco exatos conferidos e depois de preflight, criar apenas \`CREATE ROLE oes_e6_capture_login NOLOGIN NOINHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION;\`. Conferir ausência de privilégios extras antes de prosseguir; não deixar LOGIN ativo sem senha.
+2. Usar **cliente oficial psql em ambiente confiável**, já conectado administrativamente ao mesmo branch/banco, e executar interativamente \`\\password oes_e6_capture_login\`. Nenhuma senha deve ser enviada pelo chat nem escrita em arquivo, CLI, SQL ou repositório. O cliente deverá ser instalado/operado pelo proprietário, se disponível; esse pré-requisito ainda não foi demonstrado.
+3. Somente após senha definida e verificação de grants, conceder \`oes_e6_writer\` com \`ADMIN FALSE, INHERIT FALSE, SET TRUE\` e alterar login para \`LOGIN\` durante o teste autenticado autorizado.
+4. Executar os testes sintéticos negativos e positivos estritamente aprovados e **desativar \`NOLOGIN\` e revogar a associação temporária** ao término. Confirmar papel sem login, membership restaurada, tabela privada sem registros e fixture PG-A4 intacta.
+5. Não chamar \`\\password\` na ferramenta SQL genérica do conector ou no Neon SQL Editor: trata-se de meta-comando **exclusivo do cliente psql**, não de SQL executável pelo servidor. A operação de criação da identidade e de senha não foi realizada nesta análise.
+
+**Gate prático ainda pendente:** disponibilidade de psql e canal administrativo confiável no ambiente do proprietário, sem expor connection string com senha em terminal/logs. Se não estiver disponível, não criar infra ou serviço pago por inferência: retomar decisão arquitetural proporcional.
+
+**Estado:** \`INTERACTIVE_PSQL_PASSWORD_METHOD_VERIFIED / EXECUTION_ENVIRONMENT_UNCONFIRMED / NO_ROLE_CREATED / E6_G1_BLOCKED\`.
