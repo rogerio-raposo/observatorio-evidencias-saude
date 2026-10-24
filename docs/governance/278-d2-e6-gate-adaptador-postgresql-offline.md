@@ -47,3 +47,9 @@ Autorização para implementação offline recebida do proprietário. Criados em
 **Limites da evidência:** a execução foi da reprodução local do conteúdo recuperado, não de um checkout autenticado; não houve execução remota da CI. Os mocks não simulam ainda especificamente erro de duplicidade e divergência de SHA informado, e não provam ACL ou recuperação posterior; a implementação marca explicitamente `PRIVATE_PERSISTED_UNVERIFIED`. Não conectar a operação factual sem revisão complementar e aprovação distinta.
 
 **Estado:** `OFFLINE_UNIT_TESTS_9_OF_9_PASS_LOCAL_COPY / REMAINING_NEGATIVE_TESTS_PENDING / NEON_NOT_ACCESSED / E6_G1_BLOCKED`.
+
+## 7. Ampliação da suíte offline — 2026-10-24
+
+Adapter e suíte atualizados em `tools/d2_e5_preservation/`; verificação adicional de bytes, digest SHA-256, comprimento e identificador do objeto preparado antes da chamada ao cursor. Quatro testes sintéticos acrescentados: (i) simulação de erro de duplicidade com rollback e erro sanitizado, (ii) SHA adulterado, (iii) payload adulterado após preparação, (iv) limite inclusivo exato de 2.000.000 bytes. Execução local da suíte reproduzida: `python -m unittest -v test_e6_private_pg_offline` → **13 testes PASS, 0 failures, 0 errors**. Não é teste de integração com PostgreSQL; duplicidade é simulada como falha do cursor, não pela constraint real. Nada conectado ao Neon, sem credenciais, JSON factual ou GET. Workflow factual continua `if: ${{ false }}`.
+
+**Estado:** `OFFLINE_TESTS_13_OF_13_PASS / INTEGRATION_NOT_VALIDATED / E6_G1_BLOCKED`.
