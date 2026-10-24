@@ -91,6 +91,14 @@ def build_package(raw, started, finished, ctype, target, run_id, attempt, sha, o
     }
     preupload_structure_gate(raw)
     package_evidence(raw, provenance, target)
+    # Labels apply only to this E6 factual review package, not historical E5 bundles.
+    for name in ("manifest.json", "summary.json"):
+        path = target / name
+        metadata = json.loads(path.read_text(encoding="utf-8"))
+        metadata["data_classification"] = "RAW_SOURCE_DATA"
+        metadata["scientific_review_status"] = "NOT_SCIENTIFICALLY_REVIEWED"
+        metadata["artifact_retention"] = "TEMPORARY_ARTIFACT"
+        path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
     plan = prepare_archival_plan(target)
     if plan["classification"] != "OFFLINE_PREFLIGHT_PASS_PUBLICATION_NOT_AUTHORIZED":
         raise ValueError("Preflight not approved")
