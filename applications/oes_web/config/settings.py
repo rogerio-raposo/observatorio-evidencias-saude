@@ -15,6 +15,9 @@ if os.getenv("OES_PG_A4_ENABLED") == "1":
         raise RuntimeError("PG-A4 host and password are required")
     if os.environ["OES_PG_A4_HOST"] not in ("ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech", "ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech"):
         raise RuntimeError("PG-A4 requires the approved synthetic endpoint")
+    # Django requires a default alias even when only a named connection is used.
+    # Dummy engine never opens a database; the experimental reader is explicit.
+    DATABASES["default"] = {"ENGINE": "django.db.backends.dummy"}
     DATABASES["oes_synthetic_reader"] = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "oes_sandbox",
