@@ -75,3 +75,11 @@ A documentação https://neon.com/docs/manage/roles confirma que papéis criados
 **Gate prático ainda pendente:** disponibilidade de psql e canal administrativo confiável no ambiente do proprietário, sem expor connection string com senha em terminal/logs. Se não estiver disponível, não criar infra ou serviço pago por inferência: retomar decisão arquitetural proporcional.
 
 **Estado:** \`INTERACTIVE_PSQL_PASSWORD_METHOD_VERIFIED / EXECUTION_ENVIRONMENT_UNCONFIRMED / NO_ROLE_CREATED / E6_G1_BLOCKED\`.
+
+## 5. Avaliação de viabilidade e proporcionalidade — 2026-10-24
+
+O Neon SQL Editor aceita vários metacomandos, mas sua documentação lista apenas subconjunto e **não comprova suporte ao metacomando interativo `\\password`**; não utilizar o Editor como substituto presumido do psql. Fonte: https://neon.com/docs/get-started/query-with-neon-sql-editor . O ambiente de execução desta sessão não dispõe do executável `psql`; a disponibilidade na máquina do proprietário não foi verificada.
+
+**Decisão de engenharia recomendada:** não adicionar infraestrutura, serviços ou scripts de provisionamento apenas para contornar o provisionamento de uma credencial de piloto. Antes de pedir instalação ao proprietário, avaliar criticamente custo operacional e risco de um único uso do `psql` num dispositivo confiável versus adiar teste de autenticação até integração futura; não ampliar escopo nem declarar o teste concluído. 
+
+**Estado:** `PSQL_LOCAL_UNAVAILABLE_IN_SESSION / OWNER_ENVIRONMENT_UNKNOWN / SAFE_CREDENTIAL_PROVISIONING_PENDING / E6_G1_BLOCKED`. Nenhuma alteração operacional efetuada.
