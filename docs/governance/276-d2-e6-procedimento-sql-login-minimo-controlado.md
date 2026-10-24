@@ -98,3 +98,11 @@ O proprietário optou explicitamente por **aceitar, apenas nesta bateria de test
 
 **Estado:** \`TEMPORARY_SQL_EDITOR_PASSWORD_RISK_ACCEPTED_FOR_SYNTHETIC_TESTS / SECRET_MUST_NOT_ENTER_CHAT_OR_GITHUB / ROLE_PROVISIONING_AUTHORIZATION_REMAINS_SYNTHETIC_ONLY / E6_G1_BLOCKED\`.
 
+
+## 7. Implantação parcial autorizada — 2026-10-24
+
+Sob autorização explícita do Documento 275 e aceitação posterior do risco de senha temporária no Editor, foi executado **somente** o provisionamento SQL sem senha na branch experimental `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`: `CREATE ROLE oes_e6_capture_login NOLOGIN NOINHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION`; `GRANT oes_e6_writer TO oes_e6_capture_login WITH ADMIN FALSE, INHERIT FALSE, SET TRUE`. Verificação no catálogo: `rolcanlogin=false`, `rolinherit=false`, `rolsuper=false`, `rolcreatedb=false`, `rolcreaterole=false`, `rolreplication=false`, sem membership `neon_superuser`. Única associação concedida: `oes_e6_writer` (ADMIN FALSE, INHERIT FALSE, SET TRUE). Tabela bruta inicial 0; fixture PG-A4 2/2/3/1.
+
+**Pendente de ação exclusivamente no Neon SQL Editor pelo proprietário:** gerar senha descartável forte fora do chat e executar `ALTER ROLE oes_e6_capture_login WITH PASSWORD '<SEGREDO_EXCLUSIVO_DE_TESTE>' LOGIN;` substituindo o marcador privado antes de executar; nunca fornecer senha no chat ou GitHub. O risco de histórico é aceito somente nesse escopo sintético. Antes de alterar a senha, confirmar que o SQL Editor aponta para o branch e banco corretos. Depois, informar aqui apenas `Senha configurada`, sem qualquer valor secreto. Nenhum GitHub Secret, teste autenticado, workflow factual ou GET foi ativado nesta atividade.
+
+**Estado:** `CAPTURE_LOGIN_CREATED_NOLOGIN_NO_PASSWORD / LEAST_PRIVILEGE_CATALOG_PASS / OWNER_SECRET_CONFIGURATION_PENDING / E6_G1_FACTUAL_BLOCKED`.
