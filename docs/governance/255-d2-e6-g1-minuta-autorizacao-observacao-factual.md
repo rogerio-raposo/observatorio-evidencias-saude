@@ -59,3 +59,30 @@ A eventual aprovação de E6-G1 autorizará **apenas a captura/retensão tempor�
 ## Estado e próximo passo
 
 `D2_E6_G1_AUTHORIZATION_DRAFT_PREPARED / NOT_APPROVED / FACTUAL_WORKFLOW_BLOCKED`. A próxima atividade será revisão crítica da minuta e verificação dos pré-requisitos humanos/de publicação, antes de pedir autorização específica. CP270 vigente; D2 `PARTIAL`, Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, readiness `NOT_READY`.
+
+## Auditoria estática pré-upload — controles existentes e lacunas (2026-10-24)
+
+**Escopo da auditoria:** leitura do código e dos testes versionados em `main`, HEAD `b7a53d43da4fa60fa99e2dd3c08777311f97097f`, sem execução de teste adicional, workflow, requisição HTTP ou dados factuais. Resultado: `E6_G1_PREUPLOAD_STATIC_AUDIT_COMPLETE / LIMITED_GAPS_IDENTIFIED / GATE_NOT_READY`. A prova histórica da suíte permanece a execução sintética 27/27 PASS (`40069936004`), não reexecutada nesta auditoria.
+
+### Cobertura já existente — não duplicar
+
+| Controle | Implementação efetivamente encontrada | Limite da demonstração |
+|---|---|---|
+| Fonte e transporte | `e6_capture.py` constrói URL estática por `urlencode(..., quote_via=quote)`, método GET, `Accept: application/json`, `NoRedirect`, timeout 20s, uma chamada de `open()`, nenhuma rotina explícita de retry/paginação; `preserve.py` exige HTTPS e `clinicaltrials.gov/api/v2/studies` | `package_evidence()` valida domínio/caminho, **não igualdade com a query exata**; teste de E6 confere apenas nomes e `pageSize=20` |
+| Limites e estrutura | `capture_once()` recusa HTTP distinto de 200, content-type não JSON ou corpo acima de 2.000.000 B; `preserve._validate()` exige objeto JSON com lista `studies`, até 20, identificadores NCT válidos/únicos, `totalCount` coerente e tipo do page token | Esquema é mínimo, não inventário/whitelist de todos os campos da resposta |
+| Integridade e proveniência | `preserve.package_evidence()` grava bytes idênticos em `response.raw.json`, SHA-256 e manifesto, com execução, commit, horário, URL e contagens; staging não sobrescreve destino; `archive_preflight.prepare_archival_plan()` reabre os três arquivos, compara hashes/NCT/contagens/identidade, impede symlinks e colisões locais | Proveniência de resposta é fornecida pelo chamador; não equivale a autenticação independente da origem; nenhum commit factual autorizado |
+| Escopo científico | Manifesto e resumo trazem `scientific_appraisal_performed: false`; preflight retorna `content_review: REQUIRED_NOT_PERFORMED` e `durably_archived: false` | Ainda **não há** os rótulos literais `RAW_SOURCE_DATA / NOT_SCIENTIFICALLY_REVIEWED` exigidos na política atual |
+| Gating de execução | Job factual protegido por `if: ${{ false }}`; o fluxo não faz commit de evidência | Futura alteração desse guard deve ser aprovada separadamente; texto `owner_approval` não constitui evidência de autorização |
+
+### Lacunas materiais restritas antes de E6-G1
+
+1. **Inventário mínimo de conteúdo antes do upload público.** A validação estrutural aceita campos adicionais arbitrários em cada registro e no JSON raiz. Não existe revisão automática explícita de chaves inesperadas ou salvaguarda específica para conteúdo fora do escopo. É necessária uma **regra proporcional e testável**, adequada ao esquema real de metadados do ClinicalTrials.gov, que classifique `ALLOW/HOLD` e impeça upload ao ocorrer dúvida material. Não prometer identificação completa de dados pessoais por inspeção automatizada; os dados da fonte pública podem incluir contatos nominalmente identificáveis. A aprovação E6-G1 deve aceitar conscientemente a exposição pública dos campos permitidos.
+2. **Rotulagem efetiva do pacote e do artifact.** O atributo booleano `scientific_appraisal_performed: false` já existe, mas é insuficiente para satisfazer literalmente a política `RAW_SOURCE_DATA / NOT_SCIENTIFICALLY_REVIEWED` no manifesto e na identificação do artifact. Ajustar com mínima alteração em produtor/validador e testes; **sem modificar os bytes do `response.raw.json`**.
+3. **Gate antes do `upload-artifact`.** Atualmente, qualquer JSON que passe por `package_evidence()` e `prepare_archival_plan()` é automaticamente enviado como artifact pelo workflow factual assim que o job for liberado. Necessário tornar a política de conteúdo e rotulagem um bloqueio verificável **antes** do upload, com teste positivo e negativo puramente sintéticos.
+4. **Contrato exato da URL.** Acrescentar assertiva sintética de igualdade da URL completa e ordem/valores dos parâmetros, para detectar drift no `e6_capture.py`; distinguir URL construída no chamador de validação genérica apenas de host e path pelo `preserve.py`. Não introduzir motor de políticas de URL.
+
+**Não classificar como lacunas**: duplicar controles de 2 MB/20 NCT/hash, criar banco ou staging privado, construir detector universal de informações pessoais, repetir consulta ou ampliar para fontes externas.
+
+### Sequência recomendada e autorização
+
+Preparar proposta de **uma correção técnica pequena**, separadamente autorizada, incluindo rotulagem, filtro/decisão pré-upload proporcional e 2–4 testes sintéticos direcionados (URL exata, campos inesperados/HOLD, rotulagem e falha fechada). **Não executar coleta factual nem desbloquear `if: false`.** Rever E6-G1 após demonstração sintética e aceitação explícita da publicidade temporária. E6-G2 continua exclusivamente responsável pela eventual publicação durável e promoção científica.
