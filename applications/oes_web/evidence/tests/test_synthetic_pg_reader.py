@@ -28,3 +28,14 @@ class SyntheticReaderTests(SimpleTestCase):
         args = cursor.execute.call_args.args
         self.assertEqual(args[1], ["active"])
         self.assertTrue(args[0].lstrip().startswith("SELECT"))
+
+    @override_settings(DATABASES={ALIAS: {"ENGINE": "django.db.backends.postgresql", "NAME": "test"}})
+    def test_unavailable_connection_raises_instead_of_returning_empty_result(self):
+        from django.db.utils import OperationalError
+        connection = MagicMock()
+        connection.cursor.side_effect = OperationalError("synthetic connection unavailable")
+        with patch("evidence.synthetic_pg_reader.connections") as connections:
+            connections.__getitem__.return_value = connection
+            with self.assertRaises(OperationalError):
+                list_synthetic_study_report_links()
+        connection.cursor.assert_called_once_with()
