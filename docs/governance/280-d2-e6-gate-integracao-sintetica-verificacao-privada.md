@@ -43,3 +43,11 @@ O proprietário aprovou explicitamente `SYNTHETIC_OFFLINE_INTEGRATION_AND_PRIVAT
 **Evidência pendente:** testes novos **ainda não executados na CI**, nem validados contra PostgreSQL real. A suíte anterior 57/57 PASS aplica-se à revisão anterior, não aos novos arquivos. Workflow factual continua `if: ${{ false }}` e não foi modificado. Nenhuma operação Neon, credencial ou GET nesta etapa.
 
 **Estado:** `OFFLINE_SYNTHETIC_INTEGRATION_CODE_PERSISTED / NEW_TESTS_CI_PENDING / CONNECTED_GATE_NOT_APPROVED / E6_G1_BLOCKED`.
+
+## Etapa A — CI remota independente verificada (2026-10-24)
+
+Execução GitHub Actions `40126123398`, job `120967804433`, workflow `.github/workflows/d2-e5-a3-offline-tests.yml`, evento `workflow_dispatch`, branch `main`, **HEAD testado `2a129c2bff8318f2b32fd8f7804e6764b40ec9a7`**. Estado `completed / success`. Log integral consultado: **`Ran 63 tests in 0.046s` e `OK`**; seis testes da classe `test_e6_private_roundtrip_offline.RoundTripTests` individualmente `ok`. Link: https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40126123398 .
+
+**Conclusão restrita:** Etapa A, integração sintética offline, **PASS**. Nenhum login, SQL conectado, secrets, GET factual ou arquivo JSON bruto publicado. Etapa B permanece **não autorizada**, incluindo escrita positiva autenticada e verificação de recuperação privada real. Workflow factual permanece bloqueado por `if: ${{ false }}`; caminho antigo de artifact não foi alterado.
+
+**Estado:** `SYNTHETIC_OFFLINE_INTEGRATION_CI_63_OF_63_PASS / STAGE_A_VALIDATED_RESTRICTED / STAGE_B_NOT_AUTHORIZED / E6_G1_BLOCKED`.
