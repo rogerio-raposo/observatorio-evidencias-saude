@@ -60,4 +60,12 @@ Consulta às fontes oficiais disponíveis:
 
 **Resultado:** `TERMS_FULL_REVIEW_PENDING` mantido; `PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: APPROVED_BY_OWNER` mantido; `E6_G1_NOT_APPROVED` e `FACTUAL_CAPTURE_BLOCKED` mantidos. A diligência não executou consulta ao endpoint factual de estudos.
 
+## 7. Proporcionalidade da data de atualização da fonte (2026-10-24)
+
+Distinguem-se: (a) `started_at_utc`/`completed_at_utc`, observação efetiva pelo OES; (b) `LastUpdatePostDate` ou campo equivalente em `statusModule`, associado a atualizações publicadas de **cada estudo** quando presente no JSON; e (c) `dataTimestamp` da visão de conjunto da API, indicado para consulta no endpoint **distinto** `/api/v2/version`. Não confundir nenhum desses conceitos nem inferir `dataTimestamp` do horário de captura. Documentação técnica oficial da API v2: https://www.nlm.nih.gov/pubs/techbull/ma24/ma24_clinicaltrials_api.html ; definição de atualizações por estudo: https://clinicaltrials.gov/expert-search ; referência de uso do endpoint version: https://clinicaltrials.gov/data-api .
+
+**Decisão proporcional de preparação:** não adicionar GET de versão ao primeiro ensaio E6-G1; o contrato aprovado para deliberação permanece **um GET único** em `/api/v2/studies`. A proveniência existente (fonte, URL exata, parâmetros, horários OES, execução e SHA-256) identifica a observação bruta para fins técnicos, mas **não atesta o instante de processamento da base pela fonte** nem sana uma obrigação contratual de atribuição ainda não confirmada. Em coleta recorrente, comparação histórica ou paginação multirrequisição, avaliar novo gate e `dataTimestamp` explícito.
+
+**Termos e gate:** a revisão integral de termos continua pendente; este parecer não afirma inexistência de requisitos de atribuição. A decisão do proprietário sobre exposição pública do artifact temporário já foi registrada, mas não equivale à aprovação executiva E6-G1. `if: ${{ false }}` permanece, nenhum GET executado.
+
 **STOP — documento deliberativo apenas.**
