@@ -57,10 +57,12 @@ def prepare_observation(raw: bytes, provenance: dict[str, Any]) -> PreparedObser
         raise PersistenceHold("HOLD: invalid run attempt")
     if type(provenance["source_http_status"]) is not int or provenance["source_http_status"] != 200:
         raise PersistenceHold("HOLD: invalid response status")
-    if "application/json" not in provenance["response_content_type"].lower():
+    if not provenance["response_content_type"].lower().split(';', 1)[0].strip() == "application/json":
         raise PersistenceHold("HOLD: invalid content type")
     start, end = provenance["started_at_utc"], provenance["completed_at_utc"]
-    if not isinstance(start, datetime) or not isinstance(end, datetime) or not start.tzinfo or not end.tzinfo or end < start:
+    if (not isinstance(start, datetime) or not isinstance(end, datetime)
+            or start.tzinfo is None or end.tzinfo is None
+            or start.utcoffset() is None or end.utcoffset() is None or end < start):
         raise PersistenceHold("HOLD: invalid timestamps")
     digest = hashlib.sha256(raw).hexdigest()
     values = tuple(provenance[k] for k in FIELDS) + (digest, len(raw), raw)
@@ -76,6 +78,7 @@ def persist_observation(connection: Any, prepared: PreparedObservation) -> dict[
     if not isinstance(prepared, PreparedObservation) or prepared.statement != INSERT_SQL:
         raise PersistenceHold("HOLD: invalid prepared observation")
     if (len(prepared.parameters) != len(FIELDS) + 3
+            or prepared.byte_count < 1 or prepared.byte_count > MAX_BYTES
             or not isinstance(prepared.parameters[-1], bytes)
             or prepared.byte_count != len(prepared.parameters[-1])
             or prepared.parameters[-2] != prepared.byte_count
