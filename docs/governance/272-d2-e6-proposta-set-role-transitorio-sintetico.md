@@ -25,3 +25,15 @@ A concessão temporária de membership é uma alteração de controle de acesso 
 Esta minuta não implementa, executa nem aprova automaticamente o procedimento.
 
 **STOP — aguardando autorização explícita.**
+
+## 4. Execução autorizada — 2026-10-24
+
+O proprietário aprovou expressamente `TEMPORARY_SET_ROLE_MEMBERSHIP_SYNTHETIC_ONLY / verify-and-revoke`. No Neon experimental `br-gentle-hall-b6jaxehf` o preflight encontrou **associações preexistentes** de `oes_sandbox_owner` aos papéis `oes_e6_writer` e `oes_e6_verifier`, ambas concedidas por `cloud_admin`, com `ADMIN TRUE, INHERIT FALSE, SET FALSE`. Portanto, não era seguro executar `REVOKE` genérico: ele poderia apagar privilégios anteriores ao teste.
+
+Uma transação `GRANT ... WITH SET TRUE, INHERIT FALSE` adicionou associações temporárias em nome de `oes_sandbox_owner`. Testes transacionais separados com `SET LOCAL ROLE` produziram as negações esperadas: writer `SELECT` → `permission denied for table source_observation` (PASS); verifier `INSERT` → a mesma negação (PASS). Nenhum JSON factual ou registro sintético foi inserido pelos testes.
+
+Na limpeza, `GRANT ... WITH SET FALSE, INHERIT FALSE` desabilitou SET, mas deixou **associações adicionais do grantor proprietário**. Essas entradas foram identificadas por leitura de `pg_auth_members` e removidas com `REVOKE ... GRANTED BY oes_sandbox_owner`, preservando explicitamente os grants preexistentes de `cloud_admin`. Verificação final: exatamente **uma associação original por papel**, ambas `ADMIN TRUE / INHERIT FALSE / SET FALSE`, `pg_has_role(...,'SET') = false`, nenhuma associação temporária restante.
+
+Estado final: tabela privada com **0 linhas**; fixture PG-A4 inalterada (**2 estudos, 2 relatórios, 3 vínculos e 1 proveniência**). Workflow factual `if: ${{ false }}`; sem GET factual, novo login, serviço pago, alteração de schema/tabela ou exposição pública de JSON.
+
+**Resultado delimitado:** `SET_ROLE_NEGATIVE_TESTS_PASS / TEMP_MEMBERSHIPS_REVOKED_AND_BASELINE_RESTORED / E6_G1_FACTUAL_BLOCKED`. Não equivale a autenticação operacional real do writer/verifier, nem atesta testes de limites, duplicidade ou workflow PostgreSQL.
