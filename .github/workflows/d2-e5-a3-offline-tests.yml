@@ -1,0 +1,23 @@
+name: OES D2-E5-A3 offline synthetic tests
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e5-a3-offline-unittest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout dispatched revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run only D2-E5-A3 synthetic tests (no network clients or dependencies)
+        working-directory: tools/d2_e5_preservation
+        run: python -m unittest discover -s tests -v

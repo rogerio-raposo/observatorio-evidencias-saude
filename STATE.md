@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP268 — workflow manual para testes sintéticos D2-E5-A3 (2026-10-23 local)
+
+O acesso local aos arquivos publicados foi bloqueado por DNS, impedindo execução local fiel. Criado workflow manual independente `.github/workflows/d2-e5-a3-offline-tests.yml`, que usa Python 3.12 e somente `unittest discover -s tests -v` em `tools/d2_e5_preservation`. Não inclui código de acesso à API, segredos, Neon, banco, pacotes externos, deploy nem eventos automáticos. **Estado `E5_A3_MANUAL_UNITTEST_WORKFLOW_PENDING_RUN`: testes ainda não executados/validados no novo workflow**, acionamento manual exige decisão separada. Não alegar PASS com base em inspeção de fonte. CP268, D2 parcial, readiness NOT_READY, Fase 5 NOT_STARTED e gates preservados.
+
 ## Pós-CP268 — D2-E5-A3 módulo de preservação sintética implementado (2026-10-23 local)
 
 Sob autorização específica, foi criado `tools/d2_e5_preservation/` com módulo `preserve.py`, testes unittest sintéticos e README. Recebe bytes e proveniência fornecidos pelo chamador, valida forma/limites/NCTs, preserva `response.raw.json` exato, produz manifesto SHA-256 e resumo, prepara em diretório temporário e publica por rename local somente depois de verificações. **Nenhuma rede, consulta ClinicalTrials.gov, CI, SQL, Neon, modificação do workflow E3 ou prova científica.** Estado `D2_E5_A3_OFFLINE_IMPLEMENTED / TEST_EXECUTION_NOT_CLAIMED / CONNECTED_USE_NOT_AUTHORIZED`. Testes incluídos, não executados neste ato; próximos passos: verificação técnica autorizada de testes sintéticos e decisão independente de retenção durável antes de coleta real. CP268, Fase 4 documental encerrada, Fase 5 não iniciada, readiness NOT_READY e gates preservados.
