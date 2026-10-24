@@ -77,3 +77,26 @@ O proprietário escolheu expressamente **Opção 1: ensaio sintético mediante a
 **Próxima etapa:** preparar uma única autorização operacional restrita, com SQL pré-revisado e rollback/limpeza; nenhuma operação autorizada nesta decisão. Workflow factual continua `if: ${{ false }}`.
 
 **Estado:** `B2_OPTION_1_SELECTED / ROLE_SWITCH_EXECUTION_GATE_PENDING / B2_WRITES_NOT_AUTHORIZED / E6_G1_BLOCKED`.
+
+## Procedimento executivo restrito — opção 1, preparado sem execução (2026-10-24)
+
+**Escopo:** um único registro inequivocamente sintético na branch `br-gentle-hall-b6jaxehf`, projeto `weathered-boat-65779510`, banco `oes_sandbox`. Não criar logins, usar credenciais temporárias antigas, habilitar workflows, invocar GET ou acessar payload factual. A escolha da opção 1 foi aprovada como desenho; **DML, concessões transitórias e exclusão ainda aguardam autorização operacional específica**.
+
+**Preflight obrigatório antes de modificar qualquer coisa:** confirmar com evidência contemporânea `session_user`, associações e respectivos `grantor`/opções `SET` do proprietário para ambos os papéis, permissões efetivas, schema exato e contagem zero; confirmar fixture PG-A4 (2 estudos, 2 relatórios, 3 links, 1 proveniência). Se o conector bloquear consulta, não insistir nem contornar: interromper e usar procedimento manual aprovado, quando autorizado.
+
+**Acesso temporário:** as associações históricas concedidas por `cloud_admin` ao proprietário não devem ser removidas. Se necessário, acrescentar somente grants temporários com `SET TRUE, INHERIT FALSE`, rastrear `grantor` e retirar exclusivamente os grants criados no ensaio; revogar `GRANTED BY` corretamente, sem `REVOKE` genérico. Confirmar que o proprietário não herda privilégios de writer/verifier por essas concessões.
+
+**Inserção:** utilizar identificador prefixado `SYNTH-B2-` único, bytes UTF-8 sintéticos conhecidos, comprimento real menor ou igual a 2.000.000 e SHA-256 calculado sobre bytes sem reserialização. Executar INSERT somente após comprovar `current_user=oes_e6_writer` na transação `SET LOCAL ROLE`, registrando também `session_user`. Encerrar transação para persistência observável; não executar SELECT sobre payload como writer. A prova de autenticação independente permanece fora de escopo.
+
+**Recuperação:** em transação **separada**, `SET LOCAL ROLE oes_e6_verifier` e comprovar `current_user`; consultar somente o identificador sintético e calcular SHA-256/contagem de bytes no ambiente controlado, retornando metadados sanitizados; não exportar `raw_payload` em tela, chat, log ou artifact. Comparar digest originalmente calculado, coluna armazenada e digest de bytes recuperados. Registrar HOLD se qualquer divergência. Leitura por verifier não confere autorização de escrita.
+
+**Limpeza:** como writer/verifier não têm DELETE, executar exclusão restrita **somente** por identidade administrativa explicitamente autorizada, conferindo observação única pelo ID antes e zero registros depois; validar fixture PG-A4. **Limpeza e revogação devem ocorrer inclusive após HOLD**; se alguma etapa de saneamento falhar, registrar incidente e não declarar baseline restaurado. Revogar exclusivamente memberships de teste com prova do grantor e verificar `pg_has_role(owner,...,'SET')=false` preservando associações prévias. Login `oes_e6_capture_login` deve permanecer NOLOGIN e sem membership.
+
+**Revisão do SQL:** ainda necessária antes de execução, com conferência de tipos/constraints e da semântica do Neon SQL Editor. Não assumir que transações ou contextos de `SET LOCAL ROLE` persistem entre execuções do Editor. Comandos operacionais serão apresentados e submetidos a autorização antes de qualquer execução; esta seção não é script executável.
+
+**Critério de aceite:** um INSERT sintético confirmado, leitura sob verifier efetivo, digests/tamanhos idênticos, nenhuma permissão cruzada, linha removida, fixture inalterada e baseline de grants restaurado. Aprovação de B2 não significa liberação de E6-G1 factual.
+
+**Pedido de autorização para fase operacional posterior (não aprovado):**
+`APPROVED — OES / D2-E6 / B2_SINGLE_SYNTHETIC_CONNECTED_SET_ROLE_TRIAL / br-gentle-hall-b6jaxehf / temporary SET grants only if needed / one synthetic INSERT / private verifier hash check / precise cleanup and grantor-aware revoke / no factual GET / no public JSON / no workflow enablement / no paid services / fail closed`
+
+**Estado:** `B2_OPTION_1_EXECUTION_PLAN_PREPARED / B2_SQL_APPROVAL_PENDING / E6_G1_BLOCKED`.
