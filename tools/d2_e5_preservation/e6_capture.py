@@ -105,11 +105,32 @@ def build_package(raw, started, finished, ctype, target, run_id, attempt, sha, o
     return plan
 
 
+
+def verify_upload_package(target):
+    """Second offline fail-closed check immediately before artifact upload."""
+    plan = prepare_archival_plan(target)
+    if plan["classification"] != "OFFLINE_PREFLIGHT_PASS_PUBLICATION_NOT_AUTHORIZED":
+        raise ValueError("HOLD: archival preflight failed")
+    preupload_structure_gate((target / "response.raw.json").read_bytes())
+    for name in ("manifest.json", "summary.json"):
+        data = json.loads((target / name).read_text(encoding="utf-8"))
+        if (data.get("data_classification") != "RAW_SOURCE_DATA"
+                or data.get("scientific_review_status") != "NOT_SCIENTIFICALLY_REVIEWED"
+                or data.get("artifact_retention") != "TEMPORARY_ARTIFACT"):
+            raise ValueError("HOLD: missing mandatory review labels")
+    return plan
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--connected", action="store_true")
+    parser.add_argument("--verify-upload", action="store_true")
     parser.add_argument("--output", default="evidence-package")
     args = parser.parse_args()
+    if args.verify_upload:
+        verify_upload_package(Path(args.output))
+        print("PASS E6_PREUPLOAD_VERIFIED_REVIEW_ONLY")
+        return
     if not args.connected or os.environ.get("OES_E6_CONNECTED_APPROVAL") != "OWNER_APPROVED_SINGLE_GET":
         raise SystemExit("STOP: connected execution requires separate owner approval")
     run_id = int(os.environ["GITHUB_RUN_ID"])
