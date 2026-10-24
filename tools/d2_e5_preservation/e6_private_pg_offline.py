@@ -75,6 +75,14 @@ def persist_observation(connection: Any, prepared: PreparedObservation) -> dict[
     """
     if not isinstance(prepared, PreparedObservation) or prepared.statement != INSERT_SQL:
         raise PersistenceHold("HOLD: invalid prepared observation")
+    if (len(prepared.parameters) != len(FIELDS) + 3
+            or not isinstance(prepared.parameters[-1], bytes)
+            or prepared.byte_count != len(prepared.parameters[-1])
+            or prepared.parameters[-2] != prepared.byte_count
+            or hashlib.sha256(prepared.parameters[-1]).hexdigest() != prepared.sha256
+            or prepared.parameters[-3] != prepared.sha256
+            or prepared.parameters[0] != prepared.observation_id):
+        raise PersistenceHold("HOLD: prepared integrity mismatch")
     try:
         if connection.autocommit:
             raise PersistenceHold("HOLD: autocommit forbidden")
