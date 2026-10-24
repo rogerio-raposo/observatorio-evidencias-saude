@@ -68,4 +68,17 @@ Distinguem-se: (a) `started_at_utc`/`completed_at_utc`, observação efetiva pel
 
 **Termos e gate:** a revisão integral de termos continua pendente; este parecer não afirma inexistência de requisitos de atribuição. A decisão do proprietário sobre exposição pública do artifact temporário já foi registrada, mas não equivale à aprovação executiva E6-G1. `if: ${{ false }}` permanece, nenhum GET executado.
 
+## 8. Verificação oficial complementar dos termos — escopo e limitações (2026-10-24)
+
+Foi reaberta a página oficial https://clinicaltrials.gov/about-site/terms-conditions, mas a extração textual disponível expõe somente interface dinâmica, **não o texto normativo completo**; portanto não declarar `TERMS_FULL_REVIEW_PASS`.
+
+Fontes oficiais adicionais consultadas:
+- https://www.nlm.nih.gov/databases/download/terms_and_conditions.html : termos NLM para **downloads de seus servidores FTP** exigem crédito explícito à NLM, ausência de endosso implícito e, em redistribuição, manutenção da versão atual **ou** aviso claro de que o material pode estar desatualizado. **O escopo indicado é FTP e não autoriza inferir automaticamente que rege a API ClinicalTrials.gov.**
+- https://www.nlm.nih.gov/databases/download.html : página NLM de copyright/download, com cautelas semelhantes.
+- https://catalog.data.gov/dataset/clinicaltrials-gov : catálogo federal identifica ClinicalTrials.gov como conjunto público e fornece link para licença ODbL nos metadados; **isso não substitui os termos específicos nem resolve direitos sobre todo conteúdo de terceiros**.
+
+**Parecer:** conservar `TERMS_FULL_REVIEW_PENDING` para redistribuição integral do JSON bruto; nenhuma conclusão jurídica universal. Para eventual aprovação executiva, manter atribuição explícita de fonte/URL/data da captura, aviso visível de dado bruto não revisado e potencialmente desatualizado, ausência de endosso pela NLM e revisão por exceção `HOLD`. Essas precauções são recomendadas por prudência e **não significam que todas as obrigações contratuais foram verificadas**. Se a decisão exigir comprovação formal do direito de redistribuição do JSON integral, obter texto integral dos termos aplicáveis ou manifestação da fonte antes de disponibilizar o artifact.
+
+**Gates invariáveis:** aceite do proprietário quanto à exposição pública temporária já consta; `E6_G1_NOT_APPROVED`; workflow factual `if: ${{ false }}`; nenhuma consulta real de estudos, upload ou segundo GET autorizados.
+
 **STOP — documento deliberativo apenas.**
