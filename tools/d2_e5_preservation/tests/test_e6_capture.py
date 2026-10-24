@@ -93,3 +93,79 @@ class E6IntegrationTests(unittest.TestCase):
                     "synthetic-e6-hold",
                 )
             self.assertFalse(destination.exists())
+
+    def test_review_labels_and_second_preupload_verification(self):
+        raw = json.dumps({"studies": [
+            {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}}}],
+            "totalCount": 1}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            folder = Path(td) / "evidence"
+            e6_capture.build_package(
+                raw, "2026-10-24T05:00:00+00:00", "2026-10-24T05:00:01+00:00",
+                "application/json", folder, 42, 1, "a" * 40, "synthetic-e6-review")
+            for name in ("manifest.json", "summary.json"):
+                data = json.loads((folder / name).read_text(encoding="utf-8"))
+                self.assertEqual(data["data_classification"], "RAW_SOURCE_DATA")
+                self.assertEqual(data["scientific_review_status"], "NOT_SCIENTIFICALLY_REVIEWED")
+                self.assertEqual(data["artifact_retention"], "TEMPORARY_ARTIFACT")
+            self.assertEqual((folder / "response.raw.json").read_bytes(), raw)
+            self.assertEqual(
+                e6_capture.verify_upload_package(folder)["github_publication"],
+                "NOT_PERFORMED")
+
+    def test_second_preupload_gate_holds_missing_label(self):
+        raw = json.dumps({"studies": [
+            {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}}}],
+            "totalCount": 1}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            folder = Path(td) / "evidence"
+            e6_capture.build_package(
+                raw, "2026-10-24T05:00:00+00:00", "2026-10-24T05:00:01+00:00",
+                "application/json", folder, 42, 1, "a" * 40, "synthetic-e6-review")
+            summary_path = folder / "summary.json"
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            summary.pop("scientific_review_status")
+            summary_path.write_text(json.dumps(summary), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "^HOLD: missing mandatory review labels"):
+                e6_capture.verify_upload_package(folder)
+
+    def test_second_preupload_gate_holds_modified_raw_bytes(self):
+        raw = json.dumps({"studies": [
+            {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}}}],
+            "totalCount": 1}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            folder = Path(td) / "evidence"
+            e6_capture.build_package(
+                raw, "2026-10-24T05:00:00+00:00", "2026-10-24T05:00:01+00:00",
+                "application/json", folder, 42, 1, "a" * 40, "synthetic-e6-review")
+            (folder / "response.raw.json").write_bytes(raw + b" ")
+            with self.assertRaisesRegex(ValueError, "Raw body digest/size mismatch"):
+                e6_capture.verify_upload_package(folder)
+
+    def test_second_preupload_gate_holds_unexpected_raw_fields_even_with_updated_digest(self):
+        raw = json.dumps({"studies": [
+            {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}}}],
+            "totalCount": 1}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            folder = Path(td) / "evidence"
+            e6_capture.build_package(
+                raw, "2026-10-24T05:00:00+00:00", "2026-10-24T05:00:01+00:00",
+                "application/json", folder, 42, 1, "a" * 40, "synthetic-e6-review")
+            # An unexpected field is blocked even if the bundle's checksums
+            # are recomputed to be internally self-consistent.
+            modified = json.dumps({"studies": [
+                {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}},
+                 "unreviewedPayload": True}], "totalCount": 1}).encode()
+            (folder / "response.raw.json").write_bytes(modified)
+            digest = hashlib.sha256(modified).hexdigest()
+            manifest_path = folder / "manifest.json"
+            summary_path = folder / "summary.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            manifest["response_bytes"] = len(modified)
+            manifest["raw_sha256"] = digest
+            summary["raw_sha256"] = digest
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            summary_path.write_text(json.dumps(summary), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "^HOLD: unexpected study fields"):
+                e6_capture.verify_upload_package(folder)
