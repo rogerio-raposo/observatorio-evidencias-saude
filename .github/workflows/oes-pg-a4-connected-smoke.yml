@@ -16,6 +16,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude'
     env:
       OES_PG_A4_ENABLED: '1'
+      OES_PG_A4_EXPECTED_MODE: relational
       OES_PG_A4_HOST: ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech
       PYTHONUNBUFFERED: '1'
     steps:
