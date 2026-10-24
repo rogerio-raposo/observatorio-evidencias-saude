@@ -51,4 +51,18 @@ O arquivo `.github/workflows/d2-e6-a2-gated-capture.yml` continua com job `if: $
 
 **Status:** `SYNTHETIC_SCHEMA_CREATED / CATALOG_ACL_CHECK_PASS / BYTE_PARITY_PASS / ZERO_RAW_ROWS / NEGATIVE_RUNTIME_TESTS_PENDING / FACTUAL_CAPTURE_BLOCKED`.
 
+## 7. Testes negativos e rollback — execução sintética limitada (2026-10-24)
+
+Alvo: `weathered-boat-65779510 / br-gentle-hall-b6jaxehf / oes_sandbox`. Antes dos testes, workflow factual permaneceu `if: ${{ false }}`. Apenas SQL sintético local ao esquema novo.
+
+**Negação de acesso efetiva — PASS:** consulta `SELECT count(*) FROM oes_raw_private.source_observation` via conexão do papel real `oes_pg_a4_reader` falhou com `permission denied for schema oes_raw_private`, confirmando isolamento da fixture PG-A4.
+
+**Papéis E6 — execução autenticada NÃO COMPROVADA:** tentativas de `SELECT` como `oes_e6_writer` e `INSERT` como `oes_e6_verifier` não chegaram ao PostgreSQL por `missing authentication credentials: required password`. Ambos são `NOLOGIN`; os testes em ACL do catálogo continuam informativos, mas não substituem um teste sob identidade operacional autenticada ou `SET ROLE` com fronteiras revisadas. **Não criar senhas ou aumentar privilégios automaticamente.**
+
+**Rollback — PASS:** uma transação começou com inserção do marcador sintético `SYNTH-E6-ROLLBACK` e falhou propositalmente na segunda instrução por violação de `NOT NULL`. Consulta posterior demonstrou `total=0` e `rolled_back=0`; primeira inserção não persistiu.
+
+**Ainda pendente:** execução negativa autenticada writer/verifier, duplicidade e tamanho acima de 2 MB em testes limitados, prova independente do digest sobre bytes, ausência de JSON em logs/artifacts de uma execução do workflow reformulado e respectivos controles de credenciais. Não confundir PASS de rollback e isolamento PG-A4 com conclusão da implementação.
+
+**Estado:** `PG_A4_NEGATIVE_ACCESS_PASS / TRANSACTION_ROLLBACK_PASS / E6_ROLE_AUTH_TEST_BLOCKED / SYNTHETIC_SUITE_PARTIAL / E6_G1_FACTUAL_BLOCKED`.
+
 **STOP — implantação sintética parcial; E6-G1 factual ainda não autorizado.**
