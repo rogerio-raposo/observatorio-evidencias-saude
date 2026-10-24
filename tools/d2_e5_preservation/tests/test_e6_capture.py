@@ -15,6 +15,16 @@ class E6IntegrationTests(unittest.TestCase):
             ["query.cond", "query.term", "sort", "pageSize", "countTotal", "format"])
         self.assertIn("pageSize=20", e6_capture.URL)
 
+    def test_exact_url_contract_and_parameter_order(self):
+        expected = (
+            "https://clinicaltrials.gov/api/v2/studies?"
+            "query.cond=Insomnia&"
+            "query.term=SHUTi%20OR%20%22internet%20cognitive%20behavioral%20therapy%22"
+            "%20OR%20%22digital%20cognitive%20behavioral%20therapy%22&"
+            "sort=%40relevance&pageSize=20&countTotal=true&format=json"
+        )
+        self.assertEqual(e6_capture.URL, expected)
+
     def test_synthetic_end_to_end_package_and_preflight(self):
         raw = json.dumps({"studies": [
             {"protocolSection": {"identificationModule": {"nctId": "NCT00000001"}}}],
