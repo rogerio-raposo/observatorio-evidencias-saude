@@ -24,7 +24,7 @@ Para o primeiro ensaio, utilizar **PostgreSQL do ambiente experimental Neon já 
 
 **Implementação ainda não autorizada:** antes de alterar o banco, submeter plano mínimo de esquema, papéis, GRANT/REVOKE, isolamento dos registros factuais frente à fixture sintética PG-A4, transação/rollback, limites de tamanho e testes de acesso negativo. Preservar todas as fixtures já existentes. Não presumir que o papel `oes_pg_a4_reader` deva ler esses dados. Não utilizar a branch primária por conveniência, criar novo projeto pago ou inserir dados factuais sem gate explícito.
 
-Para a operação regular, a decisão sobre object storage versus PostgreSQL será reavaliada com critérios de volume, custo, retenção, backup e operação. Neon Object Storage não deve ser presumido habilitado em `aws-sa-east-1` na avaliação atual. A escolha de PostgreSQL é **restrita ao piloto**, não precedente de armazenamento definitivo.
+Para a operação regular, a decisão sobre object storage versus PostgreSQL será reavaliada com critérios de volume, custo, retenção, backup e operação. Neon Object Storage não deve ser presumido habilitado em `aws-sa-east-1` na avaliação atual. **Decisão expressa do proprietário (2026-10-24): a escolha de PostgreSQL para armazenar o JSON bruto é estritamente restrita ao piloto e deverá permitir migração futura para um serviço privado de armazenamento de objetos (object storage), sem compromisso de manter os bytes no banco em produção.** O piloto não define o mecanismo definitivo de retenção nem condiciona a evolução a um fornecedor específico.
 
 ## 4. Mudança necessária no workflow E6
 
@@ -46,5 +46,17 @@ O texto integral dos termos específicos ClinicalTrials.gov de redistribuição 
 `RAW_JSON_NO_PUBLIC_DOWNLOAD_APPROVED / PILOT_PRIVATE_POSTGRES_APPROVED_IN_PRINCIPLE / IMPLEMENTATION_PENDING_SEPARATE_GATE / E6_G1_NOT_APPROVED / FACTUAL_CAPTURE_BLOCKED`.
 
 Documento 268 permanece como registro histórico das alternativas e deve remeter expressamente a esta decisão posterior. CP273 permanece ponteiro de continuidade vigente até checkpoint específico posterior.
+
+## 6. Desenho mínimo de isolamento e portabilidade — apenas proposta técnica
+
+**Objeto lógico:** armazenar uma observação factual por identidade única, com payload `bytea` imutável no escopo da captura, `sha256`, tamanho em bytes, fonte, URL de requisição, identificadores de execução, horários UTC e estado técnico. Uma identidade estável de observação vincula metadados e conteúdo sem obrigar consumidores a conhecer o mecanismo físico (tabela PostgreSQL hoje, objeto privado amanhã).
+
+**Limites de implantação:** selecionar uma área de dados factual isolada do esquema de fixtures sintéticas; identidade de escrita limitada a inserir e verificar a observação autorizada; identidade de leitura somente se indispensável; papel `oes_pg_a4_reader` sem acesso ao JSON factual por padrão. Não conceder `PUBLIC` nem oferecer endpoint anônimo, link permanente ou URL pré-assinada pública.
+
+**Prova técnica mínima antes do GET:** com bytes sintéticos, verificar (i) inserção e leitura exata com comparação SHA-256, (ii) limite de 2 MB, (iii) rejeição de duplicatas e gravações incompletas, (iv) rollback em erro, (v) teste negativo de leitura por papel não autorizado, (vi) logs e artifacts sem bytes brutos, (vii) integridade de fixtures PG-A4 preservada. O gate `HOLD` deve impedir persistência quando estrutura ou proveniência não passar. Testes offline prévios não demonstram essa integração.
+
+**Contrato de migração futuro:** separar `observation_id`, metadados de proveniência, `sha256` e classificação de acesso da localização física do JSON; prever substituição controlada do conteúdo `bytea` por referência interna a objeto privado **somente após** validar leitura, checksum, retenção, controles de acesso e rollback. Não criar desde já abstração de object storage, bucket, novos serviços ou projeto Neon apenas em antecipação à migração.
+
+**Gate de execução:** este desenho é documental. Criação de tabela, papéis, permissões, testes conectados e ajustes do workflow dependem de autorização técnica posterior e de Freshness Gate. Consulta factual E6-G1 continua expressamente não autorizada.
 
 **STOP — aprovação da política e da direção arquitetural, não da execução.**
