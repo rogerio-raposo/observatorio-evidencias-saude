@@ -66,3 +66,9 @@ Alvo: `weathered-boat-65779510 / br-gentle-hall-b6jaxehf / oes_sandbox`. Antes d
 **Estado:** `PG_A4_NEGATIVE_ACCESS_PASS / TRANSACTION_ROLLBACK_PASS / E6_ROLE_AUTH_TEST_BLOCKED / SYNTHETIC_SUITE_PARTIAL / E6_G1_FACTUAL_BLOCKED`.
 
 **STOP — implantação sintética parcial; E6-G1 factual ainda não autorizado.**
+
+## 8. Preflight SET ROLE — 2026-10-24
+
+Freshness Gate: CP274 vigente e workflow factual com `if: ${{ false }}`. Consulta somente leitura, branch sintética `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`: `current_user = session_user = oes_sandbox_owner`; `pg_has_role(current_user, 'oes_e6_writer', 'SET') = false`; `pg_has_role(current_user, 'oes_e6_verifier', 'SET') = false`; tabela `oes_raw_private.source_observation` com **0 linhas**.
+
+**Decisão fail-closed:** não executar `SET ROLE` sem autorização efetiva; não alterar membership, papéis, credenciais ou grants por inferência. Testes writer/verifier sob identidade efetiva permanecem **BLOCKED**. Uma autorização separada deverá delimitar eventual associação temporária de teste e sua revogação, ou alternativa de execução segura. Nenhum GET factual, DDL, DML ou mudança no banco foi realizado nesta atividade.
