@@ -6,7 +6,15 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP277 — 2026-10-24 (vigente)
+## Marco de continuidade CP278 — 2026-10-24 (vigente)
+
+- **G1-A5:** adaptador de proveniência offline `e6_private_capture_provenance_offline.py`, commit `56b38a783e4f3df234ee778fff3638d9180bcd96`, converte timestamps ISO UTC-aware, fixa `source_name`, preserva bytes e rejeita falhas com HOLD; sem alterar `e6_capture.py` factual.
+- **G1-A6:** GitHub Actions [40133870873](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40133870873), no commit G1-A5, **73/73 PASS**, incluindo cinco novos testes de proveniência.
+- **G1-A7:** adaptador `e6_private_roundtrip_injected_offline.py` e seis testes, commit `ef26b03cbbf9f038c31eb2ee146d45f10b0453ca`: conecta leitor ao orquestrador somente com objetos de conexão injetados/mockados, simulando commit, verificação privada e HOLD pós-commit; separação de objetos não demonstra autenticação efetiva.
+- **G1-A8:** GitHub Actions [40135045815](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40135045815), job `120994679254`, commit `ef26b03cbbf9f038c31eb2ee146d45f10b0453ca`, **79/79 PASS**, seis novos testes de integração aprovados. **G1 encerrado tecnicamente apenas como protótipo sintético offline**; não há prova conectada PostgreSQL, login independente ou captura factual.
+- **Barreiras:** G2 conectado `NOT_AUTHORIZED`, E6-G1 factual `NOT_AUTHORIZED`, workflow factual `if: ${{ false }}`; sem rede Neon, GRANT, credencial, GET, SQL real ou JSON bruto público. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 `PARTIAL`, prontidão `NOT_READY`, Fase 5 `NOT_STARTED`.
+
+## Marco de continuidade CP277 — 2026-10-24 (histórico)
 
 - **G1-A1:** proprietário aprovou expressamente `G1_MINIMAL_OFFLINE_PYTHON_POSTGRES_INTEGRATION`, exclusivamente dados sintéticos, conexões injetadas e mocks, sem Neon/rede/credenciais/GET/workflow factual.
 - **G1-A2:** criados `tools/d2_e5_preservation/e6_private_reader_offline.py` e `tests/test_e6_private_reader_offline.py` no commit `78a2d3a9bef2c203c9a9b2f3e6068610e061dcd8`. SELECT parametrizado com conexão injetada e exceções sanitizadas; sem driver, sem autenticação real. Nenhum outro código modificado.

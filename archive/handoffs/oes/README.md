@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP277 — 2026-10-24**
+**CP278 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP277.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP278.md`
 
 Checkpoint anterior:
 
-`CP276`
+`CP277`
 
 Status:
 

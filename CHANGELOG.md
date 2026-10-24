@@ -1,3 +1,11 @@
+## 2026-10-24 — CP278: encerramento técnico restrito G1, 79/79 PASS offline
+
+- G1-A5: adaptador de metadados de proveniência offline e cinco testes no commit `56b38a783e4f3df234ee778fff3638d9180bcd96`; contrato de timestamps ISO para `datetime` UTC-aware e `source_name` fixo, sem mexer no capturador factual.
+- G1-A6: CI [40133870873](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40133870873) comprovou **73/73 PASS** no commit G1-A5.
+- G1-A7: adaptador de roundtrip com leitor privado DB-API injetado + seis testes de mocks no commit `ef26b03cbbf9f038c31eb2ee146d45f10b0453ca`, sem rede/driver/Neon.
+- G1-A8: CI [40135045815](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40135045815), job `120994679254`, commit `ef26b03cbbf9f038c31eb2ee146d45f10b0453ca`: **79/79 testes PASS, nenhum erro/falha**, incluindo seis testes novos.
+- Aceite: G1 `CLOSED_TECHNICAL_RESTRICTED_SYNTHETIC_OFFLINE_ONLY`. G2 conectado **não autorizado**, sem prova de autenticação independente ou comunicação real com PostgreSQL; E6-G1 factual segue bloqueado e nenhum raw JSON é publicável.
+
 ## 2026-10-24 — CP277: G1 leitor privado offline e regressão 68/68 PASS
 
 - G1-A1 autorizado pelo proprietário para implementação apenas offline (sintético, mocks e conexão injetável; sem Neon, rede, credenciais ou liberação factual).
