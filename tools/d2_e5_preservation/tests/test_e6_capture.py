@@ -169,3 +169,28 @@ class E6IntegrationTests(unittest.TestCase):
             summary_path.write_text(json.dumps(summary), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "^HOLD: unexpected study fields"):
                 e6_capture.verify_upload_package(folder)
+
+    def test_structure_gate_accepts_results_and_document_sections(self):
+        raw = json.dumps({"studies": [{
+            "protocolSection": {"identificationModule": {"nctId": "NCT00000001"}},
+            "resultsSection": {"participantFlowModule": {}},
+            "documentSection": {"largeDocumentModule": {}},
+            "hasResults": True,
+        }], "totalCount": 1}).encode()
+        self.assertIsNone(e6_capture.preupload_structure_gate(raw))
+
+    def test_results_and_document_sections_survive_package_unchanged(self):
+        raw = json.dumps({"studies": [{
+            "protocolSection": {"identificationModule": {"nctId": "NCT00000001"}},
+            "resultsSection": {"baselineCharacteristicsModule": {}},
+            "documentSection": {"largeDocumentModule": {}},
+        }], "totalCount": 1}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            folder = Path(td) / "evidence"
+            e6_capture.build_package(
+                raw, "2026-10-24T05:00:00+00:00", "2026-10-24T05:00:01+00:00",
+                "application/json", folder, 42, 1, "a" * 40, "synthetic-e6-sections")
+            self.assertEqual((folder / "response.raw.json").read_bytes(), raw)
+            self.assertEqual(
+                e6_capture.verify_upload_package(folder)["github_publication"],
+                "NOT_PERFORMED")
