@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   capture-package:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.owner_approval == 'OWNER_APPROVED_SINGLE_GET' }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
