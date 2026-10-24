@@ -1,6 +1,6 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 23 de outubro de 2026  
+**Última atualização:** 24 de outubro de 2026  
 **Fase 4 — Protocolo de Atualização:** `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY` (readiness operacional `NOT_READY`)  
 **Fase 5:** `NOT_STARTED`  
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP268 — 2026-10-23**.
+- checkpoint vigente: **CP269 — 2026-10-24**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP269 — E5-A6, prova sintética de arquivamento (2026-10-24)
+
+Autorizado D2-E5-A6: pacote explicitamente **sintético** versionado em único commit `5e430ff09f372d68d4ffac60d326d0a8c98151d1`, diretório `artifacts/d2/clinicaltrials-gov/observations/SYNTHETIC-OES-D2-E5-A6-20261024/`. Três arquivos recuperados do GitHub. SHA-256 bruto `eec9389a274b0b2c8957ad57bbbab35c3b038342130e1c9c23ac78fdef673091` verificado. Nenhum HTTP real: NCT e metadados de run/status/tempos são artificiais, expressamente ressalvados no manifesto. **`D2_E5_A6_SYNTHETIC_GITHUB_ARCHIVAL_DEMONSTRATED / INTEGRATED_FUNCTION_EXECUTION_NOT_VERIFIED`**: publicação e leitura demonstradas, mas não se executou sequência integrada E5-A3 → E5-A5 → commit. E5-A3 12/12 PASS, E5-A5 23/23 PASS; política E5-A4 aprovada, revisão de JSON factual obrigatória. D2 `PARTIAL`, Fase 4 metodológico-documental fechada, Fase 5 `NOT_STARTED`, readiness `NOT_READY`, M3 bloqueado, BRG/SA e 36 migrations não promovidas. Próximo passo: análise de custo-benefício entre teste sintético integrado adicional e preparação factual controlada, sem novas execuções por inferência.
 
 ## Pós-CP268 — D2-E5-A5 encerramento técnico restrito offline/sintético (2026-10-24 local)
 

@@ -1,0 +1,11 @@
+# OES — CP269 — Continuidade, 2026-10-24
+
+Checkpoint anterior: **CP268**. Repositório canônico `rogerio-raposo/observatorio-evidencias-saude`, branch `main`. HEAD antes do CP269: `5e430ff09f372d68d4ffac60d326d0a8c98151d1`; verificar HEAD atual na retomada.
+
+## Estado e evidências
+Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; D2 `PARTIAL`; Fase 5 `NOT_STARTED`; readiness `NOT_READY`; M3 bloqueado; BRG/SA pendentes; 36 migrations `UNREVIEWED`. Sem pesquisadores disponíveis: nenhuma avaliação científica autônoma. Django documental sintético 30 testes históricos PASS e browser 9/9 PASS, sem prontidão de produção.
+
+E5-A2 (Doc. 253): contrato de JSON bruto, manifesto e resumo, com limites 2 MB/20 registros. E5-A3: preservação offline, 12/12 PASS, run `40055328811`. E5-A4: proprietário aprovou GitHub versionado como arquivo inicial limitado, com revisão prévia de conteúdo real, licença e dados pessoais. E5-A5: preflight offline, 23/23 PASS (12 anteriores mais 11 novos), run `40068408546`. E5-A6: pacote **exclusivamente sintético** publicado em commit único `5e430ff09f372d68d4ffac60d326d0a8c98151d1`, diretório `artifacts/d2/clinicaltrials-gov/observations/SYNTHETIC-OES-D2-E5-A6-20261024/`, três arquivos recuperados, hash do JSON bruto `eec9389a274b0b2c8957ad57bbbab35c3b038342130e1c9c23ac78fdef673091`. Campos HTTP, run e NCT do pacote são fictícios. **Publicação/recuperação demonstradas, integração das funções E5-A3 e A5 com commit não executada ponta a ponta.** Nenhuma nova consulta ClinicalTrials.gov; resposta bruta original de E3 não preservada, resultado histórico E3 não pode ser reconstruído com novo GET.
+
+## Retomada
+Próximo `Prossiga`: uma avaliação crítica do valor de teste único E5-A3→E5-A5→commit sintético integrado versus preparação de observação factual com gate de revisão. Não executar consulta, CI, deploy, SQL/Neon, publicações factuais ou novas funções sem autorização específica. Cada `Prossiga` permite uma atividade, STOP; Freshness Gate inicial e antes de escrever; checkpoints por marco/3–5 atividades, progressos visíveis; modo médio para baixo risco e alto para decisões sensíveis. Fonte de continuidade: `archive/handoffs/oes/README.md` → CP269 → `STATE.md`.

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP268 — 2026-10-23**
+**CP269 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP268.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP269.md`
 
 Checkpoint anterior:
 
-`CP267`
+`CP268`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP269 — 2026-10-24:** E5-A2–A6, política GitHub, testes PASS e arquivamento sintético, integração pendente.
 
 - **CP01 — 2026-10-03:** checkpoint inaugural; documentos 00–03 e 10; retomada no Documento 11.
 - **CP02 — 2026-10-03:** consolida Documento 11; retomada no Documento 12.
