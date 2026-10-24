@@ -2,7 +2,22 @@
 
 **OES | 2026-10-24 | CP270 | `E6_G1_NOT_READY_PUBLIC_ARTIFACT_EXPOSURE / FACTUAL_CAPTURE_BLOCKED`**
 
-## Decisão metodológica revisada — publicidade de dados brutos (2026-10-24)
+## Política vigente — revisão humana por exceção (revisão autorizada em 2026-10-24; CP273)
+
+**Decisão metodológica:** a captura e a preservação temporária de JSON bruto da API pública ClinicalTrials.gov **não exigem inspeção humana integral e prévia de cada resposta**. Aplicam-se validações técnicas automatizadas, classificação conservadora `ALLOW/HOLD` e **revisão humana por exceção** quando houver campos inesperados, erro de integridade, indício relevante de conteúdo sensível ou pessoal fora da política admitida, alteração material de esquema/termos ou dúvida sobre exposição/reutilização. `ALLOW` significa apenas aceitação técnica para a destinação previamente autorizada, nunca validação científica nem garantia de ausência de dados pessoais.
+
+A revisão humana excepcional deve ocorrer **antes de disponibilizar** conteúdo classificado `HOLD`; se não houver solução tempestiva, não enviar artifact e registrar `STOP/HOLD`. Não registrar conteúdo bruto em logs. Dados permitidos pela política podem incluir contatos pessoais publicamente fornecidos pela fonte; a decisão de disponibilizar artifact em repositório público deve reconhecer explicitamente essa circunstância. Retirada ou expiração posterior não revoga downloads prévios.
+
+**Gates distintos:** E6-G1 requer autorização específica do responsável pelo projeto para o GET único, URL e revisão exatas, e aceitação prévia da possível exposição pública do artifact temporário. E6-G2 permanece obrigatório e separado para incorporação ou arquivamento factual durável e publicação científica; a análise científica de elegibilidade, qualidade e interpretação é humana/metodológica segundo suas próprias regras, não se confunde com a triagem técnica de JSON.
+
+**Controles já demonstrados:** Documento 267; [CI 40112908037](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40112908037) 38/38 testes sintéticos PASS em validação de estrutura, `HOLD`, integridade, rótulos e rechecagem pré-upload. A cobertura não comprova compatibilidade exaustiva da API nem segurança irrestrita. Continuam pendentes a decisão expressa sobre exposição pública, conferência aplicável de termos/URL/HEAD, e aprovação específica E6-G1. O teste de igualdade da URL completa indicado na auditoria histórica ainda carece de evidência específica, não inferir PASS.
+
+**Limite da autorização recebida:** esta revisão é **somente documental**. Não autoriza GET, workflow dispatch, alteração de `if: ${{ false }}`, publicação nem alteração do Neon. Estado `E6_G1_NOT_APPROVED / FACTUAL_CAPTURE_BLOCKED`.
+
+### Leitura histórica das seções abaixo
+As referências anteriores a “revisão integral de todo o JSON”, responsável nominal por sua leitura, prazo de 48 horas ou impedimento automático por ausência dessa revisão representam **política superada por esta decisão**. Conservam valor de histórico, mas não são condições vigentes de E6-G1. A auditoria estática ao fim deste documento é um snapshot pré-hardening, atualizado materialmente pelo Documento 267.
+
+## Decisão metodológica revisada — publicidade de dados brutos (2026-10-24; histórico, subordinado à política vigente acima)
 
 **Parecer vigente: `E6_G1_PUBLIC_RAW_ARTIFACT_OPTION_ACCEPTABLE_CONDITIONALLY / NOT_APPROVED / WORKFLOW_BLOCKED`.** O conteúdo previsto provém do endpoint público de metadados do ClinicalTrials.gov. **Publicidade da origem não equivale a validação científica pelo OES, nem dispensa verificar o conteúdo exato e as condições de reutilização.** A exigência anterior de repositório privado como condição absoluta foi retirada por falta de necessidade demonstrada neste piloto. O repositório GitHub público existente pode hospedar o artifact temporário **somente após aprovação específica E6-G1 que aceite expressamente sua exposição potencial ao público**.
 
@@ -16,13 +31,13 @@
 
 ### Pendências para E6-G1
 
-`PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: PENDING`; revalidação dos controles pré-upload: `PENDING`; responsável pela revisão integral: `UNASSIGNED`; prazo de revisão: `NOT_AGREED` (proposta de até 48 horas); confirmação de termos aplicáveis: `PENDING`; nova autorização do dono com URL e commit exatos: `NOT_GRANTED`. A aprovação geral da atualização documental **não** é autorização de captura, desbloqueio ou publicação.
+`PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: PENDING`; revalidação dos controles pré-upload: `PENDING`; tratamento de exceções `HOLD`: revisão humana quando acionada, sem inspeção integral obrigatória; confirmação de termos aplicáveis: `PENDING`; nova autorização do dono com URL e commit exatos: `NOT_GRANTED`. A aprovação geral da atualização documental **não** é autorização de captura, desbloqueio ou publicação.
 
 O workflow factual permanece com `if: ${{ false }}`. Não executar consulta por inferência.
 
 ## Objeto e limite decisório
 
-Minuta **não executiva** para eventual aprovação de **uma única** recuperação factual de metadados públicos na API v2 ClinicalTrials.gov, destinada a capturar bytes brutos e submetê-los aos validadores E5-A3/E5-A5, com guarda **temporária** para revisão antes de qualquer publicação. Uma nova observação não reconstrói a resposta histórica E3. Este documento não autoriza GET, mudança de `if: false`, workflow dispatch, novas fontes, download público de artifact nem commit de JSON factual.
+Minuta **não executiva** para eventual aprovação de **uma única** recuperação factual de metadados públicos na API v2 ClinicalTrials.gov, destinada a capturar bytes brutos e submetê-los aos validadores E5-A3/E5-A5, com guarda **temporária** e validação automatizada, sujeita a revisão humana **por exceção** antes da exposição em caso de `HOLD`. Uma nova observação não reconstrói a resposta histórica E3. Este documento não autoriza GET, mudança de `if: false`, workflow dispatch, novas fontes, download público de artifact nem commit de JSON factual.
 
 ## Referência congelada para deliberação
 
@@ -44,13 +59,13 @@ https://clinicaltrials.gov/api/v2/studies?query.cond=Insomnia&query.term=SHUTi%2
 2. Artifact exclusivamente sintético de E6-A3, run `40084945270`, gerado, disponibilizado e recuperado; três arquivos e digest conferidos. **Não** é evidência factual.
 3. O job factual possui trava verificável `if: false`; preenchimento de texto pelo operador **não constitui autorização**. Para uma futura execução, a aprovação substantiva deve indicar consulta exata e commit, seguida de **alteração isolada e autorizada** do workflow que possibilite **uma única** execução, com novo Freshness Gate. Preferir proteção que evite repetição inadvertida.
 4. A captura futura deve reter `response.raw.json` original, `manifest.json` e `summary.json`, com proveniência observada, SHA-256 e preflight; log sem corpo integral. Upload como GitHub Actions artifact com `retention-days: 7`, `if-no-files-found: error`, checagem posterior de ID/tamanho/digest do ZIP e do SHA-256 do JSON bruto.
-5. O GitHub Actions artifact é **temporário**, acessível conforme permissões e políticas do repositório; não é guarda durável. **Antes do despacho** definir pessoa responsável, acesso, calendário de inspeção integral do JSON, prazo até expiração e alternativa em caso de indisponibilidade ou reprovação para publicação. Se a revisão integral não for viável, **não executar**.
-6. Após a captura, analisar **todo o JSON**, eventuais campos inesperados, dados pessoais e termos de reutilização, além da pertinência de disponibilização pública. Classificar `HOLD/REJECT` ou `APPROVED_FOR_PUBLIC_REPOSITORY`. Essa decisão é independente do sucesso de transporte e da aprovação E6-G1.
+5. O GitHub Actions artifact é **temporário**, acessível conforme permissões e políticas do repositório; não é guarda durável. **Antes do despacho** aceitar expressamente a exposição pública potencial do artifact, confirmar prazo de retenção e prever fluxo de tratamento de exceções `HOLD`. Não se exige revisão humana integral rotineira.
+6. Após a captura, executar controles técnicos automatizados e encaminhar **somente exceções `HOLD`** para revisão humana antes de qualquer disponibilização. A decisão de aceitar eventual exposição pública deve ter ocorrido antes de E6-G1. Classificar `HOLD/REJECT` ou aceitação técnica para o artifact temporário. Essa decisão é independente do sucesso de transporte e da aprovação E6-G1.
 7. E6-G2 exige **nova aprovação específica** antes de qualquer commit factual. Arquivamento durável só será declarado após commit atômico dos três arquivos e recuperação/verificação posterior do conteúdo.
 
 ## Gates de execução e falha fechada
 
-**Gate E6-G1 — ainda não submetido à aprovação executiva.** Antes de solicitar a autorização: reconfirmar SHA `main`, código e URL exata; confirmar operação única, permissões, política de retenção, responsável pela revisão, prazo e plano caso o JSON não possa ser publicado. Caso qualquer elemento divergir, **STOP** e revisar minuta.
+**Gate E6-G1 — ainda não submetido à aprovação executiva.** Antes de solicitar a autorização: reconfirmar SHA `main`, código e URL exata; confirmar operação única, permissões, política de retenção, aceite da exposição pública potencial e procedimento de decisão humana para exceções `HOLD`. Caso qualquer elemento divergir, **STOP** e revisar minuta.
 
 A eventual aprovação de E6-G1 autorizará **apenas a captura/retensão temporária específica**, não publicação, novo GET adicional, inferências de elegibilidade, BRG/SA, Fase 5 ou ações fora do contrato.
 
