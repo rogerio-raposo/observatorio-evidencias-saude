@@ -1,6 +1,16 @@
 # Documento 255 — D2-E6-G1: minuta de autorização de observação factual controlada
 
-**OES | 2026-10-24 | CP270 | `D2_E6_G1_AUTHORIZATION_DRAFT_PREPARED / NOT_APPROVED / WORKFLOW_BLOCKED`**
+**OES | 2026-10-24 | CP270 | `E6_G1_NOT_READY_PUBLIC_ARTIFACT_EXPOSURE / FACTUAL_CAPTURE_BLOCKED`**
+
+## Revisão crítica final — bloqueio de acesso ao artifact (2026-10-24)
+
+**Parecer: `E6_G1_NOT_READY_PUBLIC_ARTIFACT_EXPOSURE / FACTUAL_CAPTURE_BLOCKED`.** A inspeção confirmou que o repositório `rogerio-raposo/observatorio-evidencias-saude` tem visibilidade **pública**. Pelas regras do GitHub Actions, usuários autenticados com **acesso de leitura** ao repositório podem baixar os artifacts de runs enquanto disponíveis (https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts). Em repositório público, esses arquivos **não são uma área de revisão restrita**. Portanto, a etapa de `upload-artifact@v4` configurada no workflow factual tornaria o JSON bruto acessível antes de existir a decisão de publicação E6-G2. `retention-days: 7` reduz tempo de disponibilidade, **não** restringe acesso nem substitui revisão. O controle prometido de `REVIEW_BEFORE_PUBLICATION` não está garantido pela arquitetura atual. Um branch privado dentro de repositório público tampouco oferece confidencialidade de artifact.
+
+**Correção necessária antes de submeter E6-G1 a aprovação:** selecionar e verificar uma área **privada**, com leitores especificamente autorizados, para guarda/revisão transitória do pacote bruto. Solução preferencial proporcional: repositório GitHub privado, separado, sujeito à confirmação de permissões/visibilidade, política de retenção, disponibilidade e custos antes de habilitar qualquer workflow factual. Alternativas precisam demonstrar confidencialidade equivalente e preservação dos bytes; não presumir que um artifact em `main` pública seja restrito. O repositório OES público permanece destino **somente após** aprovação específica E6-G2.
+
+**Pendências administrativas explícitas:** responsável individual pelo exame do JSON integral: `UNASSIGNED`; substituto e acesso: `UNVERIFIED`; prazo para revisão dentro da retenção: `NOT_AGREED` (sugere-se concluir em até 48 horas da coleta, caso formalmente aprovado); decisão documentada sobre termos de reutilização, dados pessoais e publicação: `PENDING`; tratamento de `REJECT/HOLD`: **não** publicar JSON nem confiar em expiração como eliminação de acesso anterior, definir descarte/retenção restrita auditável; impossibilidade de revisar antes da expiração: `STOP_INDETERMINATE`, sem declarar preservação durável e sem nova coleta.
+
+O gate de execução E6-G1 não pode ser submetido como `READY` enquanto tais controles não forem verificados. Workflow de captura factual permanece com `if: ${{ false }}`; nenhuma consulta ou alteração de permissão está autorizada por esta revisão.
 
 ## Objeto e limite decisório
 

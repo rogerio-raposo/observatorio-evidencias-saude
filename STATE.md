@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP270 — revisão crítica do gate E6-G1: acesso público a artifacts (2026-10-24)
+
+Confirmado via GitHub que o repositório OES possui visibilidade `public`. A documentação GitHub permite download de artifacts por usuários autenticados com leitura; assim, `actions/upload-artifact@v4` em repositório público pode **expor o JSON bruto antes** da revisão integral e do gate E6-G2. O prazo de sete dias não torna o artifact confidencial. O Documento 255 foi revisado, com recomendação de repositório de staging privado e controle explícito de leitores, responsável `UNASSIGNED`, prazo de revisão `NOT_AGREED`, contingência `REJECT/HOLD` e verificação de custos/acessos. **Status `E6_G1_NOT_READY_PUBLIC_ARTIFACT_EXPOSURE / FACTUAL_CAPTURE_BLOCKED`**. Sem mudanças no workflow; `if: false` mantido, nenhuma consulta ou publicação factual. CP270, D2 parcial, Fase 5 não iniciada e readiness global não pronta inalterados.
+
 ## Pós-CP270 — minuta E6-G1 preparada (2026-10-24)
 
 Criado `docs/governance/255-d2-e6-g1-minuta-autorizacao-observacao-factual.md` com URL codificada literal extraída dos parâmetros de `e6_capture.py`, SHA baseline `16945a04f6ad9fe67da53b9360df13c4151c948a`, limites da requisição, retenção de 7 dias, responsabilidades pendentes de revisão integral e gates separados E6-G1 (captura) / E6-G2 (publicação). **Não é autorização:** `D2_E6_G1_AUTHORIZATION_DRAFT_PREPARED / NOT_APPROVED / FACTUAL_WORKFLOW_BLOCKED`. O job factual permanece `if: false`; nenhum GET, workflow ou publicação nesta atividade. CP270 e demais gates preservados.
