@@ -19,14 +19,30 @@ SQL = (
 )
 
 
+def sanitized_failure(exc, phase):
+    """Return categories only; never print exception text, host, user or secrets."""
+    code = getattr(exc, "sqlstate", None)
+    if code in ("28P01", "28000"):
+        return "AUTHENTICATION"
+    if code == "42501":
+        return "PRIVILEGE"
+    if code == "42704":
+        return "ROLE_MISSING"
+    return "CONNECTION_OR_TLS" if phase == "connect" else "ROLE_OR_METADATA"
+
+
 def run():
     if any(not os.environ.get(k) for k in REQUIRED):
-        return False
+        return "MISSING_CONFIGURATION"
+    host = os.environ["OES_G2_HOST"]
+    if ("/" in host or "@" in host or ":" in host or " " in host
+            or not host.endswith(".neon.tech")):
+        return "INVALID_HOST_CONFIGURATION"
     # The client is imported only after the minimum secret gate.
     import psycopg
 
-    host = os.environ["OES_G2_HOST"]
     for login, effective_role, secret_name, acl in IDENTITIES:
+        phase = "connect"
         try:
             with psycopg.connect(
                 host=host, dbname="oes_sandbox", user=login,
@@ -35,23 +51,23 @@ def run():
                 connect_timeout=8, autocommit=False,
                 options="-c statement_timeout=5000",
             ) as connection:
+                phase = "role"
                 with connection.cursor() as cursor:
                     cursor.execute("SET LOCAL ROLE " + effective_role)
+                    phase = "metadata"
                     cursor.execute(SQL)
                     row = cursor.fetchone()
                     if (not isinstance(row, tuple) or len(row) != 6
                             or row[:3] != ("oes_sandbox", login, effective_role)
                             or row[3:] != acl):
-                        return False
+                        return "METADATA_MISMATCH"
                 connection.rollback()
-        except Exception:
-            return False
-    return True
+        except Exception as exc:
+            return sanitized_failure(exc, phase)
+    return "PASS"
 
 
 if __name__ == "__main__":
-    if run():
-        print("G2_I1_AUTHENTICATION_METADATA_PASS")
-        sys.exit(0)
-    print("G2_I1_AUTHENTICATION_HOLD")
-    sys.exit(1)
+    status = run()
+    print("G2_I1_DIAGNOSTIC_" + status)
+    sys.exit(0 if status == "PASS" else 1)
