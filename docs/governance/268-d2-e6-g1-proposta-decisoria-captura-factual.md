@@ -81,4 +81,14 @@ Fontes oficiais adicionais consultadas:
 
 **Gates invariáveis:** aceite do proprietário quanto à exposição pública temporária já consta; `E6_G1_NOT_APPROVED`; workflow factual `if: ${{ false }}`; nenhuma consulta real de estudos, upload ou segundo GET autorizados.
 
+## 9. Decisão de proporcionalidade após diligências sobre termos (2026-10-24)
+
+**Constatação:** a página oficial de termos https://clinicaltrials.gov/about-site/terms-conditions foi novamente aberta, mas a representação textual acessível não contém o corpo normativo (interface dinâmica). Não afirmar que a consulta aos termos foi concluída nem repetir diligências idênticas sem novo meio de acesso. A documentação NLM confirma que a API é o mecanismo adequado de acesso programático aos registros: https://www.nlm.nih.gov/pubs/techbull/ja25/ja25_clinical_trials_screen-scraping.html . Essa confirmação não é licença universal de redistribuição.
+
+**Alternativa A — execução originalmente proposta:** uma única consulta ao endpoint de estudos e artifact GitHub temporário publicamente acessível, com metadados brutos integrais, atribuição da fonte, rótulos de não revisão científica e controles `HOLD`. O proprietário **já aceitou o risco da exposição pública**, mas não há confirmação integral dos termos de redistribuição. Exige decisão adicional sobre esse risco residual antes da autorização executiva; não inferir autorização jurídica.
+
+**Alternativa B — dissociar prova de conectividade de redistribuição:** realizar no futuro uma única consulta no runner, computar somente métricas técnicas e hash sem fazer upload do corpo do JSON; os bytes brutos não seriam preservados como artifact público. Evita a redistribuição pública pelo OES nesse ensaio, mas **não demonstra transporte/recuperação de artifact factual** e altera o propósito originalmente proposto; requer novo escopo técnico, revisão de logs e autorização executiva específica. Não ativar por inferência.
+
+**Parecer proporcional:** em vez de ampliar a stack ou insistir em consulta inconclusiva aos termos, apresentar ao proprietário uma escolha decisória explícita entre A e B, com limites claros. A aceitação já dada da publicidade do artifact não equivale a aceitação de todo risco jurídico residual. Até essa escolha: `E6_G1_NOT_APPROVED / FACTUAL_CAPTURE_BLOCKED / TERMS_FULL_REVIEW_PENDING`. O workflow permanece em `if: ${{ false }}`; nenhuma execução factual foi realizada.
+
 **STOP — documento deliberativo apenas.**
