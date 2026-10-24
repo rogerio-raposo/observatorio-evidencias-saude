@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP265 — 2026-10-23**
+**CP266 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP265.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP266.md`
 
 Checkpoint anterior:
 
-`CP264`
+`CP265`
 
 Status:
 
@@ -666,3 +666,5 @@ em **Modo Continuidade**.
 - **CP264 — 2026-10-23:** proprietário **“Workflow aprovado.”** para um único GET ClinicalTrials.gov com GitHub Actions, e criado workflow `.github/workflows/d2-ctgov-single-public-get.yml`, commit `aaebd17b4246c2623c36954d8bedc01795eb4912`. **Dispatch não realizado:** conexão GitHub atual não expõe ação para iniciar workflow; Documento 246 registra `WORKFLOW_CREATED_DISPATCH_PENDING`, sem HTTP/JSON, sem NCT e sem resultado clínico. Próximo ato: um disparo manual `Run workflow` em `main` pelo proprietário e fornecer link do run; depois consultar logs, sem rerun. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, D2 factual parcial, gates/controles inalterados. Conversa aberta. STOP.
 
 - **CP265 — 2026-10-23:** usuário forneceu link da execução GitHub Actions `40021883998` do workflow CTgov aprovado; `workflow_dispatch` attempt=1, `completed/success`, HTTP 200, 20 NCTs de `totalCount=87` na consulta literal, token de próxima página presente; **`PARTIAL_FIRST_PAGE_ONLY`** e nenhum julgamento científico. Documento 247, STATE e CHANGELOG registram a evidência e preservam limitações; autorização de disparo consumida, sem rerun ou paginação. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 global parcial, Fase 5 `NOT_STARTED`, Ficha e gates intactos. Próximo `Prossiga`: cruzamento documental dos 20 IDs com o inventário existente, sem GET adicional. Conversa aberta; STOP.
+
+- **CP266 — 2026-10-23:** consolida cruzamento documental D2/Documento 248, primeiro vertical slice Django, B1 e UX-02 com runs de 8/8, 16/16 e 20/20 PASS; validação em navegador Django pendente não bloqueante somente ao protótipo. Fase 4 documental fechada, D2 parcial, Fase 5 não iniciada, gates inalterados. Próximo `Prossiga`: análise comparativa do próximo incremento substantivo; sem implementação por inferência. Conversa aberta. STOP.

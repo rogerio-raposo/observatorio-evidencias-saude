@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP265 — 2026-10-23**.
+- checkpoint vigente: **CP266 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP266 — consolidação de continuidade (2026-10-23 local)
+
+Checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP266.md` consolida Docs. 248–250, Django A1/B1/UX-02, runs `40044041757` (8/8), `40046496477` (16/16), `40047175669` (**20/20 PASS**) e `REAL_BROWSER_VALIDATION_PENDING_NON_BLOCKING_FOR_PROTOTYPE`. CP265 preservado imutável. Próxima atividade: comparar opções de incremento substantivo, **sem implementar por inferência**. Fase 4 apenas metodológico-documental encerrada, Fase 5 `NOT_STARTED`, readiness `NOT_READY`, D2 global parcial e gates preservados.
 
 ## Pós-CP265 — UX-02: pendência visual proporcional e decisão de continuidade (2026-10-23 local)
 
