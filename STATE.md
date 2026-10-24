@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP270 — minuta E6-G1 preparada (2026-10-24)
+
+Criado `docs/governance/255-d2-e6-g1-minuta-autorizacao-observacao-factual.md` com URL codificada literal extraída dos parâmetros de `e6_capture.py`, SHA baseline `16945a04f6ad9fe67da53b9360df13c4151c948a`, limites da requisição, retenção de 7 dias, responsabilidades pendentes de revisão integral e gates separados E6-G1 (captura) / E6-G2 (publicação). **Não é autorização:** `D2_E6_G1_AUTHORIZATION_DRAFT_PREPARED / NOT_APPROVED / FACTUAL_WORKFLOW_BLOCKED`. O job factual permanece `if: false`; nenhum GET, workflow ou publicação nesta atividade. CP270 e demais gates preservados.
+
 ## CP270 — D2-E6-A3 artifact sintético verificado (2026-10-24)
 
 A execução manual [GitHub Actions 40084945270](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40084945270), revisão `20458dcb844cbb0731131578da329d8c6dbc4dbf`, terminou `completed/success`. Artifact `oes-e6-a3-synthetic-40084945270`, ID `12556772199`, 1.783 bytes ZIP, retenção informada até 2026-10-31 10:11 UTC. ZIP recuperado e inspecionado: três arquivos (`response.raw.json` 207 B, `manifest.json` 1941 B, `summary.json` 396 B); digest do ZIP `2bb494a7704e46401aa9c0612154a27ebf91ed221e26626f5edc3aa639a8076a`; SHA-256 do JSON bruto `b4e549b09a40f172e0b971820ad372d0734862f1b00b6f0691048e0775f0c696` idêntico ao manifesto e resumo. Marcadores `synthetic_fixture=true` conferidos. **`D2_E6_A3_SYNTHETIC_ARTIFACT_TRANSPORT_AND_INTEGRITY_PASS`** demonstra transporte temporário, não preservação factual durável nem prontidão conectada. Workflow factual `.github/workflows/d2-e6-a2-gated-capture.yml` permanece com `if: false`, confirmado no HEAD; E6-G1 específico não aprovado. Próximo passo: avaliar e formalizar gate E6-G1 com URL exata e plano de revisão do JSON antes de qualquer ativação ou GET. CP270 vigente, D2 `PARTIAL`, F4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, F5 `NOT_STARTED`, readiness `NOT_READY`, M3/BRG/SA e 36 migrations inalterados.
