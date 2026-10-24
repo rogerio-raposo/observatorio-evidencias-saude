@@ -34,3 +34,19 @@ A revisão dos Documentos 271, 272 e 276 encontrou evidência histórica suficie
 Encaminhamento mínimo: obter confirmação contemporânea **somente leitura** por via aprovada e controlada pelo proprietário (por exemplo, consulta pontual de metadados no SQL Editor, sem senha, sem payload e sem resultados sensíveis). Se obtida, registrar apenas as propriedades necessárias: LOGIN desabilitado, membership do login ausente, writer INSERT/sem SELECT, verifier SELECT/sem INSERT e USAGE adequado no schema, identificando branch e banco. Não há necessidade de nova identidade, objeto, grants ou secrets para essa constatação. Caso não seja possível verificar por via permitida, manter `B1_PARTIAL` e `B2_NOT_AUTHORIZED`, sem contornar bloqueios.
 
 **Estado:** `HISTORICAL_ACL_EVIDENCE_REUSED / CURRENT_ACL_READ_ONLY_ATTESTATION_PENDING / B2_NOT_AUTHORIZED / E6_G1_BLOCKED`.
+
+## Atestação complementar fornecida pelo proprietário — 2026-10-24
+
+O proprietário executou no Neon SQL Editor a consulta somente leitura de ACL proposta para o ambiente experimental e apresentou o resultado estruturado com três papéis. **A origem deste registro é o resultado fornecido pelo proprietário, não uma nova execução direta pelo conector.**
+
+| Papel | LOGIN | INHERIT | USAGE schema | INSERT | SELECT | Associações como membro |
+|---|---|---|---|---|---|---|
+| `oes_e6_capture_login` | false | false | false | false | false | false |
+| `oes_e6_writer` | false | false | true | true | false | false |
+| `oes_e6_verifier` | false | false | true | false | true | false |
+
+Os resultados correspondem às expectativas da matriz de privilégio mínimo, e a combinação `NOLOGIN` + ausência de membership para o login de captura mantém a desativação observável. A coluna `possui_associacoes` indica exclusivamente se o papel é **membro** de outro papel; não verifica concessões recebidas por terceiros, embora isso não seja necessário para a matriz específica acima.
+
+**B1 concluída no escopo de atestação de ACL por SQL Editor**, preservando o registro de que cinco consultas diretas pelo conector haviam sido bloqueadas. Esta atestação não comprova autenticação simultânea de escritor e verificador, INSERT efetivo, leitura independente, invalidação da senha temporária antiga nem encerramento de sessões prévias. B2 exige decisão operacional própria.
+
+**Estado atualizado:** `B1_ACL_ATTESTED_BY_OWNER_PASS / B2_NOT_AUTHORIZED / E6_G1_FACTUAL_BLOCKED`.
