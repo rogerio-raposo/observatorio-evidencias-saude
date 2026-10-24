@@ -100,4 +100,20 @@ Alvo confirmado explicitamente: projeto `weathered-boat-65779510` (`oes-sandbox`
 
 **Gate seguinte:** preparar revisão detalhada das permissões-alvo e dos testes sintéticos da proposta, sem executar migração ou captura até autorização separada.
 
+## 7. Revisão adicional de privilégios efetivos (somente leitura, 2026-10-24)
+
+Consultas exclusivamente `SELECT` no projeto `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`, sob `oes_sandbox_owner`. Leitura de ACL em `pg_namespace` e testes de `has_schema_privilege` / `has_table_privilege` para `oes_pg_a4_reader` em `core`, `evidence`, `provenance`, `artifact` e `public`.
+
+**Constatações objetivas:**
+- Leitor PG-A4 tem `USAGE` em `core`, `evidence`, `provenance` e `public`, não tem em `artifact`; não possui `CREATE` nos esquemas inspecionados.
+- Nas tabelas reais inspecionadas, `SELECT` efetivo autorizado para `core.entity`, `core.entity_version`, `evidence.report`, `evidence.report_version`, `evidence.study`, `evidence.study_report_link`, `evidence.study_version` e `provenance.record`. Para demais objetos listados, incluindo `artifact.artifact`, o `SELECT` consultado retorna falso.
+- Em **todos os objetos listados** desses esquemas, `INSERT`, `UPDATE` e `DELETE` efetivos do leitor retornam falso; não se deve extrapolar o resultado para outros esquemas ou para futuras tabelas.
+- A ACL do schema `public` contém `USAGE` para `PUBLIC`, que não significa `CREATE` nem acesso irrestrito aos schemas privados. A ACL dos schemas existentes só serve como linha de base; a futura tabela `oes_raw_private.source_observation` **não existe** e não teve privilégios efetivos testados.
+
+**Consequência para a matriz:** o leitor PG-A4 possui acesso intencional a algumas tabelas sintéticas, não é um papel genericamente sem leitura. O novo schema privado deve evitar todo `USAGE` para esse papel e para `PUBLIC`, além de nenhuma concessão `SELECT` no payload. Revisar também `ALTER DEFAULT PRIVILEGES`, grants herdados, papéis proprietários, execução como escritor e testes negativos sob a identidade efetiva após implantação.
+
+**Critérios sintéticos de aceitação da próxima etapa autorizada:** verificar sob identidades reais que (1) leitor PG-A4 recebe `permission denied` ao ler o schema e a tabela privados, (2) writer não lê nem altera/deleta bytes, (3) role de verificação só lê com controle de acesso, (4) operação transacional grava bytes idênticos com hash validado, (5) falha de validação gera rollback sem resíduos, (6) não há bytes brutos em artifacts e logs, (7) fixture PG-A4 e seus grants permanecem inalterados. O comportamento de proprietário/administrador não deve ser confundido com o do writer da aplicação.
+
+**Estado:** `EFFECTIVE_PRIVILEGE_BASELINE_PASS_READ_ONLY / PRIVATE_SCHEMA_NOT_CREATED / NEGATIVE_TEST_PENDING`. Nenhuma autorização de DDL, DML ou captura factual foi inferida.
+
 **STOP — proposta aguardando avaliação, não autorização de SQL ou consulta factual.**
