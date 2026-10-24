@@ -31,3 +31,19 @@ Aprovar **somente um desenho executivo e preflight de viabilidade sem alteraçõ
 **Estado:** `B1_ACL_ATTESTED_PASS / B2_EXECUTION_DESIGN_PENDING_APPROVAL / B2_SQL_NOT_AUTHORIZED / E6_G1_BLOCKED`.
 
 **STOP.**
+
+## Desenho executivo não modificador aprovado — avaliação
+
+**Decisão sobre viabilidade:** a etapa B2 é **tecnicamente concebível, mas ainda não executável sob o baseline vigente**. O catálogo atestado em B1 comprova permissões dos papéis NOLOGIN; não fornece, por si só, duas sessões autenticadas independentes. `oes_e6_capture_login` está NOLOGIN e sem membership. Não há autorização de provisionar novas credenciais, mudar SET ROLE, ou utilizar o login proprietário como substituto silencioso da separação exigida.
+
+**Protocolo mínimo futuro (não executar agora):**
+
+1. **Gate de viabilidade de identidade:** escolher explicitamente entre (a) dois logins transitórios dedicados com memberships não herdáveis e capacidade SET restrita, um para writer e outro para verifier, ou (b) outra rota de duas sessões efetivamente segregadas que a infraestrutura permita. Cada sessão deverá comprovar `session_user`, `current_user` e a ausência de privilégios cruzados, sem expor conexão, password ou payload. A mera alternância de `SET ROLE` dentro de uma única identidade administrativa demonstra ACL, mas **não prova independência de autenticação**. O SQL Editor conectado como proprietário não substitui essa evidência.
+2. **Gate de credencial:** senhas novas e efêmeras controladas pelo proprietário, sem reutilizar a anterior e sem reproduzi-las em chat, logs, arquivos ou workflow. Exigir revogação e `NOLOGIN` no fechamento; invalidar credenciais. Não supor que `NOLOGIN` mata sessões existentes. A criação/alteração de papéis depende de aprovação própria.
+3. **Gate de registro único:** somente após autorizações operacionais e identidade verificada, INSERT parametrizado de bytes totalmente sintéticos, ID único e metadados válidos sob writer; não imprimir os bytes em nenhum resultado. A identidade writer não poderá consultar o registro para validar a si mesma.
+4. **Gate de recuperação:** usar sessão/verifier independente para ler somente o registro sintético por ID e calcular verificação de bytes, hash e tamanho em memória privada; registrar exclusivamente booleanos, tamanho e digest. Não retornar `raw_payload` ao chat nem ao GitHub.
+5. **Gate de limpeza e invariantes:** procedimento aprovado com identidade administrativa autorizada apenas para DELETE do ID sintético identificado; verificar zero registros, manter fixture PG-A4 (2 estudos, 2 relatórios, 3 vínculos e 1 proveniência), revogar concessões transitórias precisamente por grantor e inativar logins. Se readback falhar depois de COMMIT, declarar HOLD com registro possivelmente persistido e não repetir INSERT às cegas.
+
+**Segurança e simplificação:** não criar novo workflow nem camada de armazenamento para executar esse único ensaio; tentar resolver a comprovação por meios operacionais já disponíveis e expressamente autorizados. Caso a ferramenta impeça INSERT autenticado por política, **não contornar**: registrar `BLOCKED` e reavaliar utilidade do ensaio antes de novas alterações.
+
+**Decisão resultante:** falta comprovar uma rota autorizada de **duas sessões autenticadas de menor privilégio**, e fixar um plano preciso de criação/revogação, antes de pedir autorização para modificar papéis ou inserir dados. Não existem novas evidências conectadas nesta avaliação. `B2_NOT_READY_FOR_EXECUTION / B2_SQL_NOT_AUTHORIZED / E6_G1_BLOCKED`.
