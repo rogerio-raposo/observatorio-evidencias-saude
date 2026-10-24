@@ -1,6 +1,11 @@
 name: OES G2-I1 temporary-login authentication preflight (DISABLED)
 on:
   workflow_dispatch:
+    inputs:
+      confirm_g2_i1:
+        description: 'Type EXECUTE_G2_I1_ONCE to request the approved metadata-only test'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -9,7 +14,7 @@ jobs:
   g2-i1-authentication:
     # Remains hard-disabled until separate owner approval, secrets setup,
     # and review of the exact commit that would remove this guard.
-    if: ${{ false }}
+    if: ${{ false && github.event_name == 'workflow_dispatch' && inputs.confirm_g2_i1 == 'EXECUTE_G2_I1_ONCE' && github.run_attempt == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
