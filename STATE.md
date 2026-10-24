@@ -13,7 +13,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP266 — 2026-10-23**.
+- checkpoint vigente: **CP267 — 2026-10-23**.
 
 ### Nota de leitura do STATE cumulativo
 
@@ -23,6 +23,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - referências posteriores no corpo a “checkpoint vigente” ou “próximo passo” de CPs antigos são **snapshots históricos**, não instruções atuais;
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
+
+## CP267 — continuidade consolidada (2026-10-23 local)
+
+CP267 publicado em `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP267.md`: C1 catálogo 25/25 PASS (run 40048357640), C2 Study/Report documental tipado 30/30 PASS (run 40049293022), ambos em escopo funcional restrito. Navegador Django real não verificado; readiness `NOT_READY`, Fase 5 `NOT_STARTED`, D2 parcial e gates preservados. Próximo passo: avaliação crítica de próximo valor substantivo ou pausa de incrementos; nenhuma implementação implicitamente autorizada.
 
 ## Pós-CP266 — C2: validação automatizada de identidade e proveniência (2026-10-23 local; 2026-10-24 UTC)
 

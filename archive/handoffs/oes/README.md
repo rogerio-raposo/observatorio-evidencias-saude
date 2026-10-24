@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP266 — 2026-10-23**
+**CP267 — 2026-10-23**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP266.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-23_CP267.md`
 
 Checkpoint anterior:
 
-`CP265`
+`CP266`
 
 Status:
 
@@ -668,3 +668,5 @@ em **Modo Continuidade**.
 - **CP265 — 2026-10-23:** usuário forneceu link da execução GitHub Actions `40021883998` do workflow CTgov aprovado; `workflow_dispatch` attempt=1, `completed/success`, HTTP 200, 20 NCTs de `totalCount=87` na consulta literal, token de próxima página presente; **`PARTIAL_FIRST_PAGE_ONLY`** e nenhum julgamento científico. Documento 247, STATE e CHANGELOG registram a evidência e preservam limitações; autorização de disparo consumida, sem rerun ou paginação. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 global parcial, Fase 5 `NOT_STARTED`, Ficha e gates intactos. Próximo `Prossiga`: cruzamento documental dos 20 IDs com o inventário existente, sem GET adicional. Conversa aberta; STOP.
 
 - **CP266 — 2026-10-23:** consolida cruzamento documental D2/Documento 248, primeiro vertical slice Django, B1 e UX-02 com runs de 8/8, 16/16 e 20/20 PASS; validação em navegador Django pendente não bloqueante somente ao protótipo. Fase 4 documental fechada, D2 parcial, Fase 5 não iniciada, gates inalterados. Próximo `Prossiga`: análise comparativa do próximo incremento substantivo; sem implementação por inferência. Conversa aberta. STOP.
+
+- **CP267 — 2026-10-23:** consolida C1 catálogo (run 40048357640: 25/25 PASS) e C2 referências tipadas Study/Report (run 40049293022: 30/30 PASS), sem banco ou julgamentos novos. Navegador Django real pendente; readiness NOT_READY, Fase 5 NOT_STARTED, D2 parcial, gates intactos. Próximo `Prossiga`: decidir proporcionalmente próxima capacidade substantiva ou pausa no demonstrador, sem implementação automática. Conversa aberta; STOP.
