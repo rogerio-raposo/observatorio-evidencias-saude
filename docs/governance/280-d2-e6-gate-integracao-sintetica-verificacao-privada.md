@@ -35,3 +35,11 @@ Revisão do diff e testes novos identificados; CI offline PASS na revisão exata
 `APPROVED — OES / D2-E6 / SYNTHETIC_OFFLINE_INTEGRATION_AND_PRIVATE_READBACK_MOCKS_ONLY / no Neon / no credentials / no factual GET / no public JSON / keep factual workflow disabled / no paid services / fail closed`
 
 **STOP — A depende de aprovação explícita; B permanece bloqueada.**
+
+## Etapa A — implementação offline autorizada, 2026-10-24
+
+O proprietário aprovou explicitamente `SYNTHETIC_OFFLINE_INTEGRATION_AND_PRIVATE_READBACK_MOCKS_ONLY`, sem Neon, credenciais, GET ou alteração do workflow factual. Persistidos `tools/d2_e5_preservation/e6_private_roundtrip_offline.py` (commit `fa1be11d3bec020204e2c381874c1d6863115b66`) e `tools/d2_e5_preservation/tests/test_e6_private_roundtrip_offline.py` (commit `1b77ef2ce178e8854fbd0346abab417aee188a24`). Fluxo integra `prepare_observation`/`persist_observation`, chama uma interface de leitura independente injetada e compara ID, SHA-256, comprimento e bytes recuperados **sem devolvê-los**. Tratamento de falha após commit declara HOLD com possível registro persistido, sem prometer rollback impossível. Mocks simulam writer sem SELECT, verifier sem INSERT, falha de escrita/rollback, leitura negada, hash/bytes/ID adulterados e resultado sanitizado.
+
+**Evidência pendente:** testes novos **ainda não executados na CI**, nem validados contra PostgreSQL real. A suíte anterior 57/57 PASS aplica-se à revisão anterior, não aos novos arquivos. Workflow factual continua `if: ${{ false }}` e não foi modificado. Nenhuma operação Neon, credencial ou GET nesta etapa.
+
+**Estado:** `OFFLINE_SYNTHETIC_INTEGRATION_CODE_PERSISTED / NEW_TESTS_CI_PENDING / CONNECTED_GATE_NOT_APPROVED / E6_G1_BLOCKED`.
