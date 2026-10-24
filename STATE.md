@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP279 — 2026-10-24 (vigente)
+## Marco de continuidade CP280 — 2026-10-24 (vigente)
+
+- G2-I1: duas identidades temporárias provisionadas com ACL restrita, execução conectada 40140467057 falhou sem causa identificável; segunda tentativa não ocorreu por bloqueio da ferramenta. Diagnóstico offline e testes adicionados nos commits posteriores a CP279. Limpeza SQL grantor-aware PASS; 0 papéis temporários e 0 observações privadas, proveniência total 1, papéis permanentes mantidos NOLOGIN/NOINHERIT. Autenticação real permanece INCONCLUSIVE; G2-I2 NÃO AUTORIZADO; E6-G1 factual bloqueado. Workflow G2-I1 hard-disabled. Detalhes no CP280.
+
+## Marco de continuidade CP279 — 2026-10-24 (histórico)
 
 - **G2-P1:** preflight Neon autorizado somente leitura na branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`. `current_user=session_user=oes_sandbox_owner`; `oes_raw_private.source_observation` com **0 linhas**; registro do quarto invariante PG-A4 em `provenance.record` com UUID `a4300000-0000-4000-8000-000000000001` **1 linha atualmente**. ACL: `oes_e6_capture_login` NOLOGIN, sem USAGE/INSERT/SELECT/membership; writer NOLOGIN, USAGE+INSERT/sem SELECT; verifier NOLOGIN, USAGE+SELECT/sem INSERT; todos `rolinherit=false`; sem grants pelo owner para esses papéis segundo consulta. Catálogo com 16 colunas, raw `bytea`, sem ler bytes.
 - **G2-P2:** plano documental para duas identidades autenticadas distintas, driver Python proposto `psycopg 3` não instalado, TLS, transações sem autocommit, readback SHA-256 e cleanup específico. Antes de executar, resolver identidade e defaults das colunas obrigatórias e demonstrar manejo de falhas pós-commit; nenhuma autorização conectada operacional.

@@ -1,0 +1,22 @@
+# OES — CP280: encerramento operacional restrito e inconclusivo de G2-I1
+
+**Data:** 2026-10-24. **Anterior:** CP279. **HEAD antes do checkpoint:** `46e561ed7fb5499ea71efe19bf73c54048470d0d`. **Escopo:** consolidar a tentativa de autenticação conectada G2-I1, sua falha, diagnóstico offline e limpeza integral dos logins temporários. Nenhuma liberação de G2-I2 ou captura factual.
+
+## Linha de evidência após CP279
+- G2-I1 autorizado: dois logins efêmeros `oes_e6_g2_writer_tmp` e `oes_e6_g2_verifier_tmp`, criados por SQL no Neon pelo proprietário, com senhas distintas não compartilhadas no chat, projeto `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, DB `oes_sandbox`.
+- Consulta ao catálogo confirmou LOGIN, NOINHERIT, NOSUPERUSER, NOCREATEDB, NOCREATEROLE, NOREPLICATION, limite de uma conexão, exatamente uma membership em `oes_e6_writer` ou `oes_e6_verifier`, respectivamente, `SET TRUE / INHERIT FALSE / ADMIN FALSE`, grantor `oes_sandbox_owner`. Sem USAGE, INSERT ou SELECT diretos antes de SET ROLE.
+- Workflow de preflight e script Python publicados em `142372dfaef81922f24926b463f3acbd4913cf81`, TLS `verify-full` e `channel_binding=require` acrescentados em `ba39c610b270f591f8457b6cfc1e21bc6ed43442`. Confirmação manual em `6f660c4f14d05c9460b85b73551d4eb665c49fb4`.
+- Uma única execução conectada aprovada: GitHub Actions [40140467057](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40140467057), HEAD `7db60a9777d37d3ab2f650875a434687e2162260`, job `121010943885`: instalação do driver PASS, preflight conectado **FAIL/HOLD**, sem diagnóstico da causa (`G2_I1_AUTHENTICATION_HOLD`). Não há comprovação de autenticação independente ou de privilégio efetivo por sessão. Workflow desabilitado novamente no commit `a678bf84cf3623fb74911ed802b64c0df7178058`.
+- Diagnósticos sanitizados implementados no commit `6f14d4d8189b0d3b2395ecaf3c58c8b43aef3e53`; oito novos testes unitários de simulação adicionados no commit `46e561ed7fb5499ea71efe19bf73c54048470d0d`. Os oito testes foram reportados como PASS offline na conversa; **não tratar como CI remota/regressão integral comprovada**.
+- Segunda execução diagnóstica autorizada, porém a ferramenta bloqueou a tentativa de habilitação. Freshness Gate confirmou nenhum commit de habilitação; segunda execução **não ocorreu**. O workflow permaneceu hard-disabled.
+- G2-I1 cleanup autorizado no escopo original e efetivamente executado: `ALTER ROLE ... NOLOGIN` para ambos, consulta de `pg_stat_activity` sem sessões desses usuários, transação `REVOKE ... GRANTED BY oes_sandbox_owner` nas duas memberships e `DROP ROLE` de ambos — **PASS**. Verificação pós-limpeza: 0 logins temporários; `oes_raw_private.source_observation` 0 linhas; `provenance.record` total 1 registro; os três papéis `oes_e6_capture_login`, `oes_e6_writer`, `oes_e6_verifier` permanecem NOLOGIN e NOINHERIT. O UUID específico da proveniência não foi revalidado nessa última consulta, apenas contagem total 1.
+- Nenhum INSERT, DELETE de observação, leitura de raw payload, GET factual, habilitação de workflow factual ou serviço pago nesta sequência.
+
+## Decisão e fronteiras
+**G2-I1 encerrado operacionalmente com cleanup PASS e autenticação independente INCONCLUSIVE.** Não inferir prontidão a partir da configuração de ACL. Sem repetição automática ou bypass de bloqueios de ferramenta. `G2-I2 NOT_AUTHORIZED`; `E6-G1 FACTUAL BLOCKED`; workflow `.github/workflows/d2-e6-a2-gated-capture.yml` permanece desabilitado e não deve ser habilitado ou produzir JSON público. Fase 4 encerrada somente metodológica/documentalmente, D2 parcial, readiness NOT_READY, Fase 5 NOT_STARTED.
+
+## Ponto exato de retomada
+Reavaliar de forma proporcional se G2-I2 ainda deve ser perseguido: delimitar o que o ensaio demonstraria e o que ainda falta, sem recriar logins ou emitir autorização implícita; escolher encerramento/documentação ou novo caminho controlado **somente mediante decisão explícita**. Antes de agir, Freshness Gate do main, confirmar workflow G2-I1 hard-disabled, ausência de logins temporários e baseline do Neon se tecnicamente necessário. Privilegiar simplificação e evitar ciclos repetitivos.
+
+## Protocolo
+Cada `Prossiga` autoriza uma atividade interna. Checkpoints em geral após 3–5 atividades, antecipados por decisão material; Freshness Gate inicial/pré-commit; atualizações de progresso; sem serviços pagos, sem exposição de senhas, fail closed. `main` + `archive/handoffs/oes/README.md` são a fonte operacional de continuidade.

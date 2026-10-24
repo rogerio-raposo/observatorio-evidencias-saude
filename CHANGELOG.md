@@ -1,3 +1,10 @@
+## 2026-10-24 — CP280: G2-I1 encerrado inconclusivo; logins descartáveis removidos
+
+- Logins temporários criados e ACL mínima confirmada; workflow conectado G2-I1, somente metadados, execução [40140467057](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40140467057) falhou. Segunda tentativa autorizada, não executada por bloqueio de ferramenta.
+- Diagnóstico sanitizado e 8 testes de simulação adicionados, sem evidência de regressão remota completa.
+- Limpeza no Neon: NOLOGIN, nenhuma sessão, REVOKE seletivo pelo grantor e DROP de ambos; 0 logins temporários e 0 linhas privadas; proveniência total 1; papéis permanentes NOLOGIN e NOINHERIT.
+- Status: `G2_I1_CLEANUP_PASS / AUTHENTICATION_INCONCLUSIVE / G2_I2_NOT_AUTHORIZED / FACTUAL_BLOCKED`. Próximo passo: reavaliação proporcional, sem repetição implícita. Ver CP280.
+
 ## 2026-10-24 — CP279: preparação G2 documentada e CI offline 87/87 PASS
 
 - G2-P1: consultas Neon exclusivamente leitura e metadados na branch `br-gentle-hall-b6jaxehf`, DB `oes_sandbox`: tabela privada 0 linhas; proveniência PG-A4 UUID `a4300000-0000-4000-8000-000000000001` 1 linha; ACL mínima atestada; 16 colunas confirmadas, sem acesso ao `raw_payload`.
