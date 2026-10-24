@@ -6,7 +6,14 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP278 — 2026-10-24 (vigente)
+## Marco de continuidade CP279 — 2026-10-24 (vigente)
+
+- **G2-P1:** preflight Neon autorizado somente leitura na branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`. `current_user=session_user=oes_sandbox_owner`; `oes_raw_private.source_observation` com **0 linhas**; registro do quarto invariante PG-A4 em `provenance.record` com UUID `a4300000-0000-4000-8000-000000000001` **1 linha atualmente**. ACL: `oes_e6_capture_login` NOLOGIN, sem USAGE/INSERT/SELECT/membership; writer NOLOGIN, USAGE+INSERT/sem SELECT; verifier NOLOGIN, USAGE+SELECT/sem INSERT; todos `rolinherit=false`; sem grants pelo owner para esses papéis segundo consulta. Catálogo com 16 colunas, raw `bytea`, sem ler bytes.
+- **G2-P2:** plano documental para duas identidades autenticadas distintas, driver Python proposto `psycopg 3` não instalado, TLS, transações sem autocommit, readback SHA-256 e cleanup específico. Antes de executar, resolver identidade e defaults das colunas obrigatórias e demonstrar manejo de falhas pós-commit; nenhuma autorização conectada operacional.
+- **G2-P3:** commit `d9780153a7d73e96bca3533362f5a088210d9dd8`, módulo `e6_g2_identity_gate_offline.py` e 8 testes sintéticos para identidade de sessão e ACL com conexões injetadas. GitHub Actions [40135713382](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40135713382), job `120996673027`, HEAD `d9780153a7d73e96bca3533362f5a088210d9dd8`, **87/87 PASS**, 0 falhas/erros. Não comprova autenticação conectada nem independência real.
+- **Deliberação:** preparação G2 validada; **prontidão operacional condicional, NÃO liberada**. G2-I1 (identidades transitórias) e G2-I2 (ensaio Python/PostgreSQL) exigem autorizações operacionais específicas distintas. Nenhuma credencial, GRANT/REVOKE, login novo, DML/DDL ou GET factual aprovado. E6-G1 factual bloqueado; workflow `if: ${{ false }}`. Fase 4 encerramento apenas metodológico/documental; D2 parcial, readiness `NOT_READY`, Fase 5 não iniciada.
+
+## Marco de continuidade CP278 — 2026-10-24 (histórico)
 
 - **G1-A5:** adaptador de proveniência offline `e6_private_capture_provenance_offline.py`, commit `56b38a783e4f3df234ee778fff3638d9180bcd96`, converte timestamps ISO UTC-aware, fixa `source_name`, preserva bytes e rejeita falhas com HOLD; sem alterar `e6_capture.py` factual.
 - **G1-A6:** GitHub Actions [40133870873](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40133870873), no commit G1-A5, **73/73 PASS**, incluindo cinco novos testes de proveniência.

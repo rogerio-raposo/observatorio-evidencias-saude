@@ -1,3 +1,10 @@
+## 2026-10-24 — CP279: preparação G2 documentada e CI offline 87/87 PASS
+
+- G2-P1: consultas Neon exclusivamente leitura e metadados na branch `br-gentle-hall-b6jaxehf`, DB `oes_sandbox`: tabela privada 0 linhas; proveniência PG-A4 UUID `a4300000-0000-4000-8000-000000000001` 1 linha; ACL mínima atestada; 16 colunas confirmadas, sem acesso ao `raw_payload`.
+- G2-P2: definido plano mínimo de driver Python, sessões independentes com privilégio mínimo, TLS, integridade SHA-256, tratamento de falha pós-commit e limpeza exata; somente desenho.
+- G2-P3: controle offline de identidade `e6_g2_identity_gate_offline.py` mais oito testes no commit `d9780153a7d73e96bca3533362f5a088210d9dd8`. CI [40135713382](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40135713382), job `120996673027`, **87/87 PASS**.
+- Avaliação: preparação documental/offline suficiente para discutir gates operacionais, mas **G2 não está operacionalmente pronto/aprovado**; exige decidir rota de duas autenticações, compatibilidade de driver e defaults, cleanup e autorizações independentes G2-I1 e G2-I2. E6-G1 factual bloqueado. Nenhuma mutação ligada ao CP279.
+
 ## 2026-10-24 — CP278: encerramento técnico restrito G1, 79/79 PASS offline
 
 - G1-A5: adaptador de metadados de proveniência offline e cinco testes no commit `56b38a783e4f3df234ee778fff3638d9180bcd96`; contrato de timestamps ISO para `datetime` UTC-aware e `source_name` fixo, sem mexer no capturador factual.
