@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP275 — 2026-10-24**
+**CP276 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP275.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP276.md`
 
 Checkpoint anterior:
 
-`CP274`
+`CP275`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP276 — 2026-10-24:** A1 localizou a proveniência PG-A4 em `provenance.record`, vinculada por `target_version_uuid` à projeção Django; `evidence.result_source=0` é outra tabela, sem demonstrar perda. Persistência atual do UUID não reatestada. A2 recomendou encerramento técnico restrito de B2 (SET ROLE, 18 bytes, hash/limpeza PASS), sem autenticação independente ou integração Python. A3 delimitou desenho não executável de integração offline G1 e conectada sintética G2 sujeita a autorização própria. E6-G1 factual segue bloqueado; STOP.
 
 - **CP275 — 2026-10-24:** D2-E6 adaptador offline e integração sintética 63/63 PASS; B1 ACL atestada; B2 INSERT sintético, leitura privada 18 bytes/SHA e limpeza PASS; grants restaurados e tabela vazia; quarto invariante PG-A4 de proveniência ainda a identificar; E6-G1 factual bloqueado.
 

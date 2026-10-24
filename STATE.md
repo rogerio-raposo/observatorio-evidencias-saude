@@ -6,7 +6,14 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP275 — 2026-10-24 (vigente)
+## Marco de continuidade CP276 — 2026-10-24 (vigente)
+
+- **A1 / PG-A4:** o quarto invariante tem origem identificada em `provenance.record`, UUID `a4300000-0000-4000-8000-000000000001`, por `LEFT JOIN` com versão corrente de Study. A execução histórica `40110909348` confirmou a associação; `evidence.result_source=0` não é teste desse invariante. **Presença atual do UUID ainda não foi reatestada por SQL**.
+- **A2 / B2:** encerramento técnico **restrito recomendado**, sobre demonstração positiva previamente documentada (um INSERT de 18 bytes, verificação SHA-256, limpeza, restauração dos grants), sem declarar identidade de login independente, integração por Python/driver ou preservação atual do quarto invariante.
+- **A3 / próximo gate:** desenho documental G1 sem rede para integração Python/DB-API e leitor injetável; G2 conectado e sintético somente após aprovação específica e preparação segura de identidade. Corrigir contrato de proveniência/timestamps e explicitar HOLD pós-commit; não repetir B2 ou suíte 63/63 sem alteração material.
+- Mantidos: Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 `PARTIAL`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`, E6-G1 factual `NOT_AUTHORIZED`, workflow `if: ${{ false }}`, política de nenhum JSON bruto publicamente disponível; nenhuma operação Neon efetuada em A1–A3.
+
+## Marco de continuidade CP275 — 2026-10-24 (histórico)
 
 - D2-E6: adaptação offline e roundtrip sintético validados na CI **63/63 PASS** (GitHub run 40126123398); SQL conectado B2 sintético **INSERT + readback por SET ROLE + SHA-256 e tamanho PASS**, 18 bytes, segundo Documento 284. **Nenhuma autenticação independente** foi comprovada.
 - Após a limpeza, `oes_raw_private.source_observation` contém **0 linhas**; apenas memberships administrativas preexistentes do grantor `cloud_admin` com `SET FALSE`; `oes_e6_capture_login` permanece `NOLOGIN`, senha antiga não comprovadamente invalidada.
@@ -21,7 +28,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP275 — 2026-10-24**.
+- checkpoint vigente: **CP276 — 2026-10-24**.
 
 ### Nota de leitura do STATE cumulativo
 

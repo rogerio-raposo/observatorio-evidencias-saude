@@ -1,3 +1,10 @@
+## 2026-10-24 — CP276: proveniência PG-A4 reconciliada, B2 delimitado, integração proposta
+
+- A1: fonte exata do registro de proveniência identificada em `database/fixtures/pg_a4_g2b_synthetic.sql` (`provenance.record`, UUID `a4300000-0000-4000-8000-000000000001`) e consulta `applications/oes_web/evidence/synthetic_pg_reader.py`. A assertiva conectada histórica do run `40110909348` testava essa tabela; `evidence.result_source=0` não demonstra perda. Persistência atual do registro não reatestada.
+- A2: recomendação documental de encerramento técnico restrito do ensaio B2, sem ampliar o aceite do Documento 284: INSERT sintético, leitura SHA-256, limpeza e reversão PASS; duas autenticações de login e integração Python conectada não comprovadas.
+- A3: proposta documental de gate G1 de implementação/testes offline sem rede e G2 de validação Python/PostgreSQL conectada **somente sob aprovação separada**. Pendências concretas: adaptação explícita de `source_name`/timestamps e tratamento de HOLD quando readback falha após commit. Sem código, SQL, testes novos, GET factual, secrets ou modificações no workflow.
+- CP276 vigente. E6-G1 factual permanece bloqueado, `if: ${{ false }}`, JSON bruto fora de artifacts públicos, prontidão `NOT_READY`, D2 `PARTIAL`, Fase 5 `NOT_STARTED`.
+
 
 ## 2026-10-24 — D2-E6: piloto PostgreSQL privado, execução sintética B2 e CP275
 
