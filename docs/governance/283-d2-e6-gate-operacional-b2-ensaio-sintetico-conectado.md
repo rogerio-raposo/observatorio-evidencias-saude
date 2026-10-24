@@ -65,3 +65,15 @@ Documentação oficial Neon consultada: https://neon.com/docs/manage/roles . **P
 **Próxima decisão, sem executar agora:** escolher entre (I) evidência sintética pragmática sob troca de papel, com limitação de autenticação registrada; ou (II) ensaio estrito de duas sessões efêmeras SQL-only, mais complexo. Nenhuma nova conta, credencial, DML ou alteração de workflow autorizada por esta comparação.
 
 **Estado:** `B2_ALTERNATIVES_EVALUATED / IDENTITY_DESIGN_DECISION_PENDING / B2_SQL_NOT_AUTHORIZED / E6_G1_BLOCKED`.
+
+## Decisão do proprietário — opção 1 (2026-10-24)
+
+O proprietário escolheu expressamente **Opção 1: ensaio sintético mediante alternância controlada de papéis por `SET ROLE`**, dispensando para este ensaio a exigência de duas **sessões autenticadas independentes**. Essa é uma decisão de **desenho metodológico**, não autorização de DML, de concessão de `SET`, alteração de `LOGIN`, credenciais ou uso do workflow factual.
+
+**Critério de aceite delimitado:** comprovar escrita sintética positiva sob `current_user=oes_e6_writer`, leitura e comparação de integridade sob `current_user=oes_e6_verifier`, e negações cruzadas. Registrar o `session_user` administrativo, o fato de que as identidades efetivas derivaram de uma sessão controladora e a **não comprovação de autenticação operacional independente**. Não classificar como teste de login de produção.
+
+**Pré-condição técnica:** no baseline histórico, as concessões preexistentes ao proprietário apresentavam `SET FALSE`; obter `SET ROLE` real requer uma concessão transitória específica ou outro mecanismo já autorizado. Não presumir que `SET ROLE` funcionará sem alteração. Se necessária concessão, aprovar separadamente sua criação e revogação seletiva por grantor, preservando memberships preexistentes. Antes de eventual INSERT, fixar limite exato de dados sintéticos, SQL e estratégia de limpeza, com verificação de cardinalidade final e fixture PG-A4 intacta. O conector já bloqueou um teste de escrita anterior: respeitar bloqueios, sem variações destinadas a contorná-los.
+
+**Próxima etapa:** preparar uma única autorização operacional restrita, com SQL pré-revisado e rollback/limpeza; nenhuma operação autorizada nesta decisão. Workflow factual continua `if: ${{ false }}`.
+
+**Estado:** `B2_OPTION_1_SELECTED / ROLE_SWITCH_EXECUTION_GATE_PENDING / B2_WRITES_NOT_AUTHORIZED / E6_G1_BLOCKED`.
