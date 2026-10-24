@@ -83,3 +83,18 @@ O Neon SQL Editor aceita vários metacomandos, mas sua documentação lista apen
 **Decisão de engenharia recomendada:** não adicionar infraestrutura, serviços ou scripts de provisionamento apenas para contornar o provisionamento de uma credencial de piloto. Antes de pedir instalação ao proprietário, avaliar criticamente custo operacional e risco de um único uso do `psql` num dispositivo confiável versus adiar teste de autenticação até integração futura; não ampliar escopo nem declarar o teste concluído. 
 
 **Estado:** `PSQL_LOCAL_UNAVAILABLE_IN_SESSION / OWNER_ENVIRONMENT_UNKNOWN / SAFE_CREDENTIAL_PROVISIONING_PENDING / E6_G1_BLOCKED`. Nenhuma alteração operacional efetuada.
+
+
+## 6. Decisão do proprietário: tolerância temporária à senha no histórico — 2026-10-24
+
+O proprietário optou explicitamente por **aceitar, apenas nesta bateria de testes sintéticos**, a possibilidade de a senha aparecer no histórico privado do Neon SQL Editor, com substituição posterior, para evitar instalação e complexidade desproporcionais de \`psql\`. Esta decisão **supera exclusivamente a suspensão do uso do Editor por risco de histórico** indicada nas seções 3–5; mantém integralmente os limites dos Documentos 269–275.
+
+**Controles para executar:**
+- Criar uma senha **nova, forte e descartável**, exclusiva da identidade sintética \`oes_e6_capture_login\` no branch \`br-gentle-hall-b6jaxehf\`; nunca reutilizar senha pessoal, principal, de produção ou de outra conta.
+- É tolerada a presença desse segredo **no histórico restrito do SQL Editor**. Permanece proibido enviá-lo ao chat, a documentos/commits, workflows, artifacts ou logs públicos. Não transportar connection strings completas para a conversa.
+- A autorização de criação e testes sintéticos delimitados dada no Documento 275 segue vigente, sem autorização de GitHub Secrets ou execução factual. Confirmar previamente branch, banco, papéis e ACL, e executar apenas SQL dentro do escopo já aprovado.
+- Após testar: impor \`NOLOGIN\`, revogar associação temporária, **invalidar/substituir a senha** antes de qualquer reaproveitamento, verificar estado final e registrar conclusão sem qualquer segredo.
+- **Limite residual relevante:** rotação de senha não apaga retroativamente consultas do histórico, nem invalida cópias antigas de seus textos. Como a senha será exclusiva e desativada ao encerrar o ensaio, esse risco não deve se propagar para identidades futuras.
+
+**Estado:** \`TEMPORARY_SQL_EDITOR_PASSWORD_RISK_ACCEPTED_FOR_SYNTHETIC_TESTS / SECRET_MUST_NOT_ENTER_CHAT_OR_GITHUB / ROLE_PROVISIONING_AUTHORIZATION_REMAINS_SYNTHETIC_ONLY / E6_G1_BLOCKED\`.
+
