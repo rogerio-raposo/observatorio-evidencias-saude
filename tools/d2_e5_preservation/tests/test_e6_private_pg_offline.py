@@ -2,7 +2,7 @@
 import hashlib
 from dataclasses import replace
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from e6_private_pg_offline import (
     INSERT_SQL, PersistenceHold, prepare_observation, persist_observation,
@@ -134,6 +134,37 @@ class OfflineTests(unittest.TestCase):
     def test_boundary_exact_cap(self):
         p = prepare_observation(b"x" * 2_000_000, provenance())
         self.assertEqual(p.byte_count, 2_000_000)
+
+    def test_content_type_strict(self):
+        meta = provenance()
+        meta["response_content_type"] = "text/plain; hint=application/json"
+        with self.assertRaises(PersistenceHold):
+            prepare_observation(b"{}", meta)
+
+    def test_naive_timestamps_denied(self):
+        meta = provenance()
+        meta["started_at_utc"] = datetime.now()
+        with self.assertRaises(PersistenceHold):
+            prepare_observation(b"{}", meta)
+
+    def test_invalid_source_type_denied(self):
+        meta = provenance()
+        meta["source_name"] = ["ClinicalTrials.gov API v2"]
+        with self.assertRaises(PersistenceHold):
+            prepare_observation(b"{}", meta)
+
+    def test_prepared_size_forgery_denied(self):
+        p = prepare_observation(b"{}", provenance())
+        altered = replace(p, byte_count=2_000_001,
+                          parameters=p.parameters[:-2] + (2_000_001, p.parameters[-1]))
+        with self.assertRaises(PersistenceHold):
+            persist_observation(Connection(), altered)
+
+    def test_timezone_offset_timestamps(self):
+        meta = provenance()
+        meta["started_at_utc"] = datetime(2026, 10, 24, 10, 0, tzinfo=timezone.utc)
+        meta["completed_at_utc"] = datetime(2026, 10, 24, 8, 0, tzinfo=timezone(timedelta(hours=-3)))
+        self.assertEqual(prepare_observation(b"{}", meta).byte_count, 2)
 
     def test_no_credentials_used(self):
         c = Connection()
