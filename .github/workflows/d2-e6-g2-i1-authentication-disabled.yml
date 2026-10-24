@@ -1,0 +1,32 @@
+name: OES G2-I1 temporary-login authentication preflight (DISABLED)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  g2-i1-authentication:
+    # Remains hard-disabled until separate owner approval, secrets setup,
+    # and review of the exact commit that would remove this guard.
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout authorized revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PostgreSQL client
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify temporary identities (metadata only)
+        working-directory: tools/d2_e5_preservation
+        env:
+          OES_G2_HOST: ${{ secrets.OES_G2_HOST }}
+          OES_G2_WRITER_PASSWORD: ${{ secrets.OES_G2_WRITER_PASSWORD }}
+          OES_G2_VERIFIER_PASSWORD: ${{ secrets.OES_G2_VERIFIER_PASSWORD }}
+        run: python e6_g2_login_preflight.py
