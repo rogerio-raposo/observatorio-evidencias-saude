@@ -52,6 +52,30 @@ def capture_once(opener=None):
     return raw, started, utc(), ctype
 
 
+# Unknown fields trigger HOLD before packaging, not a privacy guarantee.
+_TOP_LEVEL = {"studies", "totalCount", "nextPageToken"}
+_STUDY = {"protocolSection", "derivedSection", "hasResults"}
+_SECTIONS = {"identificationModule", "statusModule", "sponsorCollaboratorsModule",
+    "oversightModule", "descriptionModule", "conditionsModule", "designModule",
+    "armsInterventionsModule", "outcomesModule", "eligibilityModule",
+    "contactsLocationsModule", "referencesModule", "ipdSharingStatementModule"}
+
+def preupload_structure_gate(raw):
+    try:
+        data = json.loads(raw)
+    except (ValueError, UnicodeError, TypeError) as exc:
+        raise ValueError("HOLD: invalid JSON") from exc
+    if not isinstance(data, dict) or set(data) - _TOP_LEVEL:
+        raise ValueError("HOLD: unexpected top-level fields")
+    if not isinstance(data.get("studies"), list):
+        raise ValueError("HOLD: invalid studies list")
+    for item in data["studies"]:
+        if not isinstance(item, dict) or set(item) - _STUDY:
+            raise ValueError("HOLD: unexpected study fields")
+        protocol = item.get("protocolSection")
+        if not isinstance(protocol, dict) or set(protocol) - _SECTIONS:
+            raise ValueError("HOLD: unexpected protocol sections")
+
 def build_package(raw, started, finished, ctype, target, run_id, attempt, sha, observation):
     provenance = {
         "activity_id": "OES/D2-E6-A2/CONTROLLED_FACTUAL_CAPTURE",
@@ -65,6 +89,7 @@ def build_package(raw, started, finished, ctype, target, run_id, attempt, sha, o
         "source_http_status": 200,
         "response_content_type": ctype,
     }
+    preupload_structure_gate(raw)
     package_evidence(raw, provenance, target)
     plan = prepare_archival_plan(target)
     if plan["classification"] != "OFFLINE_PREFLIGHT_PASS_PUBLICATION_NOT_AUTHORIZED":
