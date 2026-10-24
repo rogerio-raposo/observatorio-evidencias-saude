@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP267 — diagnóstico integrado de prontidão sem pesquisadores (2026-10-23 local)
+
+Documento 252 `docs/governance/252-analise-integrada-prontidao-dependencias-sem-pesquisadores.md` consolida matriz de dependências técnicas, científicas e operacionais sem executar ações novas. Resultado `READINESS_DEPENDENCIES_ANALYZED / RECOMMENDATIONS_ONLY / OWNER_DECISION_PENDING`: pesquisadores não são necessários para engenharia, testes sintéticos, preparação documental ou coleta factual exclusivamente não adjudicativa autorizada; são requeridos nos julgamentos especializados previstos pelos gates. Recomendação **ainda não aprovada**: pausar expansão Django, avaliar navegação real do demonstrador e escolher finalidade efetiva antes de investir em persistência/novas fontes. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, readiness `NOT_READY`, CP267, D2 parcial e BRG/SA preservados. Nenhum novo CI/SQL/Neon/consulta científica, código ou gate nesta atividade.
+
 ## CP267 — continuidade consolidada (2026-10-23 local)
 
 CP267 publicado em `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP267.md`: C1 catálogo 25/25 PASS (run 40048357640), C2 Study/Report documental tipado 30/30 PASS (run 40049293022), ambos em escopo funcional restrito. Navegador Django real não verificado; readiness `NOT_READY`, Fase 5 `NOT_STARTED`, D2 parcial e gates preservados. Próximo passo: avaliação crítica de próximo valor substantivo ou pausa de incrementos; nenhuma implementação implicitamente autorizada.
