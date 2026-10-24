@@ -84,4 +84,20 @@ Antes da implementação, validar regras de ownership, associação de roles, cr
 
 JSON mantido até validação e encerramento documental do piloto, com decisão de retenção ou descarte registrada. Sem prazo universal e sem acesso público. Um identificador estável `observation_id` e o `payload_sha256` independem de `bytea`; uma futura migração para serviço de objetos privado deverá demonstrar migração reversível, paridade dos bytes, acesso controlado e atualização auditável da referência física. **Não implementar camada de object storage antecipadamente.**
 
+## 6. Preflight de catálogo somente leitura — 2026-10-24
+
+Alvo confirmado explicitamente: projeto `weathered-boat-65779510` (`oes-sandbox`), branch experimental `br-gentle-hall-b6jaxehf`, database `oes_sandbox`. Três consultas `SELECT` ao catálogo executadas pelo conector Neon sob `oes_sandbox_owner`; sem transação de alteração, DDL, DML, criação de papéis ou captura externa.
+
+**Resultados:**
+- `oes_raw_private`: inexistente (`pg_namespace` = 0), portanto sem conflito de schema; objetos associados = 0.
+- 37 tabelas não sistêmicas visíveis; schemas existentes `appraisal`, `artifact`, `core`, `evidence`, `investigation`, `product`, `provenance`, `public`, `synthesis`.
+- Para os schemas de aplicação existentes, `PUBLIC` sem `USAGE`; `public` com `USAGE` (padrão distinto).
+- `oes_pg_a4_reader` existe, `LOGIN=true`, `INHERIT=false`, `SUPERUSER=false`, `CREATEROLE=false`, `CREATEDB=false`, não membro direto de `oes_sandbox_owner` e sem `CREATE` no schema `public`.
+- `oes_sandbox_owner` existe e possui `CREATEROLE` e `CREATEDB`, mas não `SUPERUSER`.
+- Identidades planejadas `oes_e6_writer` e `oes_e6_verifier` **não existem**; nomes provisórios, ainda não aprovados.
+
+**Avaliação:** `READ_ONLY_CATALOG_PREFLIGHT_PASS_FOR_NAME_CONFLICT_AND_ROLE_BASELINE`. Isso **não** equivale a auditoria exaustiva de ACL efetiva, herança complexa de privilégios, default privileges, teste de acesso negativo ou prova de ausência de exposição. Essas validações devem preceder a autorização da migração e da primeira escrita factual. Nenhum objeto do banco foi modificado; fixture PG-A4 não recebeu operações DML.
+
+**Gate seguinte:** preparar revisão detalhada das permissões-alvo e dos testes sintéticos da proposta, sem executar migração ou captura até autorização separada.
+
 **STOP — proposta aguardando avaliação, não autorização de SQL ou consulta factual.**
