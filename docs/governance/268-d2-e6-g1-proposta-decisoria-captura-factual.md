@@ -31,11 +31,16 @@ Os **termos específicos** e possíveis direitos sobre material de terceiros dev
 
 A política vigente, revisada no Documento 255, exige **validação automatizada e revisão humana apenas por exceção**. Não há inspeção humana integral obrigatória de cada JSON. Respostas inesperadas/duvidosas são `HOLD` **antes** do upload, sem corpo em logs; se o bloqueio não puder ser resolvido, não publicar artifact. `ALLOW` é técnico, não certificação científica.
 
-**PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: PENDING.** O proprietário deve aceitar explicitamente, em gate próprio, que um artifact temporário no repositório GitHub público possa ser baixado por terceiros antes de E6-G2; expiração/exclusão não apagam cópias. A resposta pode conter contatos pessoais que a fonte já tornou públicos. Não tornar staging privado condição absoluta sem necessidade demonstrada.
+**PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: APPROVED_BY_OWNER (2026-10-24).** O proprietário declarou expressamente: «Decido pela aceitação da exposição pública do artifact temporário». A decisão abrange exclusivamente o artifact temporário de dados brutos do ensaio E6-G1 no repositório GitHub público, potencialmente acessível por terceiros antes de E6-G2, inclusive com contatos já públicos na fonte. Expiração/exclusão posterior não revogam downloads. A aceitação não constitui autorização de GET, desbloqueio, nem aprovação jurídica irrestrita de redistribuição; `TERMS_FULL_REVIEW_PENDING` permanece.
+
+### Registro técnico da fonte e proveniência (verificado em 2026-10-24)
+O pacote E6 já registra em `manifest.json`: `source_name` (ClinicalTrials.gov API v2), `requested_url_exact`, `requested_parameters`, datas UTC de início/fim, `source_http_status`, `response_content_type`, `raw_sha256`, `repository_commit_sha`, `github_run_id`, `run_attempt` e `nct_ids_in_return_order`. O conteúdo `response.raw.json` permanece preservado em bytes. A rastreabilidade **técnica da observação** é suficiente para o escopo de captura E6-G1, sem infraestrutura adicional de catálogo de fontes.
+
+Esses atributos são produzidos pelo processo de captura e não constituem autenticação independente da fonte, verificação clínica ou ligação automática de cada campo à estrutura relacional de proveniência do PostgreSQL. A reconciliação de identidades, a proveniência por informação e as decisões científicas pertencem a gates posteriores.
 
 ## 4. Condições para apresentação de pedido executivo E6-G1
 1. Confirmar termos aplicáveis e limites para redistribuição/reuso do pacote bruto, inclusive eventuais conteúdos de terceiros, sem alegar liberação universal.
-2. Obter do proprietário **aceite explícito de exposição pública temporária**, escopo e cautelas.
+2. **ATENDIDO:** aceite explícito do proprietário quanto à potencial exposição pública temporária, com escopo e cautelas acima.
 3. Congelar URL, revisão `main`, duração de retenção (7 dias), falha fechada e plano de tratamento de exceções.
 4. Submeter **pedido separado de autorização E6-G1 para um GET factual único**. Somente depois, nova autorização/atividade delimitada para desbloquear o job e execução única, com Freshness Gate.
 5. E6-G2 de incorporação/arquivamento factual durável segue independente e não autorizado.
