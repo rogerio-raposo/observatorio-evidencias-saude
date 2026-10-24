@@ -48,4 +48,16 @@ Esses atributos são produzidos pelo processo de captura e não constituem auten
 ## 5. Restrições inalteradas
 D2 `PARTIAL`; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; readiness `NOT_READY`; Fase 5 `NOT_STARTED`; CP273 vigente; Neon e fixtures PG-A4 não tocados; nenhum acesso a produção, mudança de permissões, GET factual, postagem pública, commit factual ou serviço pago.
 
+## 6. Diligência adicional sobre reutilização (2026-10-24)
+
+Consulta às fontes oficiais disponíveis:
+- A NLM descreve a API como recurso **público para extração estruturada**, preferível a screen scraping: https://www.nlm.nih.gov/pubs/techbull/ja25/ja25_clinical_trials_screen-scraping.html .
+- O catálogo oficial federal https://catalog.data.gov/dataset/clinicaltrials-gov classifica o acesso ao conjunto como **public**, e fornece uma referência de licença no catálogo; tal metadado não substitui o texto específico e vigente dos termos do ClinicalTrials.gov.
+- A página oficial https://clinicaltrials.gov/about-site/terms-conditions foi localizada, porém seu conteúdo integral não pôde ser recuperado pelo mecanismo de leitura consultado. Não declarar análise integral dos termos concluída com base em resumos de terceiros.
+- Referências secundárias reproduzem recomendações de atribuição a ClinicalTrials.gov, identificação da data de processamento dos registros pela fonte, transparência sobre modificações e cautela com direitos de terceiros. **Esses detalhes ainda exigem confirmação direta** no texto aplicável antes de tratar redistribuição como juridicamente liberada.
+
+**Lacuna técnica específica de atribuição:** o manifesto atual contém `started_at_utc` e `completed_at_utc` (observação realizada pelo OES), mas **não armazena comprovadamente a data de processamento dos dados pelo ClinicalTrials.gov**, que é um conceito diferente. Não afirmar que a rastreabilidade técnica já satisfaz toda obrigação de atribuição para redistribuição. Uma eventual melhoria terá escopo/autorizações próprios e não pode efetuar um segundo GET sem gate específico.
+
+**Resultado:** `TERMS_FULL_REVIEW_PENDING` mantido; `PUBLIC_ARTIFACT_EXPOSURE_ACCEPTANCE: APPROVED_BY_OWNER` mantido; `E6_G1_NOT_APPROVED` e `FACTUAL_CAPTURE_BLOCKED` mantidos. A diligência não executou consulta ao endpoint factual de estudos.
+
 **STOP — documento deliberativo apenas.**
