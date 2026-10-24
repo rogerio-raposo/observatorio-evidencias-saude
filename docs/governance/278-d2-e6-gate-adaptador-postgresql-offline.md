@@ -53,3 +53,9 @@ Autorização para implementação offline recebida do proprietário. Criados em
 Adapter e suíte atualizados em `tools/d2_e5_preservation/`; verificação adicional de bytes, digest SHA-256, comprimento e identificador do objeto preparado antes da chamada ao cursor. Quatro testes sintéticos acrescentados: (i) simulação de erro de duplicidade com rollback e erro sanitizado, (ii) SHA adulterado, (iii) payload adulterado após preparação, (iv) limite inclusivo exato de 2.000.000 bytes. Execução local da suíte reproduzida: `python -m unittest -v test_e6_private_pg_offline` → **13 testes PASS, 0 failures, 0 errors**. Não é teste de integração com PostgreSQL; duplicidade é simulada como falha do cursor, não pela constraint real. Nada conectado ao Neon, sem credenciais, JSON factual ou GET. Workflow factual continua `if: ${{ false }}`.
 
 **Estado:** `OFFLINE_TESTS_13_OF_13_PASS / INTEGRATION_NOT_VALIDATED / E6_G1_BLOCKED`.
+
+## 8. Revisão de robustez (2026-10-24)
+
+Atualizado o adaptador em `860b2cdb` para validar Content-Type como media type exato `application/json` (parâmetros aceitos), timestamps com offsets efetivos e limite 1..2.000.000 bytes também no registro preparado. Ampliados testes em `d08e823d` com cinco casos de conteúdo falso, data sem timezone, metadado de origem inválido, tamanho adulterado e fusos horários distintos. **Total nominal: 18 testes**. **Não há execução verificável de 18/18 nesta atividade:** tentativa de baixar arquivos para o runtime local falhou por DNS de `raw.githubusercontent.com`. Suíte anterior de 13 testes teve execução local PASS, mas era referente à versão anterior. Não promover resultado de teste antes de execução reproduzível. Não houve Neon, secrets ou GET; workflow factual mantido `if: ${{ false }}`.
+
+**Estado:** `OFFLINE_HARDENING_COMMITTED / 18_TESTS_DEFINED_NOT_EXECUTED / E6_G1_BLOCKED`.
