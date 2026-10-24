@@ -28,10 +28,13 @@ jobs:
         env:
           OES_E6_CONNECTED_APPROVAL: ${{ inputs.owner_approval }}
         run: python e6_capture.py --connected --output evidence-package
-      - name: Temporary artifact only (never a Git commit)
+      - name: Fail-closed review-only verification immediately before upload
+        working-directory: tools/d2_e5_preservation
+        run: python e6_capture.py --verify-upload --output evidence-package
+      - name: Temporary artifact only (RAW_SOURCE_DATA / NOT_SCIENTIFICALLY_REVIEWED; never a Git commit)
         uses: actions/upload-artifact@v4
         with:
-          name: oes-e6-review-only-${{ github.run_id }}-${{ github.run_attempt }}
+          name: RAW_SOURCE_DATA-NOT_SCIENTIFICALLY_REVIEWED-oes-e6-${{ github.run_id }}-${{ github.run_attempt }}
           path: tools/d2_e5_preservation/evidence-package/
           retention-days: 7
           if-no-files-found: error
