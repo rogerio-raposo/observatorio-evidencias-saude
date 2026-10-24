@@ -1,3 +1,13 @@
+
+## 2026-10-24 — D2-E6: piloto PostgreSQL privado, execução sintética B2 e CP275
+
+- Política de retenção: dados JSON brutos originais não podem estar disponíveis para download público no GitHub, incluindo artifacts e logs; armazenamento privado PostgreSQL apenas no piloto (Docs 269–270).
+- Encerrados restritamente adaptador e integração offline; CI [40125394727](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40125394727) com **57/57 PASS** e CI [40126123398](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40126123398) com **63/63 PASS** (Docs 278–280).
+- Pré-voo de ACL B1 atestado pelo proprietário no Neon SQL Editor (Doc 282). Opção 1 escolhida: `SET ROLE` controlado, sem dois logins independentes (Doc 283).
+- B2, autorizado expressamente, concluiu um INSERT de **18 bytes estritamente sintéticos** como writer, readback como verifier com SHA-256/contagem idênticos, DELETE do ID e revogação seletiva de duas concessões temporárias (Doc 284). Tabela privada com **0 registros**, grants históricos do `cloud_admin` preservados e login descartável `NOLOGIN`; nenhuma credencial nova, GET factual ou exposição de payload bruto.
+- Fixture PG-A4: 2 estudos, 2 relatórios, 3 vínculos conferidos; **uma proveniência da projeção Django** consta na run histórica 40110909348, mas sua tabela/consulta exata não foi reconciliada com a leitura atual de `evidence.result_source=0`. Pendência explícita, sem inferir perda.
+- **CP275** ativado; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, D2 `PARTIAL`, Fase 5 `NOT_STARTED`. Workflow factual continua `if: ${{ false }}` com artifact antigo não utilizável; E6-G1 **não autorizado**. Próxima atividade: localizar fonte da proveniência PG-A4 e concluir seu invariante, sem repetir B2.
+
 # Changelog
 
 Este arquivo registra mudanças metodológicas consolidadas no Observatório de Evidências em Saúde — OES.
