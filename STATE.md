@@ -5,6 +5,14 @@
 **Fase 5:** `NOT_STARTED`  
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
+
+## Marco de continuidade CP275 — 2026-10-24 (vigente)
+
+- D2-E6: adaptação offline e roundtrip sintético validados na CI **63/63 PASS** (GitHub run 40126123398); SQL conectado B2 sintético **INSERT + readback por SET ROLE + SHA-256 e tamanho PASS**, 18 bytes, segundo Documento 284. **Nenhuma autenticação independente** foi comprovada.
+- Após a limpeza, `oes_raw_private.source_observation` contém **0 linhas**; apenas memberships administrativas preexistentes do grantor `cloud_admin` com `SET FALSE`; `oes_e6_capture_login` permanece `NOLOGIN`, senha antiga não comprovadamente invalidada.
+- Fixture PG-A4: 2 estudos, 2 relatórios, 3 vínculos confirmados; origem exata do **1 registro de proveniência da projeção Django PG-A4** ainda a identificar; `evidence.result_source=0` não permite concluir perda. Ver CP275 e Docs 265/284.
+- D2 `PARTIAL`, Fase 4 apenas encerrada metodológica/documentalmente, Fase 5 `NOT_STARTED`; workflow factual bloqueado `if: ${{ false }}` e contém artifact antigo **proibido para JSON bruto**. E6-G1 **não autorizado**.
+
 ## 1. Fonte canônica e continuidade
 
 Este repositório é a fonte canônica do Observatório de Evidências em Saúde — OES.
@@ -13,7 +21,7 @@ Continuidade formal:
 
 - ponteiro: `archive/handoffs/oes/README.md`;
 - template: `archive/continuity/OES_Template_Abertura_Continuidade.md`;
-- checkpoint vigente: **CP270 — 2026-10-24**.
+- checkpoint vigente: **CP275 — 2026-10-24**.
 
 ### Nota de leitura do STATE cumulativo
 
