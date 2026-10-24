@@ -12,5 +12,14 @@
 <dt>Proveniência</dt><dd>{{ signal.provenance }}</dd>
 <dt>Limites</dt><dd>{{ signal.limitation }}</dd>
 <dt>Encaminhamento</dt><dd>Avaliação humana pendente; nenhum julgamento executado nesta interface.</dd></dl>
+<section aria-labelledby="trajectory-title"><h2 id="trajectory-title">Trajetória documental retrospectiva</h2>
+<p>Marcos de documentação, não eventos operacionais registrados por esta aplicação.</p>
+<ol>{% for milestone in signal.milestones %}
+<li><strong>{{ milestone.description }}</strong>
+<p>Fonte: {{ milestone.source_ref }}</p>
+{% if milestone.event_date %}<p>Data documentada: {{ milestone.event_date }}</p>{% endif %}
+<p>Limite: {{ milestone.certainty_boundary }}</p></li>
+{% endfor %}</ol>
+<p>Nenhuma avaliação científica nova foi realizada nesta trajetória.</p></section>
 <nav aria-label="Exemplos"><a href="/signals/NCT01438697/">Identidade conhecida</a> · <a href="/signals/NCT07836491/">Identidade indeterminada</a></nav>
 </main></body></html>

@@ -8,7 +8,30 @@
       "Shaffer 2020 (relatório relacionado)"
     ],
     "provenance": "OES Documento 248, com referências históricas aos Documentos 232 e products/154.",
-    "limitation": "Correspondência documental histórica; nenhuma nova avaliação de elegibilidade ou revisão científica independente."
+    "limitation": "Correspondência documental histórica; nenhuma nova avaliação de elegibilidade ou revisão científica independente.",
+    "milestones": [
+      {
+        "event_type": "SOURCE_RETRIEVAL",
+        "source_ref": "Documento 247, seção 3, item 15",
+        "description": "NCT01438697 consta na primeira página recuperada pela consulta delimitada.",
+        "event_date": null,
+        "certainty_boundary": "Recuperação técnica parcial, sem triagem científica."
+      },
+      {
+        "event_type": "DOCUMENTARY_CROSSWALK",
+        "source_ref": "Documento 248, seção 2",
+        "description": "Identificador classificado KNOWN_DOCUMENTED no inventário científico delimitado.",
+        "event_date": null,
+        "certainty_boundary": "Conciliação por identificador, não nova avaliação clínica."
+      },
+      {
+        "event_type": "DOCUMENTED_REPORT_LINK",
+        "source_ref": "Documento 248, seção 2; Documento products/154",
+        "description": "Ritterband 2017 e Shaffer 2020 são relatórios relacionados ao mesmo estudo documentado.",
+        "event_date": null,
+        "certainty_boundary": "Vínculo histórico; não contabilizar dois estudos nem promover evidência."
+      }
+    ]
   },
   {
     "nct": "NCT07836491",
@@ -16,6 +39,22 @@
     "study_label": null,
     "reports": [],
     "provenance": "OES Documento 247 (identificador recuperado) e Documento 248 (inventário delimitado).",
-    "limitation": "Não identificado no corpus examinado; identidade clínica, elegibilidade e novidade NÃO avaliadas."
+    "limitation": "Não identificado no corpus examinado; identidade clínica, elegibilidade e novidade NÃO avaliadas.",
+    "milestones": [
+      {
+        "event_type": "SOURCE_RETRIEVAL",
+        "source_ref": "Documento 247, seção 3, item 01",
+        "description": "NCT07836491 consta na primeira página recuperada pela consulta delimitada.",
+        "event_date": null,
+        "certainty_boundary": "Recuperação técnica parcial, sem triagem científica."
+      },
+      {
+        "event_type": "DOCUMENTARY_CROSSWALK",
+        "source_ref": "Documento 248, seção 2, item 01",
+        "description": "Identificador não localizado no inventário científico delimitado.",
+        "event_date": null,
+        "certainty_boundary": "Não implica novo ensaio, inelegibilidade ou exclusão."
+      }
+    ]
   }
 ]
