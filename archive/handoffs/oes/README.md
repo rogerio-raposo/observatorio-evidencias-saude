@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP269 — 2026-10-24**
+**CP270 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP269.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP270.md`
 
 Checkpoint anterior:
 
-`CP268`
+`CP269`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP270 — 2026-10-24:** E6-A3, artifact sintético baixado, hashes verificados e bloqueio factual preservado.
 
 - **CP269 — 2026-10-24:** E5-A2–A6, política GitHub, testes PASS e arquivamento sintético, integração pendente.
 
