@@ -32,3 +32,23 @@ com workflow_dispatch manual e autorização específica. Resultado PASS não
 equivale a auditoria integral de acessibilidade, de segurança ou científica.
 Não executar runserver/DEBUG em produção. Os 30 testes Django existentes
 continuam em seu workflow independente.
+
+## PG-A4-G1 — leitor PostgreSQL sintético opcional
+
+O módulo `evidence/synthetic_pg_reader.py` acrescenta serviço **interno** de
+leitura Study–Report/proveniência; nenhuma rota existente é alterada.
+A conexão `oes_synthetic_reader` só é habilitada com
+`OES_PG_A4_ENABLED=1`, `OES_PG_A4_HOST` e `OES_PG_A4_PASSWORD` no
+**ambiente local privado**. Usuário fixo: `oes_pg_a4_reader`, banco
+`oes_sandbox`, SSL obrigatório e sessão `default_transaction_read_only=on`.
+Confirmar por fora que o host pertence à branch
+`br-gentle-hall-b6jaxehf`; não fornecer a conexão de `production`.
+Nunca versionar nem enviar credenciais para logs ou CI.
+
+Dependência experimental: `psycopg[binary]` em `requirements.txt`.
+Sem as variáveis, o Django permanece baseado em JSON, com `DATABASES={}`.
+A leitura PostgreSQL não executa migrations, não modifica dados e **não
+reconcilia NCT nem identidade científica**. Falha explícita quando desabilitada.
+Testes unitários em `evidence/tests/test_synthetic_pg_reader.py` utilizam mocks,
+não Neon. Execução de testes/conexão real e carga de fixtures requer etapas de
+validação posteriores e não foi comprovada pelo commit de implementação.
