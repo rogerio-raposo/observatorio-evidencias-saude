@@ -78,7 +78,8 @@ class OfflinePackagingTests(unittest.TestCase):
         result = package_evidence(body, provenance(), self.dest)
         self.assertEqual(result["scope_status"], "PASS_TECHNICAL_QUERY_ONLY")
         self.assertNotIn("title", result)
-        self.assertIsNone(result["total_count_if_provided"] if False else None)
+        self.assertEqual(result["total_count_if_provided"], 1)
+        self.assertFalse(result["next_page_token_present"])
 
     def test_invalid_or_unapproved_metadata_rejected(self):
         m = provenance()
