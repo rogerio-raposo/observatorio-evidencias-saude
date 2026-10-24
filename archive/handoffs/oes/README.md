@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP271 — 2026-10-24**
+**CP272 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP271.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP272.md`
 
 Checkpoint anterior:
 
-`CP270`
+`CP271`
 
 Status:
 
@@ -59,6 +59,9 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP271 — 2026-10-24:** PG-A3 sintético em Neon, schema baseline/003 e testes com rollback; antecede PG-A4.
+- **CP272 — 2026-10-24:** PG-A4 G0/G1/G2-A validados; G2-B fixture com 2 Studies, 2 Reports, 3 vínculos e 1 proveniência já persistida no Neon; leitura Django relacional pendente.
 
 - **CP270 — 2026-10-24:** E6-A3, artifact sintético baixado, hashes verificados e bloqueio factual preservado.
 
