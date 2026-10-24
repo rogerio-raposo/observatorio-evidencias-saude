@@ -116,3 +116,11 @@ A conexão autenticada pelo conector Neon usando explicitamente `role_name=oes_e
 **Pendências:** teste positivo sintético transacional como writer, validação independente do SHA na leitura e limpeza; desativação/rotação da credencial após a bateria de testes, com verificação de estado final. Workflow factual continua bloqueado.
 
 **Estado:** `AUTHENTICATED_MIN_PRIVILEGE_LOGIN_PASS / NEGATIVE_ACCESS_PASS / POSITIVE_SYNTHETIC_WRITE_PENDING / E6_G1_FACTUAL_BLOCKED`.
+
+## 9. Encerramento de acesso autenticado sintético — 2026-10-24
+
+Após a tentativa de teste positivo de INSERT ser bloqueada pela ferramenta, o proprietário confirmou manualmente a execução de desativação e revogação. Verificação conectada independente, no Neon branch experimental `br-gentle-hall-b6jaxehf` e banco `oes_sandbox`: `oes_e6_capture_login` existe, `rolcanlogin=false`, `rolinherit=false`; consulta a `pg_auth_members` para o papel de login retornou **zero associações**; `oes_raw_private.source_observation` contém **0 registros**. A bateria comprovou autenticação e negações de SELECT/INSERT sem SET ROLE, mas **não comprovou a inserção positiva** porque a operação foi bloqueada pela ferramenta. O bloqueio do workflow factual permanece.
+
+Limites: `NOLOGIN` impede novas conexões, mas não prova término de sessões anteriores; a senha pode persistir no sistema/histórico do SQL Editor até sua invalidação/substituição, a ser tratada antes de qualquer reutilização. Sem autorização de GET factual, novos serviços, secrets ou habilitação de workflow.
+
+**Estado:** `LOGIN_DISABLED_VERIFIED / WRITER_MEMBERSHIP_REVOKED_VERIFIED / RAW_ROWS_ZERO / POSITIVE_WRITE_NOT_EXECUTED / E6_G1_BLOCKED`.
