@@ -1,0 +1,37 @@
+name: OES D2-E6-A2 gated factual capture (NOT AUTHORIZED TO RUN)
+on:
+  workflow_dispatch:
+    inputs:
+      owner_approval:
+        description: 'Requires separate specific approval for one factual GET; enter OWNER_APPROVED_SINGLE_GET only after approval'
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: oes-d2-e6-controlled-single-get
+  cancel-in-progress: false
+jobs:
+  capture-package:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.owner_approval == 'OWNER_APPROVED_SINGLE_GET' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Single GET plus packaging and offline preflight
+        working-directory: tools/d2_e5_preservation
+        env:
+          OES_E6_CONNECTED_APPROVAL: ${{ inputs.owner_approval }}
+        run: python e6_capture.py --connected --output evidence-package
+      - name: Temporary artifact only (never a Git commit)
+        uses: actions/upload-artifact@v4
+        with:
+          name: oes-e6-review-only-${{ github.run_id }}-${{ github.run_attempt }}
+          path: tools/d2_e5_preservation/evidence-package/
+          retention-days: 7
+          if-no-files-found: error

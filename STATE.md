@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP269 — E6-A2 integração mínima implementada (2026-10-24)
+
+Autorizada implementação **sem execução conectada**. Criados `tools/d2_e5_preservation/e6_capture.py`, testes sintéticos de integração `tests/test_e6_capture.py` e workflow manual independente `.github/workflows/d2-e6-a2-gated-capture.yml`. Captura GET único sem redirects/retry, limites existentes, execução real de `package_evidence` e `prepare_archival_plan`, artifact temporário de 7 dias. **O workflow não foi executado; não houve HTTP, coleta, publicação factual nem teste CI nesta atividade.** O campo de confirmação no dispatch é uma trava operacional, **não** substitui autorização específica do proprietário para consulta. Classificação `D2_E6_A2_MINIMAL_INTEGRATION_IMPLEMENTED / INTEGRATION_TESTS_PENDING / CONNECTED_RUN_NOT_AUTHORIZED`. CP269, D2 parcial, F5 não iniciada, readiness não pronta e gates intactos.
+
 ## Pós-CP269 — D2-E6-A1 protocolo factual preparado (2026-10-24)
 
 Aprovada **preparação técnica e documental somente** de nova observação ClinicalTrials.gov; criado `docs/governance/254-d2-e6-a1-protocolo-observacao-factual-controlada.md`. Delimitados parâmetros históricos literais de E3, novo gate para URL exata e GET único, captura de bytes, integração futura E5-A3 + E5-A5, artifact temporário, revisão **integral** do JSON e segundo gate de publicação factual, seguido de commit atômico e verificação. Workflow E3 não preserva corpo JSON e **não pode ser reutilizado sem adaptação explicitamente aprovada**. Estado `D2_E6_A1_FACTUAL_OBSERVATION_PROTOCOL_PREPARED / NO_CONNECTED_EXECUTION`. Nenhum HTTP, CI, dado factual, alteração funcional ou publicação realizada. Próximo passo é avaliar adaptação mínima E6-A2, separadamente autorizada. CP269 e gates mantidos.
