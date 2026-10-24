@@ -24,6 +24,10 @@ Este arquivo preserva snapshots históricos acumulados de marcos anteriores. Por
 - em caso de divergência aparente, prevalecem: ponteiro atual → checkpoint atual → Freshness Gate.
 
 
+## Pós-CP266 — C1: catálogo documental demonstrativo implementado (2026-10-23 local)
+
+Proprietário aprovou expressamente C1 e sua implementação. Commit de código `fd30370039e44ec730c9b9903069096ad8171bfc`: catálogo GET-only na rota `/`, leitura das mesmas duas fixtures por `list_signals()`, links para `/signals/NCT01438697/` e `/signals/NCT07836491/`, estados legíveis, limites e aviso explícito de inventário demonstrativo parcial. Cinco testes adicionais `evidence/tests/test_catalog.py` cobrem inventário local, navegação, não inferência sobre identidade não reconciliada, ausência de escrita e rotas preexistentes. **C1_IMPLEMENTED / AUTOMATED_VALIDATION_PENDING**: nenhum teste do novo commit foi executado; os anteriores **20/20 PASS** correspondem à revisão UX-02 anterior. Total previsto agora: **25 testes**; execução do workflow manual exige autorização própria. Nenhum SQL/Neon, migração, consulta externa, nova dependência, deploy ou alteração científica. CP266 vigente, D2 global parcial, Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Fase 5 `NOT_STARTED`, readiness `NOT_READY`, M3 bloqueado, BRG/SA e 36 migrations `UNREVIEWED` inalterados.
+
 ## CP266 — consolidação de continuidade (2026-10-23 local)
 
 Checkpoint `archive/handoffs/oes/OES_Continuidade_2026-10-23_CP266.md` consolida Docs. 248–250, Django A1/B1/UX-02, runs `40044041757` (8/8), `40046496477` (16/16), `40047175669` (**20/20 PASS**) e `REAL_BROWSER_VALIDATION_PENDING_NON_BLOCKING_FOR_PROTOTYPE`. CP265 preservado imutável. Próxima atividade: comparar opções de incremento substantivo, **sem implementar por inferência**. Fase 4 apenas metodológico-documental encerrada, Fase 5 `NOT_STARTED`, readiness `NOT_READY`, D2 global parcial e gates preservados.
