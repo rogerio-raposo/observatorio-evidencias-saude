@@ -1,5 +1,6 @@
 """Synthetic, offline-only tests; never open a network connection."""
 import hashlib
+from dataclasses import replace
 import unittest
 from datetime import datetime, timezone
 
@@ -105,6 +106,34 @@ class OfflineTests(unittest.TestCase):
         meta["source_http_status"] = 201
         with self.assertRaises(PersistenceHold):
             prepare_observation(b"{}", meta)
+
+    def test_duplicate_insert_rolls_back_without_leak(self):
+        p = prepare_observation(b"{}", provenance())
+        c = Connection(fail=True)
+        with self.assertRaises(PersistenceHold) as caught:
+            persist_observation(c, p)
+        self.assertNotIn("SENSITIVE", str(caught.exception))
+        self.assertEqual((c.commits, c.rollbacks), (0, 1))
+
+    def test_tampered_sha_prepared_rejected_before_db(self):
+        p = prepare_observation(b"{}", provenance())
+        altered = replace(p, sha256="0" * 64)
+        c = Connection()
+        with self.assertRaisesRegex(PersistenceHold, "integrity mismatch"):
+            persist_observation(c, altered)
+        self.assertEqual(c.cur.calls, [])
+
+    def test_tampered_payload_prepared_rejected_before_db(self):
+        p = prepare_observation(b"{}", provenance())
+        altered = replace(p, parameters=p.parameters[:-1] + (b"[]",))
+        c = Connection()
+        with self.assertRaisesRegex(PersistenceHold, "integrity mismatch"):
+            persist_observation(c, altered)
+        self.assertEqual(c.cur.calls, [])
+
+    def test_boundary_exact_cap(self):
+        p = prepare_observation(b"x" * 2_000_000, provenance())
+        self.assertEqual(p.byte_count, 2_000_000)
 
     def test_no_credentials_used(self):
         c = Connection()
