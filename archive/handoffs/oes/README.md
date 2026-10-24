@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP273 — 2026-10-24**
+**CP274 — 2026-10-24**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP273.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP274.md`
 
 Checkpoint anterior:
 
-`CP272`
+`CP273`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP274 — 2026-10-24:** retenção e armazenamento privado dos JSONs; esquema PostgreSQL piloto sintético criado, isolamento PG-A4 e rollback PASS; testes dos papéis E6 pendentes; captura factual bloqueada.
 
 - **CP273 — 2026-10-24:** PG-A4 encerrado restritamente; D2-E6 pré-upload 38/38 PASS; captura factual bloqueada.
 - **CP271 — 2026-10-24:** PG-A3 sintético em Neon, schema baseline/003 e testes com rollback; antecede PG-A4.
