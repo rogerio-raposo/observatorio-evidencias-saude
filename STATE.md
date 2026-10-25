@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP295 — 2026-10-25 (vigente)
+## Marco de continuidade CP296 — 2026-10-25 (vigente)
+
+- Documento 304: PF-I01 implementado como consulta N2 GET-only offline no Django. Snapshot original preservado sob hash; CI Django 40243303174 success; sem integração DB, E9 ou A3. Aceite AC01–AC10 ainda não exaustivo, AC03 vinculativo no endpoint parcial. Próximo: inspeção proporcional dos critérios e apresentação antes de ampliar funcionalidade.
+
+## Marco de continuidade CP295 — 2026-10-25 (histórico)
 
 - Documento 300/M2-A7: mudança aprovada de prioridade, de demonstrações isoladas para planejamento de piloto técnico-funcional mínimo integrado, sem implementação autorizada. Critérios candidatos PF-01–PF-10; E9 NO-GO, Marco B aberto, readiness NOT_READY. Próximo: inventário read-only de rotas Django, contratos, persistência e serviços versus PF-01–PF-10.
 
