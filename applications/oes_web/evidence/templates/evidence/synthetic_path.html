@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Percurso técnico sintético</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main>
+<p class="notice">DEMONSTRAÇÃO TÉCNICA SINTÉTICA OFFLINE — não é ingestão factual, execução HTTP, persistência conectada nem avaliação científica.</p>
+<h1>Percurso sintético ilustrativo E6 → D1 → referência documental</h1>
+<p>Exemplo determinístico reconstruído para apresentação; não é recibo recuperado de execução histórica. A página não executa P1-A3.</p>
+{% if hold %}
+<section aria-labelledby="hold-title"><h2 id="hold-title">HOLD — apresentação não disponível</h2>
+<p>Não foi possível validar integralmente o exemplo. Nenhum comprovante positivo é apresentado.</p></section>
+{% else %}
+<section aria-labelledby="path-title"><h2 id="path-title">Cadeia de demonstração</h2>
+<ol>
+<li>E6 — preparação sintética e digest SHA-256 (verificados na suíte offline P1-A3, não aqui).</li>
+<li>D1 — cenário, ciclo e sinal simulados em memória, sem leitura conectada.</li>
+<li>Django — referência documental selecionada explicitamente pelo cenário, não inferida de identificadores ou do payload.</li>
+</ol></section>
+<section aria-labelledby="receipt-title"><h2 id="receipt-title">Exemplo de recibo sanitizado</h2>
+<dl>
+<dt>Estado técnico</dt><dd>{{ receipt.status }}</dd>
+<dt>Observação sintética</dt><dd>{{ receipt.observation_id }}</dd>
+<dt>SHA-256 do exemplo</dt><dd class="reading-path">{{ receipt.sha256 }}</dd>
+<dt>Contagem de bytes do exemplo</dt><dd>{{ receipt.payload_bytes }}</dd>
+<dt>Sinal sintético</dt><dd>{{ receipt.signal_id }}</dd>
+<dt>Referência NCT selecionada</dt><dd>{{ receipt.documentary_nct }}</dd>
+<dt>Estado documental</dt><dd>{{ receipt.identity_state }}</dd>
+<dt>Limite da evidência</dt><dd>{{ receipt.evidence_boundary }}</dd>
+<dt>Decisão científica</dt><dd>{{ receipt.scientific_decision }}</dd>
+</dl></section>
+{% endif %}
+<section aria-labelledby="limits-title"><h2 id="limits-title">Fontes e limites independentes</h2>
+<p>O exemplo de recibo é sintético; a referência NCT pertence a uma fixture documental histórica. Essa seleção não prova que a observação sintética identificou o ensaio.</p>
+<p>A evidência técnica de composição offline está no
+<a href="https://github.com/rogerio-raposo/observatorio-evidencias-saude/blob/main/docs/governance/291-encerramento-tecnico-restrito-p1-a3-integracao-sintetica-offline.md">Documento 291</a>
+e na <a href="https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40214460778">CI P1-A3</a>.
+O contrato da apresentação está no <a href="https://github.com/rogerio-raposo/observatorio-evidencias-saude/blob/main/docs/governance/292-p2-contrato-minimo-apresentacao-sintetica-django.md">Documento 292</a>.</p>
+<p>Não foi realizada avaliação científica independente. Não há verificação de armazenamento físico ou leitura PostgreSQL por esta página.</p>
+</section>
+<nav aria-label="Navegação documental"><a href="/">Retornar ao catálogo documental</a></nav>
+</main></body></html>

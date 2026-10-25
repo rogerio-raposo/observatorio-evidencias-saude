@@ -1,0 +1,11 @@
+{
+  "status": "SYNTHETIC_PATH_VERIFIED_OFFLINE",
+  "observation_id": "P1-OBS",
+  "sha256": "7294ef88cb7f01f8298f6264c1ac547e74a52b4a488c062858f8f10e26c1575b",
+  "payload_bytes": 38,
+  "signal_id": "SYNTH-SIGNAL-P1",
+  "documentary_nct": "NCT01438697",
+  "identity_state": "KNOWN_DOCUMENTED",
+  "evidence_boundary": "SYNTHETIC_TECHNICAL_ONLY",
+  "scientific_decision": "NOT_PERFORMED"
+}

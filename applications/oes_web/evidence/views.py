@@ -20,3 +20,15 @@ def detail(request, nct):
         raise Http404
     return render(request, "evidence/signal_detail.html",
                   {"signal": signal, **build_presentation(signal)})
+
+
+def synthetic_path(request):
+    """Static, separately labelled synthetic receipt; never invoke P1-A3."""
+    if request.method != "GET":
+        raise Http404
+    from .p2_presentation import load_example, SyntheticPresentationHold
+    try:
+        receipt = load_example()
+    except SyntheticPresentationHold:
+        return render(request, "evidence/synthetic_path.html", {"hold": True}, status=503)
+    return render(request, "evidence/synthetic_path.html", {"receipt": receipt, "hold": False})
