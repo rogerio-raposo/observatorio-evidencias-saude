@@ -8,3 +8,7 @@ nav{margin-top:2rem}.timeline{list-style:decimal;margin-left:.5rem;padding-left:
 .timeline li{padding:.4rem 0 1rem .7rem}.timeline li+li{border-top:1px solid #edf0f3}
 .timeline p{margin:.35rem 0}.source-links{font-size:.95rem}.boundary{color:#415165}
 @media(max-width:800px){main{margin:0;padding:1.25rem;border:0;border-radius:0}}
+
+.reading-guide{background:#f4f8fb;border:1px solid #d7e3ec;border-radius:8px;padding:1rem 1.15rem;margin-top:1.4rem}
+.reading-guide h2{margin-top:0}.reading-guide p{margin:.65rem 0 0}.reading-path{font-weight:600;overflow-wrap:anywhere}
+.reading-guide .boundary{font-weight:400}

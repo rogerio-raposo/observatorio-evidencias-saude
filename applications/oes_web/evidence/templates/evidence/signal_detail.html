@@ -6,6 +6,10 @@
 <body><main>
 <p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
 <h1>Sinal de evidência: {{ signal.nct }}</h1>
+<section class="reading-guide" aria-labelledby="route-title"><h2 id="route-title">Como ler este percurso documental</h2>
+<p class="reading-path">Sinal identificado <span aria-hidden="true">→</span> identidade documental <span aria-hidden="true">→</span> {% if signal.study_reference %}estudo e relatórios vinculados{% else %}estudo não reconciliado e nenhum relatório vinculado{% endif %} <span aria-hidden="true">→</span> fontes e limites</p>
+<p class="boundary">{% if signal.study_reference %}A associação apresentada é histórica e documental; dois relatórios não representam dois estudos.{% else %}A ausência de correspondência no inventário delimitado não estabelece novidade, inelegibilidade ou exclusão.{% endif %}</p>
+</section>
 <section aria-labelledby="identity-title">
 <h2 id="identity-title">Identidade e relatórios</h2>
 <dl><dt>Estado documental</dt><dd>{{ identity_label }}</dd>
