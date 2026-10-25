@@ -96,5 +96,10 @@
     "ai_system": "sistema de IA",
     "owner": "proprietário",
     "human_expert": "especialista humano"
+  },
+  "role": {
+    "source": "síntese-fonte",
+    "primary": "síntese principal",
+    "corroborative": "síntese corroborativa"
   }
 }

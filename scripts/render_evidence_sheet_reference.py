@@ -165,10 +165,27 @@ def map_value(path: str, value: Any, presentation: dict[str, Any]) -> Any:
     return mapping.get(key, value)
 
 
+# Only N2 descriptive fields may opt into an explicit, lossless label projection.
+N2_LABEL_FIELDS = frozenset({
+    "question.context", "synthesis.population", "synthesis.comparison",
+    "synthesis.timepoint", "synthesis.estimand",
+})
+
+
+def readable_n2_label(path: str, value: Any) -> Any:
+    if path not in N2_LABEL_FIELDS or not isinstance(value, dict):
+        return value
+    if set(value) == {"label"} and isinstance(value["label"], str):
+        return value["label"]
+    # Never choose an arbitrary field or disguise an unfamiliar scientific object.
+    return value
+
+
 def stringify(path: str, value: Any, presentation: dict[str, Any]) -> str:
     if value is MISSING:
         raise KeyError(f"Active template variable not found in view: {path}")
 
+    value = readable_n2_label(path, value)
     value = map_value(path, value, presentation)
 
     if value is None:
@@ -230,7 +247,11 @@ def render_nodes(
 
 def render(template: str, payload: Any, presentation: dict[str, Any]) -> str:
     nodes = parse(tokenize(template))
-    return render_nodes(nodes, payload, payload, presentation)
+    rendered = render_nodes(nodes, payload, payload, presentation)
+    if "OES Evidence Sheet Template" in template:
+        # A template loop emits blank lines; only remove them *between* table rows.
+        rendered = re.sub(r"(?m)(^\\|[^\\n]*\\|\\n)\\n+(?=\\|)", r"\\1", rendered)
+    return rendered
 
 
 def main() -> None:

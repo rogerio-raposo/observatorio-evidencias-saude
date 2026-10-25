@@ -56,10 +56,10 @@ IMPORTANT: this template renders evidence; it is not a scientific source and mus
 ## Resultados e achados prioritários
 
 {{#if priority_results}}
-| Desfecho / achado | Resultado | Estudos | Certeza / confiança |
-|---|---|---:|---|
+| Desfecho / achado | Papel da síntese | Resultado | Studies modelados no OES | Certeza / confiança |
+|---|---|---|---:|---|
 {{#each priority_results}}
-| {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} | {{#if synthesis.result_summary.effect_display}}{{synthesis.result_summary.effect_display}}{{else}}{{#if synthesis.result_summary.summary_text}}{{synthesis.result_summary.summary_text}}{{else}}{{synthesis.result_summary}}{{/if}}{{/if}} | {{contributing_studies}} | {{#if certainty.formal_assessment}}{{certainty.final_level}} ({{certainty.framework}}){{else}}{{certainty.display}}{{/if}} |
+| {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} | {{role}} | {{#if synthesis.result_summary.effect_display}}{{synthesis.result_summary.effect_display}}{{else}}{{#if synthesis.result_summary.summary_text}}{{synthesis.result_summary.summary_text}}{{else}}{{synthesis.result_summary}}{{/if}}{{/if}} | {{contributing_studies}} | {{#if certainty.formal_assessment}}{{certainty.final_level}} ({{certainty.framework}}){{else}}{{certainty.display}}{{/if}} |
 {{/each}}
 {{else}}
 Nenhum resultado ou achado prioritário foi registrado para esta versão.
@@ -68,7 +68,7 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 ### Detalhamento
 
 {{#each priority_results}}
-#### {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}}
+#### {{#if outcome.preferred_name}}{{outcome.preferred_name}}{{else}}{{synthesis.synthesis_type}}{{/if}} — {{role}}
 
 {{#if synthesis.population}}
 **População:** {{synthesis.population}}  
@@ -88,12 +88,12 @@ Nenhum resultado ou achado prioritário foi registrado para esta versão.
 **Interpretação:** {{synthesis.result_summary.interpretation}}  
 {{/if}}
 {{#if synthesis.result_summary.reported_study_count}}
-**k reportado pela síntese-base:** {{synthesis.result_summary.reported_study_count}}  
+**Número de estudos reportado pela síntese externa (k; não equivale aos Studies modelados no OES):** {{synthesis.result_summary.reported_study_count}}  
 {{/if}}
 {{#if synthesis.result_summary.analysis_note}}
 **Nota analítica:** {{synthesis.result_summary.analysis_note}}  
 {{/if}}
-**Studies diretamente modelados no OES nesta Synthesis:** {{contributing_studies}}  
+**Studies diretamente modelados no OES para esta Synthesis (não confundir com k da fonte externa):** {{contributing_studies}}  
 **Results contribuintes:** {{contributing_results}}
 
 {{#if certainty.formal_assessment}}
