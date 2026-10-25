@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP288 — 2026-10-25 (vigente)
+## Marco de continuidade CP289 — 2026-10-25 (vigente)
+
+- **Documento 294** formaliza parecer **P3-A3 aprovado**: suficiência técnico-demonstrativa **restrita** P1/P2 reconhecida (Marco A), com matriz P3-R01–R11 e critérios P3-S01–S06; **piloto OES amplo (Marco B) não encerrado**. P3 documental, sem novas CI, serviços, testes ou código. Próximo: reavaliação proporcional das macroatividades remanescentes. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`; avaliação científica humana diferida.
+
+## Marco de continuidade CP288 — 2026-10-25 (histórico)
 
 - P2 concluído **exclusivamente em escopo técnico restrito de apresentação sintética segregada Django** (Doc. 293). Run Django [40217150462](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40217150462) e Chromium [40217256102](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40217256102) terminaram `completed/success` no SHA `3901787f9c6a8d177f236f30310624d4a993a402`; totais internos não extraídos e screenshots individuais não inspecionadas. Próxima atividade **P3-A1**, inventário de suficiência, ainda sem código nem autorização operacional. Piloto aberto; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`; revisão científica externa diferida.
 

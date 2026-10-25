@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP288 — 2026-10-25**
+**CP289 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP288.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP289.md`
 
 Checkpoint anterior:
 
-`CP287`
+`CP288`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP289 — 2026-10-25:** P3-A1–A3 matriz e parecer de suficiência técnico-demonstrativa restrita aprovado; P3-A4 Documento 294 e decisão formal, Marco A encerrado restritamente, Marco B piloto amplo ainda aberto. Próxima reavaliação proporcional de macroatividades remanescentes.
 
 - **CP287 — 2026-10-25:** P2-A1 proporcionalidade; P2-A2 alternativa B aprovada pelo proprietário; P2-A3 Documento 292 contrato estático segregado e critérios de aceite; P2-A4 especificação preparatória seguinte, sem implementação autorizada.
 

@@ -1,3 +1,8 @@
+## 2026-10-25 — CP289 / Documento 294: P3 suficiência técnico-demonstrativa restrita aprovada
+
+- P3-A1 diagnóstico, P3-A2 matriz de rastreabilidade e P3-A3 parecer favorável; responsável aprovou expressamente o parecer. P3-A4 formaliza Documento 294: Marco A encerramento técnico **restrito** do demonstrador P1/P2; Marco B piloto amplo ainda aberto. Sem novas CI, código ou serviços.
+- Docs. 287–293 e gates preservados; avaliação científica independente diferida, conexão/produção não homologadas; Fase 4 documental apenas, readiness NOT_READY, Fase 5 NOT_STARTED. Próxima avaliação de macroatividades técnicas, operacionais e científicas remanescentes.
+
 ## 2026-10-25 — CP288 / Documento 293: encerramento técnico restrito de P2
 
 - P2-A5 entregou interface Django GET-only `/synthetic-path/` ilustrativa, fail-closed, sem execução dinâmica P1/Neon/SQL; P2-A6 adicionou cobertura Chromium para quatro páginas em três viewports, commit `3901787f9c6a8d177f236f30310624d4a993a402`.
