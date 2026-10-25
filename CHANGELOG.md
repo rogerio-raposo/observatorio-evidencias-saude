@@ -1,3 +1,8 @@
+## 2026-10-25 — CP286: checkpoint de continuidade para P2
+
+- CP286 publicado após o Documento 291: P1-A3 validado offline 107/107 PASS, oito testes novos PASS (Actions 40214460778); Django documental já encerrado restritamente (50/50 Django, 9/9 Chromium). Sem homologação científica ou PostgreSQL conectado.
+- Preservados documentos 287–290: diferimento da dupla autenticação no piloto, evitar workarounds, avanço técnico sem pesquisadores e reavaliação futura de requisitos. Próximo P2-A1 contrato proporcional de apresentação sintética segregada, sem implementação automática. Nenhum gate factual liberado.
+
 ## 2026-10-25 — Documento 291: encerramento restrito P1-A3
 
 - Primeira CI 40198850247 falhou em 3 testes; correção `event_log` no commit `3c9672e0`; CI 40214460778 **107/107 PASS**, incluindo 8/8 testes novos.

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP285 — 2026-10-25**
+**CP286 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP285.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP286.md`
 
 Checkpoint anterior:
 
-`CP284`
+`CP285`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP286 — 2026-10-25:** checkpoint preventivo para transição de conversa; P1-A3 encerrado offline via Doc. 291 (107/107 PASS); P2-A1 contrato de apresentação sintética segregada é próximo passo; sem pesquisadores vinculados, avaliação especializada diferida.
 
 - **CP285 — 2026-10-25:** reavaliação de macroatividades prioriza demonstrador científico documental; auditoria funcional e visual Django; apresentação editorial publicada no commit `359a8d3c` e CI ainda pendente.
 
