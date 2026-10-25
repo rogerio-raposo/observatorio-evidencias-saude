@@ -250,7 +250,7 @@ def render(template: str, payload: Any, presentation: dict[str, Any]) -> str:
     rendered = render_nodes(nodes, payload, payload, presentation)
     if "OES Evidence Sheet Template" in template:
         # A template loop emits blank lines; only remove them *between* table rows.
-        rendered = re.sub(r"(?m)(^\\|[^\\n]*\\|\\n)\\n+(?=\\|)", r"\\1", rendered)
+        rendered = re.sub(r"(?m)(^\|[^\n]*\|\n)\n+(?=\|)", r"\1", rendered)
     return rendered
 
 

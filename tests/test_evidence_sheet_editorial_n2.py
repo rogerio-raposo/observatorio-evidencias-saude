@@ -33,7 +33,7 @@ class EditorialN2Tests(unittest.TestCase):
              "contributing_studies":2,"certainty":{"formal_assessment":False,"display":"não avaliada formalmente"}}
             for role in ("source","primary","corroborative")]}
         frozen=copy.deepcopy(payload)
-        result=render(segment,payload,self.presentation)
+        result=render("<!-- OES Evidence Sheet Template -->\n"+segment,payload,self.presentation)
         self.assertEqual(payload,frozen)
         self.assertIn("| Papel da síntese |",result)
         for role in ("síntese-fonte","síntese principal","síntese corroborativa"):
