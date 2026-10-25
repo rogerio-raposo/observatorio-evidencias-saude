@@ -1,3 +1,7 @@
+## 2026-10-25 — CP295 / Documento 300: prioridade de piloto técnico-funcional integrado
+
+- M2-A7: aprovada mudança de direção para integrar capacidades existentes com requisitos de usuário; encerrada ampliação rotineira de demonstrações isoladas. Escopo mínimo e critérios PF-01–PF-10 propostos, sujeitos a contrato e gates futuros. Nenhuma implementação, definição retroativa de Marco B, SQL conectado ou implantação autorizada.
+
 ## 2026-10-25 — CP294 / Documento 299: integração Q–I–P histórica restrita
 
 - M2-A1–A6 consolidadas, CI offline 40237401239 completed/success para testes negativos de IDs/vínculos e determinismo. Não representa fluxo operacional, revisão científica ou encerramento do Marco B; E9 NO-GO.
