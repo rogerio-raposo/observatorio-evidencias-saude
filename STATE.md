@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP290 — 2026-10-25 (vigente)
+## Marco de continuidade CP291 — 2026-10-25 (vigente)
+
+- **Documento 296**: Alternativa A consulta documental controlada N2 aprovada; E01–E04 e testes publicados. CI offline N2 40225338793 PASS isolado; S5 amplo 40221429351 FAIL em gate temporal B1R1 histórico, não imputável à etapa F3-TEMPLATE/RC01. Fechamento editorial restrito, sem A3, publicação externa, produção operacional ou Django. Próxima atividade: roteiro de avaliação funcional controlada.
+
+## Marco de continuidade CP290 — 2026-10-25 (histórico)
 
 - **Documento 295** consolida M1-A1–M1-A4: 9/9 produtos Fase 3 formalizados, Ficha N2 (Caso dCBT-I A2/documentado) candidata a F1 consulta, reaproveitar `EvidenceSheetView`, template, renderizador; template atual v0.2 não herda automaticamente PASS histórico v0.1. Nenhuma implementação F1 aprovada, Django atual não demonstrou rota N2. Próxima: comparar alternativas de primeiro uso funcional. Marco A demonstração restrita encerrado, Marco B piloto amplo aberto; readiness `NOT_READY`, Fase 5 `NOT_STARTED`.
 

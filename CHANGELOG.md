@@ -1,3 +1,8 @@
+## 2026-10-25 — CP291 / Documento 296: Alternativa A e E01–E04 técnico-editorial restritas
+
+- Alternativa A (consulta documental controlada da Ficha N2) aprovada. M1-A6–M1-A8 identificaram e especificaram melhorias E01–E04, autorizadas e implementadas em commits be0e71f, 26946d8, aec3898, 50926dc e f82ee42, com workflow N2 offline separado.
+- CI específica run **40225338793 success**; CI geral run **40221429351 failure** por preflight histórico B1R1 após início do cronograma, embora F3-TEMPLATE e RC01 tenham passado. E01–E04 encerradas apenas no escopo técnico-editorial específico; sem publicação externa, qualificação científica independente ou promoção de readiness.
+
 ## 2026-10-25 — CP290 / Documento 295: reavaliação e reutilização funcional N2
 
 - M1-A1–M1-A4 analisaram macroatividades, nove produtos, papéis de usuários e percurso funcional F1 centrado na Ficha N2, priorizando reutilização e evitando interface Django duplicada. Artefatos N2 e caso dCBT-I A2 já existem; template atual v0.2, PASS v0.1 histórico não extrapolado.
