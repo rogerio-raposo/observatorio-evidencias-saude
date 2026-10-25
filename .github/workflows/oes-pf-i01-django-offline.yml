@@ -1,0 +1,33 @@
+name: OES PF-I01 N2 offline Django regression
+on:
+  push:
+    paths:
+      - 'applications/oes_web/evidence/n2_historical.py'
+      - 'applications/oes_web/evidence/views.py'
+      - 'applications/oes_web/evidence/urls.py'
+      - 'applications/oes_web/evidence/templates/evidence/evidence_sheet_n2.html'
+      - 'applications/oes_web/evidence/tests/test_pf_i01_n2.py'
+      - 'artifacts/pf-i01/rc01-evidence-sheet-view.json'
+      - '.github/workflows/oes-pf-i01-django-offline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Django requirements
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Django system check
+        working-directory: applications/oes_web
+        run: python manage.py check
+      - name: PF-I01 and existing regression suite
+        working-directory: applications/oes_web
+        run: python manage.py test evidence.tests --verbosity 2
