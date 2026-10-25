@@ -1,4 +1,6 @@
 """PF-I01 offline-only Django regression tests."""
+import copy
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -45,3 +47,31 @@ class PF_I01_N2Tests(SimpleTestCase):
         for path in ("/", "/signals/NCT01438697/", "/synthetic-path/"):
             with self.subTest(path=path):
                 self.assertEqual(self.client.get(path).status_code, 200)
+
+    def test_structured_accessible_reading(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<article", html=False)
+        self.assertContains(response, "<table", html=False)
+        self.assertNotContains(response, "<pre>", html=False)
+
+    def test_semantic_inconsistency_holds_even_when_digest_stubbed(self):
+        original = json.loads(n2_historical.SOURCE.read_text(encoding="utf-8"))
+        mutations = (
+            ("question_id", lambda x: x["question"].update(question_id="OES-Q-FAKE")),
+            ("linked_investigations", lambda x: x["audit"].update(linked_investigations=[])),
+            ("assurance", lambda x: x["audit"].update(assurance_level="A3")),
+            ("lineage", lambda x: x["audit"].update(lineage_available=False)),
+        )
+        for name, mutate in mutations:
+            with self.subTest(name=name), TemporaryDirectory() as td:
+                payload = copy.deepcopy(original)
+                mutate(payload)
+                target = Path(td) / "sheet.json"
+                target.write_text(json.dumps(payload), encoding="utf-8")
+                with patch.object(n2_historical, "SOURCE", target), patch.object(
+                    n2_historical.hashlib, "sha256"
+                ) as mocked_hash:
+                    mocked_hash.return_value.hexdigest.return_value = n2_historical.EXPECTED_SHA256
+                    response = self.client.get(self.url)
+                self.assertEqual(response.status_code, 503)
