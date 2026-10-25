@@ -19,6 +19,7 @@ ROUTES = {
     "catalog": "/",
     "known": "/signals/NCT01438697/",
     "unreconciled": "/signals/NCT07836491/",
+    "synthetic": "/synthetic-path/",
 }
 SIZES = {
     "desktop": {"width": 1440, "height": 900},
@@ -83,6 +84,26 @@ def validate_page(page, name, size):
                    for nct in ("NCT01438697", "NCT07836491")), tag + ": signal links")
         ensure("não é inventário completo" in page.locator("main").inner_text(),
                tag + ": incomplete-inventory disclosure absent")
+    elif name == "synthetic":
+        content = page.locator("main").inner_text()
+        ensure(page.get_by_role("heading", name="Percurso sintético ilustrativo E6 → D1 → referência documental").count() == 1,
+               tag + ": synthetic heading")
+        ensure("DEMONSTRAÇÃO TÉCNICA SINTÉTICA OFFLINE" in content,
+               tag + ": synthetic disclosure")
+        ensure("não é recibo recuperado de execução histórica" in content,
+               tag + ": example provenance boundary")
+        ensure("SYNTHETIC_TECHNICAL_ONLY" in content and "NOT_PERFORMED" in content,
+               tag + ": synthetic/scientific boundaries")
+        ensure("HOLD — apresentação não disponível" not in content,
+               tag + ": unexpected HOLD")
+        ensure(page.locator('section[aria-labelledby="receipt-title"] dd').count() == 9,
+               tag + ": sanitized receipt fields")
+        ensure(page.get_by_role("link", name="Retornar ao catálogo documental").count() == 1,
+               tag + ": return navigation")
+        ensure('{"synthetic":true,"component":"p1-a3"}' not in content,
+               tag + ": raw payload exposed")
+        ensure("Não foi realizada avaliação científica independente" in content,
+               tag + ": scientific limitation absent")
     else:
         nct = "NCT01438697" if name == "known" else "NCT07836491"
         ensure(page.get_by_role("heading", name="Sinal de evidência: " + nct).count() == 1,
@@ -135,6 +156,13 @@ def validate_navigation(browser):
         page.get_by_role("link", name="Identidade indeterminada").click()
         ensure(urlparse(page.url).path == ROUTES["unreconciled"],
                "Known -> unreconciled navigation")
+        page.goto(BASE + ROUTES["synthetic"], wait_until="networkidle")
+        page.keyboard.press("Tab")
+        ensure(page.evaluate("document.activeElement.textContent.trim()") == "Documento 291",
+               "Synthetic page keyboard focus should reach technical provenance link")
+        page.get_by_role("link", name="Retornar ao catálogo documental").click()
+        ensure(urlparse(page.url).path == ROUTES["catalog"],
+               "Synthetic -> catalog navigation")
     finally:
         context.close()
 
