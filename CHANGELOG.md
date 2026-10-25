@@ -1,3 +1,8 @@
+## 2026-10-25 — CP287 / Documento 292: P2 alternativa B aprovada e contrato formalizado
+
+- P2-A1 avaliação proporcional: falta visualização conjunta, não demonstração dinâmica HTTP. P2-A2: responsável aprovou alternativa B em modo médio. P2-A3: Documento 292 formaliza página Django sintética segregada somente leitura, nove campos P1-A3 e critérios P2-AC01–P2-AC08; próxima P2-A4 especificação de implementação, ainda sem autorização de código.
+- Nenhum teste novo, nenhuma implementação ou alteração operacional. Docs. 287–291, gates de segurança/factual, Fase 4 documental apenas, readiness NOT_READY e Fase 5 NOT_STARTED permanecem.
+
 ## 2026-10-25 — CP286: checkpoint de continuidade para P2
 
 - CP286 publicado após o Documento 291: P1-A3 validado offline 107/107 PASS, oito testes novos PASS (Actions 40214460778); Django documental já encerrado restritamente (50/50 Django, 9/9 Chromium). Sem homologação científica ou PostgreSQL conectado.

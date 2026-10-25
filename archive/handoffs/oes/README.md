@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP286 — 2026-10-25**
+**CP287 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP286.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP287.md`
 
 Checkpoint anterior:
 
-`CP285`
+`CP286`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP287 — 2026-10-25:** P2-A1 proporcionalidade; P2-A2 alternativa B aprovada pelo proprietário; P2-A3 Documento 292 contrato estático segregado e critérios de aceite; P2-A4 especificação preparatória seguinte, sem implementação autorizada.
 
 - **CP286 — 2026-10-25:** checkpoint preventivo para transição de conversa; P1-A3 encerrado offline via Doc. 291 (107/107 PASS); P2-A1 contrato de apresentação sintética segregada é próximo passo; sem pesquisadores vinculados, avaliação especializada diferida.
 

@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP286 — 2026-10-25 (vigente)
+## Marco de continuidade CP287 — 2026-10-25 (vigente)
+
+- P2-A1 inspecionou a necessidade de apresentação; P2-A2 recomendou B e obteve aprovação expressa do responsável em modo médio; P2-A3 formalizou **Documento 292** (página Django sintética separada somente leitura, offline, sem execução dinâmica), com critérios P2-AC01–P2-AC08. **Nenhum código implementado, nenhum teste novo, nenhum acesso conectado.** Próxima atividade P2-A4: preparar especificação mínima para autorização separada. CP287 vigente, HEAD no commit de publicação; piloto ainda aberto; ciência diferida, Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`.
+
+## Marco de continuidade CP286 — 2026-10-25 (histórico)
 
 - Novo handoff preventivo `archive/handoffs/oes/OES_Continuidade_2026-10-25_CP286.md`; base técnica anterior `ca9a66edc14349d24a7c21d4439460a99b8d688c`. P1-A3 `CLOSED_TECHNICAL_RESTRICTED_OFFLINE` (Doc. 291; Actions [40214460778](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40214460778) 107/107 PASS, oito novos testes PASS). Django documental `CLOSED_TECHNICAL_RESTRICTED_DOCUMENTARY_DEMONSTRATOR` (Doc. 289; Django 50/50 PASS e Chromium 9/9 PASS). **Próximo passo é P2-A1: especificar contrato mínimo de projeção sintética segregada no Django, sem codificar antes de exame e autorização proporcional**. Nenhuma integração real Django ↔ P1-A3 foi demonstrada por HTTP. Ausência atual de pesquisadores não bloqueia desenvolvimento; validação científica externa diferida (Doc. 290). Factual GET, Neon conectado/escrita, workflow factual e gastos continuam bloqueados. Piloto integrado não encerrado, Fase 4 documental apenas, readiness NOT_READY, Fase 5 NOT_STARTED.
 
