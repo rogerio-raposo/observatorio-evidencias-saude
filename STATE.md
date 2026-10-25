@@ -6,6 +6,10 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## P1-A3 — Encerramento técnico restrito / Documento 291
+
+- Integração sintética offline E6 → D1 → domínio documental Django: CI [40214460778](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40214460778), **107/107 PASS**, oito novos testes PASS. Corrigida chave `event_log` do replay D1 no commit `3c9672e0`. Estado `CLOSED_TECHNICAL_RESTRICTED_OFFLINE`. Sem gravação PostgreSQL ou consulta factual. **Próxima atividade: especificar a projeção sintética segregada no Django (P2), sem implementação automática.** CP285 permanece checkpoint vigente.
+
 ## Nova prioridade funcional sem pesquisadores — Documento 290 / 2026-10-25
 
 - Não há pesquisadores vinculados disponíveis para validação externa; tal validação fica **diferida, não dispensada**, sem bloquear engenharia sintética e documental. Prioridade aprovada: **P1 integração sintética offline ponta a ponta** (primeiro inventário de interfaces e contratos existentes); **P2** apresentação Django integrada somente após P1; **P3** demonstração de suficiência técnico-funcional com testes. Não exigir captura factual nem PostgreSQL conectado para iniciar P1; manter fronteira científica e proibição de relações inventadas. **Próximo passo:** mapear interfaces E6, domínio e serviços de demonstração, com escopo mínimo e critérios de aceite; nenhuma autorização de escrita, conexão ou deploy implícita.

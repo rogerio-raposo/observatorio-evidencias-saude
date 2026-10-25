@@ -1,3 +1,8 @@
+## 2026-10-25 — Documento 291: encerramento restrito P1-A3
+
+- Primeira CI 40198850247 falhou em 3 testes; correção `event_log` no commit `3c9672e0`; CI 40214460778 **107/107 PASS**, incluindo 8/8 testes novos.
+- P1-A3 encerrado somente offline; próximo P2 contrato de apresentação sintética. Nenhuma ampliação dos gates factual, científico ou operacional.
+
 ## 2026-10-25 — Documento 290: piloto funcional sem pesquisadores
 
 - Registrada indisponibilidade atual de pesquisadores no projeto como restrição à avaliação científica externa, sem bloquear trabalho técnico sintético.
