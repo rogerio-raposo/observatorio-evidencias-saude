@@ -6,6 +6,10 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## Nova prioridade funcional sem pesquisadores — Documento 290 / 2026-10-25
+
+- Não há pesquisadores vinculados disponíveis para validação externa; tal validação fica **diferida, não dispensada**, sem bloquear engenharia sintética e documental. Prioridade aprovada: **P1 integração sintética offline ponta a ponta** (primeiro inventário de interfaces e contratos existentes); **P2** apresentação Django integrada somente após P1; **P3** demonstração de suficiência técnico-funcional com testes. Não exigir captura factual nem PostgreSQL conectado para iniciar P1; manter fronteira científica e proibição de relações inventadas. **Próximo passo:** mapear interfaces E6, domínio e serviços de demonstração, com escopo mínimo e critérios de aceite; nenhuma autorização de escrita, conexão ou deploy implícita.
+
 ## Encerramento restrito Django — Documento 289 / 2026-10-25
 
 - Refinamento editorial e demonstrador documental Django declarados **CLOSED_TECHNICAL_RESTRICTED_DOCUMENTARY_DEMONSTRATOR** após verificações no HEAD `2c7df6d0538cf0be06a44e10b49e4d9dc3a72af5`: Django [40196984551](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40196984551) 50/50 PASS; Chromium [40197070277](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40197070277) 9/9 PASS, artefato visual preservado temporariamente, capturas individuais não inspecionadas. Suficiência estritamente documental dos dois casos existentes; não equivale a avaliação por pesquisadores, piloto integrado encerrado ou readiness. Próxima prioridade: preparar roteiro de demonstração/avaliação externa, sem contato ou divulgação não autorizada. CP285 permanece ponteiro vigente até checkpoint posterior.

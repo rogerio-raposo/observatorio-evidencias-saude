@@ -1,3 +1,8 @@
+## 2026-10-25 — Documento 290: piloto funcional sem pesquisadores
+
+- Registrada indisponibilidade atual de pesquisadores no projeto como restrição à avaliação científica externa, sem bloquear trabalho técnico sintético.
+- Prioridade P1 integração sintética controlada, depois P2 apresentação e P3 verificação funcional; primeira atividade é mapear interfaces existentes, sem implantação ou SQL conectado. Requisitos de stack e avaliação especializada seguem diferidos, não dispensados. Captura factual permanece bloqueada.
+
 ## 2026-10-25 — Documento 289: encerramento técnico restrito Django
 
 - Validações após refinamento editorial no HEAD `2c7df6d0538cf0be06a44e10b49e4d9dc3a72af5`: Actions 40196984551 Django **50/50 PASS** e 40197070277 Chromium **9/9 PASS**.
