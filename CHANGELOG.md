@@ -1,3 +1,8 @@
+## 2026-10-25 — CP283: D2-I-B composição offline validada
+
+- Django integrado ao adaptador E6 real com conexões simuladas: commit `5511eff6598b11b18b6cb47966a1c2b52fb70830`; CI [40192039182](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40192039182), Django check PASS, 50/50 PASS, quatro novos testes PASS.
+- D2-I-B `CLOSED_TECHNICAL_RESTRICTED_OFFLINE`. Autenticação conectada, TLS, cleanup e prontidão operacional não demonstrados. Gate D2-I-C pendente.
+
 ## 2026-10-25 — CP282: validações Django offline D2-I-A e D2-I-B
 
 - D2-I-A: GitHub Actions [40190923646](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40190923646), commit `6352fcc1fb19cd03cafcbd93230189b56058115e`, Django check PASS, **39/39 PASS**, seis testes novos.

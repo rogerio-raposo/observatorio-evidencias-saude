@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP282 — 2026-10-25 (vigente)
+## Marco de continuidade CP283 — 2026-10-25 (vigente)
+
+- D2-I-B: composição Django com adaptador E6 real usando apenas mocks validada no commit `5511eff6598b11b18b6cb47966a1c2b52fb70830`, CI 40192039182: **50/50 PASS** incluindo quatro testes de composição; encerramento técnico **somente offline**. D2-I-C gate conectado pendente. Captura factual e infraestrutura permanecem bloqueadas.
+
+## Marco de continuidade CP282 — 2026-10-25 (histórico)
 
 - D2-I-A: implementação de leitor sintético opt-in no serviço Django, commit `6352fcc1fb19cd03cafcbd93230189b56058115e`, CI [40190923646](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40190923646), **39/39 PASS** offline, seis testes novos. Encerramento restrito ao contrato offline.
 - D2-I-B: serviço interno `run_synthetic_private_roundtrip` com orquestrador injetado, commit `60e088af4a1bc1fb05ba889f2893598fc0608f47`, CI [40191544839](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40191544839), **46/46 PASS** offline, sete testes novos. **Composição real dos adaptadores existentes com o Django ainda não demonstrada**, nem mesmo por teste conjunto offline.

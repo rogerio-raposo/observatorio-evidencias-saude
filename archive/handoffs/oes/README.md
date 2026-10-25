@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP282 — 2026-10-25**
+**CP283 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP282.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP283.md`
 
 Checkpoint anterior:
 
-`CP281`
+`CP282`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP283 — 2026-10-25:** D2-I-B Django–E6 composição offline; CI 40192039182, 50/50 PASS. Gate conectado não executado.
 
 - **CP282 — 2026-10-25:** D2-I-A 39/39 PASS, D2-I-B contrato de serviço 46/46 PASS (ambos offline); composição efetiva dos adaptadores pendente; conexão e captura factual bloqueadas.
 
