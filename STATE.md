@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP289 — 2026-10-25 (vigente)
+## Marco de continuidade CP290 — 2026-10-25 (vigente)
+
+- **Documento 295** consolida M1-A1–M1-A4: 9/9 produtos Fase 3 formalizados, Ficha N2 (Caso dCBT-I A2/documentado) candidata a F1 consulta, reaproveitar `EvidenceSheetView`, template, renderizador; template atual v0.2 não herda automaticamente PASS histórico v0.1. Nenhuma implementação F1 aprovada, Django atual não demonstrou rota N2. Próxima: comparar alternativas de primeiro uso funcional. Marco A demonstração restrita encerrado, Marco B piloto amplo aberto; readiness `NOT_READY`, Fase 5 `NOT_STARTED`.
+
+## Marco de continuidade CP289 — 2026-10-25 (histórico)
 
 - **Documento 294** formaliza parecer **P3-A3 aprovado**: suficiência técnico-demonstrativa **restrita** P1/P2 reconhecida (Marco A), com matriz P3-R01–R11 e critérios P3-S01–S06; **piloto OES amplo (Marco B) não encerrado**. P3 documental, sem novas CI, serviços, testes ou código. Próximo: reavaliação proporcional das macroatividades remanescentes. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`; avaliação científica humana diferida.
 

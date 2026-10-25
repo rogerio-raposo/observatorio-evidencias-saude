@@ -1,3 +1,8 @@
+## 2026-10-25 — CP290 / Documento 295: reavaliação e reutilização funcional N2
+
+- M1-A1–M1-A4 analisaram macroatividades, nove produtos, papéis de usuários e percurso funcional F1 centrado na Ficha N2, priorizando reutilização e evitando interface Django duplicada. Artefatos N2 e caso dCBT-I A2 já existem; template atual v0.2, PASS v0.1 histórico não extrapolado.
+- Documento 295 consolida diagnóstico (não autorização de F1), CP290 fixa próximo passo: comparação de alternativas de primeiro uso funcional. Nenhuma nova CI, código, acesso conectado ou requisito de stack liberado. Marco B piloto amplo aberto; Fase 4 documental, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## 2026-10-25 — CP289 / Documento 294: P3 suficiência técnico-demonstrativa restrita aprovada
 
 - P3-A1 diagnóstico, P3-A2 matriz de rastreabilidade e P3-A3 parecer favorável; responsável aprovou expressamente o parecer. P3-A4 formaliza Documento 294: Marco A encerramento técnico **restrito** do demonstrador P1/P2; Marco B piloto amplo ainda aberto. Sem novas CI, código ou serviços.

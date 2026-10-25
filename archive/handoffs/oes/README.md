@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP289 — 2026-10-25**
+**CP290 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP289.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP290.md`
 
 Checkpoint anterior:
 
-`CP288`
+`CP289`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP290 — 2026-10-25:** Documento 295 consolida M1-A1–M1-A4: nove produtos, trajetória funcional candidata F1/Ficha N2, prioridade de reutilização de EvidenceSheetView e não duplicação de Django; comparação de primeiros usos é a próxima análise, nenhuma implementação autorizada.
 
 - **CP289 — 2026-10-25:** P3-A1–A3 matriz e parecer de suficiência técnico-demonstrativa restrita aprovado; P3-A4 Documento 294 e decisão formal, Marco A encerrado restritamente, Marco B piloto amplo ainda aberto. Próxima reavaliação proporcional de macroatividades remanescentes.
 
