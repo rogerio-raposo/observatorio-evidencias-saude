@@ -1,3 +1,10 @@
+## 2026-10-25 — CP285: reavaliação do piloto e auditoria Django
+
+- Reavaliadas macroatividades conforme Documento 288: priorizar percurso científico-documental com evidência, estudo, relatórios, fontes e limites; diferir infraestrutura e autenticação definitivas se não indispensáveis, sem interpretar diferimento como controle atendido.
+- Auditoria por inspeção das rotas, domínio, fixtures, templates, CSS e validador Chromium. NCT01438697 documentado com dois relatórios de um estudo; NCT07836491 permanece não reconciliado. Não houve novo julgamento científico.
+- Refinamento editorial aprovado e publicado `359a8d3cd5f8883db4fd8d4f8cba766f462ea81f` nos três arquivos de apresentação apenas; validações Django e navegador para esse commit **pendentes**.
+- Preflight administrativo Neon somente leitura confirmou lacuna de ACL para identidade única com privilégio mínimo; nenhuma alteração em banco/roles/grants/credenciais. Ensaio PostgreSQL conectado não autorizado. Captura factual bloqueada.
+
 ## 2026-10-25 — CP284: checkpoint preventivo de continuidade
 
 - D2-I-C: teste com funções E6 reais, conexão simulada única, commit `ab37802c0811cc393797fc7db36347e60469d780`; Actions [40194548767](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40194548767), **99/99 PASS**, quatro novos testes PASS. Apenas offline.

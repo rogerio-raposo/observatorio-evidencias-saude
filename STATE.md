@@ -6,7 +6,15 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP284 — 2026-10-25 (vigente)
+## Marco de continuidade CP285 — 2026-10-25 (vigente)
+
+- Macroatividades do piloto reclassificadas conforme Documento 288: essenciais a jornada documental de evidência, identidade, vínculo Study–Report, proveniência, limites e demonstração; integração conectada PostgreSQL e autenticação definitiva diferíveis conforme necessidade efetiva, sem dispensar gates de segurança para eventual execução. Captura factual segue bloqueada.
+- Auditoria Django (código, fixtures, templates, CSS e script Chromium): rotas `/`, `/signals/NCT01438697/` e `/signals/NCT07836491/`; estados de identidade explícitos; relatório múltiplo do mesmo estudo apenas quando documentado; fontes dos Docs. 247/248/products/154; limitações da revisão científica. Avaliação por inspeção, não homologação científica nem prova de navegador executado nesta etapa.
+- Refinamento editorial aprovado e publicado: commit `359a8d3cd5f8883db4fd8d4f8cba766f462ea81f`, **somente** catálogo, detalhe e CSS; nenhuma alteração de fixtures/domínio/serviços/rotas. **CI Django e Chromium ainda não verificada para este commit**; testes anteriores não equivalem a regressão PASS da alteração atual.
+- Preflight Neon administrativo somente leitura em `oes-sandbox`, branch `br-gentle-hall-b6jaxehf`: roles E6 NOLOGIN, writer INSERT sem SELECT, verifier SELECT sem INSERT; owner tem direitos amplos e **não recomendado como identidade de aplicação**. Não foram feitas mudanças. Identidade com privilégio mínimo simultâneo INSERT+SELECT não encontrada; ensaio conectado permanece pendente, não autorizado; possível diferimento conforme necessidade funcional.
+- **Próximo passo imediato:** executar e analisar workflows manuais existentes `oes-django-vertical-slice-validation.yml` e `oes-django-real-browser-validation.yml` para o commit editorial em `main`. Não declarar PASS sem run/logs. Após validação, avaliar encerramento restrito da entrega de apresentação e as lacunas restantes; checkpoint proporcional.
+
+## Marco de continuidade CP284 — 2026-10-25 (histórico)
 
 - Checkpoint preventivo sem encerramento de conversa. D2-I-A fechado offline (39/39); D2-I-B fechado offline (50/50); D2-I-C modelo simplificado de **uma identidade** com reutilização direta de funções E6, suite Python [40194548767](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40194548767) **99/99 PASS**, 4 testes novos. Execução PostgreSQL conectada e cleanup NÃO demonstrados nem autorizados. Documentos 287 e 288 prevalecem na definição de escopo sobre exigência anterior de dois logins independentes no piloto. Requisitos diferidos devem ser reavaliados na definição da stack completa; evitar workarounds do piloto. Captura factual bloqueada, serviços pagos proibidos, Fase 5 não iniciada. Próximo passo: **planejar pré-condições mínimas de ensaio sintético conectado sem modificar Neon**, e solicitar autorização específica antes de qualquer mudança/conexão/escrita/cleanup.
 

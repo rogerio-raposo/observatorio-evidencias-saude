@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP284 — 2026-10-25**
+**CP285 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP284.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP285.md`
 
 Checkpoint anterior:
 
-`CP283`
+`CP284`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP285 — 2026-10-25:** reavaliação de macroatividades prioriza demonstrador científico documental; auditoria funcional e visual Django; apresentação editorial publicada no commit `359a8d3c` e CI ainda pendente.
 
 - **CP284 — 2026-10-25:** checkpoint preventivo: decisões Doc 287/288; D2-I-C teste de uma conexão sintética 99/99 PASS em CI 40194548767; próximo gate conectado apenas com autorização. Conversa atual permanece aberta.
 
