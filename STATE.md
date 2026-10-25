@@ -6,6 +6,10 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## Decisão de escopo D2-I-C — 2026-10-25 (posterior ao CP283)
+
+- **Documento 287:** por decisão direta do responsável, autenticação com dois logins independentes **não é requisito do piloto inicial**. Fica diferida; todos os demais controles de integridade, privacidade, proveniência, TLS, menor privilégio proporcional, cleanup e HOLD continuam. Esta decisão substitui apenas esse item do Documento 285 no piloto. Ainda não autoriza escrita, modificação de grants/roles/credenciais, conexão, workflow ou captura factual. Adaptadores E6 atuais requerem duas identidades: compatibilidade com identidade única **ainda não implementada nem testada**; testes 50/50 PASS continuam evidência do modelo anterior.
+
 ## Marco de continuidade CP283 — 2026-10-25 (vigente)
 
 - D2-I-B: composição Django com adaptador E6 real usando apenas mocks validada no commit `5511eff6598b11b18b6cb47966a1c2b52fb70830`, CI 40192039182: **50/50 PASS** incluindo quatro testes de composição; encerramento técnico **somente offline**. D2-I-C gate conectado pendente. Captura factual e infraestrutura permanecem bloqueadas.

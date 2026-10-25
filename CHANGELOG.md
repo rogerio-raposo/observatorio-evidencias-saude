@@ -1,3 +1,7 @@
+## 2026-10-25 — Documento 287: decisão de escopo D2-I-C
+
+- Decisão do responsável: retirar do piloto inicial a exigência de autenticação com dois logins independentes, prevista no Documento 285. Preservar privacidade, integridade, proveniência, TLS, menor privilégio, cleanup e gates factuais. Modelo de identidade única exige novo contrato e validação; nenhuma alteração de infraestrutura/código autorizada.
+
 ## 2026-10-25 — CP283: D2-I-B composição offline validada
 
 - Django integrado ao adaptador E6 real com conexões simuladas: commit `5511eff6598b11b18b6cb47966a1c2b52fb70830`; CI [40192039182](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40192039182), Django check PASS, 50/50 PASS, quatro novos testes PASS.
