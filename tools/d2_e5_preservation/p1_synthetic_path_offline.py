@@ -47,7 +47,7 @@ def compose_synthetic_path(*, raw, provenance, association, bridge, documentary_
         if not replay.get("synthetic") or not any(
             entry.get("kind") == "signal_registered"
             and entry.get("data", {}).get("signal_id") == signal_id
-            for entry in replay.get("events", [])
+            for entry in replay.get("event_log", [])
         ):
             raise ValueError("invalid replay")
         return {
