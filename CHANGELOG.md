@@ -1,3 +1,7 @@
+## 2026-10-25 — CP294 / Documento 299: integração Q–I–P histórica restrita
+
+- M2-A1–A6 consolidadas, CI offline 40237401239 completed/success para testes negativos de IDs/vínculos e determinismo. Não representa fluxo operacional, revisão científica ou encerramento do Marco B; E9 NO-GO.
+
 ## 2026-10-25 — CP293 / Documento 298: fechamento documental F2 e E9 bloqueada
 
 - Q0–Q2 e roteamento suficientes apenas para preparação documental interna. E9 permanece NO-GO. Documento 298 publicado; CP293 consolidado para continuidade. Nenhuma autorização operacional ou científica ampliada.
