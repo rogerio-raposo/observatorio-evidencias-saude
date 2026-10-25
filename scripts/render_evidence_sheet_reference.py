@@ -177,7 +177,21 @@ def readable_n2_label(path: str, value: Any) -> Any:
         return value
     if set(value) == {"label"} and isinstance(value["label"], str):
         return value["label"]
-    # Never choose an arbitrary field or disguise an unfamiliar scientific object.
+    # Only project explicitly approved descriptive shapes; do not drop unknown fields.
+    shapes = {
+        "synthesis.population": (("population", "População"),),
+        "synthesis.comparison": (("intervention", "Intervenção"), ("comparator", "Comparador")),
+        "question.context": (
+            ("population", "População"), ("intervention", "Intervenção"),
+            ("comparator", "Comparador"), ("primary_outcome", "Desfecho principal"),
+        ),
+    }
+    shape = shapes.get(path)
+    if shape is not None and set(value) == {key for key, _ in shape} and all(
+        isinstance(value[key], str) for key, _ in shape
+    ):
+        return "; ".join(f"{label}: {value[key]}" for key, label in shape)
+    # Unknown structure remains serialized explicitly instead of gaining an invented meaning.
     return value
 
 
