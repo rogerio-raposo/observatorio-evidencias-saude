@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP291 — 2026-10-25 (vigente)
+## Marco de continuidade CP292 — 2026-10-25 (vigente)
+
+- **Documento 297:** M1-A9–A11, verificação documental N2 (histórico 6 PASS/2 PARTIAL, versão atual reproduzida via CI offline 40226403431 success). Alternativa A encerrada **apenas no escopo funcional documental interno**; sem pesquisa com usuários, revisão A3, publicação externa ou prontidão operacional. Próxima: inventário documental read-only F2 (preparação de questão/investigação).
+
+## Marco de continuidade CP291 — 2026-10-25 (histórico)
 
 - **Documento 296**: Alternativa A consulta documental controlada N2 aprovada; E01–E04 e testes publicados. CI offline N2 40225338793 PASS isolado; S5 amplo 40221429351 FAIL em gate temporal B1R1 histórico, não imputável à etapa F3-TEMPLATE/RC01. Fechamento editorial restrito, sem A3, publicação externa, produção operacional ou Django. Próxima atividade: roteiro de avaliação funcional controlada.
 

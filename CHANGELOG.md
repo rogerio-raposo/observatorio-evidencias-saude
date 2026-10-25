@@ -1,3 +1,8 @@
+## 2026-10-25 — CP292 / Documento 297: suficiência documental interna da Alternativa A
+
+- M1-A9 desenhou T01–T08; M1-A10 registrou linha de base histórica com 6 PASS estruturais e 2 PARTIAL; M1-A11 reproduziu integralmente N2 dCBT-I com CI específica run **40226403431 success**, após correção do import Python no primeiro run 40226336905.
+- Alternativa A **encerrada no escopo documental interno restrito**, sem prontidão externa/operacional, avaliação humana ou A3. Próximo exame documental F2, sem autorização de implementação.
+
 ## 2026-10-25 — CP291 / Documento 296: Alternativa A e E01–E04 técnico-editorial restritas
 
 - Alternativa A (consulta documental controlada da Ficha N2) aprovada. M1-A6–M1-A8 identificaram e especificaram melhorias E01–E04, autorizadas e implementadas em commits be0e71f, 26946d8, aec3898, 50926dc e f82ee42, com workflow N2 offline separado.
