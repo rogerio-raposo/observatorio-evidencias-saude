@@ -1,3 +1,7 @@
+## 2026-10-25 — CP297 / Documento 305: PF-I01 encerrado tecnicamente em escopo offline
+
+- Correções PF-I01-R1 e CI 40243932508 completed/success. Parecer de aceite técnico restrito AC01–AC10 com reservas: sem auditoria humana, sem integração PostgreSQL dinâmica, sem publicação. Marco B ainda aberto; E9 NO-GO. CP297 publicado.
+
 ## 2026-10-25 — CP296 / Documento 304: PF-I01 Django N2 offline
 
 - Snapshot JSON N2 original preservado via CI 40242962374; nova rota GET-only Django com hash pinado, HOLD para arquivo inválido e testes negativos. Workflow 40243303174 completed/success. Aceite restrito, sem prontidão operacional, E9/A3 ou integração SQL. Doc. 304 e CP296 publicados.
