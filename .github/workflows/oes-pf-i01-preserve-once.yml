@@ -1,0 +1,52 @@
+name: OES PF-I01 one-shot historical snapshot preservation
+on:
+  push:
+    paths:
+      - '.github/workflows/oes-pf-i01-preserve-once.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch and validate only the frozen historical artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 2 \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/11313491459/zip" \
+            --output /tmp/pf-i01-source.zip
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          from hashlib import sha256
+          z=Path('/tmp/pf-i01-source.zip').read_bytes()
+          assert sha256(z).hexdigest()=='81529675c16d85fe28991f7abe3b9594bdc1e99cbcbc3226cb8e3dc0f3b3c1a6'
+          with ZipFile('/tmp/pf-i01-source.zip') as archive:
+              source=archive.read('rc01-evidence-sheet-view.json')
+          assert len(source)==25736
+          assert sha256(source).hexdigest()=='82a828e98b97dd5b6fe392135ed172d8c896f562e698353922b23cc419cc22d9'
+          target=Path('artifacts/pf-i01/rc01-evidence-sheet-view.json')
+          target.parent.mkdir(parents=True,exist_ok=True)
+          if target.exists():
+              assert target.read_bytes()==source
+          else:
+              target.write_bytes(source)
+          assert target.read_bytes()==source
+          PY
+      - name: Commit exact bytes, no generated payload
+        run: |
+          set -euo pipefail
+          git add -- artifacts/pf-i01/rc01-evidence-sheet-view.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'data(oes): preserve verified historical N2 JSON for PF-I01'
+            git push origin HEAD:main
+          fi
