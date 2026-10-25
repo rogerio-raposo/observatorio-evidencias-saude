@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP287 — 2026-10-25 (vigente)
+## Marco de continuidade CP288 — 2026-10-25 (vigente)
+
+- P2 concluído **exclusivamente em escopo técnico restrito de apresentação sintética segregada Django** (Doc. 293). Run Django [40217150462](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40217150462) e Chromium [40217256102](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40217256102) terminaram `completed/success` no SHA `3901787f9c6a8d177f236f30310624d4a993a402`; totais internos não extraídos e screenshots individuais não inspecionadas. Próxima atividade **P3-A1**, inventário de suficiência, ainda sem código nem autorização operacional. Piloto aberto; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`; revisão científica externa diferida.
+
+## Marco de continuidade CP287 — 2026-10-25 (histórico)
 
 - P2-A1 inspecionou a necessidade de apresentação; P2-A2 recomendou B e obteve aprovação expressa do responsável em modo médio; P2-A3 formalizou **Documento 292** (página Django sintética separada somente leitura, offline, sem execução dinâmica), com critérios P2-AC01–P2-AC08. **Nenhum código implementado, nenhum teste novo, nenhum acesso conectado.** Próxima atividade P2-A4: preparar especificação mínima para autorização separada. CP287 vigente, HEAD no commit de publicação; piloto ainda aberto; ciência diferida, Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, readiness `NOT_READY`, Fase 5 `NOT_STARTED`.
 

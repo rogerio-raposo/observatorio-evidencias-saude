@@ -1,3 +1,9 @@
+## 2026-10-25 — CP288 / Documento 293: encerramento técnico restrito de P2
+
+- P2-A5 entregou interface Django GET-only `/synthetic-path/` ilustrativa, fail-closed, sem execução dinâmica P1/Neon/SQL; P2-A6 adicionou cobertura Chromium para quatro páginas em três viewports, commit `3901787f9c6a8d177f236f30310624d4a993a402`.
+- CI `40217150462` (Django) e `40217256102` (Chromium) `completed/success` no mesmo SHA; artefato Chromium registrado, sem inspeção individual de screenshots e sem auditoria de totais dos logs. Doc. 293: `P2_CLOSED_TECHNICAL_RESTRICTED_SYNTHETIC_PRESENTATION`.
+- P3-A1 é a próxima análise de suficiência funcional; piloto aberto, sem pesquisadores, nenhuma prontidão operacional/científica declarada ou gate conectado alterado.
+
 ## 2026-10-25 — CP287 / Documento 292: P2 alternativa B aprovada e contrato formalizado
 
 - P2-A1 avaliação proporcional: falta visualização conjunta, não demonstração dinâmica HTTP. P2-A2: responsável aprovou alternativa B em modo médio. P2-A3: Documento 292 formaliza página Django sintética segregada somente leitura, nove campos P1-A3 e critérios P2-AC01–P2-AC08; próxima P2-A4 especificação de implementação, ainda sem autorização de código.
