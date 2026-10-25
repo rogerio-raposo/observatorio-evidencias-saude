@@ -23,8 +23,10 @@ class SyntheticPresentationHold(ValueError):
     """Sanitized deny state, never includes fixture or exception contents."""
 
 
-def validate_receipt(receipt, resolver=get_signal):
+def validate_receipt(receipt, resolver=None):
     try:
+        if resolver is None:
+            resolver = get_signal
         if type(receipt) is not dict or set(receipt) != set(EXPECTED):
             raise ValueError("invalid schema")
         if any(type(receipt[k]) is not type(v) or receipt[k] != v
