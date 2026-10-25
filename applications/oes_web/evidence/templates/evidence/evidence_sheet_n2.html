@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><title>OES — Ficha N2 histórica</title>
-<style>body{font:16px/1.5 system-ui,sans-serif;max-width:76rem;margin:2rem auto;padding:0 1rem;color:#20242a}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}aside{padding:1rem;border:1px solid #888;margin-bottom:1.5rem}</style>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:76rem;margin:2rem auto;padding:0 1rem;color:#20242a}article table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}article td,article th{border:1px solid #aaa;padding:.45rem;text-align:left}article p{overflow-wrap:anywhere}aside{padding:1rem;border:1px solid #888;margin-bottom:1.5rem}</style>
 </head><body><main>
 <h1>OES — Ficha de Evidência N2 histórica</h1>
 <aside>Consulta interna documental, somente leitura. Assurance A2; revisão científica independente A3 não realizada. Nenhuma investigação foi aberta, nenhuma conclusão científica nova foi produzida.</aside>
 {% if hold %}<p role="alert">HOLD: ficha documental indisponível ou inválida.</p>
-{% else %}<pre>{{ body }}</pre>{% endif %}
+{% else %}<article aria-label="Ficha N2 histórica">{{ body_html }}</article>{% endif %}
 </main></body></html>
