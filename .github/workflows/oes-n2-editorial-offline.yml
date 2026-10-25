@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   editorial-offline:
@@ -27,3 +28,53 @@ jobs:
           python-version: '3.12'
       - name: Execute N2 editorial regressions without external services
         run: python -m unittest discover -s tests -p test_evidence_sheet_editorial_n2.py -v
+
+      - name: Retrieve preserved historical N2 artifact (no factual GET)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail --silent --show-error --location --retry 2 \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/11313491459/zip" \
+            --output /tmp/oes-n2-historical.zip
+          python - <<'PY'
+          from zipfile import ZipFile
+          from pathlib import Path
+          with ZipFile('/tmp/oes-n2-historical.zip') as z:
+              for name in ('rc01-evidence-sheet-view.json', 'rc01-evidence-sheet-preview.md'):
+                  Path('/tmp/'+name).write_bytes(z.read(name))
+          PY
+      - name: Render current N2 template against historical A2 JSON and inspect
+        run: |
+          python scripts/render_evidence_sheet_reference.py \
+            --template templates/evidence-sheet.md \
+            --input /tmp/rc01-evidence-sheet-view.json \
+            --presentation-map templates/evidence-sheet-presentation-map.json \
+            --output /tmp/rc01-n2-editorial-current.md
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.validate_evidence_sheet_render import validate_render
+          source=json.loads(Path('/tmp/rc01-evidence-sheet-view.json').read_text())
+          current=Path('/tmp/rc01-n2-editorial-current.md').read_text()
+          old=Path('/tmp/rc01-evidence-sheet-preview.md').read_text()
+          template=Path('templates/evidence-sheet.md').read_text()
+          validate_render(template,source,current)
+          assert source['audit']['assurance_level']=='A2'
+          assert source['audit']['publishable'] is True
+          assert [x['role'] for x in source['priority_results']]==['source','primary','corroborative']
+          for role in ('síntese-fonte','síntese principal','síntese corroborativa'):
+              assert role in current, role
+          for literal in ('"population":','"intervention":','"comparator":'):
+              assert literal not in current.split('## Método em resumo')[0],literal
+          table=current.split('| Desfecho / achado',1)[1].split('### Detalhamento',1)[0]
+          assert '\\n\\n|' not in table, 'Markdown table has blank line between rows'
+          for key in ('normalized_text',):
+              assert source['question'][key] in current
+          assert source['conclusion']['text'] in current
+          assert source['audit']['assurance_disclosure'] in current
+          assert 'PREVIEW — NÃO PUBLICÁVEL' not in current
+          assert current != old
+          print('M1-A11 INTEGRAL N2 RENDER PASS; T03/T08 structural checks PASS; no external user study')
+          PY
