@@ -6,6 +6,10 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## Marco de continuidade CP284 — 2026-10-25 (vigente)
+
+- Checkpoint preventivo sem encerramento de conversa. D2-I-A fechado offline (39/39); D2-I-B fechado offline (50/50); D2-I-C modelo simplificado de **uma identidade** com reutilização direta de funções E6, suite Python [40194548767](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40194548767) **99/99 PASS**, 4 testes novos. Execução PostgreSQL conectada e cleanup NÃO demonstrados nem autorizados. Documentos 287 e 288 prevalecem na definição de escopo sobre exigência anterior de dois logins independentes no piloto. Requisitos diferidos devem ser reavaliados na definição da stack completa; evitar workarounds do piloto. Captura factual bloqueada, serviços pagos proibidos, Fase 5 não iniciada. Próximo passo: **planejar pré-condições mínimas de ensaio sintético conectado sem modificar Neon**, e solicitar autorização específica antes de qualquer mudança/conexão/escrita/cleanup.
+
 ## Regra de escopo do piloto — Documento 288 / 2026-10-25
 
 - Diretriz do responsável: foco no objetivo central do piloto; evitar contornos e infraestrutura temporária para resolver problemas que a stack completa solucionará naturalmente. Requisitos relevantes retirados do piloto devem ser **registrados e obrigatoriamente reavaliados na definição da stack completa**, antes da respectiva operação/produção; diferido não significa dispensado. Exemplo: dupla autenticação independente (Documento 287). D2-I-C deve ser simplificado proporcionalmente. Nenhuma autorização operacional nova.

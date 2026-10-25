@@ -1,3 +1,9 @@
+## 2026-10-25 — CP284: checkpoint preventivo de continuidade
+
+- D2-I-C: teste com funções E6 reais, conexão simulada única, commit `ab37802c0811cc393797fc7db36347e60469d780`; Actions [40194548767](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40194548767), **99/99 PASS**, quatro novos testes PASS. Apenas offline.
+- Decisões canônicas Documentos 287 e 288: autenticação de dois logins independentes diferida do piloto, requisitos diferidos revisitados na definição da stack, foco no objetivo principal; não antecipar infraestrutura transitória.
+- CP preventivo; nenhuma autorização operacional adicional, sem conexão/escrita/limpeza Neon, sem GET factual.
+
 ## 2026-10-25 — Documento 288: foco no piloto e revalidação posterior de requisitos
 
 - Formalizada orientação do responsável: não implementar workarounds de stack provisória; documentar requisitos relevantes diferidos e reavaliá-los obrigatoriamente quando a stack completa for definida ou estiver em definição. Manter gates essenciais e bloqueios factuais.

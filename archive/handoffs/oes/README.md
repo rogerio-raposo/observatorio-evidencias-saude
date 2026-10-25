@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP283 — 2026-10-25**
+**CP284 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP283.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP284.md`
 
 Checkpoint anterior:
 
-`CP282`
+`CP283`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP284 — 2026-10-25:** checkpoint preventivo: decisões Doc 287/288; D2-I-C teste de uma conexão sintética 99/99 PASS em CI 40194548767; próximo gate conectado apenas com autorização. Conversa atual permanece aberta.
 
 - **CP283 — 2026-10-25:** D2-I-B Django–E6 composição offline; CI 40192039182, 50/50 PASS. Gate conectado não executado.
 
