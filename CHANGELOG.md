@@ -1,3 +1,7 @@
+## 2026-10-25 — CP296 / Documento 304: PF-I01 Django N2 offline
+
+- Snapshot JSON N2 original preservado via CI 40242962374; nova rota GET-only Django com hash pinado, HOLD para arquivo inválido e testes negativos. Workflow 40243303174 completed/success. Aceite restrito, sem prontidão operacional, E9/A3 ou integração SQL. Doc. 304 e CP296 publicados.
+
 ## 2026-10-25 — CP295 / Documento 300: prioridade de piloto técnico-funcional integrado
 
 - M2-A7: aprovada mudança de direção para integrar capacidades existentes com requisitos de usuário; encerrada ampliação rotineira de demonstrações isoladas. Escopo mínimo e critérios PF-01–PF-10 propostos, sujeitos a contrato e gates futuros. Nenhuma implementação, definição retroativa de Marco B, SQL conectado ou implantação autorizada.
