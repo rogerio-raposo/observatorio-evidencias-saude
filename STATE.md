@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP294 — 2026-10-25 (vigente)
+## Marco de continuidade CP295 — 2026-10-25 (vigente)
+
+- Documento 300/M2-A7: mudança aprovada de prioridade, de demonstrações isoladas para planejamento de piloto técnico-funcional mínimo integrado, sem implementação autorizada. Critérios candidatos PF-01–PF-10; E9 NO-GO, Marco B aberto, readiness NOT_READY. Próximo: inventário read-only de rotas Django, contratos, persistência e serviços versus PF-01–PF-10.
+
+## Marco de continuidade CP294 — 2026-10-25 (histórico)
 
 - Documento 299 consolida M2-A1–A6; histórico Q–I–P explicitamente vinculado e CI offline 40237401239 SUCCESS, escopo restrito; E9 NO-GO; Marco B aberto e readiness NOT_READY. Próximo: auditoria dos critérios de encerramento do Marco B.
 
