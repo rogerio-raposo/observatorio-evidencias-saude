@@ -1,3 +1,7 @@
+## 2026-10-25 — Documento 288: foco no piloto e revalidação posterior de requisitos
+
+- Formalizada orientação do responsável: não implementar workarounds de stack provisória; documentar requisitos relevantes diferidos e reavaliá-los obrigatoriamente quando a stack completa for definida ou estiver em definição. Manter gates essenciais e bloqueios factuais.
+
 ## 2026-10-25 — Documento 287: decisão de escopo D2-I-C
 
 - Decisão do responsável: retirar do piloto inicial a exigência de autenticação com dois logins independentes, prevista no Documento 285. Preservar privacidade, integridade, proveniência, TLS, menor privilégio, cleanup e gates factuais. Modelo de identidade única exige novo contrato e validação; nenhuma alteração de infraestrutura/código autorizada.
