@@ -6,6 +6,10 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## Encerramento restrito Django — Documento 289 / 2026-10-25
+
+- Refinamento editorial e demonstrador documental Django declarados **CLOSED_TECHNICAL_RESTRICTED_DOCUMENTARY_DEMONSTRATOR** após verificações no HEAD `2c7df6d0538cf0be06a44e10b49e4d9dc3a72af5`: Django [40196984551](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40196984551) 50/50 PASS; Chromium [40197070277](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40197070277) 9/9 PASS, artefato visual preservado temporariamente, capturas individuais não inspecionadas. Suficiência estritamente documental dos dois casos existentes; não equivale a avaliação por pesquisadores, piloto integrado encerrado ou readiness. Próxima prioridade: preparar roteiro de demonstração/avaliação externa, sem contato ou divulgação não autorizada. CP285 permanece ponteiro vigente até checkpoint posterior.
+
 ## Marco de continuidade CP285 — 2026-10-25 (vigente)
 
 - Macroatividades do piloto reclassificadas conforme Documento 288: essenciais a jornada documental de evidência, identidade, vínculo Study–Report, proveniência, limites e demonstração; integração conectada PostgreSQL e autenticação definitiva diferíveis conforme necessidade efetiva, sem dispensar gates de segurança para eventual execução. Captura factual segue bloqueada.

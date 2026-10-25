@@ -1,3 +1,8 @@
+## 2026-10-25 — Documento 289: encerramento técnico restrito Django
+
+- Validações após refinamento editorial no HEAD `2c7df6d0538cf0be06a44e10b49e4d9dc3a72af5`: Actions 40196984551 Django **50/50 PASS** e 40197070277 Chromium **9/9 PASS**.
+- Declarado encerramento **exclusivo** da entrega editorial/documental, sem homologação científica, sem PostgreSQL conectado, sem encerramento do piloto e sem autorizar captura factual. Próxima prioridade: roteiro demonstrativo para avaliação por pesquisadores.
+
 ## 2026-10-25 — CP285: reavaliação do piloto e auditoria Django
 
 - Reavaliadas macroatividades conforme Documento 288: priorizar percurso científico-documental com evidência, estudo, relatórios, fontes e limites; diferir infraestrutura e autenticação definitivas se não indispensáveis, sem interpretar diferimento como controle atendido.
