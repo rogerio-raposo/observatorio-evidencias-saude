@@ -1,3 +1,9 @@
+## 2026-10-25 — CP282: validações Django offline D2-I-A e D2-I-B
+
+- D2-I-A: GitHub Actions [40190923646](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40190923646), commit `6352fcc1fb19cd03cafcbd93230189b56058115e`, Django check PASS, **39/39 PASS**, seis testes novos.
+- D2-I-B: GitHub Actions [40191544839](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40191544839), commit `60e088af4a1bc1fb05ba889f2893598fc0608f47`, Django check PASS, **46/46 PASS**, sete testes novos.
+- Ambos exclusivamente offline: orquestrador de D2-I-B injetado/simulado, composição dos adaptadores reais pendente. Nenhuma conexão PostgreSQL, captura factual ou promoção operacional.
+
 ## 2026-10-25 — CP281: decisão aprovada de deferimento G2-I2 ao piloto integrado
 
 - Proprietário aprovou o Documento 285: não repetir G2-I2 isolado; preservar prova de autenticação independente, privilégios mínimos, integridade e cleanup como gate obrigatório do piloto integrado.

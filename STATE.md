@@ -6,6 +6,12 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
+## Marco de continuidade CP282 — 2026-10-25 (vigente)
+
+- D2-I-A: implementação de leitor sintético opt-in no serviço Django, commit `6352fcc1fb19cd03cafcbd93230189b56058115e`, CI [40190923646](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40190923646), **39/39 PASS** offline, seis testes novos. Encerramento restrito ao contrato offline.
+- D2-I-B: serviço interno `run_synthetic_private_roundtrip` com orquestrador injetado, commit `60e088af4a1bc1fb05ba889f2893598fc0608f47`, CI [40191544839](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40191544839), **46/46 PASS** offline, sete testes novos. **Composição real dos adaptadores existentes com o Django ainda não demonstrada**, nem mesmo por teste conjunto offline.
+- PostgreSQL conectado, autenticação independente, persistência real e captura factual **NÃO autorizados/comprovados**. G2-I2 diferido para gate obrigatório no piloto integrado. Ponto de retomada: definir e testar composição offline mínima dos adaptadores reais com o serviço Django, mediante autorização; sem integração conectada implícita.
+
 ## Deliberação vigente — 2026-10-25 / Documento 285 / CP281
 
 - **APROVADO:** G2-I2 isolado **diferido para gate obrigatório do piloto integrado**, conforme autorização expressa do proprietário em 2026-10-25. Não é teste dispensado nem prova de autenticação independente. G2-I1 permanece inconclusivo com cleanup PASS. Sem novos logins ou ensaio conectado nesta decisão.

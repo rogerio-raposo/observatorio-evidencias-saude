@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP281 — 2026-10-25**
+**CP282 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP281.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP282.md`
 
 Checkpoint anterior:
 
-`CP280`
+`CP281`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP282 — 2026-10-25:** D2-I-A 39/39 PASS, D2-I-B contrato de serviço 46/46 PASS (ambos offline); composição efetiva dos adaptadores pendente; conexão e captura factual bloqueadas.
 
 - **CP281 — 2026-10-25:** deferimento G2-I2 ao piloto integrado aprovado pelo proprietário (Documento 285); validação conectada obrigatória antes da captura factual; D2 prossegue com mapeamento e integração mínima, sem mudar gates.
 
