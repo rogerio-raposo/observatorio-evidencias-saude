@@ -68,13 +68,13 @@ def present_markdown(markdown):
         flush_table()
         if not stripped:
             continue
-        match = re.match(r"^(#{1,6})\\s+(.+)$", stripped)
+        match = re.match(r"^(#{1,6})\s+(.+)$", stripped)
         if match:
             level = len(match.group(1))
             parts.append(f"<h{level}>" + html.escape(match.group(2)) + f"</h{level}>")
-        elif re.match(r"^[-*]\\s+", stripped):
+        elif re.match(r"^[-*]\s+", stripped):
             parts.append("<p>• " + html.escape(stripped[2:]) + "</p>")
         else:
             parts.append("<p>" + html.escape(stripped) + "</p>")
     flush_table()
-    return "\\n".join(parts)
+    return "\n".join(parts)
