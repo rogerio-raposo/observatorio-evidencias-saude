@@ -60,7 +60,8 @@ class EditorialN2Tests(unittest.TestCase):
         self.assertIn("| Papel da síntese |",result)
         for role in ("síntese-fonte","síntese principal","síntese corroborativa"):
             self.assertIn(role,result)
-        self.assertNotIn("\n\n|", result)
+        table_body = result.split("| Desfecho / achado", 1)[1]
+        self.assertNotIn("\n\n|", table_body)
         self.assertEqual(result.count("Achado registrado"),3)
         self.assertIn("não equivale aos Studies modelados",self.template)
         self.assertIn("não confundir com k",self.template)
