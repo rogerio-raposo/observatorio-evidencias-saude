@@ -1,3 +1,7 @@
+## 2026-10-25 — CP293 / Documento 298: fechamento documental F2 e E9 bloqueada
+
+- Q0–Q2 e roteamento suficientes apenas para preparação documental interna. E9 permanece NO-GO. Documento 298 publicado; CP293 consolidado para continuidade. Nenhuma autorização operacional ou científica ampliada.
+
 ## 2026-10-25 — CP292 / Documento 297: suficiência documental interna da Alternativa A
 
 - M1-A9 desenhou T01–T08; M1-A10 registrou linha de base histórica com 6 PASS estruturais e 2 PARTIAL; M1-A11 reproduziu integralmente N2 dCBT-I com CI específica run **40226403431 success**, após correção do import Python no primeiro run 40226336905.
