@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP293 — 2026-10-25 (vigente)
+## Marco de continuidade CP294 — 2026-10-25 (vigente)
+
+- Documento 299 consolida M2-A1–A6; histórico Q–I–P explicitamente vinculado e CI offline 40237401239 SUCCESS, escopo restrito; E9 NO-GO; Marco B aberto e readiness NOT_READY. Próximo: auditoria dos critérios de encerramento do Marco B.
+
+## Marco de continuidade CP293 — 2026-10-25 (histórico)
 
 - Documento 298: F2-A1–A5 encerrada somente como preparação documental Q0/Q1/Q2 e roteamento. E9 abertura formal NO-GO, sem autorização/gate comprovados. Próximo diagnóstico: reavaliar macroatividades restantes do Marco B. CP292 preservado como antecedente.
 
