@@ -55,7 +55,9 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          from scripts.validate_evidence_sheet_render import validate_render
+          import sys
+          sys.path.insert(0, 'scripts')
+          from validate_evidence_sheet_render import validate_render
           source=json.loads(Path('/tmp/rc01-evidence-sheet-view.json').read_text())
           current=Path('/tmp/rc01-n2-editorial-current.md').read_text()
           old=Path('/tmp/rc01-evidence-sheet-preview.md').read_text()
