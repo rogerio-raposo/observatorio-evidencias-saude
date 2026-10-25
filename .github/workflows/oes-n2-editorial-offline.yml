@@ -1,0 +1,29 @@
+name: OES N2 editorial offline regression
+on:
+  push:
+    paths:
+      - 'scripts/render_evidence_sheet_reference.py'
+      - 'templates/evidence-sheet.md'
+      - 'templates/evidence-sheet-presentation-map.json'
+      - 'tests/test_evidence_sheet_editorial_n2.py'
+      - '.github/workflows/oes-n2-editorial-offline.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  editorial-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute N2 editorial regressions without external services
+        run: python -m unittest discover -s tests -p test_evidence_sheet_editorial_n2.py -v
