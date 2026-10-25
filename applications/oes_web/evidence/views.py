@@ -39,9 +39,10 @@ def evidence_sheet_n2(request, product_id):
         raise Http404
     if product_id != "OES-P-2026-000401":
         raise Http404
-    from .n2_historical import load_historical_n2, N2Hold
+    from .n2_historical import load_historical_n2, present_markdown, N2Hold
+    from django.utils.safestring import mark_safe
     try:
         body = load_historical_n2()
     except N2Hold:
         return render(request, "evidence/evidence_sheet_n2.html", {"hold": True}, status=503)
-    return render(request, "evidence/evidence_sheet_n2.html", {"body": body, "hold": False})
+    return render(request, "evidence/evidence_sheet_n2.html", {"body_html": mark_safe(present_markdown(body)), "hold": False})
