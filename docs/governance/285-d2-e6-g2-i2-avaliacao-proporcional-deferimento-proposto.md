@@ -1,6 +1,6 @@
-# Documento 285 — D2-E6 / G2-I2: avaliação proporcional e deferimento proposto
+# Documento 285 — D2-E6 / G2-I2: avaliação proporcional e deferimento aprovado
 
-**Data:** 2026-10-25. **Referência canônica:** CP280. **Natureza:** recomendação técnica; **decisão formal PENDENTE**.
+**Data:** 2026-10-25. **Referência canônica:** CP280. **Natureza:** avaliação técnica com decisão formal APROVADA em 2026-10-25.
 
 ## Questão
 Após G2-I1 encerrado com limpeza comprovada e autenticação independente inconclusiva, verificar se o ensaio conectado isolado G2-I2 precisa ocorrer agora ou se deve integrar o gate do piloto.
@@ -12,7 +12,7 @@ Após G2-I1 encerrado com limpeza comprovada e autenticação independente incon
 - Nenhuma captura factual, disponibilização de payload bruto ou liberação de workflow factual foi autorizada.
 
 ## Parecer
-**Recomendação:** diferir G2-I2 isolado e exigir uma validação conectada **na integração do piloto**, sem declarar autenticação ou roundtrip Python/PostgreSQL comprovados. Evitar recriação desnecessária de logins, workflows transitórios e ciclos de depuração sem ganho suficiente para o piloto.
+**Decisão aprovada:** diferir G2-I2 isolado e exigir uma validação conectada **na integração do piloto**, sem declarar autenticação ou roundtrip Python/PostgreSQL comprovados. Evitar recriação desnecessária de logins, workflows transitórios e ciclos de depuração sem ganho suficiente para o piloto.
 
 ## Gate mínimo obrigatório do piloto integrado — ainda não autorizado
 1. Credenciais independentes e papéis de menor privilégio; autenticação, TLS, isolamento e proibição de acesso cruzado confirmados.
@@ -22,6 +22,8 @@ Após G2-I1 encerrado com limpeza comprovada e autenticação independente incon
 5. Evidências verificáveis em ambiente pertinente, critérios explícitos de aceite e autorização separada de operação conectada/factual.
 
 ## Limites e deliberação
-Esta análise **não aprova G2-I2**, não promove E6-G1, não inicia Fase 5, não altera papéis, dados, credenciais ou workflows. Encerramento metodológico/documental da Fase 4 não é readiness operacional. **Estado: `G2_I2_DEFERRAL_RECOMMENDED / DECISION_PENDING / G2_I2_NOT_AUTHORIZED / FACTUAL_BLOCKED`.**
+Esta análise **não aprova G2-I2**, não promove E6-G1, não inicia Fase 5, não altera papéis, dados, credenciais ou workflows. Encerramento metodológico/documental da Fase 4 não é readiness operacional. **Estado: `G2_I2_DEFERRED_TO_INTEGRATED_PILOT / CONNECTED_PILOT_GATE_MANDATORY / G2_I2_NOT_AUTHORIZED / FACTUAL_BLOCKED`.**
 
-**Próxima deliberação proposta:** aprovar explicitamente o deferimento para o gate integrado ou solicitar revisão crítica do parecer. Somente após essa deliberação atualizar STATE/README/checkpoint como decisão vigente.
+**Autorização expressa:** `APPROVED — OES / D2-E6 / G2_I2_DEFER_TO_INTEGRATED_PILOT / Documento 285 / preserve connected authentication and integrity validation as mandatory pilot gate / no factual GET / no role or data changes / no workflow enablement / no paid services / fail closed`.
+
+**Próxima atividade:** mapear macroatividades remanescentes D2 e estabelecer a sequência de integração mínima, sem novas ações operacionais implícitas.

@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP280 — 2026-10-24**
+**CP281 — 2026-10-25**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-24_CP280.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-25_CP281.md`
 
 Checkpoint anterior:
 
-`CP279`
+`CP280`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP281 — 2026-10-25:** deferimento G2-I2 ao piloto integrado aprovado pelo proprietário (Documento 285); validação conectada obrigatória antes da captura factual; D2 prossegue com mapeamento e integração mínima, sem mudar gates.
 
 - **CP280 — 2026-10-24:** G2-I1 credenciais transitórias e ACL verificadas, execução 40140467057 FAIL, segunda tentativa bloqueada, limpeza grantor-aware PASS e identidades excluídas; autenticação independente inconclusiva, G2-I2 e factual bloqueados.
 

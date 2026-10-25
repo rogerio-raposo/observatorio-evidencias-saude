@@ -1,12 +1,18 @@
 # STATE — Estado Atual do Projeto OES
 
-**Última atualização:** 24 de outubro de 2026  
+**Última atualização:** 25 de outubro de 2026  
 **Fase 4 — Protocolo de Atualização:** `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY` (readiness operacional `NOT_READY`)  
 **Fase 5:** `NOT_STARTED`  
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP280 — 2026-10-24 (vigente)
+## Deliberação vigente — 2026-10-25 / Documento 285 / CP281
+
+- **APROVADO:** G2-I2 isolado **diferido para gate obrigatório do piloto integrado**, conforme autorização expressa do proprietário em 2026-10-25. Não é teste dispensado nem prova de autenticação independente. G2-I1 permanece inconclusivo com cleanup PASS. Sem novos logins ou ensaio conectado nesta decisão.
+- **Gate obrigatório antes de qualquer captura factual:** autenticação independente de menor privilégio, TLS e isolamento; INSERT/commit/leitura privada/sha de dados estritamente sintéticos; HOLD após falha pós-commit e limpeza precisa; ausência de raw JSON ou credenciais em API, logs e CI; critérios de aceite e autorização separados.
+- **Prioridade D2:** (1) mapear os entregáveis realmente necessários do piloto; (2) integrar componentes já disponíveis com stack existente; (3) validar gate conectado sintético no contexto integrado com autorização específica; (4) somente depois avaliar gate factual. Evitar novos ensaios isolados redundantes. **G2-I2 NOT_AUTHORIZED / E6-G1 FACTUAL BLOCKED**, workflow factual e G2-I1 hard-disabled; Fase 4 permanece encerrada apenas metodológica/documentalmente, Fase 5 NOT_STARTED.
+
+## Marco de continuidade CP280 — 2026-10-24 (histórico)
 
 - G2-I1: duas identidades temporárias provisionadas com ACL restrita, execução conectada 40140467057 falhou sem causa identificável; segunda tentativa não ocorreu por bloqueio da ferramenta. Diagnóstico offline e testes adicionados nos commits posteriores a CP279. Limpeza SQL grantor-aware PASS; 0 papéis temporários e 0 observações privadas, proveniência total 1, papéis permanentes mantidos NOLOGIN/NOINHERIT. Autenticação real permanece INCONCLUSIVE; G2-I2 NÃO AUTORIZADO; E6-G1 factual bloqueado. Workflow G2-I1 hard-disabled. Detalhes no CP280.
 

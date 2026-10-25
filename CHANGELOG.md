@@ -1,3 +1,8 @@
+## 2026-10-25 — CP281: decisão aprovada de deferimento G2-I2 ao piloto integrado
+
+- Proprietário aprovou o Documento 285: não repetir G2-I2 isolado; preservar prova de autenticação independente, privilégios mínimos, integridade e cleanup como gate obrigatório do piloto integrado.
+- Macroprioridades D2: mapear lacunas do piloto, integração mínima, validação sintética conectada autorizada separadamente e eventual gate factual posterior. Sem G2-I2, DML, mudanças em roles ou workflows nesta decisão; Fase 4 apenas documentalmente encerrada, D2 parcial e Fase 5 não iniciada.
+
 ## 2026-10-24 — CP280: G2-I1 encerrado inconclusivo; logins descartáveis removidos
 
 - Logins temporários criados e ACL mínima confirmada; workflow conectado G2-I1, somente metadados, execução [40140467057](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40140467057) falhou. Segunda tentativa autorizada, não executada por bloqueio de ferramenta.
