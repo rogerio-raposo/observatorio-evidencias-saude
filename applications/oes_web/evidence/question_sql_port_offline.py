@@ -61,7 +61,11 @@ class _QuestionSQLTransaction:
             return None
         if not isinstance(row, (tuple, list)) or len(row) != 7:
             raise PreparationHold("HOLD: malformed receipt")
-        if row[0] != actor_id or row[1] != request_id:\n            raise PreparationHold("HOLD: receipt key mismatch")\n        if not isinstance(row[2], str) or len(row[2]) != 64 or any(ch not in "0123456789abcdef" for ch in row[2]):\n            raise PreparationHold("HOLD: malformed fingerprint")\n        return Receipt(*row)
+        if row[0] != actor_id or row[1] != request_id:
+            raise PreparationHold("HOLD: receipt key mismatch")
+        if not isinstance(row[2], str) or len(row[2]) != 64 or any(ch not in "0123456789abcdef" for ch in row[2]):
+            raise PreparationHold("HOLD: malformed fingerprint")
+        return Receipt(*row)
 
     def current_question(self, question_id, actor_id, lock=False):
         raise PreparationHold("HOLD: SQL actor-scoped question policy not implemented")
