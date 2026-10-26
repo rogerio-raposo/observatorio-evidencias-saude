@@ -95,7 +95,7 @@ class _QuestionSQLTransaction:
             "JOIN investigation.question_version AS qv "
             "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
-            "AND ev.valid_to IS NULL "
+            "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
             "ORDER BY ev.version_no DESC LIMIT 1 "
             + ("FOR UPDATE OF q" if lock else "FOR SHARE OF q"),
             (question_id, actor_id),
