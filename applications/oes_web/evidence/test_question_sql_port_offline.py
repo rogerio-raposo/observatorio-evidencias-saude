@@ -83,11 +83,39 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("x", "y:1:z")
         self.assertNotEqual(a.calls[0][1], b.calls[0][1])
 
+    def test_scope_allowed_with_parameterized_predicate_and_row_lock(self):
+        cursor = FakeCursor((1,))
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request")
+            self.assertTrue(tx.can_access_question("Q01", "actor"))
+        sql, args = cursor.calls[1]
+        self.assertIn("q.responsible_actor_id = %s", sql)
+        self.assertIn("e.oes_id = %s", sql)
+        self.assertIn("FOR SHARE OF q", sql)
+        self.assertEqual(args, ("Q01", "actor"))
+        self.assertNotIn("Q01", sql)
+
+    def test_scope_missing_or_revoked_is_false(self):
+        cursor = FakeCursor(None)
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request")
+            self.assertFalse(tx.can_access_question("Q01", "actor"))
+
+    def test_scope_requires_request_lock(self):
+        with self.make_port(FakeCursor((1,))).begin() as tx:
+            with self.assertRaises(PreparationHold):
+                tx.can_access_question("Q01", "actor")
+
+    def test_scope_malformed_row_holds(self):
+        with self.make_port(FakeCursor(("unexpected",))).begin() as tx:
+            tx.lock_request("actor", "request")
+            with self.assertRaises(PreparationHold):
+                tx.can_access_question("Q01", "actor")
+
     def test_all_unsupported_semantics_hold(self):
         with self.make_port(FakeCursor()).begin() as tx:
             for name, args in (
                 ("current_question", ("q", "actor")),
-                ("can_access_question", ("q", "actor")),
                 ("register_q0", (object(), "actor")),
                 ("propose_q1", (object(), "actor")),
                 ("save_receipt", (object(),)),
