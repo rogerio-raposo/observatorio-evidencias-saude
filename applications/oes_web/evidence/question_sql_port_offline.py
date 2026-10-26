@@ -5,6 +5,7 @@ opens a connection, reads credentials, commits, or enables HTTP write access.
 Incomplete authorization/write semantics fail closed until a separate gate.
 """
 from contextlib import contextmanager
+from uuid import uuid4
 
 from .question_preparation import PreparationHold
 from .question_uow_offline import Receipt
@@ -35,6 +36,7 @@ class _QuestionSQLTransaction:
     def __init__(self, cursor):
         self.cursor = cursor
         self._locked = False
+        self._pending_q0 = None
 
     def lock_request(self, actor_id, request_id):
         if not isinstance(actor_id, str) or not actor_id or not isinstance(request_id, str) or not request_id:
@@ -130,10 +132,53 @@ class _QuestionSQLTransaction:
         return True
 
     def register_q0(self, command, actor_id):
-        raise PreparationHold("HOLD: SQL Q0 mapping not implemented")
+        if not self._locked or self._pending_q0 is not None:
+            raise PreparationHold("HOLD: Q0 transaction unavailable")
+        if (not isinstance(actor_id, str) or not 1 <= len(actor_id) <= 128
+                or not isinstance(command.question_id, str) or not command.question_id
+                or not isinstance(command.original_text, str) or not command.original_text
+                or command.expected_version != 0 or command.normalized_text is not None
+                or command.justification):
+            raise PreparationHold("HOLD: invalid Q0")
+        entity_id, version_id = uuid4(), uuid4()
+        self.cursor.execute(
+            "INSERT INTO core.entity (entity_uuid, oes_id, entity_type, created_by) "
+            "VALUES (%s, %s, %s, %s)",
+            (entity_id, command.question_id, "Question", actor_id))
+        self.cursor.execute(
+            "INSERT INTO investigation.question (entity_uuid, responsible_actor_id) "
+            "VALUES (%s, %s)", (entity_id, actor_id))
+        self.cursor.execute(
+            "INSERT INTO core.entity_version "
+            "(version_uuid, entity_uuid, version_no, version_status, created_by, change_type) "
+            "VALUES (%s, %s, %s, %s, %s, %s)",
+            (version_id, entity_id, 1, "current", actor_id, "initial"))
+        self.cursor.execute(
+            "INSERT INTO investigation.question_version "
+            "(version_uuid, entity_uuid, original_text, normalized_text, preparation_stage) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (version_id, entity_id, command.original_text, None, "q0_draft"))
+        self._pending_q0 = (command.question_id, actor_id, entity_id, version_id)
 
     def propose_q1(self, command, actor_id):
         raise PreparationHold("HOLD: SQL Q1 mapping not implemented")
 
     def save_receipt(self, receipt):
-        raise PreparationHold("HOLD: receipt write not implemented")
+        if not self._locked or self._pending_q0 is None:
+            raise PreparationHold("HOLD: no pending Q0")
+        question_id, actor_id, entity_id, version_id = self._pending_q0
+        if (not isinstance(receipt, Receipt) or receipt.question_id != question_id
+                or receipt.actor_id != actor_id or receipt.command_kind != "REGISTER_Q0"
+                or receipt.version != 1 or receipt.justification != ""
+                or not isinstance(receipt.request_id, str) or not 1 <= len(receipt.request_id) <= 128
+                or not isinstance(receipt.fingerprint, str) or len(receipt.fingerprint) != 64
+                or any(ch not in "0123456789abcdef" for ch in receipt.fingerprint)):
+            raise PreparationHold("HOLD: invalid Q0 receipt")
+        self.cursor.execute(
+            "INSERT INTO investigation.question_command_receipt "
+            "(actor_id, request_id, fingerprint_sha256, question_entity_uuid, question_id, "
+            "resulting_version_uuid, resulting_version_no, command_kind, justification) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (actor_id, receipt.request_id, receipt.fingerprint, entity_id, question_id,
+             version_id, 1, "REGISTER_Q0", ""))
+        self._pending_q0 = None
