@@ -1,3 +1,7 @@
+## 2026-10-26 — CP301 / Doc.329: replay offline e justificativa Q1
+
+- CI 40266729081 success após correção de indentação; persistência e writer PostgreSQL não implementados. Checkpoint CP301 vigente.
+
 ## 2026-10-26 — CP300 / Documento 319: teste Q0→Q1 sintético e limpeza
 
 - T1 Q0 e T2 Q1 verificadas no banco sintético, integridade da pergunta original e um único current; limpeza exata e zero resíduos. Sem role/grants, Django ou E9. CP300 vigente.
