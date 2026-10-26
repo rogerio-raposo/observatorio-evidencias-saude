@@ -89,10 +89,10 @@ class InjectedSQLPortTests(unittest.TestCase):
         with self.make_port(cursor).begin() as tx:
             tx.lock_request("actor", "request")
             self.assertTrue(tx.can_access_question("Q01", "actor"))
-        sql, args = cursor.calls[1]
+        sql, args = cursor.calls[-1]
         self.assertIn("q.responsible_actor_id = %s", sql)
         self.assertIn("e.oes_id = %s", sql)
-        self.assertIn("FOR SHARE OF q", sql)
+        self.assertNotIn("FOR SHARE OF q", sql)
         self.assertEqual(args, ("Q01", "actor"))
         self.assertNotIn("Q01", sql)
 
@@ -120,9 +120,9 @@ class InjectedSQLPortTests(unittest.TestCase):
             state = tx.current_question("Q01", "actor", lock=True)
         self.assertEqual(state["version"], 2)
         self.assertEqual(state["original_text"], "Original")
-        sql, params = cursor.calls[1]
+        sql, params = cursor.calls[-1]
         self.assertIn("q.responsible_actor_id = %s", sql)
-        self.assertIn("FOR SHARE OF q, ev", sql)
+        self.assertIn("FOR UPDATE OF ev", sql)
         self.assertIn("ev.version_status = 'current'", sql)
         self.assertEqual(params, ("Q01", "actor"))
         self.assertNotIn("Q01", sql)
@@ -139,7 +139,7 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("actor", "request")
             state = tx.current_question("Q01", "actor")
         self.assertIsNone(state["normalized_text"])
-        self.assertIn("FOR SHARE OF q", cursor.calls[1][0])
+        self.assertNotIn("FOR SHARE OF q", cursor.calls[-1][0])
 
     def test_current_question_requires_lock_and_valid_state(self):
         cursor = FakeCursor(("bad", "Original", None))
@@ -158,7 +158,7 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("actor", "req")
             tx.register_q0(cmd, "actor")
             tx.save_receipt(receipt)
-        calls = cursor.calls[1:]
+        calls = [item for item in cursor.calls if item[0].startswith("INSERT INTO ")]
         self.assertEqual(len(calls), 5)
         for (sql, params), table in zip(calls, (
             "core.entity ", "investigation.question ", "core.entity_version ",
@@ -196,7 +196,7 @@ class InjectedSQLPortTests(unittest.TestCase):
                 tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
                 with self.assertRaises(PreparationHold):
                     tx.save_receipt(Receipt("other", "req", "a" * 64, "Q", 1, "REGISTER_Q0"))
-        self.assertEqual(len(cursor.calls), 5)
+        self.assertEqual(len(cursor.calls), 6)
 
     def test_q0_cursor_failure_propagates_for_transaction_rollback(self):
         class FailingCursor(FakeCursor):
@@ -225,18 +225,20 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("actor", "request-q1")
             tx.propose_q1(cmd, "actor")
             tx.save_receipt(receipt)
-        sqls = [x[0] for x in cursor.calls[1:]]
+        writes_and_select = [x for x in cursor.calls if not x[0].startswith("SELECT pg_advisory")]
+        sqls = [x[0] for x in writes_and_select]
         self.assertEqual(len(sqls), 5)
-        self.assertIn("FOR SHARE OF q FOR UPDATE OF ev", sqls[0])
+        self.assertIn("FOR UPDATE OF ev", sqls[0])
+        self.assertNotIn("FOR SHARE OF q", sqls[0])
         self.assertIn("responsible_actor_id = %s", sqls[0])
         self.assertIn("UPDATE core.entity_version", sqls[1])
         self.assertIn("INSERT INTO core.entity_version", sqls[2])
         self.assertIn("INSERT INTO investigation.question_version", sqls[3])
         self.assertIn("INSERT INTO investigation.question_command_receipt", sqls[4])
-        self.assertEqual(cursor.calls[1][1], ("Q", "actor"))
-        self.assertEqual(cursor.calls[4][1][2], "Original")
-        self.assertEqual(cursor.calls[4][1][3], "Normalizada")
-        self.assertEqual(cursor.calls[5][1][7:], ("PROPOSE_Q1", "justificativa"))
+        self.assertEqual(writes_and_select[0][1], ("Q", "actor"))
+        self.assertEqual(writes_and_select[3][1][2], "Original")
+        self.assertEqual(writes_and_select[3][1][3], "Normalizada")
+        self.assertEqual(writes_and_select[4][1][7:], ("PROPOSE_Q1", "justificativa"))
 
     def test_q1_denies_stale_version_without_writes(self):
         from uuid import UUID
@@ -245,7 +247,7 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("actor", "req")
             with self.assertRaises(PreparationHold):
                 tx.propose_q1(QuestionCommand("req", "Q", 1, "Original", "Q1", "why"), "actor")
-        self.assertEqual(len(cursor.calls), 2)
+        self.assertEqual(len(cursor.calls), 3)
 
     def test_q1_missing_receipt_aborts_context(self):
         from uuid import UUID
