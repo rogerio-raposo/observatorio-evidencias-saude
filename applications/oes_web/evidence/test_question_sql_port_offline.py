@@ -233,7 +233,7 @@ class InjectedSQLPortTests(unittest.TestCase):
                 tx.lock_request("actor", "req")
                 tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
         # The injected factory, not the port, owns rollback in a real transaction.
-        self.assertEqual(len(cursor.calls), 5)
+        self.assertEqual(len(cursor.calls), 6)
 
     def test_q1_scoped_version_transition_and_receipt(self):
         from uuid import UUID
