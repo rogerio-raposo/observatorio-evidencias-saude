@@ -84,6 +84,29 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.lock_request("x", "y:1:z")
         self.assertNotEqual(a.calls[0][1], b.calls[0][1])
 
+    def test_question_lock_is_actor_independent_and_transaction_scoped(self):
+        locks = []
+        for actor, req in (("owner", "r1"), ("other", "r2")):
+            cursor = FakeCursor()
+            with self.make_port(cursor).begin() as tx:
+                tx.lock_request(actor, req)
+                tx.lock_question("Q-SAME")
+                tx.lock_question("Q-SAME")  # idempotent within the transaction
+            self.assertEqual(len(cursor.calls), 2)
+            self.assertIn("pg_advisory_xact_lock", cursor.calls[1][0])
+            locks.append(cursor.calls[1][1])
+        self.assertEqual(locks[0], locks[1])
+        self.assertNotIn("owner", locks[0][0])
+
+    def test_question_lock_rejects_second_identity(self):
+        cursor = FakeCursor()
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request")
+            tx.lock_question("Q1")
+            with self.assertRaises(PreparationHold):
+                tx.lock_question("Q2")
+        self.assertEqual(len(cursor.calls), 2)
+
     def test_scope_allowed_with_parameterized_predicate_and_row_lock(self):
         cursor = FakeCursor((1,))
         with self.make_port(cursor).begin() as tx:
