@@ -1,4 +1,8 @@
-## Marco de continuidade CP301 — 2026-10-26 (vigente)
+## Marco de continuidade CP302 — 2026-10-26 (vigente)
+
+- Doc.331: DDL do ledger sintético verificado; metadados READ ONLY confirmam writer inexistente e ausência de RLS; CP302 vigente. Nenhum novo GRANT, DML ou Django; E9 NO-GO, readiness NOT_READY.
+
+## Marco de continuidade CP301 — 2026-10-26 (histórico)
 
 - Docs. 321–329: contrato Django Q0→Q1 e Unit of Work offline, replay reautorizado e justificativa Q1 em recibo simulado; CI 40266729081 success. PostgreSQL writer/ledger e HTTP pendentes, E9 NO-GO, readiness NOT_READY.
 
