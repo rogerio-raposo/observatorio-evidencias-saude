@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP297 — 2026-10-25 (vigente)
+## Marco de continuidade CP298 — 2026-10-25 (vigente)
+
+- PF-I02 G1–G3 consolidado Docs. 306–310; Doc. 311 define pacote único de implementação Q0→Q1 em fases A–D, com primeiro gate offline Django auth code only ainda sujeito a autorização expressa. Nenhuma escrita SQL, identidade real, grants ou deploy autorizados. CP298. Marco B aberto; E9 NO-GO, readiness NOT_READY.
+
+## Marco de continuidade CP297 — 2026-10-25 (histórico)
 
 - Documento 305: PF-I01 GET-only N2 histórico encerrado em âmbito técnico offline restrito após PF-I01-R1 e CI 40243932508 success; sem validação humana ou operação conectada. Próximo: analisar fluxo de preparação Q0–Q2 com gates e persistência, inicialmente read-only. Marco B aberto e readiness NOT_READY.
 
