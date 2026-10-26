@@ -1,0 +1,26 @@
+name: OES PF-I02 W1 offline Q0 Q1 contract
+on:
+  push:
+    paths:
+      - 'applications/oes_web/evidence/question_preparation.py'
+      - 'applications/oes_web/evidence/tests/test_pf_i02_w1_contract.py'
+      - '.github/workflows/oes-pf-i02-w1-offline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r applications/oes_web/requirements.txt
+      - working-directory: applications/oes_web
+        run: python manage.py check
+      - working-directory: applications/oes_web
+        run: python manage.py test evidence.tests --verbosity 2
