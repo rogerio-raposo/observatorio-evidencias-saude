@@ -35,7 +35,10 @@ class OfflineQuestionUnitOfWork:
                 if (previous.fingerprint != fingerprint or previous.question_id != command.question_id
                         or previous.actor_id != actor_id):
                     raise PreparationConflict("HOLD: request fingerprint conflict")
-                # A receipt is never an authorization token: verify current scope again.\n                if not tx.can_access_question(previous.question_id, actor_id):\n                    raise PreparationConflict("HOLD: stale or inaccessible question")\n                return {"status": "PREPARATORY_ONLY", "question_id": previous.question_id,
+                # A receipt is never an authorization token: verify current scope again.
+                if not tx.can_access_question(previous.question_id, actor_id):
+                    raise PreparationConflict("HOLD: stale or inaccessible question")
+                return {"status": "PREPARATORY_ONLY", "question_id": previous.question_id,
                         "version": previous.version}
             current = tx.current_question(command.question_id, actor_id, lock=not is_q0)
             if is_q0:
@@ -50,6 +53,7 @@ class OfflineQuestionUnitOfWork:
                 tx.propose_q1(command, actor_id)
             version = command.expected_version + 1
             tx.save_receipt(Receipt(actor_id, command.request_id, fingerprint,
-                                    command.question_id, version, "REGISTER_Q0" if is_q0 else "PROPOSE_Q1",\n                                    command.justification if not is_q0 else ""))
+                                    command.question_id, version, "REGISTER_Q0" if is_q0 else "PROPOSE_Q1",
+                                    command.justification if not is_q0 else ""))
         return {"status": "PREPARATORY_ONLY", "question_id": command.question_id,
                 "version": version}
