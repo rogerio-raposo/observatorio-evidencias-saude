@@ -123,6 +123,7 @@ class InjectedSQLPortTests(unittest.TestCase):
         sql, params = cursor.calls[1]
         self.assertIn("q.responsible_actor_id = %s", sql)
         self.assertIn("FOR UPDATE OF q", sql)
+        self.assertIn("ev.version_status = 'current'", sql)
         self.assertEqual(params, ("Q01", "actor"))
         self.assertNotIn("Q01", sql)
 
