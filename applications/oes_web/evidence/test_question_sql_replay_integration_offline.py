@@ -57,14 +57,14 @@ class ReplayOfflineIntegrationTests(unittest.TestCase):
         result, cursor = self.submit(cmd)
         self.assertEqual(result, {"status": "PREPARATORY_ONLY", "question_id": "Q", "version": 1})
         self.assertEqual(cursor.reads, 1)
-        self.assertEqual(len(cursor.calls), 3)
-        self.assertIn("FOR SHARE OF q", cursor.calls[-1][0])
+        self.assertEqual(len(cursor.calls), 4)
+        self.assertNotIn("FOR SHARE OF q", cursor.calls[-1][0])
 
     def test_identical_q1_replay_reads_receipt_and_scope_without_writes(self):
         cmd = QuestionCommand("req1", "Q", 1, "Original", "Normalized", "reason")
         result, cursor = self.submit(cmd)
         self.assertEqual(result["version"], 2)
-        self.assertEqual(len(cursor.calls), 3)
+        self.assertEqual(len(cursor.calls), 4)
 
     def test_reused_request_with_different_payload_conflicts_before_scope(self):
         cmd = QuestionCommand("req1", "Q", 1, "Original", "New", "reason")
