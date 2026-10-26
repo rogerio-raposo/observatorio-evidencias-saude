@@ -3,6 +3,8 @@
 Generates ORM QuerySets for structural contract tests. Never evaluates a
 QuerySet, opens a connection, or enables writes. This is NOT a live backend.
 """
+from django.db.models import OuterRef, Subquery, Exists
+
 from .models import (
     OesEntity, OesEntityVersion, OesQuestion,
     OesQuestionVersion, OesQuestionCommandReceipt,
@@ -24,9 +26,18 @@ def scoped_current_question(*, question_id, actor_id):
     scoped_questions = OesQuestion.objects.filter(
         entity_uuid__in=entity_ids, responsible_actor_id=actor_id
     ).values("entity_uuid")
+    # Match BOTH columns of the database-owned composite FK. A matching
+    # question_version is mandatory before a Q1 transition may use this state.
+    question_versions = OesQuestionVersion.objects.filter(
+        version_uuid=OuterRef("version_uuid"),
+        entity_uuid=OuterRef("entity_uuid"),
+    )
     versions = OesEntityVersion.objects.filter(
         entity_uuid__in=scoped_questions, version_status="current", valid_to__isnull=True
-    ).order_by("-version_no")
+    ).annotate(
+        has_question_version=Exists(question_versions),
+        q0_original_text=Subquery(question_versions.values("original_text")[:1]),
+    ).filter(has_question_version=True).order_by("-version_no")
     return versions
 
 
