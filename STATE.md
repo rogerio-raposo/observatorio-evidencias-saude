@@ -6,7 +6,11 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP298 — 2026-10-25 (vigente)
+## Marco de continuidade CP299 — 2026-10-26 (vigente)
+
+- Documento 317: migração sintética Q0-only aprovada e aplicada no Neon sandbox branch br-gentle-hall-b6jaxehf; preflight e postflight READ ONLY, sem DML, grants ou Django. Q0→Q1 operacional não implementado; Marco B aberto, E9 NO-GO, readiness NOT_READY.
+
+## Marco de continuidade CP298 — 2026-10-25 (histórico)
 
 - PF-I02 G1–G3 consolidado Docs. 306–310; Doc. 311 define pacote único de implementação Q0→Q1 em fases A–D, com primeiro gate offline Django auth code only ainda sujeito a autorização expressa. Nenhuma escrita SQL, identidade real, grants ou deploy autorizados. CP298. Marco B aberto; E9 NO-GO, readiness NOT_READY.
 
