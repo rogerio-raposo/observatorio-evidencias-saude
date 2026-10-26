@@ -31,8 +31,8 @@ class InjectedQuestionSQLPort:
                 raise PreparationHold("HOLD: invalid cursor")
             tx = _QuestionSQLTransaction(cursor)
             yield tx
-            if tx._pending_q0 is not None:
-                raise PreparationHold("HOLD: Q0 missing receipt; abort transaction")
+            if tx._pending_q0 is not None or tx._pending_q1 is not None:
+                raise PreparationHold("HOLD: question command missing receipt; abort transaction")
 
 
 class _QuestionSQLTransaction:
@@ -41,6 +41,7 @@ class _QuestionSQLTransaction:
         self._locked = False
         self._lock_identity = None
         self._pending_q0 = None
+        self._pending_q1 = None
 
     def lock_request(self, actor_id, request_id):
         if not isinstance(actor_id, str) or not actor_id or not isinstance(request_id, str) or not request_id:
@@ -167,25 +168,84 @@ class _QuestionSQLTransaction:
         self._pending_q0 = (command.question_id, actor_id, entity_id, version_id)
 
     def propose_q1(self, command, actor_id):
-        raise PreparationHold("HOLD: SQL Q1 mapping not implemented")
+        if (not self._locked or self._lock_identity[0] != actor_id
+                or self._pending_q0 is not None or self._pending_q1 is not None):
+            raise PreparationHold("HOLD: Q1 transaction unavailable")
+        if (not isinstance(command.question_id, str) or not command.question_id
+                or type(command.expected_version) is not int or command.expected_version < 1
+                or not isinstance(command.original_text, str) or not command.original_text
+                or not isinstance(command.normalized_text, str) or not command.normalized_text
+                or not isinstance(command.justification, str) or not command.justification.strip()):
+            raise PreparationHold("HOLD: invalid Q1")
+        # Scope and row locking are mandatory and rechecked in this statement.
+        self.cursor.execute(
+            "SELECT q.entity_uuid, ev.version_uuid, ev.version_no, qv.original_text "
+            "FROM investigation.question q "
+            "JOIN core.entity e ON e.entity_uuid = q.entity_uuid "
+            "JOIN core.entity_version ev ON ev.entity_uuid = q.entity_uuid "
+            "JOIN investigation.question_version qv "
+            "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
+            "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
+            "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
+            "FOR UPDATE OF q, ev",
+            (command.question_id, actor_id))
+        row = self.cursor.fetchone()
+        if (not isinstance(row, (tuple, list)) or len(row) != 4
+                or type(row[2]) is not int or row[2] != command.expected_version
+                or row[3] != command.original_text or row[0] is None or row[1] is None):
+            raise PreparationHold("HOLD: Q1 stale or inaccessible")
+        entity_id, previous_version_id = row[0], row[1]
+        next_version_id = uuid4()
+        self.cursor.execute(
+            "UPDATE core.entity_version SET version_status = %s, valid_to = CURRENT_TIMESTAMP "
+            "WHERE version_uuid = %s AND entity_uuid = %s "
+            "AND version_no = %s AND version_status = %s AND valid_to IS NULL",
+            ("superseded", previous_version_id, entity_id, command.expected_version, "current"))
+        if self.cursor.rowcount != 1:
+            raise PreparationHold("HOLD: Q1 version update conflict")
+        self.cursor.execute(
+            "INSERT INTO core.entity_version "
+            "(version_uuid, entity_uuid, version_no, version_status, supersedes_version_uuid, "
+            "created_by, change_type) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (next_version_id, entity_id, command.expected_version + 1, "current",
+             previous_version_id, actor_id, "normalization_proposed"))
+        self.cursor.execute(
+            "INSERT INTO investigation.question_version "
+            "(version_uuid, entity_uuid, original_text, normalized_text, preparation_stage) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (next_version_id, entity_id, command.original_text,
+             command.normalized_text, "q1_proposed"))
+        self._pending_q1 = (command.question_id, actor_id, entity_id,
+                            next_version_id, command.expected_version + 1,
+                            command.justification)
+
 
     def save_receipt(self, receipt):
-        if not self._locked or self._pending_q0 is None:
-            raise PreparationHold("HOLD: no pending Q0")
-        question_id, actor_id, entity_id, version_id = self._pending_q0
+        if not self._locked:
+            raise PreparationHold("HOLD: no locked command")
+        pending = self._pending_q0 or self._pending_q1
+        if pending is None:
+            raise PreparationHold("HOLD: no pending command")
+        if self._pending_q0 is not None:
+            question_id, actor_id, entity_id, version_id = self._pending_q0
+            expected_version, kind, justification = 1, "REGISTER_Q0", ""
+        else:
+            question_id, actor_id, entity_id, version_id, expected_version, justification = self._pending_q1
+            kind = "PROPOSE_Q1"
         if (not isinstance(receipt, Receipt) or receipt.question_id != question_id
-                or receipt.actor_id != actor_id or receipt.command_kind != "REGISTER_Q0"
+                or receipt.actor_id != actor_id or receipt.command_kind != kind
                 or (receipt.actor_id, receipt.request_id) != self._lock_identity
-                or receipt.version != 1 or receipt.justification != ""
+                or receipt.version != expected_version or receipt.justification != justification
                 or not isinstance(receipt.request_id, str) or not 1 <= len(receipt.request_id) <= 128
                 or not isinstance(receipt.fingerprint, str) or len(receipt.fingerprint) != 64
                 or any(ch not in "0123456789abcdef" for ch in receipt.fingerprint)):
-            raise PreparationHold("HOLD: invalid Q0 receipt")
+            raise PreparationHold("HOLD: invalid command receipt")
         self.cursor.execute(
             "INSERT INTO investigation.question_command_receipt "
             "(actor_id, request_id, fingerprint_sha256, question_entity_uuid, question_id, "
             "resulting_version_uuid, resulting_version_no, command_kind, justification) "
             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (actor_id, receipt.request_id, receipt.fingerprint, entity_id, question_id,
-             version_id, 1, "REGISTER_Q0", ""))
+             version_id, expected_version, kind, justification))
         self._pending_q0 = None
+        self._pending_q1 = None
