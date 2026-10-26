@@ -28,6 +28,9 @@ class FakeTransaction:
     def current_question(self,qid,actor,lock):
         state=self.questions.get(qid)
         return deepcopy(state) if state and state["actor"]==actor else None
+    def can_access_question(self,qid,actor):
+        state=self.questions.get(qid)
+        return bool(state and state["actor"]==actor)
     def register_q0(self,c,actor):
         self.questions[c.question_id]={"actor":actor,"version":1,"original_text":c.original_text,"normalized_text":None}
     def propose_q1(self,c,actor):
@@ -49,6 +52,9 @@ class OfflineUnitOfWorkTests(SimpleTestCase):
         self.assertEqual(self.send(q1)["version"],2)
         self.assertEqual(self.port.questions["OES-Q-SYN"]["original_text"],self.q0.original_text)
         self.assertEqual(len(self.port.receipts),2)
+        receipt=self.port.receipts[("5","request-b")]
+        self.assertEqual(receipt.command_kind,"PROPOSE_Q1")
+        self.assertEqual(receipt.justification,"justificativa")
     def test_replay_returns_same_receipt(self):
         first=self.send(self.q0)
         self.assertEqual(self.send(self.q0),first)
@@ -82,3 +88,17 @@ class OfflineUnitOfWorkTests(SimpleTestCase):
         from django.core.exceptions import PermissionDenied
         with self.assertRaises(PermissionDenied):self.send(self.q0,who=anonymous)
         self.assertEqual(self.port.questions,{})
+
+    def test_replay_denied_after_scope_revoked(self):
+        self.send(self.q0)
+        self.port.questions["OES-Q-SYN"]["actor"]="different"
+        with self.assertRaises(PreparationConflict): self.send(self.q0)
+
+    def test_replay_old_request_after_q1(self):
+        self.send(self.q0)
+        self.send(QuestionCommand("request-b","OES-Q-SYN",1,"Pergunta sintética?","Q1","motivo"))
+        self.assertEqual(self.send(self.q0)["version"],1)
+
+    def test_question_request_id_length_rejected(self):
+        with self.assertRaises(PreparationHold):
+            self.send(QuestionCommand("x"*129,"OES-Q-SYN",0,"Pergunta sintética?"))
