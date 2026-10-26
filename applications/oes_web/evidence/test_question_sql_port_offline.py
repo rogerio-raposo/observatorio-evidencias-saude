@@ -2,7 +2,8 @@
 import unittest
 from contextlib import contextmanager
 
-from .question_preparation import PreparationHold
+from .question_preparation import PreparationHold, QuestionCommand
+from .question_uow_offline import Receipt
 from .question_sql_port_offline import InjectedQuestionSQLPort
 
 
@@ -148,12 +149,71 @@ class InjectedSQLPortTests(unittest.TestCase):
             with self.assertRaises(PreparationHold):
                 tx.current_question("Q01", "actor", lock=True)
 
+    def test_q0_and_receipt_parameterized_insert_order(self):
+        cursor = FakeCursor()
+        cmd = QuestionCommand("req", "OES-Q-SYN", 0, "Original")
+        receipt = Receipt("actor", "req", "a" * 64, "OES-Q-SYN", 1, "REGISTER_Q0")
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "req")
+            tx.register_q0(cmd, "actor")
+            tx.save_receipt(receipt)
+        calls = cursor.calls[1:]
+        self.assertEqual(len(calls), 5)
+        for (sql, params), table in zip(calls, (
+            "core.entity ", "investigation.question ", "core.entity_version ",
+            "investigation.question_version ", "investigation.question_command_receipt ")):
+            self.assertIn("INSERT INTO " + table, sql)
+            self.assertIn("%s", sql)
+            self.assertNotIn("OES-Q-SYN", sql)
+        entity_uuid = calls[0][1][0]
+        version_uuid = calls[2][1][0]
+        self.assertEqual(calls[1][1], (entity_uuid, "actor"))
+        self.assertEqual(calls[3][1][0:2], (version_uuid, entity_uuid))
+        self.assertEqual(calls[3][1][3:], (None, "q0_draft"))
+        self.assertEqual(calls[4][1][3], entity_uuid)
+        self.assertEqual(calls[4][1][5], version_uuid)
+
+    def test_q0_requires_lock_and_rejects_invalid_command(self):
+        cursor = FakeCursor()
+        cmd = QuestionCommand("req", "Q", 0, "Original")
+        with self.make_port(cursor).begin() as tx:
+            with self.assertRaises(PreparationHold):
+                tx.register_q0(cmd, "actor")
+            tx.lock_request("actor", "req")
+            with self.assertRaises(PreparationHold):
+                tx.register_q0(QuestionCommand("req", "Q", 2, "Original"), "actor")
+        self.assertEqual(len(cursor.calls), 1)
+
+    def test_receipt_requires_matching_pending_q0(self):
+        cursor = FakeCursor()
+        receipt = Receipt("actor", "req", "a" * 64, "Q", 1, "REGISTER_Q0")
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "req")
+            with self.assertRaises(PreparationHold):
+                tx.save_receipt(receipt)
+            tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
+            with self.assertRaises(PreparationHold):
+                tx.save_receipt(Receipt("other", "req", "a" * 64, "Q", 1, "REGISTER_Q0"))
+        self.assertEqual(len(cursor.calls), 5)
+
+    def test_q0_cursor_failure_propagates_for_transaction_rollback(self):
+        class FailingCursor(FakeCursor):
+            def execute(self, sql, params=()):
+                super().execute(sql, params)
+                if "INSERT INTO investigation.question_version" in sql:
+                    raise RuntimeError("simulated write failure")
+        cursor = FailingCursor()
+        with self.assertRaises(RuntimeError):
+            with self.make_port(cursor).begin() as tx:
+                tx.lock_request("actor", "req")
+                tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
+        # The injected factory, not the port, owns rollback in a real transaction.
+        self.assertEqual(len(cursor.calls), 5)
+
     def test_all_unsupported_semantics_hold(self):
         with self.make_port(FakeCursor()).begin() as tx:
             for name, args in (
-                ("register_q0", (object(), "actor")),
                 ("propose_q1", (object(), "actor")),
-                ("save_receipt", (object(),)),
             ):
                 with self.subTest(name=name), self.assertRaises(PreparationHold):
                     getattr(tx, name)(*args)
