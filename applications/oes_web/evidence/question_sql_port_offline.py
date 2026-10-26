@@ -40,6 +40,7 @@ class _QuestionSQLTransaction:
         self.cursor = cursor
         self._locked = False
         self._lock_identity = None
+        self._question_lock_id = None
         self._pending_q0 = None
         self._pending_q1 = None
 
@@ -53,6 +54,19 @@ class _QuestionSQLTransaction:
         )
         self._locked = True
         self._lock_identity = (actor_id, request_id)
+
+    def lock_question(self, question_id):
+        """Actor-independent transaction lock; future responsibility mutations MUST cooperate."""
+        if not self._locked or not isinstance(question_id, str) or not question_id:
+            raise PreparationHold("HOLD: invalid question lock")
+        if self._question_lock_id == question_id:
+            return
+        if self._question_lock_id is not None:
+            raise PreparationHold("HOLD: second question lock unsupported")
+        self.cursor.execute(
+            "SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))",
+            ("oes:question:" + question_id,))
+        self._question_lock_id = question_id
 
     def find_receipt(self, actor_id, request_id):
         if not self._locked:
@@ -76,10 +90,9 @@ class _QuestionSQLTransaction:
         return Receipt(*row)
 
     def current_question(self, question_id, actor_id, lock=False):
-        """Actor-scoped latest question; SQL-only sketch using injected cursor.
+        """Actor-scoped latest question under a synthetic identity-based lock.
 
-        Lock q in SHARE mode before reading versions. Revocation must acquire a conflicting
-        q row lock in a future separately approved implementation.
+        A future revocation path must obtain the identical advisory lock.
         """
         if not self._locked:
             raise PreparationHold("HOLD: request not locked")
@@ -87,6 +100,7 @@ class _QuestionSQLTransaction:
                 or not isinstance(actor_id, str) or not actor_id
                 or not isinstance(lock, bool)):
             raise PreparationHold("HOLD: invalid question lookup")
+        self.lock_question(question_id)
         self.cursor.execute(
             "SELECT ev.version_no, qv.original_text, qv.normalized_text "
             "FROM investigation.question AS q "
@@ -97,7 +111,7 @@ class _QuestionSQLTransaction:
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
             "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
             "ORDER BY ev.version_no DESC LIMIT 1 "
-            + ("FOR SHARE OF q, ev" if lock else "FOR SHARE OF q"),
+            + ("FOR UPDATE OF ev" if lock else ""),
             (question_id, actor_id),
         )
         row = self.cursor.fetchone()
@@ -112,22 +126,17 @@ class _QuestionSQLTransaction:
                 "normalized_text": row[2]}
 
     def can_access_question(self, question_id, actor_id):
-        """Offline SQL sketch only: lock the matched responsibility row.
-
-        The caller must already have passed Django's preparer permission gate.
-        A transaction manager must hold the row lock through commit; this
-        adapter cannot establish that property without connected validation.
-        """
+        """Offline SQL sketch: actor-scoped read after a question advisory lock."""
         if not self._locked:
             raise PreparationHold("HOLD: request not locked")
         if (not isinstance(question_id, str) or not question_id
                 or not isinstance(actor_id, str) or not actor_id):
             raise PreparationHold("HOLD: invalid access identity")
+        self.lock_question(question_id)
         self.cursor.execute(
             "SELECT 1 FROM investigation.question AS q "
             "JOIN core.entity AS e ON e.entity_uuid = q.entity_uuid "
-            "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
-            "FOR SHARE OF q",
+            "WHERE e.oes_id = %s AND q.responsible_actor_id = %s",
             (question_id, actor_id),
         )
         row = self.cursor.fetchone()
@@ -147,6 +156,7 @@ class _QuestionSQLTransaction:
                 or command.expected_version != 0 or command.normalized_text is not None
                 or command.justification):
             raise PreparationHold("HOLD: invalid Q0")
+        self.lock_question(command.question_id)
         entity_id, version_id = uuid4(), uuid4()
         self.cursor.execute(
             "INSERT INTO core.entity (entity_uuid, oes_id, entity_type, created_by) "
@@ -177,7 +187,8 @@ class _QuestionSQLTransaction:
                 or not isinstance(command.normalized_text, str) or not command.normalized_text
                 or not isinstance(command.justification, str) or not command.justification.strip()):
             raise PreparationHold("HOLD: invalid Q1")
-        # Scope and row locking are mandatory and rechecked in this statement.
+        # Re-check scope under the same question advisory lock.
+        self.lock_question(command.question_id)
         self.cursor.execute(
             "SELECT q.entity_uuid, ev.version_uuid, ev.version_no, qv.original_text "
             "FROM investigation.question q "
@@ -187,7 +198,7 @@ class _QuestionSQLTransaction:
             "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
             "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
-            "FOR SHARE OF q FOR UPDATE OF ev",
+            "FOR UPDATE OF ev",
             (command.question_id, actor_id))
         row = self.cursor.fetchone()
         if (not isinstance(row, (tuple, list)) or len(row) != 4
