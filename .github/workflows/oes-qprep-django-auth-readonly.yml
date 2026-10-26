@@ -1,0 +1,46 @@
+name: OES QPREP Django authentication READ ONLY - manual
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-qprep-django-auth-readonly
+  cancel-in-progress: false
+
+jobs:
+  authenticated-readonly:
+    if: github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      OES_QPREP_PROBE_ENABLED: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Checkout reviewed main revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Django and PostgreSQL driver
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Require temporary secret without displaying it
+        env:
+          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
+        shell: bash
+        run: |
+          if [ -z "$OES_QPREP_LOGIN_PASSWORD" ]; then
+            echo 'NOT_RUN: temporary secret unavailable'
+            exit 1
+          fi
+      - name: Authenticate Django with restricted login READ ONLY
+        env:
+          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
+        working-directory: applications/oes_web
+        run: python scripts/check_qprep_django_auth_readonly.py
