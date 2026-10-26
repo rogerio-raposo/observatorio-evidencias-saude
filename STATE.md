@@ -1,4 +1,8 @@
-## Marco de continuidade CP303 — 2026-10-26 (vigente)
+## Marco de continuidade CP304 — 2026-10-26 (vigente)
+
+- PF-I02-W2a: pacote candidato e recuperação controlada documentados no CP304; preflight Neon A2 exclusivamente READ ONLY confirmou cinco tabelas, writer ausente, sem RLS, ACL pública de CONNECT no DB, trigger SECURITY INVOKER e concessões preexistentes PG-A4. Nenhum CREATE ROLE, GRANT, REVOKE, SET ROLE ou DML executado. Provisionamento segue HOLD até autorização nominal. E9 NO-GO, readiness NOT_READY.
+
+## Marco de continuidade CP303 — 2026-10-26 (histórico)
 
 - Handoff de encerramento: Docs. 333–334 lidos, política de leitura de writer definida apenas como design; W2A_RUNTIME_HOLD; papel de writer não criado, ledger sintético criado, sem HTTP ou E9. Novo ponto de retomada no CP303.
 
