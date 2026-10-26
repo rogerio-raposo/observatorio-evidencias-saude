@@ -1,4 +1,8 @@
-## Marco de continuidade CP306 — 2026-10-26 (vigente)
+## Marco de continuidade CP307 — 2026-10-26 (vigente)
+
+- Documento 336 registra política experimental aprovada PF-I02-P2-A5: criador de Q0 como responsável único inicial, revalidação de responsabilidade vigente para Q1/replay, ledger imutável. Sem Neon/SQL/DDL/DML; fonte persistente não identificada, catálogo read-only futuro requer autorização nominal. P2 SQL offline parcial (CI 40271463247: 109/109 PASS). Marco B aberto, readiness NOT_READY, E9 NO-GO.
+
+## Marco de continuidade CP306 — 2026-10-26 (histórico)
 
 - PF-I02-P2: GitHub Actions 40271463247 completed/success, Django check PASS, 109/109 testes offline PASS incluindo 9 do adaptador SQL injetado; falha de sintaxe da primeira CI 40271314159 corrigida antes. P2 ainda parcial: `can_access_question`, `current_question` e escritas Q0/Q1/ledger em HOLD até identificação de vínculo autorizativo confiável preparador↔pergunta. Nenhum SQL conectado, SET ROLE, DML, credencial ou HTTP. CP306 ativo; readiness NOT_READY e E9 NO-GO.
 
