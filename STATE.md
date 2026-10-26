@@ -1,4 +1,8 @@
-## Marco de continuidade CP308 — 2026-10-26 (vigente)
+## Marco de continuidade CP309 — 2026-10-26 (vigente)
+
+- PF-I02/P2: Documento 341 registra encerramento técnico exclusivamente offline do fluxo Q0 com transação e ledger simulados. GitHub Actions 40275424108, commit `d2a531b1cf480920f17c2b7123a385b78b93e6ec`: 126/126 testes PASS e Django check OK. `propose_q1` e recibo Q1 seguem HOLD; replay conectado, concorrência real e isolamento multiusuário não demonstrados. A migração sintética de responsabilidade está documentada em Doc.338; nenhuma escrita SQL conectada foi autorizada. Marco B aberto, readiness NOT_READY e E9 NO-GO.
+
+## Marco de continuidade CP308 — 2026-10-26 (histórico)
 
 - PF-I02-P2-A9: migração sintética aprovada e aplicada na branch Neon `br-gentle-hall-b6jaxehf`, DB `oes_sandbox`: `investigation.question.responsible_actor_id text NULL` e CHECK de comprimento 1–128 (ou NULL), pre/post READ ONLY confirmados. Documento 338; sem DML/backfill, grants, SET ROLE, Django, HTTP ou E9. Papel writer NOLOGIN permanece com ACL W2a. Adaptador SQL offline parcial, CI anterior 40271463247: 109/109 PASS; política por registro e revogação concorrente ainda sem validação conectada. CP308 ativo; Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
 
