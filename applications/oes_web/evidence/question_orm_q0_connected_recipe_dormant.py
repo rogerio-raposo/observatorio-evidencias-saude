@@ -34,11 +34,14 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
         raise PreparationHold("HOLD: invalid fingerprint")
     # This line is a hard blocker, not a gate to bypass via object.__new__.
     repo = DjangoQ0Repository(alias=alias)
+    connection = connections[alias]
+    if connection.vendor != "postgresql" or connection.in_atomic_block or not connection.get_autocommit():
+        raise PreparationHold("HOLD: non-independent transaction boundary")
     from .question_uow_offline import Receipt
 
     entity_uuid, version_uuid = uuid4(), uuid4()
     with transaction.atomic(using=alias, savepoint=False):
-        if connections[alias].vendor != "postgresql" or not connections[alias].in_atomic_block:
+        if not connection.in_atomic_block or not connection.get_autocommit() is False:
             raise PreparationHold("HOLD: wrong backend or transaction")
         repo.lock_request(actor_id, request_id)
         repo.lock_question(question_id)
@@ -72,6 +75,15 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
         if checks != (True,) * 5:
             raise PreparationHold("HOLD: five-record invariant failed")
         transaction.set_rollback(True, using=alias)
-    # Post-rollback residual verification requires an independently reviewed
-    # read-only connection and scope; do not infer success from exiting atomic.
-    raise PreparationHold("HOLD: residual verification not implemented")
+    # Point lookups only; after rollback, using the SAME approved alias.
+    residues = (
+        OesEntity.objects.using(alias).filter(pk=entity_uuid).exists(),
+        OesQuestion.objects.using(alias).filter(pk=entity_uuid).exists(),
+        OesEntityVersion.objects.using(alias).filter(pk=version_uuid).exists(),
+        OesQuestionVersion.objects.using(alias).filter(pk=version_uuid).exists(),
+        OesQuestionCommandReceipt.objects.using(alias).filter(
+            actor_id=actor_id, request_id=request_id).exists(),
+    )
+    if any(residues):
+        raise PreparationHold("HOLD: residual Q0 records after rollback")
+    return {"status": "ROLLED_BACK_ONLY", "verified_zero_residues": True}
