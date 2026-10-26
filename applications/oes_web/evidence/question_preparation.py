@@ -25,13 +25,13 @@ def submit_question_command(*, user, command, unit_of_work=None):
     require_question_preparer(user)
     if unit_of_work is None:
         raise PreparationHold("HOLD: persistence unavailable")
-    if not isinstance(command,QuestionCommand) or not command.request_id or not command.question_id:
+    if not isinstance(command,QuestionCommand) or not isinstance(command.request_id,str) or not (1 <= len(command.request_id) <= 128) or not isinstance(command.question_id,str) or not command.question_id:
         raise PreparationHold("HOLD: invalid request")
     if type(command.expected_version) is not int or command.expected_version < 0:
         raise PreparationHold("HOLD: invalid version")
     if not isinstance(command.original_text,str) or not command.original_text or len(command.original_text)>10000:
         raise PreparationHold("HOLD: invalid Q0")
-    if command.normalized_text is not None and (not isinstance(command.normalized_text,str) or not command.normalized_text or not command.justification):
+    if command.normalized_text is not None and (not isinstance(command.normalized_text,str) or not command.normalized_text or not isinstance(command.justification,str) or not command.justification.strip()):
         raise PreparationHold("HOLD: invalid Q1")
     try:
         result=unit_of_work.execute(command=command,actor_id=str(user.pk),fingerprint=command_fingerprint(command))
