@@ -78,7 +78,7 @@ class _QuestionSQLTransaction:
     def current_question(self, question_id, actor_id, lock=False):
         """Actor-scoped latest question; SQL-only sketch using injected cursor.
 
-        Lock q before reading its versions. Revocation must acquire a conflicting
+        Lock q in SHARE mode before reading versions. Revocation must acquire a conflicting
         q row lock in a future separately approved implementation.
         """
         if not self._locked:
@@ -97,7 +97,7 @@ class _QuestionSQLTransaction:
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
             "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
             "ORDER BY ev.version_no DESC LIMIT 1 "
-            + ("FOR UPDATE OF q" if lock else "FOR SHARE OF q"),
+            + ("FOR SHARE OF q, ev" if lock else "FOR SHARE OF q"),
             (question_id, actor_id),
         )
         row = self.cursor.fetchone()
@@ -187,7 +187,7 @@ class _QuestionSQLTransaction:
             "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
             "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
-            "FOR UPDATE OF q, ev",
+            "FOR SHARE OF q FOR UPDATE OF ev",
             (command.question_id, actor_id))
         row = self.cursor.fetchone()
         if (not isinstance(row, (tuple, list)) or len(row) != 4
