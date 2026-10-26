@@ -41,7 +41,7 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
 
     entity_uuid, version_uuid = uuid4(), uuid4()
     with transaction.atomic(using=alias, savepoint=False):
-        if not connection.in_atomic_block or not connection.get_autocommit() is False:
+        if not connection.in_atomic_block or connection.get_autocommit():
             raise PreparationHold("HOLD: wrong backend or transaction")
         repo.lock_request(actor_id, request_id)
         repo.lock_question(question_id)
