@@ -1,3 +1,7 @@
+## 2026-10-26 — CP302 / ledger criado na branch sintética
+
+- Criada e verificada investigation.question_command_receipt segundo Doc330 e autorização expressa; writer ainda inexistente. CP302 vigente, sem habilitação HTTP.
+
 ## 2026-10-26 — CP301 / Doc.329: replay offline e justificativa Q1
 
 - CI 40266729081 success após correção de indentação; persistência e writer PostgreSQL não implementados. Checkpoint CP301 vigente.
