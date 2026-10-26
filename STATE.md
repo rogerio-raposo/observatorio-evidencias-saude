@@ -1,4 +1,8 @@
-## Marco de continuidade CP311 — 2026-10-26 (vigente)
+## Marco de continuidade CP312 — 2026-10-26 (vigente)
+
+- PF-I02/P2 Django-first: avanços offline Q0/ORM acumulados de 150/150 para **167/167 PASS**, última CI `40285338405` no SHA `35b90cb52ab7737d001c476fa1fb03567fd6f6e2`. Docs.350–354: suficiência e integração ORM, proposta do ensaio, G2-P0 factual READ ONLY e G2-P1 de código somente autorizado, repositório Q0 **dormente** com consultas de escopo, recibo e advisory locks. G2-P0 confirmou no Neon apenas catálogo/permissões em `oes_sandbox`; sessão `oes_sandbox_owner`, papel-alvo `oes_qprep_writer NOLOGIN` com INSERT+SELECT nas cinco tabelas, UPDATE restrito a duas colunas de `core.entity_version`. **G2-P2 não autorizado**; não houve DML conectado, SET ROLE, writer Django ou ativação de Q0. CP312 canônico, Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
+
+## Marco de continuidade CP311 — 2026-10-26 (histórico)
 
 - PF-I02/P2: consolidação arquitetural **Django-first, exclusivamente offline**. Cinco modelos `managed=False`, ledger com PK composta e planos de QuerySets para Q0→Q1 compilados sem conexão. CI `40281783742`: 146/146 PASS (SHA `87af14c7c24be06c560704dc85419b49cd6ef4b1`); CI `40282204788`: **150/150 PASS** (SHA `d8612a6172f6f90d794c6cf141d1456b61d4f720`). Docs.343–349 registram G1 READ ONLY, contrato de concorrência/revogação, decisão Django-first e limitações ORM. Adaptador SQL preservado como evidência experimental, não implementação operacional. G2 **não autorizado**, sem writer, DML/DDL conectado, usuários reais, HTTP write ou E9; Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED. CP311 canônico.
 
