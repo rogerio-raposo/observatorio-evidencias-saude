@@ -4,13 +4,14 @@ No application writer is configured or enabled. PostgreSQL constraints,
 composite foreign keys and triggers remain database-owned.
 """
 from django.db import models
+from django.db.models.functions import Now
 
 
 class OesEntity(models.Model):
     entity_uuid = models.UUIDField(primary_key=True)
     oes_id = models.TextField(unique=True)
     entity_type = models.TextField()
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(db_default=Now())
     created_by = models.TextField(null=True)
     retired_at = models.DateTimeField(null=True)
 
@@ -24,10 +25,10 @@ class OesEntityVersion(models.Model):
     entity_uuid = models.UUIDField()
     version_no = models.IntegerField()
     version_status = models.TextField()
-    valid_from = models.DateTimeField()
+    valid_from = models.DateTimeField(db_default=Now())
     valid_to = models.DateTimeField(null=True)
     supersedes_version_uuid = models.UUIDField(null=True)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(db_default=Now())
     created_by = models.TextField(null=True)
     change_type = models.TextField()
     change_note = models.TextField(null=True)
@@ -74,7 +75,7 @@ class OesQuestionCommandReceipt(models.Model):
     resulting_version_no = models.IntegerField()
     command_kind = models.TextField()
     justification = models.TextField()
-    committed_at = models.DateTimeField()
+    committed_at = models.DateTimeField(db_default=Now())
 
     class Meta:
         managed = False
