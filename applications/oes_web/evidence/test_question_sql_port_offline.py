@@ -187,7 +187,7 @@ class InjectedSQLPortTests(unittest.TestCase):
     def test_receipt_requires_matching_pending_q0(self):
         cursor = FakeCursor()
         receipt = Receipt("actor", "req", "a" * 64, "Q", 1, "REGISTER_Q0")
-        with self.assertRaisesRegex(PreparationHold, "Q0 missing receipt"):
+        with self.assertRaisesRegex(PreparationHold, "question command missing receipt"):
             with self.make_port(cursor).begin() as tx:
                 tx.lock_request("actor", "req")
                 with self.assertRaises(PreparationHold):
@@ -211,13 +211,65 @@ class InjectedSQLPortTests(unittest.TestCase):
         # The injected factory, not the port, owns rollback in a real transaction.
         self.assertEqual(len(cursor.calls), 5)
 
-    def test_all_unsupported_semantics_hold(self):
+    def test_q1_scoped_version_transition_and_receipt(self):
+        from uuid import UUID
+        class Q1Cursor(FakeCursor):
+            rowcount = 1
+            def fetchone(self):
+                return (UUID(int=1), UUID(int=2), 1, "Original")
+        cursor = Q1Cursor()
+        cmd = QuestionCommand("request-q1", "Q", 1, "Original", "Normalizada", "justificativa")
+        receipt = Receipt("actor", "request-q1", "b" * 64, "Q", 2, "PROPOSE_Q1", "justificativa")
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request-q1")
+            tx.propose_q1(cmd, "actor")
+            tx.save_receipt(receipt)
+        sqls = [x[0] for x in cursor.calls[1:]]
+        self.assertEqual(len(sqls), 5)
+        self.assertIn("FOR UPDATE OF q, ev", sqls[0])
+        self.assertIn("responsible_actor_id = %s", sqls[0])
+        self.assertIn("UPDATE core.entity_version", sqls[1])
+        self.assertIn("INSERT INTO core.entity_version", sqls[2])
+        self.assertIn("INSERT INTO investigation.question_version", sqls[3])
+        self.assertIn("INSERT INTO investigation.question_command_receipt", sqls[4])
+        self.assertEqual(cursor.calls[1][1], ("Q", "actor"))
+        self.assertEqual(cursor.calls[4][1][2], "Original")
+        self.assertEqual(cursor.calls[4][1][3], "Normalizada")
+        self.assertEqual(cursor.calls[5][1][7:], ("PROPOSE_Q1", "justificativa"))
+
+    def test_q1_denies_stale_version_without_writes(self):
+        from uuid import UUID
+        cursor = FakeCursor((UUID(int=1), UUID(int=2), 2, "Original"))
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "req")
+            with self.assertRaises(PreparationHold):
+                tx.propose_q1(QuestionCommand("req", "Q", 1, "Original", "Q1", "why"), "actor")
+        self.assertEqual(len(cursor.calls), 2)
+
+    def test_q1_missing_receipt_aborts_context(self):
+        from uuid import UUID
+        class Q1Cursor(FakeCursor):
+            rowcount = 1
+        cursor = Q1Cursor((UUID(int=1), UUID(int=2), 1, "Original"))
+        with self.assertRaisesRegex(PreparationHold, "missing receipt"):
+            with self.make_port(cursor).begin() as tx:
+                tx.lock_request("actor", "req")
+                tx.propose_q1(QuestionCommand("req", "Q", 1, "Original", "Q1", "why"), "actor")
+
+    def test_q1_stale_update_count_fails_closed(self):
+        from uuid import UUID
+        class Q1Cursor(FakeCursor):
+            rowcount = 0
+        cursor = Q1Cursor((UUID(int=1), UUID(int=2), 1, "Original"))
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "req")
+            with self.assertRaisesRegex(PreparationHold, "version update conflict"):
+                tx.propose_q1(QuestionCommand("req", "Q", 1, "Original", "Q1", "why"), "actor")
+
+    def test_unsupported_q1_without_lock_holds(self):
         with self.make_port(FakeCursor()).begin() as tx:
-            for name, args in (
-                ("propose_q1", (object(), "actor")),
-            ):
-                with self.subTest(name=name), self.assertRaises(PreparationHold):
-                    getattr(tx, name)(*args)
+            with self.assertRaises(PreparationHold):
+                tx.propose_q1(object(), "actor")
 
 
 if __name__ == "__main__":
