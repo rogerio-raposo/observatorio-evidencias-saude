@@ -1,4 +1,8 @@
-## Marco de continuidade CP304 — 2026-10-26 (vigente)
+## Marco de continuidade CP305 — 2026-10-26 (vigente)
+
+- Documento 335: W2a encerrado tecnicamente em escopo restrito após criação autorizada de `oes_qprep_writer NOLOGIN` e grants mínimos verificados por catálogo READ ONLY. Membership administrativa automática compatível com PostgreSQL (`oes_sandbox_owner` membro do writer, ADMIN TRUE / INHERIT FALSE / SET FALSE, concedente cloud_admin); sem alteração corretiva. Writer e ACLs permanecem na branch sintética. Runtime, SET ROLE, DML, W2b/W3 e E9 continuam bloqueados; Marco B aberto e readiness NOT_READY. CP305 ativo.
+
+## Marco de continuidade CP304 — 2026-10-26 (histórico)
 
 - PF-I02-W2a: pacote candidato e recuperação controlada documentados no CP304; preflight Neon A2 exclusivamente READ ONLY confirmou cinco tabelas, writer ausente, sem RLS, ACL pública de CONNECT no DB, trigger SECURITY INVOKER e concessões preexistentes PG-A4. Nenhum CREATE ROLE, GRANT, REVOKE, SET ROLE ou DML executado. Provisionamento segue HOLD até autorização nominal. E9 NO-GO, readiness NOT_READY.
 
