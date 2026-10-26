@@ -1,3 +1,7 @@
+## 2026-10-25 — CP298 / Documento 311: pacote único PF-I02-I01
+
+- Consolidação dos Docs. 306–310: sequência I01-A Django auth offline, I01-B desenho/adequação do esquema, I01-C gate PostgreSQL conectado autorizado, I01-D integração transacional Q0→Q1. Nenhuma execução aprovada; gates E9 e A3 preservados. CP298 vigente.
+
 ## 2026-10-25 — CP297 / Documento 305: PF-I01 encerrado tecnicamente em escopo offline
 
 - Correções PF-I01-R1 e CI 40243932508 completed/success. Parecer de aceite técnico restrito AC01–AC10 com reservas: sem auditoria humana, sem integração PostgreSQL dinâmica, sem publicação. Marco B ainda aberto; E9 NO-GO. CP297 publicado.
