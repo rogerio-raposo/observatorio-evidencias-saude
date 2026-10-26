@@ -68,7 +68,40 @@ class _QuestionSQLTransaction:
         return Receipt(*row)
 
     def current_question(self, question_id, actor_id, lock=False):
-        raise PreparationHold("HOLD: SQL actor-scoped question policy not implemented")
+        """Actor-scoped latest question; SQL-only sketch using injected cursor.
+
+        Lock q before reading its versions. Revocation must acquire a conflicting
+        q row lock in a future separately approved implementation.
+        """
+        if not self._locked:
+            raise PreparationHold("HOLD: request not locked")
+        if (not isinstance(question_id, str) or not question_id
+                or not isinstance(actor_id, str) or not actor_id
+                or not isinstance(lock, bool)):
+            raise PreparationHold("HOLD: invalid question lookup")
+        self.cursor.execute(
+            "SELECT ev.version_no, qv.original_text, qv.normalized_text "
+            "FROM investigation.question AS q "
+            "JOIN core.entity AS e ON e.entity_uuid = q.entity_uuid "
+            "JOIN core.entity_version AS ev ON ev.entity_uuid = q.entity_uuid "
+            "JOIN investigation.question_version AS qv "
+            "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
+            "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
+            "AND ev.valid_to IS NULL "
+            "ORDER BY ev.version_no DESC LIMIT 1 "
+            + ("FOR UPDATE OF q" if lock else "FOR SHARE OF q"),
+            (question_id, actor_id),
+        )
+        row = self.cursor.fetchone()
+        if row is None:
+            return None
+        if (not isinstance(row, (list, tuple)) or len(row) != 3
+                or type(row[0]) is not int or row[0] < 1
+                or not isinstance(row[1], str) or not row[1]
+                or (row[2] is not None and not isinstance(row[2], str))):
+            raise PreparationHold("HOLD: malformed question state")
+        return {"version": row[0], "original_text": row[1],
+                "normalized_text": row[2]}
 
     def can_access_question(self, question_id, actor_id):
         """Offline SQL sketch only: lock the matched responsibility row.
