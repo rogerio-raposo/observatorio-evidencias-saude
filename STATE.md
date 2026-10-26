@@ -1,4 +1,8 @@
-## Marco de continuidade CP302 — 2026-10-26 (vigente)
+## Marco de continuidade CP303 — 2026-10-26 (vigente)
+
+- Handoff de encerramento: Docs. 333–334 lidos, política de leitura de writer definida apenas como design; W2A_RUNTIME_HOLD; papel de writer não criado, ledger sintético criado, sem HTTP ou E9. Novo ponto de retomada no CP303.
+
+## Marco de continuidade CP302 — 2026-10-26 (histórico)
 
 - Doc.331: DDL do ledger sintético verificado; metadados READ ONLY confirmam writer inexistente e ausência de RLS; CP302 vigente. Nenhum novo GRANT, DML ou Django; E9 NO-GO, readiness NOT_READY.
 
