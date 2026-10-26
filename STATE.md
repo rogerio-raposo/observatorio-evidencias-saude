@@ -1,4 +1,10 @@
-## Marco de continuidade CP312 — 2026-10-26 (vigente)
+## Marco de continuidade CP313 — 2026-10-26 (vigente)
+
+- **Django-first confirmado; testes com perfil correto, nunca owner.** A identidade restrita `oes_qprep_login` foi recriada pelo usuário no SQL Editor com senha descartável e herança de `oes_qprep_writer`; Neon verificou atributos não administrativos, ausência de associação a `neon_superuser` e SELECT+INSERT (sem UPDATE/DELETE de tabela) nas cinco tabelas. **Autenticação Django real ainda não testada**, e a senha é rotacionada manualmente pelo usuário após testes, mediante confirmação. Tentativa Neon API com grants superuser foi excluída; não repetir.
+- CI [40287856367](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40287856367) **174/174 PASS**, SHA `2660f98e9444935b78450b394b458e0e9592a374`; módulos ORM e rollback ainda dormentes, sem transação conectada demonstrada. Docs 355–359. Próximo passo: autenticação Django READ ONLY e confirmação de identidade, somente após verificar viabilidade operacional, sem credencial em chat/repo.
+- CP313 canônico; G2-P2B NO-GO, Marco B OPEN, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO. Fase 4 encerrada somente metodológica/documentalmente.
+
+## Marco de continuidade CP312 — 2026-10-26 (histórico)
 
 - PF-I02/P2 Django-first: avanços offline Q0/ORM acumulados de 150/150 para **167/167 PASS**, última CI `40285338405` no SHA `35b90cb52ab7737d001c476fa1fb03567fd6f6e2`. Docs.350–354: suficiência e integração ORM, proposta do ensaio, G2-P0 factual READ ONLY e G2-P1 de código somente autorizado, repositório Q0 **dormente** com consultas de escopo, recibo e advisory locks. G2-P0 confirmou no Neon apenas catálogo/permissões em `oes_sandbox`; sessão `oes_sandbox_owner`, papel-alvo `oes_qprep_writer NOLOGIN` com INSERT+SELECT nas cinco tabelas, UPDATE restrito a duas colunas de `core.entity_version`. **G2-P2 não autorizado**; não houve DML conectado, SET ROLE, writer Django ou ativação de Q0. CP312 canônico, Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
 
