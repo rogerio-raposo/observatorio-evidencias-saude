@@ -12,7 +12,7 @@ class PreparationAuthorizationTests(SimpleTestCase):
         self.assertIn("django.contrib.sessions", settings.INSTALLED_APPS)
         self.assertIn("django.middleware.csrf.CsrfViewMiddleware", settings.MIDDLEWARE)
         self.assertIn("django.contrib.auth.middleware.AuthenticationMiddleware", settings.MIDDLEWARE)
-        self.assertEqual(settings.DATABASES, {})
+        self.assertEqual(settings.DATABASES['default']['ENGINE'], 'django.db.backends.dummy')
 
     def test_anonymous_denied(self):
         user = Mock(is_authenticated=False)
