@@ -1,3 +1,7 @@
+## 2026-10-26 — CP299 / Documento 317: migração sintética Q0-only validada
+
+- DDL estrito Doc. 316 aplicado uma vez no banco oes_sandbox, branch sintética, sem DML, usuários/grants ou deploy. Verificações de catálogo confirmaram as pós-condições. CP299 vigente.
+
 ## 2026-10-25 — CP298 / Documento 311: pacote único PF-I02-I01
 
 - Consolidação dos Docs. 306–310: sequência I01-A Django auth offline, I01-B desenho/adequação do esquema, I01-C gate PostgreSQL conectado autorizado, I01-D integração transacional Q0→Q1. Nenhuma execução aprovada; gates E9 e A3 preservados. CP298 vigente.
