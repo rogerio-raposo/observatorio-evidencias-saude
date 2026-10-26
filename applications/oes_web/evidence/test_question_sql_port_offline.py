@@ -112,10 +112,45 @@ class InjectedSQLPortTests(unittest.TestCase):
             with self.assertRaises(PreparationHold):
                 tx.can_access_question("Q01", "actor")
 
+    def test_current_question_scoped_locked_and_parameterized(self):
+        cursor = FakeCursor((2, "Original", "Normalizada"))
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request")
+            state = tx.current_question("Q01", "actor", lock=True)
+        self.assertEqual(state["version"], 2)
+        self.assertEqual(state["original_text"], "Original")
+        sql, params = cursor.calls[1]
+        self.assertIn("q.responsible_actor_id = %s", sql)
+        self.assertIn("FOR UPDATE OF q", sql)
+        self.assertEqual(params, ("Q01", "actor"))
+        self.assertNotIn("Q01", sql)
+
+    def test_current_question_absent_is_not_disclosed(self):
+        cursor = FakeCursor(None)
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("other", "request")
+            self.assertIsNone(tx.current_question("Q01", "other", lock=True))
+
+    def test_current_question_read_mode_and_q0_draft(self):
+        cursor = FakeCursor((1, "Original", None))
+        with self.make_port(cursor).begin() as tx:
+            tx.lock_request("actor", "request")
+            state = tx.current_question("Q01", "actor")
+        self.assertIsNone(state["normalized_text"])
+        self.assertIn("FOR SHARE OF q", cursor.calls[1][0])
+
+    def test_current_question_requires_lock_and_valid_state(self):
+        cursor = FakeCursor(("bad", "Original", None))
+        with self.make_port(cursor).begin() as tx:
+            with self.assertRaises(PreparationHold):
+                tx.current_question("Q01", "actor")
+            tx.lock_request("actor", "request")
+            with self.assertRaises(PreparationHold):
+                tx.current_question("Q01", "actor", lock=True)
+
     def test_all_unsupported_semantics_hold(self):
         with self.make_port(FakeCursor()).begin() as tx:
             for name, args in (
-                ("current_question", ("q", "actor")),
                 ("register_q0", (object(), "actor")),
                 ("propose_q1", (object(), "actor")),
                 ("save_receipt", (object(),)),
