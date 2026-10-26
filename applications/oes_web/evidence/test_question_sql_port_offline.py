@@ -187,13 +187,14 @@ class InjectedSQLPortTests(unittest.TestCase):
     def test_receipt_requires_matching_pending_q0(self):
         cursor = FakeCursor()
         receipt = Receipt("actor", "req", "a" * 64, "Q", 1, "REGISTER_Q0")
-        with self.make_port(cursor).begin() as tx:
-            tx.lock_request("actor", "req")
-            with self.assertRaises(PreparationHold):
-                tx.save_receipt(receipt)
-            tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
-            with self.assertRaises(PreparationHold):
-                tx.save_receipt(Receipt("other", "req", "a" * 64, "Q", 1, "REGISTER_Q0"))
+        with self.assertRaisesRegex(PreparationHold, "Q0 missing receipt"):
+            with self.make_port(cursor).begin() as tx:
+                tx.lock_request("actor", "req")
+                with self.assertRaises(PreparationHold):
+                    tx.save_receipt(receipt)
+                tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
+                with self.assertRaises(PreparationHold):
+                    tx.save_receipt(Receipt("other", "req", "a" * 64, "Q", 1, "REGISTER_Q0"))
         self.assertEqual(len(cursor.calls), 5)
 
     def test_q0_cursor_failure_propagates_for_transaction_rollback(self):
