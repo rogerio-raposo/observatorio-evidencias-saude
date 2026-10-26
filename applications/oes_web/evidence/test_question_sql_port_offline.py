@@ -61,6 +61,28 @@ class InjectedSQLPortTests(unittest.TestCase):
             with self.assertRaises(PreparationHold):
                 tx.find_receipt("actor", "request")
 
+    def test_receipt_actor_mismatch_holds(self):
+        row = ("other", "request", "f" * 64, "Q01", 1, "REGISTER_Q0", "")
+        with self.make_port(FakeCursor(row)).begin() as tx:
+            tx.lock_request("actor", "request")
+            with self.assertRaises(PreparationHold):
+                tx.find_receipt("actor", "request")
+
+    def test_receipt_invalid_fingerprint_holds(self):
+        row = ("actor", "request", "not-a-digest", "Q01", 1, "REGISTER_Q0", "")
+        with self.make_port(FakeCursor(row)).begin() as tx:
+            tx.lock_request("actor", "request")
+            with self.assertRaises(PreparationHold):
+                tx.find_receipt("actor", "request")
+
+    def test_lock_key_disambiguates_actor_and_request(self):
+        a, b = FakeCursor(), FakeCursor()
+        with self.make_port(a).begin() as tx:
+            tx.lock_request("x:1:y", "z")
+        with self.make_port(b).begin() as tx:
+            tx.lock_request("x", "y:1:z")
+        self.assertNotEqual(a.calls[0][1], b.calls[0][1])
+
     def test_all_unsupported_semantics_hold(self):
         with self.make_port(FakeCursor()).begin() as tx:
             for name, args in (
