@@ -1,0 +1,30 @@
+name: OES PF-I02-I01-A offline Django auth scaffold
+on:
+  push:
+    paths:
+      - 'applications/oes_web/config/settings.py'
+      - 'applications/oes_web/evidence/preparation_auth.py'
+      - 'applications/oes_web/evidence/tests/test_pf_i02_auth_scaffold.py'
+      - '.github/workflows/oes-pf-i02-auth-offline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r applications/oes_web/requirements.txt
+      - name: Django config check
+        working-directory: applications/oes_web
+        run: python manage.py check
+      - name: Offline application tests
+        working-directory: applications/oes_web
+        run: python manage.py test evidence.tests --verbosity 2
