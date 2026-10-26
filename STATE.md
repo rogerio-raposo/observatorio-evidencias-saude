@@ -1,4 +1,8 @@
-## Marco de continuidade CP305 — 2026-10-26 (vigente)
+## Marco de continuidade CP306 — 2026-10-26 (vigente)
+
+- PF-I02-P2: GitHub Actions 40271463247 completed/success, Django check PASS, 109/109 testes offline PASS incluindo 9 do adaptador SQL injetado; falha de sintaxe da primeira CI 40271314159 corrigida antes. P2 ainda parcial: `can_access_question`, `current_question` e escritas Q0/Q1/ledger em HOLD até identificação de vínculo autorizativo confiável preparador↔pergunta. Nenhum SQL conectado, SET ROLE, DML, credencial ou HTTP. CP306 ativo; readiness NOT_READY e E9 NO-GO.
+
+## Marco de continuidade CP305 — 2026-10-26 (histórico)
 
 - Documento 335: W2a encerrado tecnicamente em escopo restrito após criação autorizada de `oes_qprep_writer NOLOGIN` e grants mínimos verificados por catálogo READ ONLY. Membership administrativa automática compatível com PostgreSQL (`oes_sandbox_owner` membro do writer, ADMIN TRUE / INHERIT FALSE / SET FALSE, concedente cloud_admin); sem alteração corretiva. Writer e ACLs permanecem na branch sintética. Runtime, SET ROLE, DML, W2b/W3 e E9 continuam bloqueados; Marco B aberto e readiness NOT_READY. CP305 ativo.
 
