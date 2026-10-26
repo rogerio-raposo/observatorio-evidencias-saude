@@ -1,0 +1,19 @@
+# Documento 335 — PF-I02 / W2a: encerramento técnico restrito de role e ACL
+**Data:** 2026-10-26. **Base:** CP304; Docs. 330–334. **Estado:** `W2A_CLOSED_TECHNICAL_RESTRICTED_ROLE_AND_ACL_ONLY`.
+
+## Evidência factual de W2a (execução conectada previamente autorizada)
+Autorização expressa: `APPROVED — OES / PF-I02-W2a / SINGLE_SYNTHETIC_NOLOGIN_ROLE_AND_MINIMAL_GRANTS / project weathered-boat-65779510 / branch br-gentle-hall-b6jaxehf / database oes_sandbox / exact CP304 provisioning SQL / READ ONLY preflight and postflight / no LOGIN / no memberships / no credentials / no SET ROLE / no application DML / no Django / no HTTP / no E9 / no paid services / fail closed / post-commit cleanup requires separate approval`.
+
+- Freshness Gate `main` à execução: CP304, HEAD `387b0a74e0d157d887bdc9ab39432f7f42beb7ff` idêntico.
+- Neon confirmou branch sintética não default e DB `oes_sandbox`. Preflight READ ONLY: `current_user=oes_sandbox_owner`; `oes_qprep_writer` inexistente, cinco tabelas presentes e possuídas pelo owner, colunas `version_status` e `valid_to` presentes, sem policy RLS e sem ACL de coluna preexistente.
+- Transação exata de criação de `oes_qprep_writer NOLOGIN NOINHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS`, mais GRANT CONNECT, USAGE e SELECT/INSERT nas cinco tabelas; UPDATE apenas nas colunas indicadas em `core.entity_version`, concluída e confirmada pelo conector.
+- Postflight READ ONLY: atributos esperados PASS; SELECT/INSERT nas cinco tabelas PASS; CREATE nos schemas, DELETE, TRUNCATE e UPDATE geral negados; `has_column_privilege` UPDATE `version_status` e `valid_to` verdadeiro, UPDATE `version_uuid` falso. Não houve prova de acesso às famílias não relacionadas por tentativa de leitura, nem teste de DML, SET ROLE ou LOGIN. `CONNECT` efetivo pode existir também via PUBLIC, privilégio preexistente.
+- `pg_auth_members` registrou `oes_sandbox_owner` como membro de `oes_qprep_writer`, concedente `cloud_admin`, `ADMIN TRUE, INHERIT FALSE, SET FALSE`. Direção owner → writer, não writer → owner.
+
+## Reconciliação do achado de membership
+A documentação PostgreSQL (Role Attributes, versões 16/17, https://www.postgresql.org/docs/17/role-attributes.html) descreve grant administrativo automático para o criador não superusuário com CREATEROLE, mesmo sem GRANT explícito, com ADMIN TRUE, INHERIT FALSE e SET FALSE. A observação é compatível com essa regra; a procedência exata de `cloud_admin` no Neon não foi reatestada independentemente. ADMIN TRUE permite gestão/reconcessão futura da membership e não fornece isolamento administrativo forte. Não revogar automaticamente associação concedida por `cloud_admin`: não existe aprovação corretiva para isso.
+
+**Conclusão estrita:** `W2A_CLOSED_TECHNICAL_RESTRICTED_ROLE_AND_ACL_ONLY`. O HOLD referente à membership inesperada fica reclassificado como comportamento administrativo compatível com PostgreSQL, não como incidente comprovado de privilégio indevido do writer. Persistem o HOLD de runtime e a ausência de prova de segregação por registro (RLS ausente). O papel e grants permanecem no banco sintético; **não foi realizado cleanup**. Sem ampliação de autorização.
+
+## Gatilhos posteriores
+W2b (identidade LOGIN e segredo, se adotados) e W3 (adapter PostgreSQL e testes conectados, idempotência, concorrência, cleanup) requerem autorizações separadas. Verificar efetivamente grants por sequências/funções/objetos dependentes antes de tentativas DML. Não utilizar `oes_sandbox_owner` como identidade de runtime, não executar SET ROLE, DML, HTTP, E9, deploy ou novos dados factuais. Isolamento entre preparadores requer política demonstrada antes de uso multiusuário. Marco B aberto; Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; readiness `NOT_READY`; Fase 5 `NOT_STARTED`; E9 NO-GO; A3 não realizada e sem pesquisadores vinculados.
