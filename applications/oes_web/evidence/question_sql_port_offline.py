@@ -29,7 +29,10 @@ class InjectedQuestionSQLPort:
         with self._factory() as cursor:
             if not callable(getattr(cursor, "execute", None)):
                 raise PreparationHold("HOLD: invalid cursor")
-            yield _QuestionSQLTransaction(cursor)
+            tx = _QuestionSQLTransaction(cursor)
+            yield tx
+            if tx._pending_q0 is not None:
+                raise PreparationHold("HOLD: Q0 missing receipt; abort transaction")
 
 
 class _QuestionSQLTransaction:
