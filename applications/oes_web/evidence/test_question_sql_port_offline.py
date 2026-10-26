@@ -122,7 +122,7 @@ class InjectedSQLPortTests(unittest.TestCase):
         self.assertEqual(state["original_text"], "Original")
         sql, params = cursor.calls[1]
         self.assertIn("q.responsible_actor_id = %s", sql)
-        self.assertIn("FOR UPDATE OF q", sql)
+        self.assertIn("FOR SHARE OF q, ev", sql)
         self.assertIn("ev.version_status = 'current'", sql)
         self.assertEqual(params, ("Q01", "actor"))
         self.assertNotIn("Q01", sql)
@@ -227,7 +227,7 @@ class InjectedSQLPortTests(unittest.TestCase):
             tx.save_receipt(receipt)
         sqls = [x[0] for x in cursor.calls[1:]]
         self.assertEqual(len(sqls), 5)
-        self.assertIn("FOR UPDATE OF q, ev", sqls[0])
+        self.assertIn("FOR SHARE OF q FOR UPDATE OF ev", sqls[0])
         self.assertIn("responsible_actor_id = %s", sqls[0])
         self.assertIn("UPDATE core.entity_version", sqls[1])
         self.assertIn("INSERT INTO core.entity_version", sqls[2])
