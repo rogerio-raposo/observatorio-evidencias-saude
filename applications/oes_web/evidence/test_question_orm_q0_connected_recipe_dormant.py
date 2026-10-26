@@ -29,3 +29,13 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
                     question_id="q", original_text="synthetic text",
                     fingerprint="a" * 64,
                 )
+
+    def test_recipe_documents_independent_boundary_and_point_probes(self):
+        import inspect
+        from evidence.question_orm_q0_connected_recipe_dormant import _rollback_recipe
+        source = inspect.getsource(_rollback_recipe)
+        self.assertIn("connection.in_atomic_block", source)
+        self.assertIn("connection.get_autocommit()", source)
+        self.assertIn("transaction.set_rollback(True, using=alias)", source)
+        self.assertIn("HOLD: residual Q0 records after rollback", source)
+        self.assertIn('verified_zero_residues": True', source)
