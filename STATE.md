@@ -1,4 +1,8 @@
-## Marco de continuidade CP310 — 2026-10-26 (vigente)
+## Marco de continuidade CP311 — 2026-10-26 (vigente)
+
+- PF-I02/P2: consolidação arquitetural **Django-first, exclusivamente offline**. Cinco modelos `managed=False`, ledger com PK composta e planos de QuerySets para Q0→Q1 compilados sem conexão. CI `40281783742`: 146/146 PASS (SHA `87af14c7c24be06c560704dc85419b49cd6ef4b1`); CI `40282204788`: **150/150 PASS** (SHA `d8612a6172f6f90d794c6cf141d1456b61d4f720`). Docs.343–349 registram G1 READ ONLY, contrato de concorrência/revogação, decisão Django-first e limitações ORM. Adaptador SQL preservado como evidência experimental, não implementação operacional. G2 **não autorizado**, sem writer, DML/DDL conectado, usuários reais, HTTP write ou E9; Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED. CP311 canônico.
+
+## Marco de continuidade CP310 — 2026-10-26 (histórico)
 
 - PF-I02/P2: encerramento **técnico restrito, sintético e offline** do fluxo Q0→Q1, incluindo ledger, rollback e replay em cursores injetados. CI GitHub Actions `40277043796`, commit `a18f90575ae8ede0ac7bce779623e980c86c5ede`, 140/140 testes PASS, Django check OK. Auditoria Doc.342, handoff CP310: pendências de concorrência/locks PostgreSQL, factory transacional conectada, ACL e isolamento multiusuário, `change_type` Q1, conflitos globais e vínculo UUID; nenhum gate conectado liberado. Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
 
