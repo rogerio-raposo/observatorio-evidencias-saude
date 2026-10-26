@@ -1,4 +1,8 @@
-## Marco de continuidade CP309 — 2026-10-26 (vigente)
+## Marco de continuidade CP310 — 2026-10-26 (vigente)
+
+- PF-I02/P2: encerramento **técnico restrito, sintético e offline** do fluxo Q0→Q1, incluindo ledger, rollback e replay em cursores injetados. CI GitHub Actions `40277043796`, commit `a18f90575ae8ede0ac7bce779623e980c86c5ede`, 140/140 testes PASS, Django check OK. Auditoria Doc.342, handoff CP310: pendências de concorrência/locks PostgreSQL, factory transacional conectada, ACL e isolamento multiusuário, `change_type` Q1, conflitos globais e vínculo UUID; nenhum gate conectado liberado. Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
+
+## Marco de continuidade CP309 — 2026-10-26 (histórico)
 
 - PF-I02/P2: Documento 341 registra encerramento técnico exclusivamente offline do fluxo Q0 com transação e ledger simulados. GitHub Actions 40275424108, commit `d2a531b1cf480920f17c2b7123a385b78b93e6ec`: 126/126 testes PASS e Django check OK. `propose_q1` e recibo Q1 seguem HOLD; replay conectado, concorrência real e isolamento multiusuário não demonstrados. A migração sintética de responsabilidade está documentada em Doc.338; nenhuma escrita SQL conectada foi autorizada. Marco B aberto, readiness NOT_READY e E9 NO-GO.
 
