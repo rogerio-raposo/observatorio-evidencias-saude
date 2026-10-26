@@ -71,7 +71,30 @@ class _QuestionSQLTransaction:
         raise PreparationHold("HOLD: SQL actor-scoped question policy not implemented")
 
     def can_access_question(self, question_id, actor_id):
-        raise PreparationHold("HOLD: independent authorization policy not implemented")
+        """Offline SQL sketch only: lock the matched responsibility row.
+
+        The caller must already have passed Django's preparer permission gate.
+        A transaction manager must hold the row lock through commit; this
+        adapter cannot establish that property without connected validation.
+        """
+        if not self._locked:
+            raise PreparationHold("HOLD: request not locked")
+        if (not isinstance(question_id, str) or not question_id
+                or not isinstance(actor_id, str) or not actor_id):
+            raise PreparationHold("HOLD: invalid access identity")
+        self.cursor.execute(
+            "SELECT 1 FROM investigation.question AS q "
+            "JOIN core.entity AS e ON e.entity_uuid = q.entity_uuid "
+            "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
+            "FOR SHARE OF q",
+            (question_id, actor_id),
+        )
+        row = self.cursor.fetchone()
+        if row is None:
+            return False
+        if row != (1,) and row != [1]:
+            raise PreparationHold("HOLD: malformed access result")
+        return True
 
     def register_q0(self, command, actor_id):
         raise PreparationHold("HOLD: SQL Q0 mapping not implemented")
