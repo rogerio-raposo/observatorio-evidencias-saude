@@ -1,4 +1,8 @@
-## Marco de continuidade CP307 — 2026-10-26 (vigente)
+## Marco de continuidade CP308 — 2026-10-26 (vigente)
+
+- PF-I02-P2-A9: migração sintética aprovada e aplicada na branch Neon `br-gentle-hall-b6jaxehf`, DB `oes_sandbox`: `investigation.question.responsible_actor_id text NULL` e CHECK de comprimento 1–128 (ou NULL), pre/post READ ONLY confirmados. Documento 338; sem DML/backfill, grants, SET ROLE, Django, HTTP ou E9. Papel writer NOLOGIN permanece com ACL W2a. Adaptador SQL offline parcial, CI anterior 40271463247: 109/109 PASS; política por registro e revogação concorrente ainda sem validação conectada. CP308 ativo; Marco B aberto, readiness NOT_READY, Fase 5 NOT_STARTED, E9 NO-GO.
+
+## Marco de continuidade CP307 — 2026-10-26 (histórico)
 
 - Documento 336 registra política experimental aprovada PF-I02-P2-A5: criador de Q0 como responsável único inicial, revalidação de responsabilidade vigente para Q1/replay, ledger imutável. Sem Neon/SQL/DDL/DML; fonte persistente não identificada, catálogo read-only futuro requer autorização nominal. P2 SQL offline parcial (CI 40271463247: 109/109 PASS). Marco B aberto, readiness NOT_READY, E9 NO-GO.
 
