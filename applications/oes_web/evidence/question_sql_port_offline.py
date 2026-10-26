@@ -36,6 +36,7 @@ class _QuestionSQLTransaction:
     def __init__(self, cursor):
         self.cursor = cursor
         self._locked = False
+        self._lock_identity = None
         self._pending_q0 = None
 
     def lock_request(self, actor_id, request_id):
@@ -47,6 +48,7 @@ class _QuestionSQLTransaction:
             (str(len(actor_id)) + ":" + actor_id + ":" + str(len(request_id)) + ":" + request_id,)
         )
         self._locked = True
+        self._lock_identity = (actor_id, request_id)
 
     def find_receipt(self, actor_id, request_id):
         if not self._locked:
@@ -132,7 +134,8 @@ class _QuestionSQLTransaction:
         return True
 
     def register_q0(self, command, actor_id):
-        if not self._locked or self._pending_q0 is not None:
+        if (not self._locked or self._pending_q0 is not None
+                or self._lock_identity[0] != actor_id):
             raise PreparationHold("HOLD: Q0 transaction unavailable")
         if (not isinstance(actor_id, str) or not 1 <= len(actor_id) <= 128
                 or not isinstance(command.question_id, str) or not command.question_id
@@ -169,6 +172,7 @@ class _QuestionSQLTransaction:
         question_id, actor_id, entity_id, version_id = self._pending_q0
         if (not isinstance(receipt, Receipt) or receipt.question_id != question_id
                 or receipt.actor_id != actor_id or receipt.command_kind != "REGISTER_Q0"
+                or (receipt.actor_id, receipt.request_id) != self._lock_identity
                 or receipt.version != 1 or receipt.justification != ""
                 or not isinstance(receipt.request_id, str) or not 1 <= len(receipt.request_id) <= 128
                 or not isinstance(receipt.fingerprint, str) or len(receipt.fingerprint) != 64
