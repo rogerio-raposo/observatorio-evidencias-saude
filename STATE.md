@@ -1,3 +1,7 @@
+## Marco de continuidade CP301 — 2026-10-26 (vigente)
+
+- Docs. 321–329: contrato Django Q0→Q1 e Unit of Work offline, replay reautorizado e justificativa Q1 em recibo simulado; CI 40266729081 success. PostgreSQL writer/ledger e HTTP pendentes, E9 NO-GO, readiness NOT_READY.
+
 # STATE — Estado Atual do Projeto OES
 
 **Última atualização:** 25 de outubro de 2026  
@@ -6,7 +10,7 @@
 **Status geral:** projeto em desenvolvimento; protocolo da Fase 4 encerrado apenas metodológica/documentalmente; D1 demonstrador sintético encerrado restritamente; D2 factual parcial
 
 
-## Marco de continuidade CP300 — 2026-10-26 (vigente)
+## Marco de continuidade CP300 — 2026-10-26 (histórico)
 
 - Documento 319: teste transacional sintético PF-I02-I01-D0 Q0→Q1, com versões e supersessão verificadas em branch sintética Neon, seguido de cleanup preciso e zero resíduos. Não comprova autenticação independente, concorrência, idempotência ou Django HTTP. CP300; E9 NO-GO e readiness NOT_READY.
 
