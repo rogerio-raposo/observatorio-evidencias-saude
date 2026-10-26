@@ -1,3 +1,7 @@
+## 2026-10-26 — CP305 / encerramento técnico restrito W2a
+
+- Documento 335 registra criação aprovada de `oes_qprep_writer NOLOGIN` e grants mínimos no Neon sintético, com verificações positivas e negativas por catálogo READ ONLY. Associação administrativa do owner ao novo papel, ADMIN TRUE / INHERIT FALSE / SET FALSE, compatível com mecanismo PostgreSQL CREATEROLE; nenhuma revogação ou cleanup. W2a fechado apenas no escopo role/ACL; W2b/W3, SET ROLE, DML, Django e E9 permanecem bloqueados. CP305 vigente.
+
 ## 2026-10-26 — CP303 / encerramento e handoff PF-I02
 
 - Doc.334 reconciliado no Freshness Gate; revisão crítica pendente para gate NOLOGIN sintético, sem aprovar SQL/GRANT, conexão Django ou E9. CP303 vigente.
