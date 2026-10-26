@@ -3,7 +3,7 @@ import unittest
 from contextlib import contextmanager
 from copy import deepcopy
 
-from .question_preparation import QuestionCommand
+from .question_preparation import QuestionCommand, PreparationHold
 from .question_sql_port_offline import InjectedQuestionSQLPort
 from .question_uow_offline import Receipt
 
@@ -90,6 +90,16 @@ class SimulatedAtomicityTests(unittest.TestCase):
                 self.assertEqual(db.rows, {})
                 self.assertEqual(db.commits, 0)
                 self.assertEqual(db.rollbacks, 1)
+
+    def test_missing_receipt_aborts_entire_transaction(self):
+        db = SimulatedDatabase()
+        port = InjectedQuestionSQLPort(db.factory)
+        with self.assertRaises(PreparationHold):
+            with port.begin() as tx:
+                tx.lock_request("actor", "req")
+                tx.register_q0(QuestionCommand("req", "Q", 0, "Original"), "actor")
+        self.assertEqual(db.rows, {})
+        self.assertEqual((db.commits, db.rollbacks), (0, 1))
 
     def test_cross_actor_duplicate_identity_fails_without_partial_state(self):
         db = SimulatedDatabase()
