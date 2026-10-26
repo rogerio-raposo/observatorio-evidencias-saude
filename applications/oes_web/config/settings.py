@@ -4,8 +4,8 @@ SECRET_KEY = "development-only-not-for-deployment"
 DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 ROOT_URLCONF = "config.urls"
-INSTALLED_APPS = ["django.contrib.staticfiles", "evidence"]
-MIDDLEWARE = ["django.middleware.common.CommonMiddleware"]
+INSTALLED_APPS = ["django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions", "django.contrib.staticfiles", "evidence"]
+MIDDLEWARE = ["django.middleware.security.SecurityMiddleware", "django.contrib.sessions.middleware.SessionMiddleware", "django.middleware.common.CommonMiddleware", "django.middleware.csrf.CsrfViewMiddleware", "django.contrib.auth.middleware.AuthenticationMiddleware"]
 TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIRS": [], "APP_DIRS": True, "OPTIONS": {}}]
 DATABASES = {}
 # Experimental PG-A4: off unless explicitly enabled; never use owner credentials.
@@ -30,3 +30,10 @@ if os.getenv("OES_PG_A4_ENABLED") == "1":
     }
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# PF-I02-I01-A: offline scaffold only. No database-backed login or user creation.
+# DB-backed session and authentication operations remain unavailable until gated.
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
+# Deployment must override development-only settings through a separate gate.
