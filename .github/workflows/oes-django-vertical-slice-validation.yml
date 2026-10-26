@@ -32,4 +32,4 @@ jobs:
 
       - name: Execute existing Django tests (no database)
         working-directory: applications/oes_web
-        run: python manage.py test evidence.tests evidence.test_question_sql_port_offline evidence.test_question_sql_atomicity_offline evidence.test_question_sql_q1_atomicity_offline evidence.test_question_sql_replay_integration_offline evidence.test_question_orm_mapping_offline evidence.test_question_orm_transaction_offline evidence.test_question_orm_dml_compilation_offline evidence.test_question_orm_atomic_boundary_offline --verbosity 2
+        run: python manage.py test evidence.tests evidence.test_question_sql_port_offline evidence.test_question_sql_atomicity_offline evidence.test_question_sql_q1_atomicity_offline evidence.test_question_sql_replay_integration_offline evidence.test_question_orm_mapping_offline evidence.test_question_orm_transaction_offline evidence.test_question_orm_dml_compilation_offline evidence.test_question_orm_atomic_boundary_offline evidence.test_question_orm_q0_dormant --verbosity 2
