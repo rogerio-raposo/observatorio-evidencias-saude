@@ -1,0 +1,77 @@
+"""Dormant Django Q0 transaction recipe. NEVER imported into runtime routing.
+
+G2-P2B is NO-GO. No writer alias, credential, repository factory or network
+entrypoint is supplied. The execution gate below intentionally always HOLDs.
+This recipe does not establish least privilege, commit or connected readiness.
+"""
+from uuid import uuid4
+
+from django.db import connections, transaction
+
+from .models import (
+    OesEntity, OesEntityVersion, OesQuestion, OesQuestionVersion,
+    OesQuestionCommandReceipt,
+)
+from .question_preparation import PreparationHold
+from .question_orm_q0_repository_dormant import DjangoQ0Repository
+
+
+def execute_connected_q0(*args, **kwargs):
+    raise PreparationHold("HOLD: G2-P2B connected execution not authorized")
+
+
+def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
+                     fingerprint):
+    """Unwired review-only recipe. NOT an approved callable execution path.
+
+    Requires separate security review, gate activation and explicit approval.
+    The ininstantiable repository prevents reaching an ORM connection here.
+    """
+    if not all(isinstance(x, str) and x for x in (
+            alias, actor_id, request_id, question_id, original_text, fingerprint)):
+        raise PreparationHold("HOLD: invalid synthetic identity")
+    if len(fingerprint) != 64 or any(x not in "0123456789abcdef" for x in fingerprint):
+        raise PreparationHold("HOLD: invalid fingerprint")
+    # This line is a hard blocker, not a gate to bypass via object.__new__.
+    repo = DjangoQ0Repository(alias=alias)
+    from .question_uow_offline import Receipt
+
+    entity_uuid, version_uuid = uuid4(), uuid4()
+    with transaction.atomic(using=alias, savepoint=False):
+        if connections[alias].vendor != "postgresql" or not connections[alias].in_atomic_block:
+            raise PreparationHold("HOLD: wrong backend or transaction")
+        repo.lock_request(actor_id, request_id)
+        repo.lock_question(question_id)
+        if repo.find_receipt(actor_id, request_id) is not None:
+            raise PreparationHold("HOLD: request already exists")
+        if OesEntity.objects.using(alias).filter(oes_id=question_id).exists():
+            raise PreparationHold("HOLD: question identity occupied")
+        repo.insert_entity(entity_uuid, question_id, actor_id)
+        repo.insert_question(entity_uuid, actor_id)
+        repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
+        repo.insert_question_version(version_uuid, entity_uuid, original_text)
+        repo.insert_receipt(
+            Receipt(actor_id, request_id, fingerprint, question_id, 1, "REGISTER_Q0"),
+            entity_uuid, version_uuid,
+        )
+        checks = (
+            OesEntity.objects.using(alias).filter(pk=entity_uuid, oes_id=question_id).exists(),
+            OesQuestion.objects.using(alias).filter(
+                pk=entity_uuid, responsible_actor_id=actor_id).exists(),
+            OesEntityVersion.objects.using(alias).filter(
+                pk=version_uuid, entity_uuid=entity_uuid, version_no=1,
+                version_status="current").exists(),
+            OesQuestionVersion.objects.using(alias).filter(
+                pk=version_uuid, entity_uuid=entity_uuid,
+                preparation_stage="q0_draft", normalized_text__isnull=True).exists(),
+            OesQuestionCommandReceipt.objects.using(alias).filter(
+                actor_id=actor_id, request_id=request_id,
+                question_entity_uuid=entity_uuid,
+                resulting_version_uuid=version_uuid).exists(),
+        )
+        if checks != (True,) * 5:
+            raise PreparationHold("HOLD: five-record invariant failed")
+        transaction.set_rollback(True, using=alias)
+    # Post-rollback residual verification requires an independently reviewed
+    # read-only connection and scope; do not infer success from exiting atomic.
+    raise PreparationHold("HOLD: residual verification not implemented")
