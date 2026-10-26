@@ -23,15 +23,25 @@ class DormantConcreteOrmRepositoryTests(SimpleTestCase):
             with self.subTest(model=model.__name__):
                 self.assertIn(model.__name__ + ".objects.using(self.alias).create(", source)
 
-    def test_concurrency_and_reads_explicitly_blocked(self):
-        # Bypass __init__ for negative path tests only; no DB is touched.
+    def test_invalid_lock_identity_fails_before_db(self):
         isolated = object.__new__(DjangoQ0Repository)
-        for method, args in (
-            ("lock_request", ("a", "r")),
-            ("lock_question", ("Q",)),
-            ("find_receipt", ("a", "r")),
-            ("current_question", ("Q", "a")),
-            ("can_access_question", ("Q", "a")),
-        ):
-            with self.subTest(method=method), self.assertRaises(PreparationHold):
-                getattr(isolated, method)(*args)
+        with self.assertRaises(PreparationHold):
+            isolated.lock_request("", "r")
+        with self.assertRaises(PreparationHold):
+            isolated.lock_question("")
+
+    def test_advisory_lock_namespace_without_connection(self):
+        isolated = object.__new__(DjangoQ0Repository)
+        with patch.object(isolated, "_advisory_lock") as lock:
+            isolated.lock_request("actor", "r1")
+            lock.assert_called_once_with("5:actor:2:r1")
+            isolated.lock_question("Q")
+            lock.assert_called_with("oes:question:Q")
+
+    def test_lookup_methods_defined_but_instantiation_still_blocked(self):
+        source = __import__("inspect").getsource(DjangoQ0Repository)
+        self.assertIn("scoped_current_question(", source)
+        self.assertIn("request_receipt(", source)
+        self.assertIn("responsible_actor_id=actor_id", source)
+        with self.assertRaises(PreparationHold):
+            DjangoQ0Repository(alias="default")
