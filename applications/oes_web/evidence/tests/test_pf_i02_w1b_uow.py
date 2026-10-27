@@ -41,7 +41,7 @@ class OfflineUnitOfWorkTests(SimpleTestCase):
     def setUp(self):
         self.port=FakePort()
         self.backend=OfflineQuestionUnitOfWork(self.port)
-        self.user=Mock(is_authenticated=True,pk=5)
+        self.user=Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=5)
         self.user.has_perm.return_value=True
         self.q0=QuestionCommand("request-a","OES-Q-SYN",0,"Pergunta sintética?")
     def send(self,c,who=None):
@@ -71,7 +71,7 @@ class OfflineUnitOfWorkTests(SimpleTestCase):
         self.assertEqual(self.port.questions["OES-Q-SYN"]["version"],1)
     def test_cross_actor_denied(self):
         self.send(self.q0)
-        stranger=Mock(is_authenticated=True,pk=6)
+        stranger=Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=6)
         stranger.has_perm.return_value=True
         q1=QuestionCommand("request-c","OES-Q-SYN",1,"Pergunta sintética?","Q1","motivo")
         with self.assertRaises(PreparationConflict): self.send(q1,who=stranger)
