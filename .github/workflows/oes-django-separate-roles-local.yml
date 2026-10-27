@@ -44,8 +44,12 @@ jobs:
           PGPASSWORD: local-disposable-only
         run: |
           psql -h 127.0.0.1 -U oes_local -d oes_local_inventory -v ON_ERROR_STOP=1 <<'SQL'
-          GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA oes_app TO oes_runtime;
-          GRANT USAGE ON ALL SEQUENCES IN SCHEMA oes_app TO oes_runtime;
+          GRANT SELECT ON oes_app.django_content_type, oes_app.auth_permission, oes_app.auth_group TO oes_runtime;
+          GRANT SELECT, INSERT, UPDATE, DELETE ON oes_app.auth_user, oes_app.django_session,
+            oes_app.auth_user_groups, oes_app.auth_user_user_permissions TO oes_runtime;
+          GRANT SELECT ON oes_app.auth_group_permissions TO oes_runtime;
+          GRANT USAGE ON SEQUENCE oes_app.auth_user_id_seq,
+            oes_app.auth_user_groups_id_seq, oes_app.auth_user_user_permissions_id_seq TO oes_runtime;
           SQL
       - name: Audit role grants and negative DDL permissions
         working-directory: applications/oes_web
