@@ -63,3 +63,20 @@ Confirmar 15 migrations, 9 tabelas, 8 sequências, permissões geradas e **nenhu
 **Modelo de pedido futuro (não acionável neste estado):** `APPROVED — OES / PF-I04-A2 / P3a_SCHEMA_ONLY / [target e SQL exatos auditados] / PRE_POST_READ_ONLY / no migrations / no DML / no application login / no roles or grants outside approved SQL / no HTTP / no paid services / fail closed`.
 
 **Decisão atual:** P3a `HOLD_PENDING_EXACT_SQL_AND_OWNER`; P3b e P4 permanecem não autorizados; CP315 vigente.
+
+## 11. Preflight Neon read-only de P3a — 2026-10-27
+Consulta catalogal sem mutações, explicitamente direcionada a projeto `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf` (`oes-pg-a3-synthetic-20261024`, não principal), banco `oes_sandbox`. A branch principal distinta é `production`/`br-wild-field-b6qg7k3p`.
+
+Resultados de SELECT: `current_database=oes_sandbox`, `current_user=oes_sandbox_owner`, `database_owner=oes_sandbox_owner`, `has_database_privilege(CREATE)=true`, `oes_app_exists=false`, `search_path=\"$user\", public`. Schemas `core` e `investigation` pertencem a `oes_sandbox_owner`; `public` pertence a `pg_database_owner`. `oes_qprep_login` e `oes_pg_a4_reader` continuam papéis login sem privilégios `CREATEROLE`; nenhum foi alterado.
+
+**Proposta de proprietário/executor P3a:** aproveitar `oes_sandbox_owner` existente, sem criar role nova. **SQL candidato exato somente schema, condicionado a autorização posterior:**
+```sql
+BEGIN;
+SET LOCAL lock_timeout = '2s';
+SET LOCAL statement_timeout = '10s';
+CREATE SCHEMA oes_app AUTHORIZATION oes_sandbox_owner;
+COMMIT;
+```
+A execução exige pré-checagem independente e confirmação de branch e banco; um schema surgido entre preflight e autorização impõe HOLD, nunca repetir automaticamente. Sem GRANT nesta etapa; migrar autenticação, configurar runtime e conceder ACL são decisões futuras separadas. O owner terá poderes DDL e não deve operar como runtime. O `search_path` observado não contém `oes_app`, portanto a conexão futura de migrations requer `-c search_path=oes_app` ou equivalente validado.
+
+**Lacuna residual:** revisão detalhada de ACL efetivas e ownership, custo e capacidade de recuperação antes de P3a. Não executar o SQL proposto sem aprovação nominal. P3a permanece HOLD; P3b/P4 bloqueados.
