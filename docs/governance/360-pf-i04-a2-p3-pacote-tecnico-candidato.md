@@ -89,3 +89,11 @@ A execução exige pré-checagem independente e confirmação de branch e banco;
 - A evidência é suficiente para identificar owner/executor do **schema vazio** sem criar outro role. A autorização P3a ainda depende de aprovação textual explícita sobre destino e SQL, com preflight renovado imediatamente antes de executar e postflight somente leitura. P3b e P4 não estão incluídos.
 
 **Gate atual:** `P3a_NOT_AUTHORIZED`; CP315 mantido. Nenhum SQL mutante, role/grant ou credencial alterado nesta verificação.
+
+## 13. Resultado P3a — EXECUTADO, 2026-10-27
+**Autorização:** proprietário declarou `Aprovado p3a` após apresentação do destino/SQL no Documento 360. **Escopo aplicado:** apenas schema vazio no banco sintético.
+
+- Preflight read-only imediatamente anterior: branch `br-gentle-hall-b6jaxehf` confirmada não primária/não padrão; `current_database=oes_sandbox`; `current_user=oes_sandbox_owner`, owner igual; `CREATE` no banco=true e `oes_app` ausente.
+- Neon `run_sql_transaction` na branch explícita: `SET LOCAL lock_timeout = '2s'`; `SET LOCAL statement_timeout = '10s'`; `CREATE SCHEMA oes_app AUTHORIZATION oes_sandbox_owner`. Retorno de execução sem erro.
+- Postflight SELECT: `oes_app` presente; proprietário `oes_sandbox_owner`; objetos catalogados **0**; `oes_qprep_login` e `oes_pg_a4_reader` sem USAGE e sem CREATE no schema.
+- **P3a CLOSED_SUCCESS_SCHEMA_ONLY.** Não houve migrations, tabelas Django, grants, credenciais, configuração runtime, HTTP writes nem DML. **P3b/P4 NÃO AUTORIZADOS**, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY; CP315 continua ponteiro até novo checkpoint.
