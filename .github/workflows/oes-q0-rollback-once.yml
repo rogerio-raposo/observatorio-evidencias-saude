@@ -1,0 +1,35 @@
+name: OES Q0 one-shot Django rollback trial - manual
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-q0-one-shot-rollback
+  cancel-in-progress: false
+
+jobs:
+  rollback-trial:
+    if: github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      OES_Q0_TRIAL_EXPLICIT_APPROVAL: G2-P2B-FIVE-INSERT-ROLLBACK-ONLY
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Django and psycopg
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Execute one-shot synthetic rollback trial
+        working-directory: applications/oes_web
+        env:
+          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
+        run: python scripts/run_q0_rollback_once.py

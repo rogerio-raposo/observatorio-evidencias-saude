@@ -34,7 +34,7 @@ def execute_connected_q0(*args, **kwargs):
 
 
 def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
-                     fingerprint, trial=None):
+                     fingerprint, trial=None, _trial_repository=None):
     """Unwired review-only recipe. NOT an approved callable execution path.
 
     Requires separate security review, gate activation and explicit approval.
@@ -60,7 +60,8 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                 or trial.rollback_required is not True):
             raise PreparationHold("HOLD: synthetic trial identity mismatch")
     # This line is a hard blocker, not a gate to bypass via object.__new__.
-    repo = DjangoQ0Repository(alias=alias)
+    repo = (DjangoQ0Repository(alias=alias) if _trial_repository is None
+            else _trial_repository)
     connection = connections[alias]
     if connection.vendor != "postgresql" or connection.in_atomic_block or not connection.get_autocommit():
         raise PreparationHold("HOLD: non-independent transaction boundary")
