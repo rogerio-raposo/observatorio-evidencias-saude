@@ -1,3 +1,9 @@
+## CP319 — PF-I04/P4-A7–A9 | permissão prepare_question criada (2026-10-27)
+
+- P4-A7: consulta READ ONLY no Neon sintético confirmou ausência de `evidence.prepare_question` em auth_permission/contenttype, sem ler usuários ou sessões. P4-A8: contrato administrativo idempotente. P4-A9: após autorização nominal, INSERT condicional executado por `oes_sandbox_owner`, preflight contenttype único e permissão ausente, `inserted_count=1`; postflight independente confirmou `evidence.prepare_question`, ID 41, contenttype `evidence.oesquestion`, 41 permissões totais. PASS.
+- Sem atribuição a usuário, role/grant, migrations, Q0, HTTP, deploy ou E9. `oes_runtime` não provisionado; P4 operacional permanece NOT_AUTHORIZED.
+- **CP319 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP319.md`. Próxima P4-A10 apenas documental para gate runtime/gestão segregada de contas. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## CP318 — PF-I04/P4-A3–A6 | preflight e identidade Django runtime (2026-10-27)
 
 - P4-A4: inspeção Neon READ ONLY na branch sintética oes-pg-a3-synthetic-20261024: migrador Django NOLOGIN, owner das 9 tabelas e 8 sequências oes_app; qprep login/writer têm SELECT e INSERT nas cinco tabelas Q0, mas não acesso às tabelas administrativas Django; oes_runtime não provisionado. Nenhum SQL mutante, dado pessoal ou científico lido.
