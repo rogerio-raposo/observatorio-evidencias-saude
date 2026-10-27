@@ -1,3 +1,11 @@
+## CP322 — PF-I04/P4-A17–A20 | bloqueio administrativo e correção do SQL candidato (2026-10-27)
+
+- **P4-A17 (documental):** alternativa preferencial, condicionada, de associação `SET ROLE` temporária e reversível para GRANTs Django pelo proprietário dos objetos, sem reativar `oes_django_migrator` NOLOGIN nem transferir ownership. Não executada.
+- **P4-A18 (um SELECT catalogal nominalmente autorizado):** relação `oes_django_migrator`→`oes_sandbox_owner` tem associação original única de OID **155649**, `grantor=cloud_admin`, `ADMIN=true`, `INHERIT=false`, `SET=false`. Nenhum membership ou privilégio alterado.
+- **P4-A19 (documental):** desenho de uma única transação com associação temporária/SET LOCAL ROLE/GRANTs Django/restauração/REVOKE restrito/COMMIT, mas **SQL integral SUPERADO E NÃO EXECUTÁVEL** após revisão crítica P4-A20.
+- **P4-A20 (documental):** corrigir postflight, pois `has_table_privilege(..., 'SELECT, INSERT, UPDATE, DELETE')` testa **qualquer** privilégio, não todos. Exigir verificações individuais positivas/negativas; inventário exato de 9 tabelas, ACL/grantor de objetos e colunas, direitos das 8 sequências Django e 5 Q0, integridade da associação `cloud_admin`, rollback e postflight independente. Não houve SQL conectado no A19/A20.
+- **CP322 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP322.md`. Próxima **P4-A21**: elaborar script integral v2 e contrato de verificação **somente documental**, sem ativação ou GRANT/role/SQL mutante; gate nominal separado para qualquer operação no Neon. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, P4 NOT_AUTHORIZED, Fase 5 NOT_STARTED.
+
 ## CP321 — PF-I04/P4-A12–A16 | oes_runtime criado e bloqueio de GRANT Django (2026-10-27)
 
 - **P4-A13:** proprietário criou `oes_runtime` com senha privada no SQL Editor do Neon sintético (`weathered-boat-65779510` / `br-gentle-hall-b6jaxehf` / `oes_sandbox`). Preflight/postflight SELECT: LOGIN=true, NOINHERIT, sem atributos administrativos, **zero memberships**. Nenhum GRANT ou conexão runtime.
