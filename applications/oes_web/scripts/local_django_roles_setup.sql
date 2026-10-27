@@ -1,0 +1,7 @@
+\set ON_ERROR_STOP on
+CREATE ROLE oes_migrator LOGIN PASSWORD 'local-migrator-only' NOSUPERUSER NOCREATEDB NOCREATEROLE;
+CREATE ROLE oes_runtime LOGIN PASSWORD 'local-runtime-only' NOSUPERUSER NOCREATEDB NOCREATEROLE;
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+CREATE SCHEMA oes_app AUTHORIZATION oes_migrator;
+GRANT CONNECT ON DATABASE oes_local_inventory TO oes_migrator, oes_runtime;
+GRANT USAGE ON SCHEMA oes_app TO oes_runtime;

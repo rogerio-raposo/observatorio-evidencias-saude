@@ -1,0 +1,54 @@
+name: OES Django separate roles test - disposable PostgreSQL
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-roles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: oes_local
+          POSTGRES_PASSWORD: local-disposable-only
+          POSTGRES_DB: oes_local_inventory
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U oes_local -d oes_local_inventory"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install "Django==5.2.18" "psycopg[binary]==3.3.6"
+      - name: Establish disposable roles and schema
+        env:
+          PGPASSWORD: local-disposable-only
+        run: psql -h 127.0.0.1 -U oes_local -d oes_local_inventory -f applications/oes_web/scripts/local_django_roles_setup.sql
+      - name: Run Django migrations as isolated migrator
+        working-directory: applications/oes_web
+        env:
+          OES_LOCAL_ROLE_AUDIT: '1'
+          OES_PG_A4_ENABLED: '0'
+        run: python manage.py migrate --noinput --settings=config.settings_role_audit_local
+      - name: Grant bounded runtime permissions in disposable environment
+        env:
+          PGPASSWORD: local-disposable-only
+        run: |
+          psql -h 127.0.0.1 -U oes_local -d oes_local_inventory -v ON_ERROR_STOP=1 <<'SQL'
+          GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA oes_app TO oes_runtime;
+          GRANT USAGE ON ALL SEQUENCES IN SCHEMA oes_app TO oes_runtime;
+          SQL
+      - name: Audit role grants and negative DDL permissions
+        working-directory: applications/oes_web
+        env:
+          OES_LOCAL_ROLE_AUDIT: '1'
+        run: python -m scripts.audit_django_runtime_role_local
