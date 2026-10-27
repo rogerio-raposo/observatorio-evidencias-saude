@@ -1,3 +1,8 @@
+## PF-I03-A1 — contrato candidato para primeiro fluxo Django integrado (2026-10-27)
+
+- **Proposta, não autorização de implementação:** reutilizar `QuestionCommand`/`submit_question_command`, `require_question_preparer` e `OfflineQuestionUnitOfWork` para preparar Q0 sintético e apresentar somente `question_id`, `version` e `PREPARATORY_ONLY` mediante Unit of Work injetada em testes; preservar bloqueio sem UoW e negar acesso por padrão. Nenhuma rota pública POST, sessão real, escrita PostgreSQL, Q1/Q2 funcional ou E9 nesta delimitação.
+- **Critérios mínimos candidatos:** usuário anônimo/sem permissão negado; Q0 válido recebe recibo sintético e versão 1; entrada inválida/versão conflitante em HOLD; replay sem bypass de autorização; GET documental N2 e rotas 404 de escrita preservados. Priorizar regressões offline proporcionais, sem reconstruir auth, ORM ou framework. CP314 canônico, G2-P2B operacional NO-GO, E9 NO-GO, Marco B OPEN, readiness NOT_READY.
+
 ## CP314 — 2026-10-27 (checkpoint canônico; credencial descartável encerrada por confirmação)
 
 - **Secret:** o proprietário confirmou a exclusão de `OES_QPREP_LOGIN_PASSWORD` no GitHub Actions e anteriormente a rotação da senha de `oes_qprep_login`. Declaração do proprietário, sem auditoria independente. Encerrar o ciclo dessa credencial; não solicitar senha no chat nem repetir o workflow experimental sem novo propósito e controle específico.
