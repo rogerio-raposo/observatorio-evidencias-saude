@@ -1,3 +1,8 @@
+## PF-I03-A1 — encerramento técnico restrito (2026-10-27)
+
+- **CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY:** CI [40530802923](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40530802923), commit `556cd56fe6990cfa54005a351c5931e765785aff`, `completed/success`: **184/184 PASS**, incluindo **7/7 testes PF-I03-A1**, compilação dos módulos Q0 e Django system check PASS. A apresentação sintética Q0 reutiliza `QuestionCommand`, autorização por permissão e `OfflineQuestionUnitOfWork` injetada, com recibo `PREPARATORY_ONLY`, estado de revisão científica `NOT_PERFORMED` e E9 `BLOCKED`. Não cria rota HTTP de escrita ou conexão SQL.
+- **Limites:** sem usuários reais, persistência durável, autenticação de aplicação integrada, Q1/Q2 funcional no piloto, fluxo E9, deploy ou decisão científica A3. Próximo incremento candidato: integrar apresentação das transições Q1 (normalização proposta) e delimitar Q2/roteamento sem execução, aproveitando o serviço/UoW existente e controles de replay/escopo; primeiro inventariar o contrato Q2 e suas dependências, sem implementá-lo por inferência. CP314 permanece canônico; Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## PF-I03-A1 — contrato candidato para primeiro fluxo Django integrado (2026-10-27)
 
 - **Proposta, não autorização de implementação:** reutilizar `QuestionCommand`/`submit_question_command`, `require_question_preparer` e `OfflineQuestionUnitOfWork` para preparar Q0 sintético e apresentar somente `question_id`, `version` e `PREPARATORY_ONLY` mediante Unit of Work injetada em testes; preservar bloqueio sem UoW e negar acesso por padrão. Nenhuma rota pública POST, sessão real, escrita PostgreSQL, Q1/Q2 funcional ou E9 nesta delimitação.
