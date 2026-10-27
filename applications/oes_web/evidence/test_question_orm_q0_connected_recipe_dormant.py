@@ -1,9 +1,10 @@
 """Review-only gate tests: never touch an actual database."""
+from dataclasses import replace
 from unittest.mock import patch
 from django.test import SimpleTestCase
 from evidence.question_preparation import PreparationHold
 from evidence.question_orm_q0_connected_recipe_dormant import (
-    execute_connected_q0, _rollback_recipe,
+    execute_connected_q0, _rollback_recipe, prepare_q0_trial_review,
 )
 
 
@@ -29,6 +30,61 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
                     question_id="q", original_text="synthetic text",
                     fingerprint="a" * 64,
                 )
+
+
+    def test_synthetic_preflight_matches_recipe_and_stays_blocked(self):
+        trial = prepare_q0_trial_review(
+            actor_id="synthetic_actor", request_id="synthetic_request",
+            question_id="OES-SYNTH-Q0-offline", original_text="Synthetic text",
+        )
+        self.assertNotEqual(trial.entity_uuid, trial.version_uuid)
+        self.assertEqual(trial.expected_insert_count, 5)
+        self.assertTrue(trial.rollback_required)
+        with patch(
+            "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
+            side_effect=AssertionError("unexpected transaction"),
+        ):
+            with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+                _rollback_recipe(
+                    alias=trial.target_alias, actor_id=trial.actor_id,
+                    request_id=trial.request_id, question_id=trial.question_id,
+                    original_text=trial.original_text, fingerprint=trial.fingerprint,
+                    trial=trial,
+                )
+
+    def test_synthetic_trial_mismatches_hold_before_repository(self):
+        trial = prepare_q0_trial_review(
+            actor_id="synthetic_actor", request_id="synthetic_request",
+            question_id="OES-SYNTH-Q0-offline", original_text="Synthetic text",
+        )
+        cases = (
+            replace(trial, entity_uuid=trial.version_uuid),
+            replace(trial, expected_insert_count=4),
+            replace(trial, rollback_required=False),
+            replace(trial, target_alias="other_alias"),
+            replace(trial, fingerprint="b" * 64),
+        )
+        for mismatch in cases:
+            with self.subTest(mismatch=mismatch):
+                with patch(
+                    "evidence.question_orm_q0_connected_recipe_dormant.DjangoQ0Repository",
+                    side_effect=AssertionError("repository must not be reached"),
+                ):
+                    with self.assertRaisesRegex(PreparationHold, "identity mismatch"):
+                        _rollback_recipe(
+                            alias=trial.target_alias, actor_id=trial.actor_id,
+                            request_id=trial.request_id, question_id=trial.question_id,
+                            original_text=trial.original_text, fingerprint=trial.fingerprint,
+                            trial=mismatch,
+                        )
+
+    def test_synthetic_preflight_rejects_non_synthetic_identifier(self):
+        from scripts.q0_rollback_trial_preflight_offline import TrialHold
+        with self.assertRaisesRegex(TrialHold, "only synthetic"):
+            prepare_q0_trial_review(
+                actor_id="synthetic_actor", request_id="synthetic_request",
+                question_id="actual-question", original_text="Synthetic text",
+            )
 
     def test_recipe_documents_independent_boundary_and_point_probes(self):
         import inspect
