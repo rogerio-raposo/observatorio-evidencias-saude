@@ -80,3 +80,12 @@ COMMIT;
 A execução exige pré-checagem independente e confirmação de branch e banco; um schema surgido entre preflight e autorização impõe HOLD, nunca repetir automaticamente. Sem GRANT nesta etapa; migrar autenticação, configurar runtime e conceder ACL são decisões futuras separadas. O owner terá poderes DDL e não deve operar como runtime. O `search_path` observado não contém `oes_app`, portanto a conexão futura de migrations requer `-c search_path=oes_app` ou equivalente validado.
 
 **Lacuna residual:** revisão detalhada de ACL efetivas e ownership, custo e capacidade de recuperação antes de P3a. Não executar o SQL proposto sem aprovação nominal. P3a permanece HOLD; P3b/P4 bloqueados.
+
+## 12. Fechamento catalogal read-only de ACL e recuperação — 2026-10-27
+- Projeto Neon `weathered-boat-65779510`, branch sintética `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`. SELECT confirmou owner/executor `oes_sandbox_owner`, com CREATE no banco; `oes_app` ausente. Os logins `oes_qprep_login` e `oes_pg_a4_reader` não têm CREATE no banco nem em `public`.
+- ACL do schema `public`: `{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}`, concedendo apenas USAGE a PUBLIC. Schemas `core`/`investigation` permanecem sob `oes_sandbox_owner`, sem mutações.
+- Metadados do projeto: **PostgreSQL 18 no Neon**, enquanto os testes locais anteriores utilizaram PostgreSQL 16. Limite de equivalência registrado; nenhuma alegação de compatibilidade integral. Plano indicado `free_v3`, mas custo futuro e restauração não comprovados por essa classificação.
+- `history_retention_seconds=21600` (6 horas): retenção configurada, **não é garantia de rollback ou restauração**. Após qualquer COMMIT com resultado incerto, impor HOLD e inspecionar estado antes de retomar; nunca utilizar DROP automático.
+- A evidência é suficiente para identificar owner/executor do **schema vazio** sem criar outro role. A autorização P3a ainda depende de aprovação textual explícita sobre destino e SQL, com preflight renovado imediatamente antes de executar e postflight somente leitura. P3b e P4 não estão incluídos.
+
+**Gate atual:** `P3a_NOT_AUTHORIZED`; CP315 mantido. Nenhum SQL mutante, role/grant ou credencial alterado nesta verificação.
