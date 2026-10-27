@@ -1,3 +1,11 @@
+## CP323 — PF-I04/P4-A21–A24 | SQL v2 HOLD; verificador A23 limitado por ACLs PUBLIC (2026-10-27)
+
+- **P4-A21:** pacote candidato transacional v2 (Bloco A de auth/sessions Django) e postflight independente; `RAISE EXCEPTION` incondicional precede GRANTs; **NÃO EXECUTAR**. SQL não validado PostgreSQL 18; nenhum Neon/GRANT. SQL anterior P4-A19 permanece SUPERADO.
+- **P4-A22:** revisão independente PASS estático com ressalvas, HOLD operacional; postflight A21 incompleto e não produz decisão automatizada única; sem validação de rollback, atomicidade do canal e grants transitórios.
+- **P4-A23:** verificador READ ONLY `WITH ... SELECT`, resumo PASS/HOLD, candidato não executado. SHA-256 exato `567985d9026b1b0a5d5298367ce2f1b70c37e802a95d6ac22876255ea254c0c7`. Baseline pré-GRANT esperada HOLD, mas nunca comprovada no servidor.
+- **P4-A24:** revisão estática PASS com ressalvas. **A24-R01 bloqueante:** ACLs diretas a `oes_runtime` são inspecionadas, mas concessões a `PUBLIC` e terceiros não são integralmente comparadas; eventual PASS do checker atual **não** prova isolamento. Outros limites: inventário de colunas e escopo, saídas longas, parser PostgreSQL 18 e transação não ensaiados.
+- **CP323 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP323.md`. Persistidos e conferidos **sete artefatos originais** em `archive/handoffs/oes/artifacts/CP323/`, com hashes Git idênticos aos locais; ZIPs locais não versionados. Próximo **P4-A25**, somente após aprovação nominal, seria um SELECT catalogal do A23 SHA acima para validar parsing e baseline HOLD; não é aceite final nem autorização de GRANT. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, P4 NOT_AUTHORIZED; Fase 5 NOT_STARTED.
+
 ## CP322 — PF-I04/P4-A17–A20 | bloqueio administrativo e correção do SQL candidato (2026-10-27)
 
 - **P4-A17 (documental):** alternativa preferencial, condicionada, de associação `SET ROLE` temporária e reversível para GRANTs Django pelo proprietário dos objetos, sem reativar `oes_django_migrator` NOLOGIN nem transferir ownership. Não executada.
