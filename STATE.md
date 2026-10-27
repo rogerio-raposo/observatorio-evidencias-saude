@@ -1,3 +1,9 @@
+## CP320 — PF-I04/P4-A10–A11 | Django preparer gate offline reforçado (2026-10-27)
+
+- P4-A10: desenho da identidade técnica `oes_runtime` candidata ainda não provisionada, matriz candidata de grants mínimos, separação de administração de contas e runtime. Permissão `evidence.prepare_question` criada no catálogo em P4-A9, mas não atribuída.
+- P4-A11: `require_question_preparer` passou a exigir usuário autenticado, ativo, não staff, não superusuário, método `has_perm` válido e autorização explícita; testes offline legados adequados e testes negativos adicionais. CI GitHub Actions [40572406644](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40572406644) PASS 130/130 no commit `0bfda5a5bbe751b67b335fed44e2dabe84e45cde`. Nenhuma ligação Django runtime, SQL, usuário, papel, grant, HTTP write ou deploy foi habilitada.
+- **CP320 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP320.md`. Próxima PF-I04/P4-A12: pacote nominal de identidade runtime e credencial, documental somente. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, P4 NOT_AUTHORIZED, Fase 5 NOT_STARTED.
+
 ## CP319 — PF-I04/P4-A7–A9 | permissão prepare_question criada (2026-10-27)
 
 - P4-A7: consulta READ ONLY no Neon sintético confirmou ausência de `evidence.prepare_question` em auth_permission/contenttype, sem ler usuários ou sessões. P4-A8: contrato administrativo idempotente. P4-A9: após autorização nominal, INSERT condicional executado por `oes_sandbox_owner`, preflight contenttype único e permissão ausente, `inserted_count=1`; postflight independente confirmou `evidence.prepare_question`, ID 41, contenttype `evidence.oesquestion`, 41 permissões totais. PASS.
