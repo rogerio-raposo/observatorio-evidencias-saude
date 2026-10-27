@@ -1,0 +1,24 @@
+name: OES PF-I04 P1 offline migration inventory
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audited Django-series baseline
+        working-directory: applications/oes_web
+        run: python -m pip install "Django==5.2.18" "psycopg[binary]==3.3.6"
+      - name: Inventory migration graph without database
+        working-directory: applications/oes_web
+        env:
+          OES_PG_A4_ENABLED: '0'
+        run: python scripts/inventory_django_admin_migrations_offline.py
