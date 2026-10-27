@@ -19,6 +19,20 @@ def inspect():
             WHERE n.nspname='oes_app'""")
         return int(cursor.fetchone()[0])
 
+from django.db.migrations.loader import MigrationLoader
+loader = MigrationLoader(None)
+approved = {"auth", "contenttypes", "sessions"}
+disk = set(loader.disk_migrations)
+if len(disk) != 15 or {app for app, name in disk} != approved:
+    raise SystemExit("HOLD: unexpected migration graph")
+with connection.cursor() as cursor:
+    cursor.execute("SHOW server_version_num")
+    pg_version = int(cursor.fetchone()[0])
+    cursor.execute("SELECT has_schema_privilege(current_user, 'oes_app', 'CREATE')")
+    can_create = cursor.fetchone()[0]
+if not (180000 <= pg_version < 190000) or not can_create:
+    raise SystemExit("HOLD: PostgreSQL version or migrator rights differ from P3b")
+
 count=inspect()
 if count != 0:
     raise SystemExit(f"HOLD: P3b expects empty oes_app, found {count} objects. Never resume automatically")
@@ -33,6 +47,11 @@ with connection.cursor() as cursor:
       WHERE n.nspname IN ('oes_app','public') AND c.relname
       ~ '^(auth_|django_(session|content_type|migrations))'""")
     objects=cursor.fetchall()
+with connection.cursor() as cursor:
+    cursor.execute("SELECT relkind, COUNT(*) FROM pg_class WHERE relnamespace='oes_app'::regnamespace AND relkind IN ('r','S') GROUP BY relkind")
+    kinds = dict(cursor.fetchall())
+if kinds.get("r") != 9 or kinds.get("S") != 8:
+    raise RuntimeError("HOLD: unexpected Django table or sequence inventory")
 if migrations != 15 or permissions != 40:
     raise RuntimeError(f"HOLD: unexpected administrative rows ({migrations}, {permissions})")
 if any(schema == "public" for schema,_,_ in objects):
