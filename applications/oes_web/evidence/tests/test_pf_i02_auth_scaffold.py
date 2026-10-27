@@ -7,6 +7,15 @@ from django.urls import resolve, Resolver404
 from evidence.preparation_auth import require_question_preparer, PREPARE_QUESTION_PERMISSION
 
 class PreparationAuthorizationTests(SimpleTestCase):
+    @staticmethod
+    def preparer(**changes):
+        fields = dict(is_authenticated=True, is_active=True,
+                      is_staff=False, is_superuser=False)
+        fields.update(changes)
+        user = Mock(**fields)
+        user.has_perm.return_value = True
+        return user
+
     def test_auth_stack_declared(self):
         self.assertIn("django.contrib.auth", settings.INSTALLED_APPS)
         self.assertIn("django.contrib.sessions", settings.INSTALLED_APPS)
@@ -15,22 +24,52 @@ class PreparationAuthorizationTests(SimpleTestCase):
         self.assertEqual(settings.DATABASES['default']['ENGINE'], 'django.db.backends.dummy')
 
     def test_anonymous_denied(self):
-        user = Mock(is_authenticated=False)
+        user = self.preparer(is_authenticated=False)
         with self.assertRaises(PermissionDenied):
             require_question_preparer(user)
         user.has_perm.assert_not_called()
 
     def test_authenticated_unprivileged_denied(self):
-        user = Mock(is_authenticated=True)
+        user = self.preparer()
         user.has_perm.return_value = False
         with self.assertRaises(PermissionDenied):
             require_question_preparer(user)
         user.has_perm.assert_called_once_with(PREPARE_QUESTION_PERMISSION)
 
     def test_explicit_preparer_permission(self):
-        user = Mock(is_authenticated=True)
-        user.has_perm.return_value = True
+        user = self.preparer()
         self.assertTrue(require_question_preparer(user))
+
+    def test_inactive_denied_even_with_permission(self):
+        user = self.preparer(is_active=False)
+        with self.assertRaises(PermissionDenied):
+            require_question_preparer(user)
+        user.has_perm.assert_not_called()
+
+    def test_staff_denied_even_with_permission(self):
+        user = self.preparer(is_staff=True)
+        with self.assertRaises(PermissionDenied):
+            require_question_preparer(user)
+        user.has_perm.assert_not_called()
+
+    def test_superuser_denied_even_with_permission(self):
+        user = self.preparer(is_superuser=True)
+        with self.assertRaises(PermissionDenied):
+            require_question_preparer(user)
+        user.has_perm.assert_not_called()
+
+    def test_missing_or_inconsistent_flags_fail_closed(self):
+        for field in ("is_active", "is_staff", "is_superuser"):
+            with self.subTest(field=field):
+                user = self.preparer(**{field: None})
+                with self.assertRaises(PermissionDenied):
+                    require_question_preparer(user)
+                user.has_perm.assert_not_called()
+
+    def test_missing_permission_method_denied(self):
+        user = self.preparer(has_perm=None)
+        with self.assertRaises(PermissionDenied):
+            require_question_preparer(user)
 
     def test_no_preparatory_write_route_or_e9(self):
         for path in ("/questions/", "/questions/new/", "/investigations/open/"):
