@@ -1,3 +1,9 @@
+## PF-I03-A3 — diagnóstico Q2 e Routing Record (2026-10-27)
+
+- Templates canônicos `templates/question-record.md` e `templates/routing-record.md` confirmam separação de Q2 (pergunta operacional, critérios de elegibilidade/busca/análise e contexto) de Routing Record (classe metodológica, criticidade, complexidade, profundidade N0–N4, manutenção M0–M3 e justificativas). Admissibilidade e autorização de abertura E9 são controles independentes.
+- Modelos Django existentes possuem `question_type`, `structure_type`, `context_payload`, `time_horizon_payload`, mas não há contrato de comando Q2 nem serviço de roteamento autorizado. Não supor mapeamento integral nem criar schema.
+- **Próximo incremento candidato:** projeção offline não persistente de Q2 e de proposta de roteamento, reutilizando o histórico Q0/Q1 e contratos documentais; entrada explícita e justificada, ausência de abertura de Investigation ou invocação E9, testes negativos proporcionais. Sem implementar nesta atividade. CP314 canônico; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## PF-I03-A2 — encerramento técnico restrito (2026-10-27)
 
 - **CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY:** [CI 40534194664](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40534194664) em `aa89f44523d0fa0c64fc7637221fb147a26eae8c`, `completed/success`: **192/192 testes PASS**, incluindo **8/8 PF-I03-A2**; Django system check PASS e compilação Q0 PASS. Q0→Q1 sintético na Unit of Work offline, versão 2, original preservado, normalização/justificativa propostas, autorização, conflitos e idempotência testados. Nenhum HTTP mutante, conexão SQL, operação persistente ou revisão científica.
