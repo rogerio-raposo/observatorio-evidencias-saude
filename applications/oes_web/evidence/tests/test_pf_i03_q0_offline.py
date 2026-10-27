@@ -13,7 +13,7 @@ class PFI03OfflineFlowTests(SimpleTestCase):
     def setUp(self):
         self.port = FakePort()
         self.uow = OfflineQuestionUnitOfWork(self.port)
-        self.user = Mock(is_authenticated=True, pk=33)
+        self.user = Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=33)
         self.user.has_perm.return_value = True
         self.command = QuestionCommand(
             "req-pfi03", "OES-SYNTH-Q0-PFI03", 0, "Pergunta sintética interna?"
