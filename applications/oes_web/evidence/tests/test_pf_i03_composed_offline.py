@@ -18,7 +18,7 @@ class PFI03ComposedOfflineFlowTests(SimpleTestCase):
     def test_real_composition_q0_q1_q2_routing_without_database(self):
         port = FakePort()
         uow = OfflineQuestionUnitOfWork(port)
-        actor = Mock(is_authenticated=True, pk=81)
+        actor = Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=81)
         actor.has_perm.return_value = True
         question_id = "OES-SYNTH-Q0-COMPOSED"
         original = "Qual o efeito da intervenção sintética?"
