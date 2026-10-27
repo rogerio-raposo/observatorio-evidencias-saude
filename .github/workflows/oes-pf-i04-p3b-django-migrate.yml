@@ -5,6 +5,8 @@ permissions:
   contents: read
 jobs:
   p3b:
+    # HOLD: owner credential workflow disabled pending revised migrant identity authorization.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
