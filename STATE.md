@@ -1,3 +1,8 @@
+## PF-I03-A2 — diagnóstico de escopo Q1/Q2 (2026-10-27)
+
+- **Revisão do código:** `QuestionCommand` + `submit_question_command` + `OfflineQuestionUnitOfWork` já suportam `PROPOSE_Q1` com `normalized_text`, justificativa, preservação do original, versão esperada, controle de escopo, idempotência e conflito. `PF-I03-A1` encerrado 184/184 PASS. Não duplicar serviços ou adaptadores.
+- **Próximo incremento recomendado (ainda não implementado):** apresentação offline de Q1 usando a mesma UoW injetada, com Q0 sintético precedente e prova de versão 2, original intacto, justificativa, autorização e rejeição por conflito/replay indevido. Q2 e Routing Record permanecem documentais e fora do contrato operacional; E9 bloqueado. Nenhuma rota HTTP POST, SQL conectado, sessão real ou alteração de gates. CP314 vigente; Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY.
+
 ## PF-I03-A1 — encerramento técnico restrito (2026-10-27)
 
 - **CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY:** CI [40530802923](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40530802923), commit `556cd56fe6990cfa54005a351c5931e765785aff`, `completed/success`: **184/184 PASS**, incluindo **7/7 testes PF-I03-A1**, compilação dos módulos Q0 e Django system check PASS. A apresentação sintética Q0 reutiliza `QuestionCommand`, autorização por permissão e `OfflineQuestionUnitOfWork` injetada, com recibo `PREPARATORY_ONLY`, estado de revisão científica `NOT_PERFORMED` e E9 `BLOCKED`. Não cria rota HTTP de escrita ou conexão SQL.
