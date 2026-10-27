@@ -66,6 +66,12 @@ class PreparationAuthorizationTests(SimpleTestCase):
                     require_question_preparer(user)
                 user.has_perm.assert_not_called()
 
+    def test_nonboolean_authentication_flag_denied(self):
+        user = self.preparer(is_authenticated=1)
+        with self.assertRaises(PermissionDenied):
+            require_question_preparer(user)
+        user.has_perm.assert_not_called()
+
     def test_missing_permission_method_denied(self):
         user = self.preparer(has_perm=None)
         with self.assertRaises(PermissionDenied):
