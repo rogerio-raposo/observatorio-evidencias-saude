@@ -49,3 +49,17 @@ Confirmar 15 migrations, 9 tabelas, 8 sequências, permissões geradas e **nenhu
 
 ## 8. Situação decisória
 **P3 NÃO AUTORIZADO.** Este documento não altera gate G2-P2B, E9 ou readiness. Próxima ação: resolver nomes/ownership e privilégios concretos, reproduzir migração sob papéis separados em ambiente descartável e então submeter SQL e autorização P3a nominal. CP315 vigente; Marco B OPEN; Fase 5 NOT_STARTED.
+
+## 9. Evidência posterior de privilégios por tabela (2026-10-27)
+- [GitHub Actions 40547999201](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40547999201), commit `f08f1527446cf48817a05e3329fd965e72837564`: 15/15 migrations e separação de papéis PASS, mas grants ainda amplos sobre todas as tabelas no teste inicial.
+- [GitHub Actions 40548763947](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40548763947), commit `4b7e60ed7e0c6822911bd29c006fb2ede3f6b65d`: `ROLE AUDIT PASS: per-table grants; runtime DDL and privileged writes denied`. Verificadas recusas efetivas de CREATE em `oes_app`, INSERT/SELECT em `django_migrations` e UPDATE em `auth_permission`; sequências verificadas. Banco descartável, **nenhum acesso Neon**.
+- Esta matriz é **experimental**, não prova autenticação Django e sessões ponta a ponta com usuário runtime. Em particular, o controle de `django_migrations` só cabe ao migrador; concessões runtime dependem de requisitos funcionais explícitos. Evitar novos testes isolados sem cenário funcional novo.
+
+## 10. Minuta de autorização P3a — NÃO APROVADA
+**Objeto estrito proposto:** exclusivamente criar namespace `oes_app` no projeto Neon `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`, com dono/migrador e ACL definidos em SQL integral previamente revisado. Proibidos migrations, criação de tabelas Django, DML, HTTP, contas Django, alteração de papéis legados, senha/segredo, produção, custo pago, E9 e P4.
+
+**Condições ainda pendentes, antes de solicitar aprovação:** (i) seleção formal do dono existente e identificação do executor, evitando criar role desnecessária; (ii) SQL exato, sem placeholder, incluindo owner e ACL, com rollback/recuperação pós-COMMIT; (iii) preflight read-only atual e confronto de HEAD/destino/ausência do schema; (iv) prova de que a ferramenta de execução não alterará branch de produção; (v) postflight específico e STOP para resultados inconclusivos. **Não presumir que a presente minuta é autorização.**
+
+**Modelo de pedido futuro (não acionável neste estado):** `APPROVED — OES / PF-I04-A2 / P3a_SCHEMA_ONLY / [target e SQL exatos auditados] / PRE_POST_READ_ONLY / no migrations / no DML / no application login / no roles or grants outside approved SQL / no HTTP / no paid services / fail closed`.
+
+**Decisão atual:** P3a `HOLD_PENDING_EXACT_SQL_AND_OWNER`; P3b e P4 permanecem não autorizados; CP315 vigente.
