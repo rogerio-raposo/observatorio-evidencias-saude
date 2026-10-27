@@ -73,7 +73,8 @@ class PreparationAuthorizationTests(SimpleTestCase):
         user.has_perm.assert_not_called()
 
     def test_missing_permission_method_denied(self):
-        user = self.preparer(has_perm=None)
+        user = self.preparer()
+        user.has_perm = None
         with self.assertRaises(PermissionDenied):
             require_question_preparer(user)
 
