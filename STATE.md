@@ -1,3 +1,9 @@
+## PF-I04-A2 — preflight catalogal não mutante da alternativa B (2026-10-27)
+
+- Neon: projeto weathered-boat-65779510, branch sintética br-gentle-hall-b6jaxehf, banco oes_sandbox. Consulta somente SELECT confirmou schemas core, investigation, public; schema candidato oes_app ainda ausente. Conexão de inspeção reportou current_user=oes_sandbox_owner; nenhum SQL mutante executado.
+- Roles: oes_qprep_login pode login, não possui CREATE no banco nem em public e possui USAGE em investigation; oes_pg_a4_reader não possui CREATE no banco/public nem USAGE em investigation; proprietário dispõe dos privilégios administrativos. Esses achados não significam que qualquer identidade esteja aprovada para migrations ou uso Django operacional.
+- Alternativa B permanece candidata: isolar Django Auth/sessões em schema dedicado, distinguir papel transitório de migração e identidade runtime mínima, validar search_path/migrations e segurança antes de execução. Não criar schema, migrations, grants, credenciais ou rotas. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY.
+
 ## PF-I04-A2 — inventário Neon e decisão de isolamento Django (2026-10-27)
 
 - Consulta não mutante via catálogo Neon: projeto weathered-boat-65779510, branch sintética br-gentle-hall-b6jaxehf, database oes_sandbox. A tabela investigation.question_version possui normalized_text nullable, preparation_stage e CHECK ck_pf_i02_question_preparation_stage; investigation.question_command_receipt dispõe de PK (actor_id,request_id), fingerprint e CHECK para REGISTER_Q0/PROPOSE_Q1. Não criar ou repetir DDL Q0.
