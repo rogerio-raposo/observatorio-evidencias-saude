@@ -56,38 +56,41 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
     with transaction.atomic(using=alias, savepoint=False):
         if not connection.in_atomic_block or connection.get_autocommit():
             raise PreparationHold("HOLD: wrong backend or transaction")
-        repo.lock_request(actor_id, request_id)
-        repo.lock_question(question_id)
-        if repo.find_receipt(actor_id, request_id) is not None:
-            raise PreparationHold("HOLD: request already exists")
-        if OesEntity.objects.using(alias).filter(oes_id=question_id).exists():
-            raise PreparationHold("HOLD: question identity occupied")
-        repo.insert_entity(entity_uuid, question_id, actor_id)
-        repo.insert_question(entity_uuid, actor_id)
-        repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
-        repo.insert_question_version(version_uuid, entity_uuid, original_text)
-        repo.insert_receipt(
-            Receipt(actor_id, request_id, fingerprint, question_id, 1, "REGISTER_Q0"),
-            entity_uuid, version_uuid,
-        )
-        checks = (
-            OesEntity.objects.using(alias).filter(pk=entity_uuid, oes_id=question_id).exists(),
-            OesQuestion.objects.using(alias).filter(
-                pk=entity_uuid, responsible_actor_id=actor_id).exists(),
-            OesEntityVersion.objects.using(alias).filter(
-                pk=version_uuid, entity_uuid=entity_uuid, version_no=1,
-                version_status="current").exists(),
-            OesQuestionVersion.objects.using(alias).filter(
-                pk=version_uuid, entity_uuid=entity_uuid,
-                preparation_stage="q0_draft", normalized_text__isnull=True).exists(),
-            OesQuestionCommandReceipt.objects.using(alias).filter(
-                actor_id=actor_id, request_id=request_id,
-                question_entity_uuid=entity_uuid,
-                resulting_version_uuid=version_uuid).exists(),
-        )
-        if checks != (True,) * 5:
-            raise PreparationHold("HOLD: five-record invariant failed")
-        transaction.set_rollback(True, using=alias)
+        try:
+            repo.lock_request(actor_id, request_id)
+            repo.lock_question(question_id)
+            if repo.find_receipt(actor_id, request_id) is not None:
+                raise PreparationHold("HOLD: request already exists")
+            if OesEntity.objects.using(alias).filter(oes_id=question_id).exists():
+                raise PreparationHold("HOLD: question identity occupied")
+            repo.insert_entity(entity_uuid, question_id, actor_id)
+            repo.insert_question(entity_uuid, actor_id)
+            repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
+            repo.insert_question_version(version_uuid, entity_uuid, original_text)
+            repo.insert_receipt(
+                Receipt(actor_id, request_id, fingerprint, question_id, 1, "REGISTER_Q0"),
+                entity_uuid, version_uuid,
+            )
+            checks = (
+                OesEntity.objects.using(alias).filter(pk=entity_uuid, oes_id=question_id).exists(),
+                OesQuestion.objects.using(alias).filter(
+                    pk=entity_uuid, responsible_actor_id=actor_id).exists(),
+                OesEntityVersion.objects.using(alias).filter(
+                    pk=version_uuid, entity_uuid=entity_uuid, version_no=1,
+                    version_status="current").exists(),
+                OesQuestionVersion.objects.using(alias).filter(
+                    pk=version_uuid, entity_uuid=entity_uuid,
+                    preparation_stage="q0_draft", normalized_text__isnull=True).exists(),
+                OesQuestionCommandReceipt.objects.using(alias).filter(
+                    actor_id=actor_id, request_id=request_id,
+                    question_entity_uuid=entity_uuid,
+                    resulting_version_uuid=version_uuid).exists(),
+            )
+            if checks != (True,) * 5:
+                raise PreparationHold("HOLD: five-record invariant failed")
+        finally:
+            # Fail closed: even an unintended normal exit must not commit.
+            transaction.set_rollback(True, using=alias)
     # Point lookups only; after rollback, using the SAME approved alias.
     residues = (
         OesEntity.objects.using(alias).filter(pk=entity_uuid).exists(),
