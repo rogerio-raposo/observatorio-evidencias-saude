@@ -38,3 +38,8 @@ Para evitar credencial permanente, manter `oes_django_migrator` como owner sem L
 `APPROVED — OES / PF-I04-A2 / P3b_MIGRATOR_ROLE_GRANTS_ONLY / synthetic branch br-gentle-hall-b6jaxehf / oes_sandbox / create oes_django_migrator / CONNECT database + USAGE,CREATE oes_app only / no password mutation / no migrations in this substep / no production / fail closed`.
 
 **Estado:** P3b migrações autorizadas em princípio mas execução **HOLD** até provisão segura do migrador; nenhuma role, grant, credential ou migration executada nesta atividade; P4 não autorizado. Gates Marco B OPEN; G2-P2B NO-GO; E9 NO-GO; readiness NOT_READY.
+
+## 2026-10-27 — Execução P3b concluída, desativação pendente
+- CI [40555198917](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40555198917) sobre `a8bd8e7ce825e56dc2794b5b6f0c4e663cd88f25`: 15/15 migrations Django 5.2.18 PASS com `oes_django_migrator`, PostgreSQL 18, `P3B POSTFLIGHT PASS: migrations=15, permissions=40, isolated schema oes_app`.
+- Postflight independente no Neon, SELECT sobre branch `br-gentle-hall-b6jaxehf` / banco `oes_sandbox`: `oes_app` owner `oes_sandbox_owner`, 15 migrations, 40 permissões, 9 tabelas, 8 sequências, zero objetos administrativos Django em `public`; 44 objetos catalogados pertencem a `oes_django_migrator`.
+- Identidade migradora ainda `rolcanlogin=true`. **Não repetir workflow.** Desabilitar LOGIN e revogar capacidade CREATE transitória requer autorização nominal específica; não excluir papel, pois é owner de objetos. Apagar segredo GitHub após fechamento da janela pelo proprietário. P4 segue não autorizado.
