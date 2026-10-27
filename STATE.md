@@ -1,3 +1,8 @@
+## Evidência conectada CP313 — 2026-10-27 — Q0 rollback PASS (sem promoção de gate)
+
+- **G2-P2B ensaio sintético conectado PASS:** [GitHub Actions 40525954698, tentativa 2](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40525954698), commit `29af77e28722973dc75319bb4a9bbb6525d0e19b`, `completed/success`. Logs registram conexão, identidade restrita, início da transação, cinco INSERTs ORM, verificação intratransacional, rollback obrigatório e cinco consultas pós-rollback sem resíduos; marcador `PASS_ROLLED_BACK_ZERO_RESIDUES`. Evidência restrita a uma execução sintética, não equivale a habilitação permanente de DML, HTTP, E9 ou deploy.
+- Tentativa 1 do mesmo run falhou antes da conexão; o proprietário confirmou atualização do secret após rotação de senha, sem verificação de conteúdo pelo assistente. **Ação pendente do proprietário:** excluir `OES_QPREP_LOGIN_PASSWORD` do GitHub Actions e rotacionar novamente a senha descartável no Neon. Nenhuma senha registrada. G2-P2B como gate operacional ainda NO-GO até deliberação explícita; E9 NO-GO, Marco B OPEN, readiness NOT_READY, Fase 5 NOT_STARTED. CP313 permanece canônico.
+
 ## Atualização factual CP313 — CI Django offline de 2026-10-27
 
 - CI manual [40521292336](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40521292336), commit `2325b7c192985220ca5a9476ea25531e8e07d6a9`: 177/177 testes Django offline PASS, incluindo três testes de preflight Q0, UUIDs e bloqueios; system check PASS. Não houve INSERT ou rollback conectado nesta CI.
