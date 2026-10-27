@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   p3b:
-    # HOLD: owner credential workflow disabled pending revised migrant identity authorization.
+    # HOLD: HOLD: migrator credentials and end-to-end plan not yet cleared.
     if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
       - name: Require one-time credential and approved environment
         env:
-          P3B_PASSWORD: ${{ secrets.OES_P3B_OWNER_PASSWORD_ONETIME }}
+          P3B_PASSWORD: ${{ secrets.OES_P3B_MIGRATOR_PASSWORD_ONETIME }}
         run: |
           if [ -z "$P3B_PASSWORD" ]; then
             echo "::error::HOLD: one-time P3b credential absent; no DB connection."
@@ -32,6 +32,6 @@ jobs:
         env:
           OES_P3B_APPROVED: '1'
           OES_P3B_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
-          OES_P3B_PASSWORD: ${{ secrets.OES_P3B_OWNER_PASSWORD_ONETIME }}
+          OES_P3B_PASSWORD: ${{ secrets.OES_P3B_MIGRATOR_PASSWORD_ONETIME }}
           OES_PG_A4_ENABLED: '0'
         run: python -m scripts.p3b_migrate_guarded

@@ -10,7 +10,7 @@ if host not in allowed or os.getenv("OES_P3B_PASSWORD", "") == "":
     raise RuntimeError("HOLD: approved branch endpoint or one-time credential not provided")
 DATABASES = {"default": {
     "ENGINE": "django.db.backends.postgresql",
-    "NAME": "oes_sandbox", "USER": "oes_sandbox_owner",
+    "NAME": "oes_sandbox", "USER": "oes_django_migrator",
     "PASSWORD": os.environ["OES_P3B_PASSWORD"],
     "HOST": host, "PORT": "5432",
     "OPTIONS": {"sslmode": "require", "options": "-c search_path=oes_app -c lock_timeout=2000 -c statement_timeout=15000"},

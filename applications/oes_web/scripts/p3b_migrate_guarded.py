@@ -13,7 +13,7 @@ def inspect():
         cursor.execute("""SELECT current_database(), current_user, current_schema(),
             EXISTS(SELECT 1 FROM pg_namespace WHERE nspname='oes_app')""")
         identity=cursor.fetchone()
-        if identity != ("oes_sandbox", "oes_sandbox_owner", "oes_app", True):
+        if identity != ("oes_sandbox", "oes_django_migrator", "oes_app", True):
             raise RuntimeError(f"HOLD: unexpected SQL identity {identity}")
         cursor.execute("""SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
             WHERE n.nspname='oes_app'""")
