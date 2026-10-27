@@ -1,3 +1,9 @@
+## PF-I03 — fechamento técnico offline (2026-10-27)
+
+- CI 40535916973: commit dac5ab536116e0abf1b47c72767bd1eb8b12e23e; 201/201 testes PASS. Teste de composição sequencial Q0-Q1-Q2-roteamento PASS; Django check PASS.
+- Classificação: CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY. Q2 e roteamento são propostas não persistidas; sem HTTP mutante, usuários reais, PostgreSQL operacional, revisão científica A3 ou abertura E9.
+- Prioridade: analisar dependências operacionais PF-05 (identidade), PF-06 (persistência), PF-08 (segurança) e PF-09 (operação). Nenhuma implementação ou mudança de gate autorizada nesta etapa. CP314 canônico; Marco B OPEN; E9 NO-GO; G2-P2B operacional NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## PF-I03-A3 e PF-I03-A1–A3 — encerramento técnico integrado restrito (2026-10-27)
 
 - **PF-I03-A3 CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY:** [CI 40535205792](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40535205792), commit `12279a64b76aa76c6fd5df901c3cc8af713db287`, `completed/success`: **200/200 PASS**, dos quais **8/8 PF-I03-A3**, e Django system check PASS. A projeção Q2/roteamento restringe identificação sintética, vínculo a readback Q1/versionamento, classificação N0–N4/M0–M3 e justificativa; admissibilidade NOT_DECIDED, investigação NOT_OPENED e E9 BLOCKED.
