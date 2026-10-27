@@ -1,3 +1,9 @@
+## CP316 — PF-I04 | P3a/P3b tecnicamente concluídos (2026-10-27)
+
+- Neon sintético `br-gentle-hall-b6jaxehf`/`oes_sandbox`: schema `oes_app` criado (P3a), migrations Django administrativas 15/15 PASS (P3b), CI [40555198917](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40555198917). Postflight independente: 40 permissões, 9 tabelas, 8 sequências, zero objetos Django em public.
+- Após autorização explícita, `oes_django_migrator` recebeu NOLOGIN e perdeu CREATE em `oes_app`; 44 objetos próprios preservados, 15 migrations intactas. Usuário declarou segredo Actions descartável excluído; não verificado independentemente. Não repetir workflow P3b.
+- **Checkpoint canônico CP316:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP316.md`; ponteiro atualizado. PF-I04/P4 não autorizado; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## CP315 — PF-I04-A2/P1 | isolamento Django local PASS (2026-10-27)
 
 - CI [40541606299](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40541606299) no commit `a5cf31ab4652c5c6a93d09338732517d6b62caec`: PostgreSQL 16 descartável, 15/15 migrations PASS, 9 tabelas e 8 sequências em `oes_app`, 40 permissões, nenhum objeto Django em `public` no inventário. **Não é Neon nem autorização P3.**
