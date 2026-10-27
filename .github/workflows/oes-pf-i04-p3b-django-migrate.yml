@@ -1,0 +1,35 @@
+name: OES PF-I04 P3b Django migrations - explicitly approved, manual
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  p3b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Require one-time credential and approved environment
+        env:
+          P3B_PASSWORD: ${{ secrets.OES_P3B_OWNER_PASSWORD_ONETIME }}
+        run: |
+          if [ -z "$P3B_PASSWORD" ]; then
+            echo "::error::HOLD: one-time P3b credential absent; no DB connection."
+            exit 1
+          fi
+      - name: Install exact migration dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install "Django==5.2.18" "psycopg[binary]==3.3.6"
+      - name: Execute Django migrations in synthetic oes_app only
+        working-directory: applications/oes_web
+        env:
+          OES_P3B_APPROVED: '1'
+          OES_P3B_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_P3B_PASSWORD: ${{ secrets.OES_P3B_OWNER_PASSWORD_ONETIME }}
+          OES_PG_A4_ENABLED: '0'
+        run: python -m scripts.p3b_migrate_guarded
