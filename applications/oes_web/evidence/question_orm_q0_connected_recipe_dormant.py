@@ -34,7 +34,7 @@ def execute_connected_q0(*args, **kwargs):
 
 
 def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
-                     fingerprint, trial=None, _trial_repository=None):
+                     fingerprint, trial=None, _trial_repository=None, _phase=None):
     """Unwired review-only recipe. NOT an approved callable execution path.
 
     Requires separate security review, gate activation and explicit approval.
@@ -68,6 +68,8 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
     from .question_uow_offline import Receipt
 
     entity_uuid, version_uuid = (trial.entity_uuid, trial.version_uuid) if trial is not None else (uuid4(), uuid4())
+    if _phase is not None:
+        _phase("TRANSACTION_START")
     with transaction.atomic(using=alias, savepoint=False):
         if not connection.in_atomic_block or connection.get_autocommit():
             raise PreparationHold("HOLD: wrong backend or transaction")
@@ -78,6 +80,8 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                 raise PreparationHold("HOLD: request already exists")
             if OesEntity.objects.using(alias).filter(oes_id=question_id).exists():
                 raise PreparationHold("HOLD: question identity occupied")
+            if _phase is not None:
+                _phase("FIVE_ORM_INSERTS")
             repo.insert_entity(entity_uuid, question_id, actor_id)
             repo.insert_question(entity_uuid, actor_id)
             repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
@@ -86,6 +90,8 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                 Receipt(actor_id, request_id, fingerprint, question_id, 1, "REGISTER_Q0"),
                 entity_uuid, version_uuid,
             )
+            if _phase is not None:
+                _phase("VERIFY_INSIDE_TRANSACTION")
             checks = (
                 OesEntity.objects.using(alias).filter(pk=entity_uuid, oes_id=question_id).exists(),
                 OesQuestion.objects.using(alias).filter(
@@ -105,8 +111,12 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                 raise PreparationHold("HOLD: five-record invariant failed")
         finally:
             # Fail closed: even an unintended normal exit must not commit.
+            if _phase is not None:
+                _phase("FORCE_ROLLBACK")
             transaction.set_rollback(True, using=alias)
     # Point lookups only; after rollback, using the SAME approved alias.
+    if _phase is not None:
+        _phase("VERIFY_ZERO_RESIDUES")
     residues = (
         OesEntity.objects.using(alias).filter(pk=entity_uuid).exists(),
         OesQuestion.objects.using(alias).filter(pk=entity_uuid).exists(),

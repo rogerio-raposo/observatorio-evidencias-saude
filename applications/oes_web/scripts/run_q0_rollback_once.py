@@ -55,6 +55,15 @@ class _OneShotTrialRepository(DjangoQ0Repository):
         self.alias = alias
 
 
+STAGE = "SETUP"
+
+
+def stage(label):
+    global STAGE
+    STAGE = label
+    print("Q0_TRIAL_STAGE: " + label, flush=True)
+
+
 def main():
     from uuid import uuid4
     suffix = uuid4().hex
@@ -70,9 +79,11 @@ def main():
             or review.target_role != "oes_qprep_login"
             or review.target_database != "oes_sandbox"):
         raise RuntimeError("trial contract mismatch")
+    stage("CONNECT_AND_AUTHENTICATE")
     conn = connections[ALIAS]
     try:
         with conn.cursor() as cur:
+            stage("VERIFY_IDENTITY_AND_PRIVILEGES")
             cur.execute(
                 "SELECT session_user, current_user, current_database(), "
                 "current_setting('transaction_read_only'), "
@@ -108,12 +119,15 @@ def main():
                 raise RuntimeError("unexpected membership options")
         if conn.in_atomic_block or not conn.get_autocommit():
             raise RuntimeError("non-independent boundary")
+        stage("TRANSACTION_START")
         result = _rollback_recipe(
             alias=ALIAS, actor_id=trial.actor_id, request_id=trial.request_id,
             question_id=trial.question_id, original_text=trial.original_text,
             fingerprint=trial.fingerprint, trial=trial,
             _trial_repository=_OneShotTrialRepository(ALIAS),
+            _phase=stage,
         )
+        stage("VERIFY_ROLLBACK_EVIDENCE")
         if result != {"status": "ROLLED_BACK_ONLY", "verified_zero_residues": True}:
             raise RuntimeError("unexpected rollback evidence")
         print("PASS_ROLLED_BACK_ZERO_RESIDUES: five ORM INSERTs checked inside "
@@ -126,4 +140,4 @@ try:
     main()
 except BaseException as exc:
     # Never expose exception text, SQL params, host URLs, or the secret.
-    sys.exit("FAIL_OR_INCONCLUSIVE_Q0_TRIAL: " + type(exc).__name__)
+    sys.exit("INCONCLUSIVE_Q0_TRIAL at " + STAGE + ": " + type(exc).__name__)
