@@ -9,7 +9,7 @@ from evidence.question_preparation import (QuestionCommand,PreparationHold,
 
 class QuestionPreparationOfflineTests(SimpleTestCase):
     def setUp(self):
-        self.actor=Mock(is_authenticated=True,pk=7)
+        self.actor=Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=7)
         self.actor.has_perm.return_value=True
         self.q0=QuestionCommand("req-1","OES-Q-TEST",0,"Pergunta sintética?")
     def test_fail_closed_without_backend(self):
