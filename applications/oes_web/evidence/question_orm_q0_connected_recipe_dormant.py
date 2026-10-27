@@ -16,6 +16,19 @@ from .question_preparation import PreparationHold
 from .question_orm_q0_repository_dormant import DjangoQ0Repository
 
 
+def prepare_q0_trial_review(*, actor_id, request_id, question_id, original_text):
+    """Prepare a synthetic proposal offline; deliberately does not call the recipe.
+
+    This is a one-way link to the existing preflight, not a writer activation.
+    The public execution gate and repository constructor still reject calls.
+    """
+    from scripts.q0_rollback_trial_preflight_offline import prepare_synthetic_q0_trial
+    return prepare_synthetic_q0_trial(
+        actor_id=actor_id, request_id=request_id,
+        question_id=question_id, original_text=original_text,
+    )
+
+
 def execute_connected_q0(*args, **kwargs):
     raise PreparationHold("HOLD: G2-P2B connected execution not authorized")
 
