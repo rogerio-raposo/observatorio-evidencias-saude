@@ -21,4 +21,4 @@ jobs:
         working-directory: applications/oes_web
         env:
           OES_PG_A4_ENABLED: '0'
-        run: python scripts/inventory_django_admin_migrations_offline.py
+        run: python -m scripts.inventory_django_admin_migrations_offline
