@@ -1,3 +1,9 @@
+## CP318 — PF-I04/P4-A3–A6 | preflight e identidade Django runtime (2026-10-27)
+
+- P4-A4: inspeção Neon READ ONLY na branch sintética oes-pg-a3-synthetic-20261024: migrador Django NOLOGIN, owner das 9 tabelas e 8 sequências oes_app; qprep login/writer têm SELECT e INSERT nas cinco tabelas Q0, mas não acesso às tabelas administrativas Django; oes_runtime não provisionado. Nenhum SQL mutante, dado pessoal ou científico lido.
+- P4-A5: recomendado runtime PostgreSQL dedicado de privilégio mínimo, separado da administração de contas, sem criar role/grant; P4-A6: `evidence.prepare_question` exigida pelo serviço, mas existência no catálogo não comprovada; verificar registro e contenttype em consulta específica autorizada.
+- **CP318 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP318.md`. Próxima atividade P4-A7: preparar gate de leitura restrita auth_permission/contenttype, sem DML. P4 NOT_AUTHORIZED; Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## CP317 — PF-I04/P4-A1–A2 | contrato candidato Q0 autenticado (2026-10-27)
 
 - Matriz de identidade e privilégios candidata consolidada: Django Auth/sessions, preparador individual e `actor_id=str(user.pk)`; uma identidade técnica runtime mínima ainda não definida/provisionada, privilégios administrativos locais são apenas experimentais. `DATABASES={}`, configuração de desenvolvimento, repositório e execução Q0 bloqueados.
