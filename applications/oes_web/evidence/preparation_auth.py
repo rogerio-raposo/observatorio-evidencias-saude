@@ -3,9 +3,14 @@ from django.core.exceptions import PermissionDenied
 
 PREPARE_QUESTION_PERMISSION = "evidence.prepare_question"
 
+
 def require_question_preparer(user):
-    """Gate for a future Q0→Q1 service; never grant by superuser/staff alone."""
-    if (not getattr(user, "is_authenticated", False)
-            or not user.has_perm(PREPARE_QUESTION_PERMISSION)):
+    """Only active non-admin users with explicit preparation permission may proceed."""
+    if (getattr(user, "is_authenticated", False) is not True
+            or getattr(user, "is_active", False) is not True
+            or getattr(user, "is_staff", True) is not False
+            or getattr(user, "is_superuser", True) is not False
+            or not callable(getattr(user, "has_perm", None))
+            or user.has_perm(PREPARE_QUESTION_PERMISSION) is not True):
         raise PermissionDenied("HOLD: question preparation not authorized")
     return True
