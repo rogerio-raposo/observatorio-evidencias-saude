@@ -10,7 +10,7 @@ from evidence.question_preparation import PreparationHold
 
 class PFI03Q2RoutingTests(SimpleTestCase):
     def setUp(self):
-        self.user = Mock(is_authenticated=True, pk=12)
+        self.user = Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=12)
         self.user.has_perm.return_value = True
         self.q1 = {
             "question_id": "OES-SYNTH-Q0-PFI03-A3", "version": 2,
