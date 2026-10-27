@@ -1,0 +1,41 @@
+name: OES Django migration isolation test - disposable local PostgreSQL
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: oes_local
+          POSTGRES_PASSWORD: local-disposable-only
+          POSTGRES_DB: oes_local_inventory
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U oes_local -d oes_local_inventory"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned disposable dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install "Django==5.2.18" "psycopg[binary]==3.3.6"
+      - name: Create schema on disposable local PostgreSQL
+        env:
+          PGPASSWORD: local-disposable-only
+        run: psql -h 127.0.0.1 -U oes_local -d oes_local_inventory -v ON_ERROR_STOP=1 -c "CREATE SCHEMA oes_app"
+      - name: Apply administrative migrations and audit schema isolation
+        working-directory: applications/oes_web
+        env:
+          OES_LOCAL_SQL_INVENTORY: '1'
+          OES_PG_A4_ENABLED: '0'
+        run: python -m scripts.audit_django_migration_isolation_local
