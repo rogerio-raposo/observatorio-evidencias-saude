@@ -1,3 +1,8 @@
+## PF-I03-A2 — encerramento técnico restrito (2026-10-27)
+
+- **CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY:** [CI 40534194664](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40534194664) em `aa89f44523d0fa0c64fc7637221fb147a26eae8c`, `completed/success`: **192/192 testes PASS**, incluindo **8/8 PF-I03-A2**; Django system check PASS e compilação Q0 PASS. Q0→Q1 sintético na Unit of Work offline, versão 2, original preservado, normalização/justificativa propostas, autorização, conflitos e idempotência testados. Nenhum HTTP mutante, conexão SQL, operação persistente ou revisão científica.
+- **Próxima atividade PF-I03-A3, exclusivamente análise de contrato:** examinar `templates/question-record.md` e `templates/routing-record.md`, separar Q2 (estruturação e proposta metodológica) da decisão de roteamento, explicitar campos, autoria, estado provisório e fronteira E9. Comparar com Django atual antes de qualquer implementação; não inventar autorização de Q2 conectado, revisão A3 ou abertura de investigação. CP314 canônico; G2-P2B operacional NO-GO, E9 NO-GO, Marco B OPEN, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## PF-I03-A2 — diagnóstico de escopo Q1/Q2 (2026-10-27)
 
 - **Revisão do código:** `QuestionCommand` + `submit_question_command` + `OfflineQuestionUnitOfWork` já suportam `PROPOSE_Q1` com `normalized_text`, justificativa, preservação do original, versão esperada, controle de escopo, idempotência e conflito. `PF-I03-A1` encerrado 184/184 PASS. Não duplicar serviços ou adaptadores.
