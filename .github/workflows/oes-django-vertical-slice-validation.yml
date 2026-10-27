@@ -26,6 +26,10 @@ jobs:
         working-directory: applications/oes_web
         run: python -m pip install --disable-pip-version-check -r requirements.txt
 
+      - name: Compile Q0 manual runner and transaction recipe without execution
+        working-directory: applications/oes_web
+        run: python -m py_compile scripts/run_q0_rollback_once.py evidence/question_orm_q0_connected_recipe_dormant.py
+
       - name: Check Django application configuration
         working-directory: applications/oes_web
         run: python manage.py check
