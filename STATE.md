@@ -1,3 +1,9 @@
+## CP317 — PF-I04/P4-A1–A2 | contrato candidato Q0 autenticado (2026-10-27)
+
+- Matriz de identidade e privilégios candidata consolidada: Django Auth/sessions, preparador individual e `actor_id=str(user.pk)`; uma identidade técnica runtime mínima ainda não definida/provisionada, privilégios administrativos locais são apenas experimentais. `DATABASES={}`, configuração de desenvolvimento, repositório e execução Q0 bloqueados.
+- Primeira fatia proposta: login sintético, formulário GET/POST protegido, Q0 com cinco INSERTs atômicos, recibo e consulta read-after-write somente após commit; sem Q1/Q2/roteamento/E9. P4 não autorizado; não reutilizar migrador nem repetir P3b.
+- **CP317 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP317.md`; próxima PF-I04/P4-A3 análise read-only da suficiência de identidade/ACL, exigindo gate próprio para acessos e mutações. Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## CP316 — PF-I04 | P3a/P3b tecnicamente concluídos (2026-10-27)
 
 - Neon sintético `br-gentle-hall-b6jaxehf`/`oes_sandbox`: schema `oes_app` criado (P3a), migrations Django administrativas 15/15 PASS (P3b), CI [40555198917](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40555198917). Postflight independente: 40 permissões, 9 tabelas, 8 sequências, zero objetos Django em public.
