@@ -1,3 +1,10 @@
+## CP321 — PF-I04/P4-A12–A16 | oes_runtime criado e bloqueio de GRANT Django (2026-10-27)
+
+- **P4-A13:** proprietário criou `oes_runtime` com senha privada no SQL Editor do Neon sintético (`weathered-boat-65779510` / `br-gentle-hall-b6jaxehf` / `oes_sandbox`). Preflight/postflight SELECT: LOGIN=true, NOINHERIT, sem atributos administrativos, **zero memberships**. Nenhum GRANT ou conexão runtime.
+- **P4-A14:** 4 SELECTs catalogais: CONNECT=true, `public` USAGE=true/CREATE=false; `oes_app`, `core` e `investigation` USAGE=false/CREATE=false; `oes_runtime` sem DML/SELECT nas 9 tabelas Django e 5 tabelas Q0 e sem acesso às 8 sequências Django.
+- **P4-A15/A16:** matriz candidata separa Django Auth/sessions (Bloco A) de Q0 (Bloco B), sem concessões. 3 SELECTs catalogais autorizados: `oes_sandbox_owner` pode conceder USAGE dos 3 schemas e DML nas 5 tabelas Q0, mas **não tem GRANT OPTION nas 9 tabelas Django** pertencentes a `oes_django_migrator`. Relação owner→migrator MEMBER=true, USAGE=false, SET=false. Bloco A bloqueado; não reativar migrador ou modificar membership/ownership automaticamente.
+- **CP321 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP321.md`. Próxima P4-A17: comparar alternativas administrativas para GRANT nas tabelas Django **somente documental**, sem SQL/SET ROLE/GRANT. Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; P4 NOT_AUTHORIZED; Fase 5 NOT_STARTED.
+
 ## CP320 — PF-I04/P4-A10–A11 | Django preparer gate offline reforçado (2026-10-27)
 
 - P4-A10: desenho da identidade técnica `oes_runtime` candidata ainda não provisionada, matriz candidata de grants mínimos, separação de administração de contas e runtime. Permissão `evidence.prepare_question` criada no catálogo em P4-A9, mas não atribuída.
