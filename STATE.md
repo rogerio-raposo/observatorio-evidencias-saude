@@ -1,3 +1,8 @@
+## Atualização factual CP313 — CI Django offline de 2026-10-27
+
+- CI manual [40521292336](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40521292336), commit `2325b7c192985220ca5a9476ea25531e8e07d6a9`: 177/177 testes Django offline PASS, incluindo três testes de preflight Q0, UUIDs e bloqueios; system check PASS. Não houve INSERT ou rollback conectado nesta CI.
+- G2-P2B permanece NO-GO. Proposta pendente de autorização nominal: uma única transação Django ORM Q0 com cinco INSERTs sintéticos, usando `oes_qprep_login` em `oes_sandbox` na branch sintética `br-gentle-hall-b6jaxehf`, rollback obrigatório e checagem de zero resíduos. Antes, revisar executor experimental segregado. Proibidos owner, commit de dados, DDL, grants, credenciais no repositório, usuários reais, deploy e HTTP write. E9 NO-GO; Marco B OPEN; readiness NOT_READY. CP313 continua canônico.
+
 ## Marco de continuidade CP313 — 2026-10-27 (evidência posterior; checkpoint CP313 preservado)
 
 - **Django READ ONLY conectado PASS:** execução manual [40506158071](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40506158071), tentativa 1, concluída com sucesso em 2026-10-27, commit `43037dd2ac56adbe8e455aaceb6b31e6ff481924`. O script Django/PostgreSQL verificou `session_user=current_user=oes_qprep_login`, DB `oes_sandbox`, `transaction_read_only=on`, `default_transaction_read_only=on`, atributos não administrativos, herança de `oes_qprep_writer` sem `SET ROLE` e ausência de vínculo com `neon_superuser`. Evidência factual restrita ao login conectado e consultas de catálogo, não à execução Q0.
