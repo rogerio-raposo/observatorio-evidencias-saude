@@ -4,7 +4,7 @@ G2-P2B is NO-GO. No writer alias, credential, repository factory or network
 entrypoint is supplied. The execution gate below intentionally always HOLDs.
 This recipe does not establish least privilege, commit or connected readiness.
 """
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from django.db import connections, transaction
 
@@ -34,7 +34,7 @@ def execute_connected_q0(*args, **kwargs):
 
 
 def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
-                     fingerprint):
+                     fingerprint, trial=None):
     """Unwired review-only recipe. NOT an approved callable execution path.
 
     Requires separate security review, gate activation and explicit approval.
@@ -45,6 +45,20 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
         raise PreparationHold("HOLD: invalid synthetic identity")
     if len(fingerprint) != 64 or any(x not in "0123456789abcdef" for x in fingerprint):
         raise PreparationHold("HOLD: invalid fingerprint")
+    if trial is not None:
+        # A future authorized trial must reuse the preflight UUIDs exactly.
+        from scripts.q0_rollback_trial_preflight_offline import SyntheticQ0Trial
+        if (type(trial) is not SyntheticQ0Trial
+                or trial.target_alias != alias
+                or (trial.actor_id, trial.request_id, trial.question_id,
+                    trial.original_text, trial.fingerprint)
+                != (actor_id, request_id, question_id, original_text, fingerprint)
+                or type(trial.entity_uuid) is not UUID
+                or type(trial.version_uuid) is not UUID
+                or trial.entity_uuid == trial.version_uuid
+                or trial.expected_insert_count != 5
+                or trial.rollback_required is not True):
+            raise PreparationHold("HOLD: synthetic trial identity mismatch")
     # This line is a hard blocker, not a gate to bypass via object.__new__.
     repo = DjangoQ0Repository(alias=alias)
     connection = connections[alias]
@@ -52,7 +66,7 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
         raise PreparationHold("HOLD: non-independent transaction boundary")
     from .question_uow_offline import Receipt
 
-    entity_uuid, version_uuid = uuid4(), uuid4()
+    entity_uuid, version_uuid = (trial.entity_uuid, trial.version_uuid) if trial is not None else (uuid4(), uuid4())
     with transaction.atomic(using=alias, savepoint=False):
         if not connection.in_atomic_block or connection.get_autocommit():
             raise PreparationHold("HOLD: wrong backend or transaction")
