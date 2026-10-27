@@ -15,7 +15,7 @@ class PFI03Q1OfflineTests(SimpleTestCase):
     def setUp(self):
         self.port = FakePort()
         self.uow = OfflineQuestionUnitOfWork(self.port)
-        self.user = Mock(is_authenticated=True, pk=41)
+        self.user = Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=41)
         self.user.has_perm.return_value = True
         self.q0 = QuestionCommand("a1", "OES-SYNTH-Q0-PFI03-A2", 0, "Original sintético?")
         self.q1 = QuestionCommand(
@@ -75,7 +75,7 @@ class PFI03Q1OfflineTests(SimpleTestCase):
     def test_anonymous_unprivileged_and_wrong_owner_denied(self):
         self.prepare()
         anonymous = Mock(is_authenticated=False, pk=None)
-        other = Mock(is_authenticated=True, pk=42)
+        other = Mock(is_authenticated=True, is_active=True, is_staff=False, is_superuser=False, pk=42)
         other.has_perm.return_value = True
         with self.assertRaises(PermissionDenied):
             self.propose(user=anonymous)
