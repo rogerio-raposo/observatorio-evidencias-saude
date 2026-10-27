@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP320 — 2026-10-27**
+**CP321 — 2026-10-27**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-27_CP320.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-27_CP321.md`
 
 Checkpoint anterior:
 
-`CP319`
+`CP320`
 
 Status:
 
