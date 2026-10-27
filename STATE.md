@@ -1,3 +1,8 @@
+## CP314 — 2026-10-27 (checkpoint canônico; credencial descartável encerrada por confirmação)
+
+- **Secret:** o proprietário confirmou a exclusão de `OES_QPREP_LOGIN_PASSWORD` no GitHub Actions e anteriormente a rotação da senha de `oes_qprep_login`. Declaração do proprietário, sem auditoria independente. Encerrar o ciclo dessa credencial; não solicitar senha no chat nem repetir o workflow experimental sem novo propósito e controle específico.
+- **Ensaio Q0 sintético conectado encerrado PASS:** run 40525954698 tentativa 2, cinco INSERTs intratransacionais, rollback e zero resíduos. CP314 em `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP314.md` passa a ser referência de continuidade. Próxima prioridade: reavaliar macroatividades e os critérios do Marco B, sem reabrir teste redundante. G2-P2B operacional NO-GO, E9 NO-GO, Marco B OPEN, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## Encerramento técnico formal — OES G2-P2B — 2026-10-27
 
 - **ENCERRADO COM SUCESSO exclusivamente o ensaio transacional conectado sintético Django ORM Q0.** Evidência [GitHub Actions 40525954698, tentativa 2](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40525954698): papel restrito `oes_qprep_login`, cinco INSERTs verificados na mesma transação, rollback obrigatório, zero resíduos verificados após rollback; `PASS_ROLLED_BACK_ZERO_RESIDUES`. O primeiro acionamento e a primeira tentativa desse run falharam por `OperationalError` antes das inserções. A CI offline no commit `29af77e28722973dc75319bb4a9bbb6525d0e19b` registrou 177/177 PASS e compilação dos módulos instrumentados.
