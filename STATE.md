@@ -1,3 +1,10 @@
+## PF-I04-A2 — autorização de avanço e fronteira de execução (2026-10-27)
+
+- O responsável autorizou prosseguir com PF-I04-A2 após o diagnóstico do Documento 316-PF-I04-A1. A autorização cobre preparação e desenvolvimento controlado da primeira fatia funcional Q0, **não** revoga gates específicos existentes para conexão/SQL, migrations, criação de usuários reais, roles/grants, secrets, escrita HTTP pública ou deploy.
+- Impedimentos confirmados no código: `DATABASES={}` por padrão, configuração de desenvolvimento, ausência de sessão/login respaldados por banco; `DjangoQ0Repository.__init__` bloqueia instanciação; `execute_connected_q0` bloqueia execução. Não contornar esses bloqueios por alterações implícitas.
+- Próximo passo operacional necessário: contrato de localização e isolamento das tabelas Django Auth/sessões, identidade responsável e reader/writer de privilégio mínimo; inspeção não mutante do esquema Q0 existente e procedimento de segurança/rollback. Somente depois, solicitar aprovação nominal da primeira conexão/mutação técnica com destino e escopo exatos. Não repetir testes puramente sintéticos sem lacuna específica.
+- CP314 canônico; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## PF-I04 — diagnóstico inicial do piloto funcional (2026-10-27)
 
 - Revisão PF-05/06/08/09: Django Auth e permissão evidence.prepare_question existem apenas como arcabouço offline; Unit of Work e ORM/recibos estão comprovados experimentalmente, não como fluxo durável de usuário; settings.py contém DEBUG e chave de desenvolvimento, DATABASES={} por padrão e leitor PG-A4 opcional somente leitura; procedimentos de CI não equivalem a operação/recuperação do piloto.
