@@ -1,3 +1,9 @@
+## PF-I04 — diagnóstico inicial do piloto funcional (2026-10-27)
+
+- Revisão PF-05/06/08/09: Django Auth e permissão evidence.prepare_question existem apenas como arcabouço offline; Unit of Work e ORM/recibos estão comprovados experimentalmente, não como fluxo durável de usuário; settings.py contém DEBUG e chave de desenvolvimento, DATABASES={} por padrão e leitor PG-A4 opcional somente leitura; procedimentos de CI não equivalem a operação/recuperação do piloto.
+- Prioridade candidata PF-I04: preparador autenticado utiliza Django para Q0, Q1, Q2/roteamento preliminar e consulta de estados/histórico, sem E9. Primeiro definir contrato mínimo do usuário, identidade, persistência, ambiente, autorização e rollback, antes de implementar. Respeitar Docs. 287 e 288: uma identidade de aplicação pode bastar no piloto; não construir workarounds de produção ou novo mecanismo de autenticação. Nenhuma operação conectada aprovada nesta análise.
+- PF-I03 permanece CLOSED_TECHNICAL_RESTRICTED_OFFLINE_ONLY (CI 40535916973, 201/201 PASS). CP314 canônico; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## PF-I03 — fechamento técnico offline (2026-10-27)
 
 - CI 40535916973: commit dac5ab536116e0abf1b47c72767bd1eb8b12e23e; 201/201 testes PASS. Teste de composição sequencial Q0-Q1-Q2-roteamento PASS; Django check PASS.
