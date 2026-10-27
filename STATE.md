@@ -1,3 +1,9 @@
+## CP315 — PF-I04-A2/P1 | isolamento Django local PASS (2026-10-27)
+
+- CI [40541606299](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40541606299) no commit `a5cf31ab4652c5c6a93d09338732517d6b62caec`: PostgreSQL 16 descartável, 15/15 migrations PASS, 9 tabelas e 8 sequências em `oes_app`, 40 permissões, nenhum objeto Django em `public` no inventário. **Não é Neon nem autorização P3.**
+- Parecer e matriz candidata de privilégios: `docs/governance/330-pf-i04-a2-p1-parecer-isolamento-e-gates-p3.md`. Alternativa B aprovada arquiteturalmente; P3 DDL/migrations, grants e P4 uso funcional continuam sujeitos a aprovações específicas.
+- **Checkpoint vigente CP315:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP315.md`. Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
 ## PF-I04-A2 — preflight catalogal não mutante da alternativa B (2026-10-27)
 
 - Neon: projeto weathered-boat-65779510, branch sintética br-gentle-hall-b6jaxehf, banco oes_sandbox. Consulta somente SELECT confirmou schemas core, investigation, public; schema candidato oes_app ainda ausente. Conexão de inspeção reportou current_user=oes_sandbox_owner; nenhum SQL mutante executado.
