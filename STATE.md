@@ -1,3 +1,9 @@
+## PF-I04-A2 — inventário Neon e decisão de isolamento Django (2026-10-27)
+
+- Consulta não mutante via catálogo Neon: projeto weathered-boat-65779510, branch sintética br-gentle-hall-b6jaxehf, database oes_sandbox. A tabela investigation.question_version possui normalized_text nullable, preparation_stage e CHECK ck_pf_i02_question_preparation_stage; investigation.question_command_receipt dispõe de PK (actor_id,request_id), fingerprint e CHECK para REGISTER_Q0/PROPOSE_Q1. Não criar ou repetir DDL Q0.
+- O inventário de tabelas da branch não exibiu tabelas Django auth_user/django_session. Django config ainda DATABASES={} por padrão; armazenamento de login/sessões e mapeamento de responsável não definidos. Recomendar isolamento das tabelas Django em área/esquema de aplicação ou base separada antes de migrations, sem criar agora. Não presumir que o Neon aceita migração padrão sem desenho de schema/search_path e grants.
+- Próximo gate: especificar escolha entre banco/namespace Django separados e conexão de app com privilégios mínimos, ciclo de contas sintéticas, política de sessão/CSRF e read-after-write; submeter plano de migrations e conexão a aprovação específica. Nenhum SQL, DDL, DML, grants, segredos ou HTTP write executado. Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY.
+
 ## PF-I04-A2 — autorização de avanço e fronteira de execução (2026-10-27)
 
 - O responsável autorizou prosseguir com PF-I04-A2 após o diagnóstico do Documento 316-PF-I04-A1. A autorização cobre preparação e desenvolvimento controlado da primeira fatia funcional Q0, **não** revoga gates específicos existentes para conexão/SQL, migrations, criação de usuários reais, roles/grants, secrets, escrita HTTP pública ou deploy.
