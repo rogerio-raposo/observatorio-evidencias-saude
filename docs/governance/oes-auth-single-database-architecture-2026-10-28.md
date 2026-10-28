@@ -431,3 +431,7 @@ Preflight sem escrita em oes_sandbox: auth_user=0; auth_permission=44; auth_user
 **Impedimentos a resolver antes de solicitar DML:** método de autenticação/segredo temporário para usuário sintético, modo autorizado de executar Django administrativo com acesso às sequências, rollback/limpeza grantor-aware e prova offline de transação e proteção de vínculos. Por proporcionalidade, não introduzir novos serviços ou roles sem necessidade comprovada.
 
 **Estado:** contrato preparado, sem SQL executado, sem usuário criado, G2-P2-B HOLD; G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
+## G2-P2-B — testes de provisionamento e limpeza offline PASS (2026-10-28)
+
+Dois testes em evidence/auth_sqlite_sandbox_checks.py (commit d54f4b4289a9bcebb0eb376356c0923d79aa9164) validam, em SQLite descartável, criação transacional de permissão evidence.prepare_question, usuário sintético com password hash, vínculo explícito e PreparerIdentity, proteção PROTECT, limpeza ordenada e restauração da contagem de permissões; o segundo provoca erro entre as operações e verifica rollback integral. CI [40741871726](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40741871726) SUCCESS: 173 testes principais + 24 auth = 197 PASS. Nenhum DML Neon, role/grant, HTTP write ou usuário real. A prova offline não autoriza nem valida execução PostgreSQL; G2-P2-B conectado permanece HOLD. Próxima decisão: preflight da identidade administrativa e especificação do provisionamento conectado com controle de credencial/cleanup, sob autorização nominal.
