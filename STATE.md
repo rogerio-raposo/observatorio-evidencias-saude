@@ -1,3 +1,9 @@
+## CP332 — Django First / G2-P2-B offline (2026-10-28)
+
+- Checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP332.md`; anterior CP331 preservado. A1–A5: confirmação do preflight administrativo, criação e refatoração do núcleo Django ORM `config/auth_pg_g2_p2b_offline.py`; entrada pública bloqueia PostgreSQL e só aceita SQLite efêmero.
+- CI [40744588262](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40744588262) FAILURE por URI SQLite de testes; corrigida. CI [40745400376](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40745400376) SUCCESS, CI [40745725023](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40745725023) SUCCESS; commit A5 `1a05f8e2`.
+- Nenhum DML Neon, role/grant/segredo/execução conectada ou HTTP write. G2-P2-B conectado HOLD; G2-P2B operacional NO-GO, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. Próximo passo revisão dirigida do contrato de execução conectada e riscos ORM; autorização nominal antes de mutação.
+
 ## CP331 — retomada G2-P2-B (2026-10-28)
 
 - Ponteiro: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP331.md`. G2-P1 conectado [40740532848](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40740532848) PASS; workflow novamente desabilitado, segredo excluído segundo responsável. B2-M1 [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136) 16/16 migrations PASS, segredo excluído segundo responsável.
