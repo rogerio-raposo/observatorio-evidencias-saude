@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'applications/oes_web/evidence/question_uow_offline.py'
+      - 'applications/oes_web/evidence/test_question_orm_q0_dormant.py'
       - 'applications/oes_web/evidence/tests/test_pf_i02_w1b_uow.py'
       - '.github/workflows/oes-pf-i02-w1b-offline.yml'
   workflow_dispatch:
@@ -23,4 +24,4 @@ jobs:
       - working-directory: applications/oes_web
         run: python manage.py check
       - working-directory: applications/oes_web
-        run: python manage.py test evidence.tests --verbosity 2
+        run: python manage.py test evidence.tests evidence.test_question_orm_q0_dormant --verbosity 2
