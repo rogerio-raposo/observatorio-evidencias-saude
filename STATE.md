@@ -1,3 +1,9 @@
+## Marco funcional pós-CP329 — Q0 sintético persistente PASS (2026-10-28)
+
+- **Execução única autorizada:** workflow manual `oes-q0-synthetic-commit-manual.yml`, [run 40695250735](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40695250735), SHA `869798455c7129dfb0ebb63e7088dc7e15f1d66b`, **SUCCESS**; logs: `PASS Q0_SYNTHETIC_COMMIT_REPLAY_CONFLICT_READBACK`. O executor relata commit Q0 sintético, conferência dos cinco registros, replay idempotente e rejeição de conflito. Não equivale a liberação de escrita operacional.
+- Pré-requisitos comprovados: catálogo de privilégios de `oes_qprep_login` (SELECT/INSERT nas cinco tabelas); teste anterior de cinco INSERTs com rollback, run 40525954698 PASS; suite offline [40693704967](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40693704967) **146/146 PASS**.
+- Segredo temporário `OES_QPREP_LOGIN_PASSWORD`: **exclusão declarada pelo responsável após o sucesso**, não verificada independentemente. Não repetir workflow automaticamente; não consultar dados reais. CP329 e Documento 362 vigentes; PF-I04/P4 autônomo deferido; Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY e Fase 5 NOT_STARTED.
+
 ## Marco funcional pós-CP329 — Django–PostgreSQL READ ONLY integrado PASS (2026-10-28)
 
 - **Evidência:** GitHub Actions [40691185683](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40691185683), `workflow_dispatch`, commit `59754c1a61d864399b60093ff29b5642b7c3993e`, conclusão **SUCCESS**. Logs: `PASS PG_A4_DJANGO_CONFIG_PREFLIGHT_NO_CONNECTION`, `PASS PG_A4_G2_B_DJANGO_CONNECTED_THREE_LINKS_ONE_PROVENANCE`, `PASS PG_A4_DJANGO_CONNECTED_SYNTHETIC_HTML`.
