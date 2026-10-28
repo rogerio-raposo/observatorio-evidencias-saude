@@ -29,6 +29,11 @@
 <section aria-labelledby="interactive-title">
 <h2 id="interactive-title">Experimentar validação local</h2>
 <p>Digite uma pergunta fictícia. A verificação ocorre exclusivamente neste navegador; nenhum texto é enviado ao servidor.</p>
+<label for="q0-local-request">Identificador sintético da solicitação (até 128 caracteres)</label>
+<input id="q0-local-request" type="text" maxlength="128" value="request-synthetic-preview">
+<label for="q0-local-question">Identificador fictício da pergunta</label>
+<input id="q0-local-question" type="text" value="OES-SYNTH-Q0-PREVIEW">
+<p>Versão esperada do comando Q0: <strong>0</strong> (fixa nesta demonstração).</p>
 <label for="q0-local-text">Pergunta sintética</label>
 <textarea id="q0-local-text" maxlength="10000" rows="4" placeholder="Escreva uma pergunta fictícia"></textarea>
 <p><button id="q0-local-check" type="button">Validar localmente</button></p>
@@ -39,14 +44,20 @@
   "use strict";
   const field = document.getElementById("q0-local-text");
   const output = document.getElementById("q0-local-result");
+  const requestId = document.getElementById("q0-local-request");
+  const questionId = document.getElementById("q0-local-question");
   document.getElementById("q0-local-check").addEventListener("click", function () {
     const value = field.value;
-    if (!value.trim()) {
+    if (!requestId.value.trim() || requestId.value.length > 128) {
+      output.textContent = "HOLD: identificador de solicitação inválido (1 a 128 caracteres).";
+    } else if (!questionId.value.trim() || !questionId.value.startsWith("OES-SYNTH-Q0-")) {
+      output.textContent = "HOLD: use um identificador fictício OES-SYNTH-Q0-.";
+    } else if (!value.trim()) {
       output.textContent = "HOLD: informe uma pergunta sintética não vazia.";
     } else if (value.length > 10000) {
       output.textContent = "HOLD: texto excede 10.000 caracteres.";
     } else {
-      output.textContent = "Validação local PASS: texto preenchido. Nenhuma autorização ou gravação foi realizada.";
+      output.textContent = "Validação local PASS: campos Q0 preenchidos; versão esperada 0. Nenhuma autorização ou gravação foi realizada.";
     }
   });
 }());
