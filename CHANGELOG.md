@@ -1,3 +1,10 @@
+## 2026-10-28 — Q0 Django–PostgreSQL sintético com commit e replay PASS (sem novo checkpoint)
+
+- Consulta catalogal READ ONLY validou `oes_qprep_login` com herança de `oes_qprep_writer` e SELECT/INSERT nas cinco tabelas Q0, sem ajustes de roles/grants.
+- Tests offline Q0 de replay, conflito e escopo atual incluídos na CI: run 40693124102 **143/143 PASS**. Executor sintético persistente e verificações fail-closed adicionados; run 40693704967 **146/146 PASS**.
+- Sob aprovação nominal `Q0_SYNTHETIC_COMMIT_ONCE`, execução manual única [40695250735](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40695250735), branch main, **SUCCESS**, log `PASS Q0_SYNTHETIC_COMMIT_REPLAY_CONFLICT_READBACK`. Cinco registros sintéticos persistentes e leitura posterior, idempotência e conflito verificados pelo executor; Q1, rota HTTP de escrita e produção permanecem indisponíveis.
+- Responsável **declarou exclusão** do segredo `OES_QPREP_LOGIN_PASSWORD`; sem verificação independente por API. CP329 mantido; G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED. Não repetir ensaio nem ampliar escrita sem decisão própria.
+
 ## 2026-10-28 — Marco técnico Django–PostgreSQL integrado READ ONLY (sem novo checkpoint)
 
 - Publicada a rota GET-only `/synthetic-pg-links/`, leitor PG-A4 existente reutilizado, template HTML e seis testes offline. Run [40689017577](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40689017577) **SUCCESS: 136/136 PASS**.
