@@ -495,3 +495,32 @@ class G2ProvisioningOfflineTests(TestCase):
         self.assertFalse(get_user_model().objects.filter(username="oes_g2_failure_fixture").exists())
         self.assertFalse(Permission.objects.filter(codename="prepare_question", content_type__app_label="evidence").exists())
         self.assertFalse(PreparerIdentity.objects.exists())
+
+
+class G2P2BExecutorOfflineTests(TestCase):
+    """Connected adapters must remain absent; only disposable SQLite may mutate."""
+
+    def test_offline_executor_and_postflight(self):
+        from config.auth_pg_g2_p2b_offline import provision_offline
+        result = provision_offline(password="test-password-only")
+        self.assertEqual(result["status"], "PASS_OFFLINE_ONLY")
+        self.assertEqual(result["after"]["permissions"], result["before"]["permissions"] + 1)
+        self.assertEqual(result["after"]["users"], 1)
+        self.assertEqual(result["after"]["identities"], 1)
+
+    def test_offline_executor_rolls_back_on_failure(self):
+        from config.auth_pg_g2_p2b_offline import provision_offline, ProvisioningHold
+        from preparer_identity.models import PreparerIdentity
+        before = (Permission.objects.count(), get_user_model().objects.count())
+        with self.assertRaises(ProvisioningHold):
+            provision_offline(password="test-password-only", inject_failure=True)
+        self.assertEqual((Permission.objects.count(), get_user_model().objects.count()), before)
+        self.assertFalse(PreparerIdentity.objects.exists())
+
+    def test_offline_executor_rejects_non_disposable_connection(self):
+        from unittest.mock import patch
+        from config.auth_pg_g2_p2b_offline import provision_offline, ProvisioningHold
+        with patch("config.auth_pg_g2_p2b_offline._offline_guard",
+                   side_effect=ProvisioningHold("HOLD: connected forbidden")):
+            with self.assertRaises(ProvisioningHold):
+                provision_offline(password="test-password-only")
