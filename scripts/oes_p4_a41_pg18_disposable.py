@@ -204,7 +204,7 @@ def main():
         emit("trial_grant_set_revoke_rollback", "PASS")
         post = psql(role="oes_sandbox_owner", script=files["postflight"])
         summary, checks = parse_postflight(post.stdout)
-        expect("postflight_26_check_pass", summary[2] == "t" and summary[4] == "0"
+        expect("postflight_28_check_pass", summary[2] == "t" and summary[4] == "0"
                and all(v == "t" for v in checks.values()))
         psql(sql="CREATE ROLE oes_p4_a40_third NOLOGIN")
         psql(role="oes_sandbox_owner", sql="""GRANT oes_p4_trial_target TO oes_p4_a40_third
@@ -238,8 +238,13 @@ def main():
           AND (SELECT count(*)=1 FROM pg_roles
                WHERE rolname='oes_p4_trial_login' AND NOT rolcanlogin)
           AND (SELECT count(*)=0 FROM pg_auth_members
-               WHERE member='oes_p4_trial_login'::regrole
-                  OR roleid='oes_p4_trial_login'::regrole)
+               WHERE member='oes_p4_trial_login'::regrole)
+          AND (SELECT count(*)=1 FROM pg_auth_members
+               WHERE roleid='oes_p4_trial_login'::regrole)
+          AND EXISTS (SELECT 1 FROM pg_auth_members
+               WHERE roleid='oes_p4_trial_login'::regrole
+                 AND member='oes_sandbox_owner'::regrole
+                 AND admin_option AND NOT inherit_option AND NOT set_option)
           AND (SELECT count(*)=1 FROM pg_auth_members
                WHERE roleid='oes_django_migrator'::regrole
                AND member='oes_sandbox_owner'::regrole)
