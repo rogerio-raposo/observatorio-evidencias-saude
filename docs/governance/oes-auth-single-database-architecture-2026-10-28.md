@@ -213,3 +213,26 @@ Responsável confirmou exclusão de `OES_AUTH_B2_M1_PASSWORD` (não verificada n
 **Recomendação para gate futuro separado, ainda não autorizado:** mapear ações e acessos efetivamente exigidos pelas rotas Django de sessão, login, autorização e identidade persistente antes de qualquer GRANT. O runtime necessitará em geral USAGE no schema, acesso de leitura aos catálogos de usuários, grupos, permissões e content types; a persistência de sessões e identidades poderá exigir INSERT/UPDATE/DELETE estritos em tabelas determinadas, e USAGE nas sequências vinculadas a INSERT. Evitar `ALL PRIVILEGES ON ALL TABLES`, CREATE no schema, acesso a `django_migrations`, privilégios administrativos e grants em schemas científicos. As ACLs sobre objetos devem ser emitidas pelo proprietário de objetos `oes_auth_migrator` ou por grantor autorizado, **não presumir capacidade do owner do schema sobre tabelas de outro papel**. O modelo de provisionamento de contas reais permanece pendente; não habilitar runtime HTTP.
 
 **Estado:** B2-M1 PASS; runtime ACL não autorizada, nenhuma mudança de role/grant, G2-P2B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
+
+## Matriz candidata de privilégios do runtime Django (2026-10-28; SEM GRANT)
+
+**Princípio:** `oes_runtime` não deve ser equiparado a migrador. Esta é uma matriz de desenho, não uma concessão autorizada. Cabe ao gate operacional futuro decidir se `oes_runtime` será reutilizado ou se será adotado login exclusivamente de autenticação; não alterar papel existente por inferência.
+
+| Objeto django_auth | Leitura autenticada e autorização | Sessão/login sintético persistente | Provisionamento administrativo separado |
+|---|---|---|---|
+| `auth_user` | SELECT (identificação, hash, flags, grupos e permissões) | UPDATE **somente se** política de login exigir `last_login` | INSERT/UPDATE/DELETE, caso aprovado, fora do runtime comum |
+| `auth_group`, `auth_permission`, `django_content_type` | SELECT | SELECT | Alterações somente sob gestão administrativa |
+| `auth_user_groups`, `auth_user_user_permissions`, `auth_group_permissions` | SELECT para checar autorização | SELECT | INSERT/DELETE só no fluxo de administração de papéis/permissões |
+| `django_session` | SELECT | INSERT, UPDATE, DELETE para gravar, renovar e encerrar sessão | não aplicável |
+| `preparer_identity_prepareridentity` | SELECT para resolver `actor_uuid` | **sem INSERT padrão**: identidade deve ser provisionada por fluxo autorizado | INSERT/UPDATE, se e quando definido; DELETE não recomendado por padrão |
+| `django_migrations` | nenhum | nenhum | migrador exclusivamente |
+| Sequências `django_session` | não há (PK de sessão não sequencial) | nenhuma | — |
+| Sequências relacionadas a `auth_user`, grupos, M2M, permissões e content types | nenhuma | nenhuma no fluxo de login comum | USAGE somente às sequências correspondentes às operações INSERT aprovadas |
+| `preparer_identity_prepareridentity_id_seq` | nenhuma | nenhuma quando identidade já provisionada | USAGE para provisionamento autorizado |
+
+**Alternativa preferencial para fase experimental controlada:** autenticação funcional de usuários sintéticos **previamente provisionados**, com SELECT estrito nas tabelas de autenticação, INSERT/UPDATE/DELETE apenas na `django_session` e UPDATE em `auth_user` condicionada ao uso do sinal padrão `last_login` (alternativamente desligar esse comportamento mediante decisão técnica documentada). Sem criação de usuários por HTTP, sem auto-provisionamento de `PreparerIdentity`, sem edição de grupos ou permissões por runtime, sem CREATE no schema, sem privileges `ALL`, sem grants em scientific schemas.
+
+**Impedimento operacional:** `oes_runtime` não possui sequer USAGE em `django_auth` e não tem privilégios nas dez tabelas nem nas nove sequências; todos esses objetos foram criados e pertencem a `oes_auth_migrator`. O schema pertence a `oes_sandbox_owner`. Planejar `GRANT USAGE ON SCHEMA` via owner do schema e `GRANT` de tabelas por owner dos objetos ou grantor autorizado; são aprovações distintas. A role do migrador tem validade de senha até 2026-10-31 23:59:59 UTC; **vencimento não transfere propriedade nem remove role**.
+
+**Gates seguintes:** (1) decisão de política do mecanismo de login (atualização `last_login` e gestão de identidades), (2) aprovação nominal da matriz de tabelas e grants de schema, (3) ensaio sintético sob login runtime explicitamente autorizado, (4) limpeza de credenciais e rechecagem de ACL. Não conceder direitos ou ativar HTTP nesta etapa. B2-M1 PASS; runtime ainda HOLD; G2-P2B NO-GO; E9 NO-GO; Fase 5 NOT_STARTED.
