@@ -223,3 +223,37 @@ class PostgresAuthMigrationSqlOfflineTests(SimpleTestCase):
             self.assertIn("UNIQUE", ddl.upper())
             self.assertIn("REFERENCES", ddl.upper())
             self.assertNotIn("CREATE SCHEMA", ddl.upper())
+
+
+class NativeDjangoPostgresSchemaPlanTests(SimpleTestCase):
+    def test_native_auth_session_and_identity_models_generate_postgres_ddl_offline(self):
+        from django.contrib.auth import get_user_model
+        from django.contrib.auth.models import Group, Permission
+        from django.contrib.contenttypes.models import ContentType
+        from django.contrib.sessions.models import Session
+        from django.db.backends.postgresql.base import DatabaseWrapper
+        from unittest.mock import patch
+        from preparer_identity.models import PreparerIdentity
+
+        wrapper = DatabaseWrapper({
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "offline_no_connection",
+            "USER": "", "PASSWORD": "", "HOST": "", "PORT": "",
+            "OPTIONS": {}, "TIME_ZONE": None, "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False, "AUTOCOMMIT": True,
+            "ATOMIC_REQUESTS": False, "TEST": {},
+        }, alias="offline_auth_schema_ddl")
+        with patch.object(wrapper, "ensure_connection", side_effect=AssertionError("network prohibited")):
+            with wrapper.schema_editor(collect_sql=True, atomic=False) as editor:
+                for model in (ContentType, Permission, Group, get_user_model(), Session, PreparerIdentity):
+                    editor.create_model(model)
+            ddl = "\n".join(editor.collected_sql)
+        for table in ("django_content_type", "auth_permission", "auth_group",
+                      "auth_user", "django_session", "preparer_identity_prepareridentity"):
+            self.assertIn('"' + table + '"', ddl)
+        self.assertIn("REFERENCES", ddl.upper())
+        self.assertIn("CREATE INDEX", ddl.upper())
+        self.assertNotIn("CREATE SCHEMA", ddl.upper())
+        self.assertNotIn("oes_sandbox.", ddl)
+        # Unqualified DDL depends on search_path; schema setup needs a separate gate.
+        self.assertNotIn('"django_auth".', ddl)
