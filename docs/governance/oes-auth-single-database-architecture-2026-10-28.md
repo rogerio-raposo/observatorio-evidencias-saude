@@ -311,3 +311,12 @@ ON TABLE django_auth.django_session TO oes_runtime;
 **Plano de verificação:** comparar ACLs/owners antes e depois; confirmar USAGE e não CREATE, SELECT apenas nas oito tabelas nomeadas, UPDATE restrito a `auth_user.last_login`, DML apenas `django_session`, nenhum direito a `django_migrations`/sequências; observar grantor real na ACL. Se qualquer desvio ocorrer, parar, não executar DML nem aplicar correções ad hoc. Reversão específica exige identificação do grantor original e aprovação; não emitir REVOKE genérico.
 
 **Decisão:** AUTH-RUNTIME-G1 permanece proposta, sem autorização para executar SQL. B2-M1 PASS, runtime HOLD, G2-P2B NO-GO, E9 NO-GO e Fase 5 NOT_STARTED.
+
+
+## AUTH-RUNTIME-G1 — decisão arquitetural preparatória sobre login (2026-10-28)
+
+Preflight READ ONLY por `has_schema_privilege`: `oes_runtime` apresenta USAGE=true somente em `public` (CREATE=false), e USAGE/CREATE=false em `appraisal`, `artifact`, `core`, `django_auth`, `evidence`, `investigation`, `oes_app`, `oes_raw_private`, `product`, `provenance`, `synthesis`. Esta é avaliação **de privilégio efetivo de schema**, não auditoria exaustiva de papéis, atributos ou privilégios em objetos. A consulta adicional sobre memberships não pôde ser concluída por restrição da ferramenta; não inferir ausência de memberships.
+
+**Recomendação proporcional:** reutilizar `oes_runtime` é tecnicamente possível quanto ao isolamento atual de schemas, mas não deve ser decidido só por este inventário. Preferência arquitetural por **login de autenticação exclusivo e efêmero na fase de prova**, caso testes conectados de sessão/identidade requeiram segredo e DML específicos; evita acumular no papel genérico um conjunto permanente de direitos de autenticação e reduz superfície de acesso. A escolha definitiva entre reaproveitar `oes_runtime` e papel dedicado exige revisão das dependências de aplicação e da governança de credenciais, sem criar papel enquanto não houver aprovação.
+
+**Estado:** decisão candidata; `AUTH-RUNTIME-G1` em HOLD, nenhum papel ou GRANT alterado. B2-M1 PASS, G2-P2B NO-GO, E9 NO-GO e Fase 5 NOT_STARTED.
