@@ -1,5 +1,6 @@
 -- OES / PF-I04 / P4-A39 — CLEANUP V2: CANDIDATO MUTANTE PERSISTENTE — HOLD
--- GATE AUTONOMO apos postflight v2 PASS, evidencias de trial e sem outras sessoes.
+-- GATE AUTONOMO depois de LOCKDOWN separado (NOLOGIN PASSWORD NULL), postflight e sem sessoes.
+-- NAO INVALIDA credencial aqui: ela deve estar invalidada por COMMIT anterior.
 -- Branch Neon deve ser certificada fora do SQL. Nao usa DROP OWNED/CASCADE.
 BEGIN;
 SET LOCAL search_path = pg_catalog;
@@ -14,6 +15,9 @@ BEGIN
     OR session_user<>'oes_sandbox_owner' OR current_user<>'oes_sandbox_owner'
     OR current_setting('server_version_num')::integer NOT BETWEEN 180000 AND 189999
     OR v_target IS NULL OR v_trial IS NULL
+    OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles r WHERE r.oid=v_trial
+          AND NOT r.rolcanlogin AND NOT r.rolsuper AND NOT r.rolcreatedb
+          AND NOT r.rolcreaterole AND NOT r.rolbypassrls)
     OR NOT EXISTS(SELECT 1 FROM pg_catalog.pg_roles r WHERE r.oid=v_target
       AND NOT r.rolcanlogin AND NOT r.rolinherit AND NOT r.rolsuper
       AND NOT r.rolcreatedb AND NOT r.rolcreaterole AND NOT r.rolreplication AND NOT r.rolbypassrls)
@@ -41,7 +45,6 @@ BEGIN
  THEN RAISE EXCEPTION 'HOLD A39 cleanup: external dependency, session, grant or baseline'; END IF;
 END
 $oes_a39_cleanup_pre$;
-ALTER ROLE oes_p4_trial_login WITH NOLOGIN PASSWORD NULL;
 REVOKE oes_p4_trial_target FROM oes_p4_trial_login
   GRANTED BY oes_sandbox_owner RESTRICT;
 DROP ROLE oes_p4_trial_target;
@@ -66,5 +69,6 @@ BEGIN
 END
 $oes_a39_cleanup_post$;
 COMMIT;
--- ALTER ROLE ... PASSWORD NULL foi executado, mas consulta posterior de pg_roles
--- nao revela senha/hash; nao consultar pg_authid sem gate e necessidade explicita.
+-- PASSWORD NULL NAO e demonstravel por pg_roles; exigir evidencia do COMMIT
+-- do script LOCKDOWN separado. Se DROP falha, ROLLBACK nao reativa a senha.
+-- Verificacao pos-cleanup independente ainda requer gate READ ONLY proprio.
