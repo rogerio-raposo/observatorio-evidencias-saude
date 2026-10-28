@@ -12,7 +12,7 @@ from preparer_identity.models import PreparerIdentity
 
 from config.auth_pg_g2_p2b_offline import (
     USERNAME, PERMISSION, CONNECTED_BASELINE, ProvisioningHold,
-    _provision_transaction, classify_connected_reconciliation,
+    classify_connected_reconciliation,
 )
 
 EXPECTED_IDENTITY = (
@@ -92,7 +92,7 @@ def _independent_readonly_reconciliation(*, baseline, commit_confirmed, using="d
     try:
         with transaction.atomic(using=using):
             with conn.cursor() as cursor:
-                cursor.execute("SET TRANSACTION READ ONLY")
+                cursor.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
             _require_admin_session(conn)
             snapshot = _snapshot_using_existing_readonly_connection(conn)
         return classify_connected_reconciliation(
@@ -106,26 +106,9 @@ def _independent_readonly_reconciliation(*, baseline, commit_confirmed, using="d
 
 
 def _trial_candidate(*, password, exclusive_window_confirmed, using="default"):
-    """Internal proposal, NOT an execution entry point or authorization.
-
-    A separate authorization must explicitly approve unlocking and the complete
-    operational workflow; this function MUST NOT be called meanwhile.
-    """
-    raise ProvisioningHold("HOLD: internal connected candidate unavailable until named DML gate")
-    if exclusive_window_confirmed is not True:
-        raise ProvisioningHold("HOLD: external writers not excluded")
-    conn = connections[using]
-    _require_admin_session(conn)
-    # Core code owns the atomic transaction, baseline and ORM write checks.
-    try:
-        outcome = _provision_transaction(
-            password=password, using=using, expected_baseline=CONNECTED_BASELINE,
-        )
-    except Exception:
-        # Commit status cannot be inferred from every exception.
-        return "INDETERMINATE_HOLD"
-    return _independent_readonly_reconciliation(
-        baseline=outcome["before"], commit_confirmed=True, using=using,
+    """Internal review placeholder. No operational write path exists."""
+    raise ProvisioningHold(
+        "HOLD: internal connected candidate unavailable until named DML gate"
     )
 
 
