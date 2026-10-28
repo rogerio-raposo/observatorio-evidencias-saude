@@ -213,3 +213,27 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertIsNone(connections["oes_scientific_hold"].connection)
         self.assertNotIn("oes_synthetic_reader", connections.databases)
         self.assertEqual(self.client.post(reverse("q0-access-status")).status_code, 404)
+
+    def test_persisted_actor_id_survives_user_rename_and_reload(self):
+        from preparer_identity.models import PreparerIdentity
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        identity = PreparerIdentity.objects.create(user=self.user)
+        original = persisted_preparer_actor_id(self.user)
+        self.assertEqual(original, "oes:actor:" + str(identity.actor_uuid))
+        self.user.username = "renamed_synthetic_preparer"
+        self.user.save(update_fields=["username"])
+        reloaded = get_user_model().objects.get(pk=self.user.pk)
+        self.assertEqual(persisted_preparer_actor_id(reloaded), original)
+
+    def test_persisted_actor_missing_and_duplicate_user_are_rejected(self):
+        from django.db import IntegrityError, transaction
+        from evidence.question_preparation import PreparationHold
+        from preparer_identity.models import PreparerIdentity
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        with self.assertRaises(PreparationHold):
+            persisted_preparer_actor_id(self.user)
+        PreparerIdentity.objects.create(user=self.user)
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                PreparerIdentity.objects.create(user=self.user)
+        self.assertTrue(persisted_preparer_actor_id(self.user).startswith("oes:actor:"))
