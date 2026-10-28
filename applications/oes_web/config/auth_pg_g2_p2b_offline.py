@@ -191,3 +191,28 @@ def verify_synthetic_relations_offline(*, using="default"):
         if any(counts[k] != 1 for k in ("users", "links", "identities")) or counts["sessions"] != 0:
             raise ProvisioningHold("HOLD: synthetic relation counts drift")
         return "PASS_OFFLINE_RELATION_RECONCILIATION"
+
+
+def classify_connected_reconciliation(*, commit_confirmed, baseline, snapshot):
+    """Pure post-commit decision; no connection or operational permission.
+
+    Snapshot must come from a separate, authorized READ ONLY Django session.
+    Counts alone cannot prove the user-permission-identity relationships.
+    """
+    if commit_confirmed is not True or type(snapshot) is not dict:
+        return "INDETERMINATE_HOLD"
+    expected = {
+        "counts": CONNECTED_POSTFLIGHT,
+        "fixture_users": 1,
+        "fixture_active_nonstaff_nonsuperuser": True,
+        "fixture_password_usable": True,
+        "fixture_permission_count": 1,
+        "fixture_permission_links": 1,
+        "fixture_identities": 1,
+        "fixture_uuid4": True,
+    }
+    if type(baseline) is not dict or baseline != CONNECTED_BASELINE:
+        return "INDETERMINATE_HOLD"
+    if snapshot != expected or type(snapshot.get("counts")) is not dict:
+        return "INDETERMINATE_HOLD"
+    return "PASS_POST_COMMIT"
