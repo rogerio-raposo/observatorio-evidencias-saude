@@ -237,3 +237,51 @@ class AuthSQLiteSandboxTests(TestCase):
             with transaction.atomic():
                 PreparerIdentity.objects.create(user=self.user)
         self.assertTrue(persisted_preparer_actor_id(self.user).startswith("oes:actor:"))
+
+    def test_persisted_identity_reaches_q0_receipt_and_replays(self):
+        from evidence.question_preparation import QuestionCommand, submit_question_command
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+        from preparer_identity.models import PreparerIdentity
+        from preparer_identity.resolver import persisted_preparer_actor_id
+
+        self.user.user_permissions.add(self.permission)
+        identity = PreparerIdentity.objects.create(user=self.user)
+        command = QuestionCommand(
+            "stable-actor-request", "OES-SYNTH-STABLE-ACTOR", 0,
+            "Pergunta sintética com identidade estável?",
+        )
+        port = FakePort()
+        backend = OfflineQuestionUnitOfWork(port)
+        def send():
+            return submit_question_command(
+                user=self.user, command=command, unit_of_work=backend,
+                actor_id_resolver=persisted_preparer_actor_id,
+            )
+        original = send()
+        self.user.username = "renamed_preparer"
+        self.user.save(update_fields=["username"])
+        self.user = get_user_model().objects.get(pk=self.user.pk)
+        self.assertEqual(send(), original)
+        stable = "oes:actor:" + str(identity.actor_uuid)
+        self.assertIn((stable, command.request_id), port.receipts)
+        self.assertNotIn((str(self.user.pk), command.request_id), port.receipts)
+        self.assertEqual(len(port.questions), 1)
+
+    def test_persisted_identity_missing_blocks_q0_before_transaction(self):
+        from evidence.question_preparation import QuestionCommand, PreparationHold, submit_question_command
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+        from preparer_identity.resolver import persisted_preparer_actor_id
+
+        self.user.user_permissions.add(self.permission)
+        port = FakePort()
+        with self.assertRaisesRegex(PreparationHold, "persistent preparer identity"):
+            submit_question_command(
+                user=self.user,
+                command=QuestionCommand("missing-actor", "OES-SYNTH-MISSING", 0, "Pergunta sintética?"),
+                unit_of_work=OfflineQuestionUnitOfWork(port),
+                actor_id_resolver=persisted_preparer_actor_id,
+            )
+        self.assertFalse(port.questions)
+        self.assertFalse(port.receipts)
