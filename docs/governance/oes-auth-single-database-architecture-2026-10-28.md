@@ -247,3 +247,27 @@ Responsável confirmou exclusão de `OES_AUTH_B2_M1_PASSWORD` (não verificada n
 **Provisionamento:** contas sintéticas, `auth_user_user_permissions` e `preparer_identity_prepareridentity` devem ser criadas por procedimento administrativo separado, auditável, com identidade UUID estável; runtime comum recebe somente SELECT para identidade e permissões. Evitar autocriação de identidade em login/GET e qualquer endpoint de gestão nesta etapa. A permissão `evidence.prepare_question` deve ser provisionada explicitamente, não inferida de `is_staff` nem de `is_superuser`. Criar dados sintéticos conectados exige autorização nominal distinta.
 
 **Próxima deliberação:** escolher preservar `last_login` nativo com UPDATE mínimo ou bloquear atualização explicitamente; em seguida definir GRANTs por tabela/coluna e grantor adequado. Até deliberação, nenhuma alteração de `last_login`, sinal, role, grant, identidade ou dado em Neon. B2-M1 PASS, runtime HOLD.
+
+
+## Runtime Auth — especificação de ACL para revisão (2026-10-28; nenhuma concessão)
+
+**Preflight catalogal somente leitura:** as dez tabelas e nove sequências de `django_auth` são propriedade de `oes_auth_migrator` e possuem `relacl=NULL` (ACL não explicitada no objeto; não interpretar como inexistência de direitos do owner). `oes_runtime` continua sem USAGE no schema nem privilégios sobre os objetos. O schema é propriedade de `oes_sandbox_owner`.
+
+**Matriz candidata exclusivamente para usuários sintéticos pré-provisionados; não é SQL aprovado:**
+
+| Objeto | Direito proposto a `oes_runtime` | Justificativa |
+|---|---|---|
+| Schema `django_auth` | USAGE, nunca CREATE | Resolução de nomes |
+| `auth_user` | SELECT; UPDATE **apenas** (`last_login`) sujeito a ensaio SQL/django | Login e sinal nativo `last_login` |
+| `auth_group`, `auth_permission`, `django_content_type` | SELECT | Resolução de permissões |
+| `auth_user_groups`, `auth_user_user_permissions`, `auth_group_permissions` | SELECT | Relações de permissões |
+| `django_session` | SELECT, INSERT, UPDATE, DELETE | Ciclo de sessão, inclusive expiração e logout |
+| `preparer_identity_prepareridentity` | SELECT | Resolver ator persistente |
+| `django_migrations` | **nenhum** | Reservado ao migrador |
+| Todas as nove sequências | **nenhum** | O fluxo de sessão usa chave textual; usuários/identidades não são criados pelo runtime |
+
+**Cuidado importante:** `UPDATE(last_login)` é privilégio **de coluna**; validar que o Django nativo persiste exclusivamente essa coluna e não executa SQL de atualização mais ampla antes de conceder. Se o teste revelar necessidade de UPDATE irrestrito, retornar para deliberação; não ampliar silenciosamente. Além disso, a conexão do runtime não deve reutilizar `settings_auth_pg_b2_optin.py`, que emprega a identidade migradora e é específica de migrations.
+
+**Plano de concessão (proposta, não autorizado):** um grantor com autoridade sobre o schema (atualmente `oes_sandbox_owner`) concede USAGE; o proprietário de tabelas (atualmente `oes_auth_migrator`) ou grantor de objeto devidamente autorizado concede direitos de tabela/coluna. Verificar previamente a capacidade efetiva do grantor, sem presumir que o owner do schema pode conceder sobre as tabelas. A expiração da senha em 31/10 não altera ownership nem substitui o plano de ciclo de vida do papel. **Não** executar `GRANT ALL`, `ALTER DEFAULT PRIVILEGES`, grants de sequências, SQL em schemas científicos, ou provisionamento de identidades como consequência desta proposta.
+
+**Critério de saída para gate futuro:** política de `last_login` formalmente aprovada, SQL mínimo revisado, identidade e credencial de runtime segregadas, uma única prova sintética autorizada e plano de reversão de GRANTs conforme grantor efetivo. Até então, **runtime HOLD; nenhuma ACL alterada**.
