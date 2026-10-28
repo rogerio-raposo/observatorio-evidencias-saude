@@ -8,12 +8,12 @@ class AuthSandboxRouter:
     def db_for_read(self, model, **hints):
         if model._meta.app_label in AUTH_APPS:
             return "default"
-        return None
+        return "oes_scientific_hold"
 
     def db_for_write(self, model, **hints):
         if model._meta.app_label in AUTH_APPS:
             return "default"
-        return None
+        return "oes_scientific_hold"
 
     def allow_relation(self, obj1, obj2, **hints):
         return None
