@@ -1,3 +1,9 @@
+## PF-I03-Q0 — identidade e integridade sintética verificadas READ ONLY (2026-10-28)
+
+- Neon `oes_sandbox`, papel `oes_qprep_login`, somente SELECT: exatamente 1 entidade identificada `OES-SYNTH-Q0-*`, 1 `investigation.question`, 1 `core.entity_version`, 1 `investigation.question_version` e 1 recibo referenciando-a. Campos coerentes: `Question`, version=1/current, `q0_draft`, normalized_text NULL, `REGISTER_Q0`, identificadores ator/pergunta/versão/entidade concordantes, SHA256 hexadecimal formatado.
+- Gatilho `investigation.tr_question_entity_type` existente e CHECKs de responsável, estágio e recibo inspecionados. **Ressalva material:** ator legado `oes_synthetic_q0` NÃO segue o contrato de identidade persistida `oes:actor:<UUID4>`; correspondência de campos não equivale a identidade Django válida. Não reatribuir nem excluir este registro sem gate independente; preservar a baseline não vazia e evitar colisões de ID.
+- Sem alterações no Neon, sem autorização de DML, sem nova infraestrutura, sem HTTP write ou promoção de gates. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED; CP335 vigente.
+
 ## PF-I03-Q0 — preflight científico READ ONLY conectado (2026-10-28)
 
 - Autorização nominal restrita a catálogo/SELECT. Neon projeto `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`; papel efetivo `oes_qprep_login` (a tentativa do nome não cadastrado `oes_qprep_trial_login` falhou sem conexão).
