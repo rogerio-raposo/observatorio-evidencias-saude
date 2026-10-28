@@ -601,3 +601,32 @@ class G2P2BExecutorOfflineTests(TestCase):
         }):
             with self.assertRaisesRegex(RuntimeError, "HOLD: G2-P2-B"):
                 import_module("config.settings_auth_pg_g2_p2b_dormant")
+
+    def test_g2_p2b_admin_preflight_contract_offline_only(self):
+        from config.auth_pg_g2_p2b_admin_preflight import (
+            assert_administrative_preflight, EXPECTED_IDENTITY,
+            REQUIRED_TABLES, REQUIRED_SEQUENCES,
+        )
+        from config.auth_pg_g2_p2b_offline import CONNECTED_BASELINE, ProvisioningHold
+        evidence = dict(
+            identity=EXPECTED_IDENTITY, baseline=dict(CONNECTED_BASELINE),
+            insert_tables=REQUIRED_TABLES, delete_tables=REQUIRED_TABLES,
+            usage_sequences=REQUIRED_SEQUENCES,
+            content_type_count=1, permission_absent=True,
+        )
+        self.assertEqual(
+            assert_administrative_preflight(**evidence),
+            "PASS_ADMIN_PREFLIGHT_CONTRACT_OFFLINE_ONLY",
+        )
+        for changed, message in (
+            ({"identity": (*EXPECTED_IDENTITY[:2], "wrong_role", *EXPECTED_IDENTITY[3:])}, "identity"),
+            ({"baseline": {**CONNECTED_BASELINE, "permissions": 43}}, "baseline"),
+            ({"insert_tables": set(REQUIRED_TABLES) - {"auth_user"}}, "privileges"),
+            ({"delete_tables": set()}, "privileges"),
+            ({"usage_sequences": set()}, "privileges"),
+            ({"content_type_count": 0}, "prerequisites"),
+            ({"permission_absent": False}, "prerequisites"),
+        ):
+            with self.subTest(changed=changed):
+                with self.assertRaisesRegex(ProvisioningHold, message):
+                    assert_administrative_preflight(**{**evidence, **changed})
