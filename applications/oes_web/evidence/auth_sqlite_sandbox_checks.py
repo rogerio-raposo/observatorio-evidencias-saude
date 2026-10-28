@@ -435,3 +435,63 @@ class G2CatalogueOfflineTests(TestCase):
             assert_g2_catalogue(identity,tables,columns,(9,True))
         with self.assertRaisesRegex(RuntimeError,"HOLD"):
             assert_g2_catalogue(identity,tables[:-1],columns,(9,False))
+
+
+class G2ProvisioningOfflineTests(TestCase):
+    """Disposable SQLite rehearsal only; never executed against Neon."""
+
+    def test_single_atomic_provisioning_and_ordered_cleanup(self):
+        from django.db import transaction
+        from django.db.models.deletion import ProtectedError
+        from preparer_identity.models import PreparerIdentity
+
+        baseline = Permission.objects.count()
+        with transaction.atomic(using="default"):
+            ct = ContentType.objects.get(app_label="evidence", model="oesquestion")
+            permission = Permission.objects.create(
+                content_type=ct, codename="prepare_question",
+                name="Synthetic preparation permission",
+            )
+            user = get_user_model().objects.create_user(
+                username="oes_g2_trial_fixture", password="disposable-test-only",
+                is_active=True, is_staff=False, is_superuser=False,
+            )
+            user.user_permissions.add(permission)
+            identity = PreparerIdentity.objects.create(user=user)
+        self.assertEqual(Permission.objects.count(), baseline + 1)
+        self.assertTrue(user.check_password("disposable-test-only"))
+        self.assertNotEqual(user.password, "disposable-test-only")
+        self.assertEqual(user.user_permissions.filter(pk=permission.pk).count(), 1)
+        self.assertEqual(PreparerIdentity.objects.get(user=user).actor_uuid, identity.actor_uuid)
+        with self.assertRaises(ProtectedError):
+            user.delete()
+        identity.delete()
+        user.user_permissions.remove(permission)
+        user.delete()
+        permission.delete()
+        self.assertEqual(Permission.objects.count(), baseline)
+        self.assertFalse(get_user_model().objects.filter(username="oes_g2_trial_fixture").exists())
+        self.assertFalse(PreparerIdentity.objects.exists())
+
+    def test_atomic_failure_rolls_back_every_synthetic_record(self):
+        from django.db import transaction
+        from preparer_identity.models import PreparerIdentity
+
+        baseline = Permission.objects.count()
+        with self.assertRaisesRegex(RuntimeError, "synthetic failure"):
+            with transaction.atomic(using="default"):
+                ct = ContentType.objects.get(app_label="evidence", model="oesquestion")
+                permission = Permission.objects.create(
+                    content_type=ct, codename="prepare_question",
+                    name="Synthetic preparation permission",
+                )
+                user = get_user_model().objects.create_user(
+                    username="oes_g2_failure_fixture", password="disposable-test-only",
+                )
+                user.user_permissions.add(permission)
+                PreparerIdentity.objects.create(user=user)
+                raise RuntimeError("synthetic failure")
+        self.assertEqual(Permission.objects.count(), baseline)
+        self.assertFalse(get_user_model().objects.filter(username="oes_g2_failure_fixture").exists())
+        self.assertFalse(Permission.objects.filter(codename="prepare_question", content_type__app_label="evidence").exists())
+        self.assertFalse(PreparerIdentity.objects.exists())
