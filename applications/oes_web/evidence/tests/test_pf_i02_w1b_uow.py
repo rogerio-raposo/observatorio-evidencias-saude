@@ -256,3 +256,55 @@ class NativeDjangoPostgresSchemaPlanTests(SimpleTestCase):
         self.assertNotIn("oes_sandbox.", ddl)
         # Unqualified DDL depends on search_path; schema setup needs a separate gate.
         self.assertNotIn('"django_auth".', ddl)
+
+
+class OptInAuthPostgresB2ConfigurationTests(SimpleTestCase):
+    def test_b2_settings_fail_closed_without_approval(self):
+        import importlib
+        import os
+        import sys
+        from unittest.mock import patch
+        name = "config.settings_auth_pg_b2_optin"
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "not authorized"):
+                importlib.import_module(name)
+        sys.modules.pop(name, None)
+
+    def test_b2_settings_require_approved_host_and_ephemeral_password(self):
+        import importlib
+        import os
+        import sys
+        from unittest.mock import patch
+        name = "config.settings_auth_pg_b2_optin"
+        with patch.dict(os.environ, {"OES_AUTH_B2_EXPLICIT_OPT_IN": "1"}, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "endpoint and ephemeral credential"):
+                importlib.import_module(name)
+        sys.modules.pop(name, None)
+        with patch.dict(os.environ, {
+            "OES_AUTH_B2_EXPLICIT_OPT_IN": "1",
+            "OES_AUTH_B2_HOST": "unapproved.example",
+            "OES_AUTH_B2_PASSWORD": "test-only",
+        }, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "endpoint and ephemeral credential"):
+                importlib.import_module(name)
+        sys.modules.pop(name, None)
+
+    def test_b2_settings_generate_isolated_connection_without_connecting(self):
+        import importlib
+        import os
+        import sys
+        from unittest.mock import patch
+        name = "config.settings_auth_pg_b2_optin"
+        with patch.dict(os.environ, {
+            "OES_AUTH_B2_EXPLICIT_OPT_IN": "1",
+            "OES_AUTH_B2_HOST": "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech",
+            "OES_AUTH_B2_PASSWORD": "synthetic-test-only",
+        }, clear=True):
+            design = importlib.import_module(name)
+            db = design.DATABASES["default"]
+            self.assertEqual(db["USER"], "oes_auth_migrator")
+            self.assertEqual(db["NAME"], "oes_sandbox")
+            self.assertEqual(db["OPTIONS"]["options"], "-c search_path=django_auth")
+            self.assertEqual(db["OPTIONS"]["sslmode"], "require")
+            self.assertEqual(design.DATABASES["oes_scientific_hold"]["ENGINE"], "django.db.backends.dummy")
+        sys.modules.pop(name, None)
