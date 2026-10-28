@@ -1,0 +1,54 @@
+name: OES G2-P2-B Django admin session READ ONLY smoke
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: oes-g2-p2b-django-session-smoke
+  cancel-in-progress: false
+jobs:
+  admin-session-read-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r applications/oes_web/requirements.txt
+      - name: Django administrative session identity (transaction read only)
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings_auth_pg_g2_p2b_session_smoke
+          OES_AUTH_G2_P2B_SMOKE_OPT_IN: '1'
+          OES_AUTH_G2_P2B_SMOKE_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_AUTH_G2_P2B_SMOKE_PASSWORD: ${{ secrets.OES_AUTH_G2_P2B_SMOKE_PASSWORD }}
+        run: |
+          python - <<'PY'
+          import django
+          django.setup()
+          from django.db import connections, transaction
+
+          conn = connections["default"]
+          cfg = conn.settings_dict
+          assert cfg["ENGINE"] == "django.db.backends.postgresql"
+          assert cfg["NAME"] == "oes_sandbox"
+          assert cfg["USER"] == "oes_auth_migrator"
+          assert cfg["OPTIONS"]["options"] == "-c search_path=django_auth"
+          assert connections["oes_scientific_hold"].settings_dict["ENGINE"] == "django.db.backends.dummy"
+          with transaction.atomic(using="default"):
+              with conn.cursor() as cursor:
+                  cursor.execute("SET TRANSACTION READ ONLY")
+                  cursor.execute(
+                      "SELECT current_database(), session_user, current_user, "
+                      "current_schema(), current_setting('search_path')"
+                  )
+                  actual = tuple(cursor.fetchone())
+                  expected = ("oes_sandbox", "oes_auth_migrator",
+                              "oes_auth_migrator", "django_auth", "django_auth")
+                  if actual != expected:
+                      raise RuntimeError("HOLD: Django admin session identity/schema drift")
+          print("PASS_G2_P2B_DJANGO_ADMIN_SESSION_READ_ONLY")
+          PY
