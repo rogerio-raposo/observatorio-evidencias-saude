@@ -1,3 +1,9 @@
+## G2-P2-B — ciclo sintético conectado concluído (2026-10-28)
+
+- Provisionamento único: [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528), `PASS_POST_COMMIT`. Preflight de limpeza conectado READ ONLY: PASS.
+- Limpeza única: [40775904096](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40775904096), tentativa 1, commit `417ee2eb266d8f28c0d87ccc07ace6e1bfa8732b`, SUCCESS, `PASS_CLEANUP_POST_COMMIT`; baseline reconciliada pelo runner: permissions=44, users=0, links=0, identities=0, sessions=0.
+- **Encerramento técnico restrito ao ensaio sintético:** não repetir workflows, sem limpeza pendente neste ciclo. Segredo efêmero `OES_AUTH_G2_P2B_CLEANUP_PASSWORD` ainda com exclusão não confirmada. Não autoriza usuários reais, HTTP write, deploy ou alteração de gates. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. CP334 segue checkpoint de referência até formalização de novo checkpoint.
+
 ## Pós-CP334 — G2-P2-B connected single synthetic trial (2026-10-28)
 
 - Workflow manual [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528), tentativa 1, commit `4215a7eb66e9213953dc691c681b75dade7002cc`: SUCCESS e marcador `OES_G2_P2B_TRIAL_RESULT=PASS_POST_COMMIT`. Evidência do runner para provisionamento Django ORM sintético e reconciliação pós-commit READ ONLY; sem consulta Neon independente adicional nesta atividade.
