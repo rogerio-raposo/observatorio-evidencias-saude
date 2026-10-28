@@ -713,3 +713,18 @@ class G2P2BExecutorOfflineTests(TestCase):
             classify({**snapshot, "counts": {**CONNECTED_POSTFLIGHT, "users": 2}}),
             "INDETERMINATE_HOLD",
         )
+
+    def test_g2_p2b_snapshot_collector_offline(self):
+        from config.auth_pg_g2_p2b_offline import (
+            provision_offline, collect_relation_snapshot_offline,
+        )
+        from django.contrib.auth import get_user_model
+        provision_offline(password="synthetic-only-password")
+        evidence = collect_relation_snapshot_offline()
+        self.assertEqual(evidence["fixture_users"], 1)
+        self.assertEqual(evidence["fixture_permission_links"], 1)
+        self.assertEqual(evidence["fixture_identities"], 1)
+        self.assertTrue(evidence["fixture_uuid4"])
+        get_user_model().objects.get(username="oes_g2_trial_fixture").user_permissions.clear()
+        changed = collect_relation_snapshot_offline()
+        self.assertEqual(changed["fixture_permission_links"], 0)
