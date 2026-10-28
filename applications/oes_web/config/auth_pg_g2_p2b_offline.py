@@ -49,7 +49,7 @@ def _baseline(using):
     return counts
 
 
-def _provision_transaction(*, password, using="default", inject_failure=False):
+def _provision_transaction(*, password, using="default", inject_failure=False,\n                           expected_baseline=None):
     """Internal ORM unit of work; callers must establish their own authorization.
 
     Not an operational entry point. Never invoke directly against Neon.
@@ -60,6 +60,8 @@ def _provision_transaction(*, password, using="default", inject_failure=False):
     with transaction.atomic(using=using):
         # Preflight is inside the same transaction as all writes.
         before = _baseline(using)
+        if expected_baseline is not None and before != expected_baseline:
+            raise ProvisioningHold("HOLD: exact baseline mismatch before writes")
         # The connected baseline (44 permissions) is a separate, unapproved gate;
         # SQLite migrations populate a different permission inventory.
         ct = ContentType.objects.using(using).get(app_label="evidence", model="oesquestion")
@@ -132,3 +134,18 @@ def validate_connected_contract(*, approved, role, database, schema,
     ):
         raise ProvisioningHold("HOLD: connected postflight drift")
     return "CONTRACT_VALIDATED_OFFLINE_NOT_AUTHORIZED_TO_EXECUTE"
+
+
+def classify_post_commit(*, before, after, commit_confirmed):
+    """Pure conservative assessment, never a database read or retry instruction.
+
+    Post-commit evidence must be collected independently by an authorized
+    read-only connection. An unknown commit cannot be declared rolled back.
+    """
+    if commit_confirmed is not True:
+        return "INDETERMINATE_HOLD"
+    if type(before) is not dict or before != CONNECTED_BASELINE:
+        return "INDETERMINATE_HOLD"
+    if type(after) is not dict or after != CONNECTED_POSTFLIGHT:
+        return "INDETERMINATE_HOLD"
+    return "PASS_POST_COMMIT"
