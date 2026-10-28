@@ -48,3 +48,16 @@ class Q0CommitCandidateOfflineTests(SimpleTestCase):
         self.assertIn('"USER": "oes_qprep_login"', source)
         self.assertIn("INCONCLUSIVE_Q0_COMMIT", source)
         self.assertNotIn("runserver", source)
+
+class IntegratedReaderGateTests(SimpleTestCase):
+    def test_connected_reader_requires_separate_approval_before_django(self):
+        script = SCRIPT.parent / "check_auth_pg_integrated_readonly.py"
+        env = os.environ.copy()
+        for key in ("OES_AUTH_PG_SMOKE_APPROVED", "OES_AUTH_SANDBOX_PG_READER",
+                    "OES_AUTH_SANDBOX_PG_PASSWORD"):
+            env.pop(key, None)
+        result = subprocess.run(
+            [sys.executable, str(script)], env=env,
+            capture_output=True, text=True, timeout=10, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("NOT_RUN: integrated connected trial is not approved", result.stderr)
