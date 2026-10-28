@@ -15,6 +15,17 @@
 <dt>Versão ilustrativa</dt><dd>{{ example.version }}</dd>
 </dl>
 </section>
+<section aria-labelledby="flow-title">
+<h2 id="flow-title">Fluxo ilustrativo de preparação</h2>
+<ol>
+<li><strong>Identificação:</strong> pergunta original sintética informada, com identificador fictício.</li>
+<li><strong>Validação:</strong> verificar texto não vazio, identificador de solicitação e versão esperada igual a zero. Nesta página, nenhum dado é enviado.</li>
+<li><strong>Autorização:</strong> em uma operação real, exigir preparador autenticado e permissão explícita; esta prévia não concede acesso.</li>
+<li><strong>Confirmação:</strong> em execução autorizada, a transação incluiria entidade, pergunta, versões e recibo idempotente. Aqui não existe commit.</li>
+<li><strong>Resultado:</strong> status meramente demonstrativo; nenhum registro foi criado por esta página.</li>
+</ol>
+<p><strong>Estado da prévia:</strong> somente apresentação. Validação, autorização e confirmação são descritas, não executadas.</p>
+</section>
 <section aria-labelledby="limits-title"><h2 id="limits-title">Limites desta demonstração</h2>
 <p>Esta página não consulta PostgreSQL, não apresenta o Q0 persistido no ensaio e não possui formulário de envio. Não autentica pesquisadores, não cria perguntas e não autoriza escrita operacional.</p>
 </section>
