@@ -5,7 +5,6 @@ permissions:
   contents: read
 jobs:
   django-auth-preflight:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
