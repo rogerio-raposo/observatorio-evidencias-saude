@@ -2,9 +2,10 @@
 from contextlib import contextmanager
 from unittest.mock import Mock
 from django.test import SimpleTestCase
+from django.core.exceptions import PermissionDenied
 
 from evidence.question_orm_q0_dormant import DormantQ0OrmPort
-from evidence.question_preparation import PreparationHold, PreparationConflict, QuestionCommand
+from evidence.question_preparation import PreparationHold, PreparationConflict, QuestionCommand, submit_question_command, command_fingerprint
 from evidence.question_uow_offline import OfflineQuestionUnitOfWork, Receipt
 
 
@@ -91,3 +92,41 @@ class DormantQ0Tests(SimpleTestCase):
             self.run_q0()
         self.assertEqual(self.events, ["enter", "rollback"])
         self.repo.insert_receipt.assert_not_called()
+
+    def test_application_service_authorized_q0_invokes_single_transaction(self):
+        user = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                    is_superuser=False, pk="synthetic-actor")
+        user.has_perm.return_value = True
+        command = QuestionCommand("app-r1", "OES-SYNTH-Q0-app", 0, "Pergunta sintética?")
+        result = submit_question_command(
+            user=user, command=command, unit_of_work=OfflineQuestionUnitOfWork(self.port))
+        self.assertEqual(result, {"status": "PREPARATORY_ONLY",
+                                  "question_id": command.question_id, "version": 1})
+        user.has_perm.assert_called_with("evidence.prepare_question")
+        self.repo.lock_request.assert_called_once_with("synthetic-actor", "app-r1")
+        receipt = self.repo.insert_receipt.call_args.args[0]
+        self.assertEqual(receipt.fingerprint, command_fingerprint(command))
+        self.assertEqual(receipt.actor_id, "synthetic-actor")
+        self.assertEqual(self.events, ["enter", "commit"])
+
+    def test_application_service_denied_without_permission_before_transaction(self):
+        user = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                    is_superuser=False, pk="synthetic-actor")
+        user.has_perm.return_value = False
+        command = QuestionCommand("app-r2", "OES-SYNTH-Q0-app", 0, "Pergunta sintética?")
+        with self.assertRaises(PermissionDenied):
+            submit_question_command(
+                user=user, command=command, unit_of_work=OfflineQuestionUnitOfWork(self.port))
+        self.assertEqual(self.events, [])
+        self.repo.insert_entity.assert_not_called()
+
+    def test_application_service_ledger_error_is_fail_closed(self):
+        user = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                    is_superuser=False, pk="synthetic-actor")
+        user.has_perm.return_value = True
+        self.repo.insert_receipt.side_effect = RuntimeError("synthetic failure")
+        command = QuestionCommand("app-r3", "OES-SYNTH-Q0-app", 0, "Pergunta sintética?")
+        with self.assertRaisesRegex(PreparationHold, "outcome uncertain"):
+            submit_question_command(
+                user=user, command=command, unit_of_work=OfflineQuestionUnitOfWork(self.port))
+        self.assertEqual(self.events, ["enter", "rollback"])
