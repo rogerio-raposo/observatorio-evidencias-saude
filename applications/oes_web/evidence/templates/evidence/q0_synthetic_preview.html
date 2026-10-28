@@ -26,8 +26,33 @@
 </ol>
 <p><strong>Estado da prévia:</strong> somente apresentação. Validação, autorização e confirmação são descritas, não executadas.</p>
 </section>
+<section aria-labelledby="interactive-title">
+<h2 id="interactive-title">Experimentar validação local</h2>
+<p>Digite uma pergunta fictícia. A verificação ocorre exclusivamente neste navegador; nenhum texto é enviado ao servidor.</p>
+<label for="q0-local-text">Pergunta sintética</label>
+<textarea id="q0-local-text" maxlength="10000" rows="4" placeholder="Escreva uma pergunta fictícia"></textarea>
+<p><button id="q0-local-check" type="button">Validar localmente</button></p>
+<p id="q0-local-result" role="status" aria-live="polite">Nenhuma validação realizada.</p>
+</section>
+<script>
+(function () {
+  "use strict";
+  const field = document.getElementById("q0-local-text");
+  const output = document.getElementById("q0-local-result");
+  document.getElementById("q0-local-check").addEventListener("click", function () {
+    const value = field.value;
+    if (!value.trim()) {
+      output.textContent = "HOLD: informe uma pergunta sintética não vazia.";
+    } else if (value.length > 10000) {
+      output.textContent = "HOLD: texto excede 10.000 caracteres.";
+    } else {
+      output.textContent = "Validação local PASS: texto preenchido. Nenhuma autorização ou gravação foi realizada.";
+    }
+  });
+}());
+</script>
 <section aria-labelledby="limits-title"><h2 id="limits-title">Limites desta demonstração</h2>
-<p>Esta página não consulta PostgreSQL, não apresenta o Q0 persistido no ensaio e não possui formulário de envio. Não autentica pesquisadores, não cria perguntas e não autoriza escrita operacional.</p>
+<p>Esta página não consulta PostgreSQL, não apresenta o Q0 persistido no ensaio e não possui formulário de envio ao servidor. A validação local não realiza requisições de rede. Não autentica pesquisadores, não cria perguntas e não autoriza escrita operacional.</p>
 </section>
 <nav><a href="/">Retornar ao catálogo documental</a></nav>
 </main></body></html>
