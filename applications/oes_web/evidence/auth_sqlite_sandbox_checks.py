@@ -357,3 +357,27 @@ class AuthSQLiteSandboxTests(TestCase):
             codename="add_prepareridentity").exists())
         self.assertTrue(ContentType.objects.filter(
             app_label="evidence", model="oesquestion").exists())
+
+    def test_native_login_updates_only_last_login_column(self):
+        """Capture the actual SQL, not an assumption about Django signals."""
+        import re
+        from django.db import connection
+        from django.test.utils import CaptureQueriesContext
+
+        with CaptureQueriesContext(connection) as captured:
+            authenticated = self.client.login(
+                username="oes_synthetic_preparer",
+                password="synthetic-only-not-a-secret",
+            )
+        self.assertTrue(authenticated)
+        updates = [item["sql"] for item in captured.captured_queries
+                   if re.search(r'UPDATE\s+["`]?auth_user["`]?\s+SET\s', item["sql"], re.I)]
+        self.assertEqual(len(updates), 1, f"Expected exactly one auth_user UPDATE; got {updates}")
+        update = updates[0]
+        assignments = re.search(r'\bSET\s+(.*?)\s+WHERE\b', update, re.I | re.S)
+        self.assertIsNotNone(assignments, update)
+        self.assertRegex(assignments.group(1), r'^\s*["`]?last_login["`]?\s*=')
+        self.assertNotIn(",", assignments.group(1),
+                         "Native login unexpectedly updates multiple auth_user columns")
+        self.user.refresh_from_db()
+        self.assertIsNotNone(self.user.last_login)
