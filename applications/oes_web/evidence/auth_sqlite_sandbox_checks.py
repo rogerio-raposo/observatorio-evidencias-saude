@@ -285,3 +285,30 @@ class AuthSQLiteSandboxTests(TestCase):
             )
         self.assertFalse(port.questions)
         self.assertFalse(port.receipts)
+
+    def test_strict_authenticated_q0_requires_persisted_actor(self):
+        from evidence.question_preparation import (
+            QuestionCommand, PreparationHold, submit_authenticated_question_command,
+        )
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+        from preparer_identity.models import PreparerIdentity
+
+        self.user.user_permissions.add(self.permission)
+        command = QuestionCommand("strict-request", "OES-SYNTH-STRICT", 0, "Pergunta sintética?")
+        port = FakePort()
+        uow = OfflineQuestionUnitOfWork(port)
+        with self.assertRaisesRegex(PreparationHold, "persistent preparer identity"):
+            submit_authenticated_question_command(user=self.user, command=command, unit_of_work=uow)
+        self.assertFalse(port.questions)
+        self.assertFalse(port.receipts)
+
+        identity = PreparerIdentity.objects.create(user=self.user)
+        result = submit_authenticated_question_command(user=self.user, command=command, unit_of_work=uow)
+        self.assertEqual(result["version"], 1)
+        self.assertIn(("oes:actor:" + str(identity.actor_uuid), command.request_id), port.receipts)
+        self.assertNotIn((str(self.user.pk), command.request_id), port.receipts)
+        self.assertEqual(
+            submit_authenticated_question_command(user=self.user, command=command, unit_of_work=uow),
+            result,
+        )
