@@ -1,3 +1,9 @@
+## CP335 — G2-P2-B encerrado no escopo sintético (2026-10-28)
+
+- Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP335.md`; provisionamento `40773613528` PASS, limpeza `40775904096` PASS e baseline 44 permissões, zero usuários, links, identidades e sessões reconciliada pelo runner em conexão READ ONLY.
+- Responsável confirmou exclusão dos segredos efêmeros, inclusive `OES_AUTH_G2_P2B_CLEANUP_PASSWORD` (sem verificação independente do cadastro GitHub). Não repetir os workflows, nem transferir autorizações a outros ensaios. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+- Próximo: avaliar incremento Django First substantivo, proporcional, sem novos testes repetitivos e sem autorização implícita de operação.
+
 ## G2-P2-B — ciclo sintético conectado concluído (2026-10-28)
 
 - Provisionamento único: [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528), `PASS_POST_COMMIT`. Preflight de limpeza conectado READ ONLY: PASS.
