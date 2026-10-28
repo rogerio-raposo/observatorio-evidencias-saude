@@ -1,3 +1,10 @@
+## P4-A37 — login temporário isolado; ensaio migrado para papel-alvo inteiramente sintético (2026-10-28)
+
+- Consulta READ ONLY reportada pelo responsável: `oes_p4_trial_login` sem associações, original `oes_django_migrator`→`oes_sandbox_owner` com exatamente uma associação OID 155649 intacta; nenhum SET do trial para migrator/owner. Senha trial expira em 2026-10-31 03:30:53 UTC; **não cadastrada no GitHub**.
+- **Decisão de menor privilégio:** NÃO conceder migrator ou owner ao login temporário. Preparada offline variante limitada a novo alvo `oes_p4_trial_target` NOLOGIN sem objetos. Sua associação ao trial com ADMIN TRUE INHERIT FALSE SET FALSE permite testar grantor-aware self-GRANT/SET LOCAL ROLE/REVOKE/ROLLBACK sem delegar direitos Django. Setup (CREATE ROLE/GRANT persistentes), trial transacional, postflight independente e cleanup foram criados localmente e empacotados, **não executados**.
+- Parecer com SHA-256 dos quatro scripts: `archive/handoffs/oes/artifacts/P4-A37/OES_PF-I04_P4-A37_DECISAO_SINTETICA_E_HASHES_HOLD.md`. **Os quatro arquivos SQL integrais permanecem apenas locais**, não alegar persistência GitHub. Qualquer setup/trial/postflight/cleanup requer gate nominal separado; o teste sintético não prova o caso histórico migrador OID 155649. Workflow A35 `if:false` permanece inalterado.
+- **CP326 ainda vigente.** Próximo P4-A38: revisão e persistência de fontes SQL integrais; nenhuma operação Neon ou registro de segredo por `Prossiga`. Gates globais permanecem NO-GO.
+
 ## P4-A35 — workflow conectado candidato SEPARADO, fisicamente bloqueado (2026-10-27)
 
 - **Novo workflow:** `.github/workflows/oes-pf-i04-p4-a35-connected-role-trial-candidate-hold.yml`, blob `41e1be3bad3aa0dee479306d8b55f6af321220ea`. `workflow_dispatch` somente, job conectado **`if: false`**, `APPROVED_HEAD=NOT_AUTHORIZED` e `CREDENTIAL_LIFECYCLE_GATE=NOT_APPROVED`; nenhuma credencial ou environment configurados nesta atividade. A32 imutável e offline-run 40622890545 PASS preservados.
