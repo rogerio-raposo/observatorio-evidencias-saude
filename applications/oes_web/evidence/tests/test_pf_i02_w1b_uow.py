@@ -177,3 +177,17 @@ class AuthenticatedQ0HttpBoundaryTests(SimpleTestCase):
                 user=user,
                 command=QuestionCommand("boundary", "OES-SYNTH-BOUNDARY", 0, "Pergunta?"),
             )
+
+
+class AuthPostgresDesignBoundaryTests(SimpleTestCase):
+    def test_single_database_auth_design_never_connects_or_enables_sql(self):
+        from django.conf import settings
+        from importlib import import_module
+        design = import_module("config.settings_auth_pg_design")
+        self.assertEqual(design.AUTH_SCHEMA, "django_auth")
+        self.assertEqual(design.DATABASES["default"]["ENGINE"], "django.db.backends.dummy")
+        self.assertEqual(design.DATABASES["oes_scientific_hold"]["ENGINE"], "django.db.backends.dummy")
+        self.assertNotIn("oes_synthetic_reader", design.DATABASES)
+        self.assertIn("preparer_identity", design.INSTALLED_APPS)
+        self.assertIn("config.auth_sandbox_router.AuthSandboxRouter", design.DATABASE_ROUTERS)
+        self.assertNotIn("preparer_identity", settings.INSTALLED_APPS)
