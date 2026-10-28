@@ -134,3 +134,50 @@ def run_connected_trial(*, password=None, exclusive_window_confirmed=False):
     raise ProvisioningHold(
         "HOLD: G2-P2-B connected DML runner not authorized or enabled"
     )
+
+
+def _classify_trial_outcome(*, phase, error=None, postcommit=None):
+    """Pure fail-closed state machine; never authorizes retry or DML."""
+    if phase == "PRECOMMIT_ROLLBACK_CONFIRMED" and error is not None:
+        return "FAIL_ROLLED_BACK"
+    if phase == "COMMIT_CONFIRMED" and error is None:
+        return "PASS_POST_COMMIT" if postcommit == "PASS_POST_COMMIT" else "INDETERMINATE_HOLD"
+    return "INDETERMINATE_HOLD"
+
+
+def _offline_integration_probe(*, password, inject_failure=False):
+    """SQLite-only rehearsal of atomic write and relational readback.
+
+    Does NOT prove separate PostgreSQL connection semantics or enable DML.
+    """
+    from config.auth_pg_g2_p2b_offline import (
+        _offline_guard, _provision_transaction,
+        collect_relation_snapshot_offline,
+    )
+    _offline_guard("default")
+    try:
+        before_and_after = _provision_transaction(
+            password=password, using="default", inject_failure=inject_failure,
+        )
+    except ProvisioningHold as exc:
+        if not inject_failure:
+            raise
+        return _classify_trial_outcome(
+            phase="PRECOMMIT_ROLLBACK_CONFIRMED", error=exc,
+        )
+    snapshot = collect_relation_snapshot_offline()
+    expected = {
+        "fixture_users": 1,
+        "fixture_active_nonstaff_nonsuperuser": True,
+        "fixture_password_usable": True,
+        "fixture_permission_count": 1,
+        "fixture_permission_links": 1,
+        "fixture_identities": 1,
+        "fixture_uuid4": True,
+    }
+    valid = all(snapshot.get(key) == value for key, value in expected.items())
+    valid = valid and snapshot["counts"] == before_and_after["after"]
+    return _classify_trial_outcome(
+        phase="COMMIT_CONFIRMED",
+        postcommit="PASS_POST_COMMIT" if valid else "INDETERMINATE_HOLD",
+    )
