@@ -160,3 +160,14 @@ Preflight conectado READ ONLY: schema `django_auth` permanece vazio (0 objetos);
 7. Restringir execução futura a uma única operação de migration sintética aprovada, sem usuários reais, sem POST Q0, sem deploy, sem serviços pagos. Após uso, desativar credencial efêmera conforme controle aprovado, sem sua divulgação.
 
 **Decisão nesta atividade:** manter Gate B2 em HOLD até cobertura offline suficiente e configuração de execução segura. Não efetuar DDL/GRANT/migration como consequência deste documento.
+
+
+## B2-P0 — preflight conectado sob migrador, READ ONLY (2026-10-28)
+
+**Autorização:** `APPROVED — OES / DJANGO_AUTH_GATE_B2_P0 / SINGLE_CONNECTED_READ_ONLY_MIGRATOR_PREFLIGHT`, estritamente leitura, sem migrations ou mutações.
+
+Consulta realizada uma vez via Neon, selecionando `role_name=oes_auth_migrator`, database `oes_sandbox`, branch `br-gentle-hall-b6jaxehf`. Resultado: `session_user=current_user=oes_auth_migrator`, `current_database()=oes_sandbox`, USAGE/CREATE em `django_auth`=true, CREATE em `public`=false, objetos em `django_auth`=0. **search_path da sessão conectada = `"$user", public`; current_schema() = `public`; current_schemas(false) = {public}.**
+
+**Conclusão restrita:** identidade e ACL adequadas ao acesso ao schema, mas o `search_path` dessa sessão Neon não seleciona `django_auth`. **B2 permanece HOLD**; não houve DDL, DML, migration, ALTER ROLE ou GRANT. A consulta não testou a conexão Django opt-in, cujo `OPTIONS.options=-c search_path=django_auth` precisa ser demonstrado separadamente em teste expressamente autorizado; não confundir configuração de sessão da API com a configuração futura do Django.
+
+**Próxima ação:** elaborar prova de conexão Django de leitura exclusivamente com `search_path` explícito, conferindo `current_schema()`, `current_schemas(false)` e `SHOW search_path` antes de qualquer migration. Falha implica NO-GO.
