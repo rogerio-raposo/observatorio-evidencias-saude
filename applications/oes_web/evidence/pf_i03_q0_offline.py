@@ -30,3 +30,31 @@ def present_synthetic_q0(*, user, command, unit_of_work=None):
         "scientific_review": "NOT_PERFORMED",
         "e9": "BLOCKED",
     }
+
+
+def present_authenticated_synthetic_q0(*, user, command, unit_of_work=None):
+    """Django identity-aware Q0 composition; injected offline UoW only.
+
+    Does not create a database connection or expose any HTTP write route.
+    """
+    from .question_preparation import submit_authenticated_question_command
+    if (type(command) is not QuestionCommand or command.expected_version != 0
+            or command.normalized_text is not None
+            or not isinstance(command.question_id, str)
+            or not command.question_id.startswith("OES-SYNTH-Q0-")):
+        raise PreparationHold("HOLD: authenticated PF-I03 accepts synthetic Q0 only")
+    receipt = submit_authenticated_question_command(
+        user=user, command=command, unit_of_work=unit_of_work,
+    )
+    if (set(receipt) != {"status", "question_id", "version"}
+            or receipt["status"] != "PREPARATORY_ONLY"
+            or receipt["question_id"] != command.question_id
+            or receipt["version"] != 1):
+        raise PreparationHold("HOLD: invalid authenticated Q0 receipt")
+    return {
+        "question_id": receipt["question_id"],
+        "version": 1,
+        "state": "PREPARATORY_ONLY",
+        "scientific_review": "NOT_PERFORMED",
+        "e9": "BLOCKED",
+    }
