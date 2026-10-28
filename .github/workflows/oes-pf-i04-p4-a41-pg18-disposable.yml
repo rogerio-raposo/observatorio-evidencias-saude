@@ -1,7 +1,7 @@
 # OES / PF-I04 / P4-A41 — disposable PostgreSQL 18 fixture ONLY.
 # NEVER connects to Neon, uses Neon credentials, or runs on production.
-# A41 has produced an offline PostgreSQL18 NO-GO for the canonical setup.
-# AUTO-TRIGGER REMOVED. Re-dispatch needs separate reviewed offline test scope.
+# A41 isolated PG18 fixture: validate v3 setup/rollback/postflight/cleanup.
+# Candidate-only, no Neon connectivity. Final oracle updated for creator autogrant.
 name: OES P4-A41 PostgreSQL18 v3 isolated creator-grant rehearsal
 
 on:
