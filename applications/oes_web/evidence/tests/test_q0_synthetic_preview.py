@@ -1,0 +1,16 @@
+"""Offline GET-only Q0 preview; no database or writer."""
+from django.test import SimpleTestCase
+from django.urls import reverse
+
+class Q0SyntheticPreviewTests(SimpleTestCase):
+    def test_get_renders_clearly_static_synthetic_example(self):
+        response = self.client.get(reverse("q0-synthetic-preview"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "PRÉVIA ESTÁTICA SINTÉTICA")
+        self.assertContains(response, "OES-SYNTH-Q0-PREVIEW")
+        self.assertContains(response, "não consulta PostgreSQL")
+        self.assertNotContains(response, "<form")
+
+    def test_post_is_rejected(self):
+        response = self.client.post(reverse("q0-synthetic-preview"), {"original_text": "write"})
+        self.assertEqual(response.status_code, 404)

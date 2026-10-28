@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - 'applications/oes_web/evidence/question_uow_offline.py'
+      - 'applications/oes_web/evidence/q0_synthetic_preview.py'
+      - 'applications/oes_web/evidence/templates/evidence/q0_synthetic_preview.html'
+      - 'applications/oes_web/evidence/tests/test_q0_synthetic_preview.py'
+      - 'applications/oes_web/evidence/urls.py'
       - 'applications/oes_web/evidence/test_question_orm_q0_dormant.py'
       - 'applications/oes_web/evidence/tests/test_q0_commit_candidate_offline.py'
       - 'applications/oes_web/scripts/run_q0_synthetic_commit_candidate.py'

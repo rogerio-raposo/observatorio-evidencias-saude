@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Prévia sintética Q0</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main>
+<p class="notice">PRÉVIA ESTÁTICA SINTÉTICA — não representa registro persistido ou autorização de pesquisa.</p>
+<h1>Preparação de pergunta — Q0</h1>
+<section aria-labelledby="q0-title">
+<h2 id="q0-title">Exemplo de pergunta original</h2>
+<dl>
+<dt>Identificador fictício</dt><dd>{{ example.question_id }}</dd>
+<dt>Texto original</dt><dd>{{ example.original_text }}</dd>
+<dt>Etapa</dt><dd>{{ example.stage }}</dd>
+<dt>Versão ilustrativa</dt><dd>{{ example.version }}</dd>
+</dl>
+</section>
+<section aria-labelledby="limits-title"><h2 id="limits-title">Limites desta demonstração</h2>
+<p>Esta página não consulta PostgreSQL, não apresenta o Q0 persistido no ensaio e não possui formulário de envio. Não autentica pesquisadores, não cria perguntas e não autoriza escrita operacional.</p>
+</section>
+<nav><a href="/">Retornar ao catálogo documental</a></nav>
+</main></body></html>
