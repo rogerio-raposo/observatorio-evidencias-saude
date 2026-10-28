@@ -87,7 +87,14 @@ def _independent_readonly_reconciliation(*, baseline, commit_confirmed, using="d
 
     Never retry automatically, never mark indeterminate execution as rollback.
     """
+    if using != "default":
+        return "INDETERMINATE_HOLD"
     conn = connections[using]
+    if conn.in_atomic_block:
+        # Closing a caller-owned transaction would be unsafe and is forbidden.
+        return "INDETERMINATE_HOLD"
+    if conn.vendor != "postgresql":
+        return "INDETERMINATE_HOLD"
     conn.close()
     try:
         with transaction.atomic(using=using):
