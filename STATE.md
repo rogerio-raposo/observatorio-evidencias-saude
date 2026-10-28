@@ -1,3 +1,12 @@
+## CP326 — PF-I04/P4-A31–A34 | GitHub Actions offline PASS; ativação conectada HOLD (2026-10-27)
+
+- **P4-A31:** canal preferido GitHub Actions manual com `psql` direto; fonte original preservada em `archive/handoffs/oes/artifacts/CP326/`. Nenhum psql local/Neon executado.
+- **P4-A32:** workflow manual `.github/workflows/oes-pf-i04-p4-a32-rollback-only-hold.yml` publicado, Git blob `955de382252e10a287880f387111b2f35d755daf`; `connected-role-trial if: false` incondicional; segredos não cadastrados.
+- **P4-A33:** run factual [40622890545](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40622890545) `workflow_dispatch` em main, commit `01553be79f77b198673d45caddfa77f739b042a3`: offline SUCCESS/log `OFFLINE_PASS`; job conectado SKIPPED/log `HARD_HOLD_CONFIRMED`. **Zero SQL Neon**; evidência em `archive/handoffs/oes/artifacts/P4-A33/OES_PF-I04_P4-A33_RESULTADO_REMOTO_40622890545.md`.
+- **P4-A34:** auditoria independente `ACTIVATION_HOLD`, parecer `archive/handoffs/oes/artifacts/P4-A34/OES_PF-I04_P4-A34_PARECER_GATES_E_RISCOS_CONEXAO.md`. Bloqueios: (R01) remover `if:false` quebraria a própria asserção do offline; (R02) apagar segredo GitHub não invalida senha privilegiada no PostgreSQL; (R03) concorrência não impede novo dispatch/re-run; (R04) postflight independente ainda requer autorização nominal separada e em nova sessão; (R05) novo diff, SHA/commit, endpoint DIRECT, logs e contagem/ROLLBACK precisam revisão. R06: proteção por environment opcional, viável somente conforme contas/revisores.
+- **CP326 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP326.md`, sucessor imutável de CP325. **P4-A29 SQL ROLLBACK-ONLY e postflight não executados**. Próximo **P4-A35**: preparar candidato novo, somente offline, preservando o workflow A32 imutável, e resolver pré-condição de credencial administrativa verdadeiramente descartável. Nenhuma ativação ou SQL concedidos por `Prossiga`.
+- Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; PF-I04/P4 NOT_AUTHORIZED; Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY; Fase 5 NOT_STARTED.
+
 ## P4-A33 — validação remota offline REAL PASS (2026-10-27, 23:46 America/Recife)
 
 - **Run GitHub [40622890545](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40622890545):** `workflow_dispatch` em `main`, SHA `01553be79f77b198673d45caddfa77f739b042a3`, primeira execução, run **SUCCESS**. Job `offline-contract` **SUCCESS**, 6 etapas success; job `connected-role-trial` **SKIPPED**, como determinado pelo `if: false`.
