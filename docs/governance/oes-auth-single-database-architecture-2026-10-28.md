@@ -276,3 +276,38 @@ Responsável confirmou exclusão de `OES_AUTH_B2_M1_PASSWORD` (não verificada n
 ## Evidência offline do SQL `last_login` (2026-10-28)
 
 Teste de captura de SQL no SQLite descartável `AuthSQLiteSandboxTests.test_native_login_updates_only_last_login_column`, CI [40732121063](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40732121063) **192/192 PASS** (173 principal + 19 integração). Login sintético nativo do Django gerou **uma** instrução `UPDATE auth_user`, somente coluna `last_login`, e valor persistiu. Isso fundamenta tecnicamente o grant candidato `UPDATE(last_login)`, **mas não demonstra privilégios PostgreSQL efetivos**, que dependem de autorização e teste próprio. Nenhum GRANT, role, Neon conectado ou runtime HTTP foi alterado.
+
+
+## Gate candidato AUTH-RUNTIME-G1 — SQL de concessões mínimas, NÃO EXECUTADO (2026-10-28)
+
+**Preflight READ ONLY:** HEAD de partida `794bd38a3b5ebf1392e42dd560c4b71573693062`. Schema `django_auth` pertence a `oes_sandbox_owner`, ACL `{oes_sandbox_owner=UC/oes_sandbox_owner,oes_auth_migrator=UC/oes_sandbox_owner}`. Dez tabelas e nove sequências pertencem a `oes_auth_migrator`, sem ACL explícita; `oes_runtime` não possui USAGE no schema nem direitos sobre essas relações. Papel migrador expira em 2026-10-31 23:59:59 UTC; vencimento não transfere ownership.
+
+**Proposta de duas autoridades distintas, sujeita a autorização própria (NÃO executar por este registro):**
+
+```sql
+-- Executar como oes_sandbox_owner (owner do schema) somente após autorização:
+GRANT USAGE ON SCHEMA django_auth TO oes_runtime;
+
+-- Executar como oes_auth_migrator (owner das relações) somente após autorização:
+GRANT SELECT ON TABLE
+    django_auth.auth_user,
+    django_auth.auth_group,
+    django_auth.auth_permission,
+    django_auth.django_content_type,
+    django_auth.auth_user_groups,
+    django_auth.auth_user_user_permissions,
+    django_auth.auth_group_permissions,
+    django_auth.preparer_identity_prepareridentity
+TO oes_runtime;
+
+GRANT UPDATE (last_login) ON TABLE django_auth.auth_user TO oes_runtime;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON TABLE django_auth.django_session TO oes_runtime;
+```
+
+**Proibições e limites:** nenhum GRANT em `django_migrations`, sequências, schema científico, nenhuma criação de papel, `ALTER DEFAULT PRIVILEGES`, `GRANT ALL`, `CREATE ON SCHEMA`, permissões de provisionamento de conta/identidade ou endpoint HTTP. Autenticação nativa atualiza apenas `last_login` conforme ensaio SQLite [40732121063](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40732121063); compatibilidade efetiva PostgreSQL não demonstrada. O fato de `oes_runtime` já existir não prova isolamento do restante de seus direitos: qualquer reutilização exige avaliar os privilégios globais antes de decidir. Uma credencial de conexão e configuração Django de runtime distinta da credencial migradora são pré-requisitos futuros.
+
+**Plano de verificação:** comparar ACLs/owners antes e depois; confirmar USAGE e não CREATE, SELECT apenas nas oito tabelas nomeadas, UPDATE restrito a `auth_user.last_login`, DML apenas `django_session`, nenhum direito a `django_migrations`/sequências; observar grantor real na ACL. Se qualquer desvio ocorrer, parar, não executar DML nem aplicar correções ad hoc. Reversão específica exige identificação do grantor original e aprovação; não emitir REVOKE genérico.
+
+**Decisão:** AUTH-RUNTIME-G1 permanece proposta, sem autorização para executar SQL. B2-M1 PASS, runtime HOLD, G2-P2B NO-GO, E9 NO-GO e Fase 5 NOT_STARTED.
