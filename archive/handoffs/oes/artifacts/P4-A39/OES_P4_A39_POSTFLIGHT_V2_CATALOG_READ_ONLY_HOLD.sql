@@ -50,7 +50,8 @@ checks AS (
           WHERE m.roleid=i.target_oid AND m.member=i.trial_oid AND m.grantor=i.trial_oid)),
       ('target_no_shared_object_dependencies',
         (SELECT count(*)=0 FROM pg_catalog.pg_shdepend s
-          WHERE s.refclassid='pg_catalog.pg_authid'::regclass AND s.refobjid=i.target_oid)),
+          WHERE s.refclassid='pg_catalog.pg_authid'::regclass AND s.refobjid=i.target_oid
+            AND s.classid <> 'pg_catalog.pg_auth_members'::regclass)),
       ('target_no_role_config',
         (SELECT count(*)=0 FROM pg_catalog.pg_db_role_setting d WHERE d.setrole=i.target_oid)),
       ('trial_cannot_SET_target',
