@@ -495,3 +495,10 @@ Revisão estática do commit `9003301c52c4705f9c893e2eaf8f93bc9606687a` e CI [40
 3. **Teste da integração efetiva:** os testes atuais demonstram bloqueio e contratos puros, não que a coleta pós-commit opere numa segunda conexão READ ONLY nem que o fluxo real siga a autorização. Testar offline o fluxo usando infraestrutura descartável, sem Neon, antes da habilitação nominal.
 
 A autorização para preparar código não permite remover bloqueios, cadastrar segredos, executar o workflow de escrita ou alterar gates. Após resolver esses três itens, uma única aprovação nominal separada poderá ser apresentada. Marco B OPEN, G2-P2-B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
+
+### G2-P2-B — resultado do ensaio conectado único (2026-10-28)
+
+**Evidência de execução:** [GitHub Actions 40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528), `workflow_dispatch`, tentativa 1, job `connected-dml` SUCCESS, commit `4215a7eb66e9213953dc691c681b75dade7002cc`. O log do job emitiu `OES_G2_P2B_TRIAL_RESULT=PASS_POST_COMMIT`. O fluxo autorizado criou registros sintéticos via Django ORM e relatou reconciliação independente em nova conexão READ ONLY. Esta evidência é do runner; não houve reconferência adicional por consulta direta ao Neon nesta consolidação.
+
+**Limites e pendências:** nenhum retry ou limpeza automática; registros sintéticos devem permanecer intactos até autorização nominal distinta de limpeza. A exclusão do segredo efêmero `OES_AUTH_G2_P2B_TRIAL_PASSWORD` foi solicitada e **ainda não foi confirmada pelo responsável** neste registro. O workflow manual permanece apto a novo disparo se a credencial existir: **não disparar novamente**. O sucesso técnico de G2-P2-B não promove Marco B, E9, acesso operacional nem Fase 5. Antes de eventual encerramento técnico definitivo: confirmação de exclusão do segredo, preservação/reconciliação do estado e decisão expressa sobre limpeza controlada.
