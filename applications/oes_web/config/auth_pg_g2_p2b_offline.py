@@ -150,3 +150,44 @@ def classify_post_commit(*, before, after, commit_confirmed):
     if type(after) is not dict or after != CONNECTED_POSTFLIGHT:
         return "INDETERMINATE_HOLD"
     return "PASS_POST_COMMIT"
+
+
+def verify_synthetic_relations_offline(*, using="default"):
+    """Read-only relationship reconciliation in disposable SQLite only.
+
+    This is not independent PostgreSQL post-commit evidence. A connected
+    verifier must use a newly established authorized read-only session.
+    """
+    _offline_guard(using)
+    from django.db import transaction
+    User = get_user_model()
+    with transaction.atomic(using=using):
+        counts = {
+            "users": User.objects.using(using).count(),
+            "permissions": Permission.objects.using(using).count(),
+            "links": User.user_permissions.through.objects.using(using).count(),
+            "identities": PreparerIdentity.objects.using(using).count(),
+            "sessions": Session.objects.using(using).count(),
+        }
+        users = User.objects.using(using).filter(
+            username=USERNAME, is_active=True, is_staff=False, is_superuser=False
+        )
+        permissions = Permission.objects.using(using).filter(
+            content_type__app_label="evidence",
+            content_type__model="oesquestion", codename=PERMISSION,
+        )
+        if users.count() != 1 or permissions.count() != 1:
+            raise ProvisioningHold("HOLD: synthetic user or permission missing")
+        user, permission = users.get(), permissions.get()
+        if not user.has_usable_password():
+            raise ProvisioningHold("HOLD: synthetic password unusable")
+        if not User.user_permissions.through.objects.using(using).filter(
+            user_id=user.pk, permission_id=permission.pk
+        ).exists():
+            raise ProvisioningHold("HOLD: synthetic permission link missing")
+        identities = PreparerIdentity.objects.using(using).filter(user_id=user.pk)
+        if identities.count() != 1 or identities.get().actor_uuid.version != 4:
+            raise ProvisioningHold("HOLD: synthetic identity missing or invalid")
+        if any(counts[k] != 1 for k in ("users", "links", "identities")) or counts["sessions"] != 0:
+            raise ProvisioningHold("HOLD: synthetic relation counts drift")
+        return "PASS_OFFLINE_RELATION_RECONCILIATION"
