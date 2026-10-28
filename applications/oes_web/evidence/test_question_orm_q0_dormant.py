@@ -4,8 +4,8 @@ from unittest.mock import Mock
 from django.test import SimpleTestCase
 
 from evidence.question_orm_q0_dormant import DormantQ0OrmPort
-from evidence.question_preparation import PreparationHold, QuestionCommand
-from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+from evidence.question_preparation import PreparationHold, PreparationConflict, QuestionCommand
+from evidence.question_uow_offline import OfflineQuestionUnitOfWork, Receipt
 
 
 class DormantQ0Tests(SimpleTestCase):
@@ -62,3 +62,32 @@ class DormantQ0Tests(SimpleTestCase):
                 tx.lock_request("actor", "r1")
                 tx.propose_q1(QuestionCommand("r1", "Q", 1, "Q0", "Q1", "because"), "actor")
         self.repo.insert_entity.assert_not_called()
+
+    def test_idempotent_replay_uses_receipt_without_second_insert(self):
+        self.repo.find_receipt.return_value = Receipt(
+            "actor", "r1", "a" * 64, "OES-Q-SYN", 1, "REGISTER_Q0")
+        self.repo.can_access_question.return_value = True
+        result = self.run_q0()
+        self.assertEqual(result, {"status": "PREPARATORY_ONLY",
+                                  "question_id": "OES-Q-SYN", "version": 1})
+        self.assertEqual(self.events, ["enter", "commit"])
+        for name in ("insert_entity", "insert_question", "insert_entity_version",
+                     "insert_question_version", "insert_receipt"):
+            getattr(self.repo, name).assert_not_called()
+
+    def test_replay_with_conflicting_fingerprint_rolls_back(self):
+        self.repo.find_receipt.return_value = Receipt(
+            "actor", "r1", "b" * 64, "OES-Q-SYN", 1, "REGISTER_Q0")
+        with self.assertRaises(PreparationConflict):
+            self.run_q0()
+        self.assertEqual(self.events, ["enter", "rollback"])
+        self.repo.insert_entity.assert_not_called()
+
+    def test_replay_without_current_access_rolls_back(self):
+        self.repo.find_receipt.return_value = Receipt(
+            "actor", "r1", "a" * 64, "OES-Q-SYN", 1, "REGISTER_Q0")
+        self.repo.can_access_question.return_value = False
+        with self.assertRaises(PreparationConflict):
+            self.run_q0()
+        self.assertEqual(self.events, ["enter", "rollback"])
+        self.repo.insert_receipt.assert_not_called()
