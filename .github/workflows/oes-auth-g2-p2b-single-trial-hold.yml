@@ -1,6 +1,11 @@
-name: OES G2-P2-B single synthetic trial - HARD HOLD
+name: OES G2-P2-B single synthetic Django trial
 on:
   workflow_dispatch:
+    inputs:
+      authorization:
+        description: 'Type APPROVED_G2_P2B_ONE_SYNTHETIC_TRIAL after confirming exclusive window'
+        required: true
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -8,11 +13,45 @@ concurrency:
   cancel-in-progress: false
 jobs:
   connected-dml:
-    if: ${{ false }}
+    if: ${{ inputs.authorization == 'APPROVED_G2_P2B_ONE_SYNTHETIC_TRIAL' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: HARD HOLD - no database writes authorized
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r applications/oes_web/requirements.txt
+      - name: One controlled Django synthetic trial; no retries or cleanup
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings_auth_pg_g2_p2b_session_smoke
+          OES_AUTH_G2_P2B_SMOKE_OPT_IN: '1'
+          OES_AUTH_G2_P2B_SMOKE_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_AUTH_G2_P2B_SMOKE_PASSWORD: ${{ secrets.OES_AUTH_G2_P2B_TRIAL_PASSWORD }}
+          OES_G2_P2B_RUN_AUTHORIZATION: ${{ inputs.authorization }}
         run: |
-          echo "HOLD: connected G2-P2-B synthetic DML requires distinct nominal authorization"
-          exit 1
+          python - <<'PY'
+          import os
+          import secrets
+          if os.environ.get("OES_G2_P2B_RUN_AUTHORIZATION") != "APPROVED_G2_P2B_ONE_SYNTHETIC_TRIAL":
+              raise SystemExit("HOLD: explicit manual authorization mismatch")
+          if not os.environ.get("OES_AUTH_G2_P2B_SMOKE_PASSWORD"):
+              raise SystemExit("HOLD: ephemeral administrative secret unavailable")
+          import django
+          django.setup()
+          from config.auth_pg_g2_p2b_connected_hold import _trial_candidate
+          from config.auth_pg_g2_p2b_offline import ProvisioningHold
+          try:
+              status = _trial_candidate(
+                  password=secrets.token_urlsafe(40),
+                  exclusive_window_confirmed=True,
+              )
+          except ProvisioningHold:
+              raise SystemExit("HOLD: trial preconditions not satisfied; no automatic retry")
+          print("OES_G2_P2B_TRIAL_RESULT=" + status)
+          if status != "PASS_POST_COMMIT":
+              raise SystemExit("HOLD: outcome not independently confirmed; do not retry or cleanup")
+          PY
