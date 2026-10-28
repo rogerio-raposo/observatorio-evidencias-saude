@@ -312,3 +312,17 @@ class AuthSQLiteSandboxTests(TestCase):
             submit_authenticated_question_command(user=self.user, command=command, unit_of_work=uow),
             result,
         )
+
+    def test_auth_router_blocks_migrations_on_scientific_aliases(self):
+        from django.db import router
+        from django.contrib.auth import get_user_model
+        from preparer_identity.models import PreparerIdentity
+        from evidence.models import OesQuestion
+        for alias in ("oes_scientific_hold", "oes_synthetic_reader"):
+            for label in ("auth", "contenttypes", "sessions", "preparer_identity", "evidence"):
+                self.assertFalse(router.allow_migrate(alias, label))
+        self.assertTrue(router.allow_migrate("default", "preparer_identity"))
+        self.assertFalse(router.allow_migrate("default", "evidence"))
+        self.assertEqual(router.db_for_write(PreparerIdentity), "default")
+        self.assertEqual(router.db_for_read(get_user_model()), "default")
+        self.assertIsNone(router.db_for_write(OesQuestion))
