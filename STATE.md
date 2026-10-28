@@ -1,3 +1,10 @@
+## CP325 — PF-I04/P4-A28–A30 | ensaio rollback-only candidato e canal psql direto (2026-10-27)
+
+- **P4-A28 (documental):** escolha proporcional de um ensaio de associação temporária + SET LOCAL ROLE + REVOKE grantor-aware **terminado obrigatoriamente por ROLLBACK**, sem GRANT em objetos Django/Q0. A associação original OID `155649`, grantor `cloud_admin`, deve permanecer intacta.
+- **P4-A29 (documental):** SQL candidato 171 linhas com quatro marcadores `A29_PRE/TEMP_GRANT/MIGRATOR/CLEAN`, contagem 1→2→2→1 e **ROLLBACK**; SHA-256 `550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17`. Postflight independente READ ONLY SHA-256 `8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509`; ambos **NÃO EXECUTADOS E NÃO AUTORIZADOS**.
+- **P4-A30 (documental):** canal preferido condicional `psql` por conexão direta, uma sessão e transação explícita com `ON_ERROR_STOP`, sem `-1`, exigindo ambiente local comprovado, rollback visível e postflight em nova sessão. Neon MCP `run_sql` e `run_sql_transaction` / SQL Editor **não aprovados** para A29 sem novo desenho/prova. Nenhuma conexão ou credencial local verificada.
+- **CP325 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP325.md`; quatro arquivos originais A29/A30 preservados com hashes Git conferidos em `archive/handoffs/oes/artifacts/CP325/`. **Próxima P4-A31:** verificar modalidade operacional de ensaio e sua viabilidade; não executar GRANT/REVOKE/SET ROLE sem autorização nominal específica e pré-condições comprovadas. Fase 5 NOT_STARTED, Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, PF-I04/P4 NOT_AUTHORIZED.
+
 ## CP324 — PF-I04/P4-A25–A27 | verificador v3 executado; baseline HOLD confirmada (2026-10-27)
 
 - **P4-A25:** uma consulta A23 READ ONLY nominalmente autorizada no Neon sintético falhou com `ACL arrays must be one-dimensional`, sem SUMMARY nem mutações; não repetida. Causa provável: `aclexplode` sobre ACL vazia de dimensão zero.
