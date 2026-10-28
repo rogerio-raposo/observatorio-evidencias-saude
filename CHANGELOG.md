@@ -1,3 +1,9 @@
+## 2026-10-28 — Django autenticado SQLite + Neon sintético READ ONLY integrado PASS
+
+- Preparados ambiente de autenticação SQLite efêmero, verificação Q0 GET-only, leitor científico opcional e executor conectado `scripts/check_auth_pg_integrated_readonly.py`; CI offline [40699959556](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40699959556) **166/166 PASS** (155 principal + 11 autenticação).
+- Ensaio conectado **uma única vez**, aprovado especificamente, workflow `oes-auth-pg-integrated-readonly-manual.yml`, [run 40701127859](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40701127859), `main` SHA `b5d74b3da90c3be4ebe80fbd233683713c4a0acc`, tentativa 1, **SUCCESS**; log `PASS SQLITE_AUTH_PG_READ_ONLY_SYNTHETIC_THREE_LINKS_Q0_WRITE_BLOCKED`. Comprovada coexistência de sessão/autorização sintética em SQLite e leitura Neon como `oes_pg_a4_reader`, com três vínculos e HTML; migrations limitadas ao SQLite.
+- Responsável **declarou exclusão** do segredo temporário `OES_PG_A4_PASSWORD`; não verificada independentemente. Não repetir o workflow, nem promover operação. G2-P2B operacional NO-GO, E9 NO-GO, Marco B OPEN, Fase 5 NOT_STARTED. Próxima atividade: avaliar lacunas de preparação Q0 persistente autenticada sem novas execuções conectadas.
+
 ## 2026-10-28 — Q0 Django–PostgreSQL sintético com commit e replay PASS (sem novo checkpoint)
 
 - Consulta catalogal READ ONLY validou `oes_qprep_login` com herança de `oes_qprep_writer` e SELECT/INSERT nas cinco tabelas Q0, sem ajustes de roles/grants.
