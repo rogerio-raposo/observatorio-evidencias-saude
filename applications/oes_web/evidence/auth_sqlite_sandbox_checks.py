@@ -748,3 +748,35 @@ class G2P2BExecutorOfflineTests(TestCase):
         from config.auth_pg_g2_p2b_offline import ProvisioningHold
         with self.assertRaisesRegex(ProvisioningHold, "connection mismatch"):
             _require_admin_session(connections["default"])
+
+    def test_g2_p2b_integrated_offline_success_and_commit_states(self):
+        from config.auth_pg_g2_p2b_connected_hold import (
+            _offline_integration_probe, _classify_trial_outcome,
+        )
+        self.assertEqual(
+            _offline_integration_probe(password="disposable-offline-fixture"),
+            "PASS_POST_COMMIT",
+        )
+        self.assertEqual(
+            _classify_trial_outcome(phase="COMMIT_UNKNOWN", error=RuntimeError("lost")),
+            "INDETERMINATE_HOLD",
+        )
+        self.assertEqual(
+            _classify_trial_outcome(
+                phase="COMMIT_CONFIRMED", postcommit="INDETERMINATE_HOLD"
+            ),
+            "INDETERMINATE_HOLD",
+        )
+
+    def test_g2_p2b_integrated_offline_precommit_rollback(self):
+        from config.auth_pg_g2_p2b_connected_hold import _offline_integration_probe
+        from django.contrib.auth import get_user_model
+        self.assertEqual(
+            _offline_integration_probe(
+                password="disposable-offline-fixture", inject_failure=True,
+            ),
+            "FAIL_ROLLED_BACK",
+        )
+        self.assertFalse(get_user_model().objects.filter(
+            username="oes_g2_trial_fixture"
+        ).exists())
