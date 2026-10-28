@@ -53,14 +53,14 @@ BEGIN
         AND member='oes_p4_trial_login'::regrole) <> 2
     OR NOT EXISTS (SELECT 1 FROM pg_auth_members
         WHERE roleid='oes_p4_trial_target'::regrole
-        AND member='oes_p4_trial_login'::regrole
-        AND grantor='oes_sandbox_owner'::regrole
-        AND admin_option AND NOT inherit_option AND NOT set_option)
+          AND member='oes_p4_trial_login'::regrole
+          AND grantor='oes_sandbox_owner'::regrole
+          AND admin_option AND NOT inherit_option AND NOT set_option)
     OR NOT EXISTS (SELECT 1 FROM pg_auth_members
         WHERE roleid='oes_p4_trial_target'::regrole
-        AND member='oes_p4_trial_login'::regrole
-        AND grantor='oes_p4_trial_login'::regrole
-        AND NOT admin_option AND NOT inherit_option AND set_option)
+          AND member='oes_p4_trial_login'::regrole
+          AND grantor='oes_p4_trial_login'::regrole
+          AND NOT admin_option AND NOT inherit_option AND set_option)
     OR NOT pg_has_role('oes_p4_trial_login','oes_p4_trial_target','SET')
  THEN RAISE EXCEPTION 'HOLD A37: grantor isolation failed'; END IF;
 END
@@ -96,13 +96,13 @@ BEGIN
         AND member='oes_p4_trial_login'::regrole) <> 1
     OR NOT EXISTS (SELECT 1 FROM pg_auth_members
         WHERE roleid='oes_p4_trial_target'::regrole
-        AND member='oes_p4_trial_login'::regrole
-        AND grantor='oes_sandbox_owner'::regrole
-        AND admin_option AND NOT inherit_option AND NOT set_option)
+          AND member='oes_p4_trial_login'::regrole
+          AND grantor='oes_sandbox_owner'::regrole
+          AND admin_option AND NOT inherit_option AND NOT set_option)
     OR EXISTS (SELECT 1 FROM pg_auth_members
         WHERE roleid='oes_p4_trial_target'::regrole
-        AND member='oes_p4_trial_login'::regrole
-        AND grantor='oes_p4_trial_login'::regrole)
+          AND member='oes_p4_trial_login'::regrole
+          AND grantor='oes_p4_trial_login'::regrole)
     OR pg_has_role('oes_p4_trial_login','oes_p4_trial_target','SET')
  THEN RAISE EXCEPTION 'HOLD A37: cleanup failed'; END IF;
 END
