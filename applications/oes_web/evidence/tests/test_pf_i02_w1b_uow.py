@@ -396,3 +396,24 @@ class DjangoAuthB2ScientificInventoryOfflineTests(SimpleTestCase):
                 with self.assertRaisesRegex(RuntimeError, "inventory changed"):
                     compare_baseline(file)
             self.assertTrue(file.is_file())
+
+
+class DjangoAuthB2PostflightOfflineTests(SimpleTestCase):
+    def test_structural_check_runs_even_if_migration_inspection_fails(self):
+        from unittest.mock import MagicMock, patch
+        from config.auth_pg_b2_postflight import postflight
+        connection = MagicMock()
+        with patch("config.auth_pg_b2_postflight.inspect_migration_state",
+                   side_effect=RuntimeError("recorder mismatch")) as inspect:
+            with patch("config.auth_pg_b2_postflight.compare_baseline") as fingerprint:
+                with self.assertRaisesRegex(RuntimeError, "postflight incomplete"):
+                    postflight("synthetic-baseline.json", connection)
+        inspect.assert_called_once_with(connection)
+        fingerprint.assert_called_once()
+
+    def test_postflight_pass_requires_both_independent_checks(self):
+        from unittest.mock import MagicMock, patch
+        from config.auth_pg_b2_postflight import postflight
+        with patch("config.auth_pg_b2_postflight.inspect_migration_state"):
+            with patch("config.auth_pg_b2_postflight.compare_baseline"):
+                self.assertEqual(postflight("synthetic.json", MagicMock()), "B2_M1_POSTFLIGHT_PASS")
