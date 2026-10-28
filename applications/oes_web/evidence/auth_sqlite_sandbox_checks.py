@@ -524,3 +524,31 @@ class G2P2BExecutorOfflineTests(TestCase):
                    side_effect=ProvisioningHold("HOLD: connected forbidden")):
             with self.assertRaises(ProvisioningHold):
                 provision_offline(password="test-password-only")
+
+    def test_offline_executor_holds_when_session_baseline_is_not_empty(self):
+        from django.contrib.sessions.models import Session
+        from datetime import timedelta
+        from django.utils import timezone
+        from config.auth_pg_g2_p2b_offline import provision_offline, ProvisioningHold
+        Session.objects.create(
+            session_key="oes_g2_fixture_session",
+            session_data="synthetic",
+            expire_date=timezone.now() + timedelta(hours=1),
+        )
+        with self.assertRaisesRegex(ProvisioningHold, "baseline"):
+            provision_offline(password="test-password-only")
+        self.assertFalse(get_user_model().objects.filter(username="oes_g2_trial_fixture").exists())
+
+    def test_offline_executor_preflight_is_inside_atomic(self):
+        from unittest.mock import patch
+        from django.db import connections
+        from config.auth_pg_g2_p2b_offline import _baseline, provision_offline
+        real_baseline = _baseline
+
+        def assert_atomic(using):
+            self.assertTrue(connections[using].in_atomic_block)
+            return real_baseline(using)
+
+        with patch("config.auth_pg_g2_p2b_offline._baseline", side_effect=assert_atomic):
+            result = provision_offline(password="test-password-only")
+        self.assertEqual(result["status"], "PASS_OFFLINE_ONLY")
