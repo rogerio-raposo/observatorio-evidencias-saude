@@ -195,3 +195,12 @@ Workflow desabilitado novamente após consumo autorizado (commit `e44c54e9c7bde5
 **Contenção:** a execução de migrations nativas pode abranger diversas transações; **não prometer rollback atômico de todo o comando**. Se erro, interromper novas tentativas e emitir inventário/postflight de leitura, com estado de `django_migrations`; não apagar manualmente tabelas ou refazer comando até plano de recuperação expressamente aprovado. O PASS exige conclusão de migrate, schema ownership e ACL coerentes, integridade `django_migrations` e inventário científico estável. O workflow de preflight B2-P1 permanece desabilitado.
 
 **Decisão nesta atividade:** somente plano documental, sem recriar segredo, sem conexão ou migration PostgreSQL. Gate B2 continua HOLD até aprovação individual B2-M1.
+
+
+## B2-M1 — migrations Django conectadas PASS (2026-10-28)
+
+Autorização expressa de execução única B2-M1; workflow manual [run 40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136), `workflow_dispatch`, tentativa 1, SHA `5bd718263d4462a3b2fe4bef6b9cb8e91d869f22`, conclusão **SUCCESS**. Preflight `PASS_READ_ONLY_DJANGO_AUTH_SCHEMA`, escopo `B2_M1_APPROVED_MIGRATION_GRAPH`, `MIGRATE_COMMAND_COMPLETED`, postflight `B2_M1_POSTFLIGHT_PASS`.
+
+**16/16 migrations aplicadas** (`contenttypes`, `auth`, `preparer_identity`, `sessions`), confirmadas por comparação de registro e arquivos locais. `django_auth` contém **49 objetos pg_class** após migração; role/sessão `oes_auth_migrator` no schema `django_auth`. `post_migrate` produziu metadados ContentType e Permission, inclusive para cinco modelos científicos `evidence` não gerenciados; metadados residem em `django_auth`. Fingerprint do inventário estrutural científico: 315 registros e SHA-256 `2e75e4c018b62f8b288b5f84e9a70fe0ebf9eea64e928468130e4950d38f6b81` tanto antes quanto depois. Isso é verificação estrutural delimitada, não prova de ausência de toda alteração de dados ou ACL.
+
+Workflow B2-M1 **desabilitado após execução** em commit `31fd4dbb910bde68a84a1951005c2f4ef72779b5`. **Segredo `OES_AUTH_B2_M1_PASSWORD` exige exclusão manual confirmada pelo responsável**; não presumir removido. Não reexecutar. B2-M1 PASS exclusivamente no escopo de migrations de autenticação sintética, sem usuário real, runtime grants, HTTP writes, deploy ou promoção operacional. G2-P2B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
