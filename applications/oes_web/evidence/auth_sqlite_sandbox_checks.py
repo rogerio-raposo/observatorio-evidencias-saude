@@ -103,3 +103,24 @@ class AuthSQLiteSandboxTests(TestCase):
             )
         self.assertEqual(fake_port.questions, {})
         self.assertEqual(fake_port.receipts, {})
+
+    def test_q0_http_access_anonymous_and_post_are_blocked(self):
+        from django.urls import reverse
+        endpoint = reverse("q0-access-status")
+        response = self.client.get(endpoint)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.json(), {"status": "HOLD", "q0_write_enabled": False})
+        self.assertEqual(self.client.post(endpoint).status_code, 404)
+
+    def test_q0_http_access_requires_explicit_permission(self):
+        from django.urls import reverse
+        endpoint = reverse("q0-access-status")
+        self.assertTrue(self.client.login(
+            username="oes_synthetic_preparer", password="synthetic-only-not-a-secret"))
+        self.assertEqual(self.client.get(endpoint).status_code, 403)
+        self.user.user_permissions.add(self.permission)
+        response = self.client.get(endpoint)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            "status": "AUTHORIZED_SYNTHETIC_SCOPE_ONLY", "q0_write_enabled": False,
+        })
