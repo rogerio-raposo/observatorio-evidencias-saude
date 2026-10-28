@@ -5,6 +5,7 @@ permissions:
   contents: read
 jobs:
   g2-p1-readonly:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
