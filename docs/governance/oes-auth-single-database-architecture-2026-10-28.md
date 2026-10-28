@@ -335,3 +335,12 @@ Preflight READ ONLY por `has_schema_privilege`: `oes_runtime` apresenta USAGE=tr
 **Encerramento:** após único ensaio autorizado, desabilitar workflow, solicitar exclusão confirmada de segredo GitHub, inventariar ACLs/grantors e executar revogações específicas e DROP ROLE **somente após autorização separada**. Expiração da credencial não elimina grants. Falha em qualquer verificação: HOLD, sem repetição automática.
 
 **Decisão desta atividade:** contrato documental exclusivamente; `oes_auth_trial_login` **não criado**, sem senha/segredo cadastrado, sem GRANT e sem conexões. AUTH-RUNTIME-G1 HOLD; B2-M1 PASS; G2-P2B NO-GO; E9 NO-GO; Fase 5 NOT_STARTED.
+
+
+## AUTH_RUNTIME_G1_MINIMAL_GRANTS — pacote de autorização proposto (2026-10-28)
+
+Preflight catalogal read-only após criação do papel: `oes_auth_trial_login` sem USAGE em `django_auth`, sem SELECT/INSERT/UPDATE/DELETE nas dez tabelas. `oes_sandbox_owner` é owner do schema; `oes_auth_migrator` é owner das dez tabelas. Sem alteração operacional nesta atividade.
+
+**Escopo exato para aprovação posterior:** um GRANT USAGE ON SCHEMA django_auth TO oes_auth_trial_login, executado com autoridade do owner do schema; SELECT nas oito tabelas `auth_user`, `auth_group`, `auth_permission`, `django_content_type`, `auth_user_groups`, `auth_user_user_permissions`, `auth_group_permissions`, `preparer_identity_prepareridentity`; UPDATE(last_login) exclusivamente em `auth_user`; SELECT, INSERT, UPDATE, DELETE exclusivamente em `django_session`. Direitos de relações concedidos pelo owner `oes_auth_migrator` ou grantor que possua grant option verificável. Sem grants em sequências, `django_migrations`, outros schemas; sem memberships, mudanças de role, migrations, DML, conexões Django, teste de login ou HTTP write. Confirmar ACL e grantor por consulta read-only após execução. **HOLD em qualquer divergência.** O usuário deverá autorizar explicitamente esse pacote antes de qualquer execução.
+
+**Dependência:** expiração da senha `oes_auth_migrator` em 2026-10-31 23:59:59 UTC. Execução e reversão posterior exigem planejar acesso autorizado aos objetos; expiração não remove grants ou ownership. Não conceder direitos como expediente para contornar falha de grantor.
