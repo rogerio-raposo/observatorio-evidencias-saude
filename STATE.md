@@ -1,3 +1,9 @@
+## Pós-CP335 — diagnóstico de integração de persistência PF-I03 (2026-10-28)
+
+- Após CI [40781780237](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40781780237) PASS, a cadeia Django auth/permission/PreparerIdentity(UUID4) → Q0 → recibo foi verificada com autenticação real SQLite e Unit of Work em memória.
+- Revisão dirigida: `evidence/question_orm_q0_dormant.py` já implementa o protocolo de cinco efeitos ORM Q0 e preserva Q1 HOLD; `evidence/question_orm_q0_repository_dormant.py` já contém mapeamento ORM mas bloqueia a instanciação; `evidence/models.py` usa modelos `managed=False` nas tabelas reais `core`/`investigation`, com FKs compostas e triggers PostgreSQL-owned. `evidence/question_orm_transaction_offline.py` contém consultas lazy, não execução. Não existe conector de escrita autorizada.
+- **Decisão de proporcionalidade:** não duplicar essas tabelas no auth SQLite nem criar nova implementação de persistência para repetir contratos offline. A lacuna real é executar e reconciliar o port ORM já existente em banco sintético isolado, mediante gate técnico/nominal separado que especifique alias, identidade, DML, rollback e reconciliação; fora desse gate, o escritor permanece HOLD. Nenhuma habilitação realizada. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED; CP335 vigente.
+
 ## Pós-CP335 — seleção de prioridade funcional Django First (2026-10-28)
 
 - Avaliação comparativa de `applications/oes_web/evidence/{views,urls,q0_access_status,q0_synthetic_preview,preparation_auth,question_preparation,models}.py`: catálogo e preview GET-only disponíveis, autorização Django e serviço de comando de preparação separados; falta integração fim a fim Q0 em escopo sintético.
