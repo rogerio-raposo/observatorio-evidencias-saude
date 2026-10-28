@@ -682,3 +682,34 @@ class G2P2BExecutorOfflineTests(TestCase):
         get_user_model().objects.get(username="oes_g2_trial_fixture").user_permissions.clear()
         with self.assertRaises(ProvisioningHold):
             verify_synthetic_relations_offline()
+
+    def test_connected_reconciliation_snapshot_contract_pure(self):
+        from config.auth_pg_g2_p2b_offline import (
+            classify_connected_reconciliation, CONNECTED_BASELINE,
+            CONNECTED_POSTFLIGHT,
+        )
+        snapshot = {
+            "counts": dict(CONNECTED_POSTFLIGHT),
+            "fixture_users": 1,
+            "fixture_active_nonstaff_nonsuperuser": True,
+            "fixture_password_usable": True,
+            "fixture_permission_count": 1,
+            "fixture_permission_links": 1,
+            "fixture_identities": 1,
+            "fixture_uuid4": True,
+        }
+        def classify(value, confirmed=True):
+            return classify_connected_reconciliation(
+                commit_confirmed=confirmed, baseline=dict(CONNECTED_BASELINE),
+                snapshot=value,
+            )
+        self.assertEqual(classify(snapshot), "PASS_POST_COMMIT")
+        self.assertEqual(classify(snapshot, None), "INDETERMINATE_HOLD")
+        self.assertEqual(
+            classify({**snapshot, "fixture_permission_links": 0}),
+            "INDETERMINATE_HOLD",
+        )
+        self.assertEqual(
+            classify({**snapshot, "counts": {**CONNECTED_POSTFLIGHT, "users": 2}}),
+            "INDETERMINATE_HOLD",
+        )
