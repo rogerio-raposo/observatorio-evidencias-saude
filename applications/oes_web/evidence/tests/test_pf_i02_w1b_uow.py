@@ -417,3 +417,21 @@ class DjangoAuthB2PostflightOfflineTests(SimpleTestCase):
         with patch("config.auth_pg_b2_postflight.inspect_migration_state"):
             with patch("config.auth_pg_b2_postflight.compare_baseline"):
                 self.assertEqual(postflight("synthetic.json", MagicMock()), "B2_M1_POSTFLIGHT_PASS")
+
+
+class DjangoAuthB2MigrationScopeTests(SimpleTestCase):
+    def test_scope_rejects_unexpected_or_missing_migration_apps(self):
+        from types import SimpleNamespace
+        from config.auth_pg_b2_scope import assert_approved_migration_scope
+        keys = {("auth", "0001"), ("contenttypes", "0001"),
+                ("sessions", "0001"), ("preparer_identity", "0001")}
+        self.assertEqual(
+            assert_approved_migration_scope(SimpleNamespace(disk_migrations=dict.fromkeys(keys))),
+            "B2_M1_APPROVED_MIGRATION_GRAPH",
+        )
+        with self.assertRaisesRegex(RuntimeError, "unexpected"):
+            assert_approved_migration_scope(
+                SimpleNamespace(disk_migrations=dict.fromkeys(keys | {("evidence", "0001")})))
+        with self.assertRaisesRegex(RuntimeError, "missing"):
+            assert_approved_migration_scope(
+                SimpleNamespace(disk_migrations=dict.fromkeys(keys - {("sessions", "0001")})))
