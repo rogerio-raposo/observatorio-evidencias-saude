@@ -1,0 +1,18 @@
+name: OES G2-P2-B single synthetic trial - HARD HOLD
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: oes-auth-g2-p2b-single-synthetic-trial
+  cancel-in-progress: false
+jobs:
+  connected-dml:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: HARD HOLD - no database writes authorized
+        run: |
+          echo "HOLD: connected G2-P2-B synthetic DML requires distinct nominal authorization"
+          exit 1
