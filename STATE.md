@@ -1,3 +1,9 @@
+## CP331 — retomada G2-P2-B (2026-10-28)
+
+- Ponteiro: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP331.md`. G2-P1 conectado [40740532848](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40740532848) PASS; workflow novamente desabilitado, segredo excluído segundo responsável. B2-M1 [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136) 16/16 migrations PASS, segredo excluído segundo responsável.
+- G2-P2-A READ ONLY baseline: auth_user=0, 44 permissões preexistentes, 0 identidades, 0 sessões e permissão `evidence.prepare_question` ausente. G2-P2-B 197/197 testes offline PASS [40741871726](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40741871726). `oes_auth_migrator` owner de 49 objetos; USAGE em quatro sequências necessárias e INSERT/DELETE sobre tabelas pertinentes confirmados por consultas pontuais. Nenhum DML conectado autorizado/executado.
+- `oes_auth_trial_login` com grants mínimos G1 PASS; credenciais de trial/migrator expiram em 2026-10-31 23:59:59 UTC (sem revogar objetos). **G2-P2-B conectado HOLD**, G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED; Marco B OPEN. Próxima atividade: formalizar evidência administrativa final e gate de provisionamento, sem executar sem autorização.
+
 ## Pós-CP330 — B2-M1 migrations PostgreSQL PASS (2026-10-28)
 
 - Execução única autorizada [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136) **SUCCESS**: Django schema `django_auth`, 16/16 migrations aplicadas; 49 objetos; postflight `B2_M1_POSTFLIGHT_PASS`. Inventário científico 315 registros, SHA-256 estável `2e75e4c018b62f8b288b5f84e9a70fe0ebf9eea64e928468130e4950d38f6b81`.
