@@ -340,3 +340,35 @@ class DjangoAuthMigrationGraphOfflineTests(SimpleTestCase):
         self.assertEqual(names, {"update_proxy_model_permissions", "noop"})
         self.assertEqual(len(data_ops), 2)
         self.assertGreater(len(all_nodes), 4)
+
+ 
+class DjangoAuthB2ConnectedPreflightOfflineTests(SimpleTestCase):
+    def test_preflight_rejects_unapproved_configuration_without_cursor(self):
+        from unittest.mock import Mock
+        from config.auth_pg_b2_preflight import read_only_preflight
+        connection = Mock(settings_dict={"ENGINE": "django.db.backends.dummy"})
+        with self.assertRaisesRegex(RuntimeError, "unauthorized"):
+            read_only_preflight(connection)
+        connection.cursor.assert_not_called()
+
+    def test_preflight_verifies_schema_and_fails_closed(self):
+        from unittest.mock import Mock
+        from config.auth_pg_b2_preflight import read_only_preflight, QUERY
+        conn = Mock(settings_dict={
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "oes_sandbox", "USER": "oes_auth_migrator",
+            "OPTIONS": {"options": "-c search_path=django_auth"},
+        })
+        cursor = conn.cursor.return_value.__enter__.return_value
+        cursor.fetchone.return_value = (
+            "oes_sandbox", "oes_auth_migrator", "oes_auth_migrator",
+            "django_auth", "django_auth", "{django_auth}", True, True, 0,
+        )
+        self.assertEqual(read_only_preflight(conn)["status"], "PASS_READ_ONLY_DJANGO_AUTH_SCHEMA")
+        cursor.execute.assert_called_once_with(QUERY)
+        cursor.fetchone.return_value = (
+            "oes_sandbox", "oes_auth_migrator", "oes_auth_migrator",
+            '"$user", public', "public", "{public}", True, True, 0,
+        )
+        with self.assertRaisesRegex(RuntimeError, "not verified"):
+            read_only_preflight(conn)
