@@ -1,0 +1,51 @@
+name: OES Q0 synthetic commit candidate - manual only
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type ONE_SYNTHETIC_Q0_COMMIT only after separate explicit authorization for persistent write'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-q0-synthetic-commit-manual
+  cancel-in-progress: false
+
+jobs:
+  synthetic-commit:
+    if: github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && inputs.confirm == 'ONE_SYNTHETIC_Q0_COMMIT'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Django and PostgreSQL driver
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Require temporary reader-independent Q0 writer credential
+        env:
+          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
+        shell: bash
+        run: |
+          if [ -z "$OES_QPREP_LOGIN_PASSWORD" ]; then
+            echo "::error::Q0 credential unavailable; no SQL executed"
+            exit 1
+          fi
+      - name: Execute exactly one synthetic Q0 command and verification
+        working-directory: applications/oes_web
+        env:
+          OES_Q0_COMMIT_EXPLICIT_APPROVAL: ${{ inputs.confirm }}
+          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
+        run: python scripts/run_q0_synthetic_commit_candidate.py
