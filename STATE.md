@@ -1,3 +1,9 @@
+## Pós-CP335 — seleção de prioridade funcional Django First (2026-10-28)
+
+- Avaliação comparativa de `applications/oes_web/evidence/{views,urls,q0_access_status,q0_synthetic_preview,preparation_auth,question_preparation,models}.py`: catálogo e preview GET-only disponíveis, autorização Django e serviço de comando de preparação separados; falta integração fim a fim Q0 em escopo sintético.
+- **Prioridade selecionada:** PF-I03, integrar identidade autenticada, checagem de permissão, comando Q0 e recibo transacional com componentes existentes, primeiramente em sandbox isolado. Critérios de aceitação: rejeitar não autorizado, persistir uma Q0 sintética com identidade do ator, verificar recibo, versão, conflito/replay e rollback, sem construir novos contratos puros genéricos.
+- **Não autorizado por essa seleção:** HTTP POST conectado, usuários reais, novas concessões Neon, deploy, produção, ciência nova ou promoção de gates. G2-P2-B não deve ser reaberto. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. CP335 permanece checkpoint vigente.
+
 ## CP335 — G2-P2-B encerrado no escopo sintético (2026-10-28)
 
 - Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP335.md`; provisionamento `40773613528` PASS, limpeza `40775904096` PASS e baseline 44 permissões, zero usuários, links, identidades e sessões reconciliada pelo runner em conexão READ ONLY.
