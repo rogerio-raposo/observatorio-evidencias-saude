@@ -56,7 +56,7 @@ checks AS (
       ('trial_cannot_SET_target',
         CASE WHEN i.trial_oid IS NOT NULL AND i.target_oid IS NOT NULL
           THEN NOT pg_catalog.pg_has_role(i.trial_oid,i.target_oid,'SET') ELSE false END),
-      ('trial_cannot_USAGES_target',
+      ('trial_cannot_USAGE_target',
         CASE WHEN i.trial_oid IS NOT NULL AND i.target_oid IS NOT NULL
           THEN NOT pg_catalog.pg_has_role(i.trial_oid,i.target_oid,'USAGE') ELSE false END),
       ('trial_cannot_SET_owner',
@@ -65,10 +65,10 @@ checks AS (
       ('trial_cannot_SET_migrator',
         CASE WHEN i.trial_oid IS NOT NULL AND i.migrator_oid IS NOT NULL
           THEN NOT pg_catalog.pg_has_role(i.trial_oid,i.migrator_oid,'SET') ELSE false END),
-      ('trial_cannot_USAGES_owner',
+      ('trial_cannot_USAGE_owner',
         CASE WHEN i.trial_oid IS NOT NULL AND i.owner_oid IS NOT NULL
           THEN NOT pg_catalog.pg_has_role(i.trial_oid,i.owner_oid,'USAGE') ELSE false END),
-      ('trial_cannot_USAGES_migrator',
+      ('trial_cannot_USAGE_migrator',
         CASE WHEN i.trial_oid IS NOT NULL AND i.migrator_oid IS NOT NULL
           THEN NOT pg_catalog.pg_has_role(i.trial_oid,i.migrator_oid,'USAGE') ELSE false END),
       ('original_migrator_only_one',
