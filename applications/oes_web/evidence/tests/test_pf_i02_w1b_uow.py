@@ -372,3 +372,27 @@ class DjangoAuthB2ConnectedPreflightOfflineTests(SimpleTestCase):
         )
         with self.assertRaisesRegex(RuntimeError, "not verified"):
             read_only_preflight(conn)
+
+
+class DjangoAuthB2ScientificInventoryOfflineTests(SimpleTestCase):
+    def test_inventory_stable_and_detects_structural_drift(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import MagicMock
+        from config.auth_pg_b2_inventory import write_baseline, compare_baseline
+        from unittest.mock import patch
+        sample = [("core", "entity", "r", "owner", 1, "id", "uuid", -1, True, "p")]
+        cursor = MagicMock()
+        cursor.fetchall.return_value = sample
+        conn = MagicMock()
+        conn.cursor.return_value.__enter__.return_value = cursor
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / "baseline.json"
+            with patch("config.auth_pg_b2_inventory.connections") as connections:
+                connections.__getitem__.return_value = conn
+                write_baseline(file)
+                compare_baseline(file)
+                cursor.fetchall.return_value = sample + [("core", "new_table", "r", "owner", None, None, None, None, None, "p")]
+                with self.assertRaisesRegex(RuntimeError, "inventory changed"):
+                    compare_baseline(file)
+            self.assertTrue(file.is_file())
