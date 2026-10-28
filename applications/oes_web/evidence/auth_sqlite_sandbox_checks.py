@@ -552,3 +552,42 @@ class G2P2BExecutorOfflineTests(TestCase):
         with patch("config.auth_pg_g2_p2b_offline._baseline", side_effect=assert_atomic):
             result = provision_offline(password="test-password-only")
         self.assertEqual(result["status"], "PASS_OFFLINE_ONLY")
+
+    def test_connected_contract_is_pure_and_rejects_unapproved_scope(self):
+        from config.auth_pg_g2_p2b_offline import (
+            CONNECTED_BASELINE, ProvisioningHold, validate_connected_contract
+        )
+        kwargs = dict(
+            role="oes_auth_migrator", database="oes_sandbox",
+            schema="django_auth", baseline=dict(CONNECTED_BASELINE)
+        )
+        with self.assertRaisesRegex(ProvisioningHold, "authorization"):
+            validate_connected_contract(approved=False, **kwargs)
+        with self.assertRaisesRegex(ProvisioningHold, "identity"):
+            validate_connected_contract(approved=True, **{**kwargs, "role": "postgres"})
+        with self.assertRaisesRegex(ProvisioningHold, "baseline"):
+            validate_connected_contract(approved=True, **{
+                **kwargs, "baseline": {**CONNECTED_BASELINE, "permissions": 43}
+            })
+        self.assertEqual(
+            validate_connected_contract(approved=True, **kwargs),
+            "CONTRACT_VALIDATED_OFFLINE_NOT_AUTHORIZED_TO_EXECUTE",
+        )
+
+    def test_connected_contract_postflight_is_exact(self):
+        from config.auth_pg_g2_p2b_offline import (
+            CONNECTED_BASELINE, CONNECTED_POSTFLIGHT,
+            ProvisioningHold, validate_connected_contract
+        )
+        kwargs = dict(
+            approved=True, role="oes_auth_migrator", database="oes_sandbox",
+            schema="django_auth", baseline=dict(CONNECTED_BASELINE)
+        )
+        with self.assertRaisesRegex(ProvisioningHold, "postflight"):
+            validate_connected_contract(
+                **kwargs, postflight={**CONNECTED_POSTFLIGHT, "sessions": 1}
+            )
+        self.assertEqual(
+            validate_connected_contract(**kwargs, postflight=dict(CONNECTED_POSTFLIGHT)),
+            "CONTRACT_VALIDATED_OFFLINE_NOT_AUTHORIZED_TO_EXECUTE",
+        )
