@@ -838,3 +838,58 @@ class G2P2BExecutorOfflineTests(TestCase):
                     after={**before, "permissions": before["permissions"] + 1},
                 )
         self.assertEqual(_counts(), after)
+
+    def test_pf_i03_persisted_identity_q0_transaction_and_replay(self):
+        """Native Django user/permission/UUID4; synthetic command port only."""
+        from preparer_identity.models import PreparerIdentity
+        from evidence.pf_i03_q0_offline import present_authenticated_synthetic_q0
+        from evidence.question_preparation import QuestionCommand
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+
+        self.user.user_permissions.add(self.permission)
+        identity = PreparerIdentity.objects.create(user=self.user)
+        self.assertEqual(identity.actor_uuid.version, 4)
+        self.assertTrue(self.client.login(
+            username="oes_synthetic_preparer",
+            password="synthetic-only-not-a-secret",
+        ))
+        authenticated = get_user_model().objects.get(pk=self.client.session["_auth_user_id"])
+        command = QuestionCommand(
+            "pf-i03-sqlite-q0", "OES-SYNTH-Q0-PERSISTED", 0,
+            "Pergunta Q0 fictícia sob identidade Django persistida?",
+        )
+        port = FakePort()
+        backend = OfflineQuestionUnitOfWork(port)
+        first = present_authenticated_synthetic_q0(
+            user=authenticated, command=command, unit_of_work=backend,
+        )
+        replay = present_authenticated_synthetic_q0(
+            user=authenticated, command=command, unit_of_work=backend,
+        )
+        actor_id = "oes:actor:" + str(identity.actor_uuid)
+        self.assertEqual(first, replay)
+        self.assertEqual(first["version"], 1)
+        self.assertEqual(port.questions[command.question_id]["actor"], actor_id)
+        self.assertEqual(port.receipts[(actor_id, command.request_id)].actor_id, actor_id)
+        self.assertEqual(len(port.receipts), 1)
+
+    def test_pf_i03_missing_persisted_identity_fails_closed(self):
+        from evidence.question_preparation import QuestionCommand, PreparationHold
+        from evidence.pf_i03_q0_offline import present_authenticated_synthetic_q0
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+
+        self.user.user_permissions.add(self.permission)
+        actor = get_user_model().objects.get(pk=self.user.pk)
+        port = FakePort()
+        with self.assertRaisesRegex(PreparationHold, "persistent preparer identity"):
+            present_authenticated_synthetic_q0(
+                user=actor,
+                command=QuestionCommand(
+                    "pf-i03-no-id", "OES-SYNTH-Q0-NO-ID", 0, "Pergunta sintética",
+                ),
+                unit_of_work=OfflineQuestionUnitOfWork(port),
+            )
+        self.assertEqual(port.questions, {})
+        self.assertEqual(port.receipts, {})
