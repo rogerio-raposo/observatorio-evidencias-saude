@@ -128,10 +128,12 @@ def build_copies(tmp, oid):
         rewritten, replacements = OID_RE.subn("oid=" + oid, text)
         # The original A29/A37 historical membership must be substituted
         # ONLY on disposable copies. Other roles/schema names stay unchanged.
-        if key in ("setup", "trial", "postflight", "cleanup") and replacements != 1:
-            raise AssertionError(f"Unexpected OID replacement count {key}={replacements}")
-        if key == "lockdown" and replacements:
-            raise AssertionError("lockdown should have no OID replacement")
+        expected_substitutions = {"setup": 1, "trial": 1, "postflight": 1,
+                                  "lockdown": 0, "cleanup": 2}
+        if replacements != expected_substitutions[key]:
+            raise AssertionError(
+                f"Unexpected OID replacement count {key}={replacements}, "
+                f"expected={expected_substitutions[key]}")
         out = tmp / (key + "_fixture.sql")
         out.write_text(rewritten, encoding="utf-8")
         REPORT["materialized_sql"][key] = {
