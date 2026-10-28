@@ -98,3 +98,37 @@ def provision_offline(*, password, using="default", inject_failure=False):
     result = _provision_transaction(password=password, using=using,
                                     inject_failure=inject_failure)
     return {"status": "PASS_OFFLINE_ONLY", **result}
+
+
+# Pure contract checks only: these functions never open a database connection.
+# Connected execution remains unimplemented and requires a separate gate.
+CONNECTED_BASELINE = {
+    "users": 0, "permissions": 44, "links": 0,
+    "identities": 0, "sessions": 0,
+}
+CONNECTED_POSTFLIGHT = {
+    "users": 1, "permissions": 45, "links": 1,
+    "identities": 1, "sessions": 0,
+}
+
+
+def validate_connected_contract(*, approved, role, database, schema,
+                                baseline, postflight=None):
+    """Validate non-secret administrative evidence; never authorize execution.
+
+    Approval is a required external fact, not something this function grants.
+    This is a documentary/offline validation contract, not a connected runner.
+    """
+    if approved is not True:
+        raise ProvisioningHold("HOLD: explicit connected authorization required")
+    if (role, database, schema) != (
+        "oes_auth_migrator", "oes_sandbox", "django_auth"
+    ):
+        raise ProvisioningHold("HOLD: administrative connection identity drift")
+    if type(baseline) is not dict or baseline != CONNECTED_BASELINE:
+        raise ProvisioningHold("HOLD: connected baseline drift")
+    if postflight is not None and (
+        type(postflight) is not dict or postflight != CONNECTED_POSTFLIGHT
+    ):
+        raise ProvisioningHold("HOLD: connected postflight drift")
+    return "CONTRACT_VALIDATED_OFFLINE_NOT_AUTHORIZED_TO_EXECUTE"
