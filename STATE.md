@@ -1,3 +1,11 @@
+## CP324 — PF-I04/P4-A25–A27 | verificador v3 executado; baseline HOLD confirmada (2026-10-27)
+
+- **P4-A25:** uma consulta A23 READ ONLY nominalmente autorizada no Neon sintético falhou com `ACL arrays must be one-dimensional`, sem SUMMARY nem mutações; não repetida. Causa provável: `aclexplode` sobre ACL vazia de dimensão zero.
+- **P4-A26:** verificador v3 com `aclexplode(CASE WHEN cardinality(...)>0 THEN ... ELSE NULL::aclitem[] END)` e auditoria de `PUBLIC` (`grantee=0`) em `oes_app/core/investigation`, 14 tabelas e colunas, 8 sequências Django. SQL SHA-256 exato `136c41c6da4f8b62fb4ebd63145cb88b04d0d4978beb41fbbfe5bce75f20518a`. Revisão documental; não autoriza GRANT.
+- **P4-A27:** após aprovação nominal independente, uma consulta v3 catalogal no Neon PostgreSQL 18 **executou sem erro**: 947 linhas recebidas (1 SUMMARY + 946 checks), `64 mismatches / 946 checks`, `SUMMARY/HOLD` **esperado pré-GRANT**; 882 conformes. Divergências: coluna 39, tabela 11, ACL tabela 11, ACL coluna 1, schema 1, ACL schema 1. `public_grants_in_scoped_objects=0`; não implica isolamento universal ou ausência de privilégios `PUBLIC` fora do escopo.
+- **CP324 vigente:** `archive/handoffs/oes/OES_Continuidade_2026-10-27_CP324.md`; três fontes A26/A27 persistidas em `archive/handoffs/oes/artifacts/CP324/` com hashes Git conferidos. **P4-A21 transação SQL ainda HOLD incondicional, jamais executada; P4-A19 superado**. Não houve role/GRANT/REVOKE/SET ROLE/DDL/DML/login Django. Próxima **P4-A28**: revisar documentalmente estratégia administrativa e desenhar teste proporcional de atomicidade, grantor e rollback; qualquer Neon mutante requer aprovação nominal separada.
+- Gates inalterados: Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; PF-I04/P4 NOT_AUTHORIZED; Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY; Fase 5 NOT_STARTED; sem pesquisadores vinculados.
+
 ## CP323 — PF-I04/P4-A21–A24 | SQL v2 HOLD; verificador A23 limitado por ACLs PUBLIC (2026-10-27)
 
 - **P4-A21:** pacote candidato transacional v2 (Bloco A de auth/sessions Django) e postflight independente; `RAISE EXCEPTION` incondicional precede GRANTs; **NÃO EXECUTAR**. SQL não validado PostgreSQL 18; nenhum Neon/GRANT. SQL anterior P4-A19 permanece SUPERADO.
