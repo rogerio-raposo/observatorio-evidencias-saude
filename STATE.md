@@ -1,3 +1,10 @@
+## P4-A39 — postflight v2 e separacao do lockdown de credencial/cleanup, SEM SQL conectado (2026-10-28)
+
+- **Quatro fontes novas em `archive/handoffs/oes/artifacts/P4-A39/`:** postflight v2 READ ONLY 26 checks SHA-256 `fac7b3146f56e9f69375cc2f6330d335cc29c961d87ca5c3d02243e0d75fca5d`; setup v2 mutante SHA-256 `236ab6ae232bc6080453345957f6a5e7711911ed50471078a5e53e94ff8f6daa`; lockdown separado `ALTER ROLE NOLOGIN PASSWORD NULL` SHA-256 `ff9782bfbc2bdec1503187d69f0b12b1c10a53d7cc08176a79ab15ef7a11baa7`; cleanup v2 sem ALTER ROLE, exigindo lockdown prévio, SHA-256 `83d76fabcf489ba4ac49151f19c799dadade3a956f9f5113da1a3b8ec843954c`. Todos **HOLD** e sem execução PostgreSQL.
+- Postflight enumera `pg_auth_members` target como granted e membro, trial como membro, `pg_shdepend` para dependências de objeto exceto arestas `pg_auth_members` previstas no PostgreSQL 18, `pg_db_role_setting`, identidade da sessão, versão, 0 conexões trial, OID 155649 e ausência SET/USAGE sensível. Cleanup não poderá desfazer invalidação da senha por falha no DROP: lockdown é transação COMMIT independente.
+- Auditoria e identidades Git blob/SHA-256: `archive/handoffs/oes/artifacts/P4-A39/OES_PF-I04_P4-A39_REVISAO_V2_GATES_E_HASHES_HOLD.md`. Fontes A37/P4-A38 imutáveis, workflows A32/A35 inalterados. **Próxima P4-A40:** ensaio de parsing/comportamento de candidato em PostgreSQL 18 **inteiramente descartável/offline**, sem Neon ou segredo. Gates individuais SETUP/TRIAL/POSTFLIGHT/LOCKDOWN/CLEANUP/POST-CLEANUP não concedidos.
+- **CP327 continua vigente**. Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO, readiness NOT_READY, PF-I04/P4 NOT_AUTHORIZED, Fase 5 NOT_STARTED.
+
 ## CP327 — P4-A35–A38 | login temporário isolado; quatro SQLs sintéticos preservados e auditados com HOLD (2026-10-28)
 
 - **P4-A35:** workflow candidato separado `.github/workflows/oes-pf-i04-p4-a35-connected-role-trial-candidate-hold.yml`, ainda `if: false`, `APPROVED_HEAD=NOT_AUTHORIZED`, `CREDENTIAL_LIFECYCLE_GATE=NOT_APPROVED`; **não adaptar A35 automaticamente** à identidade trial.
