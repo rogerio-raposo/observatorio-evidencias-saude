@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Relações sintéticas no PostgreSQL</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main>
+<p class="notice">DEMONSTRAÇÃO TÉCNICA SINTÉTICA — não é pesquisa factual, validação científica ou publicação de evidências.</p>
+<h1>Estudos, relatórios e proveniência — leitura sintética</h1>
+{% if hold %}
+<section aria-labelledby="hold-heading"><h2 id="hold-heading">HOLD — leitura indisponível</h2>
+<p>A conexão de leitura sintética não está habilitada ou não pôde ser utilizada. Nenhum resultado positivo é apresentado.</p></section>
+{% else %}
+<section aria-labelledby="results-heading"><h2 id="results-heading">Vínculos recuperados</h2>
+{% if links %}
+<ul>
+{% for link in links %}
+<li>
+<dl>
+<dt>Estudo — identificador sintético</dt><dd>{{ link.study_entity_uuid }}</dd>
+<dt>Versão do estudo</dt><dd>{{ link.study_version_uuid }}</dd>
+<dt>Relatório — identificador sintético</dt><dd>{{ link.report_entity_uuid }}</dd>
+<dt>Versão do relatório</dt><dd>{{ link.report_version_uuid }}</dd>
+<dt>Tipo de relação</dt><dd>{{ link.relation_type }}</dd>
+<dt>Proveniência técnica</dt><dd>{% if link.provenance_uuid %}{{ link.provenance_uuid }}{% else %}Não vinculada nesta projeção{% endif %}</dd>
+<dt>Campo da proveniência</dt><dd>{% if link.provenance_field_path %}{{ link.provenance_field_path }}{% else %}Não informado{% endif %}</dd>
+</dl></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Nenhum vínculo sintético foi retornado pela consulta; isto não atesta ausência de evidências científicas.</p>
+{% endif %}
+</section>
+{% endif %}
+<section aria-labelledby="limits-heading"><h2 id="limits-heading">Limites</h2>
+<p>Os registros exibidos são uma projeção técnica de ambiente sintético. Proveniência não vinculada não implica ausência de publicação, dado primário ou evidência científica. Esta página não altera o banco, não abre coleta factual e não substitui revisão humana.</p></section>
+<nav aria-label="Navegação documental"><a href="/">Retornar ao catálogo documental</a></nav>
+</main></body></html>
