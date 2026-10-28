@@ -38,6 +38,21 @@ def _exact_fixture():
     return u, p, ident
 
 
+def _delete_exact_fixture(*, before, after):
+    """Internal transactional unit, with caller-owned atomic transaction."""
+    if not connections["default"].in_atomic_block:
+        raise ProvisioningHold("HOLD: cleanup requires caller-owned atomic transaction")
+    if _counts() != before:
+        raise ProvisioningHold("HOLD: connected pre-cleanup counts drift")
+    u, p, ident = _exact_fixture()
+    ident.delete()
+    get_user_model().user_permissions.through.objects.filter(user=u, permission=p).delete()
+    u.delete()
+    p.delete()
+    if _counts() != after:
+        raise ProvisioningHold("HOLD: baseline restoration failed")
+
+
 def cleanup_once(*, authorized=False, exclusive_window=False):
     """Four scoped Django ORM effects; return state, never retry."""
     if authorized is not True or exclusive_window is not True:
@@ -48,16 +63,7 @@ def cleanup_once(*, authorized=False, exclusive_window=False):
     _require_admin_session(conn)
     try:
         with transaction.atomic(using="default"):
-            if _counts() != CONNECTED_POSTFLIGHT:
-                raise ProvisioningHold("HOLD: connected pre-cleanup counts drift")
-            u, p, ident = _exact_fixture()
-            # Four explicitly scoped effects; foreign-key dependencies verified.
-            ident.delete()
-            get_user_model().user_permissions.through.objects.filter(user=u, permission=p).delete()
-            u.delete()
-            p.delete()
-            if _counts() != CONNECTED_BASELINE:
-                raise ProvisioningHold("HOLD: baseline restoration failed")
+            _delete_exact_fixture(before=CONNECTED_POSTFLIGHT, after=CONNECTED_BASELINE)
     except Exception:
         # A failed commit is not proof of rollback.
         return "INDETERMINATE_HOLD"
