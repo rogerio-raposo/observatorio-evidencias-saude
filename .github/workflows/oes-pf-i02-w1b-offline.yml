@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'applications/oes_web/evidence/question_uow_offline.py'
+      - 'applications/oes_web/evidence/question_preparation.py'
       - 'applications/oes_web/evidence/q0_access_status.py'
       - 'applications/oes_web/config/settings_auth_sandbox.py'
       - 'applications/oes_web/preparer_identity/**'
