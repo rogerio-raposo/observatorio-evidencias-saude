@@ -49,7 +49,8 @@ def _baseline(using):
     return counts
 
 
-def _provision_transaction(*, password, using="default", inject_failure=False,\n                           expected_baseline=None):
+def _provision_transaction(*, password, using="default", inject_failure=False,
+                           expected_baseline=None):
     """Internal ORM unit of work; callers must establish their own authorization.
 
     Not an operational entry point. Never invoke directly against Neon.
