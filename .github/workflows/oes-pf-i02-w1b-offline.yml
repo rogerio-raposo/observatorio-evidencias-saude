@@ -4,6 +4,8 @@ on:
     paths:
       - 'applications/oes_web/evidence/question_uow_offline.py'
       - 'applications/oes_web/evidence/test_question_orm_q0_dormant.py'
+      - 'applications/oes_web/evidence/tests/test_q0_commit_candidate_offline.py'
+      - 'applications/oes_web/scripts/run_q0_synthetic_commit_candidate.py'
       - 'applications/oes_web/evidence/tests/test_pf_i02_w1b_uow.py'
       - '.github/workflows/oes-pf-i02-w1b-offline.yml'
   workflow_dispatch:
