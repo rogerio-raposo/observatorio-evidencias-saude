@@ -1,3 +1,9 @@
+## P4-A33 — validação remota offline REAL PASS (2026-10-27, 23:46 America/Recife)
+
+- **Run GitHub [40622890545](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40622890545):** `workflow_dispatch` em `main`, SHA `01553be79f77b198673d45caddfa77f739b042a3`, primeira execução, run **SUCCESS**. Job `offline-contract` **SUCCESS**, 6 etapas success; job `connected-role-trial` **SKIPPED**, como determinado pelo `if: false`.
+- Logs confirmados: `OFFLINE_PASS: A29 SQL identities and ROLLBACK verified; NO SQL CONNECTION` e `HARD_HOLD_CONFIRMED: connected-role-trial is SKIPPED unconditionally`. Conclusão restrita `GITHUB_OFFLINE_VALIDATION_PASS`; **nenhum SQL Neon, GRANT/REVOKE/SET ROLE ou ensaio conectado**.
+- Evidência durável: `archive/handoffs/oes/artifacts/P4-A33/OES_PF-I04_P4-A33_RESULTADO_REMOTO_40622890545.md`. P4-A34 deve avaliar controles adicionais e gate **nominal** de ensaio, sem ativação automática. CP325 segue vigente; Bloco A e Gates globais inalterados.
+
 ## CP325 — PF-I04/P4-A28–A30 | ensaio rollback-only candidato e canal psql direto (2026-10-27)
 
 - **P4-A28 (documental):** escolha proporcional de um ensaio de associação temporária + SET LOCAL ROLE + REVOKE grantor-aware **terminado obrigatoriamente por ROLLBACK**, sem GRANT em objetos Django/Q0. A associação original OID `155649`, grantor `cloud_admin`, deve permanecer intacta.
