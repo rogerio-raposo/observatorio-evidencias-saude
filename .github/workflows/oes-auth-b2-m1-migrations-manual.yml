@@ -41,6 +41,8 @@ jobs:
           import django
           from django.core.management import call_command
           django.setup()
+          from config.auth_pg_b2_scope import assert_approved_migration_scope
+          print(assert_approved_migration_scope(), flush=True)
           from config.auth_pg_b2_preflight import read_only_preflight
           print(read_only_preflight()["status"], flush=True)
           from config.auth_pg_b2_inventory import write_baseline
