@@ -23,6 +23,22 @@
 
 **Por que não reutilizar automaticamente?** `oes_django_migrator` está NOLOGIN e `oes_runtime` já existe com finalidade histórica; alterar os dois amplia sua superfície de acesso. Papéis dedicados isolam os domínios, embora acrescentem administração. Alternativa de reutilização deve ser analisada antes da aprovação; esta matriz não é decisão irrevogável.
 
+## 2A. Revisão crítica de reutilização versus isolamento (2026-10-28)
+
+**Recomendação técnica, ainda não autorização:** preferir papéis dedicados de autenticação por domínio. Reutilizar `oes_django_migrator` exigiria alterar sua condição atual NOLOGIN ou desenhar membership/SET ROLE; reutilizar `oes_runtime` ampliaria a superfície de acesso e complicaria revogações futuras no domínio científico. Não foi verificada nenhuma concessão ao futuro `oes_auth`, que ainda não existe.
+
+| Critério | Reutilizar papéis existentes | Papéis dedicados de autenticação |
+| --- | --- | --- |
+| Mudanças nos papéis científicos | Podem ser necessárias | Não necessárias |
+| Independência de revogação e rotação | Menor | Maior |
+| Segregação entre migração e runtime | Exige reavaliação das identidades atuais | Definida por função |
+| Custo de operação | Menos identidades | Duas credenciais LOGIN, uma função owner NOLOGIN |
+| Acesso SQL a dados científicos | Exige conferir ACLs acumuladas | Excluir por padrão; auditar `PUBLIC` e heranças |
+
+**Desenho mínimo recomendado:** `oes_auth_owner` NOLOGIN (titular de database/schema), `oes_auth_migrator` LOGIN sob habilitação controlada para migrations, e `oes_auth_runtime` LOGIN sem DDL; ambos sem CREATEDB/CREATEROLE/BYPASSRLS e sem memberships dos papéis científicos. O titular NOLOGIN deve ter ownership e um caminho de administração explicitamente aprovado; não presumir que o migrador possa assumir o owner. Tabelas/índices/sequências criados por migration devem ter ownership e privilégios pós-migração conferidos, inclusive `ALTER DEFAULT PRIVILEGES` sob o papel criador real quando necessário.
+
+**Pontos de atenção:** papéis PostgreSQL são compartilhados na instância/branch; separar databases não elimina privilégios implícitos de `PUBLIC`, propriedade de objetos ou acesso por funções administrativas. A matriz só estará comprovada após preflight e postflight catalogais. O custo de um database adicional no mesmo projeto e os limites aplicáveis devem ser conferidos antes da criação. Nenhuma mudança operacional decorre desta revisão.
+
 ## 3. Sequência condicionada a autorizações específicas
 
 1. Preflight READ ONLY: disponibilidade de criação de segundo database na branch/plano, roles, memberships, parâmetros de templates, `pg_database`, ACLs e situação de custo. Não se conclui disponibilidade com base apenas no inventário.
