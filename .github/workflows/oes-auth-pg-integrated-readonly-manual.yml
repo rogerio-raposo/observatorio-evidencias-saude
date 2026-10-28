@@ -1,0 +1,54 @@
+name: OES SQLite auth + PG reader synthetic integrated smoke - manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Enter ONE_READ_ONLY_SYNTHETIC after separate authorization'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-auth-pg-integrated-readonly
+  cancel-in-progress: false
+
+jobs:
+  integrated-readonly:
+    if: github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && inputs.confirm == 'ONE_READ_ONLY_SYNTHETIC'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      PYTHONUNBUFFERED: '1'
+      DJANGO_SETTINGS_MODULE: config.settings_auth_sandbox
+      OES_AUTH_SANDBOX_PG_READER: '1'
+      OES_AUTH_SANDBOX_PG_HOST: ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech
+    steps:
+      - name: Checkout approved main
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned requirements
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Verify temporary PG reader secret exists
+        env:
+          OES_AUTH_SANDBOX_PG_PASSWORD: ${{ secrets.OES_PG_A4_PASSWORD }}
+        shell: bash
+        run: |
+          if [ -z "$OES_AUTH_SANDBOX_PG_PASSWORD" ]; then
+            echo "::error::Temporary reader credential missing; no connected test executed"
+            exit 1
+          fi
+      - name: One synthetic integrated auth and PG READ ONLY verification
+        working-directory: applications/oes_web
+        env:
+          OES_AUTH_PG_SMOKE_APPROVED: ${{ inputs.confirm }}
+          OES_AUTH_SANDBOX_PG_PASSWORD: ${{ secrets.OES_PG_A4_PASSWORD }}
+        run: python scripts/check_auth_pg_integrated_readonly.py
