@@ -14,3 +14,12 @@ class Q0SyntheticPreviewTests(SimpleTestCase):
     def test_post_is_rejected(self):
         response = self.client.post(reverse("q0-synthetic-preview"), {"original_text": "write"})
         self.assertEqual(response.status_code, 404)
+
+    def test_explains_validation_authorization_and_non_persistent_confirmation(self):
+        response = self.client.get(reverse("q0-synthetic-preview"))
+        self.assertContains(response, "Fluxo ilustrativo de preparação")
+        self.assertContains(response, "Validação:")
+        self.assertContains(response, "Autorização:")
+        self.assertContains(response, "Confirmação:")
+        self.assertContains(response, "não existe commit")
+        self.assertNotContains(response, "<form")
