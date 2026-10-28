@@ -1,3 +1,11 @@
+## 2026-10-28 — CP330 e prontidão documental B2-M1
+
+- Banco `oes_sandbox` com schema `django_auth`; Gate A PASS e B1 migrador efêmero PASS. B2-P0 constatou search_path padrão `public` na sessão Neon; B2-P1 Django conectado [40727429944](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40727429944) **SUCCESS**, `PASS_READ_ONLY_DJANGO_AUTH_SCHEMA`.
+- Workflow B2-P1 novamente desabilitado; segredo excluído conforme declaração do responsável.
+- B2-M1 workflow manual de migrations preparado e **desabilitado**; preflight, allowlist, fingerprints e postflight implementados; CI offline [40729253488](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40729253488) **191/191 PASS**. Nenhuma migration PostgreSQL executada.
+- CP330 publicado como snapshot operacional. Documento 362, Marco B OPEN, G2-P2B operacional NO-GO, E9 NO-GO e Fase 5 NOT_STARTED preservados. B2-M1 exige autorização específica.
+
+
 ## 2026-10-28 — Django autenticado SQLite + Neon sintético READ ONLY integrado PASS
 
 - Preparados ambiente de autenticação SQLite efêmero, verificação Q0 GET-only, leitor científico opcional e executor conectado `scripts/check_auth_pg_integrated_readonly.py`; CI offline [40699959556](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40699959556) **166/166 PASS** (155 principal + 11 autenticação).
