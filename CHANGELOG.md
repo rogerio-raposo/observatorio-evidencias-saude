@@ -1,3 +1,11 @@
+## 2026-10-28 — CP327 / P4-A35–A38: SQLs de ensaio sintético preservados, HOLD operacional
+
+- O responsável criou `oes_p4_trial_login` com senha temporária e relatou verificação catalogal de zero memberships e associação original `oes_django_migrator`→`oes_sandbox_owner` OID 155649 intacta. Não cadastrada credencial GitHub e não executado SQL pelo assistente.
+- P4-A37 recusou conceder membership de migrador/owner ao login temporário e propôs alvo vazio `oes_p4_trial_target`, NOLOGIN, para testar grantor, SET LOCAL ROLE, REVOKE e ROLLBACK sem direitos Django/Q0.
+- P4-A38 persistiu byte-identicamente quatro SQLs de setup (COMMIT), trial (ROLLBACK), postflight (SELECT) e cleanup (COMMIT) em `archive/handoffs/oes/artifacts/P4-A38/`, com SHA256/Git blob conferidos. Auditoria estática: 9/19/1/8 instruções superiores; **nenhum SQL executado no PostgreSQL**.
+- Auditoria independente identificou bloqueios: postflight não inventaria todas as associações e dependências do target, nem certifica sessão/branch; cleanup não possui prova independente de senha nula; workflow A35 usa owner/A29 e permanece `if:false`. **Requer SQL v2 revisado antes de qualquer gate**; preservar originais históricos.
+- CP327: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP327.md`. Gates Marco B OPEN, G2-P2B NO-GO, E9 NO-GO, readiness NOT_READY e Fase 5 NOT_STARTED inalterados. P4-A39 somente correção documental.
+
 ## 2026-10-26 — CP305 / encerramento técnico restrito W2a
 
 - Documento 335 registra criação aprovada de `oes_qprep_writer NOLOGIN` e grants mínimos no Neon sintético, com verificações positivas e negativas por catálogo READ ONLY. Associação administrativa do owner ao novo papel, ADMIN TRUE / INHERIT FALSE / SET FALSE, compatível com mecanismo PostgreSQL CREATEROLE; nenhuma revogação ou cleanup. W2a fechado apenas no escopo role/ACL; W2b/W3, SET ROLE, DML, Django e E9 permanecem bloqueados. CP305 vigente.
