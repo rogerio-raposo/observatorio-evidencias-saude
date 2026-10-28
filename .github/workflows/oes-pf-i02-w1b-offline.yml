@@ -7,6 +7,7 @@ on:
       - 'applications/oes_web/evidence/q0_access_status.py'
       - 'applications/oes_web/config/settings_auth_sandbox.py'
       - 'applications/oes_web/config/auth_pg_g2_p2b_offline.py'
+      - 'applications/oes_web/config/auth_pg_g2_p2b_admin_preflight.py'
       - 'applications/oes_web/preparer_identity/**'
       - 'applications/oes_web/evidence/auth_sqlite_sandbox_checks.py'
       - 'applications/oes_web/evidence/q0_synthetic_preview.py'
