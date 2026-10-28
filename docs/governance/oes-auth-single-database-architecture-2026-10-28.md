@@ -414,3 +414,20 @@ Segunda execução especificamente autorizada [40740532848](https://github.com/r
 ## G2-P2-A — leitura catalogal (2026-10-28)
 
 Preflight sem escrita em oes_sandbox: auth_user=0; auth_permission=44; auth_user_user_permissions=0; django_session=0; preparer_identity_prepareridentity=0. A permissão específica evidence.prepare_question está ausente, enquanto o ContentType evidence.oesquestion existe (1). Há nove sequências no schema django_auth. A FK da identidade para o usuário usa NO ACTION no PostgreSQL; o modelo Django especifica PROTECT. Para eventual ensaio posterior, criar registros sintéticos e limpar em ordem reversa dependerá de autorização específica. G2-P2-A concluído como leitura; G2-P2-B/C/D não autorizados. Sem DML, grants ou HTTP writes.
+
+
+## G2-P2-B — contrato de provisionamento administrativo sintético (2026-10-28; NÃO EXECUTADO)
+
+**Decisão de desenho:** uma única Unidade de Trabalho transacional, sem migração, somente no schema `django_auth`, executada por conta administrativa existente com autoridade comprovada (não por `oes_auth_trial_login`). O agente futuro deverá possuir os direitos DML e USAGE sobre as sequências necessárias; confirmar antes, sem conceder direitos adicionais automaticamente. Não reutilizar senha do migrador nem imprimir valores sensíveis.
+
+**Preflight bloqueante:** confirmar banco, branch, `current_user`, schema, permissões; `auth_user=0`, `preparer_identity=0`, `django_session=0`, `auth_user_user_permissions=0`, `auth_permission=44`, existência única do ContentType `evidence.oesquestion`, ausência da permissão `prepare_question` e ausência do username sintético reservado. Se a situação mudou, HOLD e reavaliar, sem corrigir automaticamente. Inventariar estruturas científicas separadamente antes/depois, sem consultas a registros reais.
+
+**Operação candidata (somente mediante aprovação nominal posterior):** em uma transação Django `atomic(using="default")` sob configuração administrativa controlada e restrita: (1) criar permissão `evidence.prepare_question` associada ao ContentType existente; (2) criar exatamente um usuário com username reservado, `is_active=True`, `is_staff=False`, `is_superuser=False`, senha exclusivamente sintética e hash gerado por `set_password`/`create_user` (nunca plaintext persistido ou exibido); (3) atribuir aquela permissão explicitamente em `auth_user_user_permissions`; (4) criar uma identidade `PreparerIdentity` para o usuário, com `actor_uuid` gerado automaticamente e imutável durante o ensaio. Não criar grupos, superuser, dados científicos, logs com credenciais, nem alterar as 44 permissões existentes.
+
+**Recibo e verificação:** registrar identificadores técnicos do lote, existência dos quatro efeitos esperados (permission, user, vínculo, identidade), quantidade, checks de unicidade, estado de permissões e baseline científica, sem senha/hash/token/UUID sensível em logs públicos. Em caso de falha dentro da transação, ROLLBACK e HOLD; não reexecutar automaticamente. Uma falha após COMMIT não autoriza rollback fictício.
+
+**Limpeza projetada (gate distinto):** encerrado o ensaio runtime, remover sessões sintéticas identificadas; excluir vínculo usuário-permissão; excluir `PreparerIdentity` antes do usuário para respeitar `PROTECT`; remover usuário sintético; excluir `evidence.prepare_question` apenas se comprovadamente criada pelo próprio lote e sem referências externas; preservar os 44 registros anteriores. Revisar sequências e objetos residuais sem assumir que os contadores numéricos das sequences retrocedem após rollback ou DELETE. Encerrar credenciais e workflows com autorização própria.
+
+**Impedimentos a resolver antes de solicitar DML:** método de autenticação/segredo temporário para usuário sintético, modo autorizado de executar Django administrativo com acesso às sequências, rollback/limpeza grantor-aware e prova offline de transação e proteção de vínculos. Por proporcionalidade, não introduzir novos serviços ou roles sem necessidade comprovada.
+
+**Estado:** contrato preparado, sem SQL executado, sem usuário criado, G2-P2-B HOLD; G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
