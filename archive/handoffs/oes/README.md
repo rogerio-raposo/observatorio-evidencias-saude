@@ -1,3 +1,7 @@
+## Ponteiro atual — CP334 (2026-10-28)
+
+**Checkpoint vigente:** [OES_Continuidade_2026-10-28_CP334.md](OES_Continuidade_2026-10-28_CP334.md). A11–A15: validação da configuração administrativa G2-P2-B permanentemente bloqueada, contrato puro de preflight administrativo, testes e CI [40755134420](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40755134420) SUCCESS. Sem conexão DML Neon ou workflow conectado habilitado. **G2-P2-B conectado HOLD; próximo incremento útil: evidência da sessão real em gate READ ONLY, sem criar novo executor de escrita.** Django First (Doc347) e simplificação proporcional (Doc362) preservados.
+
 ## Ponteiro atual — CP333 (2026-10-28)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-28_CP333.md](OES_Continuidade_2026-10-28_CP333.md). A6–A10 após CP332: preflight dentro de `transaction.atomic`, checagem de sessões e alias Django, contrato puro de baseline conectada e postflight; CI [40746209036](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40746209036) e [40748916868](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40748916868) SUCCESS. **G2-P2-B conectado HOLD; nenhuma execução DML Neon ou ativação de workflow conectado.** Documento 347 Django First e Documento 362 normativos; próximo passo revisão de suficiência proporcional.
