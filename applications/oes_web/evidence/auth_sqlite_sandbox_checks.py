@@ -154,7 +154,7 @@ class AuthSQLiteSandboxTests(TestCase):
             return JsonResponse(outcome)
 
         request = RequestFactory().get("/test-only/q0-injection/")
-        request.COOKIES.update(self.client.cookies)
+        request.COOKIES.update({name: morsel.value for name, morsel in self.client.cookies.items()})
         SessionMiddleware(lambda req: None).process_request(request)
         AuthenticationMiddleware(lambda req: None).process_request(request)
         response = test_only_view(request)
