@@ -3,7 +3,13 @@
 **Status:** artefato operacional  
 **Finalidade:** servir como **único ponteiro operacional** para a retomada do desenvolvimento do Observatório de Evidências em Saúde — OES.
 
-## Marco funcional posterior ao CP329 (2026-10-28)
+## Atualização CP330 — Django auth PostgreSQL (2026-10-28)
+
+- Gate A e B1 PASS; B2-P1 Django READ ONLY [40727429944](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40727429944) PASS; segredo B2-P1 excluído conforme declaração do responsável.
+- **B2-M1 HOLD**, migrations PostgreSQL não autorizadas e não executadas; workflow manual desabilitado, segredo específico ainda não criado; CI offline [40729253488](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40729253488) 191/191 PASS.
+- **Ponto exato:** aguardar deliberação nominal B2-M1, sem ativação nem execução antecipada. Documento 362 vigente e gates gerais preservados.
+
+## Marco funcional posterior ao CP329 (histórico, superado para retomada) (2026-10-28)
 
 - **Django–PostgreSQL somente leitura concluído:** run [40691185683](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40691185683) SUCCESS, três vínculos sintéticos e renderização HTML pelo Django; suíte offline 136/136 PASS na [40689017577](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40689017577). Segredo `OES_PG_A4_PASSWORD` excluído conforme confirmação do responsável, sem verificação independente de inventário.
 - **Próxima atividade:** revisão offline objetiva do menor fluxo de escrita Django-first para Q0/Q1, sem executar SQL ou habilitar operação conectada. Documento 362 segue normativo; CP329 continua vigente; gates preservados.
@@ -14,15 +20,15 @@
 
 ## Checkpoint vigente
 
-**CP329 — 2026-10-28**
+**CP330 — 2026-10-28**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-28_CP329.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-28_CP330.md`
 
 Checkpoint anterior:
 
-`CP328`
+`CP329`
 
 Status:
 
@@ -64,6 +70,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP330 — 2026-10-28:** Django `django_auth`: A/B1/B2-P1 PASS; B2-M1 preparado, desabilitado e HOLD; CI 191/191 PASS; nenhuma migration Neon.
 
 - **CP329 — 2026-10-28:** Decisão canônica 362 de simplificação proporcional; PF-I04/P4 autônomo deferido, evidências A41 preservadas; próxima atividade Django–PostgreSQL offline. Gates conectados inalterados.
 
