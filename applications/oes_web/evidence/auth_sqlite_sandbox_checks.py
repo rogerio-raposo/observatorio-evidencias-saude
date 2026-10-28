@@ -640,7 +640,7 @@ class G2P2BExecutorOfflineTests(TestCase):
         with self.assertRaisesRegex(ProvisioningHold, "exact baseline"):
             _provision_transaction(
                 password="test-password-only",
-                expected_baseline=dict(CONNECTED_BASELINE),
+                expected_baseline={**CONNECTED_BASELINE, "permissions": -1},
             )
         self.assertEqual(Permission.objects.count(), original_permissions)
         self.assertFalse(get_user_model().objects.filter(username="oes_g2_trial_fixture").exists())
