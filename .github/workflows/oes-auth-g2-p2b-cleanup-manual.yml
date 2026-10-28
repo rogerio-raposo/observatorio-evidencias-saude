@@ -1,0 +1,46 @@
+name: OES G2-P2-B authorized synthetic cleanup
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type APPROVED_G2_P2B_SINGLE_SYNTHETIC_CLEANUP"
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: oes-auth-g2-p2b-single-synthetic-trial
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    if: ${{ inputs.confirmation == 'APPROVED_G2_P2B_SINGLE_SYNTHETIC_CLEANUP' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r applications/oes_web/requirements.txt
+      - name: Run authorized cleanup once
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings_auth_pg_g2_p2b_session_smoke
+          OES_AUTH_G2_P2B_SMOKE_OPT_IN: '1'
+          OES_AUTH_G2_P2B_SMOKE_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_AUTH_G2_P2B_SMOKE_PASSWORD: ${{ secrets.OES_AUTH_G2_P2B_CLEANUP_PASSWORD }}
+        run: |
+          python - <<'PY'
+          import os
+          if not os.getenv("OES_AUTH_G2_P2B_SMOKE_PASSWORD"):
+              raise SystemExit("HOLD: missing ephemeral credential")
+          import django
+          django.setup()
+          from config.auth_pg_g2_p2b_cleanup import cleanup_once
+          result = cleanup_once(authorized=True, exclusive_window=True)
+          print("OES_G2_P2B_CLEANUP_RESULT=" + result)
+          if result != "PASS_CLEANUP_POST_COMMIT":
+              raise SystemExit("HOLD: do not rerun")
+          PY
