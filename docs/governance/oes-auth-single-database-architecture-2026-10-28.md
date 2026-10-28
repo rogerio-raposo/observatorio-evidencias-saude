@@ -410,3 +410,7 @@ Segunda execução especificamente autorizada [40740532848](https://github.com/r
 **Riscos técnicos a resolver antes de P2-B/C:** (a) existência e ciclo da permissão customizada `evidence.prepare_question`; (b) concessão de privilégios de sequência/INSERT apenas ao agente de provisionamento, sem contaminar login runtime; (c) expiração da senha do proprietário de tabelas `oes_auth_migrator` em 2026-10-31 23:59:59 UTC, que não revoga ownership; (d) distinguir sessão criada por `django.contrib.sessions` da lógica interna de `client.login` em testes SQLite; (e) nenhuma transição automática do gate de leitura para DML.
 
 **Decisão atual:** somente desenho. O próximo passo proporcional é P2-A READ ONLY antes de qualquer código de DML ou execução. G2-P2 HOLD, G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
+## G2-P2-A — leitura catalogal (2026-10-28)
+
+Preflight sem escrita em oes_sandbox: auth_user=0; auth_permission=44; auth_user_user_permissions=0; django_session=0; preparer_identity_prepareridentity=0. A permissão específica evidence.prepare_question está ausente, enquanto o ContentType evidence.oesquestion existe (1). Há nove sequências no schema django_auth. A FK da identidade para o usuário usa NO ACTION no PostgreSQL; o modelo Django especifica PROTECT. Para eventual ensaio posterior, criar registros sintéticos e limpar em ordem reversa dependerá de autorização específica. G2-P2-A concluído como leitura; G2-P2-B/C/D não autorizados. Sem DML, grants ou HTTP writes.
