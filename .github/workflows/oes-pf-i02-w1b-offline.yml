@@ -5,6 +5,7 @@ on:
       - 'applications/oes_web/evidence/question_uow_offline.py'
       - 'applications/oes_web/evidence/q0_access_status.py'
       - 'applications/oes_web/config/settings_auth_sandbox.py'
+      - 'applications/oes_web/preparer_identity/**'
       - 'applications/oes_web/evidence/auth_sqlite_sandbox_checks.py'
       - 'applications/oes_web/evidence/q0_synthetic_preview.py'
       - 'applications/oes_web/evidence/templates/evidence/q0_synthetic_preview.html'
