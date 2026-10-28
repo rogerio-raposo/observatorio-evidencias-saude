@@ -47,3 +47,16 @@ def submit_question_command(*, user, command, unit_of_work=None, actor_id_resolv
     except PreparationHold: raise
     except Exception:
         raise PreparationHold("HOLD: outcome uncertain; do not retry automatically") from None
+
+
+def submit_authenticated_question_command(*, user, command, unit_of_work=None):
+    """Strict Django auth-store entry point; no fallback to user.pk.
+
+    Historical submit_question_command is retained for isolated offline fixtures.
+    No HTTP route, DB factory or PostgreSQL writer is wired here.
+    """
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    return submit_question_command(
+        user=user, command=command, unit_of_work=unit_of_work,
+        actor_id_resolver=persisted_preparer_actor_id,
+    )
