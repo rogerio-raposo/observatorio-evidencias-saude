@@ -736,10 +736,10 @@ class G2P2BExecutorOfflineTests(TestCase):
         from config.auth_pg_g2_p2b_offline import ProvisioningHold
         with self.assertRaisesRegex(ProvisioningHold, "not authorized"):
             run_connected_trial()
-        with self.assertRaisesRegex(ProvisioningHold, "unavailable"):
+        with self.assertRaisesRegex(ProvisioningHold, "window"):
             _trial_candidate(
                 password="synthetic-only",
-                exclusive_window_confirmed=True,
+                exclusive_window_confirmed=False,
             )
 
     def test_connected_candidate_rejects_sqlite_identity_without_db_query(self):
