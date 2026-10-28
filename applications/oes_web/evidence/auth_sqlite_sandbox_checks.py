@@ -183,3 +183,33 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertNotIn("oes_synthetic_reader", settings.DATABASES)
         self.assertEqual(connections["oes_scientific_hold"].vendor, "unknown")
         self.assertIsNone(connections["oes_scientific_hold"].connection)
+
+    def test_authenticated_session_and_synthetic_scientific_read_same_app(self):
+        """Full Django GET through SQLite session and mocked PG read only."""
+        from unittest.mock import patch
+        from uuid import UUID
+        from django.urls import reverse
+        from django.db import connections
+        from evidence.synthetic_pg_reader import SyntheticStudyReportLink
+
+        self.user.user_permissions.add(self.permission)
+        self.assertTrue(self.client.login(
+            username="oes_synthetic_preparer",
+            password="synthetic-only-not-a-secret",
+        ))
+        self.assertEqual(self.client.get(reverse("q0-access-status")).status_code, 200)
+        link = SyntheticStudyReportLink(
+            UUID(int=1), UUID(int=2), UUID(int=3), UUID(int=4),
+            "reports", UUID(int=5), "title",
+        )
+        with patch(
+            "evidence.synthetic_pg_presentation.list_synthetic_study_report_links",
+            return_value=(link,),
+        ) as reader:
+            response = self.client.get(reverse("synthetic-pg-links"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, str(UUID(int=1)))
+        reader.assert_called_once_with()
+        self.assertIsNone(connections["oes_scientific_hold"].connection)
+        self.assertNotIn("oes_synthetic_reader", connections.databases)
+        self.assertEqual(self.client.post(reverse("q0-access-status")).status_code, 404)
