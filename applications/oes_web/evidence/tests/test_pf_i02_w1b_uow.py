@@ -191,3 +191,35 @@ class AuthPostgresDesignBoundaryTests(SimpleTestCase):
         self.assertIn("preparer_identity", design.INSTALLED_APPS)
         self.assertIn("config.auth_sandbox_router.AuthSandboxRouter", design.DATABASE_ROUTERS)
         self.assertNotIn("preparer_identity", settings.INSTALLED_APPS)
+
+
+class PostgresAuthMigrationSqlOfflineTests(SimpleTestCase):
+    def test_preparer_identity_postgres_ddl_compiles_without_connecting(self):
+        from django.db.backends.postgresql.base import DatabaseWrapper
+        from preparer_identity.migrations import __path__ as migration_path
+        from django.db.migrations.loader import MigrationLoader
+        from unittest.mock import patch
+        from django.conf import settings
+        self.assertTrue(migration_path)
+        # Migration graph is read from local Python files only; never a DB.
+        with self.settings(INSTALLED_APPS=[*settings.INSTALLED_APPS, "preparer_identity"]):
+            from preparer_identity.models import PreparerIdentity
+            graph = MigrationLoader(None).graph
+            self.assertIn(("preparer_identity", "0001_initial"), graph.nodes)
+            wrapper = DatabaseWrapper({
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": "offline_no_connection",
+                "USER": "", "PASSWORD": "", "HOST": "", "PORT": "",
+                "OPTIONS": {}, "TIME_ZONE": None, "CONN_MAX_AGE": 0,
+                "CONN_HEALTH_CHECKS": False, "AUTOCOMMIT": True,
+                "ATOMIC_REQUESTS": False, "TEST": {},
+            }, alias="offline_ddl_only")
+            with patch.object(wrapper, "ensure_connection", side_effect=AssertionError("network prohibited")):
+                with wrapper.schema_editor(collect_sql=True, atomic=False) as editor:
+                    editor.create_model(PreparerIdentity)
+                ddl = "\n".join(editor.collected_sql)
+            self.assertIn('"preparer_identity_prepareridentity"', ddl)
+            self.assertIn('"actor_uuid"', ddl)
+            self.assertIn("UNIQUE", ddl.upper())
+            self.assertIn("REFERENCES", ddl.upper())
+            self.assertNotIn("CREATE SCHEMA", ddl.upper())
