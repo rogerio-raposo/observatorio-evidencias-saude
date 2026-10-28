@@ -271,3 +271,8 @@ Responsável confirmou exclusão de `OES_AUTH_B2_M1_PASSWORD` (não verificada n
 **Plano de concessão (proposta, não autorizado):** um grantor com autoridade sobre o schema (atualmente `oes_sandbox_owner`) concede USAGE; o proprietário de tabelas (atualmente `oes_auth_migrator`) ou grantor de objeto devidamente autorizado concede direitos de tabela/coluna. Verificar previamente a capacidade efetiva do grantor, sem presumir que o owner do schema pode conceder sobre as tabelas. A expiração da senha em 31/10 não altera ownership nem substitui o plano de ciclo de vida do papel. **Não** executar `GRANT ALL`, `ALTER DEFAULT PRIVILEGES`, grants de sequências, SQL em schemas científicos, ou provisionamento de identidades como consequência desta proposta.
 
 **Critério de saída para gate futuro:** política de `last_login` formalmente aprovada, SQL mínimo revisado, identidade e credencial de runtime segregadas, uma única prova sintética autorizada e plano de reversão de GRANTs conforme grantor efetivo. Até então, **runtime HOLD; nenhuma ACL alterada**.
+
+
+## Evidência offline do SQL `last_login` (2026-10-28)
+
+Teste de captura de SQL no SQLite descartável `AuthSQLiteSandboxTests.test_native_login_updates_only_last_login_column`, CI [40732121063](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40732121063) **192/192 PASS** (173 principal + 19 integração). Login sintético nativo do Django gerou **uma** instrução `UPDATE auth_user`, somente coluna `last_login`, e valor persistiu. Isso fundamenta tecnicamente o grant candidato `UPDATE(last_login)`, **mas não demonstra privilégios PostgreSQL efetivos**, que dependem de autorização e teste próprio. Nenhum GRANT, role, Neon conectado ou runtime HTTP foi alterado.
