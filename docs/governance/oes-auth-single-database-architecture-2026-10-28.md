@@ -103,3 +103,19 @@ Consulta do catálogo em `oes_sandbox` / `django_auth` após Gate A: schema pert
 
 **Proibido nesta etapa:** conceder privilégios, alterar LOGIN, criar novas roles, executar migrations ou conectar escrita HTTP/Q0. G2-P2B operacional NO-GO, E9 NO-GO e Fase 5 NOT_STARTED.
 
+
+
+## Gate B — escolha recomendada para identidade migradora (2026-10-28)
+
+**Status: proposta somente; SEM AUTORIZAÇÃO para ALTER ROLE, GRANT, CREATE ROLE ou migrations.**
+
+Novo preflight READ ONLY confirmou: `oes_django_migrator` = NOLOGIN/NOINHERIT, sem validade definida, sem SET ROLE para `oes_sandbox_owner`, com USAGE em `oes_app` e sem CREATE em `django_auth`; `oes_runtime` = LOGIN/NOINHERIT, sem USAGE em `oes_app` e sem CREATE em `django_auth`.
+
+**Recomendação de menor mudança:** manter `oes_django_migrator` como papel técnico NOLOGIN histórico, sem habilitar LOGIN globalmente. Se a reutilização for aprovada, utilizar **login temporário dedicado**, com `NOINHERIT` e permissão `SET ROLE oes_django_migrator` estritamente controlada; porém, como `oes_django_migrator` já tem USAGE em `oes_app`, isso NÃO oferece isolamento perfeito de domínios. Para isolamento mais estrito, preferir criar um papel **exclusivo de migração da autenticação**, `oes_auth_migrator`, com LOGIN temporário e USAGE/CREATE apenas em `django_auth`. Nesta etapa, esta última é a opção preferencial para posterior autorização, mas não exige um segundo database nem um owner adicional.
+
+A atribuição de CREATE sobre `django_auth` e os ownerships de tabelas a `oes_auth_migrator` exigem aprovação separada. O schema permanece com owner `oes_sandbox_owner`; tabelas criadas pelo migrador pertencerão ao executor efetivo. O runtime poderá receber grants explícitos sobre tabelas e sequências depois do Gate de migration, sob a identidade proprietária dos objetos.
+
+**Alternativa rejeitada por ora:** habilitar LOGIN em `oes_django_migrator` ou executar migrations diretamente com `oes_sandbox_owner` (superfície ampliada ou privilégios administrativos excessivos).
+
+**Atenção:** `oes_auth_migrator` é proposta de nome, não role criada; `oes_runtime` ainda pode ser candidato a runtime Django após inspeção de permissões acumuladas. Nenhuma dessas escolhas implica ativação de autenticação real ou HTTP Q0.
+
