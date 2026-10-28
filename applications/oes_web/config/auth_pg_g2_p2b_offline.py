@@ -216,3 +216,48 @@ def classify_connected_reconciliation(*, commit_confirmed, baseline, snapshot):
     if snapshot != expected or type(snapshot.get("counts")) is not dict:
         return "INDETERMINATE_HOLD"
     return "PASS_POST_COMMIT"
+
+
+def collect_relation_snapshot_offline(*, using="default"):
+    """Collect the exact relational contract in disposable SQLite only.
+
+    This routine is deliberately not a connected PostgreSQL entry point.
+    """
+    _offline_guard(using)
+    User = get_user_model()
+    with transaction.atomic(using=using):
+        counts = {
+            "users": User.objects.using(using).count(),
+            "permissions": Permission.objects.using(using).count(),
+            "links": User.user_permissions.through.objects.using(using).count(),
+            "identities": PreparerIdentity.objects.using(using).count(),
+            "sessions": Session.objects.using(using).count(),
+        }
+        users = User.objects.using(using).filter(username=USERNAME)
+        permissions = Permission.objects.using(using).filter(
+            content_type__app_label="evidence",
+            content_type__model="oesquestion", codename=PERMISSION,
+        )
+        valid_users = users.filter(is_active=True, is_staff=False, is_superuser=False)
+        user = users.first()
+        permission = permissions.first()
+        links = 0
+        identities = PreparerIdentity.objects.using(using).none()
+        if user is not None:
+            identities = PreparerIdentity.objects.using(using).filter(user_id=user.pk)
+            if permission is not None:
+                links = User.user_permissions.through.objects.using(using).filter(
+                    user_id=user.pk, permission_id=permission.pk,
+                ).count()
+        return {
+            "counts": counts,
+            "fixture_users": users.count(),
+            "fixture_active_nonstaff_nonsuperuser": valid_users.count() == 1,
+            "fixture_password_usable": bool(user and user.has_usable_password()),
+            "fixture_permission_count": permissions.count(),
+            "fixture_permission_links": links,
+            "fixture_identities": identities.count(),
+            "fixture_uuid4": (
+                identities.count() == 1 and identities.first().actor_uuid.version == 4
+            ),
+        }
