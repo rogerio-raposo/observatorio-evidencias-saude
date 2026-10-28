@@ -591,3 +591,13 @@ class G2P2BExecutorOfflineTests(TestCase):
             validate_connected_contract(**kwargs, postflight=dict(CONNECTED_POSTFLIGHT)),
             "CONTRACT_VALIDATED_OFFLINE_NOT_AUTHORIZED_TO_EXECUTE",
         )
+
+    def test_g2_p2b_admin_settings_cannot_be_enabled_by_environment(self):
+        from importlib import import_module
+        from unittest.mock import patch
+        with patch.dict("os.environ", {
+            "OES_AUTH_G2_P2B_EXPLICIT_OPT_IN": "1",
+            "OES_AUTH_B2_EXPLICIT_OPT_IN": "1",
+        }):
+            with self.assertRaisesRegex(RuntimeError, "HOLD: G2-P2-B"):
+                import_module("config.settings_auth_pg_g2_p2b_dormant")
