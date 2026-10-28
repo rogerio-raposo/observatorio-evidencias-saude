@@ -131,3 +131,13 @@ A atribuição de CREATE sobre `django_auth` e os ownerships de tabelas a `oes_a
 
 **Pendências:** especificar prazo real de validade da senha no instante da execução, verificar eventuais privilégios padrão de PUBLIC e planejar posterior ownership/grants de tabelas e sequências criadas pelas migrations. O papel não precisa de CREATEDB nem CREATE no database para criar objetos em um schema existente.
 
+
+## Gate B1 — provisionamento autorizado e verificado (2026-10-28)
+
+Autorização específica: `APPROVED — OES / DJANGO_AUTH_GATE_B1 / SINGLE_EPHEMERAL_MIGRATOR_ROLE_AND_SCHEMA_GRANT`, com escopo restrito a `oes_sandbox`, schema `django_auth`, sem migrations, DML, HTTP ou privilégios científicos.
+
+O responsável criou `oes_auth_migrator` no SQL Editor do Neon com senha privada descartável. Preflight READ ONLY confirmou: LOGIN=true, INHERIT=false, SUPERUSER/CREATEDB/CREATEROLE/REPLICATION/BYPASSRLS=false, validade `2026-10-31 23:59:59+00`, zero associações, USAGE/CREATE no schema inicialmente false.
+
+Única mutação executada pelo assistente: `GRANT USAGE, CREATE ON SCHEMA django_auth TO oes_auth_migrator;`.
+
+Postflight READ ONLY: USAGE=true, CREATE=true em `django_auth`; zero associações; atributos e validade preservados; CREATE=false nos schemas científicos `core`, `investigation` e `oes_app`; schema `django_auth` permanece com **0 objetos**. Nenhuma migration ou dado novo. **Gate B1 PASS.** Credencial deverá ser eliminada/expirada conforme política; não registrada em repositório ou conversa. **Gate B de migrations ainda NÃO AUTORIZADO** e demais gates NO-GO preservados.
