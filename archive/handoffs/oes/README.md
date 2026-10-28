@@ -1,3 +1,7 @@
+## Ponteiro atual — CP332 (2026-10-28)
+
+**Checkpoint vigente para retomada:** [OES_Continuidade_2026-10-28_CP332.md](OES_Continuidade_2026-10-28_CP332.md). A1–A5 após CP331: preflight administrativo já registrado, núcleo de provisionamento sintético Django-first preparado em SQLite, refatorado em serviço transacional interno e entrada offline fail closed; CI [40745400376](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40745400376) e [40745725023](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40745725023) SUCCESS. **G2-P2-B conectado HOLD, sem DML Neon, autorização conectada ou novo workflow.** Próximo passo: revisão técnica proporcional do contrato ORM, sem habilitar operações conectadas. Documento 347 Django First e Documento 362 vigentes.
+
 ## Ponteiro atual — CP331 (2026-10-28)
 
 **Checkpoint vigente para retomada:** [OES_Continuidade_2026-10-28_CP331.md](OES_Continuidade_2026-10-28_CP331.md). G2-P1 conectado READ ONLY PASS, G2-P2-A inventário READ ONLY PASS, G2-P2-B testes offline 197/197 PASS, preflight administrativo de privilégios concluído com consultas pontuais (duas sequências adicionais e três DELETE confirmados). **Sem provisionamento DML no Neon.** Próximo passo: consolidar evidência final e preparar gate de DML controlado, sujeito a autorização explícita. Documento 362 e gates científicos preservados. Segredos B2-M1 e G2-P1 excluídos conforme confirmação do responsável.
