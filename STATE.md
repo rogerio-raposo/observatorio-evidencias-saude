@@ -1,3 +1,8 @@
+## CP333 — G2-P2-B Django First / A6–A10 (2026-10-28)
+
+- Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP333.md`; anterior CP332 preservado. A7 corrigiu preflight dentro de `transaction.atomic`, controle de `django_session` e alias ORM; A9 adicionou contrato offline não autorizativo da baseline 44/0/0/0/0 e postflight 45/1/1/1/0. A6/A8 foram revisões estáticas; A10 consolidação.
+- CI [40746209036](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40746209036) SUCCESS e [40748916868](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40748916868) SUCCESS (`175bcb94753f9ee1dce41613d369daee4c17111f`). Nenhum DML Neon, GRANT, secrets, workflow conectado, deploy ou HTTP write. G2-P2-B conectado HOLD/NO-GO, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. Próximo passo revisão proporcional de suficiência e pacote mínimo antes de eventual autorização nominal.
+
 ## CP332 — Django First / G2-P2-B offline (2026-10-28)
 
 - Checkpoint vigente: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP332.md`; anterior CP331 preservado. A1–A5: confirmação do preflight administrativo, criação e refatoração do núcleo Django ORM `config/auth_pg_g2_p2b_offline.py`; entrada pública bloqueia PostgreSQL e só aceita SQLite efêmero.
