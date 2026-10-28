@@ -6,6 +6,7 @@ Only the historical OID 155649 is substituted in temporary *copies* for
 the isolated fixture's dynamically allocated membership OID.
 """
 import hashlib
+import ipaddress
 import json
 import os
 from pathlib import Path
@@ -177,7 +178,10 @@ def main():
     version = psql(database="postgres", sql="SHOW server_version_num").stdout.strip()
     expect("postgresql_18", version.isdigit() and 180000 <= int(version) < 190000)
     server_ip = psql(database="postgres", sql="SELECT host(inet_server_addr())").stdout.strip()
-    expect("local_only_endpoint", server_ip == "127.0.0.1")
+    # Docker publishes 127.0.0.1:5432 on the runner, but the backend
+    # legitimately reports its own RFC1918 bridge address (not 127.0.0.1).
+    ip = ipaddress.ip_address(server_ip)
+    expect("local_only_endpoint", ip.is_private or ip.is_loopback)
     oid = fixture()
     with tempfile.TemporaryDirectory(prefix="oes-p4-a40-") as td:
         files = build_copies(Path(td), oid)
