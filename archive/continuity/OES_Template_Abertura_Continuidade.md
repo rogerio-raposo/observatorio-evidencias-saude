@@ -29,6 +29,7 @@ Antes de iniciar desenvolvimento, revisão ou alteração:
 6. não preencha lacunas documentais por inferência silenciosa;
 7. não atribua versão formal, aprovação ou status normativo sem base documental;
 8. se houver conflito, a documentação canônica vigente prevalece sobre checkpoints operacionais.
+9. **consulte expressamente o Documento 362**, `docs/governance/362-decisao-simplificacao-proporcional-governanca-tecnica-oes-cp329.md`, e aplique a governança técnica proporcional ao risco, priorizando entregas funcionais e evitando microgates, verificações ou documentação redundantes; preserve os gates científicos e operacionais que permaneçam vigentes. Esta orientação é permanente para os modos Partida e Continuidade, sem autorizar por si só SQL Neon, alterações de roles, segredos, workflows conectados, deploy ou serviços pagos.
 
 ---
 
