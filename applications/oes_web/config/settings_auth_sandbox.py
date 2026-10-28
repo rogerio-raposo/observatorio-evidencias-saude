@@ -5,6 +5,8 @@ Default scientific alias is dummy. No credentials, no migrations on PG.
 import os
 from .settings import *  # noqa: F401,F403
 
+INSTALLED_APPS = [*INSTALLED_APPS, "preparer_identity"]
+
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 DATABASES["oes_scientific_hold"] = {"ENGINE": "django.db.backends.dummy"}
 
