@@ -308,3 +308,31 @@ class OptInAuthPostgresB2ConfigurationTests(SimpleTestCase):
             self.assertEqual(db["OPTIONS"]["sslmode"], "require")
             self.assertEqual(design.DATABASES["oes_scientific_hold"]["ENGINE"], "django.db.backends.dummy")
         sys.modules.pop(name, None)
+
+
+class DjangoAuthMigrationGraphOfflineTests(SimpleTestCase):
+    """Inspect the complete filesystem migration graph; never connect or run DDL."""
+    def test_auth_migration_plan_dependencies_and_operations(self):
+        from django.db.migrations.loader import MigrationLoader
+        from django.db.migrations.operations import RunPython, RunSQL
+        from django.db.migrations.operations.models import CreateModel
+        loader = MigrationLoader(None)
+        leaves = [node for node in loader.graph.leaf_nodes()
+                  if node[0] in {"auth", "contenttypes", "sessions", "preparer_identity"}]
+        self.assertEqual({n[0] for n in leaves},
+                         {"auth", "contenttypes", "sessions", "preparer_identity"})
+        plan = loader.graph.forwards_plan(leaves[-1])
+        all_nodes = set()
+        for leaf in leaves:
+            all_nodes.update(loader.graph.forwards_plan(leaf))
+        apps = {"auth", "contenttypes", "sessions", "preparer_identity"}
+        self.assertTrue(all(node[0] in apps for node in all_nodes))
+        self.assertIn(("preparer_identity", "0001_initial"), all_nodes)
+        for app in apps:
+            self.assertTrue(any(node[0] == app for node in all_nodes))
+        operations = [op for node in all_nodes
+                      for op in loader.disk_migrations[node].operations]
+        self.assertTrue(any(isinstance(op, CreateModel) for op in operations))
+        data_ops = [op for op in operations if isinstance(op, (RunPython, RunSQL))]
+        self.assertEqual(data_ops, [], "Unexpected data/custom SQL migration requires review")
+        self.assertGreater(len(all_nodes), 4)
