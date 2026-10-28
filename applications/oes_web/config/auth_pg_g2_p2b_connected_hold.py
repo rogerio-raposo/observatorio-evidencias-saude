@@ -12,7 +12,7 @@ from preparer_identity.models import PreparerIdentity
 
 from config.auth_pg_g2_p2b_offline import (
     USERNAME, PERMISSION, CONNECTED_BASELINE, ProvisioningHold,
-    classify_connected_reconciliation,
+    _provision_transaction, classify_connected_reconciliation,
 )
 
 EXPECTED_IDENTITY = (
@@ -113,9 +113,30 @@ def _independent_readonly_reconciliation(*, baseline, commit_confirmed, using="d
 
 
 def _trial_candidate(*, password, exclusive_window_confirmed, using="default"):
-    """Internal review placeholder. No operational write path exists."""
-    raise ProvisioningHold(
-        "HOLD: internal connected candidate unavailable until named DML gate"
+    """Reviewed candidate only. Public entry and workflow remain HARD HOLD.
+
+    Caller must hold independently recorded nominal authorization and an
+    exclusively controlled administrative window; never retry uncertain commit.
+    """
+    if exclusive_window_confirmed is not True or using != "default":
+        raise ProvisioningHold("HOLD: controlled trial window or alias not confirmed")
+    if not isinstance(password, str) or not password:
+        raise ProvisioningHold("HOLD: disposable synthetic password missing")
+    conn = connections[using]
+    if conn.in_atomic_block:
+        raise ProvisioningHold("HOLD: caller transaction forbidden")
+    _require_admin_session(conn)
+    # Any exception from transaction or commit is ambiguous unless rollback
+    # is separately proven. Never retry; independent READ ONLY review required.
+    try:
+        outcome = _provision_transaction(
+            password=password, using=using,
+            expected_baseline=CONNECTED_BASELINE,
+        )
+    except Exception:
+        return "INDETERMINATE_HOLD"
+    return _independent_readonly_reconciliation(
+        baseline=outcome["before"], commit_confirmed=True, using=using,
     )
 
 
