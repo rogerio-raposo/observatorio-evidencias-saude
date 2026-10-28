@@ -326,3 +326,34 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertEqual(router.db_for_write(PreparerIdentity), "default")
         self.assertEqual(router.db_for_read(get_user_model()), "default")
         self.assertEqual(router.db_for_write(OesQuestion), "oes_scientific_hold")
+
+    def test_combined_auth_migration_graph_and_post_migrate_permissions(self):
+        from django.db.migrations.loader import MigrationLoader
+        from django.contrib.auth.models import Permission
+        from django.contrib.contenttypes.models import ContentType
+        from django.db import router
+        from preparer_identity.models import PreparerIdentity
+
+        loader = MigrationLoader(None)
+        apps = {"auth", "contenttypes", "sessions", "preparer_identity"}
+        leaves = [node for node in loader.graph.leaf_nodes() if node[0] in apps]
+        self.assertEqual({node[0] for node in leaves}, apps)
+        combined = set()
+        for leaf in leaves:
+            combined.update(loader.graph.forwards_plan(leaf))
+        self.assertEqual({node[0] for node in combined}, apps)
+        self.assertIn(("preparer_identity", "0001_initial"), combined)
+        self.assertTrue(any(node[0] == "auth" for node in combined))
+        self.assertTrue(router.allow_migrate("default", "preparer_identity"))
+        self.assertFalse(router.allow_migrate("oes_scientific_hold", "preparer_identity"))
+
+        # Django test setup runs migrate and post_migrate on disposable SQLite.
+        self.assertTrue(PreparerIdentity._meta.managed)
+        self.assertTrue(PreparerIdentity._meta.db_table.startswith("preparer_identity_"))
+        self.assertTrue(ContentType.objects.filter(
+            app_label="preparer_identity", model="prepareridentity").exists())
+        self.assertTrue(Permission.objects.filter(
+            content_type__app_label="preparer_identity",
+            codename="add_prepareridentity").exists())
+        self.assertTrue(ContentType.objects.filter(
+            app_label="evidence", model="oesquestion").exists())
