@@ -1,3 +1,9 @@
+## 2026-10-28 — P4-A40: execucao real em PostgreSQL 18.6 descartavel identifica NO-GO do setup
+
+- Novo harness Python e workflow isolado em GitHub Actions testaram fixture PG18 sem Neon, segredos reais ou dados Django/Q0. Três runs: 40630179968 (guarda endereco Docker), 40630287399 (contagem substituicao OID), 40630416910 (falha real `HOLD A39 setup: target not pristine` apos CREATE ROLE dentro de transacao abortada).
+- Confirmado pela documentação PostgreSQL 18 que CREATEROLE não-superusuário recebe autogrant ADMIN TRUE/INHERIT FALSE/SET FALSE na role criada; asserção zero associações target no setup A39 v2 torna-o inexequível nessa fixture. SQLs canônicos imutáveis. Trial, postflight, lockdown e cleanup **NÃO VALIDADOS**.
+- Workflow A40 voltou a `workflow_dispatch` sem trigger de push. Parecer e evidências em `archive/handoffs/oes/artifacts/P4-A40/OES_PF-I04_P4-A40_PG18_DISPOSABLE_RESULTADO_NO_GO.md`. CP327 segue vigente; próximo P4-A41 revisão v3 OFFLINE, sem novos grants/Neon.
+
 ## 2026-10-28 — P4-A39: correcoes offline e separacao de revogacao de credencial
 
 - Publicados candidatos v2 sob HOLD: postflight de 26 checks (membership, dependencias e sessoes), setup reforcado, lockdown `NOLOGIN PASSWORD NULL` com COMMIT proprio e cleanup restrito posterior em transacao independente. `pg_shdepend` exclui somente arestas de `pg_auth_members` esperadas no PostgreSQL 18, auditadas explicitamente pelo catalogo de memberships.
