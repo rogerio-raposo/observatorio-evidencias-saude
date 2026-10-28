@@ -141,3 +141,22 @@ O responsável criou `oes_auth_migrator` no SQL Editor do Neon com senha privada
 Única mutação executada pelo assistente: `GRANT USAGE, CREATE ON SCHEMA django_auth TO oes_auth_migrator;`.
 
 Postflight READ ONLY: USAGE=true, CREATE=true em `django_auth`; zero associações; atributos e validade preservados; CREATE=false nos schemas científicos `core`, `investigation` e `oes_app`; schema `django_auth` permanece com **0 objetos**. Nenhuma migration ou dado novo. **Gate B1 PASS.** Credencial deverá ser eliminada/expirada conforme política; não registrada em repositório ou conversa. **Gate B de migrations ainda NÃO AUTORIZADO** e demais gates NO-GO preservados.
+
+
+## Gate B2 — revisão de prontidão pré-migration (2026-10-28)
+
+**Estado: HOLD — autorização NÃO solicitada, nenhuma migration autorizada.**
+
+Preflight conectado READ ONLY: schema `django_auth` permanece vazio (0 objetos); `oes_auth_migrator` LOGIN=true, CREATE em `django_auth`=true. A configuração `settings_auth_pg_design.py` é deliberadamente **dummy**, não pode ser usada para executar migrations. A DDL offline testada abrange `CREATE TABLE` dos modelos principais, **não** prova todas as operações do grafo de migrations nativas, tabelas M2M, `post_migrate`, ordenação de dependências e permissões.
+
+### Condições mínimas de liberação de B2
+
+1. Implementar configuração **separada e opt-in**, desabilitada por padrão, para migration Django no PostgreSQL `oes_sandbox`, usando unicamente `oes_auth_migrator` e senha efêmera em segredo de execução aprovado; nunca `oes_sandbox_owner` ou `oes_runtime`.
+2. Travar conexão ao endpoint e branch autorizados, SSL obrigatório, `search_path=django_auth` **sem `public`**, e confirmar por SQL READ ONLY `current_database()`, `current_user`, `current_schema()`, `current_schemas(false)`, `SHOW search_path` antes do DDL. Uma configuração de design com `dummy` não substitui essa validação.
+3. Conferir offline o plano **completo** de migrations em Django 5.2 para `auth`, `contenttypes`, `sessions`, `preparer_identity`, incluindo `django_migrations`, M2M, sequências, índices, `post_migrate` e `django_content_type`; não inferir cobertura completa de compilação `create_model`.
+4. Verificar que `evidence` é somente modelo científico não gerenciado e que nenhuma migration dele nem tabela científica será criada/modificada; confirmar os efeitos de `post_migrate` sobre ContentTypes de modelos não gerenciados.
+5. Revisar `DATABASE_ROUTERS` e privilégios efetivos; `oes_auth_migrator` deve dispor apenas de USAGE/CREATE em `django_auth`; definir grants posteriores ao runtime **em gate independente**, incluindo sequências e DEFAULT PRIVILEGES do criador real.
+6. Preflight de inventário e ACL com critério de interrupção caso haja objetos inesperados; preparar postflight com lista de objetos criados, owner/ACL, `django_migrations`, e contagem/integridade de objetos científicos antes/depois.
+7. Restringir execução futura a uma única operação de migration sintética aprovada, sem usuários reais, sem POST Q0, sem deploy, sem serviços pagos. Após uso, desativar credencial efêmera conforme controle aprovado, sem sua divulgação.
+
+**Decisão nesta atividade:** manter Gate B2 em HOLD até cobertura offline suficiente e configuração de execução segura. Não efetuar DDL/GRANT/migration como consequência deste documento.
