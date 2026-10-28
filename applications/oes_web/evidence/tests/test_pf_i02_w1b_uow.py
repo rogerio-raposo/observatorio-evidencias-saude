@@ -352,9 +352,9 @@ class DjangoAuthB2ConnectedPreflightOfflineTests(SimpleTestCase):
         connection.cursor.assert_not_called()
 
     def test_preflight_verifies_schema_and_fails_closed(self):
-        from unittest.mock import Mock
+        from unittest.mock import MagicMock
         from config.auth_pg_b2_preflight import read_only_preflight, QUERY
-        conn = Mock(settings_dict={
+        conn = MagicMock(settings_dict={
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "oes_sandbox", "USER": "oes_auth_migrator",
             "OPTIONS": {"options": "-c search_path=django_auth"},
