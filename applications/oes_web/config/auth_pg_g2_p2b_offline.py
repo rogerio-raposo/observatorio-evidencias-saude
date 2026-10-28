@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.db import connections, transaction
+from django.contrib.sessions.models import Session
 from preparer_identity.models import PreparerIdentity
 
 USERNAME = "oes_g2_trial_fixture"
@@ -34,13 +35,14 @@ def _baseline(using):
         "permissions": Permission.objects.using(using).count(),
         "links": User.user_permissions.through.objects.using(using).count(),
         "identities": PreparerIdentity.objects.using(using).count(),
+        "sessions": Session.objects.using(using).count(),
     }
     ct = ContentType.objects.using(using).filter(app_label="evidence", model="oesquestion")
     custom = Permission.objects.using(using).filter(
         content_type__app_label="evidence", content_type__model="oesquestion",
         codename=PERMISSION,
     )
-    if counts["users"] != 0 or counts["links"] != 0 or counts["identities"] != 0:
+    if any(counts[key] != 0 for key in ("users", "links", "identities", "sessions")):
         raise ProvisioningHold("HOLD: nonempty identity or authorization baseline")
     if ct.count() != 1 or custom.exists():
         raise ProvisioningHold("HOLD: content type or permission baseline drift")
@@ -54,13 +56,12 @@ def _provision_transaction(*, password, using="default", inject_failure=False):
     """
     if not isinstance(password, str) or not password:
         raise ProvisioningHold("HOLD: synthetic password required")
-    before = _baseline(using)
     User = get_user_model()
     with transaction.atomic(using=using):
-        # Revalidate inside the transaction; the in-memory sandbox has no writers
-        # outside this test process.
-        if _baseline(using) != before:
-            raise ProvisioningHold("HOLD: baseline changed")
+        # Preflight is inside the same transaction as all writes.
+        before = _baseline(using)
+        # The connected baseline (44 permissions) is a separate, unapproved gate;
+        # SQLite migrations populate a different permission inventory.
         ct = ContentType.objects.using(using).get(app_label="evidence", model="oesquestion")
         permission = Permission.objects.using(using).create(
             content_type=ct, codename=PERMISSION, name="Synthetic preparation permission"
@@ -69,6 +70,8 @@ def _provision_transaction(*, password, using="default", inject_failure=False):
             username=USERNAME, password=password,
             is_active=True, is_staff=False, is_superuser=False
         )
+        if user._state.db != using or permission._state.db != using:
+            raise ProvisioningHold("HOLD: ORM instance database alias mismatch")
         user.user_permissions.add(permission)
         identity = PreparerIdentity.objects.using(using).create(user_id=user.pk)
         if inject_failure:
@@ -78,9 +81,10 @@ def _provision_transaction(*, password, using="default", inject_failure=False):
             "permissions": Permission.objects.using(using).count(),
             "links": User.user_permissions.through.objects.using(using).count(),
             "identities": PreparerIdentity.objects.using(using).count(),
+            "sessions": Session.objects.using(using).count(),
         }
         expected = {**before, "users": 1, "permissions": before["permissions"] + 1,
-                    "links": 1, "identities": 1}
+                    "links": 1, "identities": 1, "sessions": 0}
         if observed != expected:
             raise ProvisioningHold("HOLD: postflight count mismatch")
         if identity.actor_uuid.version != 4:
