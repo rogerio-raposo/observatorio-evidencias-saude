@@ -1,7 +1,9 @@
-# OES — proposta de database de autenticação Django (pré-execução)
+# OES — proposta histórica de database de autenticação Django (substituída)
+
+> **Decisão posterior (2026-10-28):** o responsável aprovou arquitetura de referência de **um database PostgreSQL por ambiente, com schemas separados e privilégios mínimos**. O segundo database `oes_auth` deixa de ser a recomendação e NÃO deve ser criado com base neste documento. Este texto é preservado somente como histórico da alternativa avaliada. Ver `docs/governance/oes-auth-single-database-architecture-2026-10-28.md`.
 
 **Data:** 2026-10-28  
-**Estado:** PROPOSTA / NÃO APROVADA PARA EXECUÇÃO  
+**Estado:** SUPERADA COMO RECOMENDAÇÃO ARQUITETURAL / NÃO APROVADA PARA EXECUÇÃO  
 **Fundamento:** CP329, Documento 362, princípio de menor privilégio.  
 **Alvo proposto:** projeto Neon `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, novo database `oes_auth`. O database científico `oes_sandbox` não será modificado.
 
