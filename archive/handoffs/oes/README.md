@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP325 — 2026-10-27**
+**CP326 — 2026-10-27**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-27_CP325.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-27_CP326.md`
 
 Checkpoint anterior:
 
-`CP324`
+`CP325`
 
 Status:
 
