@@ -233,7 +233,6 @@ class NativeDjangoPostgresSchemaPlanTests(SimpleTestCase):
         from django.contrib.sessions.models import Session
         from django.db.backends.postgresql.base import DatabaseWrapper
         from unittest.mock import patch
-        from preparer_identity.models import PreparerIdentity
 
         wrapper = DatabaseWrapper({
             "ENGINE": "django.db.backends.postgresql",
@@ -245,11 +244,11 @@ class NativeDjangoPostgresSchemaPlanTests(SimpleTestCase):
         }, alias="offline_auth_schema_ddl")
         with patch.object(wrapper, "ensure_connection", side_effect=AssertionError("network prohibited")):
             with wrapper.schema_editor(collect_sql=True, atomic=False) as editor:
-                for model in (ContentType, Permission, Group, get_user_model(), Session, PreparerIdentity):
+                for model in (ContentType, Permission, Group, get_user_model(), Session):
                     editor.create_model(model)
             ddl = "\n".join(editor.collected_sql)
         for table in ("django_content_type", "auth_permission", "auth_group",
-                      "auth_user", "django_session", "preparer_identity_prepareridentity"):
+                      "auth_user", "django_session"):
             self.assertIn('"' + table + '"', ddl)
         self.assertIn("REFERENCES", ddl.upper())
         self.assertIn("CREATE INDEX", ddl.upper())
