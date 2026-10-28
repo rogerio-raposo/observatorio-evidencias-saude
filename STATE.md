@@ -1,3 +1,9 @@
+## P4-A35 — workflow conectado candidato SEPARADO, fisicamente bloqueado (2026-10-27)
+
+- **Novo workflow:** `.github/workflows/oes-pf-i04-p4-a35-connected-role-trial-candidate-hold.yml`, blob `41e1be3bad3aa0dee479306d8b55f6af321220ea`. `workflow_dispatch` somente, job conectado **`if: false`**, `APPROVED_HEAD=NOT_AUTHORIZED` e `CREDENTIAL_LIFECYCLE_GATE=NOT_APPROVED`; nenhuma credencial ou environment configurados nesta atividade. A32 imutável e offline-run 40622890545 PASS preservados.
+- **Controles offline estáticos PASS:** SHA-256 imutáveis A29 trial `550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17` e postflight `8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509`; tentativa `run_attempt=1` (não impede novo run_id); revisão do commit antes de qualquer conexão; conexão/direct psql projetada, mas NUNCA executada.
+- **Credencial permanece NO-GO:** apagar GitHub Secret não revoga senha PostgreSQL, e rotacionar senha do `oes_sandbox_owner` pode interromper outros consumidores; não foram alterados papéis, senhas, grants ou executado SQL. Parecer: `archive/handoffs/oes/artifacts/P4-A35/OES_PF-I04_P4-A35_WORKFLOW_CANDIDATO_E_GATE_CREDENCIAL.md`. Próxima P4-A36: decidir viabilidade de credencial descartável e negativas offline, ainda sem alteração de banco. **CP326 vigente**; gates gerais inalterados.
+
 ## CP326 — PF-I04/P4-A31–A34 | GitHub Actions offline PASS; ativação conectada HOLD (2026-10-27)
 
 - **P4-A31:** canal preferido GitHub Actions manual com `psql` direto; fonte original preservada em `archive/handoffs/oes/artifacts/CP326/`. Nenhum psql local/Neon executado.
