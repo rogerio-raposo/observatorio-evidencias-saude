@@ -1,3 +1,9 @@
+## 2026-10-28 — CP329 / Documento 362: simplificação proporcional de governança técnica
+
+- Responsável aprovou expressamente `SIMPLIFICACAO_PROPORCIONAL_GOVERNANCA_TECNICA`: suspender/deferir PF-I04/P4 como experimento autônomo, preservar evidências A37–A42, substituir microgates por regimes futuros de autorização conforme risco, simplificar credenciais sintéticas e priorizar integração Django–PostgreSQL.
+- Documento 362 e checkpoint CP329; A41 continua PASS **apenas** no PostgreSQL 18 descartável. A42 teve v1/v2/v3 e parecer locais, sem execução e com SHA-256 registrados no checkpoint; fontes integrais ainda não publicadas no GitHub por bloqueio da integração.
+- Nenhum SQL Neon, alteração de roles/grants/credenciais, segredo, workflow conectado, deploy, coleta factual ou serviço pago autorizado ou executado pela presente decisão. Gates gerais mantidos. Próximo passo: análise offline de suficiência funcional e teste mínimo Django–PostgreSQL.
+
 ## 2026-10-28 — CP328 / P4-A41: PASS integral em PostgreSQL 18 isolado, nenhuma conexão Neon
 
 - Publicados candidatos v3 de setup, postflight (28 checks) e cleanup para reconhecer autogrants PostgreSQL 18 do criador. Originais A37/A39 mantidos; SHA256 e Git blob conferidos.

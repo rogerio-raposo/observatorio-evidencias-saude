@@ -9,15 +9,15 @@
 
 ## Checkpoint vigente
 
-**CP328 — 2026-10-28**
+**CP329 — 2026-10-28**
 
 Arquivo:
 
-`archive/handoffs/oes/OES_Continuidade_2026-10-28_CP328.md`
+`archive/handoffs/oes/OES_Continuidade_2026-10-28_CP329.md`
 
 Checkpoint anterior:
 
-`CP327`
+`CP328`
 
 Status:
 
@@ -59,6 +59,8 @@ em **Modo Continuidade**.
 - documentação canônica vigente prevalece sobre o checkpoint em caso de conflito.
 
 ## Histórico
+
+- **CP329 — 2026-10-28:** Decisão canônica 362 de simplificação proporcional; PF-I04/P4 autônomo deferido, evidências A41 preservadas; próxima atividade Django–PostgreSQL offline. Gates conectados inalterados.
 
 - **CP290 — 2026-10-25:** Documento 295 consolida M1-A1–M1-A4: nove produtos, trajetória funcional candidata F1/Ficha N2, prioridade de reutilização de EvidenceSheetView e não duplicação de Django; comparação de primeiros usos é a próxima análise, nenhuma implementação autorizada.
 
