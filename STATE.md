@@ -1,3 +1,8 @@
+## CP334 — G2-P2-B Django First / A11–A15 (2026-10-28)
+
+- Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP334.md` (CP333 histórico). A11 suficiência; A12 configuração administrativa `settings_auth_pg_g2_p2b_dormant.py` com HOLD incondicional, CI [40754760803](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40754760803) SUCCESS; A13 revisão; A14 contrato puro `auth_pg_g2_p2b_admin_preflight.py`; A15 CI [40755134420](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40755134420) SUCCESS no SHA `343554e2ed0d0c3800a9f85cf9c4fc315efe22c6`.
+- Sem DML Neon, segredos, alterações de roles/grants ou habilitação de workflow conectado; G2-P2-B conectado HOLD/NO-GO, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. Próximo passo útil: obter evidência real de sessão e baseline via preflight conectado READ ONLY mediante gate próprio; reduzir refinamento apenas offline.
+
 ## CP333 — G2-P2-B Django First / A6–A10 (2026-10-28)
 
 - Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP333.md`; anterior CP332 preservado. A7 corrigiu preflight dentro de `transaction.atomic`, controle de `django_session` e alias ORM; A9 adicionou contrato offline não autorizativo da baseline 44/0/0/0/0 e postflight 45/1/1/1/0. A6/A8 foram revisões estáticas; A10 consolidação.
