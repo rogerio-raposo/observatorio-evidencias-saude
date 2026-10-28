@@ -1,3 +1,9 @@
+## Pós-CP334 — G2-P2-B READ ONLY administrativo consolidado (2026-10-28)
+
+- Preflight conectado Neon sob `oes_auth_migrator`: baseline 44 permissões, 0 usuários/vínculos/identidades/sessões, ContentType correto, permissão customizada ausente, quatro tabelas INSERT/DELETE e quatro sequências USAGE confirmadas. A ferramenta Neon abriu schema `public`, sem demonstrar configuração Django.
+- Smoke Django manual [40756319997](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40756319997) SUCCESS, SHA `3a7c86f8fa3f13e831406376b5f2ff1143cf5cb6`: `oes_auth_migrator`, `oes_sandbox`, `current_schema=django_auth`, `search_path=django_auth`, transação READ ONLY. Exclusão do segredo `OES_AUTH_G2_P2B_SMOKE_PASSWORD` confirmada pelo responsável (não independentemente auditada). Evidência consolidada no documento canônico de arquitetura; nenhum DML conectado autorizado ou executado.
+- Pendências reais: serialização diante de escritores externos, pacote único autorizado de provisionamento DML, verificação após commit e limpeza sob gate distinto. Configuração de provisionamento conectado continua bloqueada; Marco B OPEN, G2-P2-B HOLD/NO-GO, E9 NO-GO, Fase 5 NOT_STARTED. Checkpoint CP334 permanece vigente.
+
 ## CP334 — G2-P2-B Django First / A11–A15 (2026-10-28)
 
 - Checkpoint vigente `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP334.md` (CP333 histórico). A11 suficiência; A12 configuração administrativa `settings_auth_pg_g2_p2b_dormant.py` com HOLD incondicional, CI [40754760803](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40754760803) SUCCESS; A13 revisão; A14 contrato puro `auth_pg_g2_p2b_admin_preflight.py`; A15 CI [40755134420](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40755134420) SUCCESS no SHA `343554e2ed0d0c3800a9f85cf9c4fc315efe22c6`.
