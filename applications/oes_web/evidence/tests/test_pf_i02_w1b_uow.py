@@ -318,16 +318,17 @@ class DjangoAuthMigrationGraphOfflineTests(SimpleTestCase):
         from django.db.migrations.operations.models import CreateModel
         loader = MigrationLoader(None)
         leaves = [node for node in loader.graph.leaf_nodes()
-                  if node[0] in {"auth", "contenttypes", "sessions", "preparer_identity"}]
+                  if node[0] in {"auth", "contenttypes", "sessions"}]
         self.assertEqual({n[0] for n in leaves},
-                         {"auth", "contenttypes", "sessions", "preparer_identity"})
-        plan = loader.graph.forwards_plan(leaves[-1])
+                         {"auth", "contenttypes", "sessions"})
         all_nodes = set()
         for leaf in leaves:
             all_nodes.update(loader.graph.forwards_plan(leaf))
-        apps = {"auth", "contenttypes", "sessions", "preparer_identity"}
+        apps = {"auth", "contenttypes", "sessions"}
         self.assertTrue(all(node[0] in apps for node in all_nodes))
-        self.assertIn(("preparer_identity", "0001_initial"), all_nodes)
+        from preparer_identity.migrations import __path__ as identity_migration_dir
+        self.assertTrue(identity_migration_dir)
+        # Identity migration is separate: not installed in default settings.
         for app in apps:
             self.assertTrue(any(node[0] == app for node in all_nodes))
         operations = [op for node in all_nodes
