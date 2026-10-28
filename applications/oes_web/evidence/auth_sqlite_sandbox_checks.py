@@ -381,3 +381,43 @@ class AuthSQLiteSandboxTests(TestCase):
                          "Native login unexpectedly updates multiple auth_user columns")
         self.user.refresh_from_db()
         self.assertIsNotNone(self.user.last_login)
+
+
+class G2TrialSettingsOfflineTests(TestCase):
+    """Only inspect Django settings construction; never connect to Neon."""
+
+    def test_g2_trial_settings_default_and_incomplete_opt_in_hold(self):
+        import runpy
+        from unittest.mock import patch
+        module = "config.settings_auth_pg_g2_trial_optin"
+        with patch.dict("os.environ", {}, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "HOLD"):
+                runpy.run_module(module, run_name="__g2_default__")
+        with patch.dict("os.environ", {"OES_AUTH_G2_EXPLICIT_OPT_IN": "1"}, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "HOLD"):
+                runpy.run_module(module, run_name="__g2_missing__")
+        with patch.dict("os.environ", {
+            "OES_AUTH_G2_EXPLICIT_OPT_IN": "1",
+            "OES_AUTH_G2_HOST": "example.invalid",
+            "OES_AUTH_G2_PASSWORD": "offline-placeholder",
+        }, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "HOLD"):
+                runpy.run_module(module, run_name="__g2_wrong_host__")
+
+    def test_g2_trial_settings_isolate_role_schema_and_database(self):
+        import runpy
+        from unittest.mock import patch
+        with patch.dict("os.environ", {
+            "OES_AUTH_G2_EXPLICIT_OPT_IN": "1",
+            "OES_AUTH_G2_HOST": "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech",
+            "OES_AUTH_G2_PASSWORD": "offline-placeholder-not-a-secret",
+        }, clear=True):
+            cfg = runpy.run_module("config.settings_auth_pg_g2_trial_optin", run_name="__g2_offline__")
+        default = cfg["DATABASES"]["default"]
+        self.assertEqual(default["USER"], "oes_auth_trial_login")
+        self.assertEqual(default["NAME"], "oes_sandbox")
+        self.assertEqual(default["OPTIONS"]["options"], "-c search_path=django_auth")
+        self.assertEqual(default["CONN_MAX_AGE"], 0)
+        self.assertEqual(cfg["DATABASES"]["oes_scientific_hold"]["ENGINE"], "django.db.backends.dummy")
+        self.assertEqual(set(cfg["DATABASES"]), {"default", "oes_scientific_hold"})
+        self.assertEqual(cfg["DATABASE_ROUTERS"], ["config.auth_sandbox_router.AuthSandboxRouter"])
