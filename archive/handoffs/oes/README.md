@@ -1,3 +1,7 @@
+## Ponteiro atual — CP335 (2026-10-28)
+
+**Checkpoint vigente:** [OES_Continuidade_2026-10-28_CP335.md](OES_Continuidade_2026-10-28_CP335.md). G2-P2-B encerrado tecnicamente no perímetro sintético: provisionamento [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528) `PASS_POST_COMMIT`; limpeza [40775904096](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40775904096) `PASS_CLEANUP_POST_COMMIT`; baseline 44/0/0/0/0 reconciliada pelo runner. Exclusão dos segredos efêmeros confirmada pelo responsável (não auditada independentemente). **Não repetir workflows.** Próxima prioridade: selecionar incremento substantivo Django First, proporcionalmente, sem promover gates. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP334 (2026-10-28)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-28_CP334.md](OES_Continuidade_2026-10-28_CP334.md). A11–A15: validação da configuração administrativa G2-P2-B permanentemente bloqueada, contrato puro de preflight administrativo, testes e CI [40755134420](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40755134420) SUCCESS. Sem conexão DML Neon ou workflow conectado habilitado. **G2-P2-B conectado HOLD; próximo incremento útil: evidência da sessão real em gate READ ONLY, sem criar novo executor de escrita.** Django First (Doc347) e simplificação proporcional (Doc362) preservados.
