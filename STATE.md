@@ -1,3 +1,8 @@
+## Pós-CP334 — G2-P2-B connected single synthetic trial (2026-10-28)
+
+- Workflow manual [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528), tentativa 1, commit `4215a7eb66e9213953dc691c681b75dade7002cc`: SUCCESS e marcador `OES_G2_P2B_TRIAL_RESULT=PASS_POST_COMMIT`. Evidência do runner para provisionamento Django ORM sintético e reconciliação pós-commit READ ONLY; sem consulta Neon independente adicional nesta atividade.
+- **STOP:** não repetir workflow; registros sintéticos persistem até decisão nominal de limpeza. Exclusão do segredo `OES_AUTH_G2_P2B_TRIAL_PASSWORD` solicitada, mas não confirmada pelo responsável. Nenhuma limpeza autorizada. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED. CP334 continua checkpoint vigente enquanto atualização de continuidade não for formalizada.
+
 ## Pós-CP334 — G2-P2-B READ ONLY administrativo consolidado (2026-10-28)
 
 - Preflight conectado Neon sob `oes_auth_migrator`: baseline 44 permissões, 0 usuários/vínculos/identidades/sessões, ContentType correto, permissão customizada ausente, quatro tabelas INSERT/DELETE e quatro sequências USAGE confirmadas. A ferramenta Neon abriu schema `public`, sem demonstrar configuração Django.
