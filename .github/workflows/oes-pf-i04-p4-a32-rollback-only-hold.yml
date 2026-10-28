@@ -1,0 +1,148 @@
+# OES / PF-I04/P4-A32 — candidato DOCUMENTAL, HARD HOLD.
+# workflow_dispatch executa apenas validacao OFFLINE; job conectado if: false.
+# Nao remover o bloqueio sem autorizacao nominal separada, auditoria de SHA,
+# seguranca de credencial descartavel e decisao de custos do GitHub Actions.
+name: OES PF-I04 P4-A32 rollback-only ROLE trial — HARD HOLD
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-pf-i04-p4-a32-rollback-only-hold
+  cancel-in-progress: false
+
+jobs:
+  offline-contract:
+    name: Verify immutable A29 SQL offline (no Neon, no secrets)
+    if: ${{ github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout dispatched revision without persistent token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify fixed A29 SQL identities and mandatory rollback
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          root = Path('archive/handoffs/oes/artifacts/CP325')
+          trial = root / 'OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql'
+          post = root / 'OES_PF-I04_P4-A29_POSTFLIGHT_INDEPENDENTE_READ_ONLY.sql'
+          expected = {
+              trial: '550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17',
+              post: '8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509',
+          }
+          for f, digest in expected.items():
+              assert f.is_file(), f'HOLD: missing {f.name}'
+              assert sha256(f.read_bytes()).hexdigest() == digest, f'HOLD: SHA mismatch {f.name}'
+          active = [line.strip() for line in trial.read_text().splitlines()
+                    if line.strip() and not line.lstrip().startswith('--')]
+          assert active[0] == 'BEGIN;', 'HOLD: missing BEGIN'
+          assert active[-1] == 'ROLLBACK;', 'HOLD: missing final ROLLBACK'
+          assert not any(line.upper() == 'COMMIT;' for line in active), 'HOLD: COMMIT forbidden'
+          assert len(active) > 12, 'HOLD: script unexpectedly short'
+          assert post.read_text().lstrip().startswith('-- OES / PF-I04'), 'HOLD: postflight provenance'
+          print('OFFLINE_PASS: A29 SQL identities and ROLLBACK verified; NO SQL CONNECTION')
+          PY
+      - name: Assert connected job is physically disabled in reviewed workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          f = Path('.github/workflows/oes-pf-i04-p4-a32-rollback-only-hold.yml')
+          source = f.read_text()
+          assert re.search(r'(?m)^  connected-role-trial:\s*\n    name:.*\n    needs: offline-contract\s*\n    if: \$\{\{ false \}\}\s*$', source), 'HOLD: connected job not unconditionally disabled'
+          assert 'workflow_dispatch:' in source
+          assert not re.search(r'(?m)^  (?:push|pull_request|schedule|workflow_run):', source), 'HOLD: automatic trigger detected'
+          print('HARD_HOLD_CONFIRMED: connected-role-trial is SKIPPED unconditionally')
+          PY
+
+  connected-role-trial:
+    name: HARD HOLD — no database connection or mutating SQL
+    needs: offline-contract
+    if: ${{ false }}
+    # IMMUTABLE OFF. Only change under later named authorization.
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      # Verified through Neon READ ONLY endpoint metadata at P4-A32.
+      # Endpoint is DIRECT, owned by branch br-gentle-hall-b6jaxehf (NOT default).
+      PGHOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+      PGPORT: '5432'
+      PGDATABASE: oes_sandbox
+      PGUSER: oes_sandbox_owner
+      PGSSLMODE: require
+      PGCONNECT_TIMEOUT: '10'
+      PGAPPNAME: oes-pf-i04-p4-a32-rollback-only
+    steps:
+      - name: Checkout immutable dispatched revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Revalidate SQL and prepare single psql client
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17  archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql' | sha256sum -c -
+          echo '8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509  archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_POSTFLIGHT_INDEPENDENTE_READ_ONLY.sql' | sha256sum -c -
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+      - name: SINGLE trial — MUST REMAIN BLOCKED WITHOUT NOMINAL AUTHORIZATION
+        shell: bash
+        env:
+          PGPASSWORD: ${{ secrets.OES_P4_A32_OWNER_PASSWORD_ONETIME }}
+        run: |
+          set -euo pipefail
+          set +x
+          if [[ -z "${PGPASSWORD:-}" ]]; then
+            echo 'HOLD: disposable owner credential absent. No database connection.'
+            exit 1
+          fi
+          trial='archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql'
+          log="${RUNNER_TEMP}/oes_a32_role_trial.log"
+          # One invocation, one backend, explicit BEGIN and final ROLLBACK in A29.
+          # On error, psql exits, the connection closes and PostgreSQL aborts the transaction.
+          # Never retry; never use psql -1; never execute the postflight here.
+          if ! psql -X -v ON_ERROR_STOP=on -v ON_ERROR_ROLLBACK=off -A -t -F '|' -f "$trial" > "$log" 2>&1; then
+            echo 'HOLD: single trial failed or rollback not confirmed. No retry.'
+            exit 1
+          fi
+          python3 - "$log" <<'PY'
+          from pathlib import Path
+          import sys
+          lines = [x.strip() for x in Path(sys.argv[1]).read_text().splitlines() if x.strip()]
+          expected = [
+              ('A29_PRE', 'oes_sandbox_owner', 1),
+              ('A29_TEMP_GRANT', 'oes_sandbox_owner', 2),
+              ('A29_MIGRATOR', 'oes_django_migrator', 2),
+              ('A29_CLEAN', 'oes_sandbox_owner', 1),
+          ]
+          rows = []
+          for line in lines:
+              cells = line.split('|')
+              if cells[0].startswith('A29_'):
+                  assert len(cells) == 5, 'HOLD: incomplete evidence row'
+                  rows.append(cells)
+          assert len(rows) == 4, 'HOLD: evidence rows missing or duplicated'
+          pids = set()
+          for row, (phase, user, count) in zip(rows, expected):
+              assert row[0] == phase and row[2] == 'oes_sandbox_owner'
+              assert row[3] == user and int(row[4]) == count, 'HOLD: role/count mismatch'
+              pids.add(int(row[1]))
+          assert len(pids) == 1, 'HOLD: backend PID changed'
+          assert lines[-1] == 'ROLLBACK', 'HOLD: no explicit terminal ROLLBACK acknowledgement'
+          print('ROLE_TRIAL_RESULT: evidence markers consistent; final ROLLBACK acknowledged')
+          print('POSTFLIGHT_PENDING_NOMINAL_APPROVAL: no postflight run')
+          PY
