@@ -180,3 +180,18 @@ Aprovação explícita: `APPROVED — OES / DJANGO_AUTH_GATE_B2_P1 / SINGLE_DJAN
 O script Django verificou em uma única consulta SELECT que `current_database=oes_sandbox`, `session_user=current_user=oes_auth_migrator`, `search_path=current_schema=django_auth`, `current_schemas(false)={django_auth}`, USAGE/CREATE=true e objetos no schema=0. Nenhum DDL/DML/migration, grant ou alteração de papel.
 
 Workflow desabilitado novamente após consumo autorizado (commit `e44c54e9c7bde5d61589e19860da1498fed4fd3e`). **B2-P1 PASS; Gate B2 de migrations permanece HOLD e não autorizado.** A existência do segredo temporário no GitHub não implica sua remoção; requer confirmação/limpeza explícita pelo responsável.
+
+
+## Gate B2-M1 — plano de execução das migrations (proposta, NÃO autorizado)
+
+**Situação da credencial:** usuário confirmou exclusão do segredo GitHub `OES_AUTH_B2_PASSWORD` após o B2-P1 PASS. A role temporária `oes_auth_migrator` continua sujeita à validade definida no PostgreSQL e requer novo segredo descartável protegido para qualquer execução futura. Não pressupor que a exclusão do segredo revogue privilégios da role.
+
+**Escopo pretendido:** uma única execução controlada de `python manage.py migrate --noinput --database default --settings=config.settings_auth_pg_b2_optin` no projeto, branch e database já aprovados, apenas sob autorização específica B2-M1 ainda não concedida. Não usar `migrate --run-syncdb`; não executar `makemigrations`; não executar `flush`, `createsuperuser`, `collectstatic`, servidores ou endpoints HTTP.
+
+**Checks obrigatórios imediatamente antes da migration:** preflight `read_only_preflight()` via a própria conexão Django; confirmar identidade, schema, ACL e 0 objetos, inclusive tabela `django_migrations`; inspecionar o plano com `showmigrations --plan` somente após credencial aprovada. O `search_path` é **exclusivamente** `django_auth` e o alias científico permanece `dummy`. Capturar inventário READ ONLY dos schemas científicos antes/depois, preferencialmente com hashes de nomes/tipos/owners, sem ler dados científicos.
+
+**Efeitos esperados e ressalvas:** a migração cria `django_migrations`, tabelas nativas `auth`, `contenttypes`, `sessions`, a tabela `preparer_identity_prepareridentity`, tabelas M2M, índices e sequências em `django_auth`; o comando Django também pode escrever metadados de `ContentType` e `Permission` (incluindo modelos `evidence` não gerenciados) **dentro de `django_auth`**, por sinais `post_migrate`. Não devem ser criadas ou alteradas tabelas científicas. Proibição de usuários reais e de dados científicos reais permanece.
+
+**Contenção:** a execução de migrations nativas pode abranger diversas transações; **não prometer rollback atômico de todo o comando**. Se erro, interromper novas tentativas e emitir inventário/postflight de leitura, com estado de `django_migrations`; não apagar manualmente tabelas ou refazer comando até plano de recuperação expressamente aprovado. O PASS exige conclusão de migrate, schema ownership e ACL coerentes, integridade `django_migrations` e inventário científico estável. O workflow de preflight B2-P1 permanece desabilitado.
+
+**Decisão nesta atividade:** somente plano documental, sem recriar segredo, sem conexão ou migration PostgreSQL. Gate B2 continua HOLD até aprovação individual B2-M1.
