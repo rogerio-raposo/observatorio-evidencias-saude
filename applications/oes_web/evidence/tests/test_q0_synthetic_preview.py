@@ -23,3 +23,13 @@ class Q0SyntheticPreviewTests(SimpleTestCase):
         self.assertContains(response, "Confirmação:")
         self.assertContains(response, "não existe commit")
         self.assertNotContains(response, "<form")
+
+    def test_local_validation_has_no_network_submission(self):
+        response = self.client.get(reverse("q0-synthetic-preview"))
+        self.assertContains(response, 'id="q0-local-text"')
+        self.assertContains(response, 'id="q0-local-check" type="button"')
+        self.assertContains(response, "Nenhuma autorização ou gravação foi realizada")
+        self.assertContains(response, "field.value")
+        self.assertNotContains(response, "<form")
+        self.assertNotContains(response, "fetch(")
+        self.assertNotContains(response, "XMLHttpRequest")
