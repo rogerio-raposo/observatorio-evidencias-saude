@@ -1,0 +1,77 @@
+# OES / PF-I04 / P4-A41 — disposable PostgreSQL 18 fixture ONLY.
+# NEVER connects to Neon, uses Neon credentials, or runs on production.
+# A41 has produced an offline PostgreSQL18 NO-GO for the canonical setup.
+# AUTO-TRIGGER REMOVED. Re-dispatch needs separate reviewed offline test scope.
+name: OES P4-A41 PostgreSQL18 v3 isolated creator-grant rehearsal
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/oes-pf-i04-p4-a41-pg18-disposable.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-p4-a41-disposable-pg18
+  cancel-in-progress: false
+
+jobs:
+  pg18-disposable-role-trial:
+    if: ${{ github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: a41_disposable_ci_only_not_neon
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      OES_A41_OFFLINE: '1'
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGSSLMODE: disable
+      PGCONNECT_TIMEOUT: '5'
+    steps:
+      - name: Checkout immutable runner SHA without persistent token
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require local PostgreSQL CLI and Python
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+          python3 --version
+          python3 -m py_compile scripts/oes_p4_a41_pg18_disposable.py
+      - name: Execute exactly one synthetic fixture run (no Neon)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/oes_p4_a41_pg18_disposable.py
+      - name: Publish bounded summary in run log (always, no raw SQL/session secrets)
+        if: always()
+        shell: bash
+        run: |
+          if test -f p4-a41-results/summary.json; then
+            cat p4-a41-results/summary.json
+          else
+            echo 'A41_NO_SUMMARY: SQL rehearsal did not initialize, HOLD'
+          fi
