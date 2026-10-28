@@ -378,3 +378,10 @@ Dois testes offline adicionados em `evidence/auth_sqlite_sandbox_checks.py`: aus
 ## AUTH_RUNTIME_G2-P1 — artefatos preparatórios bloqueados (2026-10-28)
 
 Foi criado o verificador conectado **somente leitura** `applications/oes_web/config/auth_pg_g2_p1_preflight.py`, restrito à configuração `oes_auth_trial_login` / `oes_sandbox` / `django_auth`, que consulta identidade, schema efetivo e USAGE/CREATE. Workflow manual `.github/workflows/oes-auth-g2-p1-readonly-manual.yml` criado com bloqueio de job `if: false`, dependente de segredo efêmero `OES_AUTH_G2_P1_PASSWORD` não cadastrado por esta atividade; sem triggers automáticos, sem DML e sem ativação HTTP. Os verificadores atuais cobrem **identidade e schema**, não a totalidade da matriz de privilégios; ampliar cobertura e testar offline antes de qualquer execução conectada. Nenhum teste conectado autorizado ou realizado. G2-P1 HOLD.
+
+
+## G2-P1 — verificação de ACL ampliada e testada offline (2026-10-28)
+
+`config/auth_pg_g2_p1_preflight.py` passou a consultar somente catálogos/identidade: banco, role, schema, search_path, USAGE/CREATE, dez tabelas com privilégios SELECT/INSERT/UPDATE/DELETE, UPDATE por coluna em `auth_user` e nove sequências sem privilégios. A comparação exige matriz exata; derivações provocam HOLD. Teste `G2CatalogueOfflineTests.test_g2_exact_acl_and_sequence_drift` adicionado, com aceite do inventário esperado e rejeição de desvio em sequência e tabela.
+
+CI [40738061389](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40738061389) **195/195 PASS** (173 principais + 22 de autenticação/integração). Alterações: `04b4103` verificador; `b38053f` teste. **Nenhum acesso conectado ao Neon** e workflow G2-P1 permanece manual e desabilitado. Não alegar prova de conexão nem de ACL em runtime até G2-P1 ser especificamente autorizado e executado. G2-P2B operacional NO-GO; E9 NO-GO; Fase 5 NOT_STARTED.
