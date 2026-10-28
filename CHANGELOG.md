@@ -1,3 +1,9 @@
+## 2026-10-28 — Marco técnico Django–PostgreSQL integrado READ ONLY (sem novo checkpoint)
+
+- Publicada a rota GET-only `/synthetic-pg-links/`, leitor PG-A4 existente reutilizado, template HTML e seis testes offline. Run [40689017577](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40689017577) **SUCCESS: 136/136 PASS**.
+- Verificação conectada estritamente sintética via workflow manual existente `oes-pg-a4-connected-smoke.yml`, run [40691185683](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40691185683) **SUCCESS**, confirma três vínculos Study–Report, proveniência e HTML Django; SHA `59754c1a61d864399b60093ff29b5642b7c3993e`.
+- Responsável confirmou exclusão do segredo temporário `OES_PG_A4_PASSWORD` após o ensaio (sem confirmação independente por API). Nenhuma alteração de roles/grants, credenciais PostgreSQL, DML/DDL, migrations ou deploy; nenhum gate científico/operacional promovido. Continuidade Django-first em Q0/Q1; CP329 e Documento 362 preservados.
+
 ## 2026-10-28 — CP329 / Documento 362: simplificação proporcional de governança técnica
 
 - Responsável aprovou expressamente `SIMPLIFICACAO_PROPORCIONAL_GOVERNANCA_TECNICA`: suspender/deferir PF-I04/P4 como experimento autônomo, preservar evidências A37–A42, substituir microgates por regimes futuros de autorização conforme risco, simplificar credenciais sintéticas e priorizar integração Django–PostgreSQL.

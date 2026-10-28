@@ -1,3 +1,10 @@
+## Marco funcional pós-CP329 — Django–PostgreSQL READ ONLY integrado PASS (2026-10-28)
+
+- **Evidência:** GitHub Actions [40691185683](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40691185683), `workflow_dispatch`, commit `59754c1a61d864399b60093ff29b5642b7c3993e`, conclusão **SUCCESS**. Logs: `PASS PG_A4_DJANGO_CONFIG_PREFLIGHT_NO_CONNECTION`, `PASS PG_A4_G2_B_DJANGO_CONNECTED_THREE_LINKS_ONE_PROVENANCE`, `PASS PG_A4_DJANGO_CONNECTED_SYNTHETIC_HTML`.
+- Comprovada integração sintética de leitura **Django → Neon PostgreSQL → página HTML** pelo cliente de testes, usando `oes_pg_a4_reader` na branch `br-gentle-hall-b6jaxehf` / `oes_sandbox`: três vínculos Study–Report e distinção de proveniência. Suíte offline anterior: **136/136 PASS**, run [40689017577](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40689017577).
+- Segredo temporário `OES_PG_A4_PASSWORD`: **exclusão declarada pelo responsável** após a execução; não se declara verificação independente no inventário de segredos. Workflow não foi reexecutado. Nenhum DML/DDL, migração, grants, alterações de papéis ou deploy nesta validação.
+- **Próximo incremento recomendado:** priorizar fluxo funcional sintético de preparação Q0/Q1 em Django-first, começando por revisão dirigida do repositório ORM e um contrato mínimo de escrita transacional; qualquer teste conectado de escrita exige nova autorização específica. Não retomar PF-I04/P4 autônomo. CP329 permanece vigente, Documento 362 normativo; Marco B OPEN, G2-P2B NO-GO, E9 NO-GO, readiness NOT_READY, Fase 5 NOT_STARTED.
+
 ## CP329 — Governança técnica proporcional aprovada; PF-I04/P4 autônomo deferido (2026-10-28)
 
 - **Decisão canônica:** Documento 362 `docs/governance/362-decisao-simplificacao-proporcional-governanca-tecnica-oes-cp329.md`, aprovação explícita `SIMPLIFICACAO_PROPORCIONAL_GOVERNANCA_TECNICA`. Aprovação somente documental; nenhuma operação conectada.

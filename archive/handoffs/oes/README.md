@@ -3,6 +3,11 @@
 **Status:** artefato operacional  
 **Finalidade:** servir como **único ponteiro operacional** para a retomada do desenvolvimento do Observatório de Evidências em Saúde — OES.
 
+## Marco funcional posterior ao CP329 (2026-10-28)
+
+- **Django–PostgreSQL somente leitura concluído:** run [40691185683](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40691185683) SUCCESS, três vínculos sintéticos e renderização HTML pelo Django; suíte offline 136/136 PASS na [40689017577](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40689017577). Segredo `OES_PG_A4_PASSWORD` excluído conforme confirmação do responsável, sem verificação independente de inventário.
+- **Próxima atividade:** revisão offline objetiva do menor fluxo de escrita Django-first para Q0/Q1, sem executar SQL ou habilitar operação conectada. Documento 362 segue normativo; CP329 continua vigente; gates preservados.
+
 ## Arquitetura de continuidade
 
 `Template canônico → README/pointer → checkpoint vigente → Freshness Gate → Diagnóstico de Continuidade → retomada controlada`
