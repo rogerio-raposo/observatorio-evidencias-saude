@@ -353,3 +353,16 @@ Autorização nominal `APPROVED — OES / AUTH_RUNTIME_G1_MINIMAL_GRANTS / SINGL
 - `oes_auth_migrator`: SELECT nas oito tabelas `auth_user`, `auth_group`, `auth_permission`, `django_content_type`, `auth_user_groups`, `auth_user_user_permissions`, `auth_group_permissions`, `preparer_identity_prepareridentity`; UPDATE(`last_login`) somente em `auth_user`; SELECT/INSERT/UPDATE/DELETE em `django_session`.
 
 Postflight READ ONLY confirmou USAGE=true e CREATE=false no schema, SELECT exatamente nas oito tabelas e sessão, DML exclusivamente em sessão, nenhuma permissão em `django_migrations`, UPDATE por coluna exclusivamente `auth_user.last_login` entre 11 colunas, zero sequências com USAGE/SELECT/UPDATE e zero memberships. Sem migrations, DML ou teste de login. Essa verificação não atesta ainda execução Django conectada, nem avalia uso de credenciais ou escrita HTTP. Preservar grantor-aware rollback para eventual encerramento; não revogar automaticamente. `AUTH_RUNTIME_G1_MINIMAL_GRANTS=PASS` no escopo catalogal; B2-M1 PASS; ensaio de login conectado não autorizado; G2-P2B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
+
+## AUTH_RUNTIME_G2 — plano do ensaio conectado mínimo (2026-10-28; DESIGN ONLY)
+
+**Estado confirmado:** AUTH_RUNTIME_G1_ROLE_CREATE PASS e AUTH_RUNTIME_G1_MINIMAL_GRANTS PASS catalogal; `oes_auth_trial_login` tem USAGE em `django_auth`, SELECT nas oito tabelas autorizadas, UPDATE apenas em `auth_user.last_login`, DML em `django_session`, sem `django_migrations`, sequências nem memberships. Nenhum ensaio Django conectado autorizado.
+
+**Separação de subgates:**
+1. **G2-P0, documental/offline:** configurar settings Django de runtime dedicados, opt-in distinto de `settings_auth_pg_b2_optin` (migrador), sem ativação de HTTP; testar fail-closed e isolamento em SQLite/mocks. Não inserir credenciais no código.
+2. **G2-P1, conectado READ ONLY:** com credencial temporária em GitHub Actions secret fornecida privadamente pelo responsável, executar uma única sessão de introspecção de `current_user`, `current_schema`, `search_path`, tabelas e direitos permitidos/negados, sem ORM que execute gravação. Deve permanecer bloqueado até autorização nominal própria. Excluir segredo e desabilitar workflow após execução.
+3. **G2-P2, prova de autenticação com DML:** requer usuário de teste previamente provisionado e `PreparerIdentity`/permissão explícita por gate administrativo separado. Somente após isso deliberar atualização de `last_login`, sessões e cleanup sintéticos, com inventário antes/depois, sem HTTP writes. Sem reais pesquisadores.
+4. **G2-P3, encerramento:** verificar estado de sessões, revogações específicas observando grantor e remoção do papel mediante autorizações separadas. Expiração de senha não é limpeza.
+
+**Condições de HOLD:** settings ainda apontam `oes_auth_migrator`, password/endpoint não disponível, `search_path` divergente, privileges inesperados, objeto científico acessível, tentativa de query mutante no P1, inexistência do usuário sintético no P2, ou tentativas de habilitar o web writer. Nenhuma passagem automática entre subgates. G2-P2B operacional permanece NO-GO; E9 NO-GO; Fase 5 NOT_STARTED.
