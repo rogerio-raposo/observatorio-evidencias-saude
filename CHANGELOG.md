@@ -1,3 +1,8 @@
+## 2026-10-28 — B2-M1 migrations Django PostgreSQL PASS
+
+- Execução manual autorizada [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136), SHA `5bd718263d4462a3b2fe4bef6b9cb8e91d869f22`, **SUCCESS**, 16/16 migrations, 49 objetos no schema `django_auth`.
+- Postflight confirmou histórico completo e ContentTypes/Permissions em schema de autenticação; estruturas científicas inventariadas permaneceram iguais (315 registros, mesmo SHA-256). Workflow desabilitado novamente em `31fd4dbb`; segredo B2-M1 aguarda exclusão confirmada. Sem liberação de operação, dados reais ou escrita HTTP.
+
 ## 2026-10-28 — CP330 e prontidão documental B2-M1
 
 - Banco `oes_sandbox` com schema `django_auth`; Gate A PASS e B1 migrador efêmero PASS. B2-P0 constatou search_path padrão `public` na sessão Neon; B2-P1 Django conectado [40727429944](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40727429944) **SUCCESS**, `PASS_READ_ONLY_DJANGO_AUTH_SCHEMA`.
