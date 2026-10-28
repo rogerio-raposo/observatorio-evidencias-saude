@@ -171,3 +171,12 @@ Consulta realizada uma vez via Neon, selecionando `role_name=oes_auth_migrator`,
 **Conclusão restrita:** identidade e ACL adequadas ao acesso ao schema, mas o `search_path` dessa sessão Neon não seleciona `django_auth`. **B2 permanece HOLD**; não houve DDL, DML, migration, ALTER ROLE ou GRANT. A consulta não testou a conexão Django opt-in, cujo `OPTIONS.options=-c search_path=django_auth` precisa ser demonstrado separadamente em teste expressamente autorizado; não confundir configuração de sessão da API com a configuração futura do Django.
 
 **Próxima ação:** elaborar prova de conexão Django de leitura exclusivamente com `search_path` explícito, conferindo `current_schema()`, `current_schemas(false)` e `SHOW search_path` antes de qualquer migration. Falha implica NO-GO.
+
+
+## Gate B2-P1 — preflight Django conectado PASS (2026-10-28)
+
+Aprovação explícita: `APPROVED — OES / DJANGO_AUTH_GATE_B2_P1 / SINGLE_DJANGO_CONNECTED_READ_ONLY_PREFLIGHT`. Workflow manual `oes-auth-b2-p1-readonly-manual.yml`, [run 40727429944](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40727429944), tentativa 1, SHA `5d21be77b6047dec87a64ad3014fc138378a129c`, conclusão **SUCCESS**. Log: `PASS_READ_ONLY_DJANGO_AUTH_SCHEMA`.
+
+O script Django verificou em uma única consulta SELECT que `current_database=oes_sandbox`, `session_user=current_user=oes_auth_migrator`, `search_path=current_schema=django_auth`, `current_schemas(false)={django_auth}`, USAGE/CREATE=true e objetos no schema=0. Nenhum DDL/DML/migration, grant ou alteração de papel.
+
+Workflow desabilitado novamente após consumo autorizado (commit `e44c54e9c7bde5d61589e19860da1498fed4fd3e`). **B2-P1 PASS; Gate B2 de migrations permanece HOLD e não autorizado.** A existência do segredo temporário no GitHub não implica sua remoção; requer confirmação/limpeza explícita pelo responsável.
