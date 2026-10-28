@@ -1,6 +1,6 @@
 # OES / PF-I04 / P4-A40 — disposable PostgreSQL 18 fixture ONLY.
 # NEVER connects to Neon, uses Neon credentials, or runs on production.
-# A40 rehearsal attempt 2: bridge address guard corrected in Python source.
+# A40 rehearsal attempt 3: fixture OID substitution count corrected.
 # A single on-push test is scoped to publication of THIS workflow file only.
 name: OES P4-A40 PostgreSQL18 disconnected synthetic role trial
 
