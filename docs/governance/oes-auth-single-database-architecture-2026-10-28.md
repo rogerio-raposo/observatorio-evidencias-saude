@@ -70,3 +70,16 @@ Em `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, database `oes_sa
 **Explicitamente fora do escopo:** criação de database/schema, SQL DDL/DML, grants, secrets, migrations Neon, workflow conectado, deploy, custos pagos, Q1, E9.
 
 **Estado de governança:** Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
+
+## Execução autorizada do Gate A — 2026-10-28
+
+**Aprovação específica recebida:** `APPROVED — OES / DJANGO_AUTH_SCHEMA_GATE_A / SINGLE_EMPTY_SCHEMA_CREATE / project weathered-boat-65779510 / branch br-gentle-hall-b6jaxehf / database oes_sandbox / schema django_auth / owner oes_sandbox_owner / READ ONLY preflight and postflight / no migrations / no roles or grants / no DML / no HTTP writes / no paid services / fail closed`.
+
+- Preflight SQL READ ONLY: `current_database()=oes_sandbox`, executor `oes_sandbox_owner`, `django_auth` inexistente, role proprietária presente, executor com CREATE no database, contagem de objetos nos schemas científicos selecionados = **99**.
+- **Única mutação autorizada e realizada:** `CREATE SCHEMA django_auth AUTHORIZATION oes_sandbox_owner;`.
+- Postflight SQL READ ONLY: schema `django_auth` existente, owner `oes_sandbox_owner`, ACL explícita `NULL` (privilégios padrão aplicáveis), **zero objetos**, `oes_runtime` e `oes_django_migrator` sem CREATE no novo schema, contagem dos mesmos objetos científicos = **99**.
+- Não ocorreu migration, DML, concessão/revogação de privilégios, alteração de papel, segredo, deploy ou habilitação HTTP.
+- **Gate A encerrado como PASS limitado à criação do schema vazio.** Gate B (migrations e privilégios) **NÃO AUTORIZADO**; demais gates inalterados.
+- Nota: a contagem científica é uma verificação delimitada dos schemas `core`, `investigation`, `evidence`, `provenance` e `oes_app`, não um hash de todo o estado do banco.
+
