@@ -1,3 +1,7 @@
+## 2026-10-28 — CP331, continuidade auth sintética
+
+- G2-P1 conectado READ ONLY PASS, G2-P2-A inventário PASS, G2-P2-B offline 197 PASS; preflight catalogal administrativo identificou acessos INSERT/DELETE e USAGE nas sequências para eventual provisionamento. Sem DML no Neon. CP331 atualizado como ponteiro de continuidade; execução operacional segue bloqueada.
+
 ## 2026-10-28 — B2-M1 migrations Django PostgreSQL PASS
 
 - Execução manual autorizada [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136), SHA `5bd718263d4462a3b2fe4bef6b9cb8e91d869f22`, **SUCCESS**, 16/16 migrations, 49 objetos no schema `django_auth`.
