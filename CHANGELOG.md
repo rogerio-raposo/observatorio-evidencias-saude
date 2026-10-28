@@ -1,3 +1,9 @@
+## 2026-10-28 — P4-A39: correcoes offline e separacao de revogacao de credencial
+
+- Publicados candidatos v2 sob HOLD: postflight de 26 checks (membership, dependencias e sessoes), setup reforcado, lockdown `NOLOGIN PASSWORD NULL` com COMMIT proprio e cleanup restrito posterior em transacao independente. `pg_shdepend` exclui somente arestas de `pg_auth_members` esperadas no PostgreSQL 18, auditadas explicitamente pelo catalogo de memberships.
+- Confirmados SHA-256 e Git blob dos quatro arquivos; parecer em `archive/handoffs/oes/artifacts/P4-A39/OES_PF-I04_P4-A39_REVISAO_V2_GATES_E_HASHES_HOLD.md`. Apenas analise lexica/estatica; sem validacao PG18, SQL Neon, alteracao de senha, workflow ou segredo. Originais A37 preservados.
+- Proxima P4-A40: teste descartavel PostgreSQL 18 fora do Neon antes de qualquer gate real. CP327 ainda vigente e todos os controles operacionais HOLD.
+
 ## 2026-10-28 — CP327 / P4-A35–A38: SQLs de ensaio sintético preservados, HOLD operacional
 
 - O responsável criou `oes_p4_trial_login` com senha temporária e relatou verificação catalogal de zero memberships e associação original `oes_django_migrator`→`oes_sandbox_owner` OID 155649 intacta. Não cadastrada credencial GitHub e não executado SQL pelo assistente.
