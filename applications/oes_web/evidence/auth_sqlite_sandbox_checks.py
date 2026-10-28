@@ -728,3 +728,23 @@ class G2P2BExecutorOfflineTests(TestCase):
         get_user_model().objects.get(username="oes_g2_trial_fixture").user_permissions.clear()
         changed = collect_relation_snapshot_offline()
         self.assertEqual(changed["fixture_permission_links"], 0)
+
+    def test_connected_candidate_remains_hard_blocked_before_db_access(self):
+        from config.auth_pg_g2_p2b_connected_hold import (
+            run_connected_trial, _trial_candidate,
+        )
+        from config.auth_pg_g2_p2b_offline import ProvisioningHold
+        with self.assertRaisesRegex(ProvisioningHold, "not authorized"):
+            run_connected_trial()
+        with self.assertRaisesRegex(ProvisioningHold, "unavailable"):
+            _trial_candidate(
+                password="synthetic-only",
+                exclusive_window_confirmed=True,
+            )
+
+    def test_connected_candidate_rejects_sqlite_identity_without_db_query(self):
+        from django.db import connections
+        from config.auth_pg_g2_p2b_connected_hold import _require_admin_session
+        from config.auth_pg_g2_p2b_offline import ProvisioningHold
+        with self.assertRaisesRegex(ProvisioningHold, "connection mismatch"):
+            _require_admin_session(connections["default"])
