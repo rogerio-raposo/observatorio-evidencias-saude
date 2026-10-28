@@ -665,3 +665,20 @@ class G2P2BExecutorOfflineTests(TestCase):
             ),
             "INDETERMINATE_HOLD",
         )
+
+    def test_g2_p2b_offline_relation_reconciliation(self):
+        from config.auth_pg_g2_p2b_offline import (
+            provision_offline, verify_synthetic_relations_offline, ProvisioningHold,
+        )
+        from django.contrib.auth import get_user_model
+
+        with self.assertRaises(ProvisioningHold):
+            verify_synthetic_relations_offline()
+        provision_offline(password="synthetic-only-password")
+        self.assertEqual(
+            verify_synthetic_relations_offline(),
+            "PASS_OFFLINE_RELATION_RECONCILIATION",
+        )
+        get_user_model().objects.get(username="oes_g2_trial_fixture").user_permissions.clear()
+        with self.assertRaises(ProvisioningHold):
+            verify_synthetic_relations_offline()
