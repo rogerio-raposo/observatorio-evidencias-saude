@@ -102,3 +102,27 @@ class OfflineUnitOfWorkTests(SimpleTestCase):
     def test_question_request_id_length_rejected(self):
         with self.assertRaises(PreparationHold):
             self.send(QuestionCommand("x"*129,"OES-Q-SYN",0,"Pergunta sintética?"))
+
+
+class StablePreparerIdentityContractTests(SimpleTestCase):
+    def test_explicit_uuid_is_stable_across_user_reloads(self):
+        from uuid import UUID
+        from evidence.preparer_actor_identity import preparer_actor_id
+        first = Mock(pk=1, username="initial", oes_actor_uuid=UUID("f1234567-89ab-4cde-8fab-123456789abc"))
+        reloaded = Mock(pk=987, username="renamed", oes_actor_uuid=first.oes_actor_uuid)
+        self.assertEqual(preparer_actor_id(first), preparer_actor_id(reloaded))
+        self.assertEqual(preparer_actor_id(first), "oes:actor:f1234567-89ab-4cde-8fab-123456789abc")
+
+    def test_missing_invalid_or_transient_identity_fails_closed(self):
+        from uuid import UUID
+        from evidence.preparer_actor_identity import preparer_actor_id
+        for value in (None, "f1234567-89ab-4cde-8fab-123456789abc", 5, UUID(int=0), UUID("00000000-0000-1000-8000-000000000001")):
+            with self.subTest(value=value), self.assertRaises(PreparationHold):
+                preparer_actor_id(Mock(pk=42, oes_actor_uuid=value))
+
+    def test_distinct_uuid_yields_distinct_actors(self):
+        from uuid import UUID
+        from evidence.preparer_actor_identity import preparer_actor_id
+        a = preparer_actor_id(Mock(oes_actor_uuid=UUID("f1234567-89ab-4cde-8fab-123456789abc")))
+        b = preparer_actor_id(Mock(oes_actor_uuid=UUID("a1234567-89ab-4cde-8fab-123456789abc")))
+        self.assertNotEqual(a, b)
