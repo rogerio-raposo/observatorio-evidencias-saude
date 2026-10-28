@@ -20,7 +20,7 @@ WITH checks AS (
   UNION ALL SELECT 'trial_membership_count_one',
     (SELECT count(*)=1 FROM pg_auth_members
       WHERE roleid='oes_p4_trial_target'::regrole
-        AND member='oes_p4_trial_login'::regrole)
+      AND member='oes_p4_trial_login'::regrole)
   UNION ALL SELECT 'original_synthetic_grant_intact',
     EXISTS(SELECT 1 FROM pg_auth_members
       WHERE roleid='oes_p4_trial_target'::regrole
