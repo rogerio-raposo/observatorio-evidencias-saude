@@ -811,3 +811,30 @@ class G2P2BExecutorOfflineTests(TestCase):
             cleanup_once()
         with self.assertRaisesRegex(ProvisioningHold, "nominal approval"):
             cleanup_once(authorized=True, exclusive_window=False)
+
+    def test_g2_cleanup_atomic_offline_restores_exact_baseline(self):
+        from config.auth_pg_g2_p2b_offline import provision_offline
+        from config.auth_pg_g2_p2b_cleanup import _counts, _delete_exact_fixture
+        from django.db import transaction
+        before = _counts()
+        provision_offline(password="synthetic-disposable-password")
+        after = _counts()
+        self.assertEqual(after["permissions"], before["permissions"] + 1)
+        with transaction.atomic():
+            _delete_exact_fixture(before=after, after=before)
+        self.assertEqual(_counts(), before)
+
+    def test_g2_cleanup_atomic_offline_rolls_back_on_baseline_drift(self):
+        from config.auth_pg_g2_p2b_offline import provision_offline, ProvisioningHold
+        from config.auth_pg_g2_p2b_cleanup import _counts, _delete_exact_fixture
+        from django.db import transaction
+        before = _counts()
+        provision_offline(password="synthetic-disposable-password")
+        after = _counts()
+        with self.assertRaisesRegex(ProvisioningHold, "baseline restoration"):
+            with transaction.atomic():
+                _delete_exact_fixture(
+                    before=after,
+                    after={**before, "permissions": before["permissions"] + 1},
+                )
+        self.assertEqual(_counts(), after)
