@@ -20,7 +20,7 @@ class QuestionCommand:
 def command_fingerprint(command):
     return sha256(json.dumps(command.__dict__,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
-def submit_question_command(*, user, command, unit_of_work=None):
+def submit_question_command(*, user, command, unit_of_work=None, actor_id_resolver=None):
     """Requires separately authorized injected transactional backend; never creates one."""
     require_question_preparer(user)
     if unit_of_work is None:
@@ -34,7 +34,10 @@ def submit_question_command(*, user, command, unit_of_work=None):
     if command.normalized_text is not None and (not isinstance(command.normalized_text,str) or not command.normalized_text or not isinstance(command.justification,str) or not command.justification.strip()):
         raise PreparationHold("HOLD: invalid Q1")
     try:
-        result=unit_of_work.execute(command=command,actor_id=str(user.pk),fingerprint=command_fingerprint(command))
+        actor_id = str(user.pk) if actor_id_resolver is None else actor_id_resolver(user)
+        if not isinstance(actor_id, str) or not actor_id.strip():
+            raise PreparationHold("HOLD: invalid actor identity")
+        result=unit_of_work.execute(command=command,actor_id=actor_id,fingerprint=command_fingerprint(command))
         if (not isinstance(result,dict) or result.get("status")!="PREPARATORY_ONLY"
                 or result.get("question_id")!=command.question_id
                 or type(result.get("version")) is not int
