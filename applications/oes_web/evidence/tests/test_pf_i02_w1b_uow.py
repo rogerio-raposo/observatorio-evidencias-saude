@@ -335,5 +335,8 @@ class DjangoAuthMigrationGraphOfflineTests(SimpleTestCase):
                       for op in loader.disk_migrations[node].operations]
         self.assertTrue(any(isinstance(op, CreateModel) for op in operations))
         data_ops = [op for op in operations if isinstance(op, (RunPython, RunSQL))]
-        self.assertEqual(data_ops, [], "Unexpected data/custom SQL migration requires review")
+        self.assertFalse(any(isinstance(op, RunSQL) for op in data_ops))
+        names = {op.code.__name__ for op in data_ops if isinstance(op, RunPython)}
+        self.assertEqual(names, {"update_proxy_model_permissions", "noop"})
+        self.assertEqual(len(data_ops), 2)
         self.assertGreater(len(all_nodes), 4)
