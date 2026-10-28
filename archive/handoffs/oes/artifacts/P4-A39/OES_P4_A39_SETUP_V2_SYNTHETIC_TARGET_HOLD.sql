@@ -43,7 +43,8 @@ BEGIN
            OR member='oes_p4_trial_target'::regrole)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_shdepend
         WHERE refclassid='pg_catalog.pg_authid'::regclass
-          AND refobjid='oes_p4_trial_target'::regrole::oid)
+          AND refobjid='oes_p4_trial_target'::regrole::oid
+          AND classid <> 'pg_catalog.pg_auth_members'::regclass)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_db_role_setting
         WHERE setrole='oes_p4_trial_target'::regrole::oid)
  THEN RAISE EXCEPTION 'HOLD A39 setup: target not pristine'; END IF;
@@ -69,7 +70,8 @@ BEGIN
     OR pg_catalog.pg_has_role('oes_p4_trial_login','oes_p4_trial_target','USAGE')
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_shdepend
        WHERE refclassid='pg_catalog.pg_authid'::regclass
-         AND refobjid='oes_p4_trial_target'::regrole::oid)
+         AND refobjid='oes_p4_trial_target'::regrole::oid
+          AND classid <> 'pg_catalog.pg_auth_members'::regclass)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_db_role_setting
        WHERE setrole='oes_p4_trial_target'::regrole::oid)
  THEN RAISE EXCEPTION 'HOLD A39 setup: unexpected synthetic rights or dependencies'; END IF;
