@@ -55,6 +55,9 @@ def submit_authenticated_question_command(*, user, command, unit_of_work=None):
     Historical submit_question_command is retained for isolated offline fixtures.
     No HTTP route, DB factory or PostgreSQL writer is wired here.
     """
+    require_question_preparer(user)
+    if unit_of_work is None:
+        raise PreparationHold("HOLD: persistence unavailable")
     from preparer_identity.resolver import persisted_preparer_actor_id
     return submit_question_command(
         user=user, command=command, unit_of_work=unit_of_work,
