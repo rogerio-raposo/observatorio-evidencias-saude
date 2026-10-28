@@ -13,7 +13,7 @@
 ## 2. Avanços P4-A31–A34
 ### P4-A31 — canal preferencial
 - Revisados workflows existentes que usam PostgreSQL 18/`psql` e segredo temporário no GitHub Actions. `psql` indisponível no ambiente da conversa e instalação no computador do responsável não verificada.
-- Decisão: preparar **workflow manual GitHub Actions + `psql` DIRECT**, sem conexão inicialmente, em vez de presumir cliente local. Evidência `/mnt/data/oes_p4_a31/OES_PF-I04_P4-A31_DECISAO_CANAL_GITHUB_ACTIONS.md` preparada anteriormente; conteúdo factual consolidado aqui. Referência GitHub histórica no run do A33.
+- Decisão: preparar **workflow manual GitHub Actions + `psql` DIRECT**, sem conexão inicialmente, em vez de presumir cliente local. Fonte original integral preservada em `archive/handoffs/oes/artifacts/CP326/OES_PF-I04_P4-A31_DECISAO_CANAL_GITHUB_ACTIONS.md` (Git blob `e4b4ee7724362c7af7759480d450d9cb778cb7e8`).
 - `mcp__Neon__run_sql` uma instrução por chamada e `run_sql_transaction` transação gerenciada: não aceitos como substituto sem nova prova de rollback explícito.
 
 ### P4-A32 — workflow HARD HOLD no GitHub
