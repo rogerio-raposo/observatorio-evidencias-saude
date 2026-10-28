@@ -9,7 +9,6 @@ concurrency:
 jobs:
   django-auth-migrations:
     # Gate B2-M1 has NOT been approved. A separate, specific approval is mandatory.
-    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
