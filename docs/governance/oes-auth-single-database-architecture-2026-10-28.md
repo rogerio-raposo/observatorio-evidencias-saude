@@ -366,3 +366,10 @@ Postflight READ ONLY confirmou USAGE=true e CREATE=false no schema, SELECT exata
 4. **G2-P3, encerramento:** verificar estado de sessões, revogações específicas observando grantor e remoção do papel mediante autorizações separadas. Expiração de senha não é limpeza.
 
 **Condições de HOLD:** settings ainda apontam `oes_auth_migrator`, password/endpoint não disponível, `search_path` divergente, privileges inesperados, objeto científico acessível, tentativa de query mutante no P1, inexistência do usuário sintético no P2, ou tentativas de habilitar o web writer. Nenhuma passagem automática entre subgates. G2-P2B operacional permanece NO-GO; E9 NO-GO; Fase 5 NOT_STARTED.
+
+
+## AUTH_RUNTIME_G2-P0 — implementação offline PASS (2026-10-28)
+
+Adicionada `applications/oes_web/config/settings_auth_pg_g2_trial_optin.py`, configuração de prova exclusivamente conectável após `OES_AUTH_G2_EXPLICIT_OPT_IN=1`, host allowlisted e `OES_AUTH_G2_PASSWORD` presente. Alias `default` PostgreSQL com usuário `oes_auth_trial_login`, `search_path=django_auth`, TLS required, `CONN_MAX_AGE=0`; alias científico dummy; roteador de isolamento `AuthSandboxRouter`; não reutiliza settings B2 de migrations. Importar settings não conecta automaticamente ao Neon.
+
+Dois testes offline adicionados em `evidence/auth_sqlite_sandbox_checks.py`: ausência de opt-in, falta de credencial e host divergente geram HOLD; configuração aprovada apenas simulada confirma usuário, banco, search_path, aliases e roteador. CI [40737324208](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40737324208) **194/194 PASS** (173 principal + 21 autenticação). Commits: settings `4c4fd50`, testes `8913678`. Nenhum segredo real, nenhuma conexão Neon, DML, role/grant, workflow conectado ou HTTP writes. **G2-P0 PASS apenas offline; G2-P1 conectado depende de autorização separada**. G2-P2B operacional NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
