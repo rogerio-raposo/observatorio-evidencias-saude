@@ -24,7 +24,8 @@ BEGIN
         WHERE roleid=v_target AND member=v_trial AND grantor='oes_sandbox_owner'::regrole
           AND admin_option AND NOT inherit_option AND NOT set_option)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_shdepend
-        WHERE refclassid='pg_catalog.pg_authid'::regclass AND refobjid=v_target)
+        WHERE refclassid='pg_catalog.pg_authid'::regclass AND refobjid=v_target
+          AND classid <> 'pg_catalog.pg_auth_members'::regclass)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_db_role_setting WHERE setrole=v_target)
     OR EXISTS(SELECT 1 FROM pg_catalog.pg_stat_activity
         WHERE usename='oes_p4_trial_login')
