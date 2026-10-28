@@ -780,3 +780,26 @@ class G2P2BExecutorOfflineTests(TestCase):
         self.assertFalse(get_user_model().objects.filter(
             username="oes_g2_trial_fixture"
         ).exists())
+
+    def test_g2_postcommit_reconciliation_rejects_sqlite_without_closing_transaction(self):
+        from config.auth_pg_g2_p2b_connected_hold import (
+            _independent_readonly_reconciliation,
+        )
+        from config.auth_pg_g2_p2b_offline import CONNECTED_BASELINE
+        from django.db import connections, transaction
+        conn = connections["default"]
+        with transaction.atomic(using="default"):
+            self.assertTrue(conn.in_atomic_block)
+            self.assertEqual(
+                _independent_readonly_reconciliation(
+                    baseline=dict(CONNECTED_BASELINE), commit_confirmed=True,
+                ),
+                "INDETERMINATE_HOLD",
+            )
+            self.assertTrue(conn.in_atomic_block)
+        self.assertEqual(
+            _independent_readonly_reconciliation(
+                baseline=dict(CONNECTED_BASELINE), commit_confirmed=True,
+            ),
+            "INDETERMINATE_HOLD",
+        )
