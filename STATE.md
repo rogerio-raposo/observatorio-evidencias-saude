@@ -1,3 +1,10 @@
+## Pós-CP335 — PF-I03 Q0: gate mínimo de persistência Django ORM (2026-10-28)
+
+- Revisão do código canônico: `evidence/question_orm_q0_connected_recipe_dormant.py` já define um ensaio de **cinco INSERT ORM com rollback obrigatório**, verificação intratransacional e ausência de resíduos após rollback; `execute_connected_q0` é HARD HOLD; `DjangoQ0Repository.__init__` também bloqueia. `scripts/q0_rollback_trial_preflight_offline.py` já fornece `SyntheticQ0Trial` com alias-alvo `oes_qprep_trial` e identificadores sintéticos. Não implementar outro port nem nova configuração de escrita antes da necessidade verificada.
+- **Lacunas antes de qualquer conexão**: confirmar catálogo e privilégios do papel/alias científico em gate READ ONLY próprio, comprovar fronteira de transação e consistência dos cinco modelos `managed=False` com tabelas físicas; preservar ausência de preparadores reais; demonstrar que o ensaio, se autorizado futuramente, faz rollback obrigatório e reconciliação externa READ ONLY, sem possibilidade de commit e sem retries.
+- **Próximo gate recomendado:** uma verificação conectada proporcional **READ ONLY**, dedicada ao Q0 científico, para identidade da sessão, 5 tabelas, integridade do schema, privilégios já existentes e baseline sintética; sem DML, DDL, GRANT, novas credenciais, workflows ou serviços pagos. Pedir autorização nominal independente antes de conectar.
+- G2-P2-B encerrado e não reabrir. Nenhum HTTP write, deploy ou nova implantação. Marco B OPEN, E9 NO-GO e Fase 5 NOT_STARTED; CP335 vigente.
+
 ## Pós-CP335 — diagnóstico de integração de persistência PF-I03 (2026-10-28)
 
 - Após CI [40781780237](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40781780237) PASS, a cadeia Django auth/permission/PreparerIdentity(UUID4) → Q0 → recibo foi verificada com autenticação real SQLite e Unit of Work em memória.
