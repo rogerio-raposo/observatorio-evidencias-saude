@@ -1,3 +1,9 @@
+## Pós-CP330 — B2-M1 migrations PostgreSQL PASS (2026-10-28)
+
+- Execução única autorizada [40730386136](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40730386136) **SUCCESS**: Django schema `django_auth`, 16/16 migrations aplicadas; 49 objetos; postflight `B2_M1_POSTFLIGHT_PASS`. Inventário científico 315 registros, SHA-256 estável `2e75e4c018b62f8b288b5f84e9a70fe0ebf9eea64e928468130e4950d38f6b81`.
+- Workflow B2-M1 desabilitado após consumo, sem autorização de repetição. **Segredo `OES_AUTH_B2_M1_PASSWORD` deve ser excluído pelo responsável; confirmação pendente**. Runtime auth grants, contas reais, HTTP write e deploy não autorizados.
+- CP330 permanece ponteiro vigente (snapshot histórico pré-execução); este STATE registra evolução posterior. Marco B OPEN, G2-P2B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## CP330 — Estado vivo Django auth PostgreSQL (2026-10-28)
 
 - Checkpoint: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP330.md`; Documento 362 normativo.
