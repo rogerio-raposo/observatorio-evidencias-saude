@@ -74,3 +74,30 @@ elif mode == "relational":
     print("PASS PG_A4_G2_B_DJANGO_CONNECTED_THREE_LINKS_ONE_PROVENANCE")
 else:
     sys.exit("NOT_RUN: unknown PG-A4 expected mode")
+
+# Verify the already implemented GET-only Django view through its real reader.
+# No mock, server, new database alias, SQL mutation or HTTP network access.
+from django.test import Client
+from django.urls import reverse
+from django.db import connections as django_connections
+
+try:
+    response = Client().get(reverse("synthetic-pg-links"))
+    if response.status_code != 200:
+        sys.exit("FAIL: synthetic Django page unavailable")
+    html = response.content.decode("utf-8")
+    if "DEMONSTRAÇÃO TÉCNICA SINTÉTICA" not in html or "HOLD" in html:
+        sys.exit("FAIL: synthetic Django page missing safe presentation")
+    if mode == "relational":
+        for row in records:
+            for identifier in (row.study_entity_uuid, row.study_version_uuid,
+                               row.report_entity_uuid, row.report_version_uuid):
+                if str(identifier) not in html:
+                    sys.exit("FAIL: synthetic Django page missing expected identifier")
+        if str(provenance_1) not in html or "Não vinculada nesta projeção" not in html:
+            sys.exit("FAIL: synthetic Django page missing provenance distinction")
+    elif "Nenhum vínculo sintético" not in html:
+        sys.exit("FAIL: empty synthetic Django page did not render correctly")
+    print("PASS PG_A4_DJANGO_CONNECTED_SYNTHETIC_HTML")
+finally:
+    django_connections.close_all()
