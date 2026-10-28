@@ -28,7 +28,6 @@ def _offline_guard(using):
 
 
 def _baseline(using):
-    _offline_guard(using)
     User = get_user_model()
     counts = {
         "users": User.objects.using(using).count(),
@@ -48,13 +47,11 @@ def _baseline(using):
     return counts
 
 
-def provision_offline(*, password, using="default", inject_failure=False):
-    """Atomically create one synthetic fixture; return non-secret verification only.
+def _provision_transaction(*, password, using="default", inject_failure=False):
+    """Internal ORM unit of work; callers must establish their own authorization.
 
-    This deliberately cannot run on PostgreSQL. A future connected adapter must
-    be separately implemented, reviewed, authorized and revalidated.
+    Not an operational entry point. Never invoke directly against Neon.
     """
-    _offline_guard(using)
     if not isinstance(password, str) or not password:
         raise ProvisioningHold("HOLD: synthetic password required")
     before = _baseline(using)
@@ -88,4 +85,12 @@ def provision_offline(*, password, using="default", inject_failure=False):
             raise ProvisioningHold("HOLD: postflight count mismatch")
         if identity.actor_uuid.version != 4:
             raise ProvisioningHold("HOLD: invalid synthetic UUID")
-    return {"status": "PASS_OFFLINE_ONLY", "before": before, "after": observed}
+    return {"before": before, "after": observed}
+
+
+def provision_offline(*, password, using="default", inject_failure=False):
+    """Only public entry point: disposable SQLite, fail closed before any ORM read."""
+    _offline_guard(using)
+    result = _provision_transaction(password=password, using=using,
+                                    inject_failure=inject_failure)
+    return {"status": "PASS_OFFLINE_ONLY", **result}
