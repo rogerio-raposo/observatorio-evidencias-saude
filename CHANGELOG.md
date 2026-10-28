@@ -1,3 +1,10 @@
+## 2026-10-28 — CP328 / P4-A41: PASS integral em PostgreSQL 18 isolado, nenhuma conexão Neon
+
+- Publicados candidatos v3 de setup, postflight (28 checks) e cleanup para reconhecer autogrants PostgreSQL 18 do criador. Originais A37/A39 mantidos; SHA256 e Git blob conferidos.
+- Fixture `scripts/oes_p4_a41_pg18_disposable.py` e workflow A41 com postgres:18 em contêiner GitHub Actions. Run 40631051160 falhou somente em asserção pós-cleanup da própria fixture; corrigida. Run **40631160589 SUCCESS** provou setup, rollback-only GRANT/SET LOCAL ROLE/REVOKE, postflight de 28 checks, rejeição de terceiro, lockdown NOLOGIN PASSWORD NULL, cleanup e verificação final. Nenhuma operação Neon.
+- A41 workflow retornou a `workflow_dispatch` (sem push), A40 já manual, A32/A35 conectados permanecem if:false. Evidência `archive/handoffs/oes/artifacts/P4-A41/OES_PF-I04_P4-A41_PG18_V3_VALIDATION_PASS_WITH_LIMITS.md`.
+- Publicado **CP328** e atualizado ponteiro canônico. Próxima P4-A42: desenhar/aprovar preflight catalogal **READ ONLY** do login trial em ambos sentidos antes de qualquer setup Neon. Gates operacionais não alterados.
+
 ## 2026-10-28 — P4-A40: execucao real em PostgreSQL 18.6 descartavel identifica NO-GO do setup
 
 - Novo harness Python e workflow isolado em GitHub Actions testaram fixture PG18 sem Neon, segredos reais ou dados Django/Q0. Três runs: 40630179968 (guarda endereco Docker), 40630287399 (contagem substituicao OID), 40630416910 (falha real `HOLD A39 setup: target not pristine` apos CREATE ROLE dentro de transacao abortada).
