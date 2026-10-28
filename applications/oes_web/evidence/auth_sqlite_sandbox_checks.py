@@ -803,3 +803,11 @@ class G2P2BExecutorOfflineTests(TestCase):
             ),
             "INDETERMINATE_HOLD",
         )
+
+    def test_g2_cleanup_requires_approval_before_database_access(self):
+        from config.auth_pg_g2_p2b_cleanup import cleanup_once
+        from config.auth_pg_g2_p2b_offline import ProvisioningHold
+        with self.assertRaisesRegex(ProvisioningHold, "nominal approval"):
+            cleanup_once()
+        with self.assertRaisesRegex(ProvisioningHold, "nominal approval"):
+            cleanup_once(authorized=True, exclusive_window=False)
