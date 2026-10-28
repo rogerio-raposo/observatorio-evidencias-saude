@@ -63,3 +63,41 @@ class PFI03ComposedOfflineFlowTests(SimpleTestCase):
         self.assertEqual(result["admissibility"], "NOT_DECIDED")
         self.assertEqual(result["investigation"], "NOT_OPENED")
         self.assertEqual(result["e9"], "BLOCKED")
+
+
+class PFI03AuthenticatedQ0CompositionTests(SimpleTestCase):
+    def test_authenticated_actor_id_reaches_transaction_receipt(self):
+        from unittest.mock import patch
+        from evidence.pf_i03_q0_offline import present_authenticated_synthetic_q0
+        actor = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                     is_superuser=False, pk=81)
+        actor.has_perm.return_value = True
+        port = FakePort()
+        command = QuestionCommand("auth-q0-1", "OES-SYNTH-Q0-AUTH", 0, "Pergunta Q0 sintética")
+        with patch("preparer_identity.resolver.persisted_preparer_actor_id",
+                   return_value="synthetic-stable-actor") as resolver:
+            result = present_authenticated_synthetic_q0(
+                user=actor, command=command, unit_of_work=OfflineQuestionUnitOfWork(port),
+            )
+        resolver.assert_called_once_with(actor)
+        self.assertEqual(result["version"], 1)
+        self.assertEqual(result["e9"], "BLOCKED")
+        self.assertIn(("synthetic-stable-actor", "auth-q0-1"), port.receipts)
+
+    def test_denied_user_never_resolves_identity_or_writes(self):
+        from unittest.mock import patch
+        from django.core.exceptions import PermissionDenied
+        from evidence.pf_i03_q0_offline import present_authenticated_synthetic_q0
+        actor = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                     is_superuser=False, pk=81)
+        actor.has_perm.return_value = False
+        port = FakePort()
+        with patch("preparer_identity.resolver.persisted_preparer_actor_id") as resolver:
+            with self.assertRaises(PermissionDenied):
+                present_authenticated_synthetic_q0(
+                    user=actor,
+                    command=QuestionCommand("auth-denied", "OES-SYNTH-Q0-DENIED", 0, "Q0"),
+                    unit_of_work=OfflineQuestionUnitOfWork(port),
+                )
+        resolver.assert_not_called()
+        self.assertFalse(port.receipts)
