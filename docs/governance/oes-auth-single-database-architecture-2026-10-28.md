@@ -482,3 +482,16 @@ Consultas catalogais adicionais exclusivamente de leitura confirmaram, para oes_
 **Reconciliação:** a verificação SQLite `verify_synthetic_relations_offline` e seus testes provam somente a semântica local. O futuro runner conectado deverá abrir uma **nova conexão Django READ ONLY após encerrar a transação**, obter contagens e relações exatas (usuário fixture, grupo/atributos, permissão ligada ao ContentType correto, vínculo único e `PreparerIdentity` UUID4) e comparar a `CONNECTED_POSTFLIGHT`, sem imprimir segredos nem IDs internos. A conexão de leitura deve permanecer separada da transação DML. Falha de rede após tentativa de commit ou leitura incompleta: `INDETERMINATE_HOLD` e nenhum retry nem limpeza automática, mesmo que a leitura parcial sugira sucesso. `PASS_POST_COMMIT` requer commit confirmado e leitura independente completa. Nenhuma função pura existente autoriza DML.
 
 **Gate antes da execução:** entregar e revisar um único runner conectado com esses limites, teste offline integrado sem Neon e proteção explícita contra retry; requer autorização nominal de DML em etapa distinta. Não reutilizar o workflow de smoke de leitura como writer. G2-P2-B permanece NO-GO.
+
+
+### Revisão de desbloqueio G2-P2-B — decisão de prontidão (2026-10-28)
+
+Revisão estática do commit `9003301c52c4705f9c893e2eaf8f93bc9606687a` e CI [40761371142](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40761371142) SUCCESS, sem DML conectado.
+
+**Resultado: NOT READY para autorização de escrita ainda.** A integração `auth_pg_g2_p2b_connected_hold.py` é candidata e está deliberadamente bloqueada nas entradas pública e interna. O código existente documenta a coleta de evidências numa nova conexão em transação READ ONLY e a reconciliação estrita, mas não é executor operacional testado. Revisão identificou três lacunas concretas, a serem resolvidas **em um único pacote**, sem novos contratos puros:
+
+1. **Gate executável e janela exclusiva:** um workflow manual de ensaio único, separado do smoke READ ONLY, deve verificar versão/branch, segredo efêmero, ausência/suspensão de writers externos confirmada operacionalmente e concorrência de workflow. Um parâmetro booleano ou `concurrency.group` isolados não asseguram exclusividade global.
+2. **Caminho de commit e erros:** separar comprovadamente erros pré-commit com rollback de perda de confirmação do commit; preservar `INDETERMINATE_HOLD` em qualquer falha ambígua e proibir retries/limpeza automáticos. Não remover os HARD HOLDs até autorização nominal de escrita.
+3. **Teste da integração efetiva:** os testes atuais demonstram bloqueio e contratos puros, não que a coleta pós-commit opere numa segunda conexão READ ONLY nem que o fluxo real siga a autorização. Testar offline o fluxo usando infraestrutura descartável, sem Neon, antes da habilitação nominal.
+
+A autorização para preparar código não permite remover bloqueios, cadastrar segredos, executar o workflow de escrita ou alterar gates. Após resolver esses três itens, uma única aprovação nominal separada poderá ser apresentada. Marco B OPEN, G2-P2-B NO-GO, E9 NO-GO, Fase 5 NOT_STARTED.
