@@ -124,3 +124,44 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertEqual(response.json(), {
             "status": "AUTHORIZED_SYNTHETIC_SCOPE_ONLY", "q0_write_enabled": False,
         })
+
+    def test_http_request_to_authorized_q0_service_with_fake_transaction(self):
+        """Real Django request auth; command execution remains an injected offline fake."""
+        from django.test import RequestFactory
+        from django.contrib.auth.middleware import AuthenticationMiddleware
+        from django.contrib.sessions.middleware import SessionMiddleware
+        from django.http import JsonResponse
+        from evidence.question_preparation import QuestionCommand, submit_question_command
+        from evidence.question_uow_offline import OfflineQuestionUnitOfWork
+        from evidence.tests.test_pf_i02_w1b_uow import FakePort
+
+        self.user.user_permissions.add(self.permission)
+        self.assertTrue(self.client.login(
+            username="oes_synthetic_preparer",
+            password="synthetic-only-not-a-secret",
+        ))
+        fake = FakePort()
+        command = QuestionCommand(
+            "request-http-synthetic", "OES-SYNTH-Q0-HTTP-FAKE", 0,
+            "Pergunta sintética da requisição de teste?",
+        )
+
+        def test_only_view(request):
+            outcome = submit_question_command(
+                user=request.user, command=command,
+                unit_of_work=OfflineQuestionUnitOfWork(fake),
+            )
+            return JsonResponse(outcome)
+
+        request = RequestFactory().get("/test-only/q0-injection/")
+        request.COOKIES.update(self.client.cookies)
+        SessionMiddleware(lambda req: None).process_request(request)
+        AuthenticationMiddleware(lambda req: None).process_request(request)
+        response = test_only_view(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["version"], 1)
+        self.assertEqual(len(fake.questions), 1)
+        self.assertEqual(len(fake.receipts), 1)
+        self.assertNotIn("/test-only/q0-injection/", [
+            "/synthetic-q0-access/", "/synthetic-q0-preview/",
+        ])
