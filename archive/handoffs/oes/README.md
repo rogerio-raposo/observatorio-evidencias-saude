@@ -1,3 +1,7 @@
+## Ponteiro atual — CP331 (2026-10-28)
+
+**Checkpoint vigente para retomada:** [OES_Continuidade_2026-10-28_CP331.md](OES_Continuidade_2026-10-28_CP331.md). G2-P1 conectado READ ONLY PASS, G2-P2-A inventário READ ONLY PASS, G2-P2-B testes offline 197/197 PASS, preflight administrativo de privilégios concluído com consultas pontuais (duas sequências adicionais e três DELETE confirmados). **Sem provisionamento DML no Neon.** Próximo passo: consolidar evidência final e preparar gate de DML controlado, sujeito a autorização explícita. Documento 362 e gates científicos preservados. Segredos B2-M1 e G2-P1 excluídos conforme confirmação do responsável.
+
 # OES — Handoffs de Continuidade
 
 **Status:** artefato operacional  
