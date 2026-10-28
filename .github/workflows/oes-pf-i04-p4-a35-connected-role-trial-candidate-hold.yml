@@ -1,0 +1,149 @@
+# OES — PF-I04/P4-A35 — SEPARATE CONNECTED WORKFLOW CANDIDATE — HARD HOLD.
+# DO NOT authorize credentials, connect to Neon, or remove any guard by "Prossiga".
+# A32 remains a distinct immutable offline witness. Never put passwords in git/logs.
+name: OES PF-I04 P4-A35 connected ROLE trial candidate — HARD HOLD
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-pf-i04-p4-a35-role-trial
+  cancel-in-progress: false
+
+jobs:
+  offline-integrity:
+    name: A35 offline proof (no database and no secrets)
+    if: ${{ github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout dispatch revision without retained credential
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Validate exact A29 SQL sources and physical hard holds
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import re
+          from pathlib import Path
+          root = Path('archive/handoffs/oes/artifacts/CP325')
+          trial = root / 'OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql'
+          post = root / 'OES_PF-I04_P4-A29_POSTFLIGHT_INDEPENDENTE_READ_ONLY.sql'
+          expected = {
+            trial: '550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17',
+            post: '8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509',
+          }
+          for f, sha in expected.items():
+            assert f.is_file() and hashlib.sha256(f.read_bytes()).hexdigest() == sha, 'HOLD: SQL identity mismatch'
+          executable = [s.strip() for s in trial.read_text().splitlines()
+                        if s.strip() and not s.lstrip().startswith('--')]
+          assert executable[0] == 'BEGIN;' and executable[-1] == 'ROLLBACK;', 'HOLD: transaction boundaries'
+          assert 'COMMIT;' not in executable, 'HOLD: COMMIT forbidden'
+          for marker in ('A29_PRE', 'A29_TEMP_GRANT', 'A29_MIGRATOR', 'A29_CLEAN'):
+            assert marker in trial.read_text(), 'HOLD: missing phase marker'
+          own = Path('.github/workflows/oes-pf-i04-p4-a35-connected-role-trial-candidate-hold.yml').read_text()
+          assert re.search(r'(?m)^  connected-role-trial:\s*\n    name:.*\n    needs: offline-integrity\s*\n    if: \$\{\{ false \}\}\s*$', own), 'HOLD: connected job enabled'
+          assert "APPROVED_HEAD: 'NOT_AUTHORIZED'" in own, 'HOLD: head gate removed'
+          assert "CREDENTIAL_LIFECYCLE_GATE: 'NOT_APPROVED'" in own, 'HOLD: credential gate removed'
+          assert not re.search(r'(?m)^  (?:push|pull_request|schedule|workflow_run):', own), 'HOLD: auto trigger'
+          print('A35_OFFLINE_PASS: immutable SQL and independent connected guards verified')
+          print('A35_CONNECTED_HARD_HOLD: no secrets, no Neon, no role mutations')
+          PY
+
+  connected-role-trial:
+    name: HARD HOLD — never connect or change memberships without a new reviewed gate
+    needs: offline-integrity
+    if: ${{ false }}
+    # This is NOT approved. A future activation must be a new reviewed diff and exact commit.
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment:
+      name: oes-p4-a35-owner-transient
+    env:
+      # NEVER populate these gates by default. Do not merely change if:false.
+      APPROVED_HEAD: 'NOT_AUTHORIZED'
+      CREDENTIAL_LIFECYCLE_GATE: 'NOT_APPROVED'
+      PGHOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+      PGPORT: '5432'
+      PGDATABASE: oes_sandbox
+      PGUSER: oes_sandbox_owner
+      PGSSLMODE: verify-full
+      PGCONNECT_TIMEOUT: '10'
+      PGAPPNAME: oes-pf-i04-p4-a35-single-rollback
+    steps:
+      - name: Check fixed run attempt, source revision and one-time credential lifecycle gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${GITHUB_REPOSITORY}" == 'rogerio-raposo/observatorio-evidencias-saude' ]]
+          [[ "${GITHUB_REF}" == 'refs/heads/main' ]]
+          [[ "${GITHUB_EVENT_NAME}" == 'workflow_dispatch' ]]
+          [[ "${GITHUB_RUN_ATTEMPT}" == '1' ]]
+          [[ "${APPROVED_HEAD}" =~ ^[0-9a-f]{40}$ ]]
+          [[ "${GITHUB_SHA}" == "${APPROVED_HEAD}" ]]
+          [[ "${CREDENTIAL_LIFECYCLE_GATE}" == 'APPROVED_BY_NOMINAL_REVIEW' ]]
+          echo 'PRECONNECTION_SOURCE_GATES_PASS (not credential validation)'
+      - name: Checkout exact approved commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Validate SQL hashes and ensure psql exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '550b03d428033e1af46e9c0028a73191351a044e96eb47835f7ba137fc8c3e17  archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql' | sha256sum -c -
+          echo '8a34176b4c3d1a44df9f495487f3e90e61686599767add7bdba013cad22ec509  archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_POSTFLIGHT_INDEPENDENTE_READ_ONLY.sql' | sha256sum -c -
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+      - name: Execute at most one A29 file and validate four markers plus explicit rollback
+        shell: bash
+        env:
+          # Environment secret deliberately NOT created; requires preauthorized rotation at source.
+          PGPASSWORD: ${{ secrets.OES_P4_A35_OWNER_PASSWORD_ONE_TIME }}
+        run: |
+          set -euo pipefail
+          set +x
+          [[ -n "${PGPASSWORD:-}" ]] || { echo 'HOLD: no one-time credential; no DB connection'; exit 1; }
+          trial='archive/handoffs/oes/artifacts/CP325/OES_PF-I04_P4-A29_ROLLBACK_ONLY_ROLE_TRIAL_CANDIDATO.sql'
+          out="${RUNNER_TEMP}/a35_trial_output.txt"
+          trap 'rm -f "$out"' EXIT
+          # Connection is direct, a single psql process executes BEGIN ... ROLLBACK.
+          # ON_ERROR_STOP exits and closes an open transaction on SQL error.
+          # NO -1, no retry, no DB postflight in this job, no raw log upload.
+          if ! psql -X -v ON_ERROR_STOP=on -v ON_ERROR_ROLLBACK=off -A -t -F '|' -P pager=off -f "$trial" > "$out" 2>&1; then
+            echo 'A35_HOLD: psql failed, result uncertain; no retry; postflight separately authorized'
+            exit 1
+          fi
+          python3 - "$out" <<'PY'
+          from pathlib import Path
+          import sys
+          lines = [x.strip() for x in Path(sys.argv[1]).read_text().splitlines() if x.strip()]
+          expected = [
+            ('A29_PRE','oes_sandbox_owner',1),
+            ('A29_TEMP_GRANT','oes_sandbox_owner',2),
+            ('A29_MIGRATOR','oes_django_migrator',2),
+            ('A29_CLEAN','oes_sandbox_owner',1),
+          ]
+          rows = [x.split('|') for x in lines if x.startswith('A29_')]
+          assert len(rows) == 4, 'HOLD: missing or duplicate phase markers'
+          pids = set()
+          for row, (phase, user, count) in zip(rows, expected):
+            assert len(row) == 5, 'HOLD: malformed evidence'
+            assert row[0] == phase and row[2] == 'oes_sandbox_owner', 'HOLD: session identity'
+            assert row[3] == user and row[4] == str(count), 'HOLD: role or membership count'
+            pids.add(row[1])
+          assert len(pids) == 1 and next(iter(pids)).isdigit(), 'HOLD: backend PID changed'
+          assert lines[-1] == 'ROLLBACK', 'HOLD: explicit rollback not acknowledged'
+          assert not any('ERROR:' in x or 'WARNING:' in x for x in lines), 'HOLD: unexpected server warning'
+          print('A35_TRIAL_OBSERVED: four phases and explicit rollback; POSTFLIGHT STILL REQUIRED')
+          PY
