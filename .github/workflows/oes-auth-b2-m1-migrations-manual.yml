@@ -74,7 +74,35 @@ jobs:
               cursor.execute("""
                   SELECT to_regclass('django_auth.django_migrations') IS NOT NULL
               """)
-              print("B2_M1_MIGRATION_RECORDER_EXISTS", cursor.fetchone()[0])
+              recorder_exists = cursor.fetchone()[0]
+              print("B2_M1_MIGRATION_RECORDER_EXISTS", recorder_exists)
+              if recorder_exists:
+                  cursor.execute("""
+                      SELECT app, name FROM django_auth.django_migrations
+                      ORDER BY app, name
+                  """)
+                  migrations = cursor.fetchall()
+                  print("B2_M1_APPLIED_MIGRATIONS", migrations, flush=True)
+                  expected_apps = {"auth", "contenttypes", "sessions", "preparer_identity"}
+                  recorded_apps = {app for app, _ in migrations}
+                  if recorded_apps != expected_apps:
+                      raise RuntimeError("HOLD: unexpected or incomplete migration app set")
+                  cursor.execute("""
+                      SELECT app_label, model, count(*) FROM django_auth.django_content_type
+                      WHERE app_label IN ('auth','contenttypes','sessions',
+                                          'preparer_identity','evidence')
+                      GROUP BY app_label, model ORDER BY app_label, model
+                  """)
+                  print("B2_M1_CONTENT_TYPE_METADATA", cursor.fetchall(), flush=True)
+                  cursor.execute("""
+                      SELECT ct.app_label, count(*) FROM django_auth.auth_permission AS p
+                      JOIN django_auth.django_content_type AS ct ON ct.id=p.content_type_id
+                      GROUP BY ct.app_label ORDER BY ct.app_label
+                  """)
+                  print("B2_M1_PERMISSION_COUNTS", cursor.fetchall(), flush=True)
+              else:
+                  raise RuntimeError("HOLD: migration recorder absent")
+
           from config.auth_pg_b2_inventory import compare_baseline
           from pathlib import Path
           compare_baseline(Path.cwd() / ".b2_m1_scientific_before.json")
