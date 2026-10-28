@@ -421,3 +421,17 @@ class G2TrialSettingsOfflineTests(TestCase):
         self.assertEqual(cfg["DATABASES"]["oes_scientific_hold"]["ENGINE"], "django.db.backends.dummy")
         self.assertEqual(set(cfg["DATABASES"]), {"default", "oes_scientific_hold"})
         self.assertEqual(cfg["DATABASE_ROUTERS"], ["config.auth_sandbox_router.AuthSandboxRouter"])
+
+
+class G2CatalogueOfflineTests(TestCase):
+    def test_g2_exact_acl_and_sequence_drift(self):
+        from config.auth_pg_g2_p1_preflight import TABLES, assert_g2_catalogue
+        identity = ("oes_sandbox","oes_auth_trial_login","oes_auth_trial_login","django_auth","django_auth",True,False)
+        tables = [(name,*rights) for name,rights in TABLES.items()]
+        columns = [("id",False),("last_login",True),("password",False)]
+        self.assertEqual(assert_g2_catalogue(identity,tables,columns,(9,False)),
+                         "PASS_G2_P1_CONNECTED_READ_ONLY")
+        with self.assertRaisesRegex(RuntimeError,"HOLD"):
+            assert_g2_catalogue(identity,tables,columns,(9,True))
+        with self.assertRaisesRegex(RuntimeError,"HOLD"):
+            assert_g2_catalogue(identity,tables[:-1],columns,(9,False))
