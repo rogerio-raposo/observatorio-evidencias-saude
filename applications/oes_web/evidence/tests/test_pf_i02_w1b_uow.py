@@ -126,3 +126,54 @@ class StablePreparerIdentityContractTests(SimpleTestCase):
         a = preparer_actor_id(Mock(oes_actor_uuid=UUID("f1234567-89ab-4cde-8fab-123456789abc")))
         b = preparer_actor_id(Mock(oes_actor_uuid=UUID("a1234567-89ab-4cde-8fab-123456789abc")))
         self.assertNotEqual(a, b)
+
+
+class AuthenticatedQ0HttpBoundaryTests(SimpleTestCase):
+    """Guard against accidentally exposing the historical user.pk path in HTTP."""
+    def test_no_http_route_exposes_q0_service_or_writer(self):
+        from django.urls import get_resolver
+        from evidence.question_preparation import (
+            submit_question_command, submit_authenticated_question_command,
+        )
+        from evidence.question_orm_q0_dormant import DormantQ0OrmPort
+        from evidence.question_orm_q0_repository_dormant import DjangoQ0Repository
+        patterns = get_resolver().url_patterns
+        callbacks = []
+        def walk(items):
+            for item in items:
+                if hasattr(item, "url_patterns"):
+                    walk(item.url_patterns)
+                else:
+                    callbacks.append(item.callback)
+        walk(patterns)
+        forbidden = {
+            submit_question_command,
+            submit_authenticated_question_command,
+            DormantQ0OrmPort,
+            DjangoQ0Repository,
+        }
+        self.assertTrue(callbacks)
+        self.assertTrue(forbidden.isdisjoint(callbacks))
+        # No route imports the legacy command service or dormant writer.
+        import inspect
+        for view in callbacks:
+            module = inspect.getmodule(view)
+            if module is not None and module.__name__.startswith("evidence."):
+                namespace = vars(module)
+                for name in ("submit_question_command", "submit_authenticated_question_command",
+                             "DjangoQ0Repository", "DormantQ0OrmPort"):
+                    self.assertNotIn(name, namespace, module.__name__)
+
+    def test_strict_authenticated_service_requires_injected_backend(self):
+        from unittest.mock import Mock
+        from evidence.question_preparation import (
+            QuestionCommand, PreparationHold, submit_authenticated_question_command,
+        )
+        user = Mock(is_authenticated=True, is_active=True, is_staff=False,
+                    is_superuser=False, pk=1)
+        user.has_perm.return_value = True
+        with self.assertRaisesRegex(PreparationHold, "persistence unavailable"):
+            submit_authenticated_question_command(
+                user=user,
+                command=QuestionCommand("boundary", "OES-SYNTH-BOUNDARY", 0, "Pergunta?"),
+            )
