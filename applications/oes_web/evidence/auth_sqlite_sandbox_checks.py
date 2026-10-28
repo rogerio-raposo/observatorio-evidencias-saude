@@ -630,3 +630,38 @@ class G2P2BExecutorOfflineTests(TestCase):
             with self.subTest(changed=changed):
                 with self.assertRaisesRegex(ProvisioningHold, message):
                     assert_administrative_preflight(**{**evidence, **changed})
+
+    def test_exact_atomic_baseline_holds_without_mutation(self):
+        from config.auth_pg_g2_p2b_offline import (
+            _provision_transaction, ProvisioningHold, CONNECTED_BASELINE
+        )
+        from preparer_identity.models import PreparerIdentity
+        original_permissions = Permission.objects.count()
+        with self.assertRaisesRegex(ProvisioningHold, "exact baseline"):
+            _provision_transaction(
+                password="test-password-only",
+                expected_baseline=dict(CONNECTED_BASELINE),
+            )
+        self.assertEqual(Permission.objects.count(), original_permissions)
+        self.assertFalse(get_user_model().objects.filter(username="oes_g2_trial_fixture").exists())
+        self.assertFalse(PreparerIdentity.objects.exists())
+
+    def test_post_commit_requires_independent_exact_evidence(self):
+        from config.auth_pg_g2_p2b_offline import (
+            classify_post_commit, CONNECTED_BASELINE, CONNECTED_POSTFLIGHT
+        )
+        before, after = dict(CONNECTED_BASELINE), dict(CONNECTED_POSTFLIGHT)
+        self.assertEqual(
+            classify_post_commit(before=before, after=after, commit_confirmed=True),
+            "PASS_POST_COMMIT",
+        )
+        self.assertEqual(
+            classify_post_commit(before=before, after=after, commit_confirmed=None),
+            "INDETERMINATE_HOLD",
+        )
+        self.assertEqual(
+            classify_post_commit(
+                before=before, after={**after, "sessions": 1}, commit_confirmed=True
+            ),
+            "INDETERMINATE_HOLD",
+        )
