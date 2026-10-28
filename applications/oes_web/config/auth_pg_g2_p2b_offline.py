@@ -21,7 +21,9 @@ def _offline_guard(using):
     conn = connections[using]
     if using != "default" or conn.vendor != "sqlite":
         raise ProvisioningHold("HOLD: G2-P2-B connected provisioning is not authorized")
-    if conn.settings_dict.get("NAME") != ":memory:":
+    name = str(conn.settings_dict.get("NAME", ""))
+    test_uri = f"file:memorydb_{using}?mode=memory&cache=shared"
+    if name not in (":memory:", test_uri):
         raise ProvisioningHold("HOLD: only disposable in-memory SQLite is permitted")
 
 
@@ -70,9 +72,7 @@ def provision_offline(*, password, using="default", inject_failure=False):
             username=USERNAME, password=password,
             is_active=True, is_staff=False, is_superuser=False
         )
-        User.user_permissions.through.objects.using(using).create(
-            user_id=user.pk, permission_id=permission.pk
-        )
+        user.user_permissions.add(permission)
         identity = PreparerIdentity.objects.using(using).create(user_id=user.pk)
         if inject_failure:
             raise ProvisioningHold("HOLD: injected precommit failure")
