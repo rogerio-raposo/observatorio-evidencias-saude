@@ -119,3 +119,15 @@ A atribuição de CREATE sobre `django_auth` e os ownerships de tabelas a `oes_a
 
 **Atenção:** `oes_auth_migrator` é proposta de nome, não role criada; `oes_runtime` ainda pode ser candidato a runtime Django após inspeção de permissões acumuladas. Nenhuma dessas escolhas implica ativação de autenticação real ou HTTP Q0.
 
+
+
+## Gate B — proposta delimitada de provisionamento do migrador (2026-10-28)
+
+**Preflight READ ONLY:** `oes_auth_migrator` inexistente; `django_auth` existente, owner `oes_sandbox_owner`, 0 objetos; executor `oes_sandbox_owner` com CREATEROLE. **Nenhuma alteração SQL autorizada nesta atividade.**
+
+**Operação futura sujeita a aprovação separada:** criar exclusivamente `oes_auth_migrator` como LOGIN NOINHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS, com senha descartável definida privadamente pelo responsável no editor SQL do Neon e validade curta explicitamente aprovada; conceder somente USAGE, CREATE no schema `django_auth` do database `oes_sandbox`. Não reutilizar senha histórica; nunca registrá-la em GitHub, chat ou logs. Executar por sessão administrativa aprovada, com preflight e postflight catalogais, verificando memberships, ACL, ownership e inexistência de privilégios sobre schemas científicos. Não incluir migrations neste gate.
+
+**Sequência sugerida em autorização futura:** (1) preflight de invariantes; (2) criação do login com senha descartável pelo responsável; (3) GRANT USAGE, CREATE ON SCHEMA django_auth TO oes_auth_migrator; (4) postflight; (5) revogação/expiração da credencial após utilização aprovada. Uma ação SQL de CREATE ROLE é global ao cluster PostgreSQL, portanto nomes e privilégios devem ser cuidadosamente delimitados. Não incluir grants em `public`, `oes_app`, `core`, `investigation` etc. Não habilitar HTTP nem Q0.
+
+**Pendências:** especificar prazo real de validade da senha no instante da execução, verificar eventuais privilégios padrão de PUBLIC e planejar posterior ownership/grants de tabelas e sequências criadas pelas migrations. O papel não precisa de CREATEDB nem CREATE no database para criar objetos em um schema existente.
+
