@@ -33,3 +33,13 @@ class Q0SyntheticPreviewTests(SimpleTestCase):
         self.assertNotContains(response, "<form")
         self.assertNotContains(response, "fetch(")
         self.assertNotContains(response, "XMLHttpRequest")
+
+    def test_local_q0_contract_shows_request_id_question_id_and_revision(self):
+        response = self.client.get(reverse("q0-synthetic-preview"))
+        self.assertContains(response, 'id="q0-local-request"')
+        self.assertContains(response, 'id="q0-local-question"')
+        self.assertContains(response, 'maxlength="128"')
+        self.assertContains(response, "Versão esperada do comando Q0")
+        self.assertContains(response, 'questionId.value.startsWith("OES-SYNTH-Q0-")')
+        self.assertContains(response, "identificador de solicitação inválido")
+        self.assertNotContains(response, "<form")
