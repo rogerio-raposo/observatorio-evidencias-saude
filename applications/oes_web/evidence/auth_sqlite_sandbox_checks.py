@@ -325,4 +325,4 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertFalse(router.allow_migrate("default", "evidence"))
         self.assertEqual(router.db_for_write(PreparerIdentity), "default")
         self.assertEqual(router.db_for_read(get_user_model()), "default")
-        self.assertIsNone(router.db_for_write(OesQuestion))
+        self.assertEqual(router.db_for_write(OesQuestion), "oes_scientific_hold")
