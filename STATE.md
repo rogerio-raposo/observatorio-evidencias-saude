@@ -1,7 +1,7 @@
 ## CP329 — Governança técnica proporcional aprovada; PF-I04/P4 autônomo deferido (2026-10-28)
 
 - **Decisão canônica:** Documento 362 `docs/governance/362-decisao-simplificacao-proporcional-governanca-tecnica-oes-cp329.md`, aprovação explícita `SIMPLIFICACAO_PROPORCIONAL_GOVERNANCA_TECNICA`. Aprovação somente documental; nenhuma operação conectada.
-- PF-I04/P4 autônomo **SUSPENSO/DEFERIDO**; A41 PASS restrito a PostgreSQL 18 descartável (Actions 40631160589), sem validação operacional Neon. Evidências A37–A41 intactas; A42 três versões SQL e parecer **locais, não executados nem publicados integralmente no GitHub**; hashes identificados no CP329.
+- PF-I04/P4 autônomo **SUSPENSO/DEFERIDO**; A41 PASS restrito a PostgreSQL 18 descartável (Actions 40631160589), sem validação operacional Neon. Evidências A37–A41 intactas; A42 três versões SQL e parecer **arquivados no GitHub em `archive/handoffs/oes/artifacts/P4-A42/`, não executados**; hashes identificados no CP329.
 - Proporcionalidade: autorizações futuras por escopo/procedimento; sem promover retroativamente SQL Neon. Fim da exigência genérica de expiração de senha ao segundo; menor privilégio, prazo de uso e revogação proporcional. A32/A35 mantêm `if:false`; sem roles/grants/segredos/workflows/deploy/gastos/dados reais.
 - **Próxima atividade:** análise OFFLINE de requisitos reais de privilégios Django–PostgreSQL e proposta do teste integrado mínimo. Não avançar automaticamente P4-A43. Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`, Marco B `OPEN`, G2-P2B `NO-GO`, E9 `NO-GO`, readiness `NOT_READY`, PF-I04/P4 `NOT_AUTHORIZED`, Fase 5 `NOT_STARTED`.
 - **Checkpoint:** `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP329.md`; seguir Freshness Gate e parar após publicação.

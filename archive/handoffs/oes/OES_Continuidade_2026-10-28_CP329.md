@@ -14,12 +14,12 @@
 ## 2. Evidências técnicas preservadas e seus limites
 - A37–A41: fontes e pareceres canônicos anteriores permanecem imutáveis em `archive/handoffs/oes/artifacts/P4-A38/`, `P4-A39/`, `P4-A40/`, `P4-A41/`; a execução GitHub Actions A41 [40631160589](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40631160589) foi `SUCCESS` em PostgreSQL 18 descartável, **não no Neon**.
 - A42: preparadas três versões locais de consulta catalogal (sem execução SQL, sem promover versão a requisito) e parecer histórico. O endpoint DIRECT foi revalidado em metadados via consulta direta ao ID `ep-wispy-dream-b6021bw0`; a listagem geral de computes havia retornado HTTP 401, sem causa conclusiva.
-- **A42 fontes integrais: NÃO PERSISTIDAS NO GITHUB neste checkpoint**. A transferência via integração foi bloqueada; preservar identidade e pendência sem afirmar upload:
+- **A42 fontes integrais: PERSISTIDAS NO GITHUB** em `archive/handoffs/oes/artifacts/P4-A42/` no commit de ativação CP329, com SHA-256 conferidos:
   - `OES_PF-I04_P4-A42_BASELINE_NEON_CATALOG_READ_ONLY_CANDIDATE_HOLD.sql` — SHA-256 `2d3b98299db7ecf36026ff444e58f5672ef0a23ab8de6ee5c8298eb790ce753b`.
   - `OES_PF-I04_P4-A42_BASELINE_NEON_CATALOG_READ_ONLY_V2_REVIEW_HOLD.sql` — SHA-256 `360bb3f00e60c8ac2b4d20ff9b2c8b29dd557768d8a759db53824d1742ea6fd7`.
   - `OES_PF-I04_P4-A42_BASELINE_NEON_CATALOG_READ_ONLY_V3_STRICT_EXPIRY_HOLD.sql` — SHA-256 `158ee2171543770f58cad66d5320a71e1383fc59546d65e3d9a9bd1c02e686d4`.
   - `OES_PF-I04_P4-A42_REVISAO_FINAL_E_GATE_NOMINAL_PROPOSTO_HOLD.md` — SHA-256 `e9e99ab8ad049db10d2875b5b36e8391de359f8a9f8f9d635bcbd686836cc0f5`.
-- Arquivos A42 continuam acessíveis como artefatos desta conversa, mas a recuperabilidade em uma conversa futura **não é garantida**. Se necessário retomá-los, conferir os SHA-256 antes de uso; o trabalho A42 não é necessário para o próximo passo funcional.
+- Arquivos A42 estão persistidos no GitHub. Se necessário retomá-los, conferir os SHA-256 antes de uso; permanecem exclusivamente históricos sob HOLD e não são necessários para o próximo passo funcional.
 
 ## 3. Proteções e gates NÃO modificados
 - Fase 4: `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`. Marco B: `OPEN`; G2-P2B: `NO-GO`; E9: `NO-GO`; readiness: `NOT_READY`; PF-I04/P4 operacional: `NOT_AUTHORIZED`; Fase 5: `NOT_STARTED`.
