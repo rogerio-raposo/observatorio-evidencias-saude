@@ -176,3 +176,10 @@ class AuthSQLiteSandboxTests(TestCase):
             password="synthetic-only-not-a-secret",
         ))
         self.assertIsNone(connections["oes_scientific_hold"].connection)
+
+    def test_optional_scientific_reader_disabled_without_credentials(self):
+        from django.conf import settings
+        from django.db import connections
+        self.assertNotIn("oes_synthetic_reader", settings.DATABASES)
+        self.assertEqual(connections["oes_scientific_hold"].vendor, "unknown")
+        self.assertIsNone(connections["oes_scientific_hold"].connection)
