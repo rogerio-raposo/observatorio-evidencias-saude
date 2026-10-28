@@ -1,3 +1,13 @@
+## CP330 — Estado vivo Django auth PostgreSQL (2026-10-28)
+
+- Checkpoint: `archive/handoffs/oes/OES_Continuidade_2026-10-28_CP330.md`; Documento 362 normativo.
+- Arquitetura: banco único `oes_sandbox`, schema `django_auth` segregado. Gate A e B1 PASS; papel `oes_auth_migrator` temporário com prazo 2026-10-31 23:59:59 UTC. Gate B2-P1 Django READ ONLY [40727429944](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40727429944) PASS com `search_path=django_auth`.
+- **B2-M1 HOLD, não autorizado:** workflow `.github/workflows/oes-auth-b2-m1-migrations-manual.yml` permanece `if:false`; segredo específico B2-M1 não cadastrado; migrations PostgreSQL não executadas. CI offline [40729253488](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40729253488) **191/191 PASS**.
+- Segredo B2-P1 excluído segundo confirmação do responsável, sem verificação administrativa independente; prazo da senha não revoga grants.
+- Próxima etapa: deliberação nominal B2-M1; antes dela, não habilitar workflow, não cadastrar segredo e não executar `migrate`.
+- Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; Marco B OPEN; G2-P2B operacional NO-GO; E9 NO-GO; readiness NOT_READY; Fase 5 NOT_STARTED.
+
+
 ## Marco funcional pós-CP329 — autenticação SQLite + leitura Neon integradas PASS (2026-10-28)
 
 - **Ensaio conectado único:** workflow manual `oes-auth-pg-integrated-readonly-manual.yml`, [run 40701127859](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40701127859), `workflow_dispatch` na `main`, SHA `b5d74b3da90c3be4ebe80fbd233683713c4a0acc`, tentativa 1, conclusão **SUCCESS**; log `PASS SQLITE_AUTH_PG_READ_ONLY_SYNTHETIC_THREE_LINKS_Q0_WRITE_BLOCKED`.
