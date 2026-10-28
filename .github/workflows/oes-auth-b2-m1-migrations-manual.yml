@@ -43,6 +43,9 @@ jobs:
           django.setup()
           from config.auth_pg_b2_preflight import read_only_preflight
           print(read_only_preflight()["status"], flush=True)
+          from config.auth_pg_b2_inventory import write_baseline
+          from pathlib import Path
+          write_baseline(Path.cwd() / ".b2_m1_scientific_before.json")
           # Django migration recorder and post_migrate are scoped by the auth router.
           call_command("showmigrations", plan=True, database="default", verbosity=1)
           call_command("migrate", database="default", interactive=False, verbosity=1)
@@ -72,4 +75,7 @@ jobs:
                   SELECT to_regclass('django_auth.django_migrations') IS NOT NULL
               """)
               print("B2_M1_MIGRATION_RECORDER_EXISTS", cursor.fetchone()[0])
+          from config.auth_pg_b2_inventory import compare_baseline
+          from pathlib import Path
+          compare_baseline(Path.cwd() / ".b2_m1_scientific_before.json")
           PY
