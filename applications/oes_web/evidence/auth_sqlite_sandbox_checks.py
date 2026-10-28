@@ -165,3 +165,14 @@ class AuthSQLiteSandboxTests(TestCase):
         self.assertNotIn("/test-only/q0-injection/", [
             "/synthetic-q0-access/", "/synthetic-q0-preview/",
         ])
+
+    def test_auth_and_scientific_aliases_are_isolated(self):
+        from django.db import connections
+        self.assertEqual(connections["default"].vendor, "sqlite")
+        self.assertEqual(connections["oes_scientific_hold"].vendor, "unknown")
+        self.assertIsNone(connections["oes_scientific_hold"].connection)
+        self.assertTrue(self.client.login(
+            username="oes_synthetic_preparer",
+            password="synthetic-only-not-a-secret",
+        ))
+        self.assertIsNone(connections["oes_scientific_hold"].connection)
