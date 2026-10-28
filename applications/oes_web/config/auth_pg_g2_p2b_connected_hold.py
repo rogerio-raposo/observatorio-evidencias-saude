@@ -111,6 +111,7 @@ def _trial_candidate(*, password, exclusive_window_confirmed, using="default"):
     A separate authorization must explicitly approve unlocking and the complete
     operational workflow; this function MUST NOT be called meanwhile.
     """
+    raise ProvisioningHold("HOLD: internal connected candidate unavailable until named DML gate")
     if exclusive_window_confirmed is not True:
         raise ProvisioningHold("HOLD: external writers not excluded")
     conn = connections[using]
