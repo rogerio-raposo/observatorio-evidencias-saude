@@ -159,7 +159,7 @@ class AuthSQLiteSandboxTests(TestCase):
         AuthenticationMiddleware(lambda req: None).process_request(request)
         response = test_only_view(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["version"], 1)
+        self.assertEqual(__import__("json").loads(response.content)["version"], 1)
         self.assertEqual(len(fake.questions), 1)
         self.assertEqual(len(fake.receipts), 1)
         self.assertNotIn("/test-only/q0-injection/", [
