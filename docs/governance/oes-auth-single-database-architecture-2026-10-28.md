@@ -83,3 +83,23 @@ Em `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, database `oes_sa
 - **Gate A encerrado como PASS limitado à criação do schema vazio.** Gate B (migrations e privilégios) **NÃO AUTORIZADO**; demais gates inalterados.
 - Nota: a contagem científica é uma verificação delimitada dos schemas `core`, `investigation`, `evidence`, `provenance` e `oes_app`, não um hash de todo o estado do banco.
 
+
+
+## Gate B — matriz mínima de privilégios, preflight READ ONLY (2026-10-28)
+
+**Situação:** desenho documental, sem autorização de grants, alterações de roles ou migrations.
+
+Consulta do catálogo em `oes_sandbox` / `django_auth` após Gate A: schema pertence a `oes_sandbox_owner`, ACL explícita NULL, objetos 0. `oes_django_migrator` permanece NOLOGIN, sem USAGE/CREATE em `django_auth` e sem SET ROLE para `oes_sandbox_owner`; `oes_runtime` LOGIN, igualmente sem USAGE/CREATE em `django_auth`. Ambos dispõem de CONNECT no database. O owner possui USAGE/CREATE.
+
+| Papel operacional | Direitos mínimos necessários | Direitos excluídos |
+| --- | --- | --- |
+| Executor de migration (identidade ainda a definir) | CONNECT em `oes_sandbox`; USAGE+CREATE em `django_auth`; ownership dos objetos que criar; conexão com `search_path=django_auth` | Sem CREATE no database, CREATEDB, CREATEROLE, superuser, BYPASSRLS, acesso ampliado aos schemas científicos |
+| Runtime autenticador (identidade ainda a definir) | CONNECT; USAGE no schema; SELECT/INSERT/UPDATE/DELETE nas tabelas Django requeridas; USAGE de sequências para INSERT; eventual SELECT de sequências se justificado pelo SQL real | Sem CREATE em schema/database, ownership, TRUNCATE, REFERENCES genérico, DDL |
+| Owner administrativo | Mantém ownership do schema e capacidade delimitada de administração | Não utilizar credencial owner no runtime |
+
+**Ponto bloqueante:** `oes_django_migrator` é NOLOGIN e não dispõe de CREATE no schema; `oes_runtime` não possui sequer USAGE. O estado atual não sustenta migrations nem login persistente. Não utilizar automaticamente `oes_sandbox_owner` como credencial de migration Django, pois esse papel tem privilégios amplos. Definir expressamente mecanismo de conexão do migrador (role LOGIN dedicada ou login controlado com SET ROLE) e ownership das tabelas antes de qualquer GRANT.
+
+**Detalhamento necessário antes de Gate B:** testar plano completo de migrations (incluindo tabelas M2M, `django_migrations`, índices, sequências, constraints e `post_migrate` de permissões), conferir roles/ACLs, determinar criador efetivo para `ALTER DEFAULT PRIVILEGES`, fixar `search_path=django_auth` para migrador e runtime e comprovar que objetos não são criados em `public`. Separar autorização de criação/alteração de privilégios da autorização de executar migrations.
+
+**Proibido nesta etapa:** conceder privilégios, alterar LOGIN, criar novas roles, executar migrations ou conectar escrita HTTP/Q0. G2-P2B operacional NO-GO, E9 NO-GO e Fase 5 NOT_STARTED.
+
