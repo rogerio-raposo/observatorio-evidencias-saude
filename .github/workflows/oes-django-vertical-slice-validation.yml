@@ -28,7 +28,7 @@ jobs:
 
       - name: Compile Q0 manual runner and transaction recipe without execution
         working-directory: applications/oes_web
-        run: python -m py_compile scripts/run_q0_rollback_once.py evidence/question_orm_q0_connected_recipe_dormant.py scripts/provision_one_synthetic_preparer.py scripts/q0_rollback_isolated_review.py scripts/q0_rollback_transaction_candidate.py
+        run: python -m py_compile scripts/run_q0_rollback_once.py evidence/question_orm_q0_connected_recipe_dormant.py scripts/provision_one_synthetic_preparer.py scripts/q0_rollback_isolated_review.py scripts/q0_rollback_transaction_candidate.py scripts/attest_synthetic_q0_auth_readonly.py config/settings_q0_auth_attestation.py preparer_identity/synthetic_service_readonly.py
 
       - name: Check Django application configuration
         working-directory: applications/oes_web
