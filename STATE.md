@@ -1,3 +1,8 @@
+## PF-I03-Q0 — contrato científico de sessão validado offline (2026-10-28)
+
+- CI [40793424259](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40793424259) SUCCESS no commit `12c5f04508fe47ecb221b49672d8793861565f0e`. Contrato `config/pf_i03_q0_session_contract.py` verificado sem conexão: alias `oes_qprep_trial`, banco `oes_sandbox`, papel `oes_qprep_login`, `transaction_read_only=on`, conjunto exato de cinco tabelas.
+- Evidência de teste puro NÃO equivale a sessão Django conectada. Próximo gate sugerido: **uma sessão Django READ ONLY**, credencial protegida efêmera, identidade efetiva e catálogo verificados na mesma conexão, sem DML, DDL, grants, mudanças de role, migrations ou execução da receita de rollback Q0. Requer autorização nominal separada. G2-P2-B não reabrir. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED; CP335 vigente.
+
 ## PF-I03-Q0 — preparação do ensaio ORM sintético com rollback (2026-10-28)
 
 - Diagnóstico sobre o código existente: `_rollback_recipe` realiza cinco INSERT ORM, verifica cinco relações dentro de `transaction.atomic`, força `transaction.set_rollback(True)` e consulta a ausência dos cinco resíduos após sair da transação. Entradas públicas `execute_connected_q0` e `execute_connected_q0_rollback_trial` permanecem HOLD; `DjangoQ0Repository.__init__` é bloqueante. **Nenhum escritor conectado foi habilitado**.
