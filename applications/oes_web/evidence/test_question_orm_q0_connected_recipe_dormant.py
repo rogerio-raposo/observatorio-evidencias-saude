@@ -112,3 +112,16 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
         trial = prepare_pf_i03_q0_trial(actor_id=actor, **kwargs)
         self.assertEqual(trial.actor_id, actor)
         self.assertTrue(trial.rollback_required)
+
+
+    def test_pf_i03_review_wiring_stays_blocked_before_connection(self):
+        from scripts.pf_i03_q0_rollback_candidate_offline import (
+            build_review_candidate, _review_only_orm_wiring,
+        )
+        trial = build_review_candidate()
+        with patch(
+            "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
+            side_effect=AssertionError("unexpected connected transaction"),
+        ):
+            with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+                _review_only_orm_wiring(trial)
