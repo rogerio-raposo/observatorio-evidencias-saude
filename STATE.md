@@ -1,3 +1,9 @@
+## PF-I03-Q0 — revisão de falha transacional comprovada offline (2026-10-29)
+
+- Commit `202eb34c135f6c7ed7260ae4a93d49981536baea`: `transaction.set_rollback(True)` precede o callback de fase opcional. Commit `486356dffb531878908fda26df3677f69fd2eab7`: teste simula falha transacional com mocks e verifica rollback, fechamento, cinco consultas de resíduos e HOLD após reconciliação; CI [40819580824](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40819580824) SUCCESS.
+- Limite: teste sintético não comprova rollback PostgreSQL real; repositório ORM e executor conectado continuam HARD HOLD. Falta revisão e liberação nominal da configuração transacional do executor, credencial efêmera e eventual reconciliação externa independente. Sem Neon DML/DDL/GRANT, deploy ou HTTP write.
+- CP335 vigente, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — revisão de ativação temporária, DML ainda HOLD (2026-10-29)
 
 - Autorização do usuário para prosseguir após a revisão de preparação do ensaio; **não interpretar como liberação incondicional de escrita**: a revisão atual identificou duas lacunas concretas.
