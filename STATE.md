@@ -1,3 +1,9 @@
+## CP337 — PF-I03 Q0 Django First (2026-10-29)
+
+- Checkpoint [CP337](archive/handoffs/oes/OES_Continuidade_2026-10-29_CP337.md) vigente. A1–A4: revisão de suficiência Django ORM existente; reconciliação separada READ ONLY adicionada em `23afaadb`; callback movido para dentro do fechamento `finally` em `79bd9c68`. Modificações de código verificadas estaticamente, **sem CI posterior nem execução conectada**.
+- Executor e construtor ORM continuam HARD HOLD; configuração científica existente é somente leitura, sem alias escritor autorizado. Identidade UUID4 sintética não comprova ator Django; preservar Q0 legado. A revisão futura deve examinar fronteiras de transação, isolamento de credenciais, privilégios e teste mínimo conectado **somente após gate nominal independente**.
+- Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED. Documento 362 e Django First preservados; nenhuma autorização de DML, DDL, GRANT, HTTP write, deploy ou ciência real.
+
 ## Pos-CP336: separacao do executor Q0 e reconciliador (2026-10-29)
 
 - Revisao arquitetural apenas, sem DML: executor Django ORM temporario (papel oes_qprep_login, alias oes_qprep_trial, cinco INSERT na mesma transacao, rollback obrigatorio, sem commit) e verificador PostgreSQL independente (outra sessao, credencial de leitura separada, SELECT somente). Os dois operam no mesmo banco oes_sandbox e branch br-gentle-hall-b6jaxehf; nenhum deles pode habilitar HTTP.
