@@ -22,6 +22,7 @@ def _perform_rollback_only(*, trial, verified_actor):
     if writer.vendor != "postgresql" or writer.in_atomic_block or not writer.get_autocommit():
         raise PreparationHold("HOLD: invalid writer transaction boundary")
     completed = False
+    transaction_failure = None
     try:
         with transaction.atomic(using=WRITER, savepoint=False):
             try:
@@ -35,61 +36,74 @@ def _perform_rollback_only(*, trial, verified_actor):
                                    [trial.question_id])
                 if (OesEntity.objects.using(WRITER).filter(oes_id=trial.question_id).exists()
                         or OesQuestionCommandReceipt.objects.using(WRITER).filter(
-                            actor_id=verified_actor,request_id=trial.request_id).exists()):
+                            actor_id=verified_actor, request_id=trial.request_id).exists()):
                     raise PreparationHold("HOLD: occupied synthetic identifiers")
                 e, v = trial.entity_uuid, trial.version_uuid
                 OesEntity.objects.using(WRITER).create(
-                    entity_uuid=e,oes_id=trial.question_id,entity_type="Question",
+                    entity_uuid=e, oes_id=trial.question_id, entity_type="Question",
                     created_by=verified_actor)
                 OesQuestion.objects.using(WRITER).create(
-                    entity_uuid=e,responsible_actor_id=verified_actor)
+                    entity_uuid=e, responsible_actor_id=verified_actor)
                 OesEntityVersion.objects.using(WRITER).create(
-                    version_uuid=v,entity_uuid=e,version_no=1,
-                    version_status="current",created_by=verified_actor,change_type="initial")
+                    version_uuid=v, entity_uuid=e, version_no=1,
+                    version_status="current", created_by=verified_actor, change_type="initial")
                 OesQuestionVersion.objects.using(WRITER).create(
-                    version_uuid=v,entity_uuid=e,original_text=trial.original_text,
-                    normalized_text=None,preparation_stage="q0_draft")
+                    version_uuid=v, entity_uuid=e, original_text=trial.original_text,
+                    normalized_text=None, preparation_stage="q0_draft")
                 OesQuestionCommandReceipt.objects.using(WRITER).create(
-                    actor_id=verified_actor,request_id=trial.request_id,
-                    fingerprint_sha256=trial.fingerprint,question_entity_uuid=e,
-                    question_id=trial.question_id,resulting_version_uuid=v,
-                    resulting_version_no=1,command_kind="REGISTER_Q0",justification="")
+                    actor_id=verified_actor, request_id=trial.request_id,
+                    fingerprint_sha256=trial.fingerprint, question_entity_uuid=e,
+                    question_id=trial.question_id, resulting_version_uuid=v,
+                    resulting_version_no=1, command_kind="REGISTER_Q0", justification="")
                 counts = (
-                    OesEntity.objects.using(WRITER).filter(pk=e,oes_id=trial.question_id).count(),
-                    OesQuestion.objects.using(WRITER).filter(pk=e,responsible_actor_id=verified_actor).count(),
-                    OesEntityVersion.objects.using(WRITER).filter(pk=v,entity_uuid=e).count(),
-                    OesQuestionVersion.objects.using(WRITER).filter(pk=v,entity_uuid=e).count(),
+                    OesEntity.objects.using(WRITER).filter(pk=e, oes_id=trial.question_id).count(),
+                    OesQuestion.objects.using(WRITER).filter(pk=e, responsible_actor_id=verified_actor).count(),
+                    OesEntityVersion.objects.using(WRITER).filter(pk=v, entity_uuid=e).count(),
+                    OesQuestionVersion.objects.using(WRITER).filter(pk=v, entity_uuid=e).count(),
                     OesQuestionCommandReceipt.objects.using(WRITER).filter(
-                        actor_id=verified_actor,request_id=trial.request_id,
+                        actor_id=verified_actor, request_id=trial.request_id,
                         fingerprint_sha256=trial.fingerprint).count(),
                 )
-                if counts != (1,1,1,1,1):
+                if counts != (1, 1, 1, 1, 1):
                     raise PreparationHold("HOLD: in-transaction invariants")
                 completed = True
             finally:
                 transaction.set_rollback(True, using=WRITER)
+    except Exception as exc:
+        transaction_failure = exc
     finally:
+        # Do not reconcile through a connection whose transaction remains open.
+        boundary_open = writer.in_atomic_block
         writer.close()
-    if not completed:
-        raise PreparationHold("HOLD: transaction did not complete")
+        if boundary_open:
+            raise PreparationHold("HOLD: writer transaction boundary remained open")
     reader = connections[READER]
     try:
         reader.close()
+        if reader is writer or reader.vendor != "postgresql" or reader.in_atomic_block:
+            raise PreparationHold("HOLD: independent reader invalid")
         with reader.cursor() as cursor:
             cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
-            if cursor.fetchone() != ("oes_pg_a4_reader","oes_sandbox","on"):
+            if cursor.fetchone() != ("oes_pg_a4_reader", "oes_sandbox", "on"):
                 raise PreparationHold("HOLD: independent reader identity mismatch")
-        if any((
+        residues = (
             OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
             OesQuestion.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
             OesEntityVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
             OesQuestionVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
             OesQuestionCommandReceipt.objects.using(READER).filter(
-                actor_id=verified_actor,request_id=trial.request_id).exists(),
-        )):
-            raise PreparationHold("HOLD: scientific rollback residues")
+                actor_id=verified_actor, request_id=trial.request_id).exists(),
+        )
+    except Exception as exc:
+        raise PreparationHold("HOLD: independent reconciliation unavailable") from exc
     finally:
         reader.close()
+    if any(residues):
+        raise PreparationHold("HOLD: scientific rollback residues")
+    if transaction_failure is not None:
+        raise PreparationHold("HOLD: transaction failed; zero residues independently verified") from transaction_failure
+    if not completed:
+        raise PreparationHold("HOLD: transaction did not complete")
     return "PASS_ROLLBACK_ZERO_RESIDUES"
 
 
