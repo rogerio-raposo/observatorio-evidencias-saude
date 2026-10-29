@@ -1,3 +1,7 @@
+## Ponteiro atual — CP336 (2026-10-29)
+
+**Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP336.md](OES_Continuidade_2026-10-29_CP336.md). PF-I03 Django First: sessão científica Django READ ONLY [40816706429](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40816706429) SUCCESS; candidato ORM Q0 rollback-only ainda HARD HOLD, correção da reconciliação após falha validada offline [40819580824](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40819580824) SUCCESS. Secret READ ONLY declarado excluído; G2-P2-B encerrado, preservar Q0 sintético legado. **Próximo:** revisão proporcional da ativação temporária e configuração transacional separada, sem DML antes de novo gate. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP335 (2026-10-28)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-28_CP335.md](OES_Continuidade_2026-10-28_CP335.md). G2-P2-B encerrado tecnicamente no perímetro sintético: provisionamento [40773613528](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40773613528) `PASS_POST_COMMIT`; limpeza [40775904096](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40775904096) `PASS_CLEANUP_POST_COMMIT`; baseline 44/0/0/0/0 reconciliada pelo runner. Exclusão dos segredos efêmeros confirmada pelo responsável (não auditada independentemente). **Não repetir workflows.** Próxima prioridade: selecionar incremento substantivo Django First, proporcionalmente, sem promover gates. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
