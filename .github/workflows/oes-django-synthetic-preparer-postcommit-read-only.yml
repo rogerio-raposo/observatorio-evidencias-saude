@@ -1,0 +1,95 @@
+name: OES synthetic preparer - postcommit READ ONLY
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-postcommit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+    steps:
+      - name: Require existing auth reader credential
+        shell: bash
+        run: |
+          test -n "$OES_Q0_AUTH_PASSWORD" || { echo "::error::HOLD: auth reader secret absent"; exit 1; }
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing requirements
+        working-directory: applications/oes_web
+        run: python -m pip install -r requirements.txt
+      - name: Verify exact single synthetic identity and assignment (SELECT only)
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          from django.contrib.auth.hashers import is_password_usable
+          from preparer_identity.provisioning_plan_offline import classify_readback, Outcome
+          from evidence.preparation_auth import require_question_preparer
+          from django.core.exceptions import PermissionDenied
+          from types import SimpleNamespace
+          host="ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+          with psycopg.connect(host=host, dbname="oes_sandbox",
+                 user="oes_auth_trial_login", password=os.environ["OES_Q0_AUTH_PASSWORD"],
+                 sslmode="require", options="-c search_path=django_auth,public -c default_transaction_read_only=on",
+                 connect_timeout=12) as db:
+              with db.cursor() as cur:
+                  cur.execute("SELECT current_user, current_database(), current_schema(), current_setting('transaction_read_only')")
+                  if cur.fetchone()!=("oes_auth_trial_login","oes_sandbox","django_auth","on"):
+                      raise RuntimeError("HOLD: wrong read-only identity")
+                  cur.execute("""
+                      SELECT u.id,u.password,u.is_active,u.is_staff,u.is_superuser,i.user_id,i.actor_uuid
+                      FROM django_auth.auth_user u
+                      LEFT JOIN django_auth.preparer_identity_prepareridentity i ON i.user_id=u.id
+                      WHERE u.username='oes_synth_preparer_marco_b_trial_20261029'
+                  """)
+                  rows=cur.fetchall()
+                  if len(rows)!=1:
+                      raise RuntimeError("HOLD: unique reserved user absent")
+                  uid,password,active,staff,superuser,linked,actor_uuid=rows[0]
+                  cur.execute("""
+                      SELECT ct.app_label,ct.model,p.codename
+                      FROM django_auth.auth_user_user_permissions up
+                      JOIN django_auth.auth_permission p ON p.id=up.permission_id
+                      JOIN django_auth.django_content_type ct ON ct.id=p.content_type_id
+                      WHERE up.user_id=%s
+                  """,(uid,))
+                  perms=cur.fetchall()
+                  cur.execute("SELECT EXISTS(SELECT 1 FROM django_auth.auth_user_groups WHERE user_id=%s)",(uid,))
+                  groups=cur.fetchone()[0]
+                  cur.execute("SELECT count(*) FROM django_auth.preparer_identity_prepareridentity WHERE user_id=%s",(uid,))
+                  identity_count=cur.fetchone()[0]
+                  facts=dict(user_found=True,identity_found=linked is not None,
+                      permission_found=perms==[("evidence","oesquestion","prepare_question")],
+                      flags_valid=active is True and staff is False and superuser is False
+                                  and not is_password_usable(password),
+                      same_user_link=linked==uid,same_actor_uuid=actor_uuid is not None,
+                      no_extra_access=not groups and len(perms)==1 and identity_count==1,
+                      read_complete=True,independent_reader=True)
+                  if classify_readback(**facts)!=Outcome.COMMITTED_VERIFIED:
+                      raise RuntimeError("HOLD: postcommit invariants differ")
+                  authorized=SimpleNamespace(is_authenticated=True,is_active=active,
+                      is_staff=staff,is_superuser=superuser,
+                      has_perm=lambda name: name=="evidence.prepare_question")
+                  if require_question_preparer(authorized) is not True:
+                      raise RuntimeError("HOLD: preparer policy rejected")
+                  unauthorized=SimpleNamespace(is_authenticated=False,is_active=active,
+                      is_staff=staff,is_superuser=superuser,
+                      has_perm=lambda name: True)
+                  try:
+                      require_question_preparer(unauthorized)
+                  except PermissionDenied:
+                      pass
+                  else:
+                      raise RuntimeError("HOLD: unauthenticated permission bypass")
+          print("PASS_READ_ONLY: one synthetic identity, exact direct permission, unusable password, policy contract")
+          PY
