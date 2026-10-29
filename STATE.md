@@ -1,3 +1,10 @@
+## PF-I03-Q0 — revisão de fronteira após CI offline (2026-10-29)
+
+- CI [40818251168](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818251168) **SUCCESS** no HEAD `d94e1a4b47018b28e7675e1aaa7ac627661cb319`; preflight sintético valida apenas formato `oes:actor:<UUID4>`, não proveniência.
+- `preparer_identity.models.PreparerIdentity` reside na store de autenticação separada; `persisted_preparer_actor_id` consulta `default`. O ensaio científico independente no alias `oes_qprep_trial` **não tem como certificar vínculo real ao Django auth apenas pelo UUID4**. Não inventar pesquisador nem converter o ator legado. Decisão proporcional: distinguir claramente ensaio de integridade do ORM/rollback (ator sintético estrutural) da integração end-to-end com auth persistida (gate futuro). Sem identidade persistida criada, a conclusão end-to-end permanece HOLD.
+- Mapeamentos `models.py` já apontam para tabelas qualificadas com `managed=False`; não recriar esquema no SQLite. Próximo passo viável é revisão/autorizaçao **específica** de um único ensaio científico sintético rollback-only, com isolamento de identidade, execução PostgreSQL sob papel mínimo e evidência externa pós-rollback. Nenhuma autorização DML inferida de `Prossiga`.
+- Nenhuma mudança no Neon, nenhum secret ativo confirmado, sem HTTP write, deploy ou promoção de gates. CP335 vigente, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — pós-session smoke e preparo proporcional de gate ORM (2026-10-29)
 
 - Usuário **declarou excluído** o secret temporário `OES_PF_I03_Q0_PASSWORD`; não houve auditoria independente do GitHub Secrets nem rotação/revogação da senha do papel Neon. Sessão Django READ ONLY 40816706429 SUCCESS já registrada e encerrada.
