@@ -148,6 +148,13 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
             get_autocommit=lambda: True, cursor=lambda: reader_cursor,
             close=MagicMock())
         read_alias = "oes_synthetic_readback"
+        fake_connections = MagicMock()
+        fake_connections.databases = {
+            trial.target_alias: {}, read_alias: {},
+        }
+        fake_connections.__getitem__.side_effect = {
+            trial.target_alias: conn, read_alias: reader,
+        }.__getitem__
         rollbacks = []
 
         @contextmanager
@@ -168,7 +175,7 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
                        "OesQuestionVersion", "OesQuestionCommandReceipt")
         with patch(
             "evidence.question_orm_q0_connected_recipe_dormant.connections",
-            {trial.target_alias: conn, read_alias: reader},
+            fake_connections,
         ), patch(
             "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
             side_effect=fake_atomic,
