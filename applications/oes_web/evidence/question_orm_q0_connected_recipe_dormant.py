@@ -34,7 +34,7 @@ def execute_connected_q0(*args, **kwargs):
 
 
 def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
-                     fingerprint, trial=None, _trial_repository=None, _phase=None):
+                     fingerprint, trial=None, reconcile_alias=None, _trial_repository=None, _phase=None):
     """Unwired review-only recipe. NOT an approved callable execution path.
 
     Requires separate security review, gate activation and explicit approval.
@@ -59,6 +59,10 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                 or trial.expected_insert_count != 5
                 or trial.rollback_required is not True):
             raise PreparationHold("HOLD: synthetic trial identity mismatch")
+    # A separate alias is mandatory; never reconcile through the writer session.
+    if (not isinstance(reconcile_alias, str) or not reconcile_alias
+            or reconcile_alias == alias or reconcile_alias not in connections.databases):
+        raise PreparationHold("HOLD: independent readonly reconciliation alias absent")
     # This line is a hard blocker, not a gate to bypass via object.__new__.
     repo = (DjangoQ0Repository(alias=alias) if _trial_repository is None
             else _trial_repository)
@@ -128,19 +132,30 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
 
     if _phase is not None:
         _phase("VERIFY_ZERO_RESIDUES_NEW_SESSION")
+    reader = connections[reconcile_alias]
     try:
+        if (reader is connection or reader.vendor != "postgresql"
+                or reader.in_atomic_block or not reader.get_autocommit()):
+            raise PreparationHold("HOLD: independent reader transaction boundary invalid")
+        # Server-side check; a Django alias name alone is not an ACL guarantee.
+        with reader.cursor() as cursor:
+            cursor.execute("SELECT current_setting('transaction_read_only'), current_user, current_database()")
+            readonly, reader_role, reader_database = cursor.fetchone()
+        if (readonly != "on" or reader_role == "oes_qprep_login"
+                or reader_database != "oes_sandbox"):
+            raise PreparationHold("HOLD: reconciler must be a separate readonly identity")
         residues = (
-            OesEntity.objects.using(alias).filter(pk=entity_uuid).exists(),
-            OesQuestion.objects.using(alias).filter(pk=entity_uuid).exists(),
-            OesEntityVersion.objects.using(alias).filter(pk=version_uuid).exists(),
-            OesQuestionVersion.objects.using(alias).filter(pk=version_uuid).exists(),
-            OesQuestionCommandReceipt.objects.using(alias).filter(
+            OesEntity.objects.using(reconcile_alias).filter(pk=entity_uuid).exists(),
+            OesQuestion.objects.using(reconcile_alias).filter(pk=entity_uuid).exists(),
+            OesEntityVersion.objects.using(reconcile_alias).filter(pk=version_uuid).exists(),
+            OesQuestionVersion.objects.using(reconcile_alias).filter(pk=version_uuid).exists(),
+            OesQuestionCommandReceipt.objects.using(reconcile_alias).filter(
                 actor_id=actor_id, request_id=request_id).exists(),
         )
     except Exception as exc:
         raise PreparationHold("HOLD: independent rollback reconciliation unavailable") from exc
     finally:
-        connection.close()
+        reader.close()
     if any(residues):
         raise PreparationHold("HOLD: residual Q0 records after rollback")
     if transaction_failure is not None:
