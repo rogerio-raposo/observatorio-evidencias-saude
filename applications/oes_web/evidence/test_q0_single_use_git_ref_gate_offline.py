@@ -30,3 +30,20 @@ class SingleUseGitRefGateOfflineTests(SimpleTestCase):
             with self.assertRaises(SingleUseHold):
                 consume()
             remote.assert_not_called()
+
+    def test_manual_first_attempt_and_reviewed_sha_required(self):
+        env = {"OES_SINGLE_USE_CONSUME": "APPROVED_ONCE",
+               "GITHUB_TOKEN": "offline-fixture",
+               "GITHUB_REPOSITORY": "rogerio-raposo/observatorio-evidencias-saude",
+               "GITHUB_REF": "refs/heads/main", "GITHUB_SHA": "a" * 40,
+               "OES_APPROVED_SHA": "a" * 40, "GITHUB_RUN_ATTEMPT": "1",
+               "GITHUB_EVENT_NAME": "workflow_dispatch"}
+        for field, value in (("OES_APPROVED_SHA", "b" * 40),
+                             ("GITHUB_RUN_ATTEMPT", "2"),
+                             ("GITHUB_EVENT_NAME", "push")):
+            with self.subTest(field=field), patch.dict(
+                    "os.environ", {**env, field: value}, clear=True), patch(
+                    "scripts.q0_single_use_git_ref_gate.urlopen") as remote:
+                with self.assertRaises(SingleUseHold):
+                    consume()
+                remote.assert_not_called()
