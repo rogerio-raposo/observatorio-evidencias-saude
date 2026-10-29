@@ -64,3 +64,26 @@ class SyntheticServiceReadOnlyTests(SimpleTestCase):
             with self.assertRaises(PreparationHold):
                 attest_synthetic_identity_readonly()
             connections.__getitem__.assert_called_once_with("oes_auth_readonly")
+
+    def test_auth_only_settings_exclude_writer_and_require_explicit_gate(self):
+        import importlib.util
+        import os
+        from pathlib import Path
+        settings_file = (Path(__file__).resolve().parents[1] /
+                         "config" / "settings_q0_auth_attestation.py")
+        env = {"OES_AUTH_ATTEST_ONLY": "1",
+               "OES_Q0_AUTH_PASSWORD": "offline-fixture"}
+        # A package import is needed for the relative base-settings import.
+        from unittest.mock import patch as mock_patch
+        with mock_patch.dict(os.environ, env, clear=True):
+            from importlib import import_module, reload
+            module = reload(import_module("config.settings_q0_auth_attestation"))
+            self.assertEqual(set(module.DATABASES), {"default", "oes_auth_readonly"})
+            self.assertEqual(module.DATABASES["default"]["ENGINE"],
+                             "django.db.backends.dummy")
+            self.assertIn("default_transaction_read_only=on",
+                          module.DATABASES["oes_auth_readonly"]["OPTIONS"]["options"])
+            self.assertNotIn("oes_q0_writer", module.DATABASES)
+        with mock_patch.dict(os.environ, {"OES_Q0_AUTH_PASSWORD": "fixture"}, clear=True):
+            with self.assertRaises(RuntimeError):
+                reload(import_module("config.settings_q0_auth_attestation"))
