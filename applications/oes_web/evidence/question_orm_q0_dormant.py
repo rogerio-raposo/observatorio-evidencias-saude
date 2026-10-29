@@ -17,19 +17,26 @@ class DormantQ0OrmPort:
             raise PreparationHold("HOLD: Q0 ORM backend not configured")
         self.atomic_factory = atomic_factory
         self.repository_factory = repository_factory
+        self.last_completed_q0 = None
 
     @contextmanager
     def begin(self):
+        self.last_completed_q0 = None
+        completed = None
         with self.atomic_factory():
             with self.repository_factory() as repo:
                 tx = _Q0Transaction(repo)
                 yield tx
                 if tx.pending is not None:
                     raise PreparationHold("HOLD: receipt missing; rollback")
-                # Retain identifiers only within this dormant transaction context.
-                # No successful commit or positive readback is implied here.
-                if tx.created_q0 is not None and not tx.receipt_saved:
-                    raise PreparationHold("HOLD: Q0 identifiers without receipt")
+                if tx.created_q0 is not None:
+                    if not tx.receipt_saved or tx.saved_receipt is None:
+                        raise PreparationHold("HOLD: Q0 identifiers without receipt")
+                    completed = dict(tx.created_q0)
+                    completed["request_id"] = tx.saved_receipt.request_id
+                    completed["fingerprint"] = tx.saved_receipt.fingerprint
+        # Metadata only; not evidence of a real database commit.
+        self.last_completed_q0 = completed
 
 
 class _Q0Transaction:
@@ -39,6 +46,7 @@ class _Q0Transaction:
         self.pending = None
         self.created_q0 = None
         self.receipt_saved = False
+        self.saved_receipt = None
 
     def lock_request(self, actor_id, request_id):
         self.repo.lock_request(actor_id, request_id)
@@ -93,6 +101,7 @@ class _Q0Transaction:
                 or receipt.justification):
             raise PreparationHold("HOLD: receipt mismatch")
         self.repo.insert_receipt(receipt, entity_uuid, version_uuid)
+        self.saved_receipt = receipt
         self.receipt_saved = True
         self.pending = None
 
