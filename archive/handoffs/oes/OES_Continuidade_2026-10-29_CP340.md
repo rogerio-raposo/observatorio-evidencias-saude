@@ -1,0 +1,24 @@
+# OES — Continuidade CP340 — 2026-10-29
+
+**Anterior:** [CP339](OES_Continuidade_2026-10-29_CP339.md). **Branch:** `main`. **HEAD de referência:** `b44278b197dc37c37acb812544a01ac7d8d4e199`.
+**Escopo:** Marco B, composição Django Q0 dormente, segurança PostgreSQL e validação conectada exclusivamente READ ONLY do leitor.
+**Gates:** Marco B OPEN; execução Django Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED; sem promoção científica.
+
+## Evidências desde CP339
+- `5103f9b7`: composição Django autenticada Q0 como blueprint bloqueado; `d4983342` e `0f4135a2`: contrato dormente vincula `transaction.atomic(using=writer_alias, savepoint=False)` e repositório ao mesmo alias; gates de execução pública e construtor ORM continuam a rejeitar operações. CI [40873846271](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40873846271), SHA `0f4135a2`: **257/257 PASS offline**, sem commit real.
+- Neon: projeto `weathered-boat-65779510`, branch `br-gentle-hall-b6jaxehf`, banco `oes_sandbox`. Preflight de catálogos apurou cinco tabelas ORM corretas: `core.entity`, `core.entity_version`, `investigation.question`, `investigation.question_version`, `investigation.question_command_receipt`. Inspeção preliminar limitada ao schema investigation havia apresentado falsa insuficiência do escritor; retificada pela verificação completa.
+- `oes_qprep_login` já possuía USAGE de schemas e SELECT/INSERT nas cinco tabelas, sem UPDATE/DELETE. Não houve concessão adicional ao escritor.
+- Sob autorização nominal de correção ACL mínima, foram aplicados exclusivamente `GRANT USAGE ON SCHEMA investigation TO oes_pg_a4_reader` e `GRANT SELECT ON TABLE investigation.question, investigation.question_version, investigation.question_command_receipt TO oes_pg_a4_reader`. Postflight com as duas identidades confirmou leitor com USAGE/SELECT nas cinco tabelas e sem INSERT/UPDATE/DELETE nelas. Não extrapolar essa evidência para todos os objetos PostgreSQL.
+- Sob autorização nominal distinta, `ALTER ROLE oes_pg_a4_reader IN DATABASE oes_sandbox SET default_transaction_read_only = on` foi aplicado. `pg_db_role_setting` confirmou persistência. Conexão Neon MCP de PID 1437, anterior à alteração, permaneceu `off`, evidenciando reutilização de sessão, não refutação do catálogo.
+- Workflow manual isolado criado em `.github/workflows/oes-pg-a4-reader-connected-validation.yml`, commit `b44278b1`: Django `oes_synthetic_reader` usando endpoint direto aprovado, `CONN_MAX_AGE=0`, `-c default_transaction_read_only=on`, apenas SELECT, valida identidade, banco, dois parâmetros readonly e ACL das cinco tabelas. [Actions 40877254997](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40877254997) **SUCCESS** no SHA `b44278b1`, mensagem `PASS: Django reader identity, fresh direct readonly session and five-table ACL`. Não houve DML, migração ou Q0 integrada.
+- Secret `OES_PG_A4_READER_PASSWORD`: usuário informou **não excluído**. Não afirmar duração, validade ou conteúdo da senha; ela permanece no GitHub sob gestão do responsável. Decisão proporcional: secret de leitura pode ser conservado para validações recorrentes **desde que** o privilégio geral e acesso ao workflow/secret sejam auditados e que a credencial não tenha compromisso anterior de uso único. Credenciais temporárias de escrita/admin continuam efêmeras. Não persistir valores ou URLs com credenciais.
+
+## Limites técnicos não resolvidos
+- Leitor Django independente READ ONLY e ACL das cinco tabelas: **validado operacionalmente**; não repetir esse diagnóstico nem GRANTs sem fato novo.
+- `execute_connected_q0` e `DjangoQ0Repository.__init__` continuam HARD HOLD. A composição autenticada é inalcançável, não evidência de transação integrada, commit ou segurança operacional do escritor Django.
+- Django auth/PreparerIdentity via alias `default`, isolamento de writer e leitor no mesmo branch, transação real atômica, idempotência/recibo, readback após commit e reconciliação interprocessos de resultado incerto permanecem sujeitos à revisão/gate próprio.
+- `last_uncertain_q0` é apenas memória. Não repetir INSERT em resultado incerto; reconciliar pelo recibo persistido e pelas cinco tabelas via leitor separado, com HOLD em ausência/parcialidade/incongruência. Sem DELETE compensatório.
+- Manter política proporcional (Doc362), Django First (Doc347), ausência de pesquisadores/validação científica; Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
+## Próximo incremento recomendado
+Realizar uma **revisão de suficiência de ativação mínima do escritor Django autenticado**, sem DML ou workflow conectado de escrita: separar rigorosamente os controles já validados do leitor dos requisitos ainda pendentes de writer/auth/commit e preparar um único gate nominal operacional, se materialmente justificado. Evitar novas camadas dormentes ou repetição de testes offline.
