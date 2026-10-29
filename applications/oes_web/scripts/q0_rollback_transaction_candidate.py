@@ -145,6 +145,15 @@ def _perform_rollback_only(*, trial, verified_actor):
     return "PASS_ROLLBACK_ZERO_RESIDUES"
 
 
+def review_and_execute_isolated_trial():
+    """Manual connected composition only; public entrypoint remains disabled.
+
+    Provenance comes from an auth-only read-only session; no caller-supplied actor.
+    """
+    trial, actor = prepare_persisted_service_trial_readonly()
+    return _perform_rollback_only(trial=trial, verified_actor=actor)
+
+
 def run_connected(*args, **kwargs):
     raise PreparationHold("HOLD: isolated connected runner not CI-validated or wired")
 
