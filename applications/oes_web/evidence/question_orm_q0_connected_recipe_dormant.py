@@ -114,9 +114,14 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
             if _phase is not None:
                 _phase("FORCE_ROLLBACK")
             transaction.set_rollback(True, using=alias)
-    # Point lookups only; after rollback, using the SAME approved alias.
+    # After the forced rollback, close the trial connection: independent
+    # point lookups must reopen the same alias in a new database session.
+    # This is a dormant recipe, NOT an enabled connected entry point.
+    if connection.in_atomic_block:
+        raise PreparationHold("HOLD: rollback reconciliation inside transaction")
+    connection.close()
     if _phase is not None:
-        _phase("VERIFY_ZERO_RESIDUES")
+        _phase("VERIFY_ZERO_RESIDUES_NEW_SESSION")
     residues = (
         OesEntity.objects.using(alias).filter(pk=entity_uuid).exists(),
         OesQuestion.objects.using(alias).filter(pk=entity_uuid).exists(),
