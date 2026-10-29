@@ -54,6 +54,18 @@ if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
         "OPTIONS": {"sslmode": "require", "options": "-c search_path=django_auth,public"},
         "CONN_MAX_AGE": 0,
     }
+    # Dedicated auth attestation alias; does not change the general default session.
+    DATABASES["oes_auth_readonly"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "oes_sandbox",
+        "USER": "oes_auth_trial_login",
+        "PASSWORD": os.environ["OES_Q0_AUTH_PASSWORD"],
+        "HOST": _host,
+        "PORT": "5432",
+        "OPTIONS": {"sslmode": "require",
+                    "options": "-c search_path=django_auth,public -c default_transaction_read_only=on"},
+        "CONN_MAX_AGE": 0,
+    }
     DATABASES["oes_q0_writer"] = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "oes_sandbox",
