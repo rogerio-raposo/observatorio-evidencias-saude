@@ -138,3 +138,9 @@ class PFI03ReadonlySessionContractTests(SimpleTestCase):
                 verify_observed_readonly_session({**EXPECTED, **change}, evidence)
         with self.assertRaises(PreparationHold):
             verify_observed_readonly_session(dict(EXPECTED), {**evidence, "core.entity": False})
+        self.assertEqual(
+            verify_observed_readonly_session(
+                {**EXPECTED, "search_path": "core,investigation,public"}, evidence
+            ),
+            "READ_ONLY_SESSION_CONTRACT_PASS",
+        )
