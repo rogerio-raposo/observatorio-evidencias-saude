@@ -6,7 +6,6 @@ credentials and nominal DML authorization are required for a real trial.
 from uuid import uuid4
 
 from evidence.question_preparation import PreparationHold
-from evidence.question_orm_q0_connected_recipe_dormant import execute_connected_q0
 from scripts.q0_rollback_trial_preflight_offline import prepare_pf_i03_q0_trial
 
 
