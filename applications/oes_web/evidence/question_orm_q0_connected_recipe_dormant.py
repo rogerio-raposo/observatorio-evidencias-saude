@@ -130,10 +130,10 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
         if boundary_open:
             raise PreparationHold("HOLD: transaction boundary remained open")
 
-    if _phase is not None:
-        _phase("VERIFY_ZERO_RESIDUES_NEW_SESSION")
     reader = connections[reconcile_alias]
     try:
+        if _phase is not None:
+            _phase("VERIFY_ZERO_RESIDUES_NEW_SESSION")
         if (reader is connection or reader.vendor != "postgresql"
                 or reader.in_atomic_block or not reader.get_autocommit()):
             raise PreparationHold("HOLD: independent reader transaction boundary invalid")
