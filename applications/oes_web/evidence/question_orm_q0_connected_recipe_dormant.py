@@ -161,3 +161,67 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
     if transaction_failure is not None:
         raise PreparationHold("HOLD: Q0 transaction failed; zero residues verified") from transaction_failure
     return {"status": "ROLLED_BACK_ONLY", "verified_zero_residues": True}
+
+
+def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
+                                  request_id, question_id, fingerprint,
+                                  entity_uuid, version_uuid, original_text):
+    """Dormant, internal positive readback; NOT a writer or execution gate.
+
+    Caller must separately establish a successful authorized commit and
+    trustworthy same-branch reader configuration. A matching readback is
+    necessary evidence, not a substitute for that commit proof.
+    """
+    if (not isinstance(read_alias, str) or not read_alias
+            or not isinstance(writer_alias, str) or read_alias == writer_alias
+            or read_alias not in connections.databases):
+        raise PreparationHold("HOLD: independent readback alias required")
+    if (not all(isinstance(value, str) and value for value in (
+            actor_id, request_id, question_id, fingerprint, original_text))
+            or len(fingerprint) != 64
+            or any(ch not in "0123456789abcdef" for ch in fingerprint)
+            or type(entity_uuid) is not UUID or type(version_uuid) is not UUID
+            or entity_uuid == version_uuid):
+        raise PreparationHold("HOLD: invalid Q0 readback identity")
+    reader = connections[read_alias]
+    try:
+        if (reader.vendor != "postgresql" or reader.in_atomic_block
+                or not reader.get_autocommit()):
+            raise PreparationHold("HOLD: invalid readback session")
+        with reader.cursor() as cursor:
+            cursor.execute(
+                "SELECT current_setting('transaction_read_only'), "
+                "current_user, current_database()"
+            )
+            readonly, role, database = cursor.fetchone()
+        if readonly != "on" or role == "oes_qprep_login" or database != "oes_sandbox":
+            raise PreparationHold("HOLD: readback session is not independent readonly")
+        checks = (
+            OesEntity.objects.using(read_alias).filter(
+                pk=entity_uuid, oes_id=question_id, entity_type="Question",
+                created_by=actor_id).count() == 1,
+            OesQuestion.objects.using(read_alias).filter(
+                pk=entity_uuid, responsible_actor_id=actor_id).count() == 1,
+            OesEntityVersion.objects.using(read_alias).filter(
+                pk=version_uuid, entity_uuid=entity_uuid, version_no=1,
+                version_status="current", created_by=actor_id).count() == 1,
+            OesQuestionVersion.objects.using(read_alias).filter(
+                pk=version_uuid, entity_uuid=entity_uuid,
+                original_text=original_text, preparation_stage="q0_draft",
+                normalized_text__isnull=True).count() == 1,
+            OesQuestionCommandReceipt.objects.using(read_alias).filter(
+                actor_id=actor_id, request_id=request_id,
+                fingerprint_sha256=fingerprint, question_id=question_id,
+                question_entity_uuid=entity_uuid,
+                resulting_version_uuid=version_uuid, resulting_version_no=1,
+                command_kind="REGISTER_Q0").count() == 1,
+        )
+        if checks != (True,) * 5:
+            raise PreparationHold("HOLD: committed Q0 readback invariant failed")
+    except PreparationHold:
+        raise
+    except Exception as exc:
+        raise PreparationHold("HOLD: positive Q0 readback unavailable") from exc
+    finally:
+        reader.close()
+    return {"readback_verified": True, "question_id": question_id, "version": 1}
