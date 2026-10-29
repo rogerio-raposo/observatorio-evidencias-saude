@@ -98,7 +98,8 @@ def _perform_rollback_only(*, trial, verified_actor):
             if cursor.fetchone() != ("oes_pg_a4_reader", "oes_sandbox", "on"):
                 raise PreparationHold("HOLD: independent reader identity mismatch")
         residues = (
-            OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),\n            OesEntity.objects.using(READER).filter(oes_id=trial.question_id).exists(),
+            OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
+            OesEntity.objects.using(READER).filter(oes_id=trial.question_id).exists(),
             OesQuestion.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
             OesEntityVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
             OesQuestionVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
