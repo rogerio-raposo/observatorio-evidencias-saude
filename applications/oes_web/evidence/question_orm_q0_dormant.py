@@ -28,6 +28,7 @@ class DormantQ0OrmPort:
         self.atomic_factory = atomic_factory
         self.repository_factory = repository_factory
         self.last_completed_q0 = None
+        self.last_uncertain_q0 = None
 
     def readback_arguments(self, *, writer_alias, read_alias):
         """Prepare arguments for independent verification; no DB access or commit proof.
@@ -51,6 +52,8 @@ class DormantQ0OrmPort:
 
     @contextmanager
     def begin(self):
+        if self.last_uncertain_q0 is not None:
+            raise PreparationHold("HOLD: unresolved Q0 outcome; no automatic retry")
         self.last_completed_q0 = None
         completed = None
         with self.atomic_factory():
@@ -69,11 +72,19 @@ class DormantQ0OrmPort:
         if completed is not None and self.readback_verifier is not None:
             # Invoked only after both injected context managers exit normally.
             # Fake contexts/verifiers are not proof of a PostgreSQL commit.
-            result = self.readback_verifier(
-                writer_alias=self.writer_alias, read_alias=self.read_alias,
-                **completed)
+            # Preserve reconciliation keys if the outcome is uncertain.
+            # This is in-memory diagnostic metadata, never durable evidence.
+            self.last_uncertain_q0 = dict(completed)
+            try:
+                result = self.readback_verifier(
+                    writer_alias=self.writer_alias, read_alias=self.read_alias,
+                    **completed)
+            except Exception:
+                raise PreparationHold(
+                    "HOLD: Q0 outcome uncertain after transaction; reconcile manually") from None
             if not isinstance(result, dict) or result.get("readback_verified") is not True:
                 raise PreparationHold("HOLD: independent Q0 readback not verified")
+            self.last_uncertain_q0 = None
         self.last_completed_q0 = completed
 
 
