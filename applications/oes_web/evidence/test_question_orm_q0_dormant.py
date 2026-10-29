@@ -66,6 +66,33 @@ class DormantQ0Tests(SimpleTestCase):
             self.port.readback_arguments(
                 writer_alias="same", read_alias="same")
 
+    def test_injected_readback_runs_after_boundary_and_fails_closed(self):
+        def verifier(**kwargs):
+            self.assertEqual(self.events, ["enter", "commit"])
+            self.assertEqual(kwargs["writer_alias"], "writer")
+            self.assertEqual(kwargs["read_alias"], "reader")
+            return {"readback_verified": True}
+        self.port.readback_verifier = verifier
+        self.port.writer_alias = "writer"
+        self.port.read_alias = "reader"
+        self.run_q0()
+        self.assertIsNotNone(self.port.last_completed_q0)
+
+        self.port.readback_verifier = lambda **kwargs: {"readback_verified": False}
+        with self.assertRaisesRegex(PreparationHold, "readback not verified"):
+            self.run_q0()
+        self.assertIsNone(self.port.last_completed_q0)
+
+    def test_injected_readback_not_called_on_ledger_failure(self):
+        verifier = Mock()
+        self.port.readback_verifier = verifier
+        self.port.writer_alias = "writer"
+        self.port.read_alias = "reader"
+        self.repo.insert_receipt.side_effect = RuntimeError("synthetic failure")
+        with self.assertRaises(RuntimeError):
+            self.run_q0()
+        verifier.assert_not_called()
+
     def test_ledger_failure_rolls_back(self):
         self.repo.insert_receipt.side_effect = RuntimeError("synthetic receipt error")
         with self.assertRaises(RuntimeError):
