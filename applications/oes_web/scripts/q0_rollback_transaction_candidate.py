@@ -90,7 +90,8 @@ def _perform_rollback_only(*, trial, verified_actor):
     reader = connections[READER]
     try:
         reader.close()
-        if (reader is writer or reader.vendor != "postgresql" or reader.in_atomic_block\n                or not reader.get_autocommit()):
+        if (reader is writer or reader.vendor != "postgresql" or reader.in_atomic_block
+                or not reader.get_autocommit()):
             raise PreparationHold("HOLD: independent reader invalid")
         with reader.cursor() as cursor:
             cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
