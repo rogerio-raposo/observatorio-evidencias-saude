@@ -1,3 +1,7 @@
+## 2026-10-29 — CP336: continuidade PF-I03 Q0
+
+- CP336 criado em `archive/handoffs/oes/OES_Continuidade_2026-10-29_CP336.md`, com ponteiros README e STATE atualizados. Sessão Django científica READ ONLY PASS (Actions 40816706429); reconciliação Q0 offline após falha PASS (Actions 40819580824). Escritor conectado HARD HOLD, sem DML Neon e sem promoção de gates.
+
 ## 2026-10-28 — CP331, continuidade auth sintética
 
 - G2-P1 conectado READ ONLY PASS, G2-P2-A inventário PASS, G2-P2-B offline 197 PASS; preflight catalogal administrativo identificou acessos INSERT/DELETE e USAGE nas sequências para eventual provisionamento. Sem DML no Neon. CP331 atualizado como ponteiro de continuidade; execução operacional segue bloqueada.
