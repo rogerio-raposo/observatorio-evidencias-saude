@@ -121,9 +121,10 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
     finally:
         # Attempt independent read-only reconciliation even after an INSERT,
         # constraint or transaction error. Never retry or compensate with DELETE.
-        if connection.in_atomic_block:
-            raise PreparationHold("HOLD: transaction boundary remained open")
+        boundary_open = connection.in_atomic_block
         connection.close()
+        if boundary_open:
+            raise PreparationHold("HOLD: transaction boundary remained open")
 
     if _phase is not None:
         _phase("VERIFY_ZERO_RESIDUES_NEW_SESSION")
