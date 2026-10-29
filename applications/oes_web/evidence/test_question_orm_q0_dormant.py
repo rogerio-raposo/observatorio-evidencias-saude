@@ -50,12 +50,20 @@ class DormantQ0Tests(SimpleTestCase):
                      "insert_question_version", "insert_receipt"):
             getattr(self.repo, name).assert_called_once()
         self.assertEqual(self.events, ["enter", "commit"])
+        candidate = self.port.last_completed_q0
+        self.assertEqual(candidate["actor_id"], "actor")
+        self.assertEqual(candidate["request_id"], "r1")
+        self.assertEqual(candidate["question_id"], "OES-Q-SYN")
+        self.assertEqual(candidate["fingerprint"], "a" * 64)
+        self.assertEqual(candidate["original_text"], "Pergunta sintética?")
+        self.assertNotEqual(candidate["entity_uuid"], candidate["version_uuid"])
 
     def test_ledger_failure_rolls_back(self):
         self.repo.insert_receipt.side_effect = RuntimeError("synthetic receipt error")
         with self.assertRaises(RuntimeError):
             self.run_q0()
         self.assertEqual(self.events, ["enter", "rollback"])
+        self.assertIsNone(self.port.last_completed_q0)
 
     def test_q1_remains_explicitly_blocked(self):
         with self.assertRaisesRegex(PreparationHold, "Q1 backend not implemented"):
@@ -72,6 +80,7 @@ class DormantQ0Tests(SimpleTestCase):
         self.assertEqual(result, {"status": "PREPARATORY_ONLY",
                                   "question_id": "OES-Q-SYN", "version": 1})
         self.assertEqual(self.events, ["enter", "commit"])
+        self.assertIsNone(self.port.last_completed_q0)
         for name in ("insert_entity", "insert_question", "insert_entity_version",
                      "insert_question_version", "insert_receipt"):
             getattr(self.repo, name).assert_not_called()
