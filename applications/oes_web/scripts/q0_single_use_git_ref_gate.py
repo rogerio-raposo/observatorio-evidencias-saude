@@ -38,6 +38,11 @@ def consume():
             or not sha or len(sha) != 40
             or any(c not in "0123456789abcdef" for c in sha)):
         raise SingleUseHold("HOLD: invalid GitHub attempt provenance")
+    # A rerun is never an authorized fresh attempt; the reviewed SHA must be pinned.
+    if (os.environ.get("GITHUB_RUN_ATTEMPT") != "1"
+            or os.environ.get("OES_APPROVED_SHA") != sha
+            or os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch"):
+        raise SingleUseHold("HOLD: unreviewed SHA, event or repeated run attempt")
     body = json.dumps({"ref": REF, "sha": sha}).encode()
     req = Request("https://api.github.com/repos/" + REPOSITORY + "/git/refs",
                   data=body, method="POST", headers={
