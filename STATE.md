@@ -1,3 +1,10 @@
+## PF-I03-Q0 — revisão de ativação temporária, DML ainda HOLD (2026-10-29)
+
+- Autorização do usuário para prosseguir após a revisão de preparação do ensaio; **não interpretar como liberação incondicional de escrita**: a revisão atual identificou duas lacunas concretas.
+- `_rollback_recipe` aplica rollback no `finally` transacional, mas **a reconciliação de resíduos e o fechamento explicitamente independente só são alcançados na saída normal do bloco `transaction.atomic`**. Se um INSERT ou verificação gerar exceção, falta um caminho obrigatório de reconciliação READ ONLY e reporte de resultado incerto. Não executar até corrigir.
+- `DjangoQ0Repository.__init__` e `execute_connected_q0` seguem HARD HOLD; `settings_pf_i03_q0_readonly_trial` força transação READ ONLY e não pode ser usada para DML. Não burlar bloqueios via `_trial_repository` ou `object.__new__`. Nenhum secret ativo confirmado, nenhum workflow escritor aprovado.
+- Próxima entrega proporcional: corrigir a receita para garantir fechamento/reconciliação em falhas, revisar separadamente a ativação restrita a um único ensaio sintético rollback-only, então formalizar escopo exato do DML/credencial. Nenhuma DML/DDL/GRANT, deploy, HTTP write ou alteração de gates; CP335 vigente, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — revisão do candidato rollback-only (2026-10-29)
 
 - Commit `5b15775f8c55aba15ba7f1fcbf63d731cdbad96e`, CI [40818900543](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818900543) SUCCESS. O candidato offline passou a conferir o plano de rollback já existente (alias, 5 INSERT previstos, nenhum commit, rollback obrigatório, identidade UUID4 sintética). `execute_candidate` e o construtor ORM permanecem HARD HOLD.
