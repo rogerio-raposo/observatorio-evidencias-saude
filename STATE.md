@@ -1,3 +1,10 @@
+## PF-I03-Q0 — pós-session smoke e preparo proporcional de gate ORM (2026-10-29)
+
+- Usuário **declarou excluído** o secret temporário `OES_PF_I03_Q0_PASSWORD`; não houve auditoria independente do GitHub Secrets nem rotação/revogação da senha do papel Neon. Sessão Django READ ONLY 40816706429 SUCCESS já registrada e encerrada.
+- Revisão da receita ORM em `question_orm_q0_connected_recipe_dormant.py`, repositório `question_orm_q0_repository_dormant.py` e preflight `q0_rollback_trial_preflight_offline.py`: cinco INSERTs e rollback/reconciliação planejados, mas executor público e construtor do repositório são **HARD HOLD**. A configuração de sessão validada força `default_transaction_read_only=on`, portanto NÃO pode ser reutilizada para qualquer teste INSERT. Não contornar o HOLD por injeção ou manipulação de objetos sem revisão de código.
+- Antes de propor autorização de um rollback conectado: identificar fonte de identidade sintética `oes:actor:<UUID4>` e admissibilidade conforme regras do banco, validar mapeamento ORM/constraints, criar caminho de execução *separado e restrito* com rollback forçado e nova sessão de reconciliação, explicitar privilégio mínimo e fronteira de transação. Não reutilizar o ator legado `oes_synthetic_q0` nem registros existentes. Requer revisão de segurança e autorização nominal de DML independente. Evitar gerar outra camada de persistência ou testes redundantes.
+- Nenhum Neon DML/DDL/GRANT, deploy, HTTP write ou alteração de gates. CP335 vigente, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — sessão Django científica READ ONLY validada (2026-10-29)
 
 - Execução manual [40816706429](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40816706429) **SUCCESS** no commit `4c151004ba23634bb9afa48c96f16fa0eb02f8ab`, log `READ_ONLY_SESSION_CONTRACT_PASS`. Verificados via sessão Django: alias `oes_qprep_trial`, PostgreSQL `oes_sandbox`, `session_user=current_user=oes_qprep_login`, `search_path=core,investigation,public`, `transaction_read_only=on`, SELECT nas cinco tabelas científicas.
