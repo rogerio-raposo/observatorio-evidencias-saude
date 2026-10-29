@@ -1,3 +1,7 @@
+## 2026-10-29 — CP340: validação conectada Django READ ONLY do leitor
+
+- CP340 registra o sucesso [Actions 40877254997](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40877254997), commit `b44278b1`: identidade/sessão Django READ ONLY e cinco ACLs Q0 validadas em conexão real. Preflight Neon e correção mínima de ACL do leitor, `default_transaction_read_only=on` persistido. Secret READ ONLY `OES_PG_A4_READER_PASSWORD` mantido por decisão do usuário, sob governança proporcional; sem valores registrados. Executor Q0 HARD HOLD; Marco B OPEN, E9 NO-GO.
+
 ## 2026-10-29 — CP339: Q0 Django offline, CI 257/257 PASS
 
 - CP339 consolida readback pós-contexto dormente, tratamento de incerteza transacional e regressão CI [40872403076](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40872403076) SUCCESS (257/257 offline). Sem DML Neon, sem commit ORM conectado, HARD HOLD preservado; Marco B OPEN.
