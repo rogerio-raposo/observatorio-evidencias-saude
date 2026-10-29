@@ -4,7 +4,7 @@ SECRET_KEY = "development-only-not-for-deployment"
 DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
 ROOT_URLCONF = "config.urls"
-INSTALLED_APPS = ["django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions", "django.contrib.staticfiles", "evidence"]
+INSTALLED_APPS = ["django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions", "django.contrib.staticfiles", "evidence", "preparer_identity"]
 MIDDLEWARE = ["django.middleware.security.SecurityMiddleware", "django.contrib.sessions.middleware.SessionMiddleware", "django.middleware.common.CommonMiddleware", "django.middleware.csrf.CsrfViewMiddleware", "django.contrib.auth.middleware.AuthenticationMiddleware"]
 TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIRS": [], "APP_DIRS": True, "OPTIONS": {}}]
 DATABASES = {}
@@ -50,7 +50,8 @@ if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
         "PASSWORD": os.environ["OES_Q0_AUTH_PASSWORD"],
         "HOST": _host,
         "PORT": "5432",
-        "OPTIONS": {"sslmode": "require"},
+        # Pin Django auth/contenttypes/identity and migration metadata to the same schema.
+        "OPTIONS": {"sslmode": "require", "options": "-c search_path=django_auth,public"},
         "CONN_MAX_AGE": 0,
     }
     DATABASES["oes_q0_writer"] = {
