@@ -59,8 +59,7 @@ def _review_authenticated_q0_composition(*, user, command, writer_alias,
 
     @contextmanager
     def writer_repository():
-        with DjangoQ0Repository(alias=writer_alias) as repository:
-            yield repository
+        yield DjangoQ0Repository(alias=writer_alias)
 
     port = DormantQ0OrmPort(
         atomic_factory=writer_transaction,
