@@ -125,3 +125,67 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
         ):
             with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
                 _review_only_orm_wiring(trial)
+
+
+    def test_failed_transaction_still_reconciles_five_absent_residues(self):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        from unittest.mock import MagicMock
+        from evidence.question_orm_q0_connected_recipe_dormant import _rollback_recipe
+
+        trial = prepare_q0_trial_review(
+            actor_id="synthetic_actor", request_id="synthetic_failed_request",
+            question_id="OES-SYNTH-Q0-failed", original_text="Synthetic text",
+        )
+        conn = SimpleNamespace(vendor="postgresql", in_atomic_block=False,
+                               get_autocommit=lambda: True,
+                               close=MagicMock())
+        rollbacks = []
+
+        @contextmanager
+        def fake_atomic(*, using, savepoint):
+            self.assertEqual(using, trial.target_alias)
+            conn.in_atomic_block = True
+            conn.get_autocommit = lambda: False
+            try:
+                yield
+            finally:
+                conn.in_atomic_block = False
+                conn.get_autocommit = lambda: True
+
+        repo = MagicMock()
+        repo.lock_request.side_effect = RuntimeError("synthetic insert failure")
+        phases = []
+        model_names = ("OesEntity", "OesQuestion", "OesEntityVersion",
+                       "OesQuestionVersion", "OesQuestionCommandReceipt")
+        with patch(
+            "evidence.question_orm_q0_connected_recipe_dormant.connections",
+            {trial.target_alias: conn},
+        ), patch(
+            "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
+            side_effect=fake_atomic,
+        ), patch(
+            "evidence.question_orm_q0_connected_recipe_dormant.transaction.set_rollback",
+            side_effect=lambda flag, using: rollbacks.append((flag, using)),
+        ):
+            from contextlib import ExitStack
+            with ExitStack() as stack:
+                models = []
+                for name in model_names:
+                    model = MagicMock()
+                    model.objects.using.return_value.filter.return_value.exists.return_value = False
+                    stack.enter_context(patch(
+                        "evidence.question_orm_q0_connected_recipe_dormant." + name, model))
+                    models.append(model)
+                with self.assertRaisesRegex(PreparationHold, "zero residues verified"):
+                    _rollback_recipe(
+                        alias=trial.target_alias, actor_id=trial.actor_id,
+                        request_id=trial.request_id, question_id=trial.question_id,
+                        original_text=trial.original_text,
+                        fingerprint=trial.fingerprint, trial=trial,
+                        _trial_repository=repo, _phase=phases.append,
+                    )
+        self.assertEqual(rollbacks, [(True, trial.target_alias)])
+        self.assertIn("VERIFY_ZERO_RESIDUES_NEW_SESSION", phases)
+        self.assertEqual(conn.close.call_count, 2)
+        self.assertTrue(all(m.objects.using.called for m in models))
