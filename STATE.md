@@ -1,3 +1,9 @@
+## PF-I03-Q0 — sessão Django científica READ ONLY validada (2026-10-29)
+
+- Execução manual [40816706429](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40816706429) **SUCCESS** no commit `4c151004ba23634bb9afa48c96f16fa0eb02f8ab`, log `READ_ONLY_SESSION_CONTRACT_PASS`. Verificados via sessão Django: alias `oes_qprep_trial`, PostgreSQL `oes_sandbox`, `session_user=current_user=oes_qprep_login`, `search_path=core,investigation,public`, `transaction_read_only=on`, SELECT nas cinco tabelas científicas.
+- Somente catálogo e metadados; nenhuma escrita Q0, nenhuma migração, DDL, GRANT ou mudança de role. O probe fecha a conexão em `finally`. A exclusão do secret `OES_PF_I03_Q0_PASSWORD` foi **solicitada ao usuário**, ainda não confirmada; não declarar revogação da senha no Neon.
+- **Gate encerrado:** PF-I03-Q0 / SINGLE_DJANGO_SCIENTIFIC_READ_ONLY_SESSION. A receita ORM de cinco INSERT com rollback permanece HARD HOLD e exige autorização distinta. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED; CP335 vigente.
+
 ## PF-I03-Q0 — contrato científico de sessão validado offline (2026-10-28)
 
 - CI [40793424259](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40793424259) SUCCESS no commit `12c5f04508fe47ecb221b49672d8793861565f0e`. Contrato `config/pf_i03_q0_session_contract.py` verificado sem conexão: alias `oes_qprep_trial`, banco `oes_sandbox`, papel `oes_qprep_login`, `transaction_read_only=on`, conjunto exato de cinco tabelas.
