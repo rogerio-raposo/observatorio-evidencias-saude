@@ -1,3 +1,7 @@
+## 2026-10-29 — CP339: Q0 Django offline, CI 257/257 PASS
+
+- CP339 consolida readback pós-contexto dormente, tratamento de incerteza transacional e regressão CI [40872403076](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40872403076) SUCCESS (257/257 offline). Sem DML Neon, sem commit ORM conectado, HARD HOLD preservado; Marco B OPEN.
+
 ## 2026-10-29 — CP338: Django Q0, CI offline 253 PASS
 
 - CP338: verificação positiva Q0 e metadados preparatórios dormentes; testes Django offline [40862416668](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40862416668) SUCCESS 253/253. Sem execução Neon, persistência conectada ou promoção de gates. Próximo: proposta nominal integrada Django auth → Q0 → commit → readback, com Marco B OPEN e validação científica pendente.
