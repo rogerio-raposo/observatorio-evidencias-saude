@@ -1,3 +1,8 @@
+## PF-I03-Q0 — revisão do candidato rollback-only (2026-10-29)
+
+- Commit `5b15775f8c55aba15ba7f1fcbf63d731cdbad96e`, CI [40818900543](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818900543) SUCCESS. O candidato offline passou a conferir o plano de rollback já existente (alias, 5 INSERT previstos, nenhum commit, rollback obrigatório, identidade UUID4 sintética). `execute_candidate` e o construtor ORM permanecem HARD HOLD.
+- **Limite importante:** este incremento não constitui executor conectado, não valida a proveniência persistida da identidade e não autoriza DML. Próxima atividade deve revisar **um executor conectado temporário realmente executável sob gate nominal próprio**, sem ampliar testes offline ou acrescentar novos documentos redundantes. Baseline sintética legada preservada; nenhum segredo registrado ou alteração Neon. CP335 vigente, Marco B OPEN, E9 NO-GO e Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — candidato offline validado; encerrar preparações redundantes (2026-10-29)
 
 - CI [40818644362](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818644362) SUCCESS no commit `5ed826c1478ee5dacd55d2a7a2513935d42eef30`. O candidato `scripts/pf_i03_q0_rollback_candidate_offline.py` gera metadados inéditos e valida contrato exclusivamente offline, com execução conectada explicitamente HOLD.
