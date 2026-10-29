@@ -1,3 +1,8 @@
+## CP339 — Q0 Django offline e controle pós-transação (2026-10-29)
+
+- [CP339](archive/handoffs/oes/OES_Continuidade_2026-10-29_CP339.md) vigente. Commits `1023b7fc`, `6230f481`, `806b559a`, `a60ce72b`, `c6bded68`, `924583c4`, `732bfc09`, `40ae2141`: argumentos e verificador readback injetado, retenção de IDs após falha de readback ou saída transacional. CI [40872403076](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40872403076) **257/257 PASS offline**.
+- Resultado incerto somente em memória não comprova commit nem recuperação interprocessos; exigir reconciliação por recibo persistido com leitor independente antes de qualquer retry. `DjangoQ0Repository` e `execute_connected_q0` HARD HOLD. Próximo: composição mínima Django autenticado → Q0 → commit → readback, com gate nominal. Marco B OPEN, ciência pendente, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Marco B / Bloco A — revisão da composição executável mínima (2026-10-29)
 
 - Revisão no HEAD `e3498c84`, sem conexão ou execução. Ponto de entrada autenticado existente: `submit_authenticated_question_command` usa `persisted_preparer_actor_id` no alias Django `default`; exige verificar configuração real do auth store e usuário sintético persistido. `OfflineQuestionUnitOfWork` já coordena lock, idempotência, Q0 e recibo; reutilizar, não duplicar.
