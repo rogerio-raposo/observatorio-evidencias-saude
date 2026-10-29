@@ -46,3 +46,13 @@ class SyntheticProvisioningOfflineTests(SimpleTestCase):
             review_provisioning_sequence(PROVISIONING_SEQUENCE[:-1])
         with self.assertRaises(ProvisioningHold):
             review_provisioning_sequence(PROVISIONING_SEQUENCE + ("COMMIT_ONCE",))
+
+    def test_connected_composition_remains_unconditionally_blocked(self):
+        from preparer_identity.connected_provisioning_dormant import (
+            execute_connected_provisioning, _review_single_use_transaction,
+        )
+        with self.assertRaises(ProvisioningHold):
+            execute_connected_provisioning()
+        with self.assertRaises(ProvisioningHold):
+            _review_single_use_transaction(plan=None, alias="default",
+                                           read_alias="oes_synthetic_reader")
