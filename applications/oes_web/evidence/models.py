@@ -45,6 +45,8 @@ class OesQuestion(models.Model):
     class Meta:
         managed = False
         db_table = '"investigation"."question"'
+        # Django permission metadata only; never manage or migrate the scientific table.
+        permissions = [("prepare_question", "Can prepare an OES question")]
 
 
 class OesQuestionVersion(models.Model):
