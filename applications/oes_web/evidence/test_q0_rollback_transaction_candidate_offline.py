@@ -57,7 +57,7 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             entities.return_value.filter.return_value.exists.return_value = False
             receipts.return_value.filter.return_value.exists.return_value = False
             entities.return_value.create.side_effect = RuntimeError("injected insert failure")
-            with self.assertRaises(RuntimeError):
+            with self.assertRaisesRegex(PreparationHold, "independent reconciliation unavailable"):
                 candidate._perform_rollback_only(trial=trial, verified_actor=actor)
 
         rollback.assert_called_once_with(True, using=candidate.WRITER)
