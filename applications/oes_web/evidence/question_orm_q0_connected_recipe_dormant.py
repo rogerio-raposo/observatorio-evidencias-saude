@@ -113,9 +113,9 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
                     raise PreparationHold("HOLD: five-record invariant failed")
             finally:
                 # Fail closed: even an unintended normal exit must not commit.
+                transaction.set_rollback(True, using=alias)
                 if _phase is not None:
                     _phase("FORCE_ROLLBACK")
-                transaction.set_rollback(True, using=alias)
     except Exception as exc:
         transaction_failure = exc
     finally:
