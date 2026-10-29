@@ -43,12 +43,16 @@ class MultiAliasOfflineTests(SimpleTestCase):
             "OES_Q0_AUTH_PASSWORD": "auth-fixture",
             "OES_Q0_WRITER_PASSWORD": "writer-fixture",
         })
-        self.assertEqual(set(cfg), {"default", "oes_q0_writer", "oes_synthetic_reader"})
+        self.assertEqual(set(cfg), {"default", "oes_auth_readonly", "oes_q0_writer", "oes_synthetic_reader"})
         self.assertEqual([cfg[name]["USER"] for name in ("default", "oes_q0_writer", "oes_synthetic_reader")],
                          ["oes_auth_trial_login", "oes_qprep_login", "oes_pg_a4_reader"])
         self.assertTrue(all(cfg[name]["CONN_MAX_AGE"] == 0 for name in cfg))
         self.assertEqual(cfg["default"]["OPTIONS"]["options"],
                          "-c search_path=django_auth,public")
+        self.assertEqual(cfg["oes_auth_readonly"]["USER"], "oes_auth_trial_login")
+        self.assertEqual(cfg["oes_auth_readonly"]["OPTIONS"]["options"],
+                         "-c search_path=django_auth,public -c default_transaction_read_only=on")
+        self.assertEqual(cfg["oes_auth_readonly"]["CONN_MAX_AGE"], 0)
         self.assertEqual(cfg["oes_synthetic_reader"]["OPTIONS"]["options"],
                          "-c default_transaction_read_only=on")
         with self.assertRaises(PreparationHold):
