@@ -21,4 +21,4 @@ jobs:
           OES_PF_I03_Q0_READONLY_OPT_IN: '1'
           OES_PF_I03_Q0_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
           OES_PF_I03_Q0_PASSWORD: ${{ secrets.OES_PF_I03_Q0_PASSWORD }}
-        run: python scripts/pf_i03_q0_readonly_session_probe.py
+        run: python -m scripts.pf_i03_q0_readonly_session_probe
