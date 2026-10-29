@@ -46,3 +46,25 @@ def prepare_synthetic_q0_trial(*, actor_id: str, request_id: str,
 def execute_connected_q0_rollback_trial(*args, **kwargs):
     """Intentionally blocked: G2-P2B is NO-GO; no database entrypoint."""
     raise TrialHold("HOLD: connected Django Q0 rollback trial not authorized; G2-P2B NO-GO")
+
+
+def validate_pf_i03_actor_format(actor_id: str) -> None:
+    """Structural check only; does NOT establish persisted Django identity."""
+    if not isinstance(actor_id, str) or not actor_id.startswith("oes:actor:"):
+        raise TrialHold("HOLD: PF-I03 actor must use persisted identity format")
+    try:
+        identity = UUID(actor_id[len("oes:actor:"):])
+    except (ValueError, AttributeError):
+        raise TrialHold("HOLD: PF-I03 actor UUID invalid") from None
+    if identity.version != 4 or str(identity) != actor_id[len("oes:actor:"):]:
+        raise TrialHold("HOLD: PF-I03 actor must be canonical UUID4")
+
+
+def prepare_pf_i03_q0_trial(*, actor_id: str, request_id: str,
+                            question_id: str, original_text: str) -> SyntheticQ0Trial:
+    """Offline proposal; actor provenance must be separately proven before DML."""
+    validate_pf_i03_actor_format(actor_id)
+    return prepare_synthetic_q0_trial(
+        actor_id=actor_id, request_id=request_id,
+        question_id=question_id, original_text=original_text,
+    )
