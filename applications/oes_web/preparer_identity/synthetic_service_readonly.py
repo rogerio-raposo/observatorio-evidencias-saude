@@ -37,7 +37,7 @@ def attest_synthetic_identity_readonly():
     Requires an already configured independent auth-store alias and never
     fabricates is_authenticated or calls login/force_login.
     """
-    conn = connections["default"]
+    conn = connections["oes_auth_readonly"]
     if conn.vendor != "postgresql" or conn.in_atomic_block or not conn.get_autocommit():
         raise PreparationHold("HOLD: auth-store connection boundary")
     try:
@@ -49,14 +49,14 @@ def attest_synthetic_identity_readonly():
             if cursor.fetchone() != ("oes_auth_trial_login", "oes_sandbox",
                                      "django_auth", "on"):
                 raise PreparationHold("HOLD: auth-store readonly identity")
-        users = list(get_user_model().objects.using("default").filter(
+        users = list(get_user_model().objects.using("oes_auth_readonly").filter(
             username=RESERVED_USERNAME))
-        identities = (list(PreparerIdentity.objects.using("default").filter(
+        identities = (list(PreparerIdentity.objects.using("oes_auth_readonly").filter(
             user_id=users[0].pk)) if len(users) == 1 else [])
-        permissions = (list(users[0].user_permissions.using("default").values_list(
+        permissions = (list(users[0].user_permissions.using("oes_auth_readonly").values_list(
                 "content_type__app_label", "content_type__model", "codename"))
             if len(users) == 1 else [])
-        groups = (list(users[0].groups.using("default").values_list("pk", flat=True))
+        groups = (list(users[0].groups.using("oes_auth_readonly").values_list("pk", flat=True))
                   if len(users) == 1 else [])
         return classify_synthetic_identity(
             users=users, identities=identities, permissions=permissions, groups=groups)
