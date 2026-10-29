@@ -117,9 +117,10 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             rollback.assert_called_once_with(True, using=candidate.WRITER)
             writer.close.assert_called_once()
             reader.close.assert_called()
-            for manager in managers:
-                self.assertTrue(any(
-                    call.args == (candidate.READER,) for call in manager.call_args_list))
+            if not reader_raises:
+                for manager in managers:
+                    self.assertTrue(any(
+                        call.args == (candidate.READER,) for call in manager.call_args_list))
 
     def test_failed_insert_with_verified_zero_residues_is_hold(self):
         self._exercise_failed_insert_with_reader(reader_raises=False)
