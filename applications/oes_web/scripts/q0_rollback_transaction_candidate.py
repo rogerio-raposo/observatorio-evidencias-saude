@@ -14,6 +14,16 @@ WRITER = "oes_q0_writer"
 READER = "oes_synthetic_reader"
 
 
+def review_persisted_actor_binding(*, user, trial):
+    """Review the persisted auth-store binding; not a real login or DML gate."""
+    from evidence.preparation_auth import require_question_preparer
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    require_question_preparer(user)
+    actor = persisted_preparer_actor_id(user)
+    validate_persisted_actor_trial(authenticated_actor_id=actor, trial=trial)
+    return "PERSISTED_ACTOR_BINDING_REVIEW_PASS"
+
+
 def _perform_rollback_only(*, trial, verified_actor):
     """Internal, intentionally unwired transaction recipe. No commit path."""
     RollbackTrialBoundary(WRITER, READER, 5, True, True, True, True).review()
@@ -80,14 +90,14 @@ def _perform_rollback_only(*, trial, verified_actor):
     reader = connections[READER]
     try:
         reader.close()
-        if reader is writer or reader.vendor != "postgresql" or reader.in_atomic_block:
+        if (reader is writer or reader.vendor != "postgresql" or reader.in_atomic_block\n                or not reader.get_autocommit()):
             raise PreparationHold("HOLD: independent reader invalid")
         with reader.cursor() as cursor:
             cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
             if cursor.fetchone() != ("oes_pg_a4_reader", "oes_sandbox", "on"):
                 raise PreparationHold("HOLD: independent reader identity mismatch")
         residues = (
-            OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
+            OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),\n            OesEntity.objects.using(READER).filter(oes_id=trial.question_id).exists(),
             OesQuestion.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
             OesEntityVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
             OesQuestionVersion.objects.using(READER).filter(pk=trial.version_uuid).exists(),
