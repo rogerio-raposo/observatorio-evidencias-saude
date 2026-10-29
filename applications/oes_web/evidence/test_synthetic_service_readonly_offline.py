@@ -54,3 +54,13 @@ class SyntheticServiceReadOnlyTests(SimpleTestCase):
             with self.assertRaises(PreparationHold):
                 attest_synthetic_identity_readonly()
             fake.cursor.assert_not_called()
+
+    def test_attestation_uses_dedicated_auth_reader_alias(self):
+        from unittest.mock import MagicMock
+        conn = MagicMock()
+        conn.vendor = "dummy"
+        with patch("preparer_identity.synthetic_service_readonly.connections") as connections:
+            connections.__getitem__.return_value = conn
+            with self.assertRaises(PreparationHold):
+                attest_synthetic_identity_readonly()
+            connections.__getitem__.assert_called_once_with("oes_auth_readonly")
