@@ -60,3 +60,29 @@ def classify_readback(*, user_found, identity_found, permission_found, flags_val
 
 def execute_provisioning(*args, **kwargs):
     raise ProvisioningHold("HOLD: connected synthetic provisioning not authorized")
+
+
+# Ordered contract only: these symbolic steps contain no SQL or ORM operations.
+PROVISIONING_SEQUENCE = (
+    "CHECK_FRESH_ADMIN_IDENTITY_AND_SCHEMA",
+    "CHECK_SINGLE_USE_GATE_AND_SYNTHETIC_PARAMETERS",
+    "BEGIN_ATOMIC",
+    "ACQUIRE_TRANSACTION_SCOPED_LOCK",
+    "RECHECK_ABSENCE_AND_FOREIGN_KEY_TARGETS",
+    "ENSURE_EXACT_CONTENT_TYPE_AND_PERMISSION",
+    "CREATE_ONE_USER_WITH_UNUSABLE_PASSWORD",
+    "CREATE_ONE_LINKED_PREPARER_IDENTITY",
+    "LINK_ONE_DIRECT_PREPARATION_PERMISSION",
+    "ASSERT_ONE_USER_ONE_IDENTITY_ONE_PERMISSION_NO_EXTRA_ACCESS",
+    "COMMIT_ONCE",
+    "INDEPENDENT_READBACK_BEFORE_DECLARING_SUCCESS",
+)
+
+
+def review_provisioning_sequence(steps=PROVISIONING_SEQUENCE):
+    """Pure contract validation; intentionally cannot perform any step."""
+    if type(steps) is not tuple or steps != PROVISIONING_SEQUENCE:
+        raise ProvisioningHold("HOLD: unauthorized provisioning sequence")
+    if len(steps) != len(set(steps)):
+        raise ProvisioningHold("HOLD: duplicated provisioning step")
+    return PROVISIONING_SEQUENCE
