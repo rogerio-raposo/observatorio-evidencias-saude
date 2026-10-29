@@ -47,6 +47,8 @@ class MultiAliasOfflineTests(SimpleTestCase):
         self.assertEqual([cfg[name]["USER"] for name in ("default", "oes_q0_writer", "oes_synthetic_reader")],
                          ["oes_auth_trial_login", "oes_qprep_login", "oes_pg_a4_reader"])
         self.assertTrue(all(cfg[name]["CONN_MAX_AGE"] == 0 for name in cfg))
+        self.assertEqual(cfg["default"]["OPTIONS"]["options"],
+                         "-c search_path=django_auth,public")
         self.assertEqual(cfg["oes_synthetic_reader"]["OPTIONS"]["options"],
                          "-c default_transaction_read_only=on")
         with self.assertRaises(PreparationHold):
@@ -66,3 +68,15 @@ class MultiAliasOfflineTests(SimpleTestCase):
         with self.assertRaisesRegex(RuntimeError, "direct same-branch endpoint"):
             load_settings({**env, "OES_Q0_WRITER_PASSWORD": "writer-fixture",
                            "OES_PG_A4_HOST": "ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech"})
+
+
+class CanonicalAuthMetadataOfflineTests(SimpleTestCase):
+    def test_identity_app_registered_and_permission_declared(self):
+        from django.conf import settings
+        from django.apps import apps
+        from evidence.models import OesQuestion
+        self.assertIn("preparer_identity", settings.INSTALLED_APPS)
+        self.assertIsNotNone(apps.get_model("preparer_identity", "PreparerIdentity"))
+        self.assertIn(("prepare_question", "Can prepare an OES question"),
+                      OesQuestion._meta.permissions)
+        self.assertFalse(OesQuestion._meta.managed)
