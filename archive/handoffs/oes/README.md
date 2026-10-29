@@ -1,3 +1,7 @@
+## Ponteiro atual — CP339 (2026-10-29)
+
+**Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP339.md](OES_Continuidade_2026-10-29_CP339.md). Q0 Django ORM dormente, readback e falha pós-contexto; CI [40872403076](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40872403076) **257/257 PASS offline**. Sem commit ORM real; recuperação em memória não é durável. Próximo: composição mínima integrada e gate nominal antes de DML. Marco B OPEN, HARD HOLD, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP338 (2026-10-29)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP338.md](OES_Continuidade_2026-10-29_CP338.md). Marco B orientado ao encerramento técnico-demonstrativo restrito, validação científica pendente. Django Q0 port e readback ainda dormentes; CI [40862416668](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40862416668) **253/253 PASS offline**, commit de referência `16a18407`. Sem integração conectada ou prova de commit deste port; **HARD HOLD**. Próximo: proposta nominal mínima de ensaio integrado autenticado Django–PostgreSQL, considerando a evidência histórica Q0 [40695250735](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40695250735) sem repetir o que já foi comprovado. Documento 362; Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED.
