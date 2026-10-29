@@ -42,6 +42,7 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         reader = MagicMock()
         reader.vendor = "postgresql"
         reader.in_atomic_block = False
+        reader.get_autocommit.return_value = True
         reader.cursor.return_value.__enter__.return_value.fetchone.return_value = ("other_role", "oes_sandbox", "on")
         connections.__getitem__.side_effect = lambda alias: writer if alias == candidate.WRITER else reader
         rollback = MagicMock()
@@ -76,6 +77,7 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         writer.vendor = reader.vendor = "postgresql"
         writer.in_atomic_block = reader.in_atomic_block = False
         writer.get_autocommit.return_value = True
+        reader.get_autocommit.return_value = True
         writer.cursor.return_value.__enter__.return_value.fetchone.return_value = (
             "oes_qprep_login", "oes_sandbox", "off")
         reader.cursor.return_value.__enter__.return_value.fetchone.return_value = (
@@ -127,3 +129,25 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
 
     def test_failed_insert_with_unavailable_reconciliation_is_hold(self):
         self._exercise_failed_insert_with_reader(reader_raises=True)
+
+    def test_persisted_binding_review_requires_permission_and_resolved_actor(self):
+        trial, actor = self.trial()
+        user = MagicMock()
+        with patch.object(candidate, "validate_persisted_actor_trial") as validate, patch(
+            "evidence.preparation_auth.require_question_preparer"
+        ) as permission, patch(
+            "preparer_identity.resolver.persisted_preparer_actor_id", return_value=actor
+        ) as resolve:
+            self.assertEqual(candidate.review_persisted_actor_binding(user=user, trial=trial),
+                             "PERSISTED_ACTOR_BINDING_REVIEW_PASS")
+            permission.assert_called_once_with(user)
+            resolve.assert_called_once_with(user)
+            validate.assert_called_once_with(authenticated_actor_id=actor, trial=trial)
+
+    def test_persisted_binding_review_never_accepts_foreign_actor(self):
+        trial, _ = self.trial()
+        with patch("evidence.preparation_auth.require_question_preparer"), patch(
+            "preparer_identity.resolver.persisted_preparer_actor_id",
+            return_value="oes:actor:" + str(uuid4())
+        ), self.assertRaises(PreparationHold):
+            candidate.review_persisted_actor_binding(user=MagicMock(), trial=trial)
