@@ -1,3 +1,7 @@
+## Ponteiro atual — CP344 (2026-10-29)
+
+**Checkpoint vigente:** [CP344](OES_Continuidade_2026-10-29_CP344.md). CI [40964845881](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40964845881) **303/303 PASS offline**; identidade sintética READ ONLY conectada [40962343481](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40962343481) PASS. CLI manual restrito preparado, workflow conectado **desabilitado**; ensaio com cinco INSERTs e ROLLBACK **não executado**, autorização nominal **não consumida**. **Retomada:** revisão final proporcional e integração ao workflow manual, sem mecanismo de tag Git ou microgates. Marco B OPEN; Q0 geral HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP343 (2026-10-29)
 
 **Checkpoint vigente:** [CP343](OES_Continuidade_2026-10-29_CP343.md). CI 40950780938: 282/282 PASS offline. Ensaio rollback sintético autorizado, não executado. Protocolo pré-operacional publicado; execução NO-GO até fechar bloqueadores. Marco B OPEN; Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED.
