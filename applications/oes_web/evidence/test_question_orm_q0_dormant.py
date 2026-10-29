@@ -57,6 +57,14 @@ class DormantQ0Tests(SimpleTestCase):
         self.assertEqual(candidate["fingerprint"], "a" * 64)
         self.assertEqual(candidate["original_text"], "Pergunta sintética?")
         self.assertNotEqual(candidate["entity_uuid"], candidate["version_uuid"])
+        args = self.port.readback_arguments(
+            writer_alias="synthetic_writer", read_alias="synthetic_reader")
+        self.assertEqual(args["entity_uuid"], candidate["entity_uuid"])
+        self.assertEqual(args["request_id"], "r1")
+        self.assertEqual(args["read_alias"], "synthetic_reader")
+        with self.assertRaisesRegex(PreparationHold, "independent aliases"):
+            self.port.readback_arguments(
+                writer_alias="same", read_alias="same")
 
     def test_ledger_failure_rolls_back(self):
         self.repo.insert_receipt.side_effect = RuntimeError("synthetic receipt error")
@@ -64,6 +72,9 @@ class DormantQ0Tests(SimpleTestCase):
             self.run_q0()
         self.assertEqual(self.events, ["enter", "rollback"])
         self.assertIsNone(self.port.last_completed_q0)
+        with self.assertRaisesRegex(PreparationHold, "no new Q0 candidate"):
+            self.port.readback_arguments(
+                writer_alias="synthetic_writer", read_alias="synthetic_reader")
 
     def test_q1_remains_explicitly_blocked(self):
         with self.assertRaisesRegex(PreparationHold, "Q1 backend not implemented"):
