@@ -19,6 +19,26 @@ class DormantQ0OrmPort:
         self.repository_factory = repository_factory
         self.last_completed_q0 = None
 
+    def readback_arguments(self, *, writer_alias, read_alias):
+        """Prepare arguments for independent verification; no DB access or commit proof.
+
+        Does not invoke the readback or change PREPARATORY_ONLY. Only a
+        separately authorized post-commit executor may use the returned data.
+        """
+        candidate = self.last_completed_q0
+        if not isinstance(candidate, dict):
+            raise PreparationHold("HOLD: no new Q0 candidate for readback")
+        if (not isinstance(writer_alias, str) or not writer_alias
+                or not isinstance(read_alias, str) or not read_alias
+                or writer_alias == read_alias):
+            raise PreparationHold("HOLD: independent aliases required")
+        required = ("actor_id", "request_id", "question_id", "fingerprint",
+                    "entity_uuid", "version_uuid", "original_text")
+        if any(key not in candidate for key in required):
+            raise PreparationHold("HOLD: incomplete Q0 candidate")
+        return {"writer_alias": writer_alias, "read_alias": read_alias,
+                **{key: candidate[key] for key in required}}
+
     @contextmanager
     def begin(self):
         self.last_completed_q0 = None
