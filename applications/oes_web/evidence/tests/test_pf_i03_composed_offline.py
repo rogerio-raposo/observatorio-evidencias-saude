@@ -115,3 +115,26 @@ class PFI03ScientificAliasDormantTests(SimpleTestCase):
                             for db in cfg.DATABASES.values()))
         self.assertNotIn("PASSWORD", repr(cfg.DATABASES))
         self.assertNotIn("HOST", repr(cfg.DATABASES))
+
+
+class PFI03ReadonlySessionContractTests(SimpleTestCase):
+    def test_session_contract_accepts_only_complete_readonly_evidence(self):
+        from config.pf_i03_q0_session_contract import (
+            EXPECTED, TABLES, verify_observed_readonly_session,
+        )
+        from evidence.question_preparation import PreparationHold
+        evidence = {name: True for name in TABLES}
+        self.assertEqual(
+            verify_observed_readonly_session(dict(EXPECTED), evidence),
+            "READ_ONLY_SESSION_CONTRACT_PASS",
+        )
+        for change in (
+            {"transaction_read_only": "off"},
+            {"session_user": "other"},
+            {"database": "other"},
+            {"search_path": "public"},
+        ):
+            with self.subTest(change=change), self.assertRaises(PreparationHold):
+                verify_observed_readonly_session({**EXPECTED, **change}, evidence)
+        with self.assertRaises(PreparationHold):
+            verify_observed_readonly_session(dict(EXPECTED), {**evidence, "core.entity": False})
