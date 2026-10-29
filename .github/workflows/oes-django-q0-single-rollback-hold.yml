@@ -1,0 +1,34 @@
+name: OES Django Q0 single rollback trial - HOLD
+on:
+  workflow_dispatch:
+    inputs:
+      protocol_ack:
+        description: "Review only; connected execution is not enabled"
+        required: true
+        type: choice
+        options:
+          - REVIEW_ONLY
+permissions:
+  contents: read
+concurrency:
+  group: oes-django-q0-rollback-single-trial
+  cancel-in-progress: false
+jobs:
+  preflight-review-only:
+    if: ${{ inputs.protocol_ack == 'REVIEW_ONLY' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Confirm manual workflow remains non-operational
+        run: |
+          echo 'HOLD: protocol review only; no PostgreSQL credentials or DML'
+          echo 'Approved offline baseline: 287/287, Actions 40952187463'
+  connected-trial:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Connected execution explicitly disabled
+        run: |
+          echo 'HOLD: no connected trial is wired'
+          exit 1
