@@ -24,6 +24,32 @@ def review_persisted_actor_binding(*, user, trial):
     return "PERSISTED_ACTOR_BINDING_REVIEW_PASS"
 
 
+
+def prepare_persisted_service_trial_readonly():
+    """Attest service identity and construct one synthetic trial; no writer access.
+
+    This function is NOT connected to run_connected or to any workflow.
+    """
+    from dataclasses import replace
+    from uuid import uuid4
+    from preparer_identity.synthetic_service_readonly import (
+        attest_synthetic_identity_readonly,
+    )
+    from scripts.q0_rollback_trial_preflight_offline import prepare_pf_i03_q0_trial
+
+    actor = attest_synthetic_identity_readonly()
+    nonce = uuid4().hex
+    trial = prepare_pf_i03_q0_trial(
+        actor_id=actor,
+        request_id="q0-rollback-" + nonce,
+        question_id="OES-SYNTH-Q0-" + nonce,
+        original_text="Synthetic technical rollback trial; no factual evidence.",
+    )
+    trial = replace(trial, target_alias=WRITER)
+    validate_persisted_actor_trial(authenticated_actor_id=actor, trial=trial)
+    return trial, actor
+
+
 def _perform_rollback_only(*, trial, verified_actor):
     """Internal, intentionally unwired transaction recipe. No commit path."""
     RollbackTrialBoundary(WRITER, READER, 5, True, True, True, True).review()
