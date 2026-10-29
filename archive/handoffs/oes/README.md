@@ -1,3 +1,7 @@
+## Ponteiro atual — CP342 (2026-10-29)
+
+**Checkpoint vigente:** [CP342](OES_Continuidade_2026-10-29_CP342.md). Provisionamento sintético único [40903228787](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40903228787) PASS_POST_COMMIT após [40902960370](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40902960370) 268/268 PASS offline. Secret migrator excluído conforme responsável. Workflow de confirmação READ ONLY posterior publicado, **execução pendente**. Não repetir provisionamento. Marco B OPEN; Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP341 (2026-10-29)
 
 **Checkpoint vigente:** [CP341](OES_Continuidade_2026-10-29_CP341.md). Django auth, writer e leitor: preflights conectados PASS; `django_auth` canônico; provisionamento e Q0 conectados HARD HOLD. CI [40900571707](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40900571707): **267/267 PASS offline**, SHA `10e7c912`. Secret temporário `OES_AUTH_MIGRATOR_PASSWORD` excluído conforme responsável. Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED.
