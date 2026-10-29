@@ -64,3 +64,28 @@ class PreparerSessionMatrixTests(TestCase):
         from django.contrib.auth import authenticate
         self.assertFalse(self.users["allowed"].has_usable_password())
         self.assertIsNone(authenticate(username="oes_offline_allowed", password="not-a-real-secret"))
+
+    def test_persisted_actor_binding_is_derived_from_authenticated_user(self):
+        from uuid import uuid4
+        from preparer_identity.models import PreparerIdentity
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        user = self.users["allowed"]
+        actor = uuid4()
+        PreparerIdentity.objects.create(user=user, actor_uuid=actor)
+        self.assertEqual(persisted_preparer_actor_id(user), "oes:actor:" + str(actor))
+        # Caller attributes are not trusted as an alternative identity.
+        user.oes_actor_uuid = uuid4()
+        self.assertEqual(persisted_preparer_actor_id(user), "oes:actor:" + str(actor))
+
+    def test_persisted_actor_binding_rejects_missing_or_foreign_identity(self):
+        from uuid import uuid4
+        from preparer_identity.models import PreparerIdentity
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        from evidence.question_preparation import PreparationHold
+        user = self.users["allowed"]
+        other = self.users["no_permission"]
+        PreparerIdentity.objects.create(user=other, actor_uuid=uuid4())
+        with self.assertRaises(PreparationHold):
+            persisted_preparer_actor_id(user)
+        with self.assertRaises(PreparationHold):
+            persisted_preparer_actor_id(type("Anonymous", (), {"is_authenticated": False, "pk": None})())
