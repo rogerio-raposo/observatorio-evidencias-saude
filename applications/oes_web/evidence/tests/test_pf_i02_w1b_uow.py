@@ -190,7 +190,8 @@ class AuthPostgresDesignBoundaryTests(SimpleTestCase):
         self.assertNotIn("oes_synthetic_reader", design.DATABASES)
         self.assertIn("preparer_identity", design.INSTALLED_APPS)
         self.assertIn("config.auth_sandbox_router.AuthSandboxRouter", design.DATABASE_ROUTERS)
-        self.assertNotIn("preparer_identity", settings.INSTALLED_APPS)
+        self.assertIn("preparer_identity", settings.INSTALLED_APPS)
+        # The canonical auth app is registered but connected writes remain gated.
 
 
 class PostgresAuthMigrationSqlOfflineTests(SimpleTestCase):
@@ -202,7 +203,7 @@ class PostgresAuthMigrationSqlOfflineTests(SimpleTestCase):
         from django.conf import settings
         self.assertTrue(migration_path)
         # Migration graph is read from local Python files only; never a DB.
-        with self.settings(INSTALLED_APPS=[*settings.INSTALLED_APPS, "preparer_identity"]):
+        with self.settings(INSTALLED_APPS=list(dict.fromkeys([*settings.INSTALLED_APPS, "preparer_identity"]))):
             from preparer_identity.models import PreparerIdentity
             graph = MigrationLoader(None).graph
             self.assertIn(("preparer_identity", "0001_initial"), graph.nodes)
