@@ -1,3 +1,9 @@
+## CP338 — validação Django Q0 offline e próximo gate integrado (2026-10-29)
+
+- Checkpoint [CP338](archive/handoffs/oes/OES_Continuidade_2026-10-29_CP338.md) vigente; commits `8bbfa78a`, `d6cbd82c`, `065b6c5c`, `c8183ff6`, `befdfe82`, `16a18407` adicionaram verificador positivo dormente, metadados candidatos e testes de rollback/readback sem ativação. GitHub Actions [40862416668](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40862416668) SUCCESS, 253/253 offline; duas execuções anteriores falharam e foram corrigidas.
+- Contrato `PREPARATORY_ONLY`, `execute_connected_q0` e construtor de `DjangoQ0Repository` permanecem HARD HOLD. Não atribuir resultado de commit ao metadado `last_completed_q0`. Reutilizar evidência histórica de Q0 sintético com commit [40695250735](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40695250735), sem confundir com novo port ORM autenticado.
+- Próximo ponto: proposta nominal proporcional para fluxo Django-auth persistido → Q0/recibo → commit autorizado → readback independente → apresentação, sem execução conectada antes de aprovação específica. Marco B OPEN, validação científica pendente, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Decisão de escopo do Marco B — encerramento técnico-demonstrativo restrito (2026-10-29)
 
 - **Decisão expressa do responsável:** orientar o futuro encerramento do Marco B ao **escopo técnico-demonstrativo restrito**, mantendo **validação científica externa pendente**, sem pesquisadores vinculados. Isto **não declara encerrado o Marco B neste momento** e não modifica retroativamente o Documento 294 ou o Marco A.
