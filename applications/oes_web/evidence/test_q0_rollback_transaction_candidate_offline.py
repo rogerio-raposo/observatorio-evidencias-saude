@@ -255,3 +255,22 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             with self.assertRaises(ValueError):
                 candidate.prepare_persisted_service_trial_readonly()
             connections.__getitem__.assert_not_called()
+
+    def test_isolated_composition_passes_attested_actor_to_existing_recipe(self):
+        trial, actor = self.trial()
+        with patch.object(candidate, "prepare_persisted_service_trial_readonly",
+                          return_value=(trial, actor)) as prepare, patch.object(
+                          candidate, "_perform_rollback_only",
+                          return_value="PASS_ROLLBACK_ZERO_RESIDUES") as perform:
+            self.assertEqual(candidate.review_and_execute_isolated_trial(),
+                             "PASS_ROLLBACK_ZERO_RESIDUES")
+            prepare.assert_called_once_with()
+            perform.assert_called_once_with(trial=trial, verified_actor=actor)
+
+    def test_isolated_composition_never_opens_writer_if_attestation_fails(self):
+        with patch.object(candidate, "prepare_persisted_service_trial_readonly",
+                          side_effect=PreparationHold("HOLD: read only failure")), patch.object(
+                          candidate, "_perform_rollback_only") as perform:
+            with self.assertRaises(PreparationHold):
+                candidate.review_and_execute_isolated_trial()
+            perform.assert_not_called()
