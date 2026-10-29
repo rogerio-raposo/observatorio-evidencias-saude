@@ -30,7 +30,41 @@ def prepare_q0_trial_review(*, actor_id, request_id, question_id, original_text)
 
 
 def execute_connected_q0(*args, **kwargs):
+    """Public gate: a source-level change and separate approval are required."""
     raise PreparationHold("HOLD: G2-P2B connected execution not authorized")
+
+
+def _review_authenticated_q0_composition(*, user, command, atomic_factory,
+                                         repository_factory, readback_verifier,
+                                         writer_alias, read_alias):
+    """Dormant integration blueprint. Never callable as an operational executor.
+
+    This function is deliberately blocked BEFORE evaluating user identity,
+    factories or aliases, including when invoked directly by an internal caller.
+    The code following the gate is reviewed source for a future separately
+    approved activation; it is not evidence of commit or database readiness.
+    """
+    raise PreparationHold("HOLD: Django Q0 integrated executor not authorized")
+
+    # Unreachable until a distinct source-reviewed gate activation. The future
+    # implementation must also prove real transaction.atomic, branch identity,
+    # least-privilege ACL and durable receipt-based reconciliation.
+    from .question_orm_q0_dormant import DormantQ0OrmPort
+    from .question_uow_offline import OfflineQuestionUnitOfWork
+    from .question_preparation import submit_authenticated_question_command
+
+    port = DormantQ0OrmPort(
+        atomic_factory=atomic_factory,
+        repository_factory=repository_factory,
+        readback_verifier=readback_verifier,
+        writer_alias=writer_alias,
+        read_alias=read_alias,
+    )
+    return submit_authenticated_question_command(
+        user=user,
+        command=command,
+        unit_of_work=OfflineQuestionUnitOfWork(port),
+    )
 
 
 def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
