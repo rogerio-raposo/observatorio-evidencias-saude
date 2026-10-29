@@ -22,8 +22,15 @@ TABLES = frozenset({
 
 def verify_observed_readonly_session(observed, tables):
     """Accept evidence, not self-declared readiness or a DB connection."""
-    if not isinstance(observed, dict) or any(observed.get(k) != v for k, v in EXPECTED.items()):
-        raise PreparationHold("HOLD: scientific Django session mismatch")
+    if not isinstance(observed, dict):
+        raise PreparationHold("HOLD: scientific Django session evidence absent")
+    for key, expected in EXPECTED.items():
+        actual = observed.get(key)
+        if key == "search_path" and isinstance(actual, str):
+            actual = tuple(part.strip() for part in actual.split(","))
+            expected = tuple(part.strip() for part in expected.split(","))
+        if actual != expected:
+            raise PreparationHold(f"HOLD: scientific Django session mismatch: {key}")
     if not isinstance(tables, dict) or set(tables) != TABLES:
         raise PreparationHold("HOLD: scientific table inventory mismatch")
     if any(type(v) is not bool or v is not True for v in tables.values()):
