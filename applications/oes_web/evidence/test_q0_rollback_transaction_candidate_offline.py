@@ -230,3 +230,28 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
 
     def test_atomic_exit_failure_zero_residues_must_hold(self):
         self._full_transaction_scenario("exit_failure")
+
+    def test_readonly_service_attestation_creates_canonical_trial_without_writer(self):
+        actor = "oes:actor:" + str(uuid4())
+        with patch(
+            "preparer_identity.synthetic_service_readonly.attest_synthetic_identity_readonly",
+            return_value=actor,
+        ) as attest, patch.object(candidate, "connections") as connections:
+            trial, verified = candidate.prepare_persisted_service_trial_readonly()
+            self.assertEqual(verified, actor)
+            self.assertEqual(trial.actor_id, actor)
+            self.assertEqual(trial.target_alias, candidate.WRITER)
+            self.assertTrue(trial.question_id.startswith("OES-SYNTH-Q0-"))
+            self.assertEqual(trial.expected_insert_count, 5)
+            self.assertTrue(trial.rollback_required)
+            attest.assert_called_once_with()
+            connections.__getitem__.assert_not_called()
+
+    def test_readonly_service_attestation_rejects_noncanonical_actor(self):
+        with patch(
+            "preparer_identity.synthetic_service_readonly.attest_synthetic_identity_readonly",
+            return_value="oes_synthetic_q0",
+        ), patch.object(candidate, "connections") as connections:
+            with self.assertRaises(ValueError):
+                candidate.prepare_persisted_service_trial_readonly()
+            connections.__getitem__.assert_not_called()
