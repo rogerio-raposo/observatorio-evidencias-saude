@@ -1,3 +1,7 @@
+## CP336 — checkpoint de continuidade ativo (2026-10-29)
+
+- Checkpoint [CP336](archive/handoffs/oes/OES_Continuidade_2026-10-29_CP336.md) ativo; ponteiro atualizado em `archive/handoffs/oes/README.md`. PF-I03 Q0: sessão Django READ ONLY conectada PASS; rollback após exceção exercitado com fakes offline PASS; repositório e executor ORM conectados continuam HARD HOLD. Secret temporário declarado excluído. Próximo: revisão de configuração transacional e ativação controlada antes de solicitar gate DML independente. **Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED.**
+
 ## PF-I03-Q0 — revisão de falha transacional comprovada offline (2026-10-29)
 
 - Commit `202eb34c135f6c7ed7260ae4a93d49981536baea`: `transaction.set_rollback(True)` precede o callback de fase opcional. Commit `486356dffb531878908fda26df3677f69fd2eab7`: teste simula falha transacional com mocks e verifica rollback, fechamento, cinco consultas de resíduos e HOLD após reconciliação; CI [40819580824](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40819580824) SUCCESS.
