@@ -35,6 +35,22 @@ class SyntheticProvisioningOfflineTests(SimpleTestCase):
         self.assertEqual(classify_readback(**dict(good, same_actor_uuid=None)),
                          Outcome.UNCERTAIN_OR_DIVERGENT)
 
+    def test_permission_definition_does_not_count_as_user_permission_link(self):
+        # A pre-existing content type/auth_permission is not trial evidence.
+        # The classifier accepts only the exact user's assigned permission link.
+        absent = dict(user_found=False, identity_found=False,
+                      permission_found=False, flags_valid=False,
+                      same_user_link=False, same_actor_uuid=False,
+                      no_extra_access=False, read_complete=True,
+                      independent_reader=True)
+        self.assertEqual(classify_readback(**absent), Outcome.NOT_COMMITTED_VERIFIED)
+        self.assertEqual(classify_readback(**dict(absent, permission_found=True)),
+                         Outcome.UNCERTAIN_OR_DIVERGENT)
+        self.assertEqual(classify_readback(**dict(absent, read_complete=False)),
+                         Outcome.UNCERTAIN_OR_DIVERGENT)
+        self.assertEqual(classify_readback(**dict(absent, independent_reader=False)),
+                         Outcome.UNCERTAIN_OR_DIVERGENT)
+
     def test_single_use_sequence_is_inert_and_immutable(self):
         self.assertEqual(review_provisioning_sequence(), PROVISIONING_SEQUENCE)
         self.assertEqual(len(PROVISIONING_SEQUENCE), len(set(PROVISIONING_SEQUENCE)))
