@@ -3,7 +3,7 @@ from uuid import uuid4
 from django.test import SimpleTestCase
 from preparer_identity.provisioning_plan_offline import (
     Outcome, ProvisioningHold, SyntheticIdentityPlan,
-    classify_readback, execute_provisioning,
+    classify_readback, execute_provisioning, PROVISIONING_SEQUENCE, review_provisioning_sequence,
 )
 
 
@@ -34,3 +34,15 @@ class SyntheticProvisioningOfflineTests(SimpleTestCase):
                          Outcome.NOT_COMMITTED_VERIFIED)
         self.assertEqual(classify_readback(**dict(good, same_actor_uuid=None)),
                          Outcome.UNCERTAIN_OR_DIVERGENT)
+
+    def test_single_use_sequence_is_inert_and_immutable(self):
+        self.assertEqual(review_provisioning_sequence(), PROVISIONING_SEQUENCE)
+        self.assertEqual(len(PROVISIONING_SEQUENCE), len(set(PROVISIONING_SEQUENCE)))
+        self.assertLess(PROVISIONING_SEQUENCE.index("BEGIN_ATOMIC"),
+                        PROVISIONING_SEQUENCE.index("CREATE_ONE_USER_WITH_UNUSABLE_PASSWORD"))
+        self.assertLess(PROVISIONING_SEQUENCE.index("COMMIT_ONCE"),
+                        PROVISIONING_SEQUENCE.index("INDEPENDENT_READBACK_BEFORE_DECLARING_SUCCESS"))
+        with self.assertRaises(ProvisioningHold):
+            review_provisioning_sequence(PROVISIONING_SEQUENCE[:-1])
+        with self.assertRaises(ProvisioningHold):
+            review_provisioning_sequence(PROVISIONING_SEQUENCE + ("COMMIT_ONCE",))
