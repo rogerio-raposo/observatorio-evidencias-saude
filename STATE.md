@@ -1,3 +1,9 @@
+## PF-I03-Q0 — candidato offline validado; encerrar preparações redundantes (2026-10-29)
+
+- CI [40818644362](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818644362) SUCCESS no commit `5ed826c1478ee5dacd55d2a7a2513935d42eef30`. O candidato `scripts/pf_i03_q0_rollback_candidate_offline.py` gera metadados inéditos e valida contrato exclusivamente offline, com execução conectada explicitamente HOLD.
+- Avaliação de proporcionalidade: não criar novos preparadores, portas ou testes offline para o mesmo contrato. Existe bloqueio real entre receita ORM dormente e executor conectado: construtor do repositório e entrypoint público negam execução; o alias READ ONLY aprovado não permite DML; dados científicos sintéticos anteriores devem permanecer intocados.
+- **Próximo marco substantivo:** uma revisão delimitada de código do executor temporário **rollback-only** e de sua configuração científica separada, antes de solicitar gate DML nominal. Não inferir proveniência Django de um UUID4 sintético. Nenhum DML, DDL, permissão ou workflow conectado autorizado nesta etapa. CP335 vigente; Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — decisão de prontidão para um único rollback ORM conectado (2026-10-29)
 
 - Revisão em `main` HEAD `380fdbe52a761ce0638d7cb99c0e780ce478e380`: `DjangoQ0Repository.__init__` continua HARD HOLD; `execute_connected_q0` continua HARD HOLD. `_rollback_recipe` contém cinco INSERTs, rollback via `transaction.set_rollback(True)` e consultas após fechar a sessão, mas o uso de `_trial_repository` é gancho experimental e **não é um gate de produção nem licença para contornar o construtor**.
