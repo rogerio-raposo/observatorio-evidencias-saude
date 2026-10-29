@@ -1,3 +1,10 @@
+## PF-I03-Q0 — decisão de prontidão para um único rollback ORM conectado (2026-10-29)
+
+- Revisão em `main` HEAD `380fdbe52a761ce0638d7cb99c0e780ce478e380`: `DjangoQ0Repository.__init__` continua HARD HOLD; `execute_connected_q0` continua HARD HOLD. `_rollback_recipe` contém cinco INSERTs, rollback via `transaction.set_rollback(True)` e consultas após fechar a sessão, mas o uso de `_trial_repository` é gancho experimental e **não é um gate de produção nem licença para contornar o construtor**.
+- A configuração `settings_pf_i03_q0_readonly_trial.py` impõe `default_transaction_read_only=on`, portanto serve apenas a catálogo e **não pode** ser usada no ensaio DML. Uma nova sessão científica separada, de duração limitada e com credencial descartável, exige revisão específica e aprovação do executor antes do disparo.
+- **Critério mínimo de gate futuro:** exclusivamente 1 Q0 sintética inédita sob `oes_qprep_login` na branch/database conhecidos, 5 INSERT ORM em uma transação com rollback incondicional, nenhuma confirmação/commit, sem retries nem DELETE compensatório; identidade de ator UUID4 apenas estrutural e não atribuída a pesquisador Django real; manter intacto o Q0 legado; snapshot anterior + prova externa de ausência de cinco resíduos e baseline preservada; falha/incerteza → HOLD e reconciliação somente leitura. Para reduzir risco, primeiro submeter o executor e a configuração de escrita temporária a revisão de código, com o caminho público bloqueado, e somente depois solicitar autorização nominal DML.
+- **Sem autorização DML neste turno.** Nenhuma modificação de schema, ACL, secret, deployment ou serviços pagos. CP335 vigente, Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## PF-I03-Q0 — revisão de fronteira após CI offline (2026-10-29)
 
 - CI [40818251168](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40818251168) **SUCCESS** no HEAD `d94e1a4b47018b28e7675e1aaa7ac627661cb319`; preflight sintético valida apenas formato `oes:actor:<UUID4>`, não proveniência.
