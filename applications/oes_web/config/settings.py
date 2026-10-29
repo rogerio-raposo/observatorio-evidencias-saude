@@ -28,6 +28,42 @@ if os.getenv("OES_PG_A4_ENABLED") == "1":
         "OPTIONS": {"sslmode": "require", "options": "-c default_transaction_read_only=on"},
         "CONN_MAX_AGE": 0,
     }
+# Marco B: explicit, dormant-by-default three-alias configuration for offline review.
+# No writer connection is initiated here. This flag is NOT an execution gate.
+if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
+    if os.getenv("OES_PG_A4_ENABLED") != "1":
+        raise RuntimeError("HOLD: independent PG-A4 reader must be configured")
+    _host = "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+    _required = ("OES_Q0_AUTH_PASSWORD", "OES_Q0_WRITER_PASSWORD")
+    if any(not os.getenv(name) for name in _required):
+        raise RuntimeError("HOLD: separate auth and writer credentials required")
+    if os.environ["OES_PG_A4_HOST"] != _host:
+        raise RuntimeError("HOLD: direct same-branch endpoint required")
+    if len({os.environ["OES_Q0_AUTH_PASSWORD"],
+            os.environ["OES_Q0_WRITER_PASSWORD"],
+            os.environ["OES_PG_A4_PASSWORD"]}) != 3:
+        raise RuntimeError("HOLD: database identities require distinct credentials")
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "oes_sandbox",
+        "USER": "oes_auth_trial_login",
+        "PASSWORD": os.environ["OES_Q0_AUTH_PASSWORD"],
+        "HOST": _host,
+        "PORT": "5432",
+        "OPTIONS": {"sslmode": "require"},
+        "CONN_MAX_AGE": 0,
+    }
+    DATABASES["oes_q0_writer"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "oes_sandbox",
+        "USER": "oes_qprep_login",
+        "PASSWORD": os.environ["OES_Q0_WRITER_PASSWORD"],
+        "HOST": _host,
+        "PORT": "5432",
+        "OPTIONS": {"sslmode": "require"},
+        "CONN_MAX_AGE": 0,
+    }
+
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
