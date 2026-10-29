@@ -41,7 +41,10 @@ def classify_readback(*, user_found, identity_found, permission_found, flags_val
                       read_complete, independent_reader):
     """Classify verified booleans, never infer commit from an incomplete read.
 
-    permission_found means the exact user-permission LINK, never the global\n    auth_permission definition (which may preexist). A connected verifier must\n    independently establish each proposition for the reserved synthetic identity.\n    This helper performs no I/O and does not authorize retry or writes.
+    permission_found means the exact user-permission LINK, never the global
+    auth_permission definition (which may preexist). A connected verifier must
+    independently establish each proposition for the reserved synthetic identity.
+    This helper performs no I/O and does not authorize retry or writes.
     """
     values = (user_found, identity_found, permission_found, flags_valid,
               same_user_link, same_actor_uuid, no_extra_access,
@@ -50,7 +53,10 @@ def classify_readback(*, user_found, identity_found, permission_found, flags_val
         return Outcome.UNCERTAIN_OR_DIVERGENT
     if not read_complete or not independent_reader:
         return Outcome.UNCERTAIN_OR_DIVERGENT
-    # The global permission/content-type may have existed before this trial.\n    # Absence only means all three trial-specific records/links are absent.\n    if not user_found and not identity_found and not permission_found:\n        return Outcome.NOT_COMMITTED_VERIFIED
+    # The global permission/content-type may have existed before this trial.
+    # Absence only means all three trial-specific records/links are absent.
+    if not user_found and not identity_found and not permission_found:
+        return Outcome.NOT_COMMITTED_VERIFIED
     if all(values):
         return Outcome.COMMITTED_VERIFIED
     return Outcome.UNCERTAIN_OR_DIVERGENT
