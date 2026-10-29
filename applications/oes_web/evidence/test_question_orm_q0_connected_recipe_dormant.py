@@ -24,7 +24,7 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
             "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
             side_effect=AssertionError("unexpected database transaction"),
         ):
-            with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+            with self.assertRaisesRegex(PreparationHold, "independent readonly reconciliation alias absent"):
                 _rollback_recipe(
                     alias="unused", actor_id="synthetic", request_id="r",
                     question_id="q", original_text="synthetic text",
@@ -44,7 +44,7 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
             "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
             side_effect=AssertionError("unexpected transaction"),
         ):
-            with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+            with self.assertRaisesRegex(PreparationHold, "independent readonly reconciliation alias absent"):
                 _rollback_recipe(
                     alias=trial.target_alias, actor_id=trial.actor_id,
                     request_id=trial.request_id, question_id=trial.question_id,
@@ -123,7 +123,7 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
             "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
             side_effect=AssertionError("unexpected connected transaction"),
         ):
-            with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+            with self.assertRaisesRegex(PreparationHold, "independent readonly reconciliation alias absent"):
                 _review_only_orm_wiring(trial)
 
 
@@ -140,6 +140,14 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
         conn = SimpleNamespace(vendor="postgresql", in_atomic_block=False,
                                get_autocommit=lambda: True,
                                close=MagicMock())
+        reader_cursor = MagicMock()
+        reader_cursor.__enter__.return_value.fetchone.return_value = (
+            "on", "oes_synthetic_readonly", "oes_sandbox")
+        reader = SimpleNamespace(
+            vendor="postgresql", in_atomic_block=False,
+            get_autocommit=lambda: True, cursor=lambda: reader_cursor,
+            close=MagicMock())
+        read_alias = "oes_synthetic_readback"
         rollbacks = []
 
         @contextmanager
@@ -160,7 +168,7 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
                        "OesQuestionVersion", "OesQuestionCommandReceipt")
         with patch(
             "evidence.question_orm_q0_connected_recipe_dormant.connections",
-            {trial.target_alias: conn},
+            {trial.target_alias: conn, read_alias: reader},
         ), patch(
             "evidence.question_orm_q0_connected_recipe_dormant.transaction.atomic",
             side_effect=fake_atomic,
@@ -184,8 +192,10 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
                         original_text=trial.original_text,
                         fingerprint=trial.fingerprint, trial=trial,
                         _trial_repository=repo, _phase=phases.append,
+                        reconcile_alias=read_alias,
                     )
         self.assertEqual(rollbacks, [(True, trial.target_alias)])
         self.assertIn("VERIFY_ZERO_RESIDUES_NEW_SESSION", phases)
-        self.assertEqual(conn.close.call_count, 2)
-        self.assertTrue(all(m.objects.using.called for m in models))
+        conn.close.assert_called_once()
+        reader.close.assert_called_once()
+        self.assertTrue(all(m.objects.using.call_args.args == (read_alias,) for m in models))
