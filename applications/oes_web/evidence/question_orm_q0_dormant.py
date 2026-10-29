@@ -56,18 +56,26 @@ class DormantQ0OrmPort:
             raise PreparationHold("HOLD: unresolved Q0 outcome; no automatic retry")
         self.last_completed_q0 = None
         completed = None
-        with self.atomic_factory():
-            with self.repository_factory() as repo:
-                tx = _Q0Transaction(repo)
-                yield tx
-                if tx.pending is not None:
-                    raise PreparationHold("HOLD: receipt missing; rollback")
-                if tx.created_q0 is not None:
-                    if not tx.receipt_saved or tx.saved_receipt is None:
-                        raise PreparationHold("HOLD: Q0 identifiers without receipt")
-                    completed = dict(tx.created_q0)
-                    completed["request_id"] = tx.saved_receipt.request_id
-                    completed["fingerprint"] = tx.saved_receipt.fingerprint
+        try:
+            with self.atomic_factory():
+                with self.repository_factory() as repo:
+                    tx = _Q0Transaction(repo)
+                    yield tx
+                    if tx.pending is not None:
+                        raise PreparationHold("HOLD: receipt missing; rollback")
+                    if tx.created_q0 is not None:
+                        if not tx.receipt_saved or tx.saved_receipt is None:
+                            raise PreparationHold("HOLD: Q0 identifiers without receipt")
+                        completed = dict(tx.created_q0)
+                        completed["request_id"] = tx.saved_receipt.request_id
+                        completed["fingerprint"] = tx.saved_receipt.fingerprint
+        except Exception:
+            if completed is not None:
+                # Context exit may have committed despite reporting failure.
+                self.last_uncertain_q0 = dict(completed)
+                raise PreparationHold(
+                    "HOLD: Q0 transaction outcome uncertain; reconcile manually") from None
+            raise
         # Metadata only; not evidence of a real database commit.
         if completed is not None and self.readback_verifier is not None:
             # Invoked only after both injected context managers exit normally.
