@@ -82,6 +82,21 @@ class DormantQ0Tests(SimpleTestCase):
         with self.assertRaisesRegex(PreparationHold, "readback not verified"):
             self.run_q0()
         self.assertIsNone(self.port.last_completed_q0)
+        uncertain = self.port.last_uncertain_q0
+        self.assertEqual(uncertain["request_id"], "r1")
+        self.assertEqual(uncertain["actor_id"], "actor")
+        self.assertEqual(uncertain["fingerprint"], "a" * 64)
+        with self.assertRaisesRegex(PreparationHold, "no automatic retry"):
+            self.run_q0()
+
+    def test_injected_readback_exception_retains_reconciliation_keys(self):
+        self.port.readback_verifier = Mock(side_effect=TimeoutError("synthetic timeout"))
+        self.port.writer_alias = "writer"
+        self.port.read_alias = "reader"
+        with self.assertRaisesRegex(PreparationHold, "reconcile manually"):
+            self.run_q0()
+        self.assertEqual(self.port.last_uncertain_q0["question_id"], "OES-Q-SYN")
+        self.assertIsNone(self.port.last_completed_q0)
 
     def test_injected_readback_not_called_on_ledger_failure(self):
         verifier = Mock()
