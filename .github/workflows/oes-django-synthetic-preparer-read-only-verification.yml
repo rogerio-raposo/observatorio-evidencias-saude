@@ -109,6 +109,41 @@ jobs:
                   """)
                   count = cursor.fetchone()[0]
                   if count < 1:
+                      # Boolean-only staged diagnostics; no rows, counts, IDs or PII.
+                      cursor.execute("""
+                          SELECT
+                              EXISTS (SELECT 1 FROM django_auth.auth_user),
+                              EXISTS (
+                                  SELECT 1 FROM django_auth.auth_user
+                                  WHERE is_active IS TRUE
+                                    AND is_staff IS FALSE
+                                    AND is_superuser IS FALSE
+                              ),
+                              EXISTS (
+                                  SELECT 1 FROM django_auth.auth_user AS u
+                                  JOIN django_auth.preparer_identity_prepareridentity AS i
+                                    ON i.user_id = u.id
+                                  WHERE u.is_active IS TRUE
+                                    AND u.is_staff IS FALSE
+                                    AND u.is_superuser IS FALSE
+                                    AND i.actor_uuid IS NOT NULL
+                              ),
+                              EXISTS (
+                                  SELECT 1 FROM django_auth.auth_permission AS p
+                                  JOIN django_auth.django_content_type AS ct
+                                    ON ct.id = p.content_type_id
+                                  WHERE ct.app_label = 'evidence'
+                                    AND p.codename = 'prepare_question'
+                              )
+                      """)
+                      has_user, has_active_nonadmin, has_bound_identity, has_permission = cursor.fetchone()
+                      for label, value in (
+                          ("user_exists", has_user),
+                          ("active_nonadmin_exists", has_active_nonadmin),
+                          ("active_nonadmin_identity_exists", has_bound_identity),
+                          ("permission_definition_exists", has_permission),
+                      ):
+                          print(f"DIAGNOSTIC: {label}={'YES' if value else 'NO'}")
                       raise RuntimeError("HOLD: no eligible persisted synthetic preparer")
                   # Do not output row counts, names, emails, UUIDs or user IDs.
                   print("PASS: eligible persisted preparer exists; identity and permission paths checked")
