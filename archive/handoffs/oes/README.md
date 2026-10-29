@@ -1,3 +1,7 @@
+## Ponteiro atual — CP337 (2026-10-29)
+
+**Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP337.md](OES_Continuidade_2026-10-29_CP337.md). PF-I03 Django First, A1–A4: revisão de suficiência e código de reconciliação ORM Q0 em alias READ ONLY independente, commits `23afaadb` e `79bd9c68`. **Somente revisão estática, sem CI posterior, sem execução DML e com escritor conectado HARD HOLD.** Preservar Q0 sintético legado; configuração executora e ativação ainda não implementadas. Próximo: revisar suficiência transacional e isolamento de credenciais antes de eventual gate nominal integrado. Documento 362 vigente; Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP336 (2026-10-29)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP336.md](OES_Continuidade_2026-10-29_CP336.md). PF-I03 Django First: sessão científica Django READ ONLY [40816706429](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40816706429) SUCCESS; candidato ORM Q0 rollback-only ainda HARD HOLD, correção da reconciliação após falha validada offline [40819580824](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40819580824) SUCCESS. Secret READ ONLY declarado excluído; G2-P2-B encerrado, preservar Q0 sintético legado. **Próximo:** revisão proporcional da ativação temporária e configuração transacional separada, sem DML antes de novo gate. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
