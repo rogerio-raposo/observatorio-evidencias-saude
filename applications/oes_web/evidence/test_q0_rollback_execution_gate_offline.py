@@ -49,3 +49,21 @@ class RollbackTrialBoundaryTests(SimpleTestCase):
         ):
             with self.subTest(case=case), self.assertRaises(PreparationHold):
                 validate_persisted_actor_trial(**case)
+
+    def test_isolated_runner_requires_exact_actor_and_stays_closed(self):
+        from uuid import uuid4
+        from dataclasses import replace
+        from scripts.q0_rollback_trial_preflight_offline import prepare_pf_i03_q0_trial
+        from scripts.q0_rollback_isolated_review import review_candidate, run_connected
+        actor = "oes:actor:" + str(uuid4())
+        trial = replace(prepare_pf_i03_q0_trial(
+            actor_id=actor, request_id="review-only",
+            question_id="OES-SYNTH-Q0-review-only",
+            original_text="Pergunta inteiramente sintetica"),
+            target_alias="oes_q0_writer")
+        self.assertEqual(review_candidate(authenticated_actor_id=actor, trial=trial),
+                         "REVIEW_READY_CONNECTED_HOLD")
+        with self.assertRaises(PreparationHold):
+            review_candidate(authenticated_actor_id="oes:actor:" + str(uuid4()), trial=trial)
+        with self.assertRaises(PreparationHold):
+            run_connected()
