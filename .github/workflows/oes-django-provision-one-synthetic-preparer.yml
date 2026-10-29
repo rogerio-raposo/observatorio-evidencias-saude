@@ -1,0 +1,49 @@
+name: OES Marco B - single synthetic preparer provisioning
+on:
+  workflow_dispatch:
+    inputs:
+      approval_phrase:
+        description: 'Type APPROVED_20261029 to authorize the one synthetic trial'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-single-synthetic-preparer-20261029
+  cancel-in-progress: false
+
+jobs:
+  single-synthetic-provisioning:
+    if: ${{ github.ref == 'refs/heads/main' && inputs.approval_phrase == 'APPROVED_20261029' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings
+      OES_SINGLE_TRIAL_APPROVAL: ${{ inputs.approval_phrase }}
+      OES_APPROVED_SHA: ${{ github.sha }}
+      OES_AUTH_MIGRATOR_PASSWORD: ${{ secrets.OES_AUTH_MIGRATOR_PASSWORD }}
+      OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+    steps:
+      - name: Require both distinct secrets
+        shell: bash
+        run: |
+          if [ -z "$OES_AUTH_MIGRATOR_PASSWORD" ] || [ -z "$OES_Q0_AUTH_PASSWORD" ] || [ "$OES_AUTH_MIGRATOR_PASSWORD" = "$OES_Q0_AUTH_PASSWORD" ]; then
+            echo "::error::HOLD: dedicated administrative and reader credentials required"
+            exit 1
+          fi
+      - name: Checkout approved revision without persisted token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing Django dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: One-time synthetic provisioning and independent reconciliation
+        working-directory: applications/oes_web
+        run: python scripts/provision_one_synthetic_preparer.py
