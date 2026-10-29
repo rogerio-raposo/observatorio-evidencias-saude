@@ -1,0 +1,25 @@
+name: OES PF-I03 Q0 single Django READ ONLY session
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  readonly-session:
+    if: ${{ vars.OES_PF_I03_Q0_READONLY_APPROVED == '1' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r applications/oes_web/requirements.txt
+      - name: Single scientific Django read-only session
+        working-directory: applications/oes_web
+        env:
+          OES_PF_I03_Q0_READONLY_OPT_IN: '1'
+          OES_PF_I03_Q0_HOST: ${{ vars.OES_PF_I03_Q0_HOST }}
+          OES_PF_I03_Q0_PASSWORD: ${{ secrets.OES_PF_I03_Q0_PASSWORD }}
+        run: python scripts/pf_i03_q0_readonly_session_probe.py
