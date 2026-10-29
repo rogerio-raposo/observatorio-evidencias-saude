@@ -1,3 +1,7 @@
+## 2026-10-29 — CP337: reconciliação separada do candidato Django ORM Q0
+
+- CP337 consolida A1–A4. Commits `23afaadb` e `79bd9c68` alteraram exclusivamente receita dormente para reconciliador independente e fechamento em exceção de callback. Sem CI posterior, DML Neon ou habilitação de escritor; HARD HOLD e gates preservados.
+
 ## 2026-10-29 — CP336: continuidade PF-I03 Q0
 
 - CP336 criado em `archive/handoffs/oes/OES_Continuidade_2026-10-29_CP336.md`, com ponteiros README e STATE atualizados. Sessão Django científica READ ONLY PASS (Actions 40816706429); reconciliação Q0 offline após falha PASS (Actions 40819580824). Escritor conectado HARD HOLD, sem DML Neon e sem promoção de gates.
