@@ -95,3 +95,20 @@ class Q0ConnectedRecipeDormantTests(SimpleTestCase):
         self.assertIn("transaction.set_rollback(True, using=alias)", source)
         self.assertIn("HOLD: residual Q0 records after rollback", source)
         self.assertIn('verified_zero_residues": True', source)
+
+
+    def test_pf_i03_proposal_requires_canonical_uuid4_actor(self):
+        from uuid import uuid4
+        from scripts.q0_rollback_trial_preflight_offline import (
+            prepare_pf_i03_q0_trial, TrialHold,
+        )
+        kwargs = dict(request_id="pf-i03-isolated-request",
+                      question_id="OES-SYNTH-Q0-PF-I03-isolated",
+                      original_text="Pergunta Q0 puramente sintetica")
+        for actor in ("oes_synthetic_q0", "oes:actor:invalid", "oes:actor:123"):
+            with self.subTest(actor=actor), self.assertRaises(TrialHold):
+                prepare_pf_i03_q0_trial(actor_id=actor, **kwargs)
+        actor = "oes:actor:" + str(uuid4())
+        trial = prepare_pf_i03_q0_trial(actor_id=actor, **kwargs)
+        self.assertEqual(trial.actor_id, actor)
+        self.assertTrue(trial.rollback_required)
