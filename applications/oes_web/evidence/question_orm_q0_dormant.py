@@ -26,6 +26,10 @@ class DormantQ0OrmPort:
                 yield tx
                 if tx.pending is not None:
                     raise PreparationHold("HOLD: receipt missing; rollback")
+                # Retain identifiers only within this dormant transaction context.
+                # No successful commit or positive readback is implied here.
+                if tx.created_q0 is not None and not tx.receipt_saved:
+                    raise PreparationHold("HOLD: Q0 identifiers without receipt")
 
 
 class _Q0Transaction:
@@ -33,6 +37,8 @@ class _Q0Transaction:
         self.repo = repository
         self.request = None
         self.pending = None
+        self.created_q0 = None
+        self.receipt_saved = False
 
     def lock_request(self, actor_id, request_id):
         self.repo.lock_request(actor_id, request_id)
@@ -67,6 +73,13 @@ class _Q0Transaction:
         self.repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
         self.repo.insert_question_version(version_uuid, entity_uuid, command.original_text)
         self.pending = (actor_id, command.question_id, entity_uuid, version_uuid)
+        self.created_q0 = {
+            "actor_id": actor_id,
+            "question_id": command.question_id,
+            "entity_uuid": entity_uuid,
+            "version_uuid": version_uuid,
+            "original_text": command.original_text,
+        }
 
     def propose_q1(self, command, actor_id):
         raise PreparationHold("HOLD: Django ORM Q1 backend not implemented")
@@ -80,6 +93,7 @@ class _Q0Transaction:
                 or receipt.justification):
             raise PreparationHold("HOLD: receipt mismatch")
         self.repo.insert_receipt(receipt, entity_uuid, version_uuid)
+        self.receipt_saved = True
         self.pending = None
 
     def _require_lock(self, actor_id):
