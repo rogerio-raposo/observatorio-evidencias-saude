@@ -1,0 +1,98 @@
+name: OES Django auth and writer - read-only preflight
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-writer-read-only-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OES_Q0_MULTI_ALIAS_ENABLED: "1"
+      OES_PG_A4_ENABLED: "1"
+      OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+      OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+      OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+      OES_Q0_WRITER_PASSWORD: ${{ secrets.OES_Q0_WRITER_PASSWORD }}
+    steps:
+      - name: Require three separate secrets
+        shell: bash
+        run: |
+          if [ -z "$OES_PG_A4_PASSWORD" ] || [ -z "$OES_Q0_AUTH_PASSWORD" ] || [ -z "$OES_Q0_WRITER_PASSWORD" ]; then
+            echo "::error::HOLD: auth, writer and reader secrets required"
+            exit 1
+          fi
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Django dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Execute SELECT-only auth and writer preflight
+        working-directory: applications/oes_web
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+          import django
+          django.setup()
+          from django.db import connections
+
+          expected = {"default": "oes_auth_trial_login",
+                      "oes_q0_writer": "oes_qprep_login"}
+          tables = (("core", "entity"), ("core", "entity_version"),
+                    ("investigation", "question"), ("investigation", "question_version"),
+                    ("investigation", "question_command_receipt"))
+          try:
+              assert set(connections.databases) == {
+                  "default", "oes_q0_writer", "oes_synthetic_reader"
+              }, "HOLD: aliases not isolated"
+              for alias, role in expected.items():
+                  db = connections[alias]
+                  assert db.settings_dict["CONN_MAX_AGE"] == 0, "HOLD: persistent connection"
+                  db.close()
+                  with db.cursor() as cursor:
+                      cursor.execute(
+                          "SELECT current_user, session_user, current_database(), "
+                          "current_setting('transaction_read_only')"
+                      )
+                      current, login, database, read_only = cursor.fetchone()
+                      assert (current, login, database) == (role, role, "oes_sandbox"), (
+                          "HOLD: wrong connected identity"
+                      )
+                      if alias == "default":
+                          cursor.execute(
+                              "SELECT has_schema_privilege(current_user, 'django_auth', 'USAGE'), "
+                              "has_table_privilege(current_user, 'django_auth.auth_user', 'SELECT')"
+                          )
+                          assert cursor.fetchone() == (True, True), (
+                              "HOLD: auth schema or auth_user SELECT unavailable"
+                          )
+                          assert read_only in ("on", "off"), "HOLD: invalid auth transaction mode"
+                      else:
+                          for schema, table in tables:
+                              qualified = f'"{schema}"."{table}"'
+                              cursor.execute(
+                                  "SELECT has_schema_privilege(current_user, %s, 'USAGE'), "
+                                  "has_table_privilege(current_user, %s, 'SELECT'), "
+                                  "has_table_privilege(current_user, %s, 'INSERT'), "
+                                  "has_table_privilege(current_user, %s, 'UPDATE'), "
+                                  "has_table_privilege(current_user, %s, 'DELETE')",
+                                  (schema, qualified, qualified, qualified, qualified)
+                              )
+                              assert cursor.fetchone() == (True, True, True, False, False), (
+                                  f"HOLD: unexpected Q0 writer ACL on {schema}.{table}"
+                              )
+                      print(f"PASS: {alias} authenticated and catalog preflight (SELECT only)")
+          finally:
+              for alias in expected:
+                  connections[alias].close()
+          PY
