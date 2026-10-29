@@ -1,3 +1,7 @@
+## Ponteiro atual — CP343 (2026-10-29)
+
+**Checkpoint vigente:** [CP343](OES_Continuidade_2026-10-29_CP343.md). CI 40950780938: 282/282 PASS offline. Ensaio rollback sintético autorizado, não executado. Protocolo pré-operacional publicado; execução NO-GO até fechar bloqueadores. Marco B OPEN; Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP342 (2026-10-29)
 
 **Checkpoint vigente:** [CP342](OES_Continuidade_2026-10-29_CP342.md). Provisionamento sintético único [40903228787](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40903228787) PASS_POST_COMMIT após [40902960370](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40902960370) 268/268 PASS offline. Secret migrator excluído conforme responsável. Confirmação posterior READ ONLY [40905200153](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40905200153) PASS; frente sintética cadastral encerrada, sem login real ou Q0 conectado. Não repetir provisionamento. Marco B OPEN; Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED.
