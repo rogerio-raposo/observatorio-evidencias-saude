@@ -12,9 +12,19 @@ from .question_uow_offline import Receipt
 
 
 class DormantQ0OrmPort:
-    def __init__(self, *, atomic_factory=None, repository_factory=None):
+    def __init__(self, *, atomic_factory=None, repository_factory=None,
+                 readback_verifier=None, writer_alias=None, read_alias=None):
         if not callable(atomic_factory) or not callable(repository_factory):
             raise PreparationHold("HOLD: Q0 ORM backend not configured")
+        if readback_verifier is not None and (
+                not callable(readback_verifier)
+                or not isinstance(writer_alias, str) or not writer_alias
+                or not isinstance(read_alias, str) or not read_alias
+                or writer_alias == read_alias):
+            raise PreparationHold("HOLD: invalid independent readback configuration")
+        self.readback_verifier = readback_verifier
+        self.writer_alias = writer_alias
+        self.read_alias = read_alias
         self.atomic_factory = atomic_factory
         self.repository_factory = repository_factory
         self.last_completed_q0 = None
@@ -56,6 +66,14 @@ class DormantQ0OrmPort:
                     completed["request_id"] = tx.saved_receipt.request_id
                     completed["fingerprint"] = tx.saved_receipt.fingerprint
         # Metadata only; not evidence of a real database commit.
+        if completed is not None and self.readback_verifier is not None:
+            # Invoked only after both injected context managers exit normally.
+            # Fake contexts/verifiers are not proof of a PostgreSQL commit.
+            result = self.readback_verifier(
+                writer_alias=self.writer_alias, read_alias=self.read_alias,
+                **completed)
+            if not isinstance(result, dict) or result.get("readback_verified") is not True:
+                raise PreparationHold("HOLD: independent Q0 readback not verified")
         self.last_completed_q0 = completed
 
 
