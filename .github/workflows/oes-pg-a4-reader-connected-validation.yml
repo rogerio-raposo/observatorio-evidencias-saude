@@ -1,0 +1,82 @@
+name: OES PG-A4 Django reader - connected read-only validation
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reader-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OES_PG_A4_ENABLED: "1"
+      OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+      OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+    steps:
+      - name: Require disposable reader secret
+        shell: bash
+        run: |
+          if [ -z "$OES_PG_A4_PASSWORD" ]; then
+            echo "::error::Disposable reader secret absent; HOLD"
+            exit 1
+          fi
+      - name: Checkout without persisted token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing Django dependencies
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Read-only Django reader session and ACL preflight
+        working-directory: applications/oes_web
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+          import django
+          django.setup()
+          from django.db import connections
+          alias = "oes_synthetic_reader"
+          db = connections[alias]
+          expected = (
+              ("core", "entity"),
+              ("core", "entity_version"),
+              ("investigation", "question"),
+              ("investigation", "question_version"),
+              ("investigation", "question_command_receipt"),
+          )
+          try:
+              db.close()
+              with db.cursor() as cursor:
+                  cursor.execute(
+                      "SELECT current_user, session_user, current_database(), "
+                      "current_setting('default_transaction_read_only'), "
+                      "current_setting('transaction_read_only'), pg_backend_pid()"
+                  )
+                  identity = cursor.fetchone()
+                  assert identity[0:5] == (
+                      "oes_pg_a4_reader", "oes_pg_a4_reader", "oes_sandbox", "on", "on"
+                  ), "HOLD: incorrect reader identity or read-only session"
+                  for schema, table in expected:
+                      cursor.execute(
+                          "SELECT has_schema_privilege(current_user, %s, 'USAGE'), "
+                          "has_table_privilege(current_user, %s, 'SELECT'), "
+                          "has_table_privilege(current_user, %s, 'INSERT'), "
+                          "has_table_privilege(current_user, %s, 'UPDATE'), "
+                          "has_table_privilege(current_user, %s, 'DELETE')",
+                          (schema, f'"{schema}"."{table}"', f'"{schema}"."{table}"',
+                           f'"{schema}"."{table}"', f'"{schema}"."{table}"'),
+                      )
+                      assert cursor.fetchone() == (True, True, False, False, False), (
+                          f"HOLD: unexpected ACL for {schema}.{table}"
+                      )
+                  print("PASS: Django reader identity, fresh direct readonly session and five-table ACL")
+          finally:
+              db.close()
+          PY
