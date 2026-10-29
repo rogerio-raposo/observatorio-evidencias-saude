@@ -98,6 +98,21 @@ class DormantQ0Tests(SimpleTestCase):
         self.assertEqual(self.port.last_uncertain_q0["question_id"], "OES-Q-SYN")
         self.assertIsNone(self.port.last_completed_q0)
 
+    def test_transaction_exit_failure_retains_candidate_and_blocks_retry(self):
+        @contextmanager
+        def uncertain_atomic():
+            yield
+            raise RuntimeError("synthetic commit acknowledgment lost")
+
+        self.port.atomic_factory = uncertain_atomic
+        with self.assertRaisesRegex(PreparationHold, "transaction outcome uncertain"):
+            self.run_q0()
+        self.assertEqual(self.port.last_uncertain_q0["request_id"], "r1")
+        self.assertEqual(self.port.last_uncertain_q0["fingerprint"], "a" * 64)
+        self.assertIsNone(self.port.last_completed_q0)
+        with self.assertRaisesRegex(PreparationHold, "no automatic retry"):
+            self.run_q0()
+
     def test_injected_readback_not_called_on_ledger_failure(self):
         verifier = Mock()
         self.port.readback_verifier = verifier
