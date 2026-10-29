@@ -1,3 +1,10 @@
+## Pos-CP336: separacao do executor Q0 e reconciliador (2026-10-29)
+
+- Revisao arquitetural apenas, sem DML: executor Django ORM temporario (papel oes_qprep_login, alias oes_qprep_trial, cinco INSERT na mesma transacao, rollback obrigatorio, sem commit) e verificador PostgreSQL independente (outra sessao, credencial de leitura separada, SELECT somente). Os dois operam no mesmo banco oes_sandbox e branch br-gentle-hall-b6jaxehf; nenhum deles pode habilitar HTTP.
+- Sequencia futura: snapshot READ ONLY de identificadores e baseline da Q0 legada; uma tentativa autorizada de escrita sintetica com rollback; sessao de leitura separada prova ausencia de residuos por cinco tabelas e preservacao do legado. Divergencia ou impossibilidade de verificacao leva a HOLD, sem retry nem DELETE compensatorio. Contagens globais isoladas nao comprovam isolamento quando ha concorrencia.
+- Pendencias: repositorio e entrypoint ORM continuam HARD HOLD; configuracao existente e somente de leitura; nao existe configuracao executora aprovada; formato UUID4 sintetico nao prova identidade Django persistida. Exigir gate nominal de DML depois de revisao tecnica. Nao criar nova camada de persistencia.
+- CP336 vigente; Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
+
 ## CP336 — checkpoint de continuidade ativo (2026-10-29)
 
 - Checkpoint [CP336](archive/handoffs/oes/OES_Continuidade_2026-10-29_CP336.md) ativo; ponteiro atualizado em `archive/handoffs/oes/README.md`. PF-I03 Q0: sessão Django READ ONLY conectada PASS; rollback após exceção exercitado com fakes offline PASS; repositório e executor ORM conectados continuam HARD HOLD. Secret temporário declarado excluído. Próximo: revisão de configuração transacional e ativação controlada antes de solicitar gate DML independente. **Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED.**
