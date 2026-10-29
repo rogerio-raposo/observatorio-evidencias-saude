@@ -48,7 +48,7 @@ jobs:
 
           db = connections["default"]
           required = (
-              "auth_user", "auth_permission", "auth_user_user_permissions",
+              "auth_user", "auth_permission", "django_content_type", "auth_user_user_permissions",
               "auth_user_groups", "auth_group_permissions",
               "preparer_identity_prepareridentity",
           )
