@@ -101,3 +101,17 @@ class PFI03AuthenticatedQ0CompositionTests(SimpleTestCase):
                 )
         resolver.assert_not_called()
         self.assertFalse(port.receipts)
+
+
+class PFI03ScientificAliasDormantTests(SimpleTestCase):
+    def test_scientific_q0_alias_has_no_connection_or_credentials(self):
+        from config import settings_pf_i03_q0_scientific_dormant as cfg
+        self.assertEqual(cfg.PF_I03_SCIENTIFIC_ALIAS, "oes_qprep_trial")
+        self.assertEqual(cfg.PF_I03_EXPECTED_ROLE, "oes_qprep_login")
+        self.assertEqual(cfg.PF_I03_EXPECTED_DATABASE, "oes_sandbox")
+        self.assertEqual(cfg.PF_I03_EXPECTED_TABLE_SCHEMAS, ("core", "investigation"))
+        self.assertIs(cfg.PF_I03_ROLLBACK_REQUIRED, True)
+        self.assertTrue(all(db == {"ENGINE": "django.db.backends.dummy"}
+                            for db in cfg.DATABASES.values()))
+        self.assertNotIn("PASSWORD", repr(cfg.DATABASES))
+        self.assertNotIn("HOST", repr(cfg.DATABASES))
