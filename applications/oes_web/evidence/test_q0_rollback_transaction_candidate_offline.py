@@ -39,7 +39,11 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         cursor = writer.cursor.return_value.__enter__.return_value
         cursor.fetchone.return_value = ("oes_qprep_login", "oes_sandbox", "off")
         connections = MagicMock()
-        connections.__getitem__.return_value = writer
+        reader = MagicMock()
+        reader.vendor = "postgresql"
+        reader.in_atomic_block = False
+        reader.cursor.return_value.__enter__.return_value.fetchone.return_value = ("other_role", "oes_sandbox", "on")
+        connections.__getitem__.side_effect = lambda alias: writer if alias == candidate.WRITER else reader
         rollback = MagicMock()
 
         @contextmanager
