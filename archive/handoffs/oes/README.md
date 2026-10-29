@@ -1,3 +1,7 @@
+## Ponteiro atual — CP341 (2026-10-29)
+
+**Checkpoint vigente:** [CP341](OES_Continuidade_2026-10-29_CP341.md). Django auth, writer e leitor: preflights conectados PASS; `django_auth` canônico; provisionamento e Q0 conectados HARD HOLD. CI [40900571707](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40900571707): **267/267 PASS offline**, SHA `10e7c912`. Secret temporário `OES_AUTH_MIGRATOR_PASSWORD` excluído conforme responsável. Marco B OPEN; E9 NO-GO; Fase 5 NOT_STARTED.
+
 ## Ponteiro atual — CP340 (2026-10-29)
 
 **Checkpoint vigente:** [OES_Continuidade_2026-10-29_CP340.md](OES_Continuidade_2026-10-29_CP340.md). Leitor Django READ ONLY conectado **PASS** [Actions 40877254997](https://github.com/rogerio-raposo/observatorio-evidencias-saude/actions/runs/40877254997), SHA `b44278b1`. ACL das cinco tabelas Q0 confirmada; secret `OES_PG_A4_READER_PASSWORD` **mantido por decisão do usuário**, sujeito a auditoria proporcional e validade da credencial. Escritor Django/commit ainda HARD HOLD; não repetir GRANTs nem validar novamente o leitor sem fato novo. Marco B OPEN, E9 NO-GO, Fase 5 NOT_STARTED.
