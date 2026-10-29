@@ -5,6 +5,8 @@ Never call Django migrations, Q0 executor, or provision a real user.
 """
 import os
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from uuid import UUID, uuid4
 
 import django
@@ -21,7 +23,6 @@ USERNAME = "oes_synth_preparer_marco_b_trial_20261029"
 CONTENT_TYPE = ("evidence", "oesquestion")
 PERMISSION = ("Can prepare an OES question", "prepare_question")
 LOCK = 405171002917
-EXPECTED_HEAD = "445df50ff420bca454afc41526114ece742a76c0"
 
 
 def require(condition, reason):
