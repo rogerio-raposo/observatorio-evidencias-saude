@@ -4,7 +4,6 @@ Not authentication, not HTTP authorization, and never a DML gate.
 """
 from uuid import UUID
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Permission
 from django.db import connections
 from evidence.question_preparation import PreparationHold
 from .models import PreparerIdentity
@@ -54,8 +53,7 @@ def attest_synthetic_identity_readonly():
             username=RESERVED_USERNAME))
         identities = (list(PreparerIdentity.objects.using("default").filter(
             user_id=users[0].pk)) if len(users) == 1 else [])
-        permissions = (list(Permission.objects.using("default").filter(
-            user__pk=users[0].pk).values_list(
+        permissions = (list(users[0].user_permissions.using("default").values_list(
                 "content_type__app_label", "content_type__model", "codename"))
             if len(users) == 1 else [])
         groups = (list(users[0].groups.using("default").values_list("pk", flat=True))
