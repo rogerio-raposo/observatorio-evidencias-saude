@@ -151,3 +151,82 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             return_value="oes:actor:" + str(uuid4())
         ), self.assertRaises(PreparationHold):
             candidate.review_persisted_actor_binding(user=MagicMock(), trial=trial)
+
+    def _full_transaction_scenario(self, outcome):
+        from contextlib import ExitStack
+        trial, actor = self.trial()
+        writer, reader = MagicMock(), MagicMock()
+        writer.vendor = reader.vendor = "postgresql"
+        writer.in_atomic_block = reader.in_atomic_block = False
+        writer.get_autocommit.return_value = True
+        reader.get_autocommit.return_value = True
+        writer.cursor.return_value.__enter__.return_value.fetchone.return_value = (
+            "oes_qprep_login", "oes_sandbox", "off")
+        reader.cursor.return_value.__enter__.return_value.fetchone.return_value = (
+            "oes_pg_a4_reader", "oes_sandbox", "on")
+        connection_map = {candidate.WRITER: writer, candidate.READER: reader}
+        connections = MagicMock()
+        connections.__getitem__.side_effect = connection_map.__getitem__
+        rollback = MagicMock()
+
+        @contextmanager
+        def atomic(*, using, savepoint):
+            self.assertEqual((using, savepoint), (candidate.WRITER, False))
+            yield
+            if outcome == "exit_failure":
+                raise RuntimeError("synthetic atomic exit failure")
+
+        models = (candidate.OesEntity, candidate.OesQuestion,
+                  candidate.OesEntityVersion, candidate.OesQuestionVersion,
+                  candidate.OesQuestionCommandReceipt)
+        with ExitStack() as stack:
+            stack.enter_context(patch.object(candidate, "connections", connections))
+            stack.enter_context(patch.object(candidate.transaction, "atomic", atomic))
+            stack.enter_context(patch.object(candidate.transaction, "set_rollback", rollback))
+            managers = [
+                stack.enter_context(patch.object(model.objects, "using"))
+                for model in models
+            ]
+            for manager in managers:
+                def outcome_for_alias(alias):
+                    manager = MagicMock()
+                    manager.filter.return_value.exists.return_value = False
+                    manager.filter.return_value.count.return_value = (
+                        1 if alias == candidate.WRITER else 0)
+                    return manager
+                manager.side_effect = outcome_for_alias
+            if outcome == "residues":
+                managers[0].side_effect = lambda alias: self._residual_manager(alias)
+            if outcome == "residues":
+                with self.assertRaisesRegex(PreparationHold, "scientific rollback residues"):
+                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+            elif outcome == "exit_failure":
+                with self.assertRaisesRegex(PreparationHold, "transaction failed; zero residues"):
+                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+            else:
+                self.assertEqual(candidate._perform_rollback_only(
+                    trial=trial, verified_actor=actor), "PASS_ROLLBACK_ZERO_RESIDUES")
+            rollback.assert_called_once_with(True, using=candidate.WRITER)
+            writer.close.assert_called_once()
+            reader.close.assert_called()
+            for manager in managers:
+                self.assertTrue(any(c.args == (candidate.READER,)
+                                    for c in manager.call_args_list))
+
+    @staticmethod
+    def _residual_manager(alias):
+        manager = MagicMock()
+        manager.filter.return_value.exists.return_value = (
+            alias == candidate.READER)
+        manager.filter.return_value.count.return_value = (
+            1 if alias == candidate.WRITER else 0)
+        return manager
+
+    def test_full_five_inserts_rollback_and_zero_residues(self):
+        self._full_transaction_scenario("success")
+
+    def test_five_inserts_with_residues_must_hold(self):
+        self._full_transaction_scenario("residues")
+
+    def test_atomic_exit_failure_zero_residues_must_hold(self):
+        self._full_transaction_scenario("exit_failure")
