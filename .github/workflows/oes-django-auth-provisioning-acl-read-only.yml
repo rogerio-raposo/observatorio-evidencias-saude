@@ -1,0 +1,102 @@
+name: OES Django auth provisioning ACL - SELECT-only preflight
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-provisioning-acl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OES_Q0_MULTI_ALIAS_ENABLED: "1"
+      OES_PG_A4_ENABLED: "1"
+      OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+      OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+      OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+      OES_Q0_WRITER_PASSWORD: ${{ secrets.OES_Q0_WRITER_PASSWORD }}
+    steps:
+      - name: Require existing secrets
+        shell: bash
+        run: |
+          if [ -z "$OES_PG_A4_PASSWORD" ] || [ -z "$OES_Q0_AUTH_PASSWORD" ] || [ -z "$OES_Q0_WRITER_PASSWORD" ]; then
+            echo "::error::HOLD: required secrets unavailable"
+            exit 1
+          fi
+      - name: Checkout without persisted token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing requirements
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Read PostgreSQL catalog privileges only
+        working-directory: applications/oes_web
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+          import django
+          django.setup()
+          from django.db import connections
+
+          db = connections["default"]
+          tables = (
+              "django_content_type", "auth_permission", "auth_user",
+              "auth_user_user_permissions", "preparer_identity_prepareridentity"
+          )
+          try:
+              db.close()
+              with db.cursor() as cursor:
+                  cursor.execute(
+                      "SELECT current_user, session_user, current_database(), "
+                      "current_schema(), current_setting('search_path')"
+                  )
+                  user, session, database, schema, path = cursor.fetchone()
+                  if (user, session, database, schema) != (
+                      "oes_auth_trial_login", "oes_auth_trial_login",
+                      "oes_sandbox", "django_auth"
+                  ):
+                      raise RuntimeError("HOLD: wrong authentication connection or schema")
+                  if path != "django_auth,public":
+                      raise RuntimeError("HOLD: unexpected search_path")
+                  cursor.execute(
+                      "SELECT has_schema_privilege(current_user, 'django_auth', 'USAGE')"
+                  )
+                  if cursor.fetchone()[0] is not True:
+                      raise RuntimeError("HOLD: auth schema USAGE denied")
+                  all_ok = True
+                  for table in tables:
+                      qualified = "django_auth." + table
+                      cursor.execute(
+                          "SELECT to_regclass(%s) IS NOT NULL, "
+                          "has_table_privilege(current_user, %s, 'SELECT'), "
+                          "has_table_privilege(current_user, %s, 'INSERT'), "
+                          "has_table_privilege(current_user, %s, 'UPDATE'), "
+                          "has_table_privilege(current_user, %s, 'DELETE')",
+                          (qualified, qualified, qualified, qualified, qualified)
+                      )
+                      exists, select, insert, update, delete = cursor.fetchone()
+                      # Assess potential future provisioning only; do not write.
+                      minimum = exists and select and insert
+                      all_ok = all_ok and minimum
+                      print(
+                          f"ACL: {table}: "
+                          f"exists={'YES' if exists else 'NO'} "
+                          f"select={'YES' if select else 'NO'} "
+                          f"insert={'YES' if insert else 'NO'} "
+                          f"update={'YES' if update else 'NO'} "
+                          f"delete={'YES' if delete else 'NO'}"
+                      )
+                  if not all_ok:
+                      raise RuntimeError("HOLD: one or more required INSERT/SELECT grants absent")
+                  print("PASS: minimum auth provisioning table ACL present (no writes executed)")
+          finally:
+              db.close()
+          PY
