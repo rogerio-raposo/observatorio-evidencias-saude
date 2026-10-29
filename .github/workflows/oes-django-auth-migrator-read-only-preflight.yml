@@ -1,0 +1,122 @@
+name: OES Django auth migrator - manual SELECT-only preflight
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-migrator-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OES_AUTH_MIGRATOR_PASSWORD: ${{ secrets.OES_AUTH_MIGRATOR_PASSWORD }}
+    steps:
+      - name: Require temporary administrative secret
+        shell: bash
+        run: |
+          if [ -z "$OES_AUTH_MIGRATOR_PASSWORD" ]; then
+            echo "::error::HOLD: temporary migrator secret unavailable"
+            exit 1
+          fi
+      - name: Checkout without persisted token
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing PostgreSQL driver
+        working-directory: applications/oes_web
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Check connection identity and privileges using SELECT only
+        working-directory: applications/oes_web
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          from django.db.backends.postgresql.base import DatabaseWrapper
+          from django.db import connections
+          from django.conf import settings
+
+          # Isolated connection: not wired into Django DATABASES or ORM routing.
+          # No transactions, DML, DDL, role changes or application commands.
+          os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+          import django
+          django.setup()
+          from django.db import connections
+
+          config = {
+              "ENGINE": "django.db.backends.postgresql",
+              "NAME": "oes_sandbox",
+              "USER": "oes_auth_migrator",
+              "PASSWORD": os.environ["OES_AUTH_MIGRATOR_PASSWORD"],
+              "HOST": "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech",
+              "PORT": "5432",
+              "OPTIONS": {"sslmode": "require", "options": "-c search_path=django_auth,public -c default_transaction_read_only=on"},
+              "CONN_MAX_AGE": 0,
+              "CONN_HEALTH_CHECKS": False,
+              "AUTOCOMMIT": True,
+              "ATOMIC_REQUESTS": False,
+              "TIME_ZONE": None,
+              "TEST": {},
+          }
+          db = DatabaseWrapper(config, alias="oes_auth_migrator_preflight")
+          tables = (
+              "auth_user", "auth_permission", "django_content_type",
+              "auth_user_user_permissions", "preparer_identity_prepareridentity",
+          )
+          sequences = (
+              "auth_user_id_seq", "auth_permission_id_seq",
+              "django_content_type_id_seq", "auth_user_user_permissions_id_seq",
+              "preparer_identity_prepareridentity_id_seq",
+          )
+          try:
+              with db.cursor() as cursor:
+                  cursor.execute(
+                      "SELECT current_user, session_user, current_database(), "
+                      "current_schema(), current_setting('search_path'), "
+                      "current_setting('transaction_read_only')"
+                  )
+                  if cursor.fetchone() != (
+                      "oes_auth_migrator", "oes_auth_migrator",
+                      "oes_sandbox", "django_auth", "django_auth,public", "on"
+                  ):
+                      raise RuntimeError("HOLD: incorrect identity, schema, or read-only session")
+                  for table in tables:
+                      cursor.execute(
+                          "SELECT pg_get_userbyid(c.relowner) "
+                          "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace "
+                          "WHERE n.nspname='django_auth' AND c.relname=%s "
+                          "AND c.relkind IN ('r','p')",
+                          (table,),
+                      )
+                      if cursor.fetchone() != ("oes_auth_migrator",):
+                          raise RuntimeError("HOLD: unexpected table ownership")
+                      cursor.execute(
+                          "SELECT has_table_privilege(current_user, %s, 'SELECT'), "
+                          "has_table_privilege(current_user, %s, 'INSERT')",
+                          ("django_auth."+table, "django_auth."+table),
+                      )
+                      if cursor.fetchone() != (True, True):
+                          raise RuntimeError("HOLD: table access unavailable")
+                  for sequence in sequences:
+                      cursor.execute(
+                          "SELECT pg_get_userbyid(c.relowner) "
+                          "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace "
+                          "WHERE n.nspname='django_auth' AND c.relname=%s AND c.relkind='S'",
+                          (sequence,),
+                      )
+                      if cursor.fetchone() != ("oes_auth_migrator",):
+                          raise RuntimeError("HOLD: unexpected sequence ownership")
+                      cursor.execute(
+                          "SELECT has_sequence_privilege(current_user, %s, 'USAGE')",
+                          ("django_auth."+sequence,),
+                      )
+                      if cursor.fetchone() != (True,):
+                          raise RuntimeError("HOLD: sequence USAGE unavailable")
+                  print("PASS: dedicated migrator identity, readonly session, five tables and five sequences")
+          finally:
+              db.close()
+          PY
