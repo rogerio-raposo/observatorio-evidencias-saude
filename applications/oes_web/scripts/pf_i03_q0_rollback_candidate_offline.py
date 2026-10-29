@@ -42,6 +42,23 @@ def review_rollback_contract(trial):
     return "PF_I03_Q0_ROLLBACK_REVIEW_PASS_CONNECTED_HOLD"
 
 
+def _review_only_orm_wiring(trial):
+    """Exact wiring planned for a future nominally authorized transaction.
+
+    The underlying repository constructor remains HARD HOLD, so this method
+    never provides a connection or a working DML executor. No bypass objects,
+    repository injection, settings mutation, or credentials are accepted.
+    """
+    review_rollback_contract(trial)
+    from evidence.question_orm_q0_connected_recipe_dormant import _rollback_recipe
+    return _rollback_recipe(
+        alias=trial.target_alias, actor_id=trial.actor_id,
+        request_id=trial.request_id, question_id=trial.question_id,
+        original_text=trial.original_text, fingerprint=trial.fingerprint,
+        trial=trial,
+    )
+
+
 def execute_candidate(*args, **kwargs):
     """Permanent HOLD; do not use injection to bypass repository constructor."""
     raise PreparationHold("HOLD: PF-I03 connected ORM rollback requires separate DML gate")
