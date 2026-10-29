@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       protocol_ack:
-        description: "Review only; connected execution is not enabled"
+        description: "Review-only check; no connected execution"
         required: true
         type: choice
         options:
@@ -19,10 +19,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Confirm manual workflow remains non-operational
+      - name: Checkout dispatched source without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify connected execution still disabled
+        working-directory: applications/oes_web
         run: |
-          echo 'HOLD: protocol review only; no PostgreSQL credentials or DML'
-          echo 'Approved offline baseline: 287/287, Actions 40952187463'
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          candidate = ast.parse(Path("scripts/q0_rollback_transaction_candidate.py").read_text())
+          gate = next(node for node in candidate.body
+                      if isinstance(node, ast.FunctionDef) and node.name == "run_connected")
+          assert len(gate.body) == 1 and isinstance(gate.body[0], ast.Raise), "HOLD: candidate entrypoint changed"
+          review = ast.parse(Path("scripts/q0_rollback_isolated_review.py").read_text())
+          review_gate = next(node for node in review.body
+                             if isinstance(node, ast.FunctionDef) and node.name == "run_connected")
+          assert len(review_gate.body) == 1 and isinstance(review_gate.body[0], ast.Raise), "HOLD: review entrypoint changed"
+          print("REVIEW_ONLY_CONNECTED_HOLD_CONFIRMED")
+          PY
+      - name: Report review-only scope
+        run: |
+          echo 'HOLD: no database credentials, DML, or trial execution'
+          echo 'Dispatched revision reviewed: ${{ github.sha }}'
   connected-trial:
     if: ${{ false }}
     runs-on: ubuntu-latest
