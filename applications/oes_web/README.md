@@ -52,3 +52,13 @@ reconcilia NCT nem identidade científica**. Falha explícita quando desabilitad
 Testes unitários em `evidence/tests/test_synthetic_pg_reader.py` utilizam mocks,
 não Neon. Execução de testes/conexão real e carga de fixtures requer etapas de
 validação posteriores e não foi comprovada pelo commit de implementação.
+
+## Navegação do demonstrador
+
+A página inicial mantém o catálogo documental e apresenta um guia das funcionalidades.
+O menu comum liga o catálogo, o percurso sintético, a leitura sintética opcional,
+a prévia Q0 com validação local e a ficha N2 histórica disponível (A2).
+Todas as páginas HTML incluem retorno ao início e atalho para o conteúdo,
+inclusive quando uma apresentação exibe HOLD. A leitura sintética continua
+sujeita à configuração e autorização existentes; o menu não habilita conexão.
+Nenhum envio HTTP ou persistência Q0 é acrescentado pela navegação.

@@ -2,11 +2,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OES — Catálogo demonstrativo de sinais</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
-<body><main>
+<title>OES — Catálogo demonstrativo de sinais</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"><link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
+<body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
+<main>
+{% include "evidence/navigation.html" with current="home" %}
+<div id="conteudo" tabindex="-1">
 <p class="notice">CATÁLOGO DEMONSTRATIVO — duas fixtures documentais locais; não é inventário completo, seleção científica ou atualização de evidências.</p>
 <h1>Catálogo documental de sinais</h1>
 <p>Identificadores e estados conforme registros documentais delimitados. Consulte cada sinal para suas fontes e limites.</p>
+<section aria-labelledby="demo-guide-title">
+<h2 id="demo-guide-title">Explore o demonstrador</h2>
+<p>Comece pelo catálogo abaixo ou escolha uma das apresentações no menu comum.</p>
+<ul>
+<li><strong>Documental:</strong> sinais, fontes e vínculos históricos delimitados.</li>
+<li><strong>Sintético:</strong> percurso ilustrativo e prévia Q0 com validação local, sem envio ou gravação.</li>
+<li><strong>Leitura sintética:</strong> depende de acesso previamente autorizado; se indisponível, exibe HOLD.</li>
+<li><strong>Histórico:</strong> ficha N2 disponível em consulta A2, sem revisão científica independente A3.</li>
+</ul>
+</section>
 <section class="reading-guide" aria-labelledby="guide-heading"><h2 id="guide-heading">Como interpretar estes exemplos</h2>
 <p>Os dois exemplos ilustram situações diferentes: uma identidade documentada com relatórios relacionados e outra não identificada no inventário consultado. Essa distinção não equivale a uma nova avaliação científica.</p></section>
 <section aria-labelledby="signals-heading"><h2 id="signals-heading">Sinais representados</h2>
@@ -21,4 +34,6 @@
 {% empty %}<li>Nenhum sinal demonstrativo disponível.</li>{% endfor %}
 </ul></section>
 <p>Nenhum julgamento científico novo é realizado nesta interface.</p>
+</div>
+{% include "evidence/return_navigation.html" %}
 </main></body></html>

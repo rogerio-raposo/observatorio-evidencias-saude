@@ -2,8 +2,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OES — Sinal demonstrativo</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
-<body><main>
+<title>OES — Sinal demonstrativo</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"><link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
+<body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
+<main>
+{% include "evidence/navigation.html" with current="" %}
+<div id="conteudo" tabindex="-1">
 <p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
 <h1>Sinal de evidência: {{ signal.nct }}</h1>
 <section class="reading-guide" aria-labelledby="route-title"><h2 id="route-title">Como ler este percurso documental</h2>
@@ -38,4 +41,6 @@
 <p>Nenhuma avaliação científica nova foi realizada nesta trajetória.</p>
 </section>
 <nav aria-label="Exemplos"><a href="/signals/NCT01438697/">Identidade conhecida</a> · <a href="/signals/NCT07836491/">Identidade indeterminada</a></nav>
+</div>
+{% include "evidence/return_navigation.html" %}
 </main></body></html>

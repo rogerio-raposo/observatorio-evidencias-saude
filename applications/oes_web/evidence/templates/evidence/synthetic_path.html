@@ -2,8 +2,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OES — Percurso técnico sintético</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
-<body><main>
+<title>OES — Percurso técnico sintético</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"><link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
+<body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
+<main>
+{% include "evidence/navigation.html" with current="synthetic-path" %}
+<div id="conteudo" tabindex="-1">
 <p class="notice">DEMONSTRAÇÃO TÉCNICA SINTÉTICA OFFLINE — não é ingestão factual, execução HTTP, persistência conectada nem avaliação científica.</p>
 <h1>Percurso sintético ilustrativo E6 → D1 → referência documental</h1>
 <p>Exemplo determinístico reconstruído para apresentação; não é recibo recuperado de execução histórica. A página não executa P1-A3.</p>
@@ -38,5 +41,6 @@ e na <a href="https://github.com/rogerio-raposo/observatorio-evidencias-saude/ac
 O contrato da apresentação está no <a href="https://github.com/rogerio-raposo/observatorio-evidencias-saude/blob/main/docs/governance/292-p2-contrato-minimo-apresentacao-sintetica-django.md">Documento 292</a>.</p>
 <p>Não foi realizada avaliação científica independente. Não há verificação de armazenamento físico ou leitura PostgreSQL por esta página.</p>
 </section>
-<nav aria-label="Navegação documental"><a href="/">Retornar ao catálogo documental</a></nav>
+</div>
+{% include "evidence/return_navigation.html" %}
 </main></body></html>
