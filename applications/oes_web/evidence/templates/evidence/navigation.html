@@ -1,0 +1,10 @@
+<nav class="demo-navigation" aria-label="Funcionalidades do demonstrador">
+<p><strong>OES — Demonstrador</strong> · Consulta e exemplos delimitados</p>
+<ul>
+<li><a href="{% url 'home' %}"{% if current == 'home' %} aria-current="page"{% endif %}>Catálogo documental</a></li>
+<li><a href="{% url 'synthetic-path' %}"{% if current == 'synthetic-path' %} aria-current="page"{% endif %}>Percurso sintético</a></li>
+<li><a href="{% url 'synthetic-pg-links' %}"{% if current == 'synthetic-pg-links' %} aria-current="page"{% endif %}>Leitura sintética (pode estar HOLD)</a></li>
+<li><a href="{% url 'q0-synthetic-preview' %}"{% if current == 'q0-synthetic-preview' %} aria-current="page"{% endif %}>Prévia Q0 sintética</a></li>
+<li><a href="{% url 'evidence-sheet-n2' 'OES-P-2026-000401' %}"{% if current == 'evidence-sheet-n2' %} aria-current="page"{% endif %}>Ficha N2 histórica (A2)</a></li>
+</ul>
+</nav>
