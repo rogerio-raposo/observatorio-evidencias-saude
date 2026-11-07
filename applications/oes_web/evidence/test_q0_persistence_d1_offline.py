@@ -34,10 +34,27 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         self.writer.get_autocommit.return_value = True
         self.writer.cursor.return_value.__enter__.return_value.fetchone.return_value = (
             "oes_qprep_login", "oes_sandbox", "off")
+        writer_cursor = self.writer.cursor.return_value.__enter__.return_value
+        def writer_query(sql, params=None):
+            if "has_schema_privilege" in sql:
+                writer_cursor.fetchone.return_value = (True,)
+            elif "has_table_privilege" in sql:
+                writer_cursor.fetchone.return_value = (True, True, False)
+            elif "pg_current_xact_id" in sql:
+                writer_cursor.fetchone.return_value = ("100",)
+            else:
+                writer_cursor.fetchone.return_value = ("oes_qprep_login", "oes_sandbox", "off")
+        writer_cursor.execute.side_effect = writer_query
         reader = MagicMock(alias="oes_synthetic_reader", vendor="postgresql", in_atomic_block=False)
         reader.get_autocommit.return_value = True
         reader.cursor.return_value.__enter__.return_value.fetchone.return_value = (
             "oes_pg_a4_reader", "oes_sandbox", "on")
+        reader_cursor = reader.cursor.return_value.__enter__.return_value
+        def reader_query(sql, params=None):
+            reader_cursor.fetchone.return_value = ((True,) if "has_schema_privilege" in sql
+                else (True, False, False) if "has_table_privilege" in sql
+                else ("oes_pg_a4_reader", "oes_sandbox", "on"))
+        reader_cursor.execute.side_effect = reader_query
         configs = {}
         for alias, role, options in (
                 ("default", "oes_auth_trial_login", "-c search_path=django_auth,public"),
@@ -57,11 +74,16 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         def atomic(**kwargs):
             self.assertEqual(kwargs, {"using": "oes_q0_writer", "savepoint": False})
             self.events.append("enter")
+            self.writer.in_atomic_block = True
+            self.writer.get_autocommit.return_value = False
             try:
                 yield
             except Exception:
                 self.events.append("rollback simulated")
                 raise
+            finally:
+                self.writer.in_atomic_block = False
+                self.writer.get_autocommit.return_value = True
             self.events.append("commit simulated")
             if self.exit_failure:
                 raise RuntimeError("lost acknowledgement")
@@ -76,6 +98,22 @@ class PersistenceD1OfflineTests(SimpleTestCase):
 
         self.atomic = self.enterContext(patch(MODULE + "transaction.atomic", side_effect=atomic))
         self.readback = self.enterContext(patch(MODULE + "_verify_committed_q0_readback", side_effect=readback))
+        # Legacy D1 tests isolate the new evidence boundary; D3 tests below
+        # exercise real collector logic with fake cursor rows and ORM queries.
+        def collect(*, command, actor_id, trace):
+            if not trace.atomic_entered:
+                return {"outcome": "ABSENT", "automatic_retry": False}
+            if trace.boundary != "COMMIT_ACKNOWLEDGED" or not trace.local_closed:
+                return {"outcome": "INDETERMINATE", "automatic_retry": False}
+            if trace.candidate is None:
+                return {"outcome": "PERSISTED", "automatic_retry": False}
+            try:
+                result = self.readback(**trace.candidate)
+            except Exception:
+                return {"outcome": "INDETERMINATE", "automatic_retry": False}
+            return {"outcome": "PERSISTED" if isinstance(result, dict) and result.get("readback_verified") is True
+                else "INDETERMINATE", "automatic_retry": False}
+        self.enterContext(patch("evidence.question_orm_q0_evidence_dormant._collect_q0_commit_evidence", side_effect=collect))
         self.lookup = self.enterContext(patch(
             "preparer_identity.resolver.PreparerIdentity.objects.using"))
         self.lookup.return_value.get.return_value = SimpleNamespace(

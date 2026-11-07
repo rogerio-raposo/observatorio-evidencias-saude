@@ -155,6 +155,10 @@ def _review_q0_persistence_d1(*, user, command):
     )
     from .question_orm_q0_dormant import DormantQ0OrmPort
     from .question_uow_offline import OfflineQuestionUnitOfWork
+    from .question_orm_q0_evidence_dormant import (
+        _WriterTrace, _expected_receipt, _review_q0_privileges,
+        _capture_q0_writer_transaction, _collect_q0_commit_evidence,
+    )
 
     if (not isinstance(command, QuestionCommand)
             or type(command.expected_version) is not int
@@ -168,6 +172,7 @@ def _review_q0_persistence_d1(*, user, command):
             # resolution have completed before the (still blocked) constructor.
             # Never use object.__new__, subclassing or a trial repository here.
             repository = DjangoQ0Repository(alias="oes_q0_writer")
+            trace = _WriterTrace(_expected_receipt(command, actor_id))
 
             @contextmanager
             def writer_transaction():
@@ -187,19 +192,25 @@ def _review_q0_persistence_d1(*, user, command):
                     reader.close()
                     try:
                         _review_q0_session_boundary(writer=writer, reader=reader)
+                        trace.writer_privileges = _review_q0_privileges(writer)
+                        _review_q0_privileges(reader)
                     finally:
                         reader.close()
                     with transaction.atomic(using="oes_q0_writer", savepoint=False):
+                        trace.atomic_entered = True
                         # Recheck the effective writer inside the boundary,
                         # exactly as the rollback-only recipe does.
                         with writer.cursor() as cursor:
                             if postgres_session_identity(cursor) != (
                                     "oes_qprep_login", "oes_sandbox", "off"):
                                 raise PreparationHold("HOLD: D2 writer identity mismatch")
+                        _capture_q0_writer_transaction(writer, trace)
                         yield
+                    trace.boundary = "COMMIT_ACKNOWLEDGED"
                 finally:
                     boundary_open = writer.in_atomic_block
                     writer.close()
+                    trace.local_closed = True
                     if boundary_open:
                         raise PreparationHold("HOLD: D1 writer boundary remained open")
 
@@ -207,14 +218,40 @@ def _review_q0_persistence_d1(*, user, command):
             def repository_context():
                 yield repository
 
+            def verified_readback(**candidate):
+                trace.candidate = candidate
+                trace.observation = _collect_q0_commit_evidence(
+                    command=command, actor_id=actor_id, trace=trace)
+                if trace.observation.get("outcome") != "PERSISTED":
+                    raise PreparationHold("HOLD: D3 commit evidence insufficient")
+                return {"readback_verified": True}
+
             port = DormantQ0OrmPort(
                 atomic_factory=writer_transaction,
                 repository_factory=repository_context,
-                readback_verifier=_verify_committed_q0_readback,
+                readback_verifier=verified_readback,
                 writer_alias="oes_q0_writer", read_alias="oes_synthetic_reader",
             )
-            return OfflineQuestionUnitOfWork(port).execute(
-                command=command, actor_id=actor_id, fingerprint=fingerprint)
+            try:
+                result = OfflineQuestionUnitOfWork(port).execute(
+                    command=command, actor_id=actor_id, fingerprint=fingerprint)
+            except Exception as exc:
+                trace.candidate = port.last_uncertain_q0
+                if trace.observation is None:
+                    trace.observation = _collect_q0_commit_evidence(
+                        command=command, actor_id=actor_id, trace=trace)
+                # Evidence never turns a failed service call into permission or
+                # automatic success/retry. The authenticated service sanitizes
+                # unexpected errors as before; HOLD/Conflict retain semantics.
+                if isinstance(exc, PreparationHold):
+                    exc.q0_observation = trace.observation
+                raise
+            if trace.observation is None:  # Idempotent replay, no new inserts.
+                trace.observation = _collect_q0_commit_evidence(
+                    command=command, actor_id=actor_id, trace=trace)
+            if trace.observation.get("outcome") != "PERSISTED":
+                raise PreparationHold("HOLD: D3 persisted Q0 not independently verified")
+            return result
 
     return submit_authenticated_question_command(
         user=user, command=command, unit_of_work=Composition())
@@ -392,7 +429,8 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
 
 def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
                                   request_id, question_id, fingerprint,
-                                  entity_uuid, version_uuid, original_text):
+                                  entity_uuid, version_uuid, original_text,
+                                  _snapshot_reader=None):
     """Dormant, internal positive readback; NOT a writer or execution gate.
 
     Caller must separately establish a successful authorized commit and
@@ -411,9 +449,13 @@ def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
             or entity_uuid == version_uuid):
         raise PreparationHold("HOLD: invalid Q0 readback identity")
     reader = connections[read_alias]
+    owned_snapshot = _snapshot_reader is reader
+    if _snapshot_reader is not None and not owned_snapshot:
+        raise PreparationHold("HOLD: invalid owned readback snapshot")
     try:
-        if (reader.vendor != "postgresql" or reader.in_atomic_block
-                or not reader.get_autocommit()):
+        if (reader.vendor != "postgresql"
+                or (not owned_snapshot and (reader.in_atomic_block or not reader.get_autocommit()))
+                or (owned_snapshot and (not reader.in_atomic_block or reader.get_autocommit()))):
             raise PreparationHold("HOLD: invalid readback session")
         with reader.cursor() as cursor:
             cursor.execute(
@@ -423,6 +465,13 @@ def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
             readonly, role, database = cursor.fetchone()
         if readonly != "on" or role == "oes_qprep_login" or database != "oes_sandbox":
             raise PreparationHold("HOLD: readback session is not independent readonly")
+        if owned_snapshot:
+            if role != "oes_pg_a4_reader":
+                raise PreparationHold("HOLD: unexpected snapshot reader identity")
+            with reader.cursor() as cursor:
+                cursor.execute("SELECT current_setting('transaction_isolation'),pg_is_in_recovery()")
+                if cursor.fetchone() != ("repeatable read", False):
+                    raise PreparationHold("HOLD: readback requires consistent primary snapshot")
         checks = (
             OesEntity.objects.using(read_alias).filter(
                 pk=entity_uuid, oes_id=question_id, entity_type="Question",
@@ -450,5 +499,6 @@ def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
     except Exception as exc:
         raise PreparationHold("HOLD: positive Q0 readback unavailable") from exc
     finally:
-        reader.close()
+        if not owned_snapshot:
+            reader.close()
     return {"readback_verified": True, "question_id": question_id, "version": 1}
