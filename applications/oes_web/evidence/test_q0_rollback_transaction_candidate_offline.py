@@ -195,17 +195,23 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
                         1 if alias == candidate.WRITER else 0)
                     return manager
                 manager.side_effect = outcome_for_alias
+            if outcome == "fifth_insert_failure":
+                receipt_manager = outcome_for_alias(candidate.WRITER)
+                receipt_manager.create.side_effect = RuntimeError("offline fifth insert failure")
+                managers[-1].side_effect = lambda alias: receipt_manager if alias == candidate.WRITER else outcome_for_alias(alias)
             if outcome == "residues":
                 managers[0].side_effect = lambda alias: self._residual_manager(alias)
             if outcome == "residues":
                 with self.assertRaisesRegex(PreparationHold, "scientific rollback residues"):
                     candidate._perform_rollback_only(trial=trial, verified_actor=actor)
-            elif outcome == "exit_failure":
+            elif outcome in ("exit_failure", "fifth_insert_failure"):
                 with self.assertRaisesRegex(PreparationHold, "transaction failed; zero residues"):
                     candidate._perform_rollback_only(trial=trial, verified_actor=actor)
             else:
                 self.assertEqual(candidate._perform_rollback_only(
                     trial=trial, verified_actor=actor), "PASS_ROLLBACK_ZERO_RESIDUES")
+            if outcome == "fifth_insert_failure":
+                receipt_manager.create.assert_called_once()
             rollback.assert_called_once_with(True, using=candidate.WRITER)
             writer.close.assert_called_once()
             reader.close.assert_called()
@@ -274,3 +280,6 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             with self.assertRaises(PreparationHold):
                 candidate.review_and_execute_isolated_trial()
             perform.assert_not_called()
+
+    def test_failure_on_fifth_insert_forces_rollback_and_independent_reconciliation(self):
+        self._full_transaction_scenario("fifth_insert_failure")

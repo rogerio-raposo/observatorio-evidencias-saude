@@ -47,6 +47,12 @@ class MultiAliasOfflineTests(SimpleTestCase):
         self.assertEqual([cfg[name]["USER"] for name in ("default", "oes_q0_writer", "oes_synthetic_reader")],
                          ["oes_auth_trial_login", "oes_qprep_login", "oes_pg_a4_reader"])
         self.assertTrue(all(cfg[name]["CONN_MAX_AGE"] == 0 for name in cfg))
+        for alias, connection in cfg.items():
+            with self.subTest(alias=alias):
+                self.assertEqual(connection["HOST"], HOST)
+                self.assertEqual(connection["NAME"], "oes_sandbox")
+                self.assertEqual(connection["PORT"], "5432")
+                self.assertEqual(connection["OPTIONS"]["sslmode"], "require")
         self.assertEqual(cfg["default"]["OPTIONS"]["options"],
                          "-c search_path=django_auth,public")
         self.assertEqual(cfg["oes_auth_readonly"]["USER"], "oes_auth_trial_login")
@@ -72,6 +78,22 @@ class MultiAliasOfflineTests(SimpleTestCase):
         with self.assertRaisesRegex(RuntimeError, "direct same-branch endpoint"):
             load_settings({**env, "OES_Q0_WRITER_PASSWORD": "writer-fixture",
                            "OES_PG_A4_HOST": "ep-wispy-dream-b6021bw0-pooler.c-2.sa-east-1.aws.neon.tech"})
+
+    def test_foreign_destination_missing_reader_and_other_shared_credentials_hold(self):
+        env = {
+            "OES_Q0_MULTI_ALIAS_ENABLED": "1", "OES_PG_A4_ENABLED": "1",
+            "OES_PG_A4_HOST": HOST, "OES_PG_A4_PASSWORD": "offline-reader",
+            "OES_Q0_AUTH_PASSWORD": "offline-auth",
+            "OES_Q0_WRITER_PASSWORD": "offline-writer",
+        }
+        for mutation in (
+            {"OES_PG_A4_HOST": "unapproved.invalid"},
+            {"OES_PG_A4_ENABLED": "0"},
+            {"OES_Q0_AUTH_PASSWORD": "offline-reader"},
+            {"OES_Q0_AUTH_PASSWORD": "offline-writer"},
+        ):
+            with self.subTest(mutation=mutation), self.assertRaises(RuntimeError):
+                load_settings({**env, **mutation})
 
 
 class CanonicalAuthMetadataOfflineTests(SimpleTestCase):
