@@ -34,6 +34,66 @@ def execute_connected_q0(*args, **kwargs):
     raise PreparationHold("HOLD: G2-P2B connected execution not authorized")
 
 
+def _review_q0_persistence_d1(*, user, command):
+    """Internal commit composition, blocked by the existing repository gate.
+
+    No HTTP/CLI wiring. Offline tests replace the repository, atomic boundary,
+    auth-store lookup and readback; their normal exits are NOT commit evidence.
+    No factory or alias is accepted from callers. Do not activate the repository
+    to use this blueprint without separate connected review and authorization.
+    """
+    from contextlib import contextmanager
+    from .question_preparation import (
+        QuestionCommand, submit_authenticated_question_command,
+    )
+    from .question_orm_q0_dormant import DormantQ0OrmPort
+    from .question_uow_offline import OfflineQuestionUnitOfWork
+
+    if (not isinstance(command, QuestionCommand)
+            or type(command.expected_version) is not int
+            or command.expected_version != 0
+            or command.normalized_text is not None or command.justification != ""):
+        raise PreparationHold("HOLD: D1 accepts REGISTER_Q0 only")
+
+    class Composition:
+        def execute(self, *, command, actor_id, fingerprint):
+            # Authentication, permission, command validation and persisted actor
+            # resolution have completed before the (still blocked) constructor.
+            # Never use object.__new__, subclassing or a trial repository here.
+            repository = DjangoQ0Repository(alias="oes_q0_writer")
+
+            @contextmanager
+            def writer_transaction():
+                writer = connections["oes_q0_writer"]
+                if (writer.vendor != "postgresql" or writer.in_atomic_block
+                        or not writer.get_autocommit()):
+                    raise PreparationHold("HOLD: D1 requires an independent writer boundary")
+                try:
+                    with transaction.atomic(using="oes_q0_writer", savepoint=False):
+                        yield
+                finally:
+                    boundary_open = writer.in_atomic_block
+                    writer.close()
+                    if boundary_open:
+                        raise PreparationHold("HOLD: D1 writer boundary remained open")
+
+            @contextmanager
+            def repository_context():
+                yield repository
+
+            port = DormantQ0OrmPort(
+                atomic_factory=writer_transaction,
+                repository_factory=repository_context,
+                readback_verifier=_verify_committed_q0_readback,
+                writer_alias="oes_q0_writer", read_alias="oes_synthetic_reader",
+            )
+            return OfflineQuestionUnitOfWork(port).execute(
+                command=command, actor_id=actor_id, fingerprint=fingerprint)
+
+    return submit_authenticated_question_command(
+        user=user, command=command, unit_of_work=Composition())
+
+
 def _review_authenticated_q0_composition(*, user, command, writer_alias,
                                          read_alias):
     """Non-executable Django Q0 blueprint, gated before any external effect.
