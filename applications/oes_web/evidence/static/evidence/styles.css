@@ -12,3 +12,9 @@ nav{margin-top:2rem}.timeline{list-style:decimal;margin-left:.5rem;padding-left:
 .reading-guide{background:#f4f8fb;border:1px solid #d7e3ec;border-radius:8px;padding:1rem 1.15rem;margin-top:1.4rem}
 .reading-guide h2{margin-top:0}.reading-guide p{margin:.65rem 0 0}.reading-path{font-weight:600;overflow-wrap:anywhere}
 .reading-guide .boundary{font-weight:400}
+
+.question-preview #conteudo{overflow-wrap:anywhere}
+.question-preview input,.question-preview textarea{box-sizing:border-box;display:block;width:100%;max-width:100%;font:inherit;margin:.4rem 0 1rem}
+.question-preview button{font:inherit;padding:.55rem .8rem}
+.question-preview a{display:inline-block;padding:.2rem 0}
+.question-preview :is(input,textarea,button):focus-visible{outline:3px solid #145c96;outline-offset:3px}

@@ -2,21 +2,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OES — Prévia sintética Q0</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"><link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
+<title>OES — Prévia sintética Q0 → Q1 → Q2</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"><link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
 <body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
-<main>
+<main class="question-preview">
 {% include "evidence/navigation.html" with current="q0-synthetic-preview" %}
 <div id="conteudo" tabindex="-1">
 <p class="notice">PRÉVIA ESTÁTICA SINTÉTICA — não representa registro persistido ou autorização de pesquisa.</p>
-<h1>Preparação de pergunta — Q0</h1>
+<h1>Preparação de pergunta — Q0 → Q1 → Q2</h1>
+<p>Exemplo fixo e inteiramente fictício: pergunta original → normalização proposta → estruturação metodológica preliminar. As etapas abaixo são ilustrações, sem submissão ou persistência.</p>
+<nav aria-label="Etapas da demonstração"><ol>
+<li><a href="#q0-title">Q0 — Pergunta original</a></li>
+<li><a href="#q1-title">Q1 — Normalização proposta</a></li>
+<li><a href="#q2-title">Q2 — Estruturação preliminar</a></li>
+</ol></nav>
 <section aria-labelledby="q0-title">
-<h2 id="q0-title">Exemplo de pergunta original</h2>
+<h2 id="q0-title" tabindex="-1">Q0 — Exemplo de pergunta original</h2>
 <dl>
 <dt>Identificador fictício</dt><dd>{{ example.question_id }}</dd>
+<dt>Solicitação sintética Q0</dt><dd>{{ q0.request_id }}</dd>
 <dt>Texto original</dt><dd>{{ example.original_text }}</dd>
 <dt>Etapa</dt><dd>{{ example.stage }}</dd>
 <dt>Versão ilustrativa</dt><dd>{{ example.version }}</dd>
+<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — somente preparação; não é recibo de execução.</dd>
 </dl>
+<p>Q0 preserva a pergunta como foi formulada. A próxima etapa ilustra uma proposta de normalização, sem substituir esse original.</p>
+<p><a href="#q1-title">Continuar para Q1 — normalização proposta</a></p>
+</section>
+<section aria-labelledby="q1-title">
+<h2 id="q1-title" tabindex="-1">Q1 — Normalização proposta</h2>
+<dl>
+<dt>Mesma pergunta sintética</dt><dd>{{ q1.question_id }}</dd>
+<dt>Solicitação sintética Q1</dt><dd>{{ q1.request_id }}</dd>
+<dt>Versão de referência ilustrativa</dt><dd>{{ q1.expected_version }} (Q0); proposta Q1 ilustrada como versão 2, sem gravação.</dd>
+<dt>Texto original preservado</dt><dd>{{ q1.original_text }}</dd>
+<dt>Normalização proposta</dt><dd>{{ q1.normalized_text }}</dd>
+<dt>Justificativa da proposta</dt><dd>{{ q1.justification }}</dd>
+<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — sem revisão científica realizada.</dd>
+</dl>
+<p>Q1 explicita elementos antes não delimitados. São escolhas fictícias para leitura do exemplo, sem aprovação metodológica.</p>
+<p><a href="#q0-title">Rever Q0</a> · <a href="#q2-title">Continuar para Q2 — estruturação preliminar</a></p>
+</section>
+<section aria-labelledby="q2-title">
+<h2 id="q2-title" tabindex="-1">Q2 — Estruturação metodológica preliminar</h2>
+<p>Os campos organizam a proposta Q1. Q2 é uma estruturação preliminar, não uma decisão científica.</p>
+<dl>
+<dt>Pergunta sintética e versão Q1 de referência</dt><dd>{{ q2.question_id }} — versão ilustrativa {{ q2.q1_version }}</dd>
+<dt>Pergunta operacional proposta</dt><dd>{{ q2.operational_question }}</dd>
+<dt>População</dt><dd>{{ q2.population }}</dd>
+<dt>Exposição ou intervenção</dt><dd>{{ q2.exposure_or_intervention }}</dd>
+<dt>Comparador</dt><dd>{{ q2.comparator }}</dd>
+<dt>Desfechos</dt><dd><ul>{% for outcome in q2.outcomes %}<li>{{ outcome }}</li>{% endfor %}</ul></dd>
+<dt>Classe metodológica proposta</dt><dd>{{ q2.methodological_class }} — intervenção</dd>
+<dt>Profundidade proposta</dt><dd>{{ q2.depth }} — código ilustrativo</dd>
+<dt>Manutenção proposta</dt><dd>{{ q2.maintenance }} — código ilustrativo</dd>
+<dt>Justificativa do encaminhamento proposto</dt><dd>{{ q2.routing_justification }}</dd>
+<dt>Estado da proposta ilustrada</dt><dd>PROPOSED_OFFLINE_ONLY — somente proposta demonstrativa.</dd>
+</dl>
+<p>Admissibilidade não decidida (NOT_DECIDED); revisão científica não realizada (NOT_PERFORMED); Investigation não aberta (NOT_OPENED).</p>
+<p>Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED. Nenhum encaminhamento foi autorizado por esta página.</p>
+<p><a href="#q1-title">Rever a normalização proposta em Q1</a></p>
 </section>
 <section aria-labelledby="flow-title">
 <h2 id="flow-title">Fluxo ilustrativo de preparação</h2>
@@ -31,7 +75,7 @@
 </section>
 <section aria-labelledby="interactive-title">
 <h2 id="interactive-title">Experimentar validação local</h2>
-<p>Digite uma pergunta fictícia. A verificação ocorre exclusivamente neste navegador; nenhum texto é enviado ao servidor.</p>
+<p>Este exercício local é independente do exemplo fixo Q0→Q1→Q2 acima: editar os campos não modifica as propostas ilustradas. Digite uma pergunta fictícia. A verificação ocorre exclusivamente neste navegador; nenhum texto é enviado ao servidor.</p>
 <label for="q0-local-request">Identificador sintético da solicitação (até 128 caracteres)</label>
 <input id="q0-local-request" type="text" maxlength="128" value="request-synthetic-preview">
 <label for="q0-local-question">Identificador fictício da pergunta</label>
