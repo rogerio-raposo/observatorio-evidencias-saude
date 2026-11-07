@@ -7,7 +7,7 @@ No default repository, alias, or actual connection is available. Q1 is HOLD.
 from contextlib import contextmanager
 from uuid import uuid4
 
-from .question_preparation import PreparationHold
+from .question_preparation import PreparationHold, command_fingerprint
 from .question_uow_offline import Receipt
 
 
@@ -29,6 +29,24 @@ class DormantQ0OrmPort:
         self.repository_factory = repository_factory
         self.last_completed_q0 = None
         self.last_uncertain_q0 = None
+
+    def review_uncertain_q0(self, **observation):
+        """Offline classification, never a collector, retry or gate activation.
+
+        The receipt is the durable lookup key for a future authorized reader;
+        this object's metadata is only an in-process aid. Even a positive or
+        absent observation does not re-arm this port or retry a command.
+        """
+        from .question_orm_q0_connected_recipe_dormant import _classify_q0_commit_observation
+        candidate = self.last_uncertain_q0
+        if candidate is None:
+            raise PreparationHold("HOLD: no uncertain Q0 to reconcile")
+        if observation.get("boundary") == "NOT_STARTED":
+            raise PreparationHold("HOLD: Q0 write attempt already started")
+        expected = Receipt(candidate["actor_id"], candidate["request_id"],
+                           candidate["fingerprint"], candidate["question_id"],
+                           1, "REGISTER_Q0")
+        return _classify_q0_commit_observation(expected_receipt=expected, **observation)
 
     def readback_arguments(self, *, writer_alias, read_alias):
         """Prepare arguments for independent verification; no DB access or commit proof.
@@ -56,6 +74,7 @@ class DormantQ0OrmPort:
             raise PreparationHold("HOLD: unresolved Q0 outcome; no automatic retry")
         self.last_completed_q0 = None
         completed = None
+        tx = None
         try:
             with self.atomic_factory():
                 with self.repository_factory() as repo:
@@ -70,9 +89,10 @@ class DormantQ0OrmPort:
                         completed["request_id"] = tx.saved_receipt.request_id
                         completed["fingerprint"] = tx.saved_receipt.fingerprint
         except Exception:
-            if completed is not None:
+            candidate = completed or (tx.created_q0 if tx is not None else None)
+            if candidate is not None:
                 # Context exit may have committed despite reporting failure.
-                self.last_uncertain_q0 = dict(completed)
+                self.last_uncertain_q0 = dict(candidate)
                 raise PreparationHold(
                     "HOLD: Q0 transaction outcome uncertain; reconcile manually") from None
             raise
@@ -133,18 +153,22 @@ class _Q0Transaction:
             raise PreparationHold("HOLD: invalid Q0 transition")
         self.repo.lock_question(command.question_id)
         entity_uuid, version_uuid = uuid4(), uuid4()
-        self.repo.insert_entity(entity_uuid, command.question_id, actor_id)
-        self.repo.insert_question(entity_uuid, actor_id)
-        self.repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
-        self.repo.insert_question_version(version_uuid, entity_uuid, command.original_text)
-        self.pending = (actor_id, command.question_id, entity_uuid, version_uuid)
+        # Keep reconciliation keys BEFORE the first write: a mid-write failure
+        # must not lose the UUIDs or permit reuse of this port as a fresh attempt.
         self.created_q0 = {
             "actor_id": actor_id,
+            "request_id": command.request_id,
+            "fingerprint": command_fingerprint(command),
             "question_id": command.question_id,
             "entity_uuid": entity_uuid,
             "version_uuid": version_uuid,
             "original_text": command.original_text,
         }
+        self.pending = (actor_id, command.question_id, entity_uuid, version_uuid)
+        self.repo.insert_entity(entity_uuid, command.question_id, actor_id)
+        self.repo.insert_question(entity_uuid, actor_id)
+        self.repo.insert_entity_version(version_uuid, entity_uuid, actor_id)
+        self.repo.insert_question_version(version_uuid, entity_uuid, command.original_text)
 
     def propose_q1(self, command, actor_id):
         raise PreparationHold("HOLD: Django ORM Q1 backend not implemented")

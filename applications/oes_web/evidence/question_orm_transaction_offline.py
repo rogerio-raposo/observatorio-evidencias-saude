@@ -11,6 +11,16 @@ from .models import (
 )
 
 
+def postgres_session_identity(cursor):
+    """Shared dormant probe; caller owns the authorized session and boundary.
+
+    Same query/order used by the rollback-only recipe. Never called on import.
+    Offline callers must supply a fake cursor, not open a database session.
+    """
+    cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
+    return cursor.fetchone()
+
+
 def scoped_current_question(*, question_id, actor_id):
     """Join via UUID fields explicitly; composite FKs remain PostgreSQL-owned.
 

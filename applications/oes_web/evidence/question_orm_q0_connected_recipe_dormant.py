@@ -12,8 +12,115 @@ from .models import (
     OesEntity, OesEntityVersion, OesQuestion, OesQuestionVersion,
     OesQuestionCommandReceipt,
 )
-from .question_preparation import PreparationHold
+from .question_preparation import PreparationHold, PreparationConflict
 from .question_orm_q0_repository_dormant import DjangoQ0Repository
+from .question_orm_transaction_offline import postgres_session_identity
+
+
+def _review_q0_database_configuration(databases):
+    """Pure review of existing three-alias settings, never a readiness proof.
+
+    A direct pinned endpoint avoids accepting two arbitrary matching hosts as
+    evidence of the approved branch. Passwords are compared, never returned.
+    Server observations and operational review are still mandatory.
+    """
+    host = "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+    roles = {"default": "oes_auth_trial_login", "oes_q0_writer": "oes_qprep_login",
+             "oes_synthetic_reader": "oes_pg_a4_reader"}
+    passwords = []
+    for alias, role in roles.items():
+        config = databases.get(alias, {})
+        if (config.get("ENGINE") != "django.db.backends.postgresql"
+                or config.get("HOST") != host or str(config.get("PORT")) != "5432"
+                or config.get("NAME") != "oes_sandbox" or config.get("USER") != role
+                or config.get("OPTIONS", {}).get("sslmode") != "require"
+                or not isinstance(config.get("PASSWORD"), str) or not config["PASSWORD"]):
+            raise PreparationHold("HOLD: invalid D2 database configuration")
+        # Reject alternate libpq routing/identity options rather than assume
+        # HOST/USER describe the effective connection in their presence.
+        if set(config.get("OPTIONS", {})) - {"sslmode", "options"}:
+            raise PreparationHold("HOLD: unsupported D2 connection options")
+        expected_options = {
+            "default": "-c search_path=django_auth,public",
+            "oes_q0_writer": "",
+            "oes_synthetic_reader": "-c default_transaction_read_only=on",
+        }
+        if config.get("OPTIONS", {}).get("options", "") != expected_options[alias]:
+            raise PreparationHold("HOLD: unsupported D2 session options")
+        passwords.append(config["PASSWORD"])
+    if len(set(passwords)) != 3:
+        raise PreparationHold("HOLD: D2 requires distinct credentials")
+
+
+def _review_q0_session_boundary(*, writer, reader):
+    """Dormant session preflight after the repository gate, before atomic.
+
+    Reuses the rollback identity probe; no factories or alias overrides.
+    This helper is not an execution entrypoint. Tests use fake connections.
+    """
+    if (writer is reader or writer.alias != "oes_q0_writer"
+            or reader.alias != "oes_synthetic_reader"):
+        raise PreparationHold("HOLD: independent D2 reader required")
+    for connection in (writer, reader):
+        if (connection.vendor != "postgresql" or connection.in_atomic_block
+                or connection.get_autocommit() is not True):
+            raise PreparationHold("HOLD: invalid D2 transaction boundary")
+    with writer.cursor() as cursor:
+        if postgres_session_identity(cursor) != ("oes_qprep_login", "oes_sandbox", "off"):
+            raise PreparationHold("HOLD: D2 writer identity mismatch")
+    with reader.cursor() as cursor:
+        if postgres_session_identity(cursor) != ("oes_pg_a4_reader", "oes_sandbox", "on"):
+            raise PreparationHold("HOLD: D2 reader identity mismatch")
+
+
+def _classify_q0_commit_observation(*, expected_receipt, observed_receipt=None,
+                                    boundary="UNKNOWN", writer_finished=False,
+                                    consistent_read=False, readback_verified=False,
+                                    all_records_absent=False):
+    """Pure reconciliation policy over the EXISTING receipt/readback contract.
+
+    Inputs are evidence, not caller authorization. No SQL, retry, connection or
+    new ledger. A future authorized collector must establish a fresh consistent
+    primary snapshot AFTER server-side writer completion and inspect all five
+    records (including partial writes/occupied question IDs) before asserting
+    absence. Neither close() nor a missing receipt establishes those facts.
+    Never pass these classifications off as the command service result.
+    """
+    from .question_uow_offline import Receipt
+    if (not isinstance(expected_receipt, Receipt)
+            or not all(isinstance(value, str) and value for value in (
+                expected_receipt.actor_id, expected_receipt.request_id,
+                expected_receipt.question_id, expected_receipt.fingerprint))
+            or len(expected_receipt.fingerprint) != 64
+            or any(ch not in "0123456789abcdef" for ch in expected_receipt.fingerprint)
+            or type(expected_receipt.version) is not int or expected_receipt.version != 1
+            or expected_receipt.command_kind != "REGISTER_Q0" or expected_receipt.justification):
+        raise PreparationHold("HOLD: invalid D2 reconciliation identity")
+    if boundary not in ("NOT_STARTED", "ROLLED_BACK", "COMMIT_ACKNOWLEDGED", "UNKNOWN"):
+        raise PreparationHold("HOLD: invalid D2 boundary evidence")
+    outcome = "INDETERMINATE"
+    if boundary == "NOT_STARTED":
+        # No writer effects is local evidence only for this invocation. A
+        # previous attempt using these keys must still be reconciled separately.
+        if observed_receipt is None and readback_verified is False:
+            outcome = "ABSENT"
+    elif writer_finished is True and consistent_read is True:
+        if isinstance(observed_receipt, Receipt):
+            if (observed_receipt.actor_id, observed_receipt.request_id) != (
+                    expected_receipt.actor_id, expected_receipt.request_id):
+                return {"outcome": outcome, "scope": "Q0_RECORDS", "automatic_retry": False}
+            if observed_receipt.fingerprint != expected_receipt.fingerprint:
+                raise PreparationConflict("HOLD: request fingerprint conflict")
+            if (type(observed_receipt.version) is int
+                    and observed_receipt == expected_receipt and readback_verified is True
+                    and all_records_absent is False and boundary != "ROLLED_BACK"):
+                outcome = "PERSISTED"
+        elif (observed_receipt is None and all_records_absent is True
+                and readback_verified is False and boundary != "COMMIT_ACKNOWLEDGED"):
+            outcome = "ABSENT"
+    return {"outcome": outcome,
+            "scope": "THIS_ATTEMPT" if boundary == "NOT_STARTED" else "Q0_RECORDS",
+            "automatic_retry": False}
 
 
 def prepare_q0_trial_review(*, actor_id, request_id, question_id, original_text):
@@ -69,7 +176,26 @@ def _review_q0_persistence_d1(*, user, command):
                         or not writer.get_autocommit()):
                     raise PreparationHold("HOLD: D1 requires an independent writer boundary")
                 try:
+                    _review_q0_database_configuration(connections.databases)
+                    reader = connections["oes_synthetic_reader"]
+                    # Discard a previous reader session before preflight. No
+                    # assumption that this alone provides snapshot consistency.
+                    if reader is writer:
+                        raise PreparationHold("HOLD: independent D2 reader required")
+                    if reader.in_atomic_block:
+                        raise PreparationHold("HOLD: invalid D2 reader boundary")
+                    reader.close()
+                    try:
+                        _review_q0_session_boundary(writer=writer, reader=reader)
+                    finally:
+                        reader.close()
                     with transaction.atomic(using="oes_q0_writer", savepoint=False):
+                        # Recheck the effective writer inside the boundary,
+                        # exactly as the rollback-only recipe does.
+                        with writer.cursor() as cursor:
+                            if postgres_session_identity(cursor) != (
+                                    "oes_qprep_login", "oes_sandbox", "off"):
+                                raise PreparationHold("HOLD: D2 writer identity mismatch")
                         yield
                 finally:
                     boundary_open = writer.in_atomic_block

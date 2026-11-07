@@ -7,6 +7,7 @@ from django.db import connections, transaction
 from evidence.models import (OesEntity, OesQuestion, OesEntityVersion,
                              OesQuestionVersion, OesQuestionCommandReceipt)
 from evidence.question_preparation import PreparationHold
+from evidence.question_orm_transaction_offline import postgres_session_identity
 from evidence.q0_rollback_execution_gate_offline import (
     RollbackTrialBoundary, validate_persisted_actor_trial)
 
@@ -73,8 +74,7 @@ def _perform_rollback_only(*, trial, verified_actor, phase_reporter=None):
         with transaction.atomic(using=WRITER, savepoint=False):
             try:
                 with writer.cursor() as cursor:
-                    cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
-                    if cursor.fetchone() != ("oes_qprep_login", "oes_sandbox", "off"):
+                    if postgres_session_identity(cursor) != ("oes_qprep_login", "oes_sandbox", "off"):
                         raise PreparationHold("HOLD: writer identity mismatch")
                     cursor.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s,0))",
                                    [trial.request_id])
@@ -133,8 +133,7 @@ def _perform_rollback_only(*, trial, verified_actor, phase_reporter=None):
                 or not reader.get_autocommit()):
             raise PreparationHold("HOLD: independent reader invalid")
         with reader.cursor() as cursor:
-            cursor.execute("SELECT current_user,current_database(),current_setting('transaction_read_only')")
-            if cursor.fetchone() != ("oes_pg_a4_reader", "oes_sandbox", "on"):
+            if postgres_session_identity(cursor) != ("oes_pg_a4_reader", "oes_sandbox", "on"):
                 raise PreparationHold("HOLD: independent reader identity mismatch")
         residues = (
             OesEntity.objects.using(READER).filter(pk=trial.entity_uuid).exists(),
