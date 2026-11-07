@@ -1,5 +1,5 @@
 """Offline validation of dormant manual entrypoint, no network or Django writes."""
-from unittest.mock import patch
+from unittest.mock import call, patch
 from django.test import SimpleTestCase
 from scripts.q0_manual_rollback_trial import check_manual_boundary, REQUIRED
 
@@ -79,13 +79,20 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
             ) as recipe, patch("builtins.print") as output:
                 if status == "PASS_ROLLBACK_ZERO_RESIDUES":
                     main()
-                    output.assert_called_once_with(status)
+                    self.assertEqual(output.call_args_list, [
+                        call("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED", flush=True),
+                        call("Q0_PHASE_DJANGO_INITIALIZED", flush=True), call(status),
+                    ])
                 else:
                     with self.assertRaisesRegex(RuntimeError, "unexpected rollback classification"):
                         main()
-                    output.assert_not_called()
+                    self.assertEqual(output.call_args_list, [
+                        call("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED", flush=True),
+                        call("Q0_PHASE_DJANGO_INITIALIZED", flush=True),
+                    ])
                 setup.assert_called_once_with()
-                recipe.assert_called_once_with()
+                from scripts.q0_manual_rollback_trial import report_phase
+                recipe.assert_called_once_with(phase_reporter=report_phase)
 
     def test_process_entrypoint_sanitizes_recipe_failure_without_retry(self):
         import runpy
@@ -104,8 +111,12 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
                 with self.assertRaises(SystemExit) as raised:
                     runpy.run_module("scripts.q0_manual_rollback_trial", run_name="__main__")
             self.assertEqual(str(raised.exception), "HOLD_Q0_MANUAL_ROLLBACK_INCONCLUSIVE")
-            recipe.assert_called_once_with()
-            output.assert_not_called()
+            self.assertEqual(recipe.call_count, 1)
+            self.assertEqual(set(recipe.call_args.kwargs), {"phase_reporter"})
+            self.assertEqual(output.call_args_list, [
+                call("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED", flush=True),
+                call("Q0_PHASE_DJANGO_INITIALIZED", flush=True),
+            ])
 
     def test_checkout_mismatch_stops_before_django_or_recipe(self):
         from scripts.q0_manual_rollback_trial import main
@@ -136,3 +147,30 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
             setup.assert_not_called()
             recipe.assert_not_called()
             output.assert_not_called()
+
+    def test_django_failure_reports_only_completed_boundary(self):
+        from scripts.q0_manual_rollback_trial import main
+        with patch.dict("os.environ", self.valid_environment(), clear=True), patch(
+            "scripts.q0_manual_rollback_trial.checked_out_sha", return_value="a" * 40
+        ), patch("django.setup", side_effect=RuntimeError("OFFLINE_SECRET_SENTINEL")), patch(
+            "scripts.q0_rollback_transaction_candidate.review_and_execute_isolated_trial"
+        ) as recipe, patch("builtins.print") as output:
+            with self.assertRaises(RuntimeError):
+                main()
+            self.assertEqual(output.call_args_list, [
+                call("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED", flush=True),
+            ])
+            recipe.assert_not_called()
+
+    def test_phase_output_is_allowlisted_and_output_failure_is_nonfatal(self):
+        from scripts.q0_manual_rollback_trial import report_phase, PHASE_MARKERS
+        with patch("builtins.print") as output:
+            report_phase("OFFLINE_SECRET_SENTINEL")
+            output.assert_not_called()
+            for marker in PHASE_MARKERS:
+                report_phase(marker)
+            self.assertEqual(output.call_args_list, [
+                call(marker, flush=True) for marker in PHASE_MARKERS
+            ])
+        with patch("builtins.print", side_effect=OSError("OFFLINE_SECRET_SENTINEL")):
+            report_phase("Q0_PHASE_DJANGO_INITIALIZED")
