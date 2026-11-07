@@ -1,54 +1,121 @@
-name: OES Django Q0 single rollback trial - HOLD
+name: OES Django Q0 manual review or single rollback - operational HOLD by default
 on:
   workflow_dispatch:
     inputs:
       protocol_ack:
-        description: "Review-only check; no connected execution"
+        description: "REVIEW_ONLY does not connect; rollback requires separate operational approval"
         required: true
+        default: REVIEW_ONLY
         type: choice
         options:
           - REVIEW_ONLY
+          - SINGLE_SYNTHETIC_ROLLBACK
+      approved_sha:
+        description: "Exact reviewed SHA; rollback only, must match the separately approved repository variable"
+        required: false
+        default: ""
+        type: string
 permissions:
   contents: read
+# Serializes both modes without cancelling an active rollback. This does NOT
+# prevent a second dispatch; the single attempt remains an operational control.
 concurrency:
   group: oes-django-q0-rollback-single-trial
   cancel-in-progress: false
+# No environment, credential or permission is provisioned by this proposal.
+# OES_Q0_APPROVED_SHA and OES_Q0_OPERATIONAL_AUTHORIZATION must remain unset
+# until published-source review and a separate nominal operational decision.
+env:
+  OES_Q0_MODE: ${{ inputs.protocol_ack }}
+  OES_Q0_REQUESTED_SHA: ${{ inputs.approved_sha }}
+  OES_Q0_APPROVED_SHA: ${{ vars.OES_Q0_APPROVED_SHA }}
+  OES_Q0_OPERATIONAL_AUTHORIZATION: ${{ vars.OES_Q0_OPERATIONAL_AUTHORIZATION }}
 jobs:
   preflight-review-only:
-    if: ${{ inputs.protocol_ack == 'REVIEW_ONLY' }}
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      mode: ${{ steps.boundary.outputs.mode }}
     steps:
-      - name: Checkout dispatched source without persisted credentials
+      - name: Checkout the dispatched immutable revision without persisted credentials
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
-      - name: Verify connected execution still disabled
+      - name: Review manual boundary and preserve general Q0 HOLD without scientific secrets
+        id: boundary
         working-directory: applications/oes_web
+        shell: bash
         run: |
           python - <<'PY'
           import ast
+          import os
+          import sys
           from pathlib import Path
-          candidate = ast.parse(Path("scripts/q0_rollback_transaction_candidate.py").read_text())
-          gate = next(node for node in candidate.body
-                      if isinstance(node, ast.FunctionDef) and node.name == "run_connected")
-          assert len(gate.body) == 1 and isinstance(gate.body[0], ast.Raise), "HOLD: candidate entrypoint changed"
-          review = ast.parse(Path("scripts/q0_rollback_isolated_review.py").read_text())
-          review_gate = next(node for node in review.body
-                             if isinstance(node, ast.FunctionDef) and node.name == "run_connected")
-          assert len(review_gate.body) == 1 and isinstance(review_gate.body[0], ast.Raise), "HOLD: review entrypoint changed"
-          print("REVIEW_ONLY_CONNECTED_HOLD_CONFIRMED")
+          from scripts.q0_manual_rollback_trial import check_workflow_boundary, checked_out_sha
+          try:
+              mode = check_workflow_boundary(os.environ, checked_out_sha())
+              for filename in ("q0_rollback_transaction_candidate.py", "q0_rollback_isolated_review.py"):
+                  module = ast.parse((Path("scripts") / filename).read_text())
+                  gate = next(node for node in module.body
+                              if isinstance(node, ast.FunctionDef) and node.name == "run_connected")
+                  if len(gate.body) != 1 or not isinstance(gate.body[0], ast.Raise):
+                      raise RuntimeError("general Q0 gate changed")
+              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                  output.write("mode=" + mode + "\n")
+          except BaseException:
+              sys.exit("HOLD_Q0_WORKFLOW_BOUNDARY")
+          print("REVIEW_ONLY_CONNECTED_HOLD_CONFIRMED" if mode == "REVIEW_ONLY"
+                else "ROLLBACK_BOUNDARY_REVIEWED_NOT_EXECUTED")
           PY
-      - name: Report review-only scope
-        run: |
-          echo 'HOLD: no database credentials, DML, or trial execution'
-          echo 'Dispatched revision reviewed: ${{ github.sha }}'
   connected-trial:
-    if: ${{ false }}
+    needs: preflight-review-only
+    # Input/secret existence alone is insufficient. Approval is separately
+    # configured by the responsible operator and bound to the reviewed SHA.
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' &&
+          github.ref == 'refs/heads/main' && github.run_attempt == '1' &&
+          needs.preflight-review-only.outputs.mode == 'SINGLE_SYNTHETIC_ROLLBACK' &&
+          vars.OES_Q0_APPROVED_SHA == github.sha &&
+          vars.OES_Q0_OPERATIONAL_AUTHORIZATION == format('APPROVED_SINGLE_SYNTHETIC_ROLLBACK:{0}', github.sha) }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Connected execution explicitly disabled
+      - name: Checkout only the separately approved immutable revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ vars.OES_Q0_APPROVED_SHA }}
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck the actual checkout before dependencies or scientific secrets
+        working-directory: applications/oes_web
+        shell: bash
         run: |
-          echo 'HOLD: no connected trial is wired'
-          exit 1
+          python - <<'PY'
+          import os
+          import sys
+          from scripts.q0_manual_rollback_trial import check_workflow_boundary, checked_out_sha
+          try:
+              if check_workflow_boundary(os.environ, checked_out_sha()) != "SINGLE_SYNTHETIC_ROLLBACK":
+                  raise RuntimeError("rollback mode required")
+          except BaseException:
+              sys.exit("HOLD_Q0_WORKFLOW_BOUNDARY")
+          PY
+      - name: Install existing requirements without scientific secrets
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Single synthetic rollback via the existing CLI - no retry
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+          OES_Q0_MANUAL_ROLLBACK_ONLY: APPROVED_SINGLE_SYNTHETIC_ROLLBACK
+          OES_PG_A4_ENABLED: '1'
+          OES_Q0_MULTI_ALIAS_ENABLED: '1'
+          OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+          OES_Q0_WRITER_PASSWORD: ${{ secrets.OES_Q0_WRITER_PASSWORD }}
+        run: python -m scripts.q0_manual_rollback_trial
