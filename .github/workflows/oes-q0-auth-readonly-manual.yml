@@ -1,0 +1,126 @@
+name: OES Q0 auth-only READ ONLY diagnostic - manual HOLD by default
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: "Exact reviewed main SHA; must equal the separately approved repository variable"
+        required: true
+        type: string
+      protocol_ack:
+        description: "Explicit one-run auth-only diagnostic, without scientific reader/writer"
+        required: true
+        type: choice
+        options:
+          - REVIEW_ONLY
+          - SINGLE_AUTH_READ_ONLY_DIAGNOSTIC
+        default: REVIEW_ONLY
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oes-q0-auth-readonly-single-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      approved: ${{ steps.guard.outputs.approved }}
+    steps:
+      - name: Checkout dispatch SHA without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify immutable revision, operational approval and diagnostic isolation
+        id: guard
+        shell: bash
+        env:
+          DISPATCH_MODE: ${{ inputs.protocol_ack }}
+          REQUESTED_SHA: ${{ inputs.approved_sha }}
+          EXPECTED_SHA: ${{ vars.OES_Q0_AUTH_DIAG_APPROVED_SHA }}
+          OPERATIONAL_AUTHORIZATION: ${{ vars.OES_Q0_AUTH_DIAG_OPERATIONAL_AUTHORIZATION }}
+          TRIGGER_SHA: ${{ github.sha }}
+          TRIGGER_REF: ${{ github.ref }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          python - <<'PY'
+          import ast
+          import os
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          try:
+              checked_out = subprocess.check_output(
+                  ["git", "rev-parse", "HEAD"], text=True).strip()
+              expected = os.environ["EXPECTED_SHA"]
+              requested = os.environ["REQUESTED_SHA"]
+              trigger = os.environ["TRIGGER_SHA"]
+              if not (os.environ["TRIGGER_REF"] == "refs/heads/main"
+                      and os.environ["RUN_ATTEMPT"] == "1"
+                      and len(expected) == 40
+                      and expected == requested == trigger == checked_out):
+                  raise RuntimeError("revision boundary")
+              if os.environ["DISPATCH_MODE"] != "SINGLE_AUTH_READ_ONLY_DIAGNOSTIC":
+                  raise RuntimeError("review only")
+              if os.environ["OPERATIONAL_AUTHORIZATION"] != (
+                      "APPROVED_SINGLE_AUTH_READ_ONLY_DIAGNOSTIC:" + expected):
+                  raise RuntimeError("authorization boundary")
+              cli = Path("applications/oes_web/scripts/diagnose_synthetic_q0_auth_readonly.py")
+              settings = Path("applications/oes_web/config/settings_q0_auth_attestation.py")
+              service = Path("applications/oes_web/preparer_identity/synthetic_service_readonly.py")
+              for candidate in (cli, settings, service):
+                  ast.parse(candidate.read_text(encoding="utf-8"))
+              if "diagnose_synthetic_identity_readonly" not in cli.read_text(encoding="utf-8"):
+                  raise RuntimeError("diagnostic entry point")
+              if '"oes_auth_readonly"' not in settings.read_text(encoding="utf-8"):
+                  raise RuntimeError("auth-only alias")
+              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                  output.write("approved=true\n")
+          except BaseException:
+              sys.exit("HOLD_Q0_AUTH_DIAG_PREFLIGHT")
+          print("Q0_AUTH_DIAG_PREFLIGHT_APPROVED_NO_CONNECTION")
+          PY
+
+  auth-readonly:
+    needs: preflight
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' &&
+          github.ref == 'refs/heads/main' && github.run_attempt == '1' &&
+          needs.preflight.outputs.approved == 'true' &&
+          inputs.protocol_ack == 'SINGLE_AUTH_READ_ONLY_DIAGNOSTIC' &&
+          vars.OES_Q0_AUTH_DIAG_APPROVED_SHA == github.sha &&
+          vars.OES_Q0_AUTH_DIAG_OPERATIONAL_AUTHORIZATION == format('APPROVED_SINGLE_AUTH_READ_ONLY_DIAGNOSTIC:{0}', github.sha) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact authorized revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ vars.OES_Q0_AUTH_DIAG_APPROVED_SHA }}
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm actual checkout before dependencies or secrets
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ vars.OES_Q0_AUTH_DIAG_APPROVED_SHA }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA" || { echo HOLD_Q0_AUTH_DIAG_REVISION; exit 1; }
+      - name: Install existing requirements without database credentials
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Run exactly one isolated auth-only READ ONLY diagnostic
+        working-directory: applications/oes_web
+        env:
+          OES_AUTH_DIAGNOSTIC_ONLY: READ_ONLY_SYNTHETIC_IDENTITY
+          OES_AUTH_ATTEST_ONLY: '1'
+          DJANGO_SETTINGS_MODULE: config.settings_q0_auth_attestation
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+        run: python -m scripts.diagnose_synthetic_q0_auth_readonly
