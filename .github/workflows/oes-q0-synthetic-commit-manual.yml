@@ -1,51 +1,89 @@
-name: OES Q0 synthetic commit candidate - manual only
+name: OES Django Q0 single persistent trial - REVIEW ONLY
 
 on:
   workflow_dispatch:
     inputs:
-      confirm:
-        description: 'Type ONE_SYNTHETIC_Q0_COMMIT only after separate explicit authorization for persistent write'
+      protocol_ack:
+        description: 'REVIEW_ONLY never connects; reserved mode remains SOURCE HOLD'
         required: true
+        default: REVIEW_ONLY
+        type: choice
+        options:
+          - REVIEW_ONLY
+          - SINGLE_SYNTHETIC_COMMIT
+      approved_sha:
+        description: 'Full reviewed SHA, also independently approved for this run'
+        required: false
+        default: ''
+        type: string
+      trial_id:
+        description: 'Reserved UUIDv4 hex recorded BEFORE the attempt; never generated in the CLI'
+        required: false
+        default: ''
         type: string
 
 permissions:
   contents: read
 
+# Serialization ONLY. Not proof of consumed authorization or single execution.
 concurrency:
-  group: oes-q0-synthetic-commit-manual
+  group: oes-django-q0-single-persistent-trial
   cancel-in-progress: false
 
+env:
+  OES_Q0_PERSIST_MODE: ${{ inputs.protocol_ack }}
+  OES_Q0_PERSIST_REQUESTED_SHA: ${{ inputs.approved_sha }}
+  OES_Q0_PERSIST_TRIAL_ID: ${{ inputs.trial_id }}
+  OES_Q0_PERSIST_APPROVED_SHA: ${{ vars.OES_Q0_PERSIST_APPROVED_SHA }}
+  OES_Q0_PERSIST_APPROVED_RUN_ID: ${{ vars.OES_Q0_PERSIST_APPROVED_RUN_ID }}
+  OES_Q0_PERSIST_OPERATIONAL_AUTHORIZATION: ${{ vars.OES_Q0_PERSIST_OPERATIONAL_AUTHORIZATION }}
+
 jobs:
-  synthetic-commit:
-    if: github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && inputs.confirm == 'ONE_SYNTHETIC_Q0_COMMIT'
+  review-only:
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
-    env:
-      PYTHONUNBUFFERED: '1'
+    timeout-minutes: 5
     steps:
-      - name: Checkout main
+      - name: Checkout the dispatched immutable revision
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Review boundary and identifiers without Django or database secrets
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_single_persistent_trial --review-workflow
+
+  single-persistent-trial:
+    needs: review-only
+    # SOURCE HOLD: durable atomic consumption is NOT implemented. Do not replace
+    # this with input/secret existence or concurrency as proof of single use.
+    # Requires a reviewed source change AND separate operational authorization.
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the same dispatched immutable revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install pinned Django and PostgreSQL driver
+      - name: Recheck SHA and nominal run binding without database secrets
         working-directory: applications/oes_web
-        run: python -m pip install --disable-pip-version-check -r requirements.txt
-      - name: Require temporary reader-independent Q0 writer credential
-        env:
-          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
-        shell: bash
-        run: |
-          if [ -z "$OES_QPREP_LOGIN_PASSWORD" ]; then
-            echo "::error::Q0 credential unavailable; no SQL executed"
-            exit 1
-          fi
-      - name: Execute exactly one synthetic Q0 command and verification
+        run: python -m scripts.q0_single_persistent_trial --review-workflow
+      - name: Install existing requirements without database secrets
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Reserved canonical single attempt - CLI also SOURCE HOLD
         working-directory: applications/oes_web
         env:
-          OES_Q0_COMMIT_EXPLICIT_APPROVAL: ${{ inputs.confirm }}
-          OES_QPREP_LOGIN_PASSWORD: ${{ secrets.OES_QPREP_LOGIN_PASSWORD }}
-        run: python scripts/run_q0_synthetic_commit_candidate.py
+          DJANGO_SETTINGS_MODULE: config.settings
+          OES_PG_A4_ENABLED: '1'
+          OES_Q0_MULTI_ALIAS_ENABLED: '1'
+          OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+          OES_Q0_WRITER_PASSWORD: ${{ secrets.OES_Q0_WRITER_PASSWORD }}
+        run: python -m scripts.q0_single_persistent_trial
