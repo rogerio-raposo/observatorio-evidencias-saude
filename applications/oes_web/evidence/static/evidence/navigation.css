@@ -12,3 +12,9 @@
 .demo-skip{position:absolute;left:1rem;top:0;transform:translateY(-150%);background:white;color:#145c96;padding:.75rem;z-index:1}
 .demo-skip:focus{transform:translateY(0)}
 @media(max-width:480px){.demo-navigation ul{flex-direction:column}.demo-navigation a{display:block}}
+
+.demo-state{border:1px solid #a6b4c1;border-left-width:5px;border-radius:6px;padding:.8rem 1rem;overflow-wrap:anywhere}
+.demo-state-unavailable{background:#fff5db;border-color:#8a641f}
+.demo-state-restricted{background:#eef2f6;border-color:#53677a}
+.demo-state-validation{background:#eef6fc;border-color:#145c96}
+.demo-state p:first-child{margin-top:0}.demo-state p:last-child{margin-bottom:0}

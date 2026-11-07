@@ -75,3 +75,71 @@ class PF_I01_N2Tests(SimpleTestCase):
                     mocked_hash.return_value.hexdigest.return_value = n2_historical.EXPECTED_SHA256
                     response = self.client.get(self.url)
                 self.assertEqual(response.status_code, 503)
+
+    def test_sheet_hierarchy_index_and_historical_text_are_preserved(self):
+        import re
+        from html.parser import HTMLParser
+
+        class TextReader(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.text = []
+                self.headings = []
+                self.ids = []
+                self.anchors = []
+
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if re.fullmatch(r"h[1-6]", tag):
+                    self.headings.append(int(tag[1]))
+                if "id" in attrs:
+                    self.ids.append(attrs["id"])
+                if tag == "a" and attrs.get("href", "").startswith("#"):
+                    self.anchors.append(attrs["href"][1:])
+
+            def handle_data(self, data):
+                self.text.append(data)
+
+        source = n2_historical.load_historical_n2()
+        body = n2_historical.present_markdown(source)
+        parsed = TextReader()
+        parsed.feed(body)
+        visible = re.sub(r"\s+", " ", "".join(parsed.text))
+        # Every source line/cell survives presentation, apart from Markdown syntax
+        # and template comments. No scientific wording or numeric result is rewritten.
+        for line in re.sub(r"<!--.*?-->", "", source, flags=re.S).splitlines():
+            line = line.strip()
+            if not line or re.fullmatch(r"-{3,}", line):
+                continue
+            values = line[1:-1].split("|") if line.startswith("|") else [line]
+            for value in values:
+                value = value.strip()
+                if re.fullmatch(r":?-{3,}:?", value):
+                    continue
+                value = re.sub(r"^(?:#{1,6}\s+|>\s+|[-*]\s+)", "", value)
+                value = value.replace("**", "").replace("`", "")
+                self.assertIn(re.sub(r"\s+", " ", value), visible)
+        self.assertNotIn("**", visible)
+        self.assertNotIn("template_version", visible)
+        self.assertEqual(len(parsed.ids), len(set(parsed.ids)))
+        self.assertTrue(set(parsed.anchors).issubset(parsed.ids))
+        self.assertIn("sheet-index", parsed.ids)
+        self.assertGreater(len(parsed.anchors), 10)
+        for previous, current in zip(parsed.headings, parsed.headings[1:]):
+            self.assertLessEqual(current, previous + 1)
+        response = self.client.get(self.url)
+        self.assertContains(response, "<h1>", count=1)
+
+    def test_inline_presentation_escapes_html_and_formats_supported_markdown(self):
+        body = n2_historical.present_markdown(
+            '# Title\n## Section\n**Label:** <script>alert(1)</script>\n'
+            '> **Limit**\n- *Note* and `code`\n'
+            '| Heading |\n|---|\n| **Cell** |'
+        )
+        self.assertIn('<strong>Label:</strong>', body)
+        self.assertIn('&lt;script&gt;', body)
+        self.assertNotIn('<script>', body)
+        self.assertIn('<blockquote>', body)
+        self.assertIn('<em>Note</em>', body)
+        self.assertIn('<code>code</code>', body)
+        self.assertIn('<strong>Cell</strong>', body)

@@ -7,6 +7,8 @@
 <main>
 {% include "evidence/navigation.html" with current="" %}
 <div id="conteudo" tabindex="-1">
+<nav aria-label="Localização"><a href="{% url 'home' %}">Catálogo documental</a> → <span aria-current="page">Sinal {{ signal.nct }}</span></nav>
+<p>NCT é o identificador de registro do ensaio no ClinicalTrials.gov; sua presença não equivale à identificação científica reconciliada.</p>
 <p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
 <h1>Sinal de evidência: {{ signal.nct }}</h1>
 <section class="reading-guide" aria-labelledby="route-title"><h2 id="route-title">Como ler este percurso documental</h2>

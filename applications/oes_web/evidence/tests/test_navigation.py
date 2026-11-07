@@ -54,6 +54,8 @@ class NavigationTests(SimpleTestCase):
                 response = self.client.get(reverse(name, args=args))
                 self.assert_navigation(response, status=503)
                 self.assertContains(response, "HOLD", status_code=503)
+                self.assertContains(response, "demo-state-unavailable", status_code=503)
+                self.assertContains(response, "Indisponibilidade técnica" if name == "evidence-sheet-n2" else "indisponibilidade técnica", status_code=503)
 
     def test_navigation_destinations_still_reject_write_methods(self):
         for name, args, _ in self.destinations:

@@ -43,21 +43,46 @@ def load_historical_n2():
     except Exception:
         raise N2Hold("HOLD: historical evidence sheet unavailable") from None
 
+def _inline(text):
+    """Only emphasis and code used by the historical sheet; never raw HTML."""
+    tokens = re.split(r"(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*)", text)
+    rendered = []
+    for token in tokens:
+        if token.startswith("**") and token.endswith("**"):
+            rendered.append("<strong>" + html.escape(token[2:-2]) + "</strong>")
+        elif token.startswith("`") and token.endswith("`"):
+            rendered.append("<code>" + html.escape(token[1:-1]) + "</code>")
+        elif token.startswith("*") and token.endswith("*"):
+            rendered.append("<em>" + html.escape(token[1:-1]) + "</em>")
+        else:
+            rendered.append(html.escape(token))
+    return "".join(rendered)
+
+
 def present_markdown(markdown):
-    """Escape all input; display bounded Markdown structure without raw HTML."""
-    parts = []
-    rows = []
+    """Bounded presentation of the unchanged historical Markdown.
+
+    The page owns h1; the product starts at h2 and its sections at h3.
+    Anchors are ordinal and independent of scientific identifiers/content.
+    """
+    parts, rows, sections = [], [], []
+    major_section = False
+
+    def back_to_index():
+        return '<p class="sheet-return"><a href="#sheet-index">Retornar ao índice da ficha</a></p>'
+
     def flush_table():
-        nonlocal rows
         if rows:
-            parts.append("<table>" + "".join(
+            parts.append('<div class="sheet-table" role="region" aria-label="Tabela da ficha histórica" tabindex="0"><table>' + "".join(
                 "<tr>" + "".join(
-                    ("<th>" if n == 0 else "<td>") + html.escape(cell.strip()) +
+                    ("<th scope=\"col\">" if n == 0 else "<td>") + _inline(cell.strip()) +
                     ("</th>" if n == 0 else "</td>") for cell in row
                 ) + "</tr>" for n, row in enumerate(rows)
-            ) + "</table>")
-            rows = []
-    for line in markdown.splitlines():
+            ) + "</table></div>")
+            rows.clear()
+
+    # Template comments are presentation metadata, not scientific sheet content.
+    for line in re.sub(r"<!--.*?-->", "", markdown, flags=re.S).splitlines():
         stripped = line.strip()
         if stripped.startswith("|") and stripped.endswith("|"):
             cells = [cell.strip() for cell in stripped[1:-1].split("|")]
@@ -70,11 +95,30 @@ def present_markdown(markdown):
             continue
         match = re.match(r"^(#{1,6})\s+(.+)$", stripped)
         if match:
-            level = len(match.group(1))
-            parts.append(f"<h{level}>" + html.escape(match.group(2)) + f"</h{level}>")
+            source_level = len(match.group(1))
+            level = min(source_level + 1, 6)
+            anchor = ""
+            if source_level == 2:
+                if major_section:
+                    parts.append(back_to_index())
+                major_section = True
+                anchor_id = f"sheet-section-{len(sections) + 1}"
+                sections.append((anchor_id, match.group(2)))
+                anchor = f' id="{anchor_id}" tabindex="-1"'
+            parts.append(f"<h{level}{anchor}>" + _inline(match.group(2)) + f"</h{level}>")
+        elif re.fullmatch(r"-{3,}", stripped):
+            parts.append("<hr>")
+        elif stripped.startswith("> "):
+            parts.append("<blockquote><p>" + _inline(stripped[2:]) + "</p></blockquote>")
         elif re.match(r"^[-*]\s+", stripped):
-            parts.append("<p>• " + html.escape(stripped[2:]) + "</p>")
+            parts.append("<p>• " + _inline(stripped[2:]) + "</p>")
         else:
-            parts.append("<p>" + html.escape(stripped) + "</p>")
+            parts.append("<p>" + _inline(stripped) + "</p>")
     flush_table()
-    return "\n".join(parts)
+    if major_section:
+        parts.append(back_to_index())
+    index = '<nav aria-label="Índice da ficha"><h2 id="sheet-index" tabindex="-1">Índice da ficha histórica</h2><ul>' + "".join(
+        f'<li><a href="#{anchor}">' + _inline(title) + '</a></li>'
+        for anchor, title in sections
+    ) + '</ul></nav>'
+    return index + "\n" + "\n".join(parts)

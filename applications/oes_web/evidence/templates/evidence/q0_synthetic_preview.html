@@ -23,7 +23,7 @@
 <dt>Texto original</dt><dd>{{ example.original_text }}</dd>
 <dt>Etapa</dt><dd>{{ example.stage }}</dd>
 <dt>Versão ilustrativa</dt><dd>{{ example.version }}</dd>
-<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — somente preparação; não é recibo de execução.</dd>
+<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — estado apenas preparatório; não é recibo de execução.</dd>
 </dl>
 <p>Q0 preserva a pergunta como foi formulada. A próxima etapa ilustra uma proposta de normalização, sem substituir esse original.</p>
 <p><a href="#q1-title">Continuar para Q1 — normalização proposta</a></p>
@@ -37,7 +37,7 @@
 <dt>Texto original preservado</dt><dd>{{ q1.original_text }}</dd>
 <dt>Normalização proposta</dt><dd>{{ q1.normalized_text }}</dd>
 <dt>Justificativa da proposta</dt><dd>{{ q1.justification }}</dd>
-<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — sem revisão científica realizada.</dd>
+<dt>Estado preparatório ilustrado</dt><dd>PREPARATORY_ONLY — estado apenas preparatório, sem revisão científica realizada.</dd>
 </dl>
 <p>Q1 explicita elementos antes não delimitados. São escolhas fictícias para leitura do exemplo, sem aprovação metodológica.</p>
 <p><a href="#q0-title">Rever Q0</a> · <a href="#q2-title">Continuar para Q2 — estruturação preliminar</a></p>
@@ -53,13 +53,13 @@
 <dt>Comparador</dt><dd>{{ q2.comparator }}</dd>
 <dt>Desfechos</dt><dd><ul>{% for outcome in q2.outcomes %}<li>{{ outcome }}</li>{% endfor %}</ul></dd>
 <dt>Classe metodológica proposta</dt><dd>{{ q2.methodological_class }} — intervenção</dd>
-<dt>Profundidade proposta</dt><dd>{{ q2.depth }} — código ilustrativo</dd>
-<dt>Manutenção proposta</dt><dd>{{ q2.maintenance }} — código ilustrativo</dd>
+<dt>Profundidade proposta</dt><dd>{{ q2.depth }} — Ficha de Evidência Estruturada; escolha ilustrativa, sem produzir uma ficha.</dd>
+<dt>Manutenção proposta</dt><dd>{{ q2.maintenance }} — elegível para atualização; escolha ilustrativa, sem monitoramento ativo.</dd>
 <dt>Justificativa do encaminhamento proposto</dt><dd>{{ q2.routing_justification }}</dd>
 <dt>Estado da proposta ilustrada</dt><dd>PROPOSED_OFFLINE_ONLY — somente proposta demonstrativa.</dd>
 </dl>
 <p>Admissibilidade não decidida (NOT_DECIDED); revisão científica não realizada (NOT_PERFORMED); Investigation não aberta (NOT_OPENED).</p>
-<p>Q0 HARD HOLD; E9 NO-GO; Fase 5 NOT_STARTED. Nenhum encaminhamento foi autorizado por esta página.</p>
+<p class="demo-state demo-state-restricted"><strong>Restrição operacional:</strong> Q0 HARD HOLD (execução geral bloqueada); E9 NO-GO (gate permanece fechado); Fase 5 NOT_STARTED (não iniciada). Nenhum encaminhamento foi autorizado por esta página.</p>
 <p><a href="#q1-title">Rever a normalização proposta em Q1</a></p>
 </section>
 <section aria-labelledby="flow-title">
@@ -84,7 +84,8 @@
 <label for="q0-local-text">Pergunta sintética</label>
 <textarea id="q0-local-text" maxlength="10000" rows="4" placeholder="Escreva uma pergunta fictícia"></textarea>
 <p><button id="q0-local-check" type="button">Validar localmente</button></p>
-<p id="q0-local-result" role="status" aria-live="polite">Nenhuma validação realizada.</p>
+<p id="q0-local-result" class="demo-state" role="status" aria-live="polite">Nenhuma validação realizada.</p>
+<p>Uma mensagem HOLD neste exercício indica erro de preenchimento local. Corrija os campos e valide novamente; isso não modifica a restrição operacional de Q0.</p>
 </section>
 <script>
 (function () {
@@ -94,15 +95,16 @@
   const requestId = document.getElementById("q0-local-request");
   const questionId = document.getElementById("q0-local-question");
   document.getElementById("q0-local-check").addEventListener("click", function () {
+    output.classList.add("demo-state-validation");
     const value = field.value;
     if (!requestId.value.trim() || requestId.value.length > 128) {
-      output.textContent = "HOLD: identificador de solicitação inválido (1 a 128 caracteres).";
+      output.textContent = "HOLD: erro de validação local — identificador de solicitação inválido (1 a 128 caracteres).";
     } else if (!questionId.value.trim() || !questionId.value.startsWith("OES-SYNTH-Q0-")) {
-      output.textContent = "HOLD: use um identificador fictício OES-SYNTH-Q0-.";
+      output.textContent = "HOLD: erro de validação local — use um identificador fictício OES-SYNTH-Q0-.";
     } else if (!value.trim()) {
-      output.textContent = "HOLD: informe uma pergunta sintética não vazia.";
+      output.textContent = "HOLD: erro de validação local — informe uma pergunta sintética não vazia.";
     } else if (value.length > 10000) {
-      output.textContent = "HOLD: texto excede 10.000 caracteres.";
+      output.textContent = "HOLD: erro de validação local — texto excede 10.000 caracteres.";
     } else {
       output.textContent = "Validação local PASS: campos Q0 preenchidos; versão esperada 0. Nenhuma autorização ou gravação foi realizada.";
     }
