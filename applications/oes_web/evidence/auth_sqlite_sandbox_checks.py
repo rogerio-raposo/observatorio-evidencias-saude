@@ -17,9 +17,9 @@ class AuthSQLiteSandboxTests(TestCase):
         content_type = ContentType.objects.get(
             app_label="evidence", model="oesquestion"
         )
-        self.permission = Permission.objects.create(
-            content_type=content_type, codename="prepare_question",
-            name="Prepare a question (sandbox only)"
+        # post_migrate already creates the model-declared Django permission.
+        self.permission = Permission.objects.get(
+            content_type=content_type, codename="prepare_question"
         )
 
     def test_login_and_explicit_permission(self):
@@ -495,6 +495,15 @@ class G2CatalogueOfflineTests(TestCase):
 class G2ProvisioningOfflineTests(TestCase):
     """Disposable SQLite rehearsal only; never executed against Neon."""
 
+    @classmethod
+    def setUpTestData(cls):
+        # G2 specifically rehearses creation of a missing permission. Django's
+        # post_migrate permission belongs to the normal sandbox baseline, not G2.
+        Permission.objects.filter(
+            content_type__app_label="evidence", content_type__model="oesquestion",
+            codename="prepare_question",
+        ).delete()
+
     def test_single_atomic_provisioning_and_ordered_cleanup(self):
         from django.db import transaction
         from django.db.models.deletion import ProtectedError
@@ -554,6 +563,15 @@ class G2ProvisioningOfflineTests(TestCase):
 
 class G2P2BExecutorOfflineTests(TestCase):
     """Connected adapters must remain absent; only disposable SQLite may mutate."""
+
+    @classmethod
+    def setUpTestData(cls):
+        # Keep the G2 preflight invariant: a missing permission before the
+        # atomic synthetic provision/cleanup, restricted to disposable SQLite.
+        Permission.objects.filter(
+            content_type__app_label="evidence", content_type__model="oesquestion",
+            codename="prepare_question",
+        ).delete()
 
     def test_offline_executor_and_postflight(self):
         from config.auth_pg_g2_p2b_offline import provision_offline

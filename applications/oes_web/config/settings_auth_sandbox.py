@@ -5,7 +5,6 @@ Default scientific alias is dummy. No credentials, no migrations on PG.
 import os
 from .settings import *  # noqa: F401,F403
 
-INSTALLED_APPS = [*INSTALLED_APPS, "preparer_identity"]
 DATABASE_ROUTERS = ["config.auth_sandbox_router.AuthSandboxRouter"]
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
