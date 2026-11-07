@@ -83,15 +83,36 @@ def check_manual_boundary(environ):
     return True
 
 
+PHASE_MARKERS = frozenset((
+    "Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED",
+    "Q0_PHASE_DJANGO_INITIALIZED",
+    "Q0_PHASE_SYNTHETIC_IDENTITY_ATTESTED",
+    "Q0_PHASE_WRITER_BOUNDARY_CLOSED",
+    "Q0_PHASE_INDEPENDENT_RECONCILIATION_COMPLETED",
+))
+
+
+def report_phase(marker):
+    """Best-effort static facts only; reporting failure must not affect the trial."""
+    if marker not in PHASE_MARKERS:
+        return
+    try:
+        print(marker, flush=True)
+    except Exception:
+        pass
+
+
 def main():
     check_manual_boundary(os.environ)
     check_workflow_boundary(os.environ, checked_out_sha())
+    report_phase("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED")
     import django
     django.setup()
+    report_phase("Q0_PHASE_DJANGO_INITIALIZED")
     from scripts.q0_rollback_transaction_candidate import (
         review_and_execute_isolated_trial,
     )
-    result = review_and_execute_isolated_trial()
+    result = review_and_execute_isolated_trial(phase_reporter=report_phase)
     if result != "PASS_ROLLBACK_ZERO_RESIDUES":
         raise RuntimeError("HOLD: unexpected rollback classification")
     print("PASS_ROLLBACK_ZERO_RESIDUES")

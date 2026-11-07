@@ -14,6 +14,15 @@ WRITER = "oes_q0_writer"
 READER = "oes_synthetic_reader"
 
 
+def _phase_completed(reporter, marker):
+    """Diagnostic notification only; never change transaction/error handling."""
+    if reporter is not None:
+        try:
+            reporter(marker)
+        except Exception:
+            pass
+
+
 def review_persisted_actor_binding(*, user, trial):
     """Review the persisted auth-store binding; not a real login or DML gate."""
     from evidence.preparation_auth import require_question_preparer
@@ -25,7 +34,7 @@ def review_persisted_actor_binding(*, user, trial):
 
 
 
-def prepare_persisted_service_trial_readonly():
+def prepare_persisted_service_trial_readonly(*, phase_reporter=None):
     """Attest service identity and construct one synthetic trial; no writer access.
 
     This function is NOT connected to run_connected or to any workflow.
@@ -38,6 +47,7 @@ def prepare_persisted_service_trial_readonly():
     from scripts.q0_rollback_trial_preflight_offline import prepare_pf_i03_q0_trial
 
     actor = attest_synthetic_identity_readonly()
+    _phase_completed(phase_reporter, "Q0_PHASE_SYNTHETIC_IDENTITY_ATTESTED")
     nonce = uuid4().hex
     trial = prepare_pf_i03_q0_trial(
         actor_id=actor,
@@ -50,7 +60,7 @@ def prepare_persisted_service_trial_readonly():
     return trial, actor
 
 
-def _perform_rollback_only(*, trial, verified_actor):
+def _perform_rollback_only(*, trial, verified_actor, phase_reporter=None):
     """Internal, intentionally unwired transaction recipe. No commit path."""
     RollbackTrialBoundary(WRITER, READER, 5, True, True, True, True).review()
     validate_persisted_actor_trial(authenticated_actor_id=verified_actor, trial=trial)
@@ -113,6 +123,9 @@ def _perform_rollback_only(*, trial, verified_actor):
         writer.close()
         if boundary_open:
             raise PreparationHold("HOLD: writer transaction boundary remained open")
+    # Only the local boundary/connection closure is observed here. This marker
+    # does not assert that PostgreSQL rollback succeeded.
+    _phase_completed(phase_reporter, "Q0_PHASE_WRITER_BOUNDARY_CLOSED")
     reader = connections[READER]
     try:
         reader.close()
@@ -136,6 +149,8 @@ def _perform_rollback_only(*, trial, verified_actor):
         raise PreparationHold("HOLD: independent reconciliation unavailable") from exc
     finally:
         reader.close()
+    # Queries and reader closure completed; results may still contain residues.
+    _phase_completed(phase_reporter, "Q0_PHASE_INDEPENDENT_RECONCILIATION_COMPLETED")
     if any(residues):
         raise PreparationHold("HOLD: scientific rollback residues")
     if transaction_failure is not None:
@@ -145,13 +160,13 @@ def _perform_rollback_only(*, trial, verified_actor):
     return "PASS_ROLLBACK_ZERO_RESIDUES"
 
 
-def review_and_execute_isolated_trial():
+def review_and_execute_isolated_trial(*, phase_reporter=None):
     """Manual connected composition only; public entrypoint remains disabled.
 
     Provenance comes from an auth-only read-only session; no caller-supplied actor.
     """
-    trial, actor = prepare_persisted_service_trial_readonly()
-    return _perform_rollback_only(trial=trial, verified_actor=actor)
+    trial, actor = prepare_persisted_service_trial_readonly(phase_reporter=phase_reporter)
+    return _perform_rollback_only(trial=trial, verified_actor=actor, phase_reporter=phase_reporter)
 
 
 def run_connected(*args, **kwargs):

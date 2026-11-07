@@ -70,7 +70,7 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         self.assertEqual(connections.__getitem__.call_args_list[0].args,
                          (candidate.WRITER,))
 
-    def _exercise_failed_insert_with_reader(self, *, reader_raises=False):
+    def _exercise_failed_insert_with_reader(self, *, reader_raises=False, phase_reporter=None):
         from contextlib import ExitStack
         trial, actor = self.trial()
         writer, reader = MagicMock(), MagicMock()
@@ -113,7 +113,7 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             expected = ("independent reconciliation unavailable" if reader_raises
                         else "transaction failed; zero residues independently verified")
             with self.assertRaisesRegex(PreparationHold, expected) as raised:
-                candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+                candidate._perform_rollback_only(trial=trial, verified_actor=actor, phase_reporter=phase_reporter)
             if not reader_raises:
                 self.assertIsInstance(raised.exception.__cause__, RuntimeError)
             rollback.assert_called_once_with(True, using=candidate.WRITER)
@@ -152,9 +152,15 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         ), self.assertRaises(PreparationHold):
             candidate.review_persisted_actor_binding(user=MagicMock(), trial=trial)
 
-    def _full_transaction_scenario(self, outcome):
+    def _full_transaction_scenario(self, outcome, *, phase_reporter=None, invocation=None):
         from contextlib import ExitStack
         trial, actor = self.trial()
+        def perform():
+            if invocation is not None:
+                return invocation()
+            return candidate._perform_rollback_only(
+                trial=trial, verified_actor=actor, phase_reporter=phase_reporter)
+
         writer, reader = MagicMock(), MagicMock()
         writer.vendor = reader.vendor = "postgresql"
         writer.in_atomic_block = reader.in_atomic_block = False
@@ -172,6 +178,8 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
             rollback.side_effect = RuntimeError("offline rollback failure")
         if outcome == "writer_close_failure":
             writer.close.side_effect = RuntimeError("offline close failure")
+        if outcome == "reader_close_failure":
+            reader.close.side_effect = [None, RuntimeError("offline reader close failure")]
         if outcome == "writer_identity_mismatch":
             writer.cursor.return_value.__enter__.return_value.fetchone.return_value = (
                 "other_role", "oes_sandbox", "off")
@@ -183,6 +191,8 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         def atomic(*, using, savepoint):
             self.assertEqual((using, savepoint), (candidate.WRITER, False))
             yield
+            if outcome == "writer_boundary_open":
+                writer.in_atomic_block = True
             if outcome == "exit_failure":
                 raise RuntimeError("synthetic atomic exit failure")
 
@@ -211,29 +221,40 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
                 managers[-1].side_effect = lambda alias: receipt_manager if alias == candidate.WRITER else outcome_for_alias(alias)
             if outcome == "residues":
                 managers[0].side_effect = lambda alias: self._residual_manager(alias)
+            if outcome == "writer_boundary_open":
+                with self.assertRaisesRegex(PreparationHold, "writer transaction boundary remained open"):
+                    perform()
+                writer.close.assert_called_once()
+                reader.close.assert_not_called()
+                return
+            if outcome == "reader_close_failure":
+                with self.assertRaisesRegex(RuntimeError, "offline reader close failure"):
+                    perform()
+                writer.close.assert_called_once()
+                self.assertEqual(reader.close.call_count, 2)
+                return
             if outcome == "writer_close_failure":
                 with self.assertRaisesRegex(RuntimeError, "offline close failure"):
-                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+                    perform()
                 rollback.assert_called_once_with(True, using=candidate.WRITER)
                 writer.close.assert_called_once()
                 reader.close.assert_not_called()
                 return
             if outcome == "reader_identity_mismatch":
                 with self.assertRaisesRegex(PreparationHold, "independent reconciliation unavailable"):
-                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+                    perform()
                 rollback.assert_called_once_with(True, using=candidate.WRITER)
                 writer.close.assert_called_once()
                 reader.close.assert_called()
                 return
             if outcome == "residues":
                 with self.assertRaisesRegex(PreparationHold, "scientific rollback residues"):
-                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+                    perform()
             elif outcome in ("exit_failure", "fifth_insert_failure", "rollback_failure", "writer_identity_mismatch"):
                 with self.assertRaisesRegex(PreparationHold, "transaction failed; zero residues"):
-                    candidate._perform_rollback_only(trial=trial, verified_actor=actor)
+                    perform()
             else:
-                self.assertEqual(candidate._perform_rollback_only(
-                    trial=trial, verified_actor=actor), "PASS_ROLLBACK_ZERO_RESIDUES")
+                self.assertEqual(perform(), "PASS_ROLLBACK_ZERO_RESIDUES")
             if outcome == "fifth_insert_failure":
                 receipt_manager.create.assert_called_once()
             rollback.assert_called_once_with(True, using=candidate.WRITER)
@@ -294,8 +315,8 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
                           return_value="PASS_ROLLBACK_ZERO_RESIDUES") as perform:
             self.assertEqual(candidate.review_and_execute_isolated_trial(),
                              "PASS_ROLLBACK_ZERO_RESIDUES")
-            prepare.assert_called_once_with()
-            perform.assert_called_once_with(trial=trial, verified_actor=actor)
+            prepare.assert_called_once_with(phase_reporter=None)
+            perform.assert_called_once_with(trial=trial, verified_actor=actor, phase_reporter=None)
 
     def test_isolated_composition_never_opens_writer_if_attestation_fails(self):
         with patch.object(candidate, "prepare_persisted_service_trial_readonly",
@@ -317,3 +338,76 @@ class RollbackCandidateOfflineTests(SimpleTestCase):
         for outcome in ("writer_identity_mismatch", "reader_identity_mismatch"):
             with self.subTest(outcome=outcome):
                 self._full_transaction_scenario(outcome)
+
+    def test_transaction_markers_describe_completed_phases_not_success(self):
+        writer_closed = "Q0_PHASE_WRITER_BOUNDARY_CLOSED"
+        reconciled = "Q0_PHASE_INDEPENDENT_RECONCILIATION_COMPLETED"
+        cases = {
+            "success": [writer_closed, reconciled],
+            "fifth_insert_failure": [writer_closed, reconciled],
+            "rollback_failure": [writer_closed, reconciled],
+            "exit_failure": [writer_closed, reconciled],
+            "residues": [writer_closed, reconciled],
+            "writer_close_failure": [],
+            "writer_boundary_open": [],
+            "reader_identity_mismatch": [writer_closed],
+            "reader_close_failure": [writer_closed],
+        }
+        for outcome, expected in cases.items():
+            with self.subTest(outcome=outcome):
+                phases = []
+                self._full_transaction_scenario(outcome, phase_reporter=phases.append)
+                self.assertEqual(phases, expected)
+        phases = []
+        self._exercise_failed_insert_with_reader(reader_raises=True, phase_reporter=phases.append)
+        self.assertEqual(phases, [writer_closed])
+
+    def test_reporting_failure_does_not_change_transaction_or_result(self):
+        def unavailable_output(marker):
+            raise OSError("OFFLINE_SECRET_SENTINEL")
+        self._full_transaction_scenario("success", phase_reporter=unavailable_output)
+        self._full_transaction_scenario("fifth_insert_failure", phase_reporter=unavailable_output)
+
+    def test_identity_marker_only_after_attestation_returns(self):
+        actor = "oes:actor:" + str(uuid4())
+        phases = []
+        with patch(
+            "preparer_identity.synthetic_service_readonly.attest_synthetic_identity_readonly",
+            return_value=actor,
+        ):
+            candidate.prepare_persisted_service_trial_readonly(phase_reporter=phases.append)
+        self.assertEqual(phases, ["Q0_PHASE_SYNTHETIC_IDENTITY_ATTESTED"])
+        phases.clear()
+        with patch(
+            "preparer_identity.synthetic_service_readonly.attest_synthetic_identity_readonly",
+            side_effect=RuntimeError("OFFLINE_SECRET_SENTINEL"),
+        ), self.assertRaises(RuntimeError):
+            candidate.prepare_persisted_service_trial_readonly(phase_reporter=phases.append)
+        self.assertEqual(phases, [])
+
+    def test_complete_cli_and_existing_composition_emit_ordered_static_facts(self):
+        from scripts.q0_manual_rollback_trial import main
+        from evidence.test_q0_manual_rollback_trial_offline import Q0ManualTrialOfflineTests
+        from unittest.mock import call
+        env = Q0ManualTrialOfflineTests().valid_environment()
+        actor = "oes:actor:" + str(uuid4())
+
+        def invoke_cli():
+            main()
+            return "PASS_ROLLBACK_ZERO_RESIDUES"
+
+        with patch.dict("os.environ", env, clear=True), patch(
+            "scripts.q0_manual_rollback_trial.checked_out_sha", return_value="a" * 40
+        ), patch("django.setup"), patch(
+            "preparer_identity.synthetic_service_readonly.attest_synthetic_identity_readonly",
+            return_value=actor,
+        ), patch("builtins.print") as output:
+            self._full_transaction_scenario("success", invocation=invoke_cli)
+        self.assertEqual(output.call_args_list, [
+            call("Q0_PHASE_OPERATIONAL_BOUNDARY_VALIDATED", flush=True),
+            call("Q0_PHASE_DJANGO_INITIALIZED", flush=True),
+            call("Q0_PHASE_SYNTHETIC_IDENTITY_ATTESTED", flush=True),
+            call("Q0_PHASE_WRITER_BOUNDARY_CLOSED", flush=True),
+            call("Q0_PHASE_INDEPENDENT_RECONCILIATION_COMPLETED", flush=True),
+            call("PASS_ROLLBACK_ZERO_RESIDUES"),
+        ])
