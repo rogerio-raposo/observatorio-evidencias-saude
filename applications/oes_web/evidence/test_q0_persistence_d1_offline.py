@@ -3,7 +3,7 @@ from contextlib import contextmanager
 from dataclasses import replace
 from types import SimpleNamespace
 from uuid import UUID
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 from django.core.exceptions import PermissionDenied
 from django.test import SimpleTestCase
@@ -30,9 +30,28 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         self.repo.current_question.return_value = None
         self.repo.can_access_question.return_value = True
         self.exit_failure = False
-        self.writer = Mock(vendor="postgresql", in_atomic_block=False)
+        self.writer = MagicMock(alias="oes_q0_writer", vendor="postgresql", in_atomic_block=False)
         self.writer.get_autocommit.return_value = True
-        self.enterContext(patch(MODULE + "connections", {"oes_q0_writer": self.writer}))
+        self.writer.cursor.return_value.__enter__.return_value.fetchone.return_value = (
+            "oes_qprep_login", "oes_sandbox", "off")
+        reader = MagicMock(alias="oes_synthetic_reader", vendor="postgresql", in_atomic_block=False)
+        reader.get_autocommit.return_value = True
+        reader.cursor.return_value.__enter__.return_value.fetchone.return_value = (
+            "oes_pg_a4_reader", "oes_sandbox", "on")
+        configs = {}
+        for alias, role, options in (
+                ("default", "oes_auth_trial_login", "-c search_path=django_auth,public"),
+                ("oes_q0_writer", "oes_qprep_login", ""),
+                ("oes_synthetic_reader", "oes_pg_a4_reader", "-c default_transaction_read_only=on")):
+            configs[alias] = {"ENGINE": "django.db.backends.postgresql",
+                "HOST": "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech",
+                "PORT": "5432", "NAME": "oes_sandbox", "USER": role,
+                "PASSWORD": "offline-fake-" + alias,
+                "OPTIONS": {"sslmode": "require", "options": options}}
+        fake_connections = MagicMock(databases=configs)
+        fake_connections.__getitem__.side_effect = {
+            "oes_q0_writer": self.writer, "oes_synthetic_reader": reader}.__getitem__
+        self.enterContext(patch(MODULE + "connections", fake_connections))
 
         @contextmanager
         def atomic(**kwargs):
