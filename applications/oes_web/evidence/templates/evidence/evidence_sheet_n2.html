@@ -1,14 +1,14 @@
 {% load static %}
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OES — Ficha N2 histórica</title>
-<style>body{font:16px/1.5 system-ui,sans-serif;max-width:76rem;margin:2rem auto;padding:0 1rem;color:#20242a}article table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}article td,article th{border:1px solid #aaa;padding:.45rem;text-align:left}article p{overflow-wrap:anywhere}aside{padding:1rem;border:1px solid #888;margin-bottom:1.5rem}</style>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:76rem;margin:2rem auto;padding:0 1rem;color:#20242a}article table{border-collapse:collapse;width:100%}article td,article th{border:1px solid #aaa;padding:.45rem;text-align:left}article p{overflow-wrap:anywhere}aside{padding:1rem;border:1px solid #888;margin-bottom:1.5rem}.sheet-table{overflow-x:auto;max-width:100%}.sheet-table:focus-visible{outline:3px solid #145c96;outline-offset:3px}article h2,article h3,article h4,article h5{overflow-wrap:anywhere}article nav li{margin:.45rem 0}.sheet-return a{display:inline-block;padding:.5rem 0}</style>
 <link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head><body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
 <main>
 {% include "evidence/navigation.html" with current="evidence-sheet-n2" %}
 <div id="conteudo" tabindex="-1">
 <h1>OES — Ficha de Evidência N2 histórica</h1>
-<aside>Consulta interna documental, somente leitura. Assurance A2; revisão científica independente A3 não realizada. Nenhuma investigação foi aberta, nenhuma conclusão científica nova foi produzida.</aside>
-{% if hold %}<p role="alert">HOLD: ficha documental indisponível ou inválida.</p>
+<aside>Consulta interna documental, somente leitura. N2 significa Ficha de Evidência Estruturada. Nível de garantia (assurance) A2: verificação metodológica assistida por inteligência artificial e aprovação de governança; revisão científica independente A3 não realizada. M1 significa elegível para atualização, sem indicar monitoramento ativo. A atualidade apresentada pertence ao registro histórico, não a uma checagem de hoje. Nenhuma investigação foi aberta, nenhuma conclusão científica nova foi produzida.</aside>
+{% if hold %}<div class="demo-state demo-state-unavailable" role="alert"><p><strong>Indisponibilidade técnica — HOLD: ficha documental indisponível ou inválida.</strong></p><p>A integridade da apresentação não pôde ser confirmada. O conteúdo permanece oculto; retorne ao catálogo para continuar a demonstração.</p></div>
 {% else %}<article aria-label="Ficha N2 histórica">{{ body_html }}</article>{% endif %}
 </div>
 {% include "evidence/return_navigation.html" %}
