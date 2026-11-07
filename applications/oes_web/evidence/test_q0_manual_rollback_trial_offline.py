@@ -8,6 +8,9 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
     def valid_environment(self):
         return {
             **REQUIRED,
+            "OES_Q0_MODE": "SINGLE_SYNTHETIC_ROLLBACK",
+            "OES_Q0_REQUESTED_SHA": "a" * 40,
+            "OES_Q0_OPERATIONAL_AUTHORIZATION": "APPROVED_SINGLE_SYNTHETIC_ROLLBACK:" + "a" * 40,
             "GITHUB_SHA": "a" * 40,
             "OES_Q0_APPROVED_SHA": "a" * 40,
             "OES_PG_A4_PASSWORD": "offline-reader",
@@ -70,7 +73,7 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
         for status in ("PASS_ROLLBACK_ZERO_RESIDUES", "HOLD", None):
             with self.subTest(status=status), patch.dict(
                 "os.environ", self.valid_environment(), clear=True
-            ), patch("django.setup") as setup, patch(
+            ), patch("scripts.q0_manual_rollback_trial.checked_out_sha", return_value="a" * 40), patch("django.setup") as setup, patch(
                 "scripts.q0_rollback_transaction_candidate.review_and_execute_isolated_trial",
                 return_value=status,
             ) as recipe, patch("builtins.print") as output:
@@ -87,16 +90,49 @@ class Q0ManualTrialOfflineTests(SimpleTestCase):
     def test_process_entrypoint_sanitizes_recipe_failure_without_retry(self):
         import runpy
         import sys
+        from types import SimpleNamespace
         with patch.dict("os.environ", self.valid_environment(), clear=True), patch(
             "django.setup"
         ), patch(
             "scripts.q0_rollback_transaction_candidate.review_and_execute_isolated_trial",
             side_effect=RuntimeError("OFFLINE_SENSITIVE_MARKER"),
-        ) as recipe, patch("builtins.print") as output:
+        ) as recipe, patch("builtins.print") as output, patch(
+            "subprocess.run", return_value=SimpleNamespace(stdout="a" * 40)
+        ):
             with patch.dict(sys.modules):
                 sys.modules.pop("scripts.q0_manual_rollback_trial", None)
                 with self.assertRaises(SystemExit) as raised:
                     runpy.run_module("scripts.q0_manual_rollback_trial", run_name="__main__")
             self.assertEqual(str(raised.exception), "HOLD_Q0_MANUAL_ROLLBACK_INCONCLUSIVE")
             recipe.assert_called_once_with()
+            output.assert_not_called()
+
+    def test_checkout_mismatch_stops_before_django_or_recipe(self):
+        from scripts.q0_manual_rollback_trial import main
+        with patch.dict("os.environ", self.valid_environment(), clear=True), patch(
+            "scripts.q0_manual_rollback_trial.checked_out_sha", return_value="b" * 40
+        ), patch("django.setup") as setup, patch(
+            "scripts.q0_rollback_transaction_candidate.review_and_execute_isolated_trial"
+        ) as recipe:
+            with self.assertRaisesRegex(RuntimeError, "checkout revision mismatch"):
+                main()
+            setup.assert_not_called()
+            recipe.assert_not_called()
+
+    def test_process_sanitizes_checkout_failure_before_django(self):
+        import runpy
+        import sys
+        from subprocess import CalledProcessError
+        with patch.dict("os.environ", self.valid_environment(), clear=True), patch(
+            "subprocess.run", side_effect=CalledProcessError(
+                1, "git", output="OFFLINE_SECRET_SENTINEL", stderr="OFFLINE_SECRET_SENTINEL")
+        ), patch("django.setup") as setup, patch(
+            "scripts.q0_rollback_transaction_candidate.review_and_execute_isolated_trial"
+        ) as recipe, patch("builtins.print") as output, patch.dict(sys.modules):
+            sys.modules.pop("scripts.q0_manual_rollback_trial", None)
+            with self.assertRaises(SystemExit) as raised:
+                runpy.run_module("scripts.q0_manual_rollback_trial", run_name="__main__")
+            self.assertEqual(str(raised.exception), "HOLD_Q0_MANUAL_ROLLBACK_INCONCLUSIVE")
+            setup.assert_not_called()
+            recipe.assert_not_called()
             output.assert_not_called()
