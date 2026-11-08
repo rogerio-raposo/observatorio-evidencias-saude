@@ -12,6 +12,10 @@
 <h1>Registrar uma questão original — Q0</h1>
 <p id="q0-write-hold" class="notice" role="status">{{ messages.blocked }}</p>
 <p>Este formulário prepara o registro da pergunta original. O envio está desabilitado; preencher os campos não cria um registro ou recibo.</p>
+{% if offline_preparation %}<p role="note">Prévia de contrato para testes offline. O envio operacional permanece bloqueado.</p>{% endif %}
+{% if result_message %}<p role="status">{{ result_message }}</p>{% endif %}
+{% if recovery_outcome %}<p>Resultado da consulta: {{ recovery_outcome }}{% if recovery_scope %} ({{ recovery_scope }}){% endif %}.</p>{% endif %}
+{% if confirmed_question_id %}<p>Questão confirmada: {{ confirmed_question_id }}</p>{% endif %}
 {% if access_message %}<p role="alert">{{ access_message }}</p>{% endif %}
 {% if form %}
 <form method="post" action="{% url 'q0-register' %}" aria-describedby="q0-write-hold">
@@ -28,7 +32,7 @@
 <p><strong>Falha anterior ao registro:</strong> {{ messages.before_write }}</p>
 <p><strong>Conflito:</strong> {{ messages.conflict }}</p>
 <p><strong>Resultado não confirmado:</strong> {{ messages.uncertain }}</p>
-<p>Uma confirmação exigirá a verificação do registro e do recibo. Esta página não indica que uma questão foi registrada.</p>
+{% if not confirmed_question_id %}<p>Uma confirmação exigirá a verificação do registro e do recibo. Esta página não indica que uma questão foi registrada.</p>{% endif %}
 </section>
 <p><a href="{% url 'home' %}">Voltar ao catálogo</a></p>
 </div></main></body></html>

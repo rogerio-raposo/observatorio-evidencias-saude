@@ -249,6 +249,11 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     return result
 
 
+def _require_q0_application_recovery_activation():
+    """Independent F1 READ ONLY gate; never establishes a writer scope."""
+    raise PreparationHold("HOLD: Q0 application read-only recovery not authorized")
+
+
 def _require_q0_read_recovery_source_activation(*, user=None, command=None):
     """Independent reserved READ ONLY gate; cannot authorize any writer path."""
     from scripts import q0_general_first_commit as trial
@@ -258,7 +263,21 @@ def _require_q0_read_recovery_source_activation(*, user=None, command=None):
             raise PreparationHold("HOLD: reserved Q0 recovery command required")
         trial._validate_reserved_user(user)
     except trial._Hold:
-        raise PreparationHold("HOLD: reserved Q0 read-only recovery operation required") from None
+        _require_q0_application_recovery_activation()
+        from .question_preparation import validate_register_q0
+        from .question_orm_q0_connected_recipe_dormant import _review_q0_reader_configuration
+        from scripts.q0_django_readonly_attestation import _session
+        validate_register_q0(command)
+        if set(connections.databases) != {"default", READER}:
+            raise PreparationHold("HOLD: recovery requires writer-free profile")
+        _review_q0_reader_configuration(connections.databases)
+        auth = connections["default"]
+        if auth.in_atomic_block:
+            raise PreparationHold("HOLD: recovery auth transaction unavailable")
+        try:
+            _session(auth, "oes_auth_trial_login")
+        finally:
+            auth.close()
 
 
 def _recover_q0_commit_evidence(*, user, command):
