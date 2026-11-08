@@ -14,7 +14,7 @@ from .models import (
 )
 from .question_preparation import PreparationHold, PreparationConflict
 from .question_orm_q0_repository_dormant import (
-    DjangoQ0Repository, _require_restricted_q0_construction,
+    DjangoQ0Repository, _require_restricted_q0_construction, _bind_trial_transaction,
 )
 from .question_orm_transaction_offline import postgres_session_identity
 
@@ -171,7 +171,7 @@ def _review_q0_persistence_d1(*, user, command):
         raise PreparationHold("HOLD: D1 accepts REGISTER_Q0 only")
 
     # Source gate before auth-store lookup, connection acquisition or atomic.
-    _require_restricted_q0_construction()
+    _require_restricted_q0_construction(user=user, command=command)
 
     class Composition:
         def execute(self, *, command, actor_id, fingerprint):
@@ -209,7 +209,8 @@ def _review_q0_persistence_d1(*, user, command):
                                     "oes_qprep_login", "oes_sandbox", "off"):
                                 raise PreparationHold("HOLD: D2 writer identity mismatch")
                         _capture_q0_writer_transaction(writer, trace)
-                        yield
+                        with _bind_trial_transaction(writer, trace):
+                            yield
                     trace.boundary = "COMMIT_ACKNOWLEDGED"
                 finally:
                     boundary_open = writer.in_atomic_block

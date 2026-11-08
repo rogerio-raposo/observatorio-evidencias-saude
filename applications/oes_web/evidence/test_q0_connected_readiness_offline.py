@@ -51,7 +51,7 @@ class ConnectedReadinessTests(SimpleTestCase):
     def test_prepared_constructor_uses_normal_canonical_class_only_in_validated_atomic(self):
         f = self.fixture
         f.writer.in_atomic_block = True
-        with patch(R + "_require_restricted_q0_construction"), patch("django.db.connections", f.connections):
+        with patch(R + "_require_restricted_q0_construction"), patch(R + "_check_trial_binding"), patch("django.db.connections", f.connections):
             repository = DjangoQ0Repository._from_preflighted_writer(writer=f.writer)
         self.assertIs(type(repository), DjangoQ0Repository)
         self.assertEqual(repository.alias, "oes_q0_writer")
