@@ -85,3 +85,26 @@ def _prepare_q0_registration_response(request):
     status, context = prepare_q0_submission(user=request.user, data=request.POST)
     context["offline_preparation"] = True
     return render(request, "evidence/q0_registration.html", context, status=status)
+
+
+def q1_proposal(request):
+    """Read-only form scaffold. No operational Q1 submission/backend."""
+    from django.http import HttpResponse
+    if request.method != "GET":
+        return HttpResponse("HOLD: proposta Q1 bloqueada; nenhuma escrita foi iniciada.", status=423)
+    from .forms import Q1ProposalForm, Q0_MESSAGES
+    from .preparation_auth import require_question_preparer
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    from django.core.exceptions import PermissionDenied
+    context = {"form": None}
+    try:
+        require_question_preparer(request.user)
+        persisted_preparer_actor_id(request.user)
+    except PermissionDenied:
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return render(request, "evidence/q1_proposal.html", context, status=403)
+    except Exception:
+        context["result_message"] = Q0_MESSAGES["identity"]
+        return render(request, "evidence/q1_proposal.html", context, status=503)
+    context["form"] = Q1ProposalForm()
+    return render(request, "evidence/q1_proposal.html", context)

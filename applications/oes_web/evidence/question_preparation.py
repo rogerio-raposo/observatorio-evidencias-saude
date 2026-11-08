@@ -110,3 +110,53 @@ def review_registered_q0(*, user, command):
     validate_register_q0(command)
     from .question_orm_q0_evidence_dormant import _recover_q0_commit_evidence
     return _recover_q0_commit_evidence(user=user, command=command)
+
+
+def validate_propose_q1(command):
+    """PROPOSE_Q1 uses the existing command, never a replacement for Q0."""
+    if (type(command) is not QuestionCommand or type(command.expected_version) is not int
+            or command.expected_version < 1):
+        raise PreparationHold("HOLD: valid expected Q1 version required")
+    validate_register_q0(QuestionCommand(command.request_id, command.question_id, 0, command.original_text))
+    for value in (command.normalized_text, command.justification):
+        if not isinstance(value, str) or not value.strip() or len(value) > 10000 or "\x00" in value:
+            raise PreparationHold("HOLD: justified Q1 proposal required")
+    return command
+
+
+def propose_authenticated_q1(*, user, command, unit_of_work=None):
+    """F1 offline seam: existing UoW only; no ORM factory or connected default.
+
+    Normal completion includes a separate receipt lookup in the supplied test
+    port. This is logical offline evidence, never PostgreSQL/D3 commit proof.
+    """
+    from .question_uow_offline import OfflineQuestionUnitOfWork, Receipt
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    require_question_preparer(user)
+    validate_propose_q1(command)
+    if type(unit_of_work) is not OfflineQuestionUnitOfWork:
+        raise PreparationHold("HOLD: Q1 persistence unavailable")
+    actor = persisted_preparer_actor_id(user)
+    result = submit_authenticated_question_command(user=user, command=command, unit_of_work=unit_of_work)
+    try:
+        require_question_preparer(user)
+        if persisted_preparer_actor_id(user) != actor:
+            raise PreparationHold("HOLD: Q1 actor binding changed")
+        expected = Receipt(actor, command.request_id, command_fingerprint(command),
+                           command.question_id, command.expected_version + 1, "PROPOSE_Q1", command.justification)
+        with unit_of_work.port.begin() as tx:
+            tx.lock_request(actor, command.request_id)
+            observed = tx.find_receipt(actor, command.request_id)
+            current = tx.current_question(command.question_id, actor, lock=False)
+            if (type(observed) is not Receipt or observed != expected
+                    or not tx.can_access_question(command.question_id, actor)
+                    or not isinstance(current, dict) or current.get("original_text") != command.original_text
+                    or type(current.get("version")) is not int or current["version"] < expected.version):
+                raise PreparationHold("HOLD: Q1 offline receipt not verified")
+    except PreparationConflict:
+        raise PreparationHold("HOLD: Q1 readback conflict after submission; no automatic retry") from None
+    except (PreparationHold, PermissionDenied):
+        raise
+    except Exception:
+        raise PreparationHold("HOLD: Q1 outcome uncertain; no automatic retry") from None
+    return result

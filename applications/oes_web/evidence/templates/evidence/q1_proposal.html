@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Proposta Q1</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main class="question-preview"><h1>Propor normalização — Q1</h1>
+<p id="q1-hold" role="status">Envio operacional bloqueado. Preencher este formulário não grava uma proposta.</p>
+<p>Q1 é uma proposta preparatória. Não representa revisão científica, decisão de admissibilidade ou abertura de investigação. E9 permanece bloqueado.</p>
+{% if outcome %}<p>Resultado técnico: {{ outcome }}.</p>{% endif %}
+{% if result_message %}<p role="status">{{ result_message }}</p>{% endif %}
+{% if proposal %}<section aria-label="Resultado preparatório offline"><p>Questão {{ proposal.question_id }}, versão {{ proposal.version }} — {{ proposal.state }}.</p>
+<p>Texto original: {{ proposal.original_text }}</p><p>Proposta: {{ proposal.proposed_normalized_text }}</p><p>Justificativa: {{ proposal.justification }}</p>
+<p>Evidência: {{ proposal.technical_evidence }}. Revisão científica: {{ proposal.scientific_review }}. Admissibilidade: {{ proposal.admissibility }}. Investigação: {{ proposal.investigation }}.</p></section>{% endif %}
+{% if form %}<form method="post" action="{% url 'q1-propose' %}" aria-describedby="q1-hold">{% csrf_token %}
+{% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}<div>{{ field.as_field_group }}</div>{% endfor %}
+<p>A identidade vem do vínculo persistido da conta. Preserve os identificadores, a versão e o texto original; o texto informado será comparado à questão sob sua responsabilidade.</p>
+<button type="submit" disabled aria-describedby="q1-hold">Proposta indisponível</button></form>{% endif %}
+<p><a href="{% url 'home' %}">Voltar ao catálogo</a></p></main></body></html>

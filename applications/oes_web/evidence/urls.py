@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import catalog, detail, synthetic_path, evidence_sheet_n2, q0_registration
+from .views import catalog, detail, synthetic_path, evidence_sheet_n2, q0_registration, q1_proposal
 from .synthetic_pg_presentation import synthetic_pg_links
 from .q0_synthetic_preview import q0_synthetic_preview
 from .q0_access_status import q0_access_status
 
 urlpatterns = [
+    path("questions/q1/propose/", q1_proposal, name="q1-propose"),
     path("questions/q0/register/", q0_registration, name="q0-register"),
     path("", catalog, name="home"),
     path("signals/<str:nct>/", detail, name="signal-detail"),
