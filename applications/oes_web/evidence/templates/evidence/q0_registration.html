@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Registro Q0</title>
+<link rel="stylesheet" href="{% static 'evidence/styles.css' %}">
+<link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
+<body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
+<main class="question-preview">
+{% include "evidence/navigation.html" with current="q0-register" %}
+<div id="conteudo" tabindex="-1">
+<h1>Registrar uma questão original — Q0</h1>
+<p id="q0-write-hold" class="notice" role="status">{{ messages.blocked }}</p>
+<p>Este formulário prepara o registro da pergunta original. O envio está desabilitado; preencher os campos não cria um registro ou recibo.</p>
+{% if access_message %}<p role="alert">{{ access_message }}</p>{% endif %}
+{% if form %}
+<form method="post" action="{% url 'q0-register' %}" aria-describedby="q0-write-hold">
+{% csrf_token %}
+{% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}<div>{{ field.as_field_group }}</div>{% endfor %}
+<p>A identidade do preparador será obtida do vínculo da conta autenticada. Não é informada neste formulário.</p>
+<p>O registro Q0 começa na versão <strong>1</strong>, etapa <strong>q0_draft</strong>. Não há alteração do texto original nem normalização nesta etapa.</p>
+<button type="submit" disabled aria-describedby="q0-write-hold">Registro indisponível</button>
+</form>
+{% endif %}
+<section aria-labelledby="q0-results-title">
+<h2 id="q0-results-title">Verificar uma tentativa futura</h2>
+<p><strong>Falha anterior ao registro:</strong> {{ messages.before_write }}</p>
+<p><strong>Conflito:</strong> {{ messages.conflict }}</p>
+<p><strong>Resultado não confirmado:</strong> {{ messages.uncertain }}</p>
+<p>Uma confirmação exigirá a verificação do registro e do recibo. Esta página não indica que uma questão foi registrada.</p>
+</section>
+<p><a href="{% url 'home' %}">Voltar ao catálogo</a></p>
+</div></main></body></html>

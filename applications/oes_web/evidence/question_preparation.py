@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from hashlib import sha256
 import json
+import re
 from django.core.exceptions import PermissionDenied
 from .preparation_auth import require_question_preparer
 
@@ -63,3 +64,49 @@ def submit_authenticated_question_command(*, user, command, unit_of_work=None):
         user=user, command=command, unit_of_work=unit_of_work,
         actor_id_resolver=persisted_preparer_actor_id,
     )
+
+
+Q0_IDENTIFIER_PATTERN = r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}"
+
+
+def validate_register_q0(command):
+    """REGISTER_Q0 application boundary; preserve original text and request key.
+
+    Stricter than the historical generic command API, which stays unchanged.
+    No actor, Q1/Q2 payload, generated identifier, backend or connection here.
+    """
+    if (type(command) is not QuestionCommand
+            or type(command.expected_version) is not int or command.expected_version != 0
+            or command.normalized_text is not None or command.justification != ""):
+        raise PreparationHold("HOLD: REGISTER_Q0 command required")
+    for value in (command.request_id, command.question_id):
+        if not isinstance(value, str) or re.fullmatch(Q0_IDENTIFIER_PATTERN, value) is None:
+            raise PreparationHold("HOLD: invalid Q0 identifier")
+    if (not isinstance(command.original_text, str) or not command.original_text.strip()
+            or len(command.original_text) > 10000 or "\x00" in command.original_text):
+        raise PreparationHold("HOLD: original Q0 text required")
+    return command
+
+
+def register_authenticated_q0(*, user, command):
+    """Functional Q0 entry; same authenticated D1/D2/D3 path, still source HOLD.
+
+    No injected backend or caller-supplied actor. The canonical service resolves
+    the persisted actor and owns UoW/ORM/receipt/readback. Never retry a HOLD.
+    """
+    require_question_preparer(user)
+    validate_register_q0(command)
+    from .question_orm_q0_connected_recipe_dormant import _review_q0_persistence_d1
+    return _review_q0_persistence_d1(user=user, command=command)
+
+
+def review_registered_q0(*, user, command):
+    """Separate read-recovery blueprint, not a submission or retry operation.
+
+    Classification remains separate from PREPARATORY_ONLY. D3's existing source
+    gate remains effective; no HTTP wiring or new persistence is introduced.
+    """
+    require_question_preparer(user)
+    validate_register_q0(command)
+    from .question_orm_q0_evidence_dormant import _recover_q0_commit_evidence
+    return _recover_q0_commit_evidence(user=user, command=command)

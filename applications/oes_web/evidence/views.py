@@ -46,3 +46,34 @@ def evidence_sheet_n2(request, product_id):
     except N2Hold:
         return render(request, "evidence/evidence_sheet_n2.html", {"hold": True}, status=503)
     return render(request, "evidence/evidence_sheet_n2.html", {"body_html": mark_safe(present_markdown(body)), "hold": False})
+
+
+def q0_registration(request):
+    """Source-held HTTP boundary: reject writes before identity/form/backend work."""
+    from django.http import HttpResponse
+    if request.method != "GET":
+        return HttpResponse(
+            "HOLD: registro Q0 bloqueado. Nenhuma escrita foi iniciada; não reenvie automaticamente.",
+            status=423, content_type="text/plain; charset=utf-8",
+        )
+    from django.core.exceptions import PermissionDenied
+    from .preparation_auth import require_question_preparer
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    from .forms import Q0RegistrationForm, Q0_MESSAGES
+    context = {"messages": Q0_MESSAGES, "form": None}
+    try:
+        require_question_preparer(request.user)
+    except PermissionDenied:
+        context["access_message"] = Q0_MESSAGES["unauthorized"]
+        return render(request, "evidence/q0_registration.html", context, status=403)
+    except Exception:
+        context["access_message"] = Q0_MESSAGES["identity"]
+        return render(request, "evidence/q0_registration.html", context, status=503)
+    try:
+        persisted_preparer_actor_id(request.user)
+    except Exception:
+        context["access_message"] = Q0_MESSAGES["identity"]
+        return render(request, "evidence/q0_registration.html", context, status=503)
+    # No request/session identifier is generated on GET, errors or reloads.
+    context["form"] = Q0RegistrationForm()
+    return render(request, "evidence/q0_registration.html", context)

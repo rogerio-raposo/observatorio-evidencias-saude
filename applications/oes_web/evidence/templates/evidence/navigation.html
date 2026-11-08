@@ -1,6 +1,7 @@
 <nav class="demo-navigation" aria-label="Funcionalidades do demonstrador">
 <p><strong>OES — Demonstrador</strong> · Consulta e exemplos delimitados</p>
 <ul>
+<li><a href="{% url 'q0-register' %}"{% if current == 'q0-register' %} aria-current="page"{% endif %}>Registro Q0 — indisponível</a></li>
 <li><a href="{% url 'home' %}"{% if current == 'home' %} aria-current="page"{% endif %}>Catálogo documental</a></li>
 <li><a href="{% url 'synthetic-path' %}"{% if current == 'synthetic-path' %} aria-current="page"{% endif %}>Percurso sintético</a></li>
 <li><a href="{% url 'synthetic-pg-links' %}"{% if current == 'synthetic-pg-links' %} aria-current="page"{% endif %}>Leitura sintética (pode estar HOLD)</a></li>
