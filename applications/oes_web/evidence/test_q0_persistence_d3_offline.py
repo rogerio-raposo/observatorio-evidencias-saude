@@ -79,6 +79,7 @@ class EvidenceD3Tests(SimpleTestCase):
                 cursor.fetchone.return_value = row
             cursor.execute.side_effect = execute
         connections = MagicMock(databases=self.configs)
+        self.connections = connections
         connections.__getitem__.side_effect = {"oes_q0_writer": self.writer, "oes_synthetic_reader": self.reader}.__getitem__
         self.enterContext(patch(E + "connections", connections))
         self.enterContext(patch(C + "connections", connections))
@@ -143,7 +144,8 @@ class EvidenceD3Tests(SimpleTestCase):
     def canonical(self):
         # Unit-test replacement only. No production constructor activation or
         # alternate repository class/factory exists in the application.
-        self.enterContext(patch(C + "DjangoQ0Repository", return_value=self.repo))
+        self.enterContext(patch(C + "_require_restricted_q0_construction"))
+        self.enterContext(patch(C + "DjangoQ0Repository._from_preflighted_writer", return_value=self.repo))
         self.dynamic_ids = True
         return _review_q0_persistence_d1(user=self.user, command=self.command)
 
@@ -350,7 +352,7 @@ class EvidenceD3Tests(SimpleTestCase):
         with self.assertRaises(PreparationHold):
             _recover_q0_commit_evidence(user=self.user, command=self.command)
         self.identity_lookup.return_value.get.side_effect = None
-        with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+        with self.assertRaisesRegex(PreparationHold, "read-only recovery"):
             _recover_q0_commit_evidence(user=self.user, command=self.command)
         self.atomic.assert_not_called()
         self.writer.cursor.assert_not_called()
