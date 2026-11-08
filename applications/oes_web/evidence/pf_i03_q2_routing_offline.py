@@ -77,3 +77,31 @@ def present_q2_routing_proposal(*, user, q1_readback, proposal):
         "investigation": "NOT_OPENED",
         "e9": "BLOCKED",
     }
+
+
+def present_authenticated_q2_routing(*, user, q1_command, proposal, unit_of_work=None):
+    """Synthetic authenticated projection from an existing offline Q1 receipt.
+
+    No client-supplied actor or Q1 presentation dict is accepted as provenance.
+    No command is submitted, no Q2/route receipt or version is persisted.
+    """
+    from .question_preparation import review_authenticated_q1_offline, validate_propose_q1
+    from .pf_i03_q1_offline import _present_q1_receipt
+    require_question_preparer(user)
+    validate_propose_q1(q1_command)
+    if (type(proposal) is not Q2RoutingProposal
+            or not q1_command.question_id.startswith("OES-SYNTH-Q0-")
+            or proposal.question_id != q1_command.question_id
+            or type(proposal.q1_version) is not int
+            or proposal.q1_version != q1_command.expected_version + 1):
+        raise PreparationHold("HOLD: synthetic Q1 reference required")
+    receipt = review_authenticated_q1_offline(user=user, command=q1_command, unit_of_work=unit_of_work)
+    q1 = _present_q1_receipt(q1_command, receipt)
+    result = present_q2_routing_proposal(user=user, q1_readback=q1, proposal=proposal)
+    result["provenance"] = {"source": "OFFLINE_Q1_RECEIPT_VERIFIED", "actor_id": receipt.actor_id,
+        "request_id": receipt.request_id, "question_id": receipt.question_id,
+        "q1_version": receipt.version, "fingerprint": receipt.fingerprint,
+        "command_kind": receipt.command_kind}
+    result["certainty"] = "NOT_ASSESSED"
+    result["limitations"] = "Dados sintéticos; recibo verificado no port offline. Sem prova de persistência PostgreSQL Q1 ou Q2 e sem avaliação científica."
+    return result

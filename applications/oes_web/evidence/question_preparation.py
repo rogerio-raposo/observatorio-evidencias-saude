@@ -130,7 +130,7 @@ def propose_authenticated_q1(*, user, command, unit_of_work=None):
     Normal completion includes a separate receipt lookup in the supplied test
     port. This is logical offline evidence, never PostgreSQL/D3 commit proof.
     """
-    from .question_uow_offline import OfflineQuestionUnitOfWork, Receipt
+    from .question_uow_offline import OfflineQuestionUnitOfWork
     from preparer_identity.resolver import persisted_preparer_actor_id
     require_question_preparer(user)
     validate_propose_q1(command)
@@ -138,9 +138,25 @@ def propose_authenticated_q1(*, user, command, unit_of_work=None):
         raise PreparationHold("HOLD: Q1 persistence unavailable")
     actor = persisted_preparer_actor_id(user)
     result = submit_authenticated_question_command(user=user, command=command, unit_of_work=unit_of_work)
+    review_authenticated_q1_offline(user=user, command=command, unit_of_work=unit_of_work, _expected_actor=actor)
+    return result
+
+
+def review_authenticated_q1_offline(*, user, command, unit_of_work=None, _expected_actor=None):
+    """Read the existing test-port receipt; no submission, Q2 write or DB factory.
+
+    The optional internal comparison preserves identity continuity after Q1.
+    Caller input can never replace the identity resolved from PreparerIdentity.
+    """
+    from .question_uow_offline import OfflineQuestionUnitOfWork, Receipt
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    require_question_preparer(user)
+    validate_propose_q1(command)
+    if type(unit_of_work) is not OfflineQuestionUnitOfWork:
+        raise PreparationHold("HOLD: Q1 offline receipt unavailable")
     try:
-        require_question_preparer(user)
-        if persisted_preparer_actor_id(user) != actor:
+        actor = persisted_preparer_actor_id(user)
+        if _expected_actor is not None and actor != _expected_actor:
             raise PreparationHold("HOLD: Q1 actor binding changed")
         expected = Receipt(actor, command.request_id, command_fingerprint(command),
                            command.question_id, command.expected_version + 1, "PROPOSE_Q1", command.justification)
@@ -151,12 +167,16 @@ def propose_authenticated_q1(*, user, command, unit_of_work=None):
             if (type(observed) is not Receipt or observed != expected
                     or not tx.can_access_question(command.question_id, actor)
                     or not isinstance(current, dict) or current.get("original_text") != command.original_text
-                    or type(current.get("version")) is not int or current["version"] < expected.version):
+                    or type(current.get("version")) is not int or current["version"] < expected.version
+                    or (current["version"] == expected.version and current.get("normalized_text") != command.normalized_text)):
                 raise PreparationHold("HOLD: Q1 offline receipt not verified")
+        require_question_preparer(user)
+        if persisted_preparer_actor_id(user) != actor:
+            raise PreparationHold("HOLD: Q1 actor binding changed during readback")
     except PreparationConflict:
         raise PreparationHold("HOLD: Q1 readback conflict after submission; no automatic retry") from None
     except (PreparationHold, PermissionDenied):
         raise
     except Exception:
         raise PreparationHold("HOLD: Q1 outcome uncertain; no automatic retry") from None
-    return result
+    return observed
