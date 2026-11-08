@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="{% static 'evidence/navigation.css' %}"></head>
 <body><a class="demo-skip" href="#conteudo">Ir para o conteúdo</a>
 <main class="question-preview">
-{% include "evidence/navigation.html" with current="q0-register" %}
+{% if not mb_private %}{% include "evidence/navigation.html" with current="q0-register" %}{% endif %}
 <div id="conteudo" tabindex="-1">
 <h1>Registrar uma questão original — Q0</h1>
+{% if q0_operational %}<form method="post" action="{% url 'mb-logout' %}">{% csrf_token %}<button type="submit">Encerrar sessão</button></form>{% endif %}
 <p id="q0-write-hold" class="notice" role="status">{{ messages.blocked }}</p>
-<p>Este formulário prepara o registro da pergunta original. O envio está desabilitado; preencher os campos não cria um registro ou recibo.</p>
+{% if not q0_operational %}<p>Este formulário prepara o registro da pergunta original. O envio está desabilitado; preencher os campos não cria um registro ou recibo.</p>{% endif %}
 {% if offline_preparation %}<p role="note">Prévia de contrato para testes offline. O envio operacional permanece bloqueado.</p>{% endif %}
+{% if reference_url %}<p><a href="{{ reference_url }}">Consultar a referência pelo leitor independente, sem reenviar Q0</a></p>{% endif %}
 {% if result_message %}<p role="status">{{ result_message }}</p>{% endif %}
 {% if recovery_outcome %}<p>Resultado da consulta: {{ recovery_outcome }}{% if recovery_scope %} ({{ recovery_scope }}){% endif %}.</p>{% endif %}
 {% if confirmed_question_id %}<p>Questão confirmada: {{ confirmed_question_id }}</p>{% endif %}
@@ -24,7 +26,7 @@
 {% for field in form %}<div>{{ field.as_field_group }}</div>{% endfor %}
 <p>A identidade do preparador será obtida do vínculo da conta autenticada. Não é informada neste formulário.</p>
 <p>O registro Q0 começa na versão <strong>1</strong>, etapa <strong>q0_draft</strong>. Não há alteração do texto original nem normalização nesta etapa.</p>
-<button type="submit" disabled aria-describedby="q0-write-hold">Registro indisponível</button>
+<button type="submit" {% if not q0_operational %}disabled{% endif %} aria-describedby="q0-write-hold">{% if q0_operational %}Registrar Q0{% else %}Registro indisponível{% endif %}</button>
 </form>
 {% endif %}
 <section aria-labelledby="q0-results-title">
@@ -34,5 +36,5 @@
 <p><strong>Resultado não confirmado:</strong> {{ messages.uncertain }}</p>
 {% if not confirmed_question_id %}<p>Uma confirmação exigirá a verificação do registro e do recibo. Esta página não indica que uma questão foi registrada.</p>{% endif %}
 </section>
-<p><a href="{% url 'home' %}">Voltar ao catálogo</a></p>
+<p><a href="{% url 'home' %}">{% if mb_private %}Voltar ao registro{% else %}Voltar ao catálogo{% endif %}</a></p>
 </div></main></body></html>

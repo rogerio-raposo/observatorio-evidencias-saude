@@ -418,7 +418,7 @@ class OperationalActivationTests(SimpleTestCase):
                     with self.assertRaises(trial._Hold):
                         trial._require_operation(mode)
 
-    def test_commit_wrapper_uses_real_issuer_and_never_retries_uncertain_service(self):
+    def test_retired_cp348_issuer_prevents_resubmission_even_with_old_approval(self):
         from evidence import question_orm_q0_repository_dormant as repo
         user=Mock()
         def submit(**kwargs):
@@ -429,16 +429,17 @@ class OperationalActivationTests(SimpleTestCase):
         with patch.dict(os.environ,self.env(),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup'), patch('evidence.question_orm_q0_connected_recipe_dormant._review_q0_database_configuration'), patch.object(trial,'_load_reserved_user',return_value=user), patch.object(trial,'_validate_reserved_user',return_value='oes:actor:offline'), patch('evidence.question_preparation.register_authenticated_q0',side_effect=submit) as service, redirect_stdout(StringIO()) as output:
             with self.assertRaisesRegex(trial._Hold,trial.INCONCLUSIVE):
                 trial.main([])
-            service.assert_called_once()
+            service.assert_not_called()
             self.assertIsNone(repo._trial_scope.get())
             self.assertIsNone(trial._operation.get())
             self.assertIn('INDETERMINATE',output.getvalue())
 
-    def test_recovery_real_gate_requires_reserved_manifest_and_never_issues_writer_scope(self):
+    def test_retired_recovery_approval_cannot_open_application_reader(self):
         from evidence import question_orm_q0_repository_dormant as repo
         from evidence.question_orm_q0_evidence_dormant import _require_q0_read_recovery_source_activation as gate
         def recover(sha):
-            gate(user=Mock(),command=trial.reserved_command())
+            with self.assertRaises(PreparationHold):
+                gate(user=Mock(),command=trial.reserved_command())
             with self.assertRaises(PreparationHold):
                 gate(user=Mock(),command=None)
             with self.assertRaises(PreparationHold):
@@ -476,16 +477,15 @@ class OperationalActivationTests(SimpleTestCase):
             self.assertEqual(exit.exception.code,0)
             entry.assert_called_once()
 
-    def test_real_read_recovery_path_is_independent_and_inconclusive_without_evidence(self):
+    def test_old_readonly_mode_cannot_replace_mb_oc1_release(self):
         from evidence import question_orm_q0_repository_dormant as repo
         user=Mock(username=trial.USERNAME,is_authenticated=True,is_active=True,is_staff=False,is_superuser=False)
         user.has_perm.return_value=True
         user.has_usable_password.return_value=False
         with patch.dict(os.environ,self.env(trial.RECOVER),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup'), patch('django.conf.settings.DATABASES',{'default':{},'oes_synthetic_reader':{}}), patch('evidence.question_orm_q0_connected_recipe_dormant._review_q0_reader_configuration'), patch.object(trial,'_load_reserved_user',return_value=user), patch('preparer_identity.resolver.persisted_preparer_actor_id',return_value='oes:actor:offline'), patch('evidence.question_orm_q0_evidence_dormant._collect_q0_commit_evidence',return_value={'outcome':'INDETERMINATE','scope':'Q0_RECORDS','automatic_retry':False}) as collect, patch('evidence.question_preparation.register_authenticated_q0',side_effect=AssertionError('writer invoked')) as submit, redirect_stdout(StringIO()) as output:
-            with self.assertRaisesRegex(trial._Hold,trial.INCONCLUSIVE):
+            with self.assertRaises(PreparationHold):
                 trial.main([])
-            collect.assert_called_once()
+            collect.assert_not_called()
             submit.assert_not_called()
             self.assertIsNone(repo._trial_scope.get())
             self.assertIsNone(trial._operation.get())
-            self.assertIn('INDETERMINATE',output.getvalue())

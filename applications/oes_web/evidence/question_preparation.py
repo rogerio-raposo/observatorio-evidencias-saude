@@ -180,3 +180,15 @@ def review_authenticated_q1_offline(*, user, command, unit_of_work=None, _expect
     except Exception:
         raise PreparationHold("HOLD: Q1 outcome uncertain; no automatic retry") from None
     return observed
+
+
+def review_authenticated_q0_reference(*, user, request_id, question_id, fingerprint):
+    """Authenticated reference only. No browser original or actor is accepted."""
+    require_question_preparer(user)
+    for value in (request_id, question_id):
+        if not isinstance(value, str) or re.fullmatch(Q0_IDENTIFIER_PATTERN, value) is None:
+            raise PreparationHold("HOLD: invalid Q0 reference")
+    if not isinstance(fingerprint, str) or re.fullmatch(r"[0-9a-f]{64}", fingerprint) is None:
+        raise PreparationHold("HOLD: invalid Q0 fingerprint reference")
+    from .question_orm_q0_evidence_dormant import _recover_q0_reference
+    return _recover_q0_reference(user=user, request_id=request_id, question_id=question_id, fingerprint=fingerprint)

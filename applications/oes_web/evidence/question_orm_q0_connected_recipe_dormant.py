@@ -209,6 +209,10 @@ def _review_q0_persistence_d1(*, user, command):
                                     "oes_qprep_login", "oes_sandbox", "off"):
                                 raise PreparationHold("HOLD: D2 writer identity mismatch")
                         _capture_q0_writer_transaction(writer, trace)
+                        import logging
+                        logging.getLogger(__name__).info(
+                            "OES_Q0_TX xid=%s request=%s question=%s fingerprint=%s",
+                            trace.xid, command.request_id, command.question_id, fingerprint)
                         with _bind_trial_transaction(writer, trace):
                             yield
                     trace.boundary = "COMMIT_ACKNOWLEDGED"

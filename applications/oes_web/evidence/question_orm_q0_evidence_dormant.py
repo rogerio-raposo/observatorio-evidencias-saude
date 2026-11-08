@@ -251,40 +251,40 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
 
 def _require_q0_application_recovery_activation():
     """Independent F1 READ ONLY gate; never establishes a writer scope."""
-    raise PreparationHold("HOLD: Q0 application read-only recovery not authorized")
+    from config.mb_oc1 import require_mb_oc1
+    try:
+        require_mb_oc1("B")
+    except PreparationHold:
+        raise PreparationHold("HOLD: Q0 application read-only recovery not authorized") from None
 
 
 def _require_q0_read_recovery_source_activation(*, user=None, command=None):
-    """Independent reserved READ ONLY gate; cannot authorize any writer path."""
-    from scripts import q0_general_first_commit as trial
-    try:
-        trial._require_operation(trial.RECOVER)
-        if command != trial.reserved_command():
-            raise PreparationHold("HOLD: reserved Q0 recovery command required")
-        trial._validate_reserved_user(user)
-    except trial._Hold:
-        _require_q0_application_recovery_activation()
-        from .question_preparation import validate_register_q0
-        from .question_orm_q0_connected_recipe_dormant import _review_q0_reader_configuration
-        from scripts.q0_django_readonly_attestation import _session
+    """General application reader only; old CP348 approval cannot activate it."""
+    _require_q0_application_recovery_activation()
+    from .question_preparation import validate_register_q0
+    from .question_orm_q0_connected_recipe_dormant import _review_q0_reader_configuration
+    from scripts.q0_django_readonly_attestation import _session
+    from .preparation_auth import require_question_preparer
+    require_question_preparer(user)
+    if command is not None:
         validate_register_q0(command)
-        if set(connections.databases) != {"default", READER}:
-            raise PreparationHold("HOLD: recovery requires writer-free profile")
-        _review_q0_reader_configuration(connections.databases)
-        auth = connections["default"]
-        if auth.in_atomic_block:
-            raise PreparationHold("HOLD: recovery auth transaction unavailable")
-        try:
-            _session(auth, "oes_auth_trial_login")
-        finally:
-            auth.close()
+    if set(connections.databases) != {"default", READER}:
+        raise PreparationHold("HOLD: recovery requires writer-free profile")
+    _review_q0_reader_configuration(connections.databases)
+    auth = connections["default"]
+    if auth.in_atomic_block:
+        raise PreparationHold("HOLD: recovery auth transaction unavailable")
+    try:
+        _session(auth, "oes_auth_trial_login")
+    finally:
+        auth.close()
 
 
 def _recover_q0_commit_evidence(*, user, command):
-    """Independent reader recovery, including process loss, restricted to the trial.
+    """Independent application reader recovery, including process loss.
 
     No operational injection, alternate constructor or caller-provided trace.
-    This reader path requires its separate nominal operational authorization.
+    This reader path requires the separate MB-OC1 reader role and release.
     """
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id
@@ -293,3 +293,67 @@ def _recover_q0_commit_evidence(*, user, command):
     actor = persisted_preparer_actor_id(user)
     _expected_receipt(command, actor)
     return _collect_q0_commit_evidence(command=command, actor_id=actor)
+
+
+def _recover_q0_reference(*, user, request_id, question_id, fingerprint):
+    """Scoped discovery is provisional; only the final owned D3 snapshot proves.
+
+    No writer, submission, caller-provided original, trace or success flags.
+    """
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import QuestionCommand, command_fingerprint, validate_register_q0
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    from .question_orm_transaction_offline import postgres_session_identity
+    require_question_preparer(user)
+    _require_q0_read_recovery_source_activation(user=user)
+    actor = persisted_preparer_actor_id(user)
+    reader = None
+    try:
+        reader = connections[READER]
+        if (reader.vendor != "postgresql" or reader.in_atomic_block or reader.get_autocommit() is not True):
+            reader = None
+            return _indeterminate()
+        with reader.cursor() as cursor:
+            if postgres_session_identity(cursor) != ("oes_pg_a4_reader", "oes_sandbox", "on"):
+                return _indeterminate()
+        _review_q0_privileges(reader)
+        record = request_receipt(actor_id=actor, request_id=request_id).using(READER).first()
+        if (record is None or record.actor_id != actor or record.request_id != request_id
+                or not OesQuestion.objects.using(READER).filter(entity_uuid=record.question_entity_uuid,
+                                                               responsible_actor_id=actor).exists()):
+            return _indeterminate()
+        if record.question_id != question_id or record.fingerprint_sha256 != fingerprint:
+            raise PreparationConflict("HOLD: owned Q0 reference conflict")
+        if (record.command_kind != "REGISTER_Q0" or type(record.resulting_version_no) is not int
+                or record.resulting_version_no != 1 or record.justification != ""):
+            return _indeterminate()
+        version = OesQuestionVersion.objects.using(READER).filter(
+            version_uuid=record.resulting_version_uuid, entity_uuid=record.question_entity_uuid
+        ).values("original_text", "normalized_text", "preparation_stage").first()
+        if (not isinstance(version, dict) or version.get("normalized_text") is not None
+                or version.get("preparation_stage") != "q0_draft"):
+            return _indeterminate()
+        command = validate_register_q0(QuestionCommand(request_id, question_id, 0, version.get("original_text")))
+        if command_fingerprint(command) != fingerprint:
+            return _indeterminate()
+    except PreparationConflict:
+        raise
+    except Exception:
+        return _indeterminate()
+    finally:
+        if reader is not None:
+            reader.close()
+    # Discovery was not a snapshot proof. The collector reopens its own session,
+    # snapshot and five-record verification; contradictions remain fail-closed.
+    require_question_preparer(user)
+    if persisted_preparer_actor_id(user) != actor:
+        return _indeterminate()
+    result = _collect_q0_commit_evidence(command=command, actor_id=actor)
+    require_question_preparer(user)
+    if persisted_preparer_actor_id(user) != actor:
+        return _indeterminate()
+    if (result.get("outcome") == "PERSISTED" and result.get("scope") == "Q0_RECORDS"
+            and result.get("automatic_retry") is False):
+        result.update(question_id=question_id, request_id=request_id, fingerprint=fingerprint,
+                      version=1, original_text=command.original_text)
+    return result

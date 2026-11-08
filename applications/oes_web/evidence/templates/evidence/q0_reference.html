@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>OES — Consulta independente Q0</title></head>
+<body><main><h1>Consulta independente por referência</h1><form method="get">{{ form.as_p }}<button type="submit">Consultar sem reenviar Q0</button></form>
+{% if result_message %}<p role="status">{{ result_message }}</p>{% endif %}
+{% if observation %}<p>{{ observation.outcome }} / {{ observation.scope }}. Questão {{ observation.question_id }}, versão {{ observation.version }}.</p>
+<pre>{{ observation.original_text }}</pre><p>Fingerprint {{ observation.fingerprint }}.</p>{% endif %}
+{% if outcome %}<p>{{ outcome }} / {{ scope }}.</p>{% endif %}
+<p>Não reenvie nem gere novos identificadores automaticamente. Ausência de evidência não comprova ausência de registro.</p>
+<p><a href="/accounts/login/">Autenticar novamente pelo processo de registro</a></p></main></body></html>

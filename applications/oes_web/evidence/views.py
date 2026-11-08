@@ -51,6 +51,17 @@ def evidence_sheet_n2(request, product_id):
 def q0_registration(request):
     """Source-held HTTP boundary: reject writes before identity/form/backend work."""
     from django.http import HttpResponse
+    from django.conf import settings
+    private = getattr(settings, "MB_OC1_CONFIGURED", False) is True
+    if request.method == "POST" or private:
+        from config.mb_oc1 import require_mb_oc1
+        from .question_preparation import PreparationHold
+        try:
+            require_mb_oc1("A")
+        except PreparationHold:
+            return HttpResponse("HOLD: registro Q0 bloqueado.", status=423)
+        if request.method == "POST":
+            return _prepare_q0_registration_response(request, operational=True)
     if request.method != "GET":
         return HttpResponse(
             "HOLD: registro Q0 bloqueado. Nenhuma escrita foi iniciada; não reenvie automaticamente.",
@@ -60,7 +71,7 @@ def q0_registration(request):
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id
     from .forms import Q0RegistrationForm, Q0_MESSAGES
-    context = {"messages": Q0_MESSAGES, "form": None}
+    context = {"messages": Q0_MESSAGES, "form": None, "mb_private": private}
     try:
         require_question_preparer(request.user)
     except PermissionDenied:
@@ -76,15 +87,31 @@ def q0_registration(request):
         return render(request, "evidence/q0_registration.html", context, status=503)
     # No request/session identifier is generated on GET, errors or reloads.
     context["form"] = Q0RegistrationForm()
+    context["q0_operational"] = private
+    if private:
+        context["messages"] = {**Q0_MESSAGES, "blocked": "Ambiente privado controlado de registro Q0."}
     return render(request, "evidence/q0_registration.html", context)
 
 
-def _prepare_q0_registration_response(request):
+def _prepare_q0_registration_response(request, *, operational=False):
     """Unrouted F1 response adapter; operational methods still stop at 423."""
     from .forms import prepare_q0_submission
     status, context = prepare_q0_submission(user=request.user, data=request.POST)
-    context["offline_preparation"] = True
-    return render(request, "evidence/q0_registration.html", context, status=status)
+    from django.conf import settings
+    context["mb_private"] = getattr(settings, "MB_OC1_CONFIGURED", False) is True
+    context["offline_preparation"] = not operational
+    if operational:
+        context["messages"] = {**context.get("messages", {}), "blocked": "Ambiente privado. Preserve os identificadores e consulte a referência; não reenvie automaticamente."}
+    form = context.get("form")
+    if form is not None and form.is_valid():
+        from urllib.parse import urlencode
+        from .question_preparation import command_fingerprint
+        command = form.to_command()
+        context["reference_url"] = "/questions/q0/review/?" + urlencode({"question_id": command.question_id,
+            "request_id": command.request_id, "fingerprint": command_fingerprint(command)})
+    response = render(request, "evidence/q0_registration.html", context, status=status)
+    response["Cache-Control"] = "no-store"
+    return response
 
 
 def q1_proposal(request):
@@ -131,3 +158,64 @@ def q2_routing(request):
         return render(request, "evidence/q2_routing.html", context, status=503)
     context["form"] = Q2RoutingForm()
     return render(request, "evidence/q2_routing.html", context)
+
+
+from django.contrib.auth.views import LoginView, LogoutView
+from .forms import MBPreparerAuthenticationForm
+
+
+class MBLoginView(LoginView):
+    authentication_form = MBPreparerAuthenticationForm
+    template_name = "registration/mb_login.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        from config.mb_oc1 import require_mb_oc1
+        from .question_preparation import PreparationHold
+        from django.http import HttpResponse
+        try:
+            require_mb_oc1("A")
+        except PreparationHold:
+            return HttpResponse("HOLD: autenticação operacional bloqueada.", status=423)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class MBLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        from config.mb_oc1 import require_mb_oc1
+        from .question_preparation import PreparationHold
+        from django.http import HttpResponse
+        try:
+            require_mb_oc1("A")
+        except PreparationHold:
+            return HttpResponse("HOLD: autenticação operacional bloqueada.", status=423)
+        return super().dispatch(request, *args, **kwargs)
+
+
+def q0_reference(request):
+    from django.http import HttpResponse
+    if request.method != "GET":
+        return HttpResponse("HOLD: consulta Q0 aceita somente GET.", status=423)
+    from config.mb_oc1 import require_mb_oc1
+    from .question_preparation import PreparationHold
+    try:
+        require_mb_oc1("B")
+    except PreparationHold:
+        return HttpResponse("HOLD: consulta Q0 operacional bloqueada.", status=423)
+    from .forms import prepare_q0_reference, Q0ReferenceForm
+    if request.GET:
+        status, context = prepare_q0_reference(user=request.user, data=request.GET)
+    else:
+        from .preparation_auth import require_question_preparer
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        from django.core.exceptions import PermissionDenied
+        try:
+            require_question_preparer(request.user)
+            persisted_preparer_actor_id(request.user)
+        except PermissionDenied:
+            return HttpResponse("Acesso não autorizado.", status=403)
+        except Exception:
+            return HttpResponse("Identidade indisponível.", status=503)
+        status, context = 200, {"form": Q0ReferenceForm()}
+    response = render(request, "evidence/q0_reference.html", context, status=status)
+    response["Cache-Control"] = "no-store"
+    return response

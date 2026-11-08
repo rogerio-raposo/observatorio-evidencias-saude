@@ -282,3 +282,59 @@ def prepare_q2_routing(*, user, data, unit_of_work=None):
     except Exception:
         context.update(outcome="UNVERIFIED_PROVENANCE", result_message="Não foi possível verificar a referência Q1 e a responsabilidade. Preserve os dados; não há proposta persistida nem reenvio automático.")
         return 503, context
+
+
+from django.contrib.auth.forms import AuthenticationForm
+
+
+class MBPreparerAuthenticationForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        from .preparation_auth import require_question_preparer
+        from preparer_identity.resolver import persisted_preparer_actor_id
+        super().confirm_login_allowed(user)
+        try:
+            require_question_preparer(user)
+            persisted_preparer_actor_id(user)
+        except Exception:
+            raise forms.ValidationError("Não foi possível autenticar o preparador.", code="invalid_login") from None
+
+
+class Q0ReferenceForm(forms.Form):
+    request_id = forms.RegexField(regex=r"\A" + Q0_IDENTIFIER_PATTERN + r"\Z", max_length=128, strip=False)
+    question_id = forms.RegexField(regex=r"\A" + Q0_IDENTIFIER_PATTERN + r"\Z", max_length=128, strip=False)
+    fingerprint = forms.RegexField(regex=r"\A[0-9a-f]{64}\Z", strip=False)
+
+    def clean(self):
+        cleaned = super().clean()
+        if set(self.data) - set(self.fields):
+            raise forms.ValidationError("Referência contém campos não permitidos.")
+        if hasattr(self.data, "getlist") and any(len(self.data.getlist(k)) > 1 for k in self.fields):
+            raise forms.ValidationError("Referência duplicada.")
+        return cleaned
+
+
+def prepare_q0_reference(*, user, data):
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import review_authenticated_q0_reference
+    context = {"form": Q0ReferenceForm(data)}
+    try:
+        require_question_preparer(user)
+        if not context["form"].is_valid():
+            return 400, context
+        observation = review_authenticated_q0_reference(user=user, **context["form"].cleaned_data)
+        if (observation.get("outcome") == "PERSISTED" and observation.get("scope") == "Q0_RECORDS"
+                and observation.get("automatic_retry") is False):
+            context.update(observation=observation, result_message="Persistência comprovada pela leitura independente.")
+            return 200, context
+        context.update(outcome=observation.get("outcome", "INDETERMINATE"),
+                       scope=observation.get("scope", "Q0_RECORDS"), result_message=Q0_MESSAGES["uncertain"])
+        return 503, context
+    except PermissionDenied:
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return 403, context
+    except PreparationConflict:
+        context.update(outcome="CONFLICT", result_message=Q0_MESSAGES["conflict"])
+        return 409, context
+    except Exception:
+        context.update(outcome="INDETERMINATE", result_message=Q0_MESSAGES["uncertain"])
+        return 503, context
