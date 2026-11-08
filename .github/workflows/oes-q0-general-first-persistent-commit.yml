@@ -1,10 +1,10 @@
-name: OES Q0 general first persistent commit - SOURCE HOLD
+name: OES Q0 general first persistent commit - reserved operation
 
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'REVIEW_ONLY by default; commit and independent reconciliation remain source-blocked'
+        description: 'REVIEW_ONLY by default; connected modes require separate nominal operational approval'
         required: true
         default: REVIEW_ONLY
         type: choice
@@ -49,9 +49,9 @@ jobs:
   first-commit:
     needs: review-only
     # Durable consumption waived only for the supervised fixed experiment.
-    # Pending reviewed trial-bound canonical activation, NOT a one-use guarantee.
+    # Administrative supervision, NOT a technical one-use guarantee.
     # Supervisor must revoke temporary approval variables after the attempt.
-    if: ${{ false }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.mode == 'FIRST_CANONICAL_Q0_COMMIT' && inputs.approved_sha == github.sha && vars.OES_Q0_FIRST_APPROVED_SHA == github.sha && vars.OES_Q0_FIRST_AUTHORIZATION == format('APPROVED_FIRST_CANONICAL_Q0_COMMIT:{0}:q0-general-first-6bf4279cc0844fda9ad4d07f5656fb0a', github.sha) }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -67,7 +67,7 @@ jobs:
         run: python -m scripts.q0_general_first_commit --review-workflow
       - name: Install existing requirements without database credentials
         run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
-      - name: Reserved canonical call - CLI and canonical construction also SOURCE HOLD
+      - name: Reserved canonical call - restricted CLI and canonical construction
         working-directory: applications/oes_web
         env:
           DJANGO_SETTINGS_MODULE: config.settings
@@ -82,7 +82,7 @@ jobs:
   independent-reconciliation:
     needs: review-only
     # Separately reviewable reader path; never depends on first-commit or a writer secret.
-    if: ${{ false }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && github.run_attempt == 1 && inputs.mode == 'RECONCILE_FIRST_Q0_READ_ONLY' && inputs.approved_sha == github.sha && vars.OES_Q0_FIRST_APPROVED_SHA == github.sha && vars.OES_Q0_FIRST_AUTHORIZATION == format('APPROVED_FIRST_Q0_READ_ONLY_RECONCILIATION:{0}:q0-general-first-6bf4279cc0844fda9ad4d07f5656fb0a', github.sha) }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -98,7 +98,7 @@ jobs:
         run: python -m scripts.q0_general_first_commit --review-workflow
       - name: Install existing requirements without database credentials
         run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
-      - name: Reserved independent reader - CLI and recovery also SOURCE HOLD
+      - name: Reserved independent reader - independently authorized READ ONLY recovery
         working-directory: applications/oes_web
         env:
           DJANGO_SETTINGS_MODULE: config.settings

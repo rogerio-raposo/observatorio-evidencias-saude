@@ -33,8 +33,11 @@ _trial_scope = ContextVar("q0_first_trial_scope", default=None)
 
 
 def _require_first_trial_source_activation():
-    # Separate reviewed source change required; env/arguments cannot issue scope.
-    raise PreparationHold("HOLD: first Q0 trial scope issuance not authorized")
+    from scripts import q0_general_first_commit as trial
+    try:
+        trial._require_operation(trial.COMMIT)
+    except trial._Hold:
+        raise PreparationHold("HOLD: reserved Q0 writer operation required") from None
 
 
 @contextmanager
@@ -42,7 +45,7 @@ def _first_trial_scope(*, sha, user, command):
     """Only the reserved CLI enters here; not a general application factory.
 
     Python private state is not a sandbox against arbitrary in-process code.
-    Source activation stays closed even with complete administrative approval.
+    Administrative approval alone cannot establish the internal CLI context.
     """
     _require_first_trial_source_activation()
     import os

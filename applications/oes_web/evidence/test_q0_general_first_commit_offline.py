@@ -29,7 +29,8 @@ class FirstCommitPrepTests(SimpleTestCase):
         sha = 'a' * 40
         prefix = 'APPROVED_FIRST_CANONICAL_Q0_COMMIT' if mode==trial.COMMIT else 'APPROVED_FIRST_Q0_READ_ONLY_RECONCILIATION'
         env = {**trial.WORKFLOW_CONTEXT, 'GITHUB_SHA':sha, 'OES_Q0_FIRST_MODE':mode,
-            'OES_Q0_FIRST_REQUESTED_SHA':sha, 'OES_Q0_FIRST_APPROVED_SHA':sha,
+            'GITHUB_WORKFLOW_REF':'rogerio-raposo/observatorio-evidencias-saude/.github/workflows/oes-q0-general-first-persistent-commit.yml@refs/heads/main',
+            'GITHUB_WORKFLOW_SHA':sha, 'OES_Q0_FIRST_REQUESTED_SHA':sha, 'OES_Q0_FIRST_APPROVED_SHA':sha,
             'OES_Q0_FIRST_AUTHORIZATION':f'{prefix}:{sha}:{trial.REQUEST_ID}',
             'DJANGO_SETTINGS_MODULE':'config.settings', 'OES_PG_A4_ENABLED':'1',
             'OES_PG_A4_HOST':trial.HOST, 'OES_Q0_AUTH_PASSWORD':'offline-auth', 'OES_PG_A4_PASSWORD':'offline-reader'}
@@ -61,7 +62,7 @@ class FirstCommitPrepTests(SimpleTestCase):
     def test_sha_approval_scope_and_rerun_rejected(self):
         env=self.env()
         self.assertEqual(trial.check_boundary(env,'a'*40),trial.COMMIT)
-        for key,value in (('GITHUB_SHA',''),('OES_Q0_FIRST_REQUESTED_SHA','b'*40),
+        for key,value in (('GITHUB_SHA',''),('GITHUB_WORKFLOW_REF','other'),('GITHUB_WORKFLOW_SHA','b'*40),('OES_Q0_FIRST_REQUESTED_SHA','b'*40),
             ('OES_Q0_FIRST_APPROVED_SHA','b'*40),('OES_Q0_FIRST_AUTHORIZATION','present'),
             ('GITHUB_RUN_ATTEMPT','2'),('GITHUB_REF','refs/heads/other'),('GITHUB_EVENT_NAME','push')):
             with self.subTest(key=key), self.assertRaises(trial._Hold):
@@ -95,14 +96,12 @@ class FirstCommitPrepTests(SimpleTestCase):
         with self.assertRaises(trial._Hold):
             trial.check_profile(trial.RECOVER,{**self.env(trial.RECOVER),'OES_Q0_WRITER_PASSWORD':''})
 
-    def test_complete_approval_and_repeated_invocations_remain_source_hold_before_setup(self):
-        for mode,code in ((trial.COMMIT,trial.WRITE_HOLD),(trial.RECOVER,trial.READ_HOLD)):
-            with patch.dict(os.environ,self.env(mode),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup') as setup, patch.object(trial,'_load_reserved_user') as load:
-                for _ in range(2):
-                    with redirect_stdout(StringIO()), self.assertRaisesRegex(trial._Hold,code):
-                        trial.main([])
+    def test_wrappers_require_internal_context_before_setup_even_with_approval(self):
+        for mode, wrapper in ((trial.COMMIT,trial._execute_first_commit),(trial.RECOVER,trial._reconcile_first_commit)):
+            with patch.dict(os.environ,self.env(mode),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup') as setup:
+                with self.assertRaises(trial._Hold):
+                    wrapper('a'*40)
                 setup.assert_not_called()
-                load.assert_not_called()
 
     def test_synthetic_preparer_uses_authorization_unusable_password_and_stored_binding(self):
         user=Mock(pk=42,username=trial.USERNAME,is_authenticated=True,is_active=True,is_staff=False,is_superuser=False)
@@ -168,7 +167,7 @@ class FirstCommitPrepTests(SimpleTestCase):
         tree=ast.parse(source)
         for name,call in (('_execute_first_commit','register_authenticated_q0'),('_reconcile_first_commit','review_registered_q0')):
             function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name)
-            self.assertIsInstance(function.body[1],ast.Raise)
+            self.assertEqual(function.body[1].value.func.id, '_require_operation')
             calls=[n.func.id for n in ast.walk(function) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name)]
             self.assertEqual(calls.count(call),1)
             self.assertFalse(any(isinstance(n,(ast.For,ast.While)) for n in ast.walk(function)))
@@ -210,7 +209,11 @@ class FirstCommitPrepTests(SimpleTestCase):
         self.assertIn('default: REVIEW_ONLY',events)
         self.assertNotIn('trial_id:',events)
         self.assertNotIn('question_id:',events)
-        self.assertEqual(source.count('if: ${{ false }}'),2)
+        self.assertNotIn('if: ${{ false }}',source)
+        for mode in (trial.COMMIT,trial.RECOVER):
+            self.assertIn("inputs.mode == '"+mode+"'",source)
+        self.assertEqual(source.count('vars.OES_Q0_FIRST_APPROVED_SHA == github.sha'),2)
+        self.assertEqual(source.count("github.run_attempt == 1"),2)
         self.assertEqual(source.count('ref: ${{ github.sha }}'),3)
         self.assertIn('contents: read',source)
         review,other=source.split('  first-commit:\n',1)
@@ -390,3 +393,99 @@ class RestrictedTrialScopeTests(SimpleTestCase):
                 with self.assertRaises(PreparationHold):
                     repository.insert_entity('offline-id',trial.QUESTION_ID,actor)
                 orm.assert_not_called()
+
+
+class OperationalActivationTests(SimpleTestCase):
+    env = FirstCommitPrepTests.env
+
+    def test_main_context_is_mode_bound_and_invalidated_on_success_and_exception(self):
+        for mode, target in ((trial.COMMIT,'_execute_first_commit'),(trial.RECOVER,'_reconcile_first_commit')):
+            for fail in (False,True):
+                def operation(sha):
+                    self.assertEqual(trial._require_operation(mode,sha),sha)
+                    with self.assertRaises(trial._Hold):
+                        trial._require_operation(trial.RECOVER if mode==trial.COMMIT else trial.COMMIT,sha)
+                    if fail:
+                        raise ValueError('offline exception')
+                with patch.dict(os.environ,self.env(mode),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch.object(trial,target,side_effect=operation) as call, redirect_stdout(StringIO()):
+                    if fail:
+                        with self.assertRaises(ValueError):
+                            trial.main([])
+                    else:
+                        self.assertEqual(trial.main([]),0)
+                    call.assert_called_once_with('a'*40)
+                    self.assertIsNone(trial._operation.get())
+                    with self.assertRaises(trial._Hold):
+                        trial._require_operation(mode)
+
+    def test_commit_wrapper_uses_real_issuer_and_never_retries_uncertain_service(self):
+        from evidence import question_orm_q0_repository_dormant as repo
+        user=Mock()
+        def submit(**kwargs):
+            scope=repo._require_restricted_q0_construction()
+            self.assertIs(scope.user,user)
+            self.assertEqual(scope.command,trial.reserved_command())
+            raise PreparationHold('offline uncertain')
+        with patch.dict(os.environ,self.env(),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup'), patch('evidence.question_orm_q0_connected_recipe_dormant._review_q0_database_configuration'), patch.object(trial,'_load_reserved_user',return_value=user), patch.object(trial,'_validate_reserved_user',return_value='oes:actor:offline'), patch('evidence.question_preparation.register_authenticated_q0',side_effect=submit) as service, redirect_stdout(StringIO()) as output:
+            with self.assertRaisesRegex(trial._Hold,trial.INCONCLUSIVE):
+                trial.main([])
+            service.assert_called_once()
+            self.assertIsNone(repo._trial_scope.get())
+            self.assertIsNone(trial._operation.get())
+            self.assertIn('INDETERMINATE',output.getvalue())
+
+    def test_recovery_real_gate_requires_reserved_manifest_and_never_issues_writer_scope(self):
+        from evidence import question_orm_q0_repository_dormant as repo
+        from evidence.question_orm_q0_evidence_dormant import _require_q0_read_recovery_source_activation as gate
+        def recover(sha):
+            gate(user=Mock(),command=trial.reserved_command())
+            with self.assertRaises(PreparationHold):
+                gate(user=Mock(),command=None)
+            with self.assertRaises(PreparationHold):
+                with repo._first_trial_scope(sha=sha,user=Mock(),command=trial.reserved_command()):
+                    self.fail('reader issued writer scope')
+            self.assertIsNone(repo._trial_scope.get())
+        with patch.dict(os.environ,self.env(trial.RECOVER),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch.object(trial,'_validate_reserved_user',return_value='oes:actor:offline'), patch.object(trial,'_reconcile_first_commit',side_effect=recover), redirect_stdout(StringIO()):
+            trial.main([])
+
+    def test_workflow_job_predicates_mutually_exclusive_and_fail_closed(self):
+        expressions=re.findall(r'    if: \$\{\{ (.*?) \}\}',WORKFLOW.read_text())
+        self.assertEqual(len(expressions),2)
+        def eligible(expression,env):
+            values={'github.event_name':env['GITHUB_EVENT_NAME'],'github.repository':env['GITHUB_REPOSITORY'],
+                'github.ref':env['GITHUB_REF'],'github.run_attempt':int(env['GITHUB_RUN_ATTEMPT']),
+                'github.sha':env['GITHUB_SHA'],'inputs.mode':env['OES_Q0_FIRST_MODE'],
+                'inputs.approved_sha':env['OES_Q0_FIRST_REQUESTED_SHA'],
+                'vars.OES_Q0_FIRST_APPROVED_SHA':env['OES_Q0_FIRST_APPROVED_SHA'],
+                'vars.OES_Q0_FIRST_AUTHORIZATION':env['OES_Q0_FIRST_AUTHORIZATION']}
+            expression=expression.replace('&&',' and ')
+            for key in sorted(values,key=len,reverse=True):
+                expression=expression.replace(key,repr(values[key]))
+            return eval(expression,{'__builtins__':{},'format':lambda template,arg:template.format(arg)})
+        for mode,expected in ((trial.COMMIT,[True,False]),(trial.RECOVER,[False,True])):
+            env=self.env(mode)
+            self.assertEqual([eligible(e,env) for e in expressions],expected)
+            for key,value in (('GITHUB_RUN_ATTEMPT','2'),('GITHUB_EVENT_NAME','push'),('GITHUB_REF','refs/heads/other'),('GITHUB_REPOSITORY','other/repo'),('OES_Q0_FIRST_REQUESTED_SHA','b'*40),('OES_Q0_FIRST_APPROVED_SHA','b'*40),('OES_Q0_FIRST_AUTHORIZATION','invalid'),('OES_Q0_FIRST_MODE',trial.REVIEW)):
+                self.assertEqual([eligible(e,{**env,key:value}) for e in expressions],[False,False])
+
+    def test_module_execution_uses_same_canonical_context_owner(self):
+        import runpy
+        with patch.object(trial,'entrypoint',return_value=0) as entry:
+            with self.assertRaises(SystemExit) as exit:
+                runpy.run_module('scripts.q0_general_first_commit',run_name='__main__')
+            self.assertEqual(exit.exception.code,0)
+            entry.assert_called_once()
+
+    def test_real_read_recovery_path_is_independent_and_inconclusive_without_evidence(self):
+        from evidence import question_orm_q0_repository_dormant as repo
+        user=Mock(username=trial.USERNAME,is_authenticated=True,is_active=True,is_staff=False,is_superuser=False)
+        user.has_perm.return_value=True
+        user.has_usable_password.return_value=False
+        with patch.dict(os.environ,self.env(trial.RECOVER),clear=True), patch.object(trial,'checked_out_sha',return_value='a'*40), patch('django.setup'), patch('django.conf.settings.DATABASES',{'default':{},'oes_synthetic_reader':{}}), patch('evidence.question_orm_q0_connected_recipe_dormant._review_q0_reader_configuration'), patch.object(trial,'_load_reserved_user',return_value=user), patch('preparer_identity.resolver.persisted_preparer_actor_id',return_value='oes:actor:offline'), patch('evidence.question_orm_q0_evidence_dormant._collect_q0_commit_evidence',return_value={'outcome':'INDETERMINATE','scope':'Q0_RECORDS','automatic_retry':False}) as collect, patch('evidence.question_preparation.register_authenticated_q0',side_effect=AssertionError('writer invoked')) as submit, redirect_stdout(StringIO()) as output:
+            with self.assertRaisesRegex(trial._Hold,trial.INCONCLUSIVE):
+                trial.main([])
+            collect.assert_called_once()
+            submit.assert_not_called()
+            self.assertIsNone(repo._trial_scope.get())
+            self.assertIsNone(trial._operation.get())
+            self.assertIn('INDETERMINATE',output.getvalue())

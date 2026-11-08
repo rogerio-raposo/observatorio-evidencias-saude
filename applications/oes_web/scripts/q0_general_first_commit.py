@@ -1,4 +1,4 @@
-"""Offline preparation of the fixed first Q0 general commit; SOURCE HOLD.
+"""Restricted first Q0 general commit and independent READ ONLY reconciliation.
 
 Not the exceptional PR25 executor. No Django, connection or side effect at import.
 """
@@ -6,6 +6,7 @@ import json
 import os
 import re
 import sys
+from contextvars import ContextVar
 
 from scripts.q0_manual_rollback_trial import WORKFLOW_CONTEXT, checked_out_sha
 
@@ -25,6 +26,8 @@ BOUNDARY = "Q0_FIRST_COMMIT_BOUNDARY_HOLD"
 INCONCLUSIVE = "Q0_FIRST_COMMIT_INDETERMINATE_NO_RETRY"
 ATTEMPT_FAILED = "Q0_FIRST_COMMIT_ATTEMPT_FAILED_NO_RETRY"
 
+
+_operation = ContextVar("q0_reserved_operation", default=None)
 
 class _Hold(RuntimeError):
     pass
@@ -53,7 +56,10 @@ def check_boundary(environ, checkout_sha):
     if mode not in (COMMIT, RECOVER):
         raise _Hold(BOUNDARY)
     prefix = "APPROVED_FIRST_CANONICAL_Q0_COMMIT" if mode == COMMIT else "APPROVED_FIRST_Q0_READ_ONLY_RECONCILIATION"
-    if (environ.get("OES_Q0_FIRST_REQUESTED_SHA") != sha
+    if (environ.get("GITHUB_WORKFLOW_REF") !=
+            "rogerio-raposo/observatorio-evidencias-saude/.github/workflows/oes-q0-general-first-persistent-commit.yml@refs/heads/main"
+            or environ.get("GITHUB_WORKFLOW_SHA") != sha
+            or environ.get("OES_Q0_FIRST_REQUESTED_SHA") != sha
             or environ.get("OES_Q0_FIRST_APPROVED_SHA") != sha
             or environ.get("OES_Q0_FIRST_AUTHORIZATION") != f"{prefix}:{sha}:{REQUEST_ID}"):
         raise _Hold(BOUNDARY)
@@ -154,16 +160,28 @@ def _load_reserved_user(mode):
     return user
 
 
+def _require_operation(mode, sha=None):
+    """Internal CLI context, never an env-only permission to construct ORM."""
+    operation = _operation.get()
+    if (operation is None or operation[0] != mode
+            or (sha is not None and operation[1] != sha)
+            or check_boundary(os.environ, checked_out_sha()) != mode
+            or operation[1] != checked_out_sha()):
+        raise _Hold(BOUNDARY)
+    check_profile(mode, os.environ)
+    return operation[1]
+
+
 def _execute_first_commit(sha):
-    """Inoperative pending separate operational source activation.
+    """Reserved operation requiring the validated internal CLI context.
 
     Durable consumption is waived for this supervised experiment only.
     Administrative approval is necessary, never sufficient for construction;
     it cannot prevent a second administrative run. No automatic retry.
     """
-    raise _Hold(WRITE_HOLD)
+    _require_operation(COMMIT, sha)
 
-    # UNREACHABLE source preparation. Canonical repository/UoW/D3 only.
+    # Canonical repository/UoW/D3 only.
     import django
     django.setup()
     from django.conf import settings
@@ -192,10 +210,10 @@ def _execute_first_commit(sha):
 
 
 def _reconcile_first_commit(sha):
-    """Independent reader-only future operation; never invokes submission."""
-    raise _Hold(READ_HOLD)
+    """Independent reader-only operation; never invokes submission."""
+    _require_operation(RECOVER, sha)
 
-    # UNREACHABLE independently approvable READ ONLY preparation.
+    # Independently authorized READ ONLY operation.
     import django
     django.setup()
     from django.conf import settings
@@ -240,10 +258,14 @@ def main(argv=None):
     if mode == REVIEW or review_workflow:
         return 0
     check_profile(mode, os.environ)
-    if mode == COMMIT:
-        _execute_first_commit(sha)
-    else:
-        _reconcile_first_commit(sha)
+    token = _operation.set((mode, sha))
+    try:
+        if mode == COMMIT:
+            _execute_first_commit(sha)
+        else:
+            _reconcile_first_commit(sha)
+    finally:
+        _operation.reset(token)
     return 0
 
 
@@ -260,4 +282,7 @@ def entrypoint():
 
 
 if __name__ == "__main__":
-    sys.exit(entrypoint())
+    # Canonical module owns the ContextVar also imported by D1/D3.
+    # python -m must not create a second operational-context instance.
+    from scripts.q0_general_first_commit import entrypoint as canonical_entrypoint
+    sys.exit(canonical_entrypoint())
