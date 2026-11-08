@@ -13,43 +13,47 @@ from .models import (
     OesQuestionCommandReceipt,
 )
 from .question_preparation import PreparationHold, PreparationConflict
-from .question_orm_q0_repository_dormant import DjangoQ0Repository
+from .question_orm_q0_repository_dormant import (
+    DjangoQ0Repository, _require_restricted_q0_construction,
+)
 from .question_orm_transaction_offline import postgres_session_identity
 
 
-def _review_q0_database_configuration(databases):
-    """Pure review of existing three-alias settings, never a readiness proof.
-
-    A direct pinned endpoint avoids accepting two arbitrary matching hosts as
-    evidence of the approved branch. Passwords are compared, never returned.
-    Server observations and operational review are still mandatory.
-    """
-    host = "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+def _review_q0_alias_configuration(alias, config):
+    """Shared pure pinning: one alias, no connection and no returned secret."""
     roles = {"default": "oes_auth_trial_login", "oes_q0_writer": "oes_qprep_login",
              "oes_synthetic_reader": "oes_pg_a4_reader"}
-    passwords = []
-    for alias, role in roles.items():
-        config = databases.get(alias, {})
-        if (config.get("ENGINE") != "django.db.backends.postgresql"
-                or config.get("HOST") != host or str(config.get("PORT")) != "5432"
-                or config.get("NAME") != "oes_sandbox" or config.get("USER") != role
-                or config.get("OPTIONS", {}).get("sslmode") != "require"
-                or not isinstance(config.get("PASSWORD"), str) or not config["PASSWORD"]):
-            raise PreparationHold("HOLD: invalid D2 database configuration")
-        # Reject alternate libpq routing/identity options rather than assume
-        # HOST/USER describe the effective connection in their presence.
-        if set(config.get("OPTIONS", {})) - {"sslmode", "options"}:
-            raise PreparationHold("HOLD: unsupported D2 connection options")
-        expected_options = {
-            "default": "-c search_path=django_auth,public",
-            "oes_q0_writer": "",
-            "oes_synthetic_reader": "-c default_transaction_read_only=on",
-        }
-        if config.get("OPTIONS", {}).get("options", "") != expected_options[alias]:
-            raise PreparationHold("HOLD: unsupported D2 session options")
-        passwords.append(config["PASSWORD"])
-    if len(set(passwords)) != 3:
+    options = {"default": "-c search_path=django_auth,public", "oes_q0_writer": "",
+               "oes_synthetic_reader": "-c default_transaction_read_only=on"}
+    if (alias not in roles or config.get("ENGINE") != "django.db.backends.postgresql"
+            or config.get("HOST") != "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+            or str(config.get("PORT")) != "5432" or config.get("NAME") != "oes_sandbox"
+            or config.get("USER") != roles[alias]
+            or config.get("OPTIONS", {}).get("sslmode") != "require"
+            or not isinstance(config.get("PASSWORD"), str) or not config["PASSWORD"]):
+        raise PreparationHold("HOLD: invalid D2 database configuration")
+    if set(config.get("OPTIONS", {})) - {"sslmode", "options"}:
+        raise PreparationHold("HOLD: unsupported D2 connection options")
+    if config.get("OPTIONS", {}).get("options", "") != options[alias]:
+        raise PreparationHold("HOLD: unsupported D2 session options")
+
+
+def _review_q0_database_configuration(databases):
+    """Pure three-alias review; server observations remain mandatory."""
+    aliases = ("default", "oes_q0_writer", "oes_synthetic_reader")
+    for alias in aliases:
+        _review_q0_alias_configuration(alias, databases.get(alias, {}))
+    if len({databases[alias]["PASSWORD"] for alias in aliases}) != 3:
         raise PreparationHold("HOLD: D2 requires distinct credentials")
+
+
+def _review_q0_reader_configuration(databases):
+    """Recovery requires only the pinned reader, never writer/auth passwords.
+
+    Auth identity is independently established by the application service.
+    Effective reader identity/rights/snapshot are checked by the D3 collector.
+    """
+    _review_q0_alias_configuration("oes_synthetic_reader", databases.get("oes_synthetic_reader", {}))
 
 
 def _review_q0_session_boundary(*, writer, reader):
@@ -166,12 +170,12 @@ def _review_q0_persistence_d1(*, user, command):
             or command.normalized_text is not None or command.justification != ""):
         raise PreparationHold("HOLD: D1 accepts REGISTER_Q0 only")
 
+    # Source gate before auth-store lookup, connection acquisition or atomic.
+    _require_restricted_q0_construction()
+
     class Composition:
         def execute(self, *, command, actor_id, fingerprint):
-            # Authentication, permission, command validation and persisted actor
-            # resolution have completed before the (still blocked) constructor.
-            # Never use object.__new__, subclassing or a trial repository here.
-            repository = DjangoQ0Repository(alias="oes_q0_writer")
+            # Authentication, validation and persisted actor precede all writes.
             trace = _WriterTrace(_expected_receipt(command, actor_id))
 
             @contextmanager
@@ -216,7 +220,9 @@ def _review_q0_persistence_d1(*, user, command):
 
             @contextmanager
             def repository_context():
-                yield repository
+                # Port enters this only AFTER preflight, atomic and xid capture.
+                yield DjangoQ0Repository._from_preflighted_writer(
+                    writer=connections["oes_q0_writer"])
 
             def verified_readback(**candidate):
                 trace.candidate = candidate

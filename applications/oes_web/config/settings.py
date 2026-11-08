@@ -28,6 +28,21 @@ if os.getenv("OES_PG_A4_ENABLED") == "1":
         "OPTIONS": {"sslmode": "require", "options": "-c default_transaction_read_only=on"},
         "CONN_MAX_AGE": 0,
     }
+def _q0_auth_store(host, password, *, readonly=False):
+    # Configuration only, never an execution/authorization gate.
+    options = "-c search_path=django_auth,public"
+    if readonly:
+        options += " -c default_transaction_read_only=on"
+    return {"ENGINE": "django.db.backends.postgresql", "NAME": "oes_sandbox",
+            "USER": "oes_auth_trial_login", "PASSWORD": password, "HOST": host,
+            "PORT": "5432", "OPTIONS": {"sslmode": "require", "options": options},
+            "CONN_MAX_AGE": 0}
+
+
+if (os.getenv("OES_Q0_RECOVERY_READONLY_ENABLED") == "1"
+        and os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1"):
+    raise RuntimeError("HOLD: recovery and writer profiles are mutually exclusive")
+
 # Marco B: explicit, dormant-by-default three-alias configuration for offline review.
 # No writer connection is initiated here. This flag is NOT an execution gate.
 if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
@@ -43,29 +58,9 @@ if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
             os.environ["OES_Q0_WRITER_PASSWORD"],
             os.environ["OES_PG_A4_PASSWORD"]}) != 3:
         raise RuntimeError("HOLD: database identities require distinct credentials")
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "oes_sandbox",
-        "USER": "oes_auth_trial_login",
-        "PASSWORD": os.environ["OES_Q0_AUTH_PASSWORD"],
-        "HOST": _host,
-        "PORT": "5432",
-        # Pin Django auth/contenttypes/identity and migration metadata to the same schema.
-        "OPTIONS": {"sslmode": "require", "options": "-c search_path=django_auth,public"},
-        "CONN_MAX_AGE": 0,
-    }
-    # Dedicated auth attestation alias; does not change the general default session.
-    DATABASES["oes_auth_readonly"] = {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "oes_sandbox",
-        "USER": "oes_auth_trial_login",
-        "PASSWORD": os.environ["OES_Q0_AUTH_PASSWORD"],
-        "HOST": _host,
-        "PORT": "5432",
-        "OPTIONS": {"sslmode": "require",
-                    "options": "-c search_path=django_auth,public -c default_transaction_read_only=on"},
-        "CONN_MAX_AGE": 0,
-    }
+    DATABASES["default"] = _q0_auth_store(_host, os.environ["OES_Q0_AUTH_PASSWORD"])
+    DATABASES["oes_auth_readonly"] = _q0_auth_store(
+        _host, os.environ["OES_Q0_AUTH_PASSWORD"], readonly=True)
     DATABASES["oes_q0_writer"] = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "oes_sandbox",
@@ -76,6 +71,18 @@ if os.getenv("OES_Q0_MULTI_ALIAS_ENABLED") == "1":
         "OPTIONS": {"sslmode": "require"},
         "CONN_MAX_AGE": 0,
     }
+
+
+# Recovery has no writer alias/password. Selecting this profile cannot activate
+# the independent READ ONLY source gate, or any ORM/HTTP writer gate.
+if os.getenv("OES_Q0_RECOVERY_READONLY_ENABLED") == "1":
+    _host = "ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech"
+    if (os.getenv("OES_PG_A4_ENABLED") != "1" or os.getenv("OES_PG_A4_HOST") != _host
+            or not os.getenv("OES_Q0_AUTH_PASSWORD")
+            or os.getenv("OES_Q0_AUTH_PASSWORD") == os.getenv("OES_PG_A4_PASSWORD")):
+        raise RuntimeError("HOLD: recovery requires isolated readonly auth and reader")
+    DATABASES["default"] = _q0_auth_store(
+        _host, os.environ["OES_Q0_AUTH_PASSWORD"], readonly=True)
 
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

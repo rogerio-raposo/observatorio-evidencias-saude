@@ -123,7 +123,8 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         return _review_q0_persistence_d1(user=self.user, command=command or self.command)
 
     def fake_repository(self):
-        return self.enterContext(patch(MODULE + "DjangoQ0Repository", return_value=self.repo))
+        self.enterContext(patch(MODULE + "_require_restricted_q0_construction"))
+        return self.enterContext(patch(MODULE + "DjangoQ0Repository._from_preflighted_writer", return_value=self.repo))
 
     def test_real_constructor_remains_blocked_before_transaction(self):
         with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
@@ -154,7 +155,7 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         constructor = self.fake_repository()
         result = self.run_command()
         self.assertEqual(result, {"status": "PREPARATORY_ONLY", "question_id": self.command.question_id, "version": 1})
-        constructor.assert_called_once_with(alias="oes_q0_writer")
+        constructor.assert_called_once_with(writer=self.writer)
         self.lookup.assert_called_once_with("default")
         self.lookup.return_value.get.assert_called_once_with(user_id=42)
         self.repo.lock_request.assert_called_once_with(self.actor, "request")

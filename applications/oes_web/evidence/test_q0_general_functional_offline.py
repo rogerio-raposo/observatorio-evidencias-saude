@@ -191,7 +191,7 @@ class Q0FunctionalServiceTests(SimpleTestCase):
             submit.assert_not_called()
 
     def test_real_recovery_blueprint_also_holds(self):
-        with self.assertRaisesRegex(PreparationHold, "writer gate G2"):
+        with self.assertRaisesRegex(PreparationHold, "read-only recovery"):
             review_registered_q0(user=self.user, command=self.command)
 
 

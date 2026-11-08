@@ -109,7 +109,7 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     Reader failures/unsupported xid history/close failure never produce success.
     """
     from .question_orm_q0_connected_recipe_dormant import (
-        _review_q0_database_configuration, _classify_q0_commit_observation,
+        _review_q0_reader_configuration, _classify_q0_commit_observation,
         _verify_committed_q0_readback,
     )
     expected = _expected_receipt(command, actor_id)
@@ -120,7 +120,7 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     result = _indeterminate()
     reader = None
     try:
-        _review_q0_database_configuration(connections.databases)
+        _review_q0_reader_configuration(connections.databases)
         reader = connections[READER]
         # Never close or take ownership of an external transaction.
         if (reader.alias != READER or reader.vendor != "postgresql"
@@ -249,17 +249,21 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     return result
 
 
+def _require_q0_read_recovery_source_activation():
+    """Independent READ ONLY source gate; cannot authorize any writer path."""
+    raise PreparationHold("HOLD: Q0 read-only recovery not authorized")
+
+
 def _recover_q0_commit_evidence(*, user, command):
-    """Recovery blueprint, including after process loss; same SOURCE HOLD as D1.
+    """Independent reader recovery, including process loss, still SOURCE HOLD.
 
     No operational injection, alternate constructor or caller-provided trace.
     A future activation must authorize this reader path separately as needed.
     """
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id
-    from .question_orm_q0_repository_dormant import DjangoQ0Repository
     require_question_preparer(user)
+    _require_q0_read_recovery_source_activation()
     actor = persisted_preparer_actor_id(user)
     _expected_receipt(command, actor)
-    DjangoQ0Repository(alias=WRITER)  # Existing source blocker, NOT bypassed.
     return _collect_q0_commit_evidence(command=command, actor_id=actor)

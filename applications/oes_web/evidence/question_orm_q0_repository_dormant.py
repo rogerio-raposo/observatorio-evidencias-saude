@@ -13,13 +13,48 @@ from .question_uow_offline import Receipt
 from .question_orm_transaction_offline import scoped_current_question, request_receipt
 
 
+def _require_restricted_q0_construction():
+    """SOURCE HOLD, not an environment switch or a new authorization protocol."""
+    raise PreparationHold("HOLD: Django ORM writer gate G2 restricted construction not authorized")
+
+
 class DjangoQ0Repository:
     """Concrete ORM mapping; all entry points remain fail-closed."""
 
-    def __init__(self, *, alias=None):
-        # Even a caller supplying an alias cannot activate this repository.
-        # Future connected work requires an explicit, reviewed source change.
-        raise PreparationHold("HOLD: Django ORM writer gate G2 not authorized")
+    def __init__(self, *, alias=None, _writer=None):
+        if _writer is None:
+            # General construction remains unconditionally blocked, even after
+            # a future separate activation of the restricted source path.
+            raise PreparationHold("HOLD: Django ORM writer gate G2 not authorized")
+        _require_restricted_q0_construction()
+        # Normal Python construction of THIS repository; no __new__, subclass,
+        # attribute assignment by an executor or alternate ORM implementation.
+        from django.db import connections
+        from .question_orm_transaction_offline import postgres_session_identity
+        from .question_orm_q0_evidence_dormant import _review_q0_privileges
+        if (type(self) is not DjangoQ0Repository
+                or alias != "oes_q0_writer" or _writer.alias != alias
+                or _writer is not connections[alias]
+                or _writer.vendor != "postgresql" or _writer.in_atomic_block is not True
+                or _writer.get_autocommit() is not False):
+            raise PreparationHold("HOLD: restricted Q0 writer boundary invalid")
+        with _writer.cursor() as cursor:
+            if postgres_session_identity(cursor) != ("oes_qprep_login", "oes_sandbox", "off"):
+                raise PreparationHold("HOLD: restricted Q0 writer identity mismatch")
+        _review_q0_privileges(_writer)
+        self.alias = alias
+
+    @classmethod
+    def _from_preflighted_writer(cls, *, writer):
+        """Internal D1 construction inside its validated atomic, still SOURCE HOLD.
+
+        A connection is context, never sufficient operational authorization.
+        General aliases, caller factories and alternate repository types rejected.
+        """
+        _require_restricted_q0_construction()
+        if cls is not DjangoQ0Repository:
+            raise PreparationHold("HOLD: canonical Q0 repository required")
+        return cls(alias="oes_q0_writer", _writer=writer)
 
     def insert_entity(self, entity_uuid, question_id, actor_id):
         return OesEntity.objects.using(self.alias).create(
