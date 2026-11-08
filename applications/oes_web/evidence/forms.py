@@ -147,3 +147,62 @@ def prepare_q0_recovery(*, user, data):
     except Exception:
         context["result_message"] = Q0_MESSAGES["uncertain"]
         return 503, context
+
+
+class Q1ProposalForm(Q0RegistrationForm):
+    expected_version = forms.IntegerField(min_value=1, label="Versão esperada")
+    normalized_text = forms.CharField(max_length=10000, strip=False, label="Proposta de texto normalizado",
+                                      widget=forms.Textarea(attrs={"rows": 6}))
+    justification = forms.CharField(max_length=10000, strip=False, label="Justificativa da proposta",
+                                   widget=forms.Textarea(attrs={"rows": 3}))
+
+    def clean(self):
+        cleaned = super().clean()
+        for name in ("normalized_text", "justification"):
+            value = cleaned.get(name)
+            if isinstance(value, str) and not value.strip():
+                self.add_error(name, "Informe um texto não vazio.")
+        return cleaned
+
+    def to_command(self):
+        from .question_preparation import validate_propose_q1
+        if not self.is_valid():
+            raise PreparationHold("HOLD: invalid Q1 form")
+        return validate_propose_q1(QuestionCommand(
+            self.cleaned_data["request_id"], self.cleaned_data["question_id"],
+            self.cleaned_data["expected_version"], self.cleaned_data["original_text"],
+            self.cleaned_data["normalized_text"], self.cleaned_data["justification"]))
+
+
+def prepare_q1_proposal(*, user, data, unit_of_work=None):
+    """Offline-only presentation with the existing UoW supplied by tests."""
+    from .preparation_auth import require_question_preparer
+    from .pf_i03_q1_offline import present_authenticated_q1
+    form = Q1ProposalForm(data)
+    context = {"form": form}
+    try:
+        require_question_preparer(user)
+        if not form.is_valid():
+            context["outcome"] = "INVALID"
+            return 400, context
+        context["proposal"] = present_authenticated_q1(user=user, command=form.to_command(), unit_of_work=unit_of_work)
+        context["outcome"] = "OFFLINE_RECEIPT_VERIFIED"
+        context["result_message"] = "Proposta Q1 verificada no contrato offline com recibo simulado. Não comprova persistência conectada."
+        return 200, context
+    except PermissionDenied:
+        context["outcome"] = "ACCESS_DENIED"
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return 403, context
+    except PreparationConflict as error:
+        # Conflicts in the supplied existing offline UoW precede mutation.
+        # Contradictory/uncertain observations must never be reported as success.
+        context["result_message"] = "A proposta conflita com a versão, solicitação ou responsabilidade da questão. Preserve os dados; não reenvie automaticamente."
+        uncertain = getattr(error, "q0_observation", None) is not None
+        context["outcome"] = "INDETERMINATE" if uncertain else "CONFLICT"
+        return (503 if uncertain else 409), context
+    except Exception:
+        context["outcome"] = "UNAVAILABLE" if unit_of_work is None else "INDETERMINATE"
+        context["result_message"] = "Proposta não confirmada. Preserve os identificadores e o texto; não reenvie nem gere outra solicitação automaticamente."
+        if unit_of_work is None:
+            context["result_message"] = "Registro Q1 operacional indisponível. Nenhum backend foi iniciado por esta entrada; preserve os dados da proposta."
+        return 503, context

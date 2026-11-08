@@ -18,6 +18,10 @@ def present_synthetic_q1(*, user, command, unit_of_work=None):
             or not command.justification.strip()):
         raise PreparationHold("HOLD: PF-I03-A2 accepts a justified synthetic Q1 only")
     receipt = submit_question_command(user=user, command=command, unit_of_work=unit_of_work)
+    return _present_q1_receipt(command, receipt)
+
+
+def _present_q1_receipt(command, receipt):
     if (set(receipt) != {"status", "question_id", "version"}
             or receipt["status"] != "PREPARATORY_ONLY"
             or receipt["question_id"] != command.question_id
@@ -35,3 +39,13 @@ def present_synthetic_q1(*, user, command, unit_of_work=None):
         "routing": "NOT_AUTHORIZED",
         "e9": "BLOCKED",
     }
+
+
+def present_authenticated_q1(*, user, command, unit_of_work=None):
+    """Authenticated general proposal; no scientific or connected assurance."""
+    from .question_preparation import propose_authenticated_q1
+    receipt = propose_authenticated_q1(user=user, command=command, unit_of_work=unit_of_work)
+    result = _present_q1_receipt(command, receipt)
+    result.update(admissibility="NOT_DECIDED", investigation="NOT_OPENED",
+                  technical_evidence="OFFLINE_RECEIPT_VERIFIED")
+    return result
