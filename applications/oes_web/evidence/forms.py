@@ -74,3 +74,76 @@ class Q0RegistrationForm(forms.Form):
             self.cleaned_data["request_id"], self.cleaned_data["question_id"],
             0, self.cleaned_data["original_text"],
         ))
+
+
+def prepare_q0_submission(*, user, data):
+    """Offline application/presentation seam, never called by operational POST.
+
+    No backend injection. A normal service return AND its D3 evidence are needed.
+    """
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import register_authenticated_q0
+    from .question_orm_q0_repository_dormant import _application_q0_scope
+    form = Q0RegistrationForm(data)
+    context = {"form": form, "messages": Q0_MESSAGES}
+    scope = None
+    try:
+        require_question_preparer(user)
+        if not form.is_valid():
+            return 400, context
+        command = form.to_command()
+        with _application_q0_scope(user=user, command=command) as scope:
+            result = register_authenticated_q0(user=user, command=command)
+            evidence = scope.observation
+            if (result != {"status": "PREPARATORY_ONLY", "question_id": command.question_id, "version": 1}
+                    or not isinstance(evidence, dict) or evidence.get("outcome") != "PERSISTED"
+                    or evidence.get("scope") != "Q0_RECORDS" or evidence.get("automatic_retry") is not False):
+                raise PreparationHold("HOLD: normal verified Q0 completion required")
+        context["result_message"] = "Registro Q0 íntegro confirmado por leitura independente."
+        context["confirmed_question_id"] = command.question_id
+        return 200, context
+    except PermissionDenied:
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return 403, context
+    except Exception as error:
+        observation = getattr(error, "q0_observation", None)
+        # Only D1's pre-INSERT typed conflict is presented as definitive.
+        conflict = isinstance(error, PreparationConflict) and scope is not None and scope.conflict_before_insert
+        context["result_message"] = Q0_MESSAGES["conflict"] if conflict else q0_failure_message(
+            error if not isinstance(error, PreparationConflict) else PreparationHold("HOLD"))
+        return (409 if conflict else 503), context
+
+
+def prepare_q0_recovery(*, user, data):
+    """Actor-scoped READ ONLY presentation. Never resubmits a command."""
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import review_registered_q0
+    form = Q0RegistrationForm(data)
+    context = {"form": form, "messages": Q0_MESSAGES}
+    try:
+        require_question_preparer(user)
+        if not form.is_valid():
+            return 400, context
+        observation = review_registered_q0(user=user, command=form.to_command())
+        outcome = observation.get("outcome") if isinstance(observation, dict) else None
+        if (outcome == "PERSISTED" and observation.get("scope") == "Q0_RECORDS"
+                and observation.get("automatic_retry") is False):
+            context["result_message"] = "Registro Q0 íntegro confirmado por leitura independente."
+            context["confirmed_question_id"] = form.cleaned_data["question_id"]
+            return 200, context
+        # Preserve classification without treating absence as registration/retry.
+        if (outcome == "ABSENT" and observation.get("scope") in ("Q0_RECORDS", "THIS_ATTEMPT")
+                and observation.get("automatic_retry") is False):
+            context["recovery_outcome"] = "ABSENT"
+            context["recovery_scope"] = observation["scope"]
+            context["result_message"] = "Ausência demonstrada no escopo informado. Preserve os identificadores; não reenvie automaticamente."
+        else:
+            context["recovery_outcome"] = "INDETERMINATE"
+            context["result_message"] = Q0_MESSAGES["uncertain"]
+        return 503, context
+    except PermissionDenied:
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return 403, context
+    except Exception:
+        context["result_message"] = Q0_MESSAGES["uncertain"]
+        return 503, context

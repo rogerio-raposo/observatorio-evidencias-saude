@@ -77,3 +77,11 @@ def q0_registration(request):
     # No request/session identifier is generated on GET, errors or reloads.
     context["form"] = Q0RegistrationForm()
     return render(request, "evidence/q0_registration.html", context)
+
+
+def _prepare_q0_registration_response(request):
+    """Unrouted F1 response adapter; operational methods still stop at 423."""
+    from .forms import prepare_q0_submission
+    status, context = prepare_q0_submission(user=request.user, data=request.POST)
+    context["offline_preparation"] = True
+    return render(request, "evidence/q0_registration.html", context, status=status)

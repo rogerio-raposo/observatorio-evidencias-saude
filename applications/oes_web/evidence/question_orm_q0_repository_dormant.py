@@ -27,6 +27,8 @@ class _TrialScope:
     active: bool = True
     binding: object = None
     transaction_used: bool = False
+    observation: object = None
+    conflict_before_insert: bool = False
 
 
 _trial_scope = ContextVar("q0_first_trial_scope", default=None)
@@ -63,6 +65,31 @@ def _first_trial_scope(*, sha, user, command):
     token = _trial_scope.set(scope)
     try:
         yield
+    finally:
+        scope.active = False
+        scope.binding = None
+        _trial_scope.reset(token)
+
+
+def _require_q0_application_write_activation():
+    """F1 offline only: no env, caller token or HTTP route can activate this."""
+    raise PreparationHold("HOLD: Q0 application write not authorized")
+
+
+@contextmanager
+def _application_q0_scope(*, user, command):
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import validate_register_q0, command_fingerprint
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    require_question_preparer(user)
+    validate_register_q0(command)
+    _require_q0_application_write_activation()
+    if _trial_scope.get() is not None:
+        raise PreparationHold("HOLD: nested Q0 application scope")
+    scope = _TrialScope(user, command, persisted_preparer_actor_id(user), command_fingerprint(command))
+    token = _trial_scope.set(scope)
+    try:
+        yield scope
     finally:
         scope.active = False
         scope.binding = None

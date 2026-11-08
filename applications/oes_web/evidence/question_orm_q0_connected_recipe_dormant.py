@@ -244,6 +244,13 @@ def _review_q0_persistence_d1(*, user, command):
                     command=command, actor_id=actor_id, fingerprint=fingerprint)
             except Exception as exc:
                 trace.candidate = port.last_uncertain_q0
+                # UoW raises its typed conflicts before register_q0 generates
+                # any candidate/INSERT. Preserve that fact for presentation,
+                # independently of whether readback of older records succeeds.
+                from .question_orm_q0_repository_dormant import _trial_scope
+                scope = _trial_scope.get()
+                if scope is not None and isinstance(exc, PreparationConflict) and trace.candidate is None:
+                    scope.conflict_before_insert = True
                 if trace.observation is None:
                     trace.observation = _collect_q0_commit_evidence(
                         command=command, actor_id=actor_id, trace=trace)
@@ -258,6 +265,11 @@ def _review_q0_persistence_d1(*, user, command):
                     command=command, actor_id=actor_id, trace=trace)
             if trace.observation.get("outcome") != "PERSISTED":
                 raise PreparationHold("HOLD: D3 persisted Q0 not independently verified")
+            # Only normal verified D3 completion supplies presentation evidence.
+            from .question_orm_q0_repository_dormant import _trial_scope
+            scope = _trial_scope.get()
+            if scope is not None:
+                scope.observation = dict(trace.observation)
             return result
 
     return submit_authenticated_question_command(
