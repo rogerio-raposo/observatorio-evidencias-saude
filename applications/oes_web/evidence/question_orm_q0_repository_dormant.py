@@ -35,11 +35,9 @@ _trial_scope = ContextVar("q0_first_trial_scope", default=None)
 
 
 def _require_first_trial_source_activation():
-    from scripts import q0_general_first_commit as trial
-    try:
-        trial._require_operation(trial.COMMIT)
-    except trial._Hold:
-        raise PreparationHold("HOLD: reserved Q0 writer operation required") from None
+    # CP348 is closed. Neither its old env approval nor a private app profile
+    # can authorize another reserved trial. The historical manifest is intact.
+    raise PreparationHold("HOLD: CP348 writer retired")
 
 
 @contextmanager
@@ -73,7 +71,8 @@ def _first_trial_scope(*, sha, user, command):
 
 def _require_q0_application_write_activation():
     """F1 offline only: no env, caller token or HTTP route can activate this."""
-    raise PreparationHold("HOLD: Q0 application write not authorized")
+    from config.mb_oc1 import require_mb_oc1
+    require_mb_oc1("A")
 
 
 @contextmanager
