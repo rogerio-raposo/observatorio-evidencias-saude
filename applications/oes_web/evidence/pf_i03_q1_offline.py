@@ -22,6 +22,16 @@ def present_synthetic_q1(*, user, command, unit_of_work=None):
 
 
 def _present_q1_receipt(command, receipt):
+    from .question_uow_offline import Receipt
+    from .question_preparation import command_fingerprint
+    if type(receipt) is Receipt:
+        if (receipt.command_kind != "PROPOSE_Q1" or receipt.request_id != command.request_id
+                or receipt.fingerprint != command_fingerprint(command)
+                or receipt.justification != command.justification):
+            raise PreparationHold("HOLD: invalid Q1 stored receipt")
+        # Presentation values derive from the observed receipt, not invented
+        # versions or a newly persisted receipt. PREPARATORY_ONLY is a label.
+        receipt = {"status": "PREPARATORY_ONLY", "question_id": receipt.question_id, "version": receipt.version}
     if (set(receipt) != {"status", "question_id", "version"}
             or receipt["status"] != "PREPARATORY_ONLY"
             or receipt["question_id"] != command.question_id

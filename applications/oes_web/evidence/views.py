@@ -108,3 +108,26 @@ def q1_proposal(request):
         return render(request, "evidence/q1_proposal.html", context, status=503)
     context["form"] = Q1ProposalForm()
     return render(request, "evidence/q1_proposal.html", context)
+
+
+def q2_routing(request):
+    """Presentation GET only; no Q2 submission or backend access from HTTP."""
+    from django.http import HttpResponse
+    if request.method != "GET":
+        return HttpResponse("HOLD: proposta Q2/roteamento bloqueada; nenhuma escrita foi iniciada.", status=423)
+    from django.core.exceptions import PermissionDenied
+    from .forms import Q2RoutingForm, Q0_MESSAGES
+    from .preparation_auth import require_question_preparer
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    context = {"form": None}
+    try:
+        require_question_preparer(request.user)
+        persisted_preparer_actor_id(request.user)
+    except PermissionDenied:
+        context["result_message"] = Q0_MESSAGES["unauthorized"]
+        return render(request, "evidence/q2_routing.html", context, status=403)
+    except Exception:
+        context["result_message"] = Q0_MESSAGES["identity"]
+        return render(request, "evidence/q2_routing.html", context, status=503)
+    context["form"] = Q2RoutingForm()
+    return render(request, "evidence/q2_routing.html", context)

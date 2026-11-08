@@ -206,3 +206,79 @@ def prepare_q1_proposal(*, user, data, unit_of_work=None):
         if unit_of_work is None:
             context["result_message"] = "Registro Q1 operacional indisponível. Nenhum backend foi iniciado por esta entrada; preserve os dados da proposta."
         return 503, context
+
+
+class Q2RoutingForm(Q1ProposalForm):
+    """Reference an existing Q1, then prepare a nonpersistent Q2 proposal."""
+    from .pf_i03_q2_routing_offline import METHODS, DEPTHS, MAINTENANCE
+    expected_version = None
+    q1_version = forms.IntegerField(min_value=2, label="Versão Q1 de referência")
+    operational_question = forms.CharField(max_length=10000, strip=False, label="Pergunta operacional", widget=forms.Textarea)
+    population = forms.CharField(max_length=10000, strip=False, label="População")
+    exposure_or_intervention = forms.CharField(max_length=10000, strip=False, label="Intervenção ou exposição")
+    comparator = forms.CharField(max_length=10000, strip=False, label="Comparador")
+    outcomes = forms.CharField(max_length=10000, strip=False, label="Desfechos (um por linha)", widget=forms.Textarea)
+    methodological_class = forms.ChoiceField(choices=[(c,c) for c in sorted(METHODS)], label="Classe metodológica proposta")
+    depth = forms.ChoiceField(choices=[(c,c) for c in sorted(DEPTHS)], label="Profundidade proposta")
+    maintenance = forms.ChoiceField(choices=[(c,c) for c in sorted(MAINTENANCE)], label="Manutenção proposta")
+    routing_justification = forms.CharField(max_length=10000, strip=False, label="Justificativa do roteamento", widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["request_id"].label = "Identificador da solicitação Q1 existente"
+        self.fields["normalized_text"].label = "Texto Q1 de referência (literal)"
+        self.fields["justification"].label = "Justificativa Q1 de referência (literal)"
+
+    def clean(self):
+        cleaned = super().clean()
+        if "question_id" in cleaned and not cleaned["question_id"].startswith("OES-SYNTH-Q0-"):
+            self.add_error("question_id", "Este percurso aceita somente questões sintéticas OES-SYNTH-Q0-.")
+        for name in ("operational_question", "population", "exposure_or_intervention", "comparator", "routing_justification"):
+            value = cleaned.get(name)
+            if isinstance(value, str) and not value.strip():
+                self.add_error(name, "Informe um texto não vazio.")
+        if "outcomes" in cleaned and any(not line.strip() for line in cleaned["outcomes"].splitlines()):
+            self.add_error("outcomes", "Informe um desfecho não vazio por linha.")
+        return cleaned
+
+    def to_command(self):
+        from .question_preparation import validate_propose_q1
+        if not self.is_valid():
+            raise PreparationHold("HOLD: invalid Q2 reference form")
+        # Translate the explicit resulting Q1 version to its command's expected
+        # version. The actual stored receipt must still match it exactly.
+        return validate_propose_q1(QuestionCommand(self.cleaned_data["request_id"], self.cleaned_data["question_id"],
+            self.cleaned_data["q1_version"] - 1, self.cleaned_data["original_text"],
+            self.cleaned_data["normalized_text"], self.cleaned_data["justification"]))
+
+    def to_proposal(self):
+        from .pf_i03_q2_routing_offline import Q2RoutingProposal
+        if not self.is_valid():
+            raise PreparationHold("HOLD: invalid Q2 proposal form")
+        c = self.cleaned_data
+        return Q2RoutingProposal(c["question_id"], c["q1_version"], c["operational_question"], c["population"],
+            c["exposure_or_intervention"], c["comparator"], tuple(c["outcomes"].splitlines()),
+            c["methodological_class"], c["depth"], c["maintenance"], c["routing_justification"])
+
+
+def prepare_q2_routing(*, user, data, unit_of_work=None):
+    """Offline test seam. The HTTP GET page never invokes this adapter."""
+    from .preparation_auth import require_question_preparer
+    from .pf_i03_q2_routing_offline import present_authenticated_q2_routing
+    form = Q2RoutingForm(data)
+    context = {"form": form}
+    try:
+        require_question_preparer(user)
+        if not form.is_valid():
+            context["outcome"] = "INVALID"
+            return 400, context
+        result = present_authenticated_q2_routing(user=user, q1_command=form.to_command(),
+                                                 proposal=form.to_proposal(), unit_of_work=unit_of_work)
+        context.update(proposal=result, outcome="PROPOSED_OFFLINE_ONLY")
+        return 200, context
+    except PermissionDenied:
+        context.update(outcome="ACCESS_DENIED", result_message=Q0_MESSAGES["unauthorized"])
+        return 403, context
+    except Exception:
+        context.update(outcome="UNVERIFIED_PROVENANCE", result_message="Não foi possível verificar a referência Q1 e a responsabilidade. Preserve os dados; não há proposta persistida nem reenvio automático.")
+        return 503, context

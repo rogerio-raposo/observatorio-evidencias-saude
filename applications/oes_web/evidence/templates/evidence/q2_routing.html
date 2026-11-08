@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OES — Proposta Q2 e roteamento preliminar</title><link rel="stylesheet" href="{% static 'evidence/styles.css' %}"></head>
+<body><main class="question-preview"><h1>Propor Q2 e roteamento preliminar</h1>
+<p id="q2-hold" role="status">Envio operacional bloqueado. Somente dados sintéticos preparatórios; nenhum registro Q2 ou de roteamento será persistido.</p>
+<p>PROPOSED_OFFLINE_ONLY. Admissibilidade NOT_DECIDED; revisão científica NOT_PERFORMED; investigação NOT_OPENED; E9 BLOCKED.</p>
+<p>N0–N4 e M0–M3 são propostas. Não determinam automaticamente investigação, produto ou monitoramento.</p>
+{% if result_message %}<p role="alert">{{ result_message }}</p>{% endif %}
+{% if proposal %}<section aria-label="Proposta preparatória offline"><h2>{{ proposal.question_id }} — Q1 versão {{ proposal.based_on_q1_version }}</h2>
+<p>Original Q0:</p><pre>{{ proposal.original_text }}</pre><p>Texto Q1:</p><pre>{{ proposal.normalized_text }}</pre>
+<p>Pergunta operacional: {{ proposal.operational_question }}</p><p>População: {{ proposal.population }}</p>
+<p>Intervenção/exposição: {{ proposal.exposure_or_intervention }}</p><p>Comparador: {{ proposal.comparator }}</p>
+<ul>{% for item in proposal.outcomes %}<li>{{ item }}</li>{% endfor %}</ul>
+<p>Classe {{ proposal.methodological_class }}; profundidade {{ proposal.depth }}; manutenção {{ proposal.maintenance }}.</p>
+<p>Justificativa: {{ proposal.routing_justification }}</p>
+<p>Proveniência {{ proposal.provenance.source }}: solicitação {{ proposal.provenance.request_id }}, ator {{ proposal.provenance.actor_id }}, fingerprint {{ proposal.provenance.fingerprint }}.</p>
+<p>Certeza: {{ proposal.certainty }}. {{ proposal.limitations }}</p></section>{% endif %}
+{% if form %}<form method="post" action="{% url 'q2-routing' %}" aria-describedby="q2-hold">{% csrf_token %}
+{% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}<div>{{ field.as_field_group }}</div>{% endfor %}
+<p>Os textos e a justificativa Q1 de referência devem corresponder literalmente ao recibo offline existente. A identidade vem da conta autenticada, nunca do formulário.</p>
+<button type="submit" disabled aria-describedby="q2-hold">Proposta indisponível</button></form>{% endif %}
+<p><a href="{% url 'q1-propose' %}">Proposta Q1</a> · <a href="{% url 'home' %}">Catálogo</a></p></main></body></html>
