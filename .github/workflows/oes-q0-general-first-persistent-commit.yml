@@ -1,0 +1,110 @@
+name: OES Q0 general first persistent commit - SOURCE HOLD
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'REVIEW_ONLY by default; commit and independent reconciliation remain source-blocked'
+        required: true
+        default: REVIEW_ONLY
+        type: choice
+        options:
+          - REVIEW_ONLY
+          - FIRST_CANONICAL_Q0_COMMIT
+          - RECONCILE_FIRST_Q0_READ_ONLY
+      approved_sha:
+        description: 'Full reviewed main SHA; identities, request and question are reserved in source'
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+# Serialization is not atomic consumption of operational authorization.
+concurrency:
+  group: oes-q0-general-first-persistent-commit
+  cancel-in-progress: false
+
+env:
+  OES_Q0_FIRST_MODE: ${{ inputs.mode }}
+  OES_Q0_FIRST_REQUESTED_SHA: ${{ inputs.approved_sha }}
+  OES_Q0_FIRST_APPROVED_SHA: ${{ vars.OES_Q0_FIRST_APPROVED_SHA }}
+  OES_Q0_FIRST_AUTHORIZATION: ${{ vars.OES_Q0_FIRST_AUTHORIZATION }}
+
+jobs:
+  review-only:
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && github.run_attempt == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Review fixed manifest and SHA without Django or database credentials
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_general_first_commit --review-workflow
+
+  first-commit:
+    needs: review-only
+    # Durable consumption waived only for the supervised fixed experiment.
+    # Pending reviewed trial-bound canonical activation, NOT a one-use guarantee.
+    # Supervisor must revoke temporary approval variables after the attempt.
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck actual checkout and nominal first-commit approval
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_general_first_commit --review-workflow
+      - name: Install existing requirements without database credentials
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Reserved canonical call - CLI and canonical construction also SOURCE HOLD
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+          OES_PG_A4_ENABLED: '1'
+          OES_Q0_MULTI_ALIAS_ENABLED: '1'
+          OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+          OES_Q0_WRITER_PASSWORD: ${{ secrets.OES_Q0_WRITER_PASSWORD }}
+          OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+        run: python -m scripts.q0_general_first_commit
+
+  independent-reconciliation:
+    needs: review-only
+    # Separately reviewable reader path; never depends on first-commit or a writer secret.
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck actual checkout and distinct READ ONLY approval
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_general_first_commit --review-workflow
+      - name: Install existing requirements without database credentials
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Reserved independent reader - CLI and recovery also SOURCE HOLD
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+          OES_Q0_RECOVERY_READONLY_ENABLED: '1'
+          OES_PG_A4_ENABLED: '1'
+          OES_PG_A4_HOST: ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+          OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+        run: python -m scripts.q0_general_first_commit
