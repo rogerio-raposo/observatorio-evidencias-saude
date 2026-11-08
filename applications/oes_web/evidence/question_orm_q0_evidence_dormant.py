@@ -249,21 +249,28 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     return result
 
 
-def _require_q0_read_recovery_source_activation():
-    """Independent READ ONLY source gate; cannot authorize any writer path."""
-    raise PreparationHold("HOLD: Q0 read-only recovery not authorized")
+def _require_q0_read_recovery_source_activation(*, user=None, command=None):
+    """Independent reserved READ ONLY gate; cannot authorize any writer path."""
+    from scripts import q0_general_first_commit as trial
+    try:
+        trial._require_operation(trial.RECOVER)
+        if command != trial.reserved_command():
+            raise PreparationHold("HOLD: reserved Q0 recovery command required")
+        trial._validate_reserved_user(user)
+    except trial._Hold:
+        raise PreparationHold("HOLD: reserved Q0 read-only recovery operation required") from None
 
 
 def _recover_q0_commit_evidence(*, user, command):
-    """Independent reader recovery, including process loss, still SOURCE HOLD.
+    """Independent reader recovery, including process loss, restricted to the trial.
 
     No operational injection, alternate constructor or caller-provided trace.
-    A future activation must authorize this reader path separately as needed.
+    This reader path requires its separate nominal operational authorization.
     """
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id
     require_question_preparer(user)
-    _require_q0_read_recovery_source_activation()
+    _require_q0_read_recovery_source_activation(user=user, command=command)
     actor = persisted_preparer_actor_id(user)
     _expected_receipt(command, actor)
     return _collect_q0_commit_evidence(command=command, actor_id=actor)
