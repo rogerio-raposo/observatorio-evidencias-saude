@@ -1,0 +1,84 @@
+name: OES Django Q0 auth and reader metadata attestation - READ ONLY
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'REVIEW_ONLY never connects; attestation needs independent SHA-bound approval'
+        type: choice
+        required: true
+        default: REVIEW_ONLY
+        options:
+          - REVIEW_ONLY
+          - SINGLE_DJANGO_Q0_READ_ONLY_ATTESTATION
+      approved_sha:
+        description: 'Full reviewed main SHA, equal to independent approval and actual checkout'
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+# Serialization only, not a durable claim or permission to repeat the diagnostic.
+concurrency:
+  group: oes-q0-django-readonly-attestation
+  cancel-in-progress: false
+
+env:
+  OES_Q0_DJANGO_RO_MODE: ${{ inputs.mode }}
+  OES_Q0_DJANGO_RO_REQUESTED_SHA: ${{ inputs.approved_sha }}
+  OES_Q0_DJANGO_RO_APPROVED_SHA: ${{ vars.OES_Q0_DJANGO_RO_APPROVED_SHA }}
+  OES_Q0_DJANGO_RO_AUTHORIZATION: ${{ vars.OES_Q0_DJANGO_RO_AUTHORIZATION }}
+
+jobs:
+  preflight:
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'rogerio-raposo/observatorio-evidencias-saude' && github.ref == 'refs/heads/main' && github.run_attempt == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      approved: ${{ steps.boundary.outputs.approved }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Validate actual revision and nominal authorization without credentials
+        id: boundary
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_django_readonly_attestation --review-workflow
+
+  readonly-attestation:
+    needs: preflight
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' &&
+          github.repository == 'rogerio-raposo/observatorio-evidencias-saude' &&
+          github.ref == 'refs/heads/main' && github.run_attempt == '1' &&
+          needs.preflight.outputs.approved == 'true' &&
+          inputs.mode == 'SINGLE_DJANGO_Q0_READ_ONLY_ATTESTATION' &&
+          inputs.approved_sha == github.sha &&
+          vars.OES_Q0_DJANGO_RO_APPROVED_SHA == github.sha &&
+          vars.OES_Q0_DJANGO_RO_AUTHORIZATION == format('APPROVED_SINGLE_DJANGO_Q0_READ_ONLY_ATTESTATION:{0}', github.sha) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck actual revision before dependencies or credentials
+        working-directory: applications/oes_web
+        run: python -m scripts.q0_django_readonly_attestation --review-workflow
+      - name: Install existing requirements without database credentials
+        run: python -m pip install --disable-pip-version-check -r applications/oes_web/requirements.txt
+      - name: Single metadata-only attestation - no retry or data-row queries
+        working-directory: applications/oes_web
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings_q0_readonly_attestation
+          OES_Q0_DJANGO_RO_PROFILE: AUTH_AND_Q0_METADATA_ONLY
+          OES_Q0_AUTH_PASSWORD: ${{ secrets.OES_Q0_AUTH_PASSWORD }}
+          OES_PG_A4_PASSWORD: ${{ secrets.OES_PG_A4_READER_PASSWORD }}
+        run: python -m scripts.q0_django_readonly_attestation
