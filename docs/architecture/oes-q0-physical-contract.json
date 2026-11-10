@@ -1,0 +1,851 @@
+{
+  "contract": "OES_Q0_PHYSICAL_CONTRACT",
+  "version": 1,
+  "status": "OFFLINE_REFERENCE_NOT_CATALOG_ATTESTATION",
+  "source_main": "42b08aa35099bfdd984522a3a07ab0f4a3f524b6",
+  "checkpoint": "CP348",
+  "scope": "Canonical REGISTER_Q0 only. Not executable DDL, migration plan, or authorization.",
+  "evidence_rules": {
+    "declared": "Each column/constraint/index cites declared_by; PK declaration uses S1 except receipt uses RECEIPT.",
+    "historical": "Only the explicitly delimited historical_evidence assertions are treated as recorded observations/application; absence of a record means not established.",
+    "current": "NOT_RECONFIRMED applies to every object, column, default, constraint, index, trigger, function, privilege and deployment fact. Nothing was queried in PostgreSQL for P2.",
+    "names": "Do not infer constraint names from PostgreSQL naming conventions. Omitted names require definition-based catalogue comparison.",
+    "order": "S1 is one historical input, never a current schema snapshot; ORDER is a historical candidate list, not an execution receipt."
+  },
+  "sources": {
+    "S1": {
+      "path": "database/poc-s1.sql",
+      "anchor": "CREATE TABLE core.entity (",
+      "nature": "DECLARATION_HISTORICAL_BASE"
+    },
+    "ORDER": {
+      "path": "database/f4-neon-sandbox-schema-migration-manifest.txt",
+      "anchor": "database/poc-s1.sql",
+      "nature": "HISTORICAL_ORDER_CANDIDATE_NOT_EXECUTION"
+    },
+    "Q0": {
+      "path": "docs/governance/316-pf-i02-i01-c-pacote-autorizacao-migracao-q0.md",
+      "anchor": "## SQL candidato fechado",
+      "nature": "DECLARATION"
+    },
+    "Q0_APPLIED": {
+      "path": "docs/governance/317-pf-i02-i01-c-resultado-migracao-q0-sintetica.md",
+      "anchor": "## Postflight",
+      "nature": "HISTORICAL_APPLICATION_RECORDED"
+    },
+    "RECEIPT": {
+      "path": "docs/governance/330-pf-i02-ledger-ddl-grants-consolidado.md",
+      "anchor": "## DDL candidato consolidado",
+      "nature": "DECLARATION"
+    },
+    "RECEIPT_APPLIED": {
+      "path": "docs/governance/331-pf-i02-w2-migracao-ledger-resultado.md",
+      "anchor": "CREATE TABLE exato do Documento 330",
+      "nature": "HISTORICAL_APPLICATION_RECORDED"
+    },
+    "RESPONSIBILITY": {
+      "path": "docs/governance/337-pf-i02-p2-a7-proposta-responsabilidade-schema.md",
+      "anchor": "## DDL candidato mínimo",
+      "nature": "DECLARATION"
+    },
+    "RESPONSIBILITY_APPLIED": {
+      "path": "docs/governance/338-pf-i02-p2-a9-resultado-migracao-responsabilidade.md",
+      "anchor": "## Evidência da execução conectada autorizada",
+      "nature": "HISTORICAL_APPLICATION_RECORDED"
+    },
+    "CATALOG": {
+      "path": "docs/governance/344-pf-i02-p2-g1-resultado-catalogo-readonly.md",
+      "anchor": "## Achados objetivos",
+      "nature": "HISTORICAL_CATALOG_RECORDED"
+    },
+    "TRIGGER": {
+      "path": "docs/governance/333-pf-i02-trigger-function-readonly-review.md",
+      "anchor": "SECURITY INVOKER",
+      "nature": "HISTORICAL_CATALOG_RECORDED"
+    },
+    "MAPPING": {
+      "path": "docs/governance/348-pf-i02-p2-mapeamento-django-schema.md",
+      "anchor": "## Proposta de cinco modelos",
+      "nature": "DESIGN_NOT_CURRENT_CATALOG"
+    },
+    "MODELS": {
+      "path": "applications/oes_web/evidence/models.py",
+      "anchor": "class OesEntity(models.Model):",
+      "nature": "CURRENT_OFFLINE_CODE"
+    },
+    "ORM": {
+      "path": "applications/oes_web/evidence/question_orm_q0_repository_dormant.py",
+      "anchor": "def insert_entity(self,",
+      "nature": "CURRENT_OFFLINE_CODE"
+    },
+    "D3": {
+      "path": "applications/oes_web/evidence/question_orm_q0_evidence_dormant.py",
+      "anchor": "def _collect_q0_commit_evidence",
+      "nature": "CURRENT_OFFLINE_CODE"
+    },
+    "CATALOG_CP336": {
+      "path": "archive/handoffs/oes/OES_Continuidade_2026-10-29_CP336.md",
+      "anchor": "8 FKs de saída e 1 trigger",
+      "nature": "HISTORICAL_CATALOG_RECORDED"
+    },
+    "CP348": {
+      "path": "archive/handoffs/oes/OES_Continuidade_2026-11-08_CP348.md",
+      "anchor": "42491887254",
+      "nature": "HISTORICAL_CONNECTED_TRIAL_RECORDED"
+    },
+    "CATALOG_PRE_Q0": {
+      "path": "docs/governance/315-pf-i02-i01-c-constraints-indexes-readonly.md",
+      "anchor": "## Restrições verificadas",
+      "nature": "HISTORICAL_CATALOG_BEFORE_Q0_EVOLUTION"
+    }
+  },
+  "schemas": [
+    "core",
+    "investigation"
+  ],
+  "documented_evolution": [
+    {
+      "step": "base",
+      "declared_by": "S1",
+      "order_reference": "ORDER",
+      "depends_on": [],
+      "historical": "Partial catalog facts only: CATALOG/TRIGGER/CATALOG_CP336; not proof that ORDER was fully applied."
+    },
+    {
+      "step": "q0_stage",
+      "declared_by": "Q0",
+      "depends_on": [
+        "base"
+      ],
+      "recorded_application": "Q0_APPLIED"
+    },
+    {
+      "step": "receipt",
+      "declared_by": "RECEIPT",
+      "depends_on": [
+        "q0_stage"
+      ],
+      "recorded_application": "RECEIPT_APPLIED",
+      "note": "Chronological dependency; receipt FK needs base composite unique, not the stage CHECK."
+    },
+    {
+      "step": "responsibility",
+      "declared_by": "RESPONSIBILITY",
+      "depends_on": [
+        "receipt"
+      ],
+      "recorded_application": "RESPONSIBILITY_APPLIED",
+      "note": "Recorded chronology; ALTER itself only requires base question table. No synthetic backfill."
+    }
+  ],
+  "tables": [
+    {
+      "table": "core.entity",
+      "django_model": "OesEntity",
+      "db_table": "\"core\".\"entity\"",
+      "managed": false,
+      "columns": [
+        {
+          "name": "entity_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "oes_id",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "entity_type",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "created_at",
+          "pg_type": "timestamp with time zone",
+          "nullable": false,
+          "declared_by": "S1",
+          "server_default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "retired_at",
+          "pg_type": "timestamp with time zone",
+          "nullable": true,
+          "declared_by": "S1"
+        }
+      ],
+      "primary_key": [
+        "entity_uuid"
+      ],
+      "constraints": [
+        {
+          "kind": "unique",
+          "columns": [
+            "oes_id"
+          ],
+          "declared_by": "S1",
+          "catalog_name_recorded": "entity_oes_id_key"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "length(trim(oes_id)) > 0"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "length(trim(entity_type)) > 0"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_entity_type",
+          "columns": [
+            "entity_type"
+          ],
+          "unique": false,
+          "declared_by": "S1",
+          "role": "ACCESS_PATH_NOT_ADDITIONAL_INTEGRITY"
+        }
+      ],
+      "historical_evidence": [
+        {
+          "source": "CATALOG_PRE_Q0",
+          "scope": "PK entity_uuid and oes_id unique confirmed before the Q0 evolution"
+        },
+        {
+          "source": "CATALOG",
+          "scope": "oes_id global unique; not a full column inventory"
+        },
+        {
+          "source": "CATALOG_CP336",
+          "scope": "table present; not all column/default definitions"
+        }
+      ],
+      "current_catalog": "NOT_RECONFIRMED"
+    },
+    {
+      "table": "core.entity_version",
+      "django_model": "OesEntityVersion",
+      "db_table": "\"core\".\"entity_version\"",
+      "managed": false,
+      "columns": [
+        {
+          "name": "version_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "entity_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "version_no",
+          "pg_type": "integer",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "version_status",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "valid_from",
+          "pg_type": "timestamp with time zone",
+          "nullable": false,
+          "declared_by": "S1",
+          "server_default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "valid_to",
+          "pg_type": "timestamp with time zone",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "supersedes_version_uuid",
+          "pg_type": "uuid",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "created_at",
+          "pg_type": "timestamp with time zone",
+          "nullable": false,
+          "declared_by": "S1",
+          "server_default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "change_type",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "change_note",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "S1"
+        }
+      ],
+      "primary_key": [
+        "version_uuid"
+      ],
+      "constraints": [
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "core.entity",
+            "columns": [
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "unique",
+          "columns": [
+            "entity_uuid",
+            "version_no"
+          ],
+          "declared_by": "S1"
+        },
+        {
+          "kind": "unique",
+          "columns": [
+            "version_uuid",
+            "entity_uuid"
+          ],
+          "declared_by": "S1"
+        },
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "supersedes_version_uuid",
+            "entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "core.entity_version",
+            "columns": [
+              "version_uuid",
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "version_no > 0"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "version_status IN ('draft','current','superseded','archived','invalidated')"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "valid_to IS NULL OR valid_to >= valid_from"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "S1",
+          "expression": "supersedes_version_uuid IS NULL OR supersedes_version_uuid <> version_uuid"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ux_entity_version_current",
+          "columns": [
+            "entity_uuid"
+          ],
+          "unique": true,
+          "predicate": "version_status = 'current'",
+          "declared_by": "S1",
+          "role": "AT_MOST_ONE_CURRENT"
+        },
+        {
+          "name": "ix_entity_version_entity",
+          "columns": [
+            "entity_uuid"
+          ],
+          "unique": false,
+          "declared_by": "S1",
+          "role": "ACCESS_PATH_NOT_ADDITIONAL_INTEGRITY"
+        }
+      ],
+      "historical_evidence": [
+        {
+          "source": "CATALOG_PRE_Q0",
+          "scope": "PK version_uuid, unique(entity_uuid,version_no), same-entity supersedes FK, status/version checks and partial current index"
+        },
+        {
+          "source": "CATALOG",
+          "scope": "unique(entity_uuid,version_no), partial unique current, change_type TEXT NOT NULL; not a full inventory"
+        }
+      ],
+      "current_catalog": "NOT_RECONFIRMED"
+    },
+    {
+      "table": "investigation.question",
+      "django_model": "OesQuestion",
+      "db_table": "\"investigation\".\"question\"",
+      "managed": false,
+      "columns": [
+        {
+          "name": "entity_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "responsible_actor_id",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "RESPONSIBILITY",
+          "note": "NULL denies application access; created_by and receipt.actor_id do not replace current responsibility."
+        }
+      ],
+      "primary_key": [
+        "entity_uuid"
+      ],
+      "constraints": [
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "core.entity",
+            "columns": [
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RESPONSIBILITY",
+          "expression": "responsible_actor_id IS NULL OR length(btrim(responsible_actor_id)) BETWEEN 1 AND 128",
+          "catalog_name_recorded": "ck_pf_i02_question_responsible_actor"
+        }
+      ],
+      "indexes": [],
+      "historical_evidence": [
+        {
+          "source": "RESPONSIBILITY_APPLIED",
+          "scope": "column TEXT NULL/no default and CHECK observed after exact Doc337 DDL"
+        },
+        {
+          "source": "CATALOG",
+          "scope": "responsibility column and CHECK confirmed"
+        },
+        {
+          "source": "TRIGGER",
+          "scope": "trigger function inspected historically"
+        }
+      ],
+      "current_catalog": "NOT_RECONFIRMED"
+    },
+    {
+      "table": "investigation.question_version",
+      "django_model": "OesQuestionVersion",
+      "db_table": "\"investigation\".\"question_version\"",
+      "managed": false,
+      "columns": [
+        {
+          "name": "version_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "entity_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "parent_question_entity_uuid",
+          "pg_type": "uuid",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "original_text",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "S1"
+        },
+        {
+          "name": "normalized_text",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "Q0",
+          "note": "NOT NULL in S1 was explicitly removed; CHECK controls allowed NULL."
+        },
+        {
+          "name": "preparation_stage",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "Q0",
+          "server_default": "'legacy_complete'",
+          "note": "Canonical Q0 always supplies q0_draft explicitly."
+        },
+        {
+          "name": "question_type",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "structure_type",
+          "pg_type": "text",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "context_payload",
+          "pg_type": "jsonb",
+          "nullable": true,
+          "declared_by": "S1"
+        },
+        {
+          "name": "time_horizon_payload",
+          "pg_type": "jsonb",
+          "nullable": true,
+          "declared_by": "S1"
+        }
+      ],
+      "primary_key": [
+        "version_uuid"
+      ],
+      "constraints": [
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "investigation.question",
+            "columns": [
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "parent_question_entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "investigation.question",
+            "columns": [
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "version_uuid",
+            "entity_uuid"
+          ],
+          "declared_by": "S1",
+          "references": {
+            "table": "core.entity_version",
+            "columns": [
+              "version_uuid",
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "Q0",
+          "expression": "(preparation_stage = 'q0_draft' AND normalized_text IS NULL) OR (preparation_stage IN ('q1_proposed','legacy_complete') AND normalized_text IS NOT NULL)",
+          "catalog_name_recorded": "ck_pf_i02_question_preparation_stage"
+        }
+      ],
+      "indexes": [],
+      "historical_evidence": [
+        {
+          "source": "CATALOG_PRE_Q0",
+          "scope": "PK/version-entity composite FK confirmed; normalized_text was then NOT NULL, later explicitly changed by Q0_APPLIED"
+        },
+        {
+          "source": "Q0_APPLIED",
+          "scope": "original_text NOT NULL; normalized_text nullable; stage NOT NULL/default legacy_complete and CHECK observed, with zero legacy rows"
+        },
+        {
+          "source": "CATALOG",
+          "scope": "Q0/Q1 stage and normalized_text relationship confirmed"
+        }
+      ],
+      "current_catalog": "NOT_RECONFIRMED"
+    },
+    {
+      "table": "investigation.question_command_receipt",
+      "django_model": "OesQuestionCommandReceipt",
+      "db_table": "\"investigation\".\"question_command_receipt\"",
+      "managed": false,
+      "columns": [
+        {
+          "name": "actor_id",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "request_id",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "fingerprint_sha256",
+          "pg_type": "character varying(64)",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "question_entity_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "question_id",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "resulting_version_uuid",
+          "pg_type": "uuid",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "resulting_version_no",
+          "pg_type": "integer",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "command_kind",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "RECEIPT"
+        },
+        {
+          "name": "justification",
+          "pg_type": "text",
+          "nullable": false,
+          "declared_by": "RECEIPT",
+          "server_default": "''"
+        },
+        {
+          "name": "committed_at",
+          "pg_type": "timestamp with time zone",
+          "nullable": false,
+          "declared_by": "RECEIPT",
+          "server_default": "CURRENT_TIMESTAMP",
+          "note": "Insert/transaction timestamp default, not the timestamp of COMMIT acknowledgement."
+        }
+      ],
+      "primary_key": [
+        "actor_id",
+        "request_id"
+      ],
+      "constraints": [
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "question_entity_uuid"
+          ],
+          "declared_by": "RECEIPT",
+          "references": {
+            "table": "investigation.question",
+            "columns": [
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "foreign_key",
+          "columns": [
+            "resulting_version_uuid",
+            "question_entity_uuid"
+          ],
+          "declared_by": "RECEIPT",
+          "references": {
+            "table": "core.entity_version",
+            "columns": [
+              "version_uuid",
+              "entity_uuid"
+            ]
+          }
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "length(actor_id) BETWEEN 1 AND 128"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "length(request_id) BETWEEN 1 AND 128"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "fingerprint_sha256 ~ '^[0-9a-f]{64}$'"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "resulting_version_no > 0"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "command_kind IN ('REGISTER_Q0','PROPOSE_Q1')"
+        },
+        {
+          "kind": "check",
+          "columns": [],
+          "declared_by": "RECEIPT",
+          "expression": "(command_kind='REGISTER_Q0' AND resulting_version_no=1 AND justification='') OR (command_kind='PROPOSE_Q1' AND resulting_version_no>1 AND length(trim(justification))>0)"
+        }
+      ],
+      "indexes": [],
+      "historical_evidence": [
+        {
+          "source": "RECEIPT_APPLIED",
+          "scope": "exact Doc330 CREATE recorded; 10 columns, composite PK, two FKs and checks confirmed then"
+        },
+        {
+          "source": "CATALOG",
+          "scope": "receipt checks reconfirmed historically"
+        }
+      ],
+      "current_catalog": "NOT_RECONFIRMED"
+    }
+  ],
+  "trigger_functions": [
+    {
+      "trigger": "tr_question_entity_type",
+      "table": "investigation.question",
+      "timing": "BEFORE INSERT OR UPDATE OF entity_uuid",
+      "for_each": "ROW",
+      "function": "core.assert_entity_type()",
+      "argument": "Question",
+      "declared_by": "S1",
+      "historical_evidence": [
+        {
+          "source": "TRIGGER",
+          "scope": "SECURITY INVOKER, qualified core.entity, no dynamic SQL, no function-local search_path, PUBLIC EXECUTE observed"
+        }
+      ],
+      "requires": "SELECT core.entity by invoker, USAGE and relevant function privileges; function ownership/config/definition must be checked if authorization is given.",
+      "current_catalog": "NOT_RECONFIRMED"
+    }
+  ],
+  "runtime_functions": [
+    {
+      "signature": "pg_catalog.pg_advisory_xact_lock(bigint)",
+      "purpose": "Cooperative transaction request/question locks",
+      "source": "ORM"
+    },
+    {
+      "signature": "pg_catalog.hashtextextended(text,bigint)",
+      "purpose": "Stable domains for advisory locks; collisions serialize, not authorize",
+      "source": "ORM"
+    },
+    {
+      "signature": "pg_catalog.pg_current_xact_id()",
+      "purpose": "Capture writer xid before first INSERT",
+      "source": "D3"
+    },
+    {
+      "signature": "pg_catalog.pg_xact_status(xid8)",
+      "purpose": "Status evidence/absence. Positive intact receipt need not depend on available history",
+      "source": "D3"
+    },
+    {
+      "signature": "pg_catalog.pg_current_snapshot()",
+      "purpose": "Reader snapshot evidence",
+      "source": "D3"
+    },
+    {
+      "signature": "pg_catalog.pg_is_in_recovery()",
+      "purpose": "Require primary observation",
+      "source": "D3"
+    }
+  ],
+  "orm_boundary": {
+    "models_source": "MODELS",
+    "mapping_design": "MAPPING",
+    "composite_foreign_keys": "UUID fields deliberately do not represent database-owned composite FKs in Django metadata.",
+    "schema_management": "All five models managed=False. No migrations/DDL generated from this manifest.",
+    "canonical_writes": "ORM",
+    "readback": "D3",
+    "not_needed": "No sequences for these UUID/composite keys, no sixth scientific table, view, new ledger or Q1/Q2 writer."
+  },
+  "postgresql_guarantees": [
+    "PKs and uniqueness; at most one current version, not at least one",
+    "Eight outgoing FKs including composites (identity correspondence, not receipt question_id/version_no equivalence)",
+    "Declared nullability/CHECKs and typed subtype trigger",
+    "Atomic commit/rollback and MVCC when run under the canonical owned PostgreSQL boundary"
+  ],
+  "oes_guarantees_not_added_as_database_constraints": [
+    "Authentication/permission and stable persisted actor",
+    "Current responsibility, cross-actor confidentiality and preservation of original Q0",
+    "Canonical five records: Question, initial version 1/current/initial, q0_draft and no normalized text",
+    "Receipt question_id equals entity.oes_id; resulting_version_no equals actual version; fingerprint matches complete command",
+    "Request/question cooperative lock order, same connection/atomic/trace/xid, no automatic retry",
+    "Attempt outcome distinct from observed persistence; independent snapshot integrity and conservative ABSENT/INDETERMINATE",
+    "RLS/row isolation and receipt/original immutability are not certified by managed=False or read filters"
+  ],
+  "connected_acceptance": "docs/governance/OES_Q0_OPERATIONAL_CONTRACT_P2.md#aceite-integrado"
+}
