@@ -324,9 +324,9 @@ class RestrictedTrialScopeTests(SimpleTestCase):
                 with self.assertRaises(PreparationHold):
                     repo._check_trial_binding(writer,binding)
                 trace.xid='17'
-                cursor.fetchone.return_value=('18',)
-                with self.assertRaises(PreparationHold):
-                    repo._check_trial_binding(writer,binding)
+                # Binding is checked locally; native atomic owns the transaction.
+                # No repeated xid query before each INSERT or lock.
+                cursor.execute.assert_not_called()
             with self.assertRaises(PreparationHold):
                 repo._check_trial_binding(writer,binding)
 

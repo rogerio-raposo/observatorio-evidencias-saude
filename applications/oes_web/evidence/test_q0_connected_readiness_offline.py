@@ -55,7 +55,8 @@ class ConnectedReadinessTests(SimpleTestCase):
             repository = DjangoQ0Repository._from_preflighted_writer(writer=f.writer)
         self.assertIs(type(repository), DjangoQ0Repository)
         self.assertEqual(repository.alias, "oes_q0_writer")
-        self.assertTrue(any("has_table_privilege" in sql for alias, sql in f.events))
+        # The already validated transaction binding replaces constructor SQL.
+        f.writer.cursor.assert_not_called()
         for model in f.models.values():
             model.objects.using.return_value.create.assert_not_called()
         f.atomic.assert_not_called()  # constructor does not open its own transaction

@@ -8,7 +8,7 @@ from evidence import test_q0_persistence_d3_offline as d3
 
 class PrivateProfileTests(SimpleTestCase):
     def env(self, role='A'):
-        e={'OES_MB_OC1_SECRET_KEY':'offline-test-key-'*5,'OES_MB_OC1_HOST':'oes.private.test',
+        e={'OES_MB_OC1_CONNECT_TIMEOUT_SECONDS':'3','OES_MB_OC1_STATEMENT_TIMEOUT_MS':'1000','OES_MB_OC1_LOCK_TIMEOUT_MS':'200', 'OES_MB_OC1_SECRET_KEY':'offline-test-key-'*5,'OES_MB_OC1_HOST':'oes.private.test',
            'OES_MB_OC1_ORIGIN':'https://oes.private.test','OES_MB_OC1_SESSION_SECONDS':'900',
            'OES_MB_OC1_TLS_TERMINATION':'wsgi','OES_MB_OC1_PG_HOST':'ep-wispy-dream-b6021bw0.c-2.sa-east-1.aws.neon.tech',
            'OES_MB_OC1_AUTH_PASSWORD':'offline-auth','OES_MB_OC1_READER_PASSWORD':'offline-reader'}

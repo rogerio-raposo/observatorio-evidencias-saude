@@ -22,6 +22,8 @@ def private_configuration(role, environ):
     if any(environ.get(k) not in (None, '', '0') for k in (
             'OES_PG_A4_ENABLED', 'OES_Q0_MULTI_ALIAS_ENABLED', 'OES_Q0_RECOVERY_READONLY_ENABLED')):
         raise RuntimeError('HOLD: legacy and MB-OC1 profiles cannot be combined')
+    from .q0_limits import execution_limits, limited_options
+    limits = execution_limits(environ)
     key = environ.get('OES_MB_OC1_SECRET_KEY', '')
     host = environ.get('OES_MB_OC1_HOST', '')
     origin = environ.get('OES_MB_OC1_ORIGIN', '')
@@ -51,7 +53,7 @@ def private_configuration(role, environ):
     def database(user, password, options):
         return {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'oes_sandbox',
                 'HOST': PG_HOST, 'PORT': '5432', 'USER': user, 'PASSWORD': password,
-                'OPTIONS': {'sslmode': 'require', 'options': options}, 'CONN_MAX_AGE': 0,
+                'OPTIONS': limited_options({'sslmode': 'require', 'options': options}, limits), 'CONN_MAX_AGE': 0,
                 'ATOMIC_REQUESTS': False}
     databases = {'default': database('oes_auth_trial_login', passwords[0],
                     '-c search_path=django_auth,public' + (' -c default_transaction_read_only=on' if role == 'B' else '')),

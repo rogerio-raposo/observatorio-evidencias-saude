@@ -23,6 +23,9 @@ def q0_failure_message(error):
         return Q0_MESSAGES["conflict"]
     if isinstance(error, PermissionDenied):
         return Q0_MESSAGES["unauthorized"]
+    failure = getattr(error, "q0_failure", None)
+    if isinstance(failure, dict) and failure.get("attempt_outcome") == "ROLLED_BACK":
+        return "Esta tentativa foi revertida. Preserve os identificadores; isso não confirma tentativas anteriores e não autoriza reenvio automático."
     observation = getattr(error, "q0_observation", None)
     if (isinstance(error, PreparationHold) and isinstance(observation, dict)
             and observation.get("outcome") == "ABSENT"

@@ -32,10 +32,9 @@ def _review_q0_alias_configuration(alias, config):
             or config.get("OPTIONS", {}).get("sslmode") != "require"
             or not isinstance(config.get("PASSWORD"), str) or not config["PASSWORD"]):
         raise PreparationHold("HOLD: invalid D2 database configuration")
-    if set(config.get("OPTIONS", {})) - {"sslmode", "options"}:
-        raise PreparationHold("HOLD: unsupported D2 connection options")
-    if config.get("OPTIONS", {}).get("options", "") != options[alias]:
-        raise PreparationHold("HOLD: unsupported D2 session options")
+    from config.q0_limits import review_limit_options
+    if not review_limit_options(config.get("OPTIONS", {}), options[alias]):
+        raise PreparationHold("HOLD: unsupported D2 session/limit options")
 
 
 def _review_q0_database_configuration(databases):
@@ -161,7 +160,7 @@ def _review_q0_persistence_d1(*, user, command):
     from .question_uow_offline import OfflineQuestionUnitOfWork
     from .question_orm_q0_evidence_dormant import (
         _WriterTrace, _expected_receipt, _review_q0_privileges,
-        _capture_q0_writer_transaction, _collect_q0_commit_evidence,
+        _capture_q0_writer_transaction, _collect_q0_commit_evidence, _indeterminate,
     )
 
     if (not isinstance(command, QuestionCommand)
@@ -196,26 +195,61 @@ def _review_q0_persistence_d1(*, user, command):
                     reader.close()
                     try:
                         _review_q0_session_boundary(writer=writer, reader=reader)
-                        trace.writer_privileges = _review_q0_privileges(writer)
                         _review_q0_privileges(reader)
                     finally:
                         reader.close()
-                    with transaction.atomic(using="oes_q0_writer", savepoint=False):
-                        trace.atomic_entered = True
-                        # Recheck the effective writer inside the boundary,
-                        # exactly as the rollback-only recipe does.
-                        with writer.cursor() as cursor:
-                            if postgres_session_identity(cursor) != (
-                                    "oes_qprep_login", "oes_sandbox", "off"):
-                                raise PreparationHold("HOLD: D2 writer identity mismatch")
-                        _capture_q0_writer_transaction(writer, trace)
-                        import logging
-                        logging.getLogger(__name__).info(
-                            "OES_Q0_TX xid=%s request=%s question=%s fingerprint=%s",
-                            trace.xid, command.request_id, command.question_id, fingerprint)
-                        with _bind_trial_transaction(writer, trace):
-                            yield
-                    trace.boundary = "COMMIT_ACKNOWLEDGED"
+                    def acknowledge_commit():
+                        # Django runs this first hook after commit() returned
+                        # and autocommit was restored, before later callbacks.
+                        # Their exceptions must never masquerade as COMMIT rejection.
+                        trace.boundary = "COMMIT_ACKNOWLEDGED"
+                        trace.phase = "AFTER_COMMIT"
+
+                    body_error = None
+                    try:
+                        with transaction.atomic(using="oes_q0_writer", savepoint=False):
+                            trace.atomic_entered = True
+                            trace.phase = "IN_TRANSACTION"
+                            writer.on_commit(acknowledge_commit)
+                            try:
+                                _capture_q0_writer_transaction(writer, trace)
+                                trace.writer_privileges = _review_q0_privileges(writer)
+                                import logging
+                                logging.getLogger(__name__).info(
+                                    "OES_Q0_TX xid=%s request=%s question=%s fingerprint=%s",
+                                    trace.xid, command.request_id, command.question_id, fingerprint)
+                                with _bind_trial_transaction(writer, trace):
+                                    yield
+                            except Exception as error:
+                                body_error = error
+                                raise
+                            trace.phase = "COMMITTING"
+                    except Exception as error:
+                        # Django returned from rollback, and the driver confirms
+                        # an idle usable connection. close()/timeout alone never suffice.
+                        from psycopg.pq import TransactionStatus
+                        from django.db import DatabaseError
+                        from .question_preparation import _q0_failure_evidence
+                        cause = error.__cause__ if error.__cause__ is not None else error
+                        # atomic rolls back a rejected COMMIT before reraising.
+                        # Only explicit server rejections qualify here, never a
+                        # transport error/cancellation or lost acknowledgement.
+                        commit_rejected = (trace.phase == "COMMITTING" and isinstance(error, DatabaseError)
+                            and getattr(cause, "sqlstate", None) in (
+                                "23502", "23503", "23505", "23514", "23P01", "40001", "40P01"))
+                        try:
+                            rollback_confirmed = ((body_error is error or commit_rejected) and writer.connection is not None
+                                and not writer.in_atomic_block and writer.get_autocommit() is True
+                                and writer.closed_in_transaction is False and writer.needs_rollback is False
+                                and writer.connection.info.transaction_status == TransactionStatus.IDLE)
+                        except Exception:
+                            rollback_confirmed = False
+                        if rollback_confirmed:
+                            trace.boundary = "ROLLED_BACK"
+                        trace.failure = _q0_failure_evidence(error, phase=trace.phase,
+                            boundary=trace.boundary, candidate_present=trace.candidate is not None)
+                        raise
+                    acknowledge_commit()
                 finally:
                     boundary_open = writer.in_atomic_block
                     writer.close()
@@ -231,6 +265,7 @@ def _review_q0_persistence_d1(*, user, command):
 
             def verified_readback(**candidate):
                 trace.candidate = candidate
+                trace.observation = _indeterminate()  # Never retry a failed observation.
                 trace.observation = _collect_q0_commit_evidence(
                     command=command, actor_id=actor_id, trace=trace)
                 if trace.observation.get("outcome") != "PERSISTED":
@@ -246,6 +281,12 @@ def _review_q0_persistence_d1(*, user, command):
             try:
                 result = OfflineQuestionUnitOfWork(port).execute(
                     command=command, actor_id=actor_id, fingerprint=fingerprint)
+                if trace.observation is None:  # Replay still requires independent proof.
+                    trace.observation = _indeterminate()
+                    trace.observation = _collect_q0_commit_evidence(
+                        command=command, actor_id=actor_id, trace=trace)
+                if trace.observation.get("outcome") != "PERSISTED":
+                    raise PreparationHold("HOLD: D3 persisted Q0 not independently verified")
             except Exception as exc:
                 trace.candidate = port.last_uncertain_q0
                 # UoW raises its typed conflicts before register_q0 generates
@@ -253,22 +294,23 @@ def _review_q0_persistence_d1(*, user, command):
                 # independently of whether readback of older records succeeds.
                 from .question_orm_q0_repository_dormant import _trial_scope
                 scope = _trial_scope.get()
-                if scope is not None and isinstance(exc, PreparationConflict) and trace.candidate is None:
+                if (scope is not None and isinstance(exc, PreparationConflict) and trace.candidate is None
+                        and trace.failure is not None and trace.failure["kind"] == "CONTRACT_CONFLICT"):
                     scope.conflict_before_insert = True
                 if trace.observation is None:
-                    trace.observation = _collect_q0_commit_evidence(
-                        command=command, actor_id=actor_id, trace=trace)
-                # Evidence never turns a failed service call into permission or
-                # automatic success/retry. The authenticated service sanitizes
-                # unexpected errors as before; HOLD/Conflict retain semantics.
-                if isinstance(exc, PreparationHold):
-                    exc.q0_observation = trace.observation
-                raise
-            if trace.observation is None:  # Idempotent replay, no new inserts.
-                trace.observation = _collect_q0_commit_evidence(
-                    command=command, actor_id=actor_id, trace=trace)
-            if trace.observation.get("outcome") != "PERSISTED":
-                raise PreparationHold("HOLD: D3 persisted Q0 not independently verified")
+                    try:
+                        trace.observation = _collect_q0_commit_evidence(command=command, actor_id=actor_id, trace=trace)
+                    except Exception:
+                        trace.observation = _indeterminate()
+                from .question_preparation import _q0_failure_evidence
+                failure = trace.failure or _q0_failure_evidence(exc, phase=trace.phase,
+                    boundary=trace.boundary, candidate_present=trace.candidate is not None)
+                error = exc if isinstance(exc, PreparationHold) else PreparationHold("HOLD: Q0 attempt failed; do not retry automatically")
+                if failure["attempt_outcome"] == "ROLLED_BACK" and not isinstance(error, PreparationConflict):
+                    error = PreparationHold("HOLD: Q0 attempt rolled back; no automatic retry")
+                error.q0_failure = failure
+                error.q0_observation = trace.observation
+                raise error from None
             # Only normal verified D3 completion supplies presentation evidence.
             from .question_orm_q0_repository_dormant import _trial_scope
             scope = _trial_scope.get()

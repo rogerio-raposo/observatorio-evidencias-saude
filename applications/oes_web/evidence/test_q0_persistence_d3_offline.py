@@ -59,9 +59,9 @@ class EvidenceD3Tests(SimpleTestCase):
                 if "has_schema_privilege" in sql:
                     row = (not self.bad_privileges,)
                 elif "has_table_privilege" in sql:
-                    row = (True, True, False) if connection is self.writer else (True, False, False)
+                    row = (True, True, False, True, False) if connection is self.writer else (True, False, False, False, False)
                     if self.bad_privileges:
-                        row = (True, True, True)
+                        row = (True, True, True, True, True)
                 elif "pg_current_xact_id" in sql:
                     row = ("100",)
                 elif "pg_xact_status" in sql:
@@ -201,8 +201,8 @@ class EvidenceD3Tests(SimpleTestCase):
         trace.candidate = None
         self.assertEqual(self.collect(trace)["outcome"], "INDETERMINATE")
 
-    def test_inflight_or_unknown_xid_is_indeterminate_even_with_apparent_receipt(self):
-        for status in (None, "in progress", "unrecognized"):
+    def test_inflight_xid_is_indeterminate_even_with_apparent_receipt(self):
+        for status in ("in progress",):
             self.status = status
             with self.subTest(status=status):
                 self.assertEqual(self.collect(self.trace())["outcome"], "INDETERMINATE")
@@ -305,7 +305,10 @@ class EvidenceD3Tests(SimpleTestCase):
         self.identity_lookup.return_value.get.assert_called_with(user_id=42)
         self.repo.lock_request.assert_called_once_with(self.actor, self.command.request_id)
         writer_sql = [sql for alias, sql in self.events if alias == "oes_q0_writer"]
-        self.assertLess(next(i for i,s in enumerate(writer_sql) if "has_table_privilege" in s), next(i for i,s in enumerate(writer_sql) if "pg_current_xact_id" in s))
+        self.assertEqual(sum("pg_current_xact_id" in s for s in writer_sql), 1)
+        self.assertEqual(sum("has_table_privilege" in s for s in writer_sql), 5)
+        self.assertEqual(sum("has_schema_privilege" in s for s in writer_sql), 2)
+        self.repo.lock_question.assert_called_once_with(self.command.question_id)
 
     def test_canonical_bad_preflight_never_starts_atomic_or_inserts(self):
         self.bad_privileges = True

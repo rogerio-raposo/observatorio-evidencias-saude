@@ -125,9 +125,12 @@ def _bind_trial_transaction(writer, trace):
             or scope.transaction_used or scope.binding is not None or not trace.xid or not trace.writer_privileges
             or trace.writer_identity != ("oes_qprep_login", "oes_sandbox", "off")
             or not writer.in_atomic_block or writer.get_autocommit()
-            or not writer.atomic_blocks or writer.connection is None):
+            or not writer.atomic_blocks or writer.connection is None or writer.closed_in_transaction is True or writer.needs_rollback is True):
         raise PreparationHold("HOLD: trial transaction not preflighted")
     scope.transaction_used = True
+    # Django has no public transaction-generation token. Keep this one
+    # guarded internal identity: a replacement atomic on the same connection
+    # must not inherit the binding. Native atomic forbids commit/rollback within it.
     scope.binding = (writer, writer.connection, writer.atomic_blocks[-1], trace, trace.xid)
     try:
         yield
@@ -141,15 +144,12 @@ def _check_trial_binding(writer, expected=None):
     from .question_orm_q0_evidence_dormant import _expected_receipt
     if (binding is None or (expected is not None and binding is not expected)
             or writer is not binding[0] or writer.connection is not binding[1]
-            or not writer.in_atomic_block or writer.get_autocommit()
             or not writer.atomic_blocks or writer.atomic_blocks[-1] is not binding[2]
+            or not writer.in_atomic_block or writer.get_autocommit()
+            or writer.closed_in_transaction is True or writer.needs_rollback is True
             or binding[3].xid != binding[4]
             or binding[3].expected != _expected_receipt(scope.command, scope.actor)):
         raise PreparationHold("HOLD: trial transaction binding mismatch")
-    with writer.cursor() as cursor:
-        cursor.execute("SELECT pg_current_xact_id()::text")
-        if cursor.fetchone() != (binding[4],):
-            raise PreparationHold("HOLD: trial xid mismatch")
     return binding
 
 
@@ -165,18 +165,12 @@ class DjangoQ0Repository:
         # Normal Python construction of THIS repository; no __new__, subclass,
         # attribute assignment by an executor or alternate ORM implementation.
         from django.db import connections
-        from .question_orm_transaction_offline import postgres_session_identity
-        from .question_orm_q0_evidence_dormant import _review_q0_privileges
         if (type(self) is not DjangoQ0Repository
                 or alias != "oes_q0_writer" or _writer.alias != alias
                 or _writer is not connections[alias]
                 or _writer.vendor != "postgresql" or _writer.in_atomic_block is not True
                 or _writer.get_autocommit() is not False):
             raise PreparationHold("HOLD: restricted Q0 writer boundary invalid")
-        with _writer.cursor() as cursor:
-            if postgres_session_identity(cursor) != ("oes_qprep_login", "oes_sandbox", "off"):
-                raise PreparationHold("HOLD: restricted Q0 writer identity mismatch")
-        _review_q0_privileges(_writer)
         self.alias = alias
         self._trial_binding = _check_trial_binding(_writer)
 
