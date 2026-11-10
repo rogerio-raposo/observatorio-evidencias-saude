@@ -85,6 +85,8 @@ class MetadataAttestationTests(SimpleTestCase):
         self.select = True
         self.write = False
         self.other_writes = False
+        self.column_insert = False
+        self.column_update = False
         self.function_oid = 42
         self.function_execute = True
         self.writer_function_execute = False  # not required for the reader
@@ -113,7 +115,7 @@ class MetadataAttestationTests(SimpleTestCase):
                 elif "to_regclass" in sql:
                     row = (params[0], self.select)
                 elif "has_table_privilege" in sql:
-                    row = (self.select, self.write, self.other_writes)
+                    row = (self.select, self.write, self.other_writes, self.column_insert, self.column_update)
                 elif "server_version_num" in sql:
                     row = (self.version,)
                 elif "to_regprocedure" in sql:
@@ -189,6 +191,12 @@ class MetadataAttestationTests(SimpleTestCase):
         self.assertEqual(diag.attest_metadata(), diag.PRIVILEGES)
         self.write = False
         self.other_writes = True
+        self.assertEqual(diag.attest_metadata(), diag.PRIVILEGES)
+        self.other_writes = False
+        self.column_insert = True
+        self.assertEqual(diag.attest_metadata(), diag.PRIVILEGES)
+        self.column_insert = False
+        self.column_update = True
         self.assertEqual(diag.attest_metadata(), diag.PRIVILEGES)
 
     def test_missing_function_or_reader_execute_or_old_version_rejected(self):

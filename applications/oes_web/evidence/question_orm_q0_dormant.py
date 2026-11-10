@@ -93,8 +93,9 @@ class DormantQ0OrmPort:
             if candidate is not None:
                 # Context exit may have committed despite reporting failure.
                 self.last_uncertain_q0 = dict(candidate)
+                # D1 captures phase/rollback facts before this public HOLD wrapper.
                 raise PreparationHold(
-                    "HOLD: Q0 transaction outcome uncertain; reconcile manually") from None
+                    "HOLD: Q0 transaction outcome uncertain; reconcile before any retry") from None
             raise
         # Metadata only; not evidence of a real database commit.
         if completed is not None and self.readback_verifier is not None:
@@ -123,6 +124,7 @@ class _Q0Transaction:
         self.pending = None
         self.created_q0 = None
         self.receipt_saved = False
+        self.question_locks = set()
         self.saved_receipt = None
 
     def lock_request(self, actor_id, request_id):
@@ -139,19 +141,19 @@ class _Q0Transaction:
 
     def current_question(self, question_id, actor_id, lock=False):
         self._require_lock(actor_id)
-        self.repo.lock_question(question_id)
+        self._lock_question(question_id)
         return self.repo.current_question(question_id, actor_id)
 
     def can_access_question(self, question_id, actor_id):
         self._require_lock(actor_id)
-        self.repo.lock_question(question_id)
+        self._lock_question(question_id)
         return self.repo.can_access_question(question_id, actor_id)
 
     def register_q0(self, command, actor_id):
         self._require_lock(actor_id)
         if self.pending is not None or command.expected_version != 0 or command.normalized_text is not None:
             raise PreparationHold("HOLD: invalid Q0 transition")
-        self.repo.lock_question(command.question_id)
+        self._lock_question(command.question_id)
         entity_uuid, version_uuid = uuid4(), uuid4()
         # Keep reconciliation keys BEFORE the first write: a mid-write failure
         # must not lose the UUIDs or permit reuse of this port as a fresh attempt.
@@ -185,6 +187,11 @@ class _Q0Transaction:
         self.saved_receipt = receipt
         self.receipt_saved = True
         self.pending = None
+
+    def _lock_question(self, question_id):
+        if question_id not in self.question_locks:
+            self.repo.lock_question(question_id)
+            self.question_locks.add(question_id)
 
     def _require_lock(self, actor_id):
         if self.request is None or self.request[0] != actor_id:

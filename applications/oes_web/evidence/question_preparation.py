@@ -192,3 +192,34 @@ def review_authenticated_q0_reference(*, user, request_id, question_id, fingerpr
         raise PreparationHold("HOLD: invalid Q0 fingerprint reference")
     from .question_orm_q0_evidence_dormant import _recover_q0_reference
     return _recover_q0_reference(user=user, request_id=request_id, question_id=question_id, fingerprint=fingerprint)
+
+
+def _q0_failure_evidence(error, *, phase, boundary, candidate_present):
+    """Sanitized attempt facts, not a claim that all Q0 records are absent."""
+    from django.db import DatabaseError
+    cause = error.__cause__ if isinstance(error.__cause__, BaseException) else error
+    state = getattr(cause, "sqlstate", None)
+    diag = getattr(cause, "diag", None)
+    constraint = (getattr(diag, "schema_name", None), getattr(diag, "table_name", None),
+                  getattr(diag, "constraint_name", None))
+    # Names follow the versioned DDL. Unknown/live schema differences fail closed.
+    known = {("core", "entity", "entity_oes_id_key"): "GLOBAL_IDENTIFIER",
+             ("investigation", "question_command_receipt", "question_command_receipt_pkey"): "REQUEST_KEY",
+             ("core", "entity_version", "entity_version_entity_uuid_version_no_key"): "VERSION_KEY"}
+    deterministic = isinstance(error, DatabaseError) and (state in ("23502", "23503", "23514", "22001", "22P02", "40001", "40P01", "55P03", "57014")
+                          or (state == "23505" and constraint in known))
+    if phase == "PREFLIGHT":
+        kind, attempt = "BEFORE_TRANSACTION", "NOT_STARTED"
+    elif boundary == "ROLLED_BACK":
+        kind, attempt = ("DETERMINISTIC_ROLLBACK" if deterministic else "FAILURE_ROLLED_BACK"), "ROLLED_BACK"
+    elif boundary == "COMMIT_ACKNOWLEDGED":
+        kind, attempt = "POST_COMMIT_VERIFICATION_FAILED", "COMMIT_ACKNOWLEDGED"
+    else:
+        kind, attempt = "COMMIT_OR_TRANSACTION_UNCERTAIN", "UNKNOWN"
+    if isinstance(error, PreparationConflict) and not candidate_present and phase == "IN_TRANSACTION":
+        kind = "CONTRACT_CONFLICT"
+    result = {"kind": kind, "attempt_outcome": attempt, "automatic_retry": False}
+    if deterministic and boundary == "ROLLED_BACK":
+        result["sqlstate"] = state
+        if state == "23505": result["constraint_class"] = known[constraint]
+    return result

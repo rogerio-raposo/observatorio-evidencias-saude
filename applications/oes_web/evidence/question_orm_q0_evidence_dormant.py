@@ -35,6 +35,8 @@ class _WriterTrace:
     observation: dict | None = None
     writer_identity: tuple | None = None
     writer_privileges: tuple | None = None
+    phase: str = "PREFLIGHT"
+    failure: dict | None = None
 
 
 def _expected_receipt(command, actor_id):
@@ -51,7 +53,7 @@ def _expected_receipt(command, actor_id):
 
 
 def _review_q0_privileges(connection):
-    """Query effective table rights, not settings assertions or role membership."""
+    """Query effective table/column rights, not assertions or role membership."""
     if connection.alias not in (WRITER, READER):
         raise PreparationHold("HOLD: invalid D3 privilege alias")
     observed = []
@@ -66,12 +68,14 @@ def _review_q0_privileges(connection):
             cursor.execute(
                 "SELECT has_table_privilege(current_user,%s,'SELECT'), "
                 "has_table_privilege(current_user,%s,'INSERT'), "
-                "has_table_privilege(current_user,%s,'UPDATE,DELETE,TRUNCATE')",
-                [table, table, table],
+                "has_table_privilege(current_user,%s,'UPDATE,DELETE,TRUNCATE'), "
+                "has_any_column_privilege(current_user,%s,'INSERT'), "
+                "has_any_column_privilege(current_user,%s,'UPDATE')",
+                [table, table, table, table, table],
             )
             row = cursor.fetchone()
-            expected = (True, True, False) if connection.alias == WRITER else (True, False, False)
-            if (not isinstance(row, tuple) or len(row) != 3
+            expected = (True, True, False, True, False) if connection.alias == WRITER else (True, False, False, False, False)
+            if (not isinstance(row, tuple) or len(row) != 5
                     or any(value is not wanted for value, wanted in zip(row, expected))):
                 raise PreparationHold("HOLD: D3 effective privileges mismatch")
             observed.append((table, row))
@@ -106,7 +110,8 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
     Receipt UUIDs recover the five records without process memory. ABSENT needs
     this attempt's server-observed xid, an ABORTED status and all residual probes;
     after loss of the trace an absent receipt always remains INDETERMINATE.
-    Reader failures/unsupported xid history/close failure never produce success.
+    Reader/snapshot/close failures never produce success; positive receipt proof
+    does not require available xid history.
     """
     from .question_orm_q0_connected_recipe_dormant import (
         _review_q0_reader_configuration, _classify_q0_commit_observation,
@@ -135,12 +140,14 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
         status = None
         if trace is not None and trace.xid is not None:
             with reader.cursor() as cursor:
-                cursor.execute("SELECT pg_xact_status(%s::xid8)", [trace.xid])
-                row = cursor.fetchone()
-                status = row[0] if isinstance(row, tuple) and len(row) == 1 else None
-            if status not in ("committed", "aborted"):
-                raise PreparationHold("HOLD: D3 server outcome unavailable")
-            if status == "aborted" and trace.boundary == "COMMIT_ACKNOWLEDGED":
+                try:
+                    cursor.execute("SELECT pg_xact_status(%s::xid8)", [trace.xid])
+                    row = cursor.fetchone()
+                    status = row[0] if isinstance(row, tuple) and len(row) == 1 else None
+                except Exception:
+                    status = None  # MVCC receipt proof does not depend on xid history.
+            if ((status in ("aborted", "in progress") and trace.boundary == "COMMIT_ACKNOWLEDGED")
+                    or (status in ("committed", "in progress") and trace.boundary == "ROLLED_BACK")):
                 raise PreparationHold("HOLD: D3 contradictory commit evidence")
         with transaction.atomic(using=READER, savepoint=False):
             with reader.cursor() as cursor:
@@ -172,8 +179,9 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
                     raise PreparationHold("HOLD: D3 receipt lookup identity mismatch")
                 if receipt.fingerprint != expected.fingerprint:
                     raise PreparationConflict("HOLD: request fingerprint conflict")
-                if status == "aborted":
-                    raise PreparationHold("HOLD: D3 receipt contradicts aborted attempt")
+                if (trace is not None and trace.candidate is not None
+                        and (trace.boundary == "ROLLED_BACK" or status in ("aborted", "in progress"))):
+                    raise PreparationHold("HOLD: D3 receipt contradicts current candidate outcome")
                 if (receipt != expected or type(receipt.version) is not int
                         or type(record.question_entity_uuid) is not UUID
                         or type(record.resulting_version_uuid) is not UUID
@@ -198,9 +206,10 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
                     _snapshot_reader=reader,
                 )
                 result = _classify_q0_commit_observation(expected_receipt=expected,
-                    observed_receipt=receipt, boundary=trace.boundary if trace is not None else "UNKNOWN",
+                    observed_receipt=receipt, boundary="UNKNOWN",
                     writer_finished=True,
                     consistent_read=True, readback_verified=True)
+                result["receipt_association"] = "CURRENT_CANDIDATE" if trace is not None and trace.candidate is not None else "EXISTING_OR_UNATTRIBUTED"
                 result["entity_uuid"] = str(record.question_entity_uuid)
                 result["version_uuid"] = str(record.resulting_version_uuid)
             elif status == "aborted" and trace is not None and isinstance(trace.candidate, dict):
