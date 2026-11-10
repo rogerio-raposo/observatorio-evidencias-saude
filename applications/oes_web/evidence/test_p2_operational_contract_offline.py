@@ -105,15 +105,14 @@ class P2OperationalContractTests(SimpleTestCase):
 
     def test_document_profile_matrix_matches_existing_configuration(self):
         rows = matrix_rows("q0-profile-matrix")
-        for profile in ("A", "B"):
-            expected = {alias: (role, mode) for p, alias, role, mode in rows if p == profile}
-            configuration = private_configuration(profile, mb_fixture.PrivateProfileTests().env(profile))
-            self.assertEqual(set(configuration["DATABASES"]), set(expected))
-            for alias, database in configuration["DATABASES"].items():
-                role, mode = expected[alias]
-                self.assertEqual(database["USER"], role)
-                self.assertEqual("default_transaction_read_only=on" in database["OPTIONS"]["options"], mode == "READ_ONLY")
-        self.assertNotIn("oes_q0_writer", {alias for p, alias, _, _ in rows if p == "B"})
+        expected = {alias: (role, mode) for profile, alias, role, mode in rows if profile == "APP"}
+        configuration = private_configuration(mb_fixture.PrivateProfileTests().env())
+        self.assertEqual(set(configuration["DATABASES"]), set(expected))
+        for alias, database in configuration["DATABASES"].items():
+            role, mode = expected[alias]
+            self.assertEqual(database["USER"], role)
+            self.assertEqual("default_transaction_read_only=on" in database["OPTIONS"]["options"], mode == "READ_ONLY")
+
 
     def test_document_acl_matrix_matches_single_p1_verifier(self):
         self.assertEqual(set(TABLES), {t["table"] for t in self.contract["tables"]})
