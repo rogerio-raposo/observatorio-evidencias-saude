@@ -1,0 +1,9 @@
+{
+  "name": "OES offline preparation",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "hostRequirements": {"cpus": 2},
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/applications/oes_web",
+  "portsAttributes": {"8000": {"label": "OES private manual WSGI", "onAutoForward": "ignore"}},
+  "otherPortsAttributes": {"onAutoForward": "ignore"},
+  "customizations": {"vscode": {"settings": {"remote.autoForwardPorts": false}}}
+}
