@@ -72,7 +72,7 @@ def _first_trial_scope(*, sha, user, command):
 def _require_q0_application_write_activation():
     """F1 offline only: no env, caller token or HTTP route can activate this."""
     from config.mb_oc1 import require_mb_oc1
-    require_mb_oc1("A")
+    require_mb_oc1()
 
 
 @contextmanager

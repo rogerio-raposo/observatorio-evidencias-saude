@@ -259,10 +259,10 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
 
 
 def _require_q0_application_recovery_activation():
-    """Independent F1 READ ONLY gate; never establishes a writer scope."""
+    """Application release for scientific READ ONLY recovery; no writer scope."""
     from config.mb_oc1 import require_mb_oc1
     try:
-        require_mb_oc1("B")
+        require_mb_oc1()
     except PreparationHold:
         raise PreparationHold("HOLD: Q0 application read-only recovery not authorized") from None
 
@@ -272,28 +272,21 @@ def _require_q0_read_recovery_source_activation(*, user=None, command=None):
     _require_q0_application_recovery_activation()
     from .question_preparation import validate_register_q0
     from .question_orm_q0_connected_recipe_dormant import _review_q0_reader_configuration
-    from scripts.q0_django_readonly_attestation import _session
     from .preparation_auth import require_question_preparer
     require_question_preparer(user)
     if command is not None:
         validate_register_q0(command)
-    if set(connections.databases) != {"default", READER}:
-        raise PreparationHold("HOLD: recovery requires writer-free profile")
+    # Auth/session is native on default, possibly read-write. Scientific
+    # recovery reviews ONLY the reader; a configured or failed writer must
+    # never be opened, inspected or reused here.
     _review_q0_reader_configuration(connections.databases)
-    auth = connections["default"]
-    if auth.in_atomic_block:
-        raise PreparationHold("HOLD: recovery auth transaction unavailable")
-    try:
-        _session(auth, "oes_auth_trial_login")
-    finally:
-        auth.close()
 
 
 def _recover_q0_commit_evidence(*, user, command):
     """Independent application reader recovery, including process loss.
 
     No operational injection, alternate constructor or caller-provided trace.
-    This reader path requires the separate MB-OC1 reader role and release.
+    This path requires application release; its scientific reader remains separate.
     """
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id

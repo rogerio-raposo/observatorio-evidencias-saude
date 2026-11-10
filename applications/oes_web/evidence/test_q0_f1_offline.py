@@ -130,16 +130,13 @@ class Q0F1Tests(SimpleTestCase):
 
     def test_read_recovery_scoped_to_actor_no_writer_and_inconclusive_on_foreign_receipt(self):
         self.enterContext(patch(E+'_require_q0_application_recovery_activation'))
-        self.f.configs.pop('oes_q0_writer')
-        self.f.configs['default']['OPTIONS']['options']='-c search_path=django_auth,public -c default_transaction_read_only=on'
-        auth=SimpleNamespace(in_atomic_block=False,close=lambda:None)
-        mapping={'default':auth,'oes_synthetic_reader':self.f.reader}
-        self.f.connections.__getitem__.side_effect=mapping.__getitem__
-        with patch('scripts.q0_django_readonly_attestation._session') as session:
-            self.assertEqual(prepare_q0_recovery(user=self.f.user,data=self.data)[0],200)
-            self.f.record.actor_id='oes:actor:someone-else'
-            self.assertEqual(prepare_q0_recovery(user=self.f.user,data=self.data)[0],503)
-            session.assert_called_with(auth,'oes_auth_trial_login')
+        def only_reader(alias):
+            self.assertEqual(alias,'oes_synthetic_reader')
+            return self.f.reader
+        self.f.connections.__getitem__.side_effect=only_reader
+        self.assertEqual(prepare_q0_recovery(user=self.f.user,data=self.data)[0],200)
+        self.f.record.actor_id='oes:actor:someone-else'
+        self.assertEqual(prepare_q0_recovery(user=self.f.user,data=self.data)[0],503)
         self.f.writer.cursor.assert_not_called()
         self.f.lookup_receipt.assert_called_with(actor_id=self.f.actor,request_id=self.data['request_id'])
         self.assertIsNone(repo._trial_scope.get())

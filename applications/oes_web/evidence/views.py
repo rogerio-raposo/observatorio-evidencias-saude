@@ -57,7 +57,7 @@ def q0_registration(request):
         from config.mb_oc1 import require_mb_oc1
         from .question_preparation import PreparationHold
         try:
-            require_mb_oc1("A")
+            require_mb_oc1()
         except PreparationHold:
             return HttpResponse("HOLD: registro Q0 bloqueado.", status=423)
         if request.method == "POST":
@@ -173,7 +173,7 @@ class MBLoginView(LoginView):
         from .question_preparation import PreparationHold
         from django.http import HttpResponse
         try:
-            require_mb_oc1("A")
+            require_mb_oc1()
         except PreparationHold:
             return HttpResponse("HOLD: autenticação operacional bloqueada.", status=423)
         return super().dispatch(request, *args, **kwargs)
@@ -185,7 +185,7 @@ class MBLogoutView(LogoutView):
         from .question_preparation import PreparationHold
         from django.http import HttpResponse
         try:
-            require_mb_oc1("A")
+            require_mb_oc1()
         except PreparationHold:
             return HttpResponse("HOLD: autenticação operacional bloqueada.", status=423)
         return super().dispatch(request, *args, **kwargs)
@@ -198,7 +198,7 @@ def q0_reference(request):
     from config.mb_oc1 import require_mb_oc1
     from .question_preparation import PreparationHold
     try:
-        require_mb_oc1("B")
+        require_mb_oc1()
     except PreparationHold:
         return HttpResponse("HOLD: consulta Q0 operacional bloqueada.", status=423)
     from .forms import prepare_q0_reference, Q0ReferenceForm

@@ -335,20 +335,15 @@ class P1EvidenceTests(SimpleTestCase):
 
 
 class P1LimitsTests(SimpleTestCase):
-    def test_private_profiles_and_existing_validators_agree_without_connection(self):
-        for role in ("A", "B"):
-            env = mb.PrivateProfileTests().env(role)
-            config = private_configuration(role, env)
-            with patch("django.db.connections") as connections:
-                if role == "A":
-                    _review_q0_database_configuration(config["DATABASES"])
-                else:
-                    _review_q0_reader_configuration(config["DATABASES"])
-                    self.assertEqual(set(config["DATABASES"]), {"default", "oes_synthetic_reader"})
-                connections.__getitem__.assert_not_called()
-            for database in config["DATABASES"].values():
-                self.assertEqual(database["OPTIONS"]["connect_timeout"], 3)
-                self.assertIn("statement_timeout=1000 -c lock_timeout=200", database["OPTIONS"]["options"])
+    def test_private_application_and_existing_validators_agree_without_connection(self):
+        config = private_configuration(mb.PrivateProfileTests().env())
+        with patch("django.db.connections") as connections:
+            _review_q0_database_configuration(config["DATABASES"])
+            _review_q0_reader_configuration(config["DATABASES"])
+            connections.__getitem__.assert_not_called()
+        for database in config["DATABASES"].values():
+            self.assertEqual(database["OPTIONS"]["connect_timeout"], 3)
+            self.assertIn("statement_timeout=1000 -c lock_timeout=200", database["OPTIONS"]["options"])
 
     def test_limits_are_explicit_finite_ordered_and_have_no_operational_defaults(self):
         env = mb.PrivateProfileTests().env()
