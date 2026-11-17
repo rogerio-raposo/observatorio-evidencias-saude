@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "base_sha": "174872af652ff1d98833e7d3fe1aef15e5696e53",
+  "delivery_branch": "evidence/oes-codespaces-https",
+  "classification": "PARTIAL_INCONCLUSIVE_INGRESS_NOT_ACCEPTED",
+  "provenance": {
+    "executor": "automated_terminal_observation",
+    "manual_observations_received": false
+  },
+  "server": {
+    "python_version": "3.12.11",
+    "standard_library_only": true,
+    "bind": "127.0.0.1",
+    "port": 8000,
+    "max_seconds": 300,
+    "automatic_restart": false,
+    "clean_environment": true,
+    "access_logs_disabled": true,
+    "started": true,
+    "timeout_exit_code": 124,
+    "listener_absent_after_exit": true
+  },
+  "local_test": {
+    "status": "OBSERVED",
+    "probe_marker_present": true,
+    "received_headers": {
+      "Host": [
+        "oes-probe.invalid"
+      ],
+      "X-Forwarded-Proto": [
+        "http"
+      ],
+      "X-Forwarded-Host": [
+        "oes-probe.invalid"
+      ],
+      "Forwarded": [
+        "proto=http;host=oes-probe.invalid"
+      ]
+    },
+    "scope": "loopback_only_not_external_ingress"
+  },
+  "unauthenticated_https": {
+    "status": "OBSERVED",
+    "address_source": "platform_variables_not_manually_confirmed",
+    "curl_exit": 0,
+    "http_status": 404,
+    "probe_marker_present": false,
+    "redirects_followed": false,
+    "credentials_supplied": false,
+    "tls_verification_disabled": false,
+    "stderr_present": false,
+    "interpretation": "does_not_distinguish_authorization_barrier_from_unavailable_forwarding"
+  },
+  "manual_checks": {
+    "private_visibility": "UNCONFIRMED",
+    "actual_url_confirmed_in_ports": "UNCONFIRMED",
+    "authenticated_https_probe": "UNCONFIRMED",
+    "browser_without_github_session": "UNCONFIRMED",
+    "forwarding_created": "UNCONFIRMED",
+    "forwarding_removal": "REQUESTED_UNCONFIRMED"
+  },
+  "ingress_header_checks": {
+    "Host": "NOT_OBSERVED",
+    "X-Forwarded-Proto": "NOT_OBSERVED",
+    "X-Forwarded-Host": "NOT_OBSERVED",
+    "Forwarded": "NOT_OBSERVED"
+  },
+  "inconclusive_properties": [
+    "private_ingress",
+    "proxy_identity",
+    "client_header_removal_or_overwrite",
+    "trusted_https_scheme",
+    "direct_access_prevention"
+  ],
+  "stop": {
+    "reason": "300_second_limit_reached_without_manual_results",
+    "operational_promotion_allowed": false,
+    "automatic_restart_allowed": false
+  },
+  "preserved": {
+    "CP348": "CURRENT_HISTORICAL_CHECKPOINT",
+    "Marco B": "OPEN",
+    "Q0": "HARD HOLD",
+    "Q1 conectado": "HOLD",
+    "E9": "NO-GO",
+    "Fase 5": "NOT_STARTED",
+    "P1_D3": "UNCHANGED"
+  },
+  "excluded_actions": [
+    "django",
+    "gunicorn",
+    "postgresql",
+    "sql",
+    "secret_registration",
+    "application_changes",
+    "gate_changes",
+    "main_changes",
+    "pull_request",
+    "merge"
+  ],
+  "sanitization": {
+    "private_urls_included": false,
+    "codespace_identifiers_included": false,
+    "credentials_included": false,
+    "session_identifiers_included": false,
+    "full_authenticated_logs_included": false
+  }
+}
