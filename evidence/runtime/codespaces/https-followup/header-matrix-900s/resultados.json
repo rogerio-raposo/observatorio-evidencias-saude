@@ -1,0 +1,515 @@
+{
+  "schema_version": 1,
+  "diagnostic": "oes-https-header-matrix-900s",
+  "base_main_sha": "174872af652ff1d98833e7d3fe1aef15e5696e53",
+  "delivery_branch": "evidence/oes-codespaces-https-followup",
+  "parent_commit": "240209658390cfecbe543023ca71b3f8cd3903a7",
+  "classification": "MATRIX_COMPLETED_FAVORABLE_OBSERVED_NORMALIZATION_NOT_UNIVERSAL_PROXY_PROOF",
+  "freshness_gate": {
+    "provenance": "executor_git_observation",
+    "local_head_equals_evidence_remote": true,
+    "main_remote_equals_approved_base": true,
+    "unexpected_tracked_changes_before_trial": false,
+    "initial_untracked_file": "oes_https_probe.js"
+  },
+  "preparation": {
+    "contract_p2_consulted": true,
+    "previous_point_trial_report_consulted": true,
+    "port_free_before_start": true,
+    "matrix_script_prepared_before_server": true,
+    "matrix_syntax_check": "node --check PASS without execution",
+    "scripts_not_tracked": true,
+    "scripts_sha256": {
+      "oes_https_probe.js": "0bc215c276b2933bef94a12d6b95e3737ad4a544fdd6fa9f2ae0e3e6e20d8af0",
+      "oes_https_headers_probe.js": "ede50a557bbeec7c616dcfcf9ca2a1515535ee81126959dabef714cf3843e4a2"
+    }
+  },
+  "server": {
+    "provenance": "executor_terminal_observation",
+    "same_standard_library_collector": true,
+    "clean_environment": true,
+    "bind": "127.0.0.1",
+    "port": 8000,
+    "external_timeout_seconds": 900,
+    "automatic_restart": false,
+    "start_command_utc": "2026-11-17T19:27:40Z",
+    "exact_bind_time_measured": false,
+    "local_validation": {
+      "utc": "2026-11-17T19:27:51.364253+00:00",
+      "http_status": 200,
+      "marker_confirmed": true
+    },
+    "access_logs_disabled": true,
+    "still_listening_observation_utc": "2026-11-17T19:41:51Z",
+    "termination": "SIGTERM_AFTER_COMPLETE_MATRIX_RECEIVED",
+    "process_exit_code": 143,
+    "listener_absence_confirmed_utc": "2026-11-17T19:42:03Z"
+  },
+  "stage_a": {
+    "provenance": "responsible_statement_and_submitted_sanitized_output",
+    "visual_marker_confirmed_by_responsible": true,
+    "output": {
+      "diagnostic": "oes-https-single-probe",
+      "startedAtUtc": "2026-11-17T19:34:17.518Z",
+      "responseReceivedAtUtc": "2026-11-17T19:34:18.733Z",
+      "finishedAtUtc": "2026-11-17T19:34:18.735Z",
+      "durationMs": 1217,
+      "httpStatus": 200,
+      "markerConfirmed": true,
+      "outcome": "COLLECTOR_MARKER_CONFIRMED"
+    },
+    "positive_result_received_before_matrix_requested": true,
+    "identical_json_resubmission_counted_as_new_trial": false
+  },
+  "stage_b": {
+    "provenance": "responsible_submitted_sanitized_javascript_output",
+    "output": {
+      "diagnostic": "oes-https-header-matrix-900s",
+      "startedAtUtc": "2026-11-17T19:37:06.497Z",
+      "finishedAtUtc": "2026-11-17T19:37:11.582Z",
+      "plannedCases": 14,
+      "completed": true,
+      "receivedRepresentation": "occurrences_then_comma_components_trimmed",
+      "physicalDuplicateRequestFieldsTested": false,
+      "results": [
+        {
+          "case": "baseline",
+          "startedAtUtc": "2026-11-17T19:37:06.497Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:07.167Z",
+          "finishedAtUtc": "2026-11-17T19:37:07.169Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {},
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Proto/a",
+          "startedAtUtc": "2026-11-17T19:37:07.169Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:07.737Z",
+          "finishedAtUtc": "2026-11-17T19:37:07.739Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Proto": "http"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Proto/b",
+          "startedAtUtc": "2026-11-17T19:37:07.739Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:08.302Z",
+          "finishedAtUtc": "2026-11-17T19:37:08.303Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Proto": "https"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Proto/lista-ab",
+          "startedAtUtc": "2026-11-17T19:37:08.303Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:08.518Z",
+          "finishedAtUtc": "2026-11-17T19:37:08.519Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Proto": "http, https"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Proto/lista-ba",
+          "startedAtUtc": "2026-11-17T19:37:08.519Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:08.805Z",
+          "finishedAtUtc": "2026-11-17T19:37:08.806Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Proto": "https, http"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Host/a",
+          "startedAtUtc": "2026-11-17T19:37:08.806Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:09.327Z",
+          "finishedAtUtc": "2026-11-17T19:37:09.327Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Host": "oes-probe.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Host/b",
+          "startedAtUtc": "2026-11-17T19:37:09.327Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:09.611Z",
+          "finishedAtUtc": "2026-11-17T19:37:09.611Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Host": "oes-alt.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Host/lista-ab",
+          "startedAtUtc": "2026-11-17T19:37:09.611Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:09.821Z",
+          "finishedAtUtc": "2026-11-17T19:37:09.823Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Host": "oes-probe.invalid, oes-alt.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "X-Forwarded-Host/lista-ba",
+          "startedAtUtc": "2026-11-17T19:37:09.823Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:10.044Z",
+          "finishedAtUtc": "2026-11-17T19:37:10.046Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Host": "oes-alt.invalid, oes-probe.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "Forwarded/a",
+          "startedAtUtc": "2026-11-17T19:37:10.046Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:10.509Z",
+          "finishedAtUtc": "2026-11-17T19:37:10.511Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "Forwarded": "proto=http;host=oes-probe.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "Forwarded/b",
+          "startedAtUtc": "2026-11-17T19:37:10.511Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:10.729Z",
+          "finishedAtUtc": "2026-11-17T19:37:10.732Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "Forwarded": "proto=https;host=oes-alt.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "Forwarded/lista-ab",
+          "startedAtUtc": "2026-11-17T19:37:10.732Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:11.015Z",
+          "finishedAtUtc": "2026-11-17T19:37:11.016Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "Forwarded": "proto=http;host=oes-probe.invalid, proto=https;host=oes-alt.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "Forwarded/lista-ba",
+          "startedAtUtc": "2026-11-17T19:37:11.017Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:11.298Z",
+          "finishedAtUtc": "2026-11-17T19:37:11.299Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "Forwarded": "proto=https;host=oes-alt.invalid, proto=http;host=oes-probe.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        },
+        {
+          "case": "combinado",
+          "startedAtUtc": "2026-11-17T19:37:11.299Z",
+          "responseReceivedAtUtc": "2026-11-17T19:37:11.581Z",
+          "finishedAtUtc": "2026-11-17T19:37:11.582Z",
+          "status": 200,
+          "markerConfirmed": true,
+          "requestedSyntheticHeaders": {
+            "X-Forwarded-Proto": "http",
+            "X-Forwarded-Host": "oes-probe.invalid",
+            "Forwarded": "proto=http;host=oes-probe.invalid"
+          },
+          "received": {
+            "X-Forwarded-Proto": [
+              [
+                "https"
+              ]
+            ],
+            "X-Forwarded-Host": [
+              [
+                "[REDACTED]"
+              ]
+            ],
+            "Forwarded": []
+          },
+          "hostMatchesOrigin": false,
+          "stop": null
+        }
+      ]
+    },
+    "browser_reported_elapsed_ms": 5085,
+    "http_200_cases": 14,
+    "marker_confirmed_cases": 14,
+    "partial_execution": false,
+    "stop_conditions_reported": []
+  },
+  "observations": {
+    "all_received_x_forwarded_proto": [
+      [
+        "https"
+      ]
+    ],
+    "all_received_x_forwarded_host": [
+      [
+        "[REDACTED]"
+      ]
+    ],
+    "all_received_forwarded": [],
+    "host_matches_origin_true_cases": 0,
+    "host_matches_origin_false_cases": 14,
+    "received_representation": "outer array: get_all occurrences; inner array: trimmed comma components",
+    "redacted_values_can_be_compared_for_identity": false
+  },
+  "inferences": {
+    "x_forwarded_proto": "compatible_with_effective_normalization_to_https_on_tested_browser_to_collector_path",
+    "x_forwarded_host": "requested_synthetic_values_not_observed_at_collector; actual received value redacted",
+    "forwarded": "absent_at_collector_even_when_requested_by_javascript",
+    "host": "collector Host differs from browser location.host; actual Host not disclosed; cause not determined"
+  },
+  "not_proven": [
+    "actual_on_wire_transmission_of_requested_headers",
+    "which_hop_removed_or_replaced_values",
+    "universal_proxy_policy",
+    "physical_duplicate_request_header_handling",
+    "full_raw_whitespace_or_comma_format",
+    "identity_or_equality_of_redacted_hosts",
+    "direct_access_prevention",
+    "unauthorized_access_prevention_in_this_trial",
+    "independent_browser_clock_synchronization",
+    "complete_P2_operational_acceptance"
+  ],
+  "closure": {
+    "server_stopped": true,
+    "listener_absent": true,
+    "forwarding": "PRESERVED_PER_RESPONSIBLE_STANDING_DECISION",
+    "private_visibility": "RESPONSIBLE_CONFIRMED_AUTHORIZATION_NO_EXECUTOR_UI_INSPECTION",
+    "visibility_changed_by_executor": false,
+    "restart_performed": false
+  },
+  "authorization_limits": {
+    "trusted_proxy_enabled": false,
+    "SECURE_PROXY_SSL_HEADER_changed": false,
+    "django_or_gunicorn_started": false,
+    "postgresql_or_neon_accessed": false,
+    "sql_executed": false
+  },
+  "sanitization": {
+    "private_urls_included": false,
+    "codespace_identifiers_included": false,
+    "credentials_included": false,
+    "cookies_or_tokens_included": false,
+    "authenticated_raw_logs_included": false,
+    "scripts_read_session_data": false,
+    "normal_browser_same_origin_authentication_used": true
+  },
+  "preserved": {
+    "CP348": "CURRENT_HISTORICAL_CHECKPOINT",
+    "Marco B": "OPEN",
+    "Q0": "HARD HOLD",
+    "Q1 conectado": "HOLD",
+    "E9": "NO-GO",
+    "Fase 5": "NOT_STARTED",
+    "P1_D3": "UNCHANGED"
+  }
+}
