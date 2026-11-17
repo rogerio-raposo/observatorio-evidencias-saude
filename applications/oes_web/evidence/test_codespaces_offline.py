@@ -53,3 +53,180 @@ class CodespacesPreparationTests(SimpleTestCase):
         lines=(ROOT/'applications/oes_web/requirements.txt').read_text().splitlines()
         for requirement in ('Django>=5.2,<5.3','psycopg[binary]>=3.2,<4','gunicorn>=23,<24'):
             self.assertIn(requirement,lines)
+
+
+class HttpsHostCsrfTests(SimpleTestCase):
+    """Consumer-side HTTP contract in memory; never attests proxy provenance.
+
+    Reuse the private builder, native middleware and actual held routes.
+    DATABASES isn't installed: any unexpected DB access fails SimpleTestCase.
+    """
+    def setUp(self):
+        from config.mb_oc1 import private_configuration
+        self.environment = fixture.PrivateProfileTests().env()
+        self.environment['OES_MB_OC1_TLS_TERMINATION'] = 'trusted_proxy'
+        self.configuration = private_configuration(self.environment)
+        http = {k: v for k, v in self.configuration.items() if k not in ('DATABASES', 'LOGGING')}
+        self.enterContext(self.settings(**http))
+        self.host = self.environment['OES_MB_OC1_HOST']
+        self.origin = self.environment['OES_MB_OC1_ORIGIN']
+
+    def request(self, *, host=None, secure=False, proto=None, **headers):
+        from django.test import RequestFactory
+        if proto is not None:
+            headers['HTTP_X_FORWARDED_PROTO'] = proto
+        return RequestFactory().get('/questions/q0/review/?view=synthetic',
+            secure=secure, HTTP_HOST=host or self.host, **headers)
+
+    def csrf_client(self):
+        from django.conf import settings
+        from django.http import HttpResponse
+        from django.middleware.csrf import CsrfViewMiddleware, get_token
+        from django.test import Client
+        request = self.request(proto='https')
+        token = get_token(request)
+        response = CsrfViewMiddleware(lambda request: HttpResponse()).process_response(request, HttpResponse())
+        client = Client(enforce_csrf_checks=True, HTTP_HOST=self.host)
+        client.cookies[settings.CSRF_COOKIE_NAME] = response.cookies[settings.CSRF_COOKIE_NAME].value
+        return client, token, response
+
+    def test_proxy_selection_is_explicit_and_does_not_enable_release(self):
+        from config.mb_oc1 import private_configuration, _require_release
+        from evidence.question_preparation import PreparationHold
+        for mode, expected in (('wsgi', None), ('trusted_proxy', ('HTTP_X_FORWARDED_PROTO', 'https'))):
+            c = private_configuration({**self.environment, 'OES_MB_OC1_TLS_TERMINATION': mode})
+            self.assertEqual(c['SECURE_PROXY_SSL_HEADER'], expected)
+            with self.settings(SECURE_PROXY_SSL_HEADER=expected), self.assertRaises(PreparationHold):
+                _require_release()
+        for mode in ('', 'automatic', '*'):
+            with self.assertRaises(RuntimeError):
+                private_configuration({**self.environment, 'OES_MB_OC1_TLS_TERMINATION': mode})
+
+    def test_is_secure_uses_first_stripped_component_or_wsgi_fallback(self):
+        # A header overrides WSGI when configured, even if the peer is untrusted.
+        for secure, proto, expected in (
+                (False, None, False), (True, None, True),
+                (False, 'https', True), (False, 'http', False),
+                (True, 'http', False), (True, '', False),
+                (False, 'https,http', True), (False, ' http , https ', False),
+                (False, ' https , http ', True), (False, 'HTTPS', False)):
+            with self.subTest(wsgi_secure=secure, proto=proto):
+                self.assertEqual(self.request(secure=secure, proto=proto).is_secure(), expected)
+        with self.settings(SECURE_PROXY_SSL_HEADER=None):
+            self.assertFalse(self.request(proto='https').is_secure())
+            self.assertTrue(self.request(secure=True, proto='http').is_secure())
+
+    def test_forwarded_scheme_has_no_native_peer_authentication(self):
+        for peer in ('127.0.0.1', '203.0.113.10'):
+            self.assertTrue(self.request(proto='https', REMOTE_ADDR=peer).is_secure())
+        # This deliberately demonstrates why offline acceptance isn't ingress sanitization.
+
+    def test_http_redirect_preserves_nominal_authority_then_stops_when_secure(self):
+        from django.test import Client
+        client = Client(enforce_csrf_checks=True, HTTP_HOST=self.host)
+        path = '/accounts/login/?next=%2Fquestions%2Fq0%2Fregister%2F'
+        for proto in (None, 'http', 'http,https'):
+            headers = {'HTTP_X_FORWARDED_HOST': 'unexpected.invalid', 'HTTP_X_FORWARDED_PORT': '9999'}
+            if proto is not None:
+                headers['HTTP_X_FORWARDED_PROTO'] = proto
+            response = client.get(path, **headers)
+            self.assertEqual(response.status_code, 301)
+            self.assertEqual(response['Location'], self.origin + path)
+            # Model the next original HTTPS request; backend transport remains HTTP.
+            final = client.get(path, HTTP_X_FORWARDED_PROTO='https')
+            self.assertEqual(final.status_code, 423)
+            self.assertNotIn('Location', final)
+        # Missing/wrong forwarded scheme at an HTTPS ingress would redirect again.
+        self.assertEqual(client.get(path, HTTP_X_FORWARDED_PROTO='http').status_code, 301)
+
+    def test_nominal_host_and_absolute_urls_ignore_forwarded_host_and_port(self):
+        from django.conf import settings
+        self.assertFalse(settings.USE_X_FORWARDED_HOST)
+        self.assertFalse(settings.USE_X_FORWARDED_PORT)
+        self.assertEqual(settings.ALLOWED_HOSTS, [self.host])
+        self.assertEqual(settings.CSRF_TRUSTED_ORIGINS, [self.origin])
+        for authority in (self.host, self.host.upper() + ':443', self.host + '.'):
+            with self.subTest(authority=authority):
+                r = self.request(host=authority, proto='https',
+                    HTTP_X_FORWARDED_HOST='unexpected.invalid', HTTP_X_FORWARDED_PORT='9999')
+                self.assertEqual(r.get_host(), authority)  # Native validation preserves representation.
+                self.assertEqual(r.build_absolute_uri(), 'https://' + authority + r.get_full_path())
+                self.assertEqual(r.get_port(), '80')  # Backend SERVER_PORT, not X-Forwarded-Port.
+
+    def test_unexpected_host_is_rejected_even_if_forwarded_host_is_approved(self):
+        from django.core.exceptions import DisallowedHost
+        from django.test import Client
+        for authority in ('unexpected.invalid', self.host + '.unexpected.invalid', self.host + ',unexpected.invalid'):
+            with self.subTest(authority=authority):
+                r = self.request(host=authority, proto='https', HTTP_X_FORWARDED_HOST=self.host)
+                with self.assertRaises(DisallowedHost):
+                    r.get_host()
+                with self.assertRaises(DisallowedHost):
+                    r.build_absolute_uri()
+                response = Client().get('/accounts/login/', HTTP_HOST=authority,
+                    HTTP_X_FORWARDED_PROTO='https', HTTP_X_FORWARDED_HOST=self.host)
+                self.assertEqual(response.status_code, 400)
+
+    def test_csrf_origin_and_token_matrix_reaches_only_the_held_view(self):
+        from config.mb_oc1 import _require_release
+        client, token, _ = self.csrf_client()
+        wrong = ('a' if token[0] != 'a' else 'b') + token[1:]
+        for origin, value, expected in (
+                (self.origin, token, 423), ('https://unexpected.invalid', token, 403),
+                ('http://' + self.host, token, 403), ('null', token, 403),
+                (self.origin, None, 403), (self.origin, 'invalid!', 403),
+                (self.origin, wrong, 403)):
+            with self.subTest(origin=origin, token_case=expected):
+                data = {} if value is None else {'csrfmiddlewaretoken': value}
+                with patch('config.mb_oc1._require_release', wraps=_require_release) as release, \
+                     patch('evidence.forms.prepare_q0_submission', side_effect=AssertionError('form/backend reached')):
+                    response = client.post('/questions/q0/register/', data,
+                        HTTP_X_FORWARDED_PROTO='https', HTTP_ORIGIN=origin)
+                self.assertEqual(response.status_code, expected)
+                self.assertEqual(release.call_count, int(expected == 423))
+
+    def test_https_referer_is_required_without_origin_and_origin_takes_precedence(self):
+        client, token, _ = self.csrf_client()
+        for referer, expected in ((None, 403), ('invalid', 403),
+                ('http://' + self.host + '/', 403), ('https://unexpected.invalid/', 403),
+                (self.origin + '/accounts/login/', 423)):
+            with self.subTest(referer=referer):
+                headers = {} if referer is None else {'HTTP_REFERER': referer}
+                response = client.post('/questions/q0/register/', {'csrfmiddlewaretoken': token},
+                    HTTP_X_FORWARDED_PROTO='https', **headers)
+                self.assertEqual(response.status_code, expected)
+        for origin, referer, expected in ((self.origin, 'https://unexpected.invalid/', 423),
+                ('https://unexpected.invalid', self.origin + '/', 403)):
+            response = client.post('/questions/q0/register/', {'csrfmiddlewaretoken': token},
+                HTTP_X_FORWARDED_PROTO='https', HTTP_ORIGIN=origin, HTTP_REFERER=referer)
+            self.assertEqual(response.status_code, expected)
+
+    def test_valid_csrf_keeps_all_private_mutating_routes_at_423(self):
+        client, token, _ = self.csrf_client()
+        with patch('evidence.forms.prepare_q0_submission', side_effect=AssertionError('writer reached')), \
+             patch('evidence.forms.prepare_q0_reference', side_effect=AssertionError('reader reached')):
+            for path in ('/accounts/login/', '/accounts/logout/', '/questions/q0/register/', '/questions/q0/review/'):
+                with self.subTest(path=path):
+                    response = client.post(path, {'csrfmiddlewaretoken': token},
+                        HTTP_X_FORWARDED_PROTO='https', HTTP_ORIGIN=self.origin)
+                    self.assertEqual(response.status_code, 423)
+
+    def test_csrf_and_session_cookie_flags_from_native_middleware(self):
+        from django.conf import settings
+        from django.contrib.sessions.middleware import SessionMiddleware
+        from django.contrib.sessions.backends.db import SessionStore
+        from django.http import HttpResponse
+        _, _, csrf_response = self.csrf_client()
+        request = self.request(proto='https')
+        request.COOKIES[settings.SESSION_COOKIE_NAME] = 'a' * 32
+        middleware = SessionMiddleware(lambda request: HttpResponse())
+        middleware.process_request(request)
+        # Stub only persistence: assert real middleware cookie emission, not a DB session proof.
+        with patch.object(SessionStore, 'load', return_value={}), patch.object(SessionStore, 'save') as save:
+            request.session['offline'] = True
+            response = middleware.process_response(request, HttpResponse())
+        save.assert_called_once()
+        for cookie in (csrf_response.cookies[settings.CSRF_COOKIE_NAME], response.cookies[settings.SESSION_COOKIE_NAME]):
+            self.assertTrue(cookie['secure'])
+            self.assertTrue(cookie['httponly'])
+            self.assertEqual(cookie['samesite'], 'Lax')
