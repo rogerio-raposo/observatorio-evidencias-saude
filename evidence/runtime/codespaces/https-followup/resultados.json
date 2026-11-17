@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "base_sha": "174872af652ff1d98833e7d3fe1aef15e5696e53",
+  "delivery_branch": "evidence/oes-codespaces-https-followup",
+  "previous_evidence": {
+    "branch": "evidence/oes-codespaces-https",
+    "commit": "b4a54962de84e65e6cb97032575bad838c2b3146"
+  },
+  "classification": "INCONCLUSIVE_BASELINE_HTTP_401",
+  "manual_confirmations_previous_trial": {
+    "provenance": "responsible_statement_after_previous_publication",
+    "private_visibility": true,
+    "https_address_identified_in_ports": true,
+    "opening_forwarded_address_http_status": 401,
+    "forwarding_removed": true
+  },
+  "server": {
+    "provenance": "executor_terminal_observation",
+    "same_collector_as_previous_trial": true,
+    "standard_library_only": true,
+    "bind": "127.0.0.1",
+    "port": 8000,
+    "clean_environment": true,
+    "max_seconds": 300,
+    "automatic_restart": false,
+    "started": true,
+    "timeout_exit_code": 124,
+    "listener_absent_after_exit": true,
+    "access_logs_disabled": true
+  },
+  "browser": {
+    "provenance": "responsible_statement_and_submitted_sanitized_output",
+    "page_open_reported": true,
+    "marker_independently_confirmed": false,
+    "javascript_approved_before_start": true,
+    "javascript_executed_reported": true,
+    "private_visibility_reconfirmed_for_this_window": false,
+    "session_data_read_or_copied": false,
+    "request_target": "/",
+    "method": "GET",
+    "redirect": "error",
+    "cache": "no-store",
+    "batch_budget_seconds": 60,
+    "per_request_timeout_max_seconds": 4,
+    "baseline_execution_while_server_active": "NOT_ESTABLISHED"
+  },
+  "submitted_output": {
+    "diagnostic": "oes-https-followup",
+    "completed": false,
+    "results": [
+      {
+        "case": "baseline",
+        "status": 401,
+        "stop": "RESPOSTA_NAO_200"
+      }
+    ]
+  },
+  "matrix": {
+    "planned_cases": 14,
+    "cases_with_submitted_results": 1,
+    "synthetic_cases_executed_according_to_submitted_output": 0,
+    "cases_not_executed": 13,
+    "headers": {
+      "Host": "NOT_OBSERVED",
+      "X-Forwarded-Proto": "NOT_OBSERVED",
+      "X-Forwarded-Host": "NOT_OBSERVED",
+      "Forwarded": "NOT_OBSERVED"
+    },
+    "physical_duplicate_request_fields": "NOT_TESTED",
+    "received_headers": null
+  },
+  "interpretation": {
+    "client_x_forwarded_proto_removed": "INCONCLUSIVE",
+    "client_x_forwarded_proto_overwritten": "INCONCLUSIVE",
+    "cause_of_401": "NOT_DETERMINED",
+    "universal_proxy_policy": "NOT_PROVEN",
+    "p2_operational_acceptance": false,
+    "trusted_proxy_release_authorized": false
+  },
+  "closure": {
+    "server": "TIMEOUT_EXIT_CONFIRMED_NO_LISTENER",
+    "forwarding": "REMOVAL_CONFIRMED_BY_RESPONSIBLE",
+    "forwarding_direct_ui_inspection_by_executor": false,
+    "restart_performed": false
+  },
+  "stop": {
+    "browser_matrix": "BASELINE_NON_200",
+    "server": "300_SECOND_LIMIT",
+    "further_tests_performed": false
+  },
+  "sanitization": {
+    "private_urls_included": false,
+    "codespace_identifiers_included": false,
+    "credentials_included": false,
+    "session_data_included": false,
+    "raw_authenticated_responses_included": false
+  },
+  "preserved": {
+    "CP348": "CURRENT_HISTORICAL_CHECKPOINT",
+    "Marco B": "OPEN",
+    "Q0": "HARD HOLD",
+    "Q1 conectado": "HOLD",
+    "E9": "NO-GO",
+    "Fase 5": "NOT_STARTED",
+    "P1_D3": "UNCHANGED"
+  }
+}
