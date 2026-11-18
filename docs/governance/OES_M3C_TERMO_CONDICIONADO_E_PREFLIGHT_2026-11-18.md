@@ -204,6 +204,16 @@ Os identificadores são **candidatos**, não fatos de disponibilidade. O executo
 
 **Pendências antes da escrita:** verificar no Codespaces a ausência de listener/processo inesperado, a execução pelo operador e a custódia do loopback, manter porta Private, demonstrar settings efetivos nos três aliases Django quando iniciados em modo permitido, aprovar a suficiência do mecanismo de proteção e RPO/RTO, e confirmar unicidade dos IDs imediatamente antes do POST. Não repetir a auditoria ampla já executada. `RELEASE_MODE=HOLD` e ausência de POST Q0 até o atendimento dessas condições.
 
+### 7.5. Aceite expresso de risco residual e custódia local — 2026-11-18
+
+**Decisão do responsável:** após apresentação explícita da pergunta sobre a suficiência da branch de segurança para uma campanha sintética, privada e supervisionada, com recuperação ainda não exercitada, RTO não comprovado e possível perda **somente dos novos registros sintéticos**, o responsável respondeu **“aprovado”**. O aceite é **delimitado à M3-C e condicionado à preservação dos demais controles e STOP**, não se estende a operação regular, perda deliberada de preexistentes, restauração invasiva, novos serviços ou aumento de custos.
+
+**Evidência local comunicada pelo operador:** comando `ps -eo pid,ppid,user,args | grep -E '[g]unicorn|[m]anage.py runserver'` não identificou processos; `ss -ltnp '( sport = :8000 )'` não identificou listener; `OES_MB_OC1_RELEASE_MODE` continuava `HOLD`. A porta `8000` foi mostrada como `Private` no painel Codespaces. A leitura equivale a ausência dos processos/ligações especificamente inspecionados naquele instante, não a uma atestação universal do ambiente.
+
+**Consequência:** o aceite resolve a **decisão reservada de risco residual de recuperação**, mas não comprova a restauração da cópia nem ativa o HTTP. Antes da tentativa única, validar no próprio processo Django autorizado os aliases/settings efetivos e suas restrições, a custódia/identidade operacional, a proteção mantida da branch `br-silent-dream-b6mvn50u` e a ausência de colisões do manifesto imediatamente antes do POST. Se falhar qualquer verificação material, STOP sem escrita. A ordem de reconciliação, logout e retorno a HOLD permanece obrigatória.
+
+**Gates:** Marco B `OPEN`, Q0 geral `HARD HOLD`, Q1 conectado `HOLD`, E9 `NO-GO` e Fase 5 `NOT_STARTED`. O presente registro é documental; não iniciou Gunicorn, não acionou Q0 nem autorizou restauração.
+
 ## 8. Integridade da publicação
 
 Este documento é uma **proposta de revisão** em branch isolada e não modifica código, testes, workflows, parâmetros, dados ou gates. O resultado do preflight é observacional, restrito ao instante de consulta. **Sem merge**; qualquer integração futura depende de revisão independente, Freshness Gate e autorização expressa.
