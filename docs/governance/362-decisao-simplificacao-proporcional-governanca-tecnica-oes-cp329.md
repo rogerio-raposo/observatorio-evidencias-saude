@@ -38,6 +38,20 @@ Usar identidade de teste de menor privilégio, separada dos papéis administrati
 - Preservar A32/A35 `if:false`, nenhuma ativação de workflow, nenhuma modificação retroativa de SQL A37–A41 e nenhuma promoção científica decorrente de testes sintéticos.
 - Estados preservados: Fase 4 `CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY`; Marco B `OPEN`; G2-P2B `NO-GO`; E9 `NO-GO`; readiness `NOT_READY`; PF-I04/P4 operacional `NOT_AUTHORIZED`; Fase 5 `NOT_STARTED`.
 
+## 5.1. Complemento aprovado em 2026-11-17 — infraestrutura experimental e transitória
+**Princípio do responsável:** **Uma pendência técnica exclusiva do Codespaces não deve bloquear o desenvolvimento do piloto quando houver uma alternativa simples, risco residual aceitável e preservação das restrições científicas e transacionais.**
+
+O GitHub Codespaces é instrumento de desenvolvimento e experimentação do OES; não constitui escolha antecipada da infraestrutura definitiva. Aplicar a matriz de risco da seção 2 distinguindo:
+- **Risco exclusivo do ambiente transitório:** admitir avaliação e aceitação fundamentada do risco residual para demonstração sintética, privada, supervisionada, delimitada e reversível, sem exigir requisitos de produção antecipadamente.
+- **Requisito da infraestrutura definitiva:** registrar pendência para decisão futura de stack e homologação, sem transformá-la automaticamente em bloqueio do avanço funcional do piloto.
+- **Risco com efeitos além do experimento:** preservar controles proporcionais sobre credenciais, exposição, persistência e integridade dos dados, recursos compartilhados, custos e efeitos científicos; não aceitar risco real material apenas por se tratar de Codespaces.
+
+Preferir mecanismos nativos dos frameworks, opções explícitas e reversíveis e reutilização de evidências. Não criar proxy, middleware, verificadores ou arquitetura paralela sem necessidade demonstrada; não repetir ensaios sem hipótese material nova. Distinguir limitação não comprovada de defeito confirmado, conforme o Contraditório Técnico Fundamentado. Aceite experimental de risco residual **não equivale** a homologação operacional ou científica, nem promove gates.
+
+**Aplicação imediata — ingresso HTTPS Codespaces:** o [PR #44](https://github.com/rogerio-raposo/observatorio-evidencias-saude/pull/44) consolidou cobertura offline HTTPS/Host/CSRF; o [PR #45](https://github.com/rogerio-raposo/observatorio-evidencias-saude/pull/45) documentou o Host convencional incompatível com o hostname nominal no caminho observado e a proveniência de X-Forwarded-Proto e X-Forwarded-Host ainda inconclusiva sob entradas controladas. Considerar USE_X_FORWARDED_HOST=True apenas como **configuração candidata condicional, experimental, não ativada**, preservando validação nominal de host e origem, sem inferir confiabilidade ou homologação. Priorizar avanço do demonstrador, com avaliação proporcional antes de qualquer uso operacional.
+
+**Invariantes:** Marco B OPEN; Q0 geral HARD HOLD; Q1 conectado HOLD; E9 NO-GO; Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY; Fase 5 NOT_STARTED; P1/P2/D3; _require_release() incondicionalmente HOLD; HTTP mutante 423; ausência de retry automático. Este complemento **não autoriza** conexão Neon/PostgreSQL, SQL, grants/roles, credenciais, deploy, exposição pública, dados reais, custos nem promoção de gates. O alcance histórico da seção 6 abaixo permanece o da decisão de 2026-10-28.
+
 ## 6. Alcance exato da aprovação e ponto seguinte
 A autorização recebida compreende **exclusivamente a formalização documental** desta decisão e um checkpoint de continuidade. Não autoriza SQL Neon (inclusive SELECT anteriormente bloqueado), alterações de roles/grants/credenciais, secrets, workflows conectados, deploy, coleta factual, dados reais ou serviços pagos.
 
