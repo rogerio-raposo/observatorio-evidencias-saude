@@ -189,6 +189,21 @@ Os identificadores são **candidatos**, não fatos de disponibilidade. O executo
 
 **Resultado do bloco executado:** `PREFLIGHT_PARTIAL_PASS / OPERATIONAL_STOP_BEFORE_HTTP_WRITE`. Não houve seleção de `PRIVATE_SYNTHETIC_Q0`, inicialização de Gunicorn, login HTTP, POST Q0, restauração, criação/exclusão de branch, mudança de segredo ou workflow. O próximo passo é completar as condições no ambiente efetivo **sem repetir consultas já conclusivas**. Resultado incerto no futuro não admite retry.
 
+### 7.4. Verificação administrativa adicional da branch de segurança e porta privada — 2026-11-18
+
+**Evidência de operador:** imagem do painel Ports do Codespaces na conversa exibiu porta `8000`, identificada como `OES private manual WSGI (8000)`, visibilidade **Private** e encaminhamento pelo usuário. O perfil foi validado no terminal do operador com `PERFIL_VALIDO: True` e `RELEASE_HOLD: True`. Trata-se de **relato visual/terminal**, não inspeção direta de processos, usuário de rede, encaminhamento HTTP em execução ou exclusividade do loopback.
+
+**Verificação administrativa Neon conectada somente leitura:**
+- Branch de proteção `br-silent-dream-b6mvn50u`: `ready`, pai `br-gentle-hall-b6jaxehf`, `parent_lsn=0/2CF88F0`, `parent_timestamp=2026-11-18T04:46:06Z`, `created_at=2026-11-18T05:04:42Z`; **nenhum compute** e `written_data_bytes=0` na ficha administrativa.
+- Origem `br-gentle-hall-b6jaxehf`: `ready`, `written_data_bytes=0` na ficha administrativa; operações listadas após a criação da segurança consistiram em start/suspend compute e consultas de observação, sem operação de restauração, exclusão ou criação de outra branch identificada no recorte listado. Catálogo de operações não é auditoria SQL.
+- Contagens observadas na origem às `2026-11-18T16:51:16Z`: `core.entity=6`; `core.entity_version=6`; `investigation.question=2`; `investigation.question_version=2`; `investigation.question_command_receipt=2`; `django_auth.auth_user=1`; `django_auth.preparer_identity_prepareridentity=1`; `django_auth.django_session=0`.
+- Contagem de `core.entity.created_at`, `core.entity_version.created_at` e `investigation.question_command_receipt.committed_at` **após** `parent_timestamp=2026-11-18T04:46:06Z`: `0` em cada uma. **Isso não comprova ausência de UPDATE, DELETE ou alteração de outras tabelas**, nem identidade bit a bit entre origem e proteção.
+- LSN observado da origem no final desta inspeção: `0/2D208B8`. Diferir do `parent_lsn` não é prova de mutação aplicacional. Não converter esse LSN em afirmação de backup/restore comprovado.
+
+**Classificação:** `SAFETY_BRANCH_ADMINISTRATIVE_PASS_WITH_LIMITATIONS`. A cópia criada por branching oferece proteção pontual tecnicamente plausível, sem necessidade automática de snapshot ou compute extra; a restauração nunca foi exercitada, portanto RTO/garantia absoluta permanecem não demonstrados. O responsável deverá aceitar explicitamente o risco residual e a eventual perda **apenas dos novos dados sintéticos**, ou manter STOP. A exigência de proteção dos preexistentes permanece vinculante.
+
+**Pendências antes da escrita:** verificar no Codespaces a ausência de listener/processo inesperado, a execução pelo operador e a custódia do loopback, manter porta Private, demonstrar settings efetivos nos três aliases Django quando iniciados em modo permitido, aprovar a suficiência do mecanismo de proteção e RPO/RTO, e confirmar unicidade dos IDs imediatamente antes do POST. Não repetir a auditoria ampla já executada. `RELEASE_MODE=HOLD` e ausência de POST Q0 até o atendimento dessas condições.
+
 ## 8. Integridade da publicação
 
 Este documento é uma **proposta de revisão** em branch isolada e não modifica código, testes, workflows, parâmetros, dados ou gates. O resultado do preflight é observacional, restrito ao instante de consulta. **Sem merge**; qualquer integração futura depende de revisão independente, Freshness Gate e autorização expressa.
