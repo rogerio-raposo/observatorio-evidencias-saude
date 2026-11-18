@@ -23,7 +23,7 @@ class MBSessionTests(TestCase):
         cls.user.user_permissions.add(permission); PreparerIdentity.objects.create(user=cls.user)
 
     def setUp(self):
-        self.release=self.enterContext(patch('config.mb_oc1._require_release'))
+        self.enterContext(self.settings(MB_OC1_RELEASE_MODE='PRIVATE_SYNTHETIC_Q0'))
         self.client=Client(enforce_csrf_checks=True)
 
     def login(self,password='offline-only-test-password'):
@@ -75,8 +75,8 @@ class MBSessionTests(TestCase):
         self.assertFalse(Session.objects.filter(expire_date__gt=timezone.now()).exists())
 
     def test_source_release_remains_closed(self):
-        self.release.side_effect=PreparationHold('HOLD')
-        self.assertEqual(self.client.get('/accounts/login/',secure=True).status_code,423)
+        with self.settings(MB_OC1_RELEASE_MODE='HOLD'):
+            self.assertEqual(self.client.get('/accounts/login/',secure=True).status_code,423)
 
     def test_prepared_q0_post_uses_authenticated_user_and_reference_not_original_in_url(self):
         self.assertEqual(self.login().status_code,302)

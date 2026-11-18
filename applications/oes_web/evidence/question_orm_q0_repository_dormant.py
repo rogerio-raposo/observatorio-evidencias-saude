@@ -70,7 +70,7 @@ def _first_trial_scope(*, sha, user, command):
 
 
 def _require_q0_application_write_activation():
-    """F1 offline only: no env, caller token or HTTP route can activate this."""
+    """Require the private application's explicit release, never a caller token."""
     from config.mb_oc1 import require_mb_oc1
     require_mb_oc1()
 

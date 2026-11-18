@@ -1,4 +1,4 @@
-"""Private profile validation only. No network; operational release SOURCE HOLD."""
+"""Private experimental profile; no network, release closed by default."""
 import re
 from urllib.parse import urlsplit
 
@@ -9,6 +9,9 @@ def private_configuration(environ):
     if any(environ.get(k) not in (None, '', '0') for k in (
             'OES_PG_A4_ENABLED', 'OES_Q0_MULTI_ALIAS_ENABLED', 'OES_Q0_RECOVERY_READONLY_ENABLED')):
         raise RuntimeError('HOLD: legacy and MB-OC1 profiles cannot be combined')
+    release_mode = environ.get('OES_MB_OC1_RELEASE_MODE', 'HOLD')
+    if release_mode not in ('HOLD', 'PRIVATE_SYNTHETIC_Q0'):
+        raise RuntimeError('HOLD: invalid MB-OC1 experimental release mode')
     from .q0_limits import execution_limits, limited_options
     limits = execution_limits(environ)
     key = environ.get('OES_MB_OC1_SECRET_KEY', '')
@@ -59,7 +62,7 @@ def private_configuration(environ):
         SESSION_COOKIE_AGE=seconds, SESSION_SAVE_EVERY_REQUEST=False,
         CSRF_COOKIE_SECURE=True, CSRF_COOKIE_HTTPONLY=True, CSRF_COOKIE_SAMESITE='Lax', CSRF_USE_SESSIONS=False,
         SESSION_ENGINE='django.contrib.sessions.backends.db',
-        DATABASES=databases, MB_OC1_CONFIGURED=True,
+        DATABASES=databases, MB_OC1_CONFIGURED=True, MB_OC1_RELEASE_MODE=release_mode,
         ROOT_URLCONF='config.urls_mb_oc1',
         LOGGING={'version': 1, 'disable_existing_loggers': False,
             'handlers': {'mb_oc1_console': {'class': 'logging.StreamHandler'}},
@@ -69,9 +72,12 @@ def private_configuration(environ):
 
 
 def _require_release():
-    # The MB-OC1.3 decision and reviewed source activation are still absent.
+    # Configuration capability, not operational authorization. All callers use
+    # require_mb_oc1(), which also checks the private application profile.
+    from django.conf import settings
     from evidence.question_preparation import PreparationHold
-    raise PreparationHold('HOLD: MB-OC1 operational release not authorized')
+    if getattr(settings, 'MB_OC1_RELEASE_MODE', 'HOLD') != 'PRIVATE_SYNTHETIC_Q0':
+        raise PreparationHold('HOLD: MB-OC1 experimental release not selected')
 
 
 def require_mb_oc1():
