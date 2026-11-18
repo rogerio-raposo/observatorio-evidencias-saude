@@ -1,5 +1,7 @@
 # OES — Homologação HTTPS, Etapa A
 
+## Histórico — tentativa inicial
+
 **Resultado: INCONCLUSIVO.** O STOP preliminar impediu iniciar o coletor. A campanha não produziu tráfego de teste nem nova evidência sobre a transformação dos cabeçalhos no ingresso. A Etapa B segue pendente.
 
 ## Identificação e Freshness Gate
@@ -47,3 +49,32 @@ Para retomar a Etapa A, o responsável pela conta precisa confirmar elegibilidad
 Nenhum coletor ou processo temporário de teste foi iniciado. A última inspeção retornou zero listeners TCP na porta 8000. O último estado administrativo observado do Codespace foi `Available`, com visibilidade final da porta indeterminada. O Codespace preexistente não foi parado nem excluído. A confirmação de visibilidade, o acompanhamento de consumo e eventual parada administrativa ficam com o responsável pelo recurso.
 
 O diff contém apenas este relatório. Nenhum gate foi promovido. Marco B OPEN, Q0 geral HARD HOLD, Q1 conectado HOLD, E9 NO-GO, Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY, Fase 5 NOT_STARTED, P1/P2/D3, `_require_release()` em HOLD, HTTP mutante 423 e ausência de retry automático foram preservados. A Etapa B não foi executada.
+
+## Retomada — 2026-11-18 UTC
+
+**Resultado geral: INCONCLUSIVO.** O ingresso autorizado, a restrição do cliente anônimo no caso observado e a fronteira local foram verificados. O comportamento do ingresso diante de valores de esquema fornecidos pelo cliente continua indeterminado.
+
+### Base e condições administrativas
+
+CP349, Codespace existente, Python 3.12.11 e GitHub CLI 2.83.2 temporária com checksum oficial conferido. A `main` remota coincidiu com a base `3ee2b1a733ee412078c5f5859f5aeb30d5fa915d`. A retomada partiu do commit `502680b71f40cc527dda6bd33cb83cb51794c5e6` na branch do PR #45. A evidência offline do PR #44 e a matriz de navegador foram reaproveitadas sem reexecução.
+
+O responsável declarou uso exclusivamente pessoal, porta 8000 configurada como `Private`, consumo de novembro integralmente compensado pela franquia e ausência de dados de cobrança cadastrados. Autorizou a retomada. A consulta de cobrança anterior não foi repetida. A campanha reutilizou o encaminhamento existente e não alterou a capacidade ou as configurações do recurso.
+
+### Método e matriz
+
+O comando documentado de listagem de portas confirmou `Private` imediatamente antes de iniciar o coletor, com o coletor ativo e após encerrá-lo. O coletor HTTP sintético escutou somente em `127.0.0.1:8000`, com ambiente vazio e sem persistência. O cliente HTTPS validou TLS, não seguiu redirecionamentos e, no caso autorizado, utilizou a autenticação de encaminhamento do GitHub descrita na documentação. As requisições usaram caminhos distintos para correlação. A saída limitou-se a contagens, comparações, valores conhecidos de esquema e status. [Listagem de portas](https://cli.github.com/manual/gh_codespace_ports) · [Encaminhamento no Codespaces](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace?tool=cli)
+
+| Caso | Envio do cliente | Observação | Classificação |
+| --- | --- | --- | --- |
+| Controle local | HTTP direto, `Host` do loopback, sem cabeçalhos encaminhados | HTTP 200 com marcador. Um `Host` igual ao endereço local. Ausentes `X-Forwarded-Proto`, `X-Forwarded-Host`, `X-Forwarded-Port` e `Forwarded`. | PASS para verificar a capacidade de um processo local de alcançar o coletor. |
+| HTTPS sem autenticação | `Host` da origem HTTPS, sem autenticação e sem cabeçalhos encaminhados | HTTP 302, sem marcador e sem registro correspondente no coletor. | PASS para a restrição observada nesta tentativa. |
+| HTTPS autenticado normal | `Host` da origem HTTPS, autenticação de encaminhamento e ausência deliberada de cabeçalhos encaminhados | HTTP 200 com marcador e registro correspondente. Um `Host` distinto da origem e do endereço local. Uma ocorrência de `X-Forwarded-Proto=https`, uma de `X-Forwarded-Host` igual ao host de origem, uma de `X-Forwarded-Port=443` e nenhuma de `Forwarded`. | PASS para conectividade e observação dos campos no caso normal. |
+| Esquema divergente ou múltiplo | Sem nova execução desses casos no ingresso. | A matriz histórica não verificou o que o navegador efetivamente enviou. | INCONCLUSIVO para a proveniência do esquema sob entrada controlada pelo cliente. |
+
+O caso normal demonstra que os três campos encaminhados foram acrescentados entre o cliente e o coletor no caminho gerenciado observado. O ponto interno de inserção ou reescrita não foi instrumentado. A diferença de `Host` é material para a futura validação do host convencional no Django, cuja resposta operacional permanece indeterminada. O caso normal não permite determinar a política para valores preexistentes enviados pelo cliente.
+
+### Fronteira local e encerramento
+
+O processo cliente local alcançou diretamente o único listener observado, via loopback, sem passar pelo HTTPS gerenciado. O coletor também observou par loopback no caso autorizado via ingresso. Assim, a observação do endereço do par, por si só, não identifica o caminho da requisição. A custódia declarada reduz o risco administrativo, sem estabelecer isolamento entre processos.
+
+Ao fim, o coletor foi encerrado, a porta encaminhada permanecia `Private` e a inspeção encontrou zero listeners TCP na porta 8000. O Codespace existente permaneceu em uso para publicação. A Etapa B permanece pendente de evidência suficiente de proveniência do esquema e de avaliação da divergência de `Host`. Nenhum gate foi promovido.
