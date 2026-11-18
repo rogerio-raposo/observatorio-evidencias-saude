@@ -145,6 +145,27 @@ Objeto: uma campanha M3-C privada, supervisionada e com dados estritamente sint�
 
 **Depois da campanha:** preservar branch de segurança e registros/recibos até decisão explícita de retenção. Não promover automaticamente qualquer gate. Este texto é minuta e **não é uma concessão antecipada** dos efeitos listados.
 
+### 7.2. Manifesto sintético candidato — preparo documental, sem submissão
+
+**Fonte revisada:** `applications/oes_web/evidence/forms.py` (`Q0RegistrationForm`, `prepare_q0_submission`), `evidence/question_preparation.py` (`QuestionCommand`, `validate_register_q0`, `command_fingerprint`) e `evidence/views.py` (`q0_registration`, `q0_reference`), todos lidos na `main` `56d2cef018c07d3a251c5b1b7af410a8fac1bd35`. A ação conectada não foi executada.
+
+| Campo de formulário | Valor candidato |
+| --- | --- |
+| `request_id` | `OES-M3C-20261118-R01` |
+| `question_id` | `OES-M3C-20261118-Q01` |
+| `original_text` | `Em um cenário inteiramente fictício de serviço de saúde, qual é a diferença entre registrar uma pergunta de pesquisa e realizar sua avaliação científica?` |
+| `expected_version` (serviço, não formulário) | `0` |
+| `normalized_text` (serviço, não formulário) | `None` |
+| `justification` (serviço, não formulário) | cadeia vazia `""` |
+| Ator | resolvido da `PreparerIdentity` persistida após autenticação; **não** fornecido no formulário |
+| `fingerprint` | calcular pelo `command_fingerprint` existente sobre o `QuestionCommand` validado, sem valor manual inventado |
+
+**Condições de aceitação:** (i) IDs inéditos e livres de colisão no banco efetivo e dentro do escopo do ator; (ii) preservação literal do texto original, sem Q1/Q2; (iii) identidade/preparador não administrativa e autorizada; (iv) uma submissão HTTP POST com CSRF nativo, sem duplicatas nem campos adicionais; (v) referência de recuperação `request_id` + `question_id` + `fingerprint` preservada por via sanitizada; (vi) não tentar novamente após resultado incerto.
+
+Os identificadores são **candidatos**, não fatos de disponibilidade. O executor deverá conferir a inexistência dos IDs no preflight permitido, sem escrever para reservá-los. O texto é fictício e não representa evidência de pesquisa nem questão científica publicada. A campanha poderá ajustar o manifesto **antes** de sua autorização operacional, caso exista colisão, sem transformar isso em novas submissões.
+
+**Limite documental:** esta seção não seleciona `PRIVATE_SYNTHETIC_Q0`, não autoriza login HTTP, não grava Q0 e não emite identificadores diretamente no PostgreSQL. A execução depende de despacho operacional explícito e de todas as condições suspensivas §7.1.
+
 ## 8. Integridade da publicação
 
 Este documento é uma **proposta de revisão** em branch isolada e não modifica código, testes, workflows, parâmetros, dados ou gates. O resultado do preflight é observacional, restrito ao instante de consulta. **Sem merge**; qualquer integração futura depende de revisão independente, Freshness Gate e autorização expressa.
