@@ -166,6 +166,29 @@ Os identificadores são **candidatos**, não fatos de disponibilidade. O executo
 
 **Limite documental:** esta seção não seleciona `PRIVATE_SYNTHETIC_Q0`, não autoriza login HTTP, não grava Q0 e não emite identificadores diretamente no PostgreSQL. A execução depende de despacho operacional explícito e de todas as condições suspensivas §7.1.
 
+### 7.3. Despacho operacional recebido e preflight READ ONLY — 2026-11-18
+
+**Decisão recebida:** o responsável declarou `Autorizado` em resposta ao despacho operacional único M3-C preparado no ChatGPT, com condições suspensivas, STOP e exclusões. Trata-se de autorização **condicionada**, não da confirmação de cumprimento dessas condições. Sem liberação automática, sem Q0 geral e sem promoção de gates.
+
+**Freshness Gate:** `main` `56d2cef018c07d3a251c5b1b7af410a8fac1bd35`. Documento M3-C editado exclusivamente na branch isolada `review/oes-m3c-preflight-20261118`; sem merge. Banco autorizado: `weathered-boat-65779510` / `br-gentle-hall-b6jaxehf` / `oes_sandbox`.
+
+**Execução conectada realizada:** consultas PostgreSQL de preflight com `SET TRANSACTION READ ONLY`, sem DML/DDL, no destino autorizado. Não houve uso do endpoint HTTP do Django.
+
+| Verificação | Evidência observada e limite |
+| --- | --- |
+| Manifesto `OES-M3C-20261118-R01` / `OES-M3C-20261118-Q01` | `0` coincidências em `core.entity.oes_id`, `investigation.question_command_receipt.request_id` e `question_id` no instante consultado; não há reserva de IDs nem garantia contra escrita posterior |
+| Reader `oes_pg_a4_reader` | Cinco tabelas: todas as colunas SELECT, nenhuma coluna UPDATE, sem TRUNCATE. Sessão do papel: `current_user` confirmado; `default_transaction_read_only=on` |
+| Writer `oes_qprep_login` | Cinco tabelas: todas as colunas SELECT, nenhuma coluna UPDATE, sem TRUNCATE. Sessão do papel: `current_user` confirmado; `default_transaction_read_only=off` |
+| Auth `oes_auth_trial_login` | Consultas de direitos por coluna às seis tabelas Auth/PreparerIdentity indicam SELECT disponível; UPDATE observado em `auth_user` e `django_session`, não nas demais; sem TRUNCATE nessas seis. Sessão do papel: `current_user` confirmado; `default_transaction_read_only=off` |
+| Preparador | Contagem de associações `PreparerIdentity` ligadas a usuários ativos, não staff/não superuser: `1`; não prova ainda login HTTP nem autorização efetiva `evidence.prepare_question` no request |
+| Limites | `rolconnlimit`: Auth 1, Reader 2, Writer -1. Uma transação administrativa separada para cada papel; operação Django efetiva/ausência de consumidores concorrentes não atestada |
+| Timeouts | Os três logins mostraram `statement_timeout=0`, `lock_timeout=0` em sessões abertas diretamente pela ferramenta. São **diferentes** da futura configuração de opções da aplicação (10.000/2.000 ms), não a comprovam nem a refutam; exigir verificação nos aliases Django quando autorizados e disponíveis |
+| Branch de segurança | `br-silent-dream-b6mvn50u` `ready`, sem compute; `parent_lsn=0/2CF88F0` e `parent_timestamp=2026-11-18T04:46:06Z`. O LSN atual da origem foi observado em `0/2CF89E8`; **a diferença não demonstra por si alteração de conteúdo**, mas a igualdade do estado protegido não foi comprovada |
+
+**STOP antes da escrita — condições ainda não atestadas:** (1) equivalência/adequação do estado anterior preservado na branch de segurança e protocolo de recuperação aceitável dos preexistentes; (2) custódia real da porta Private, loopback, origem HTTPS e processo Gunicorn com apenas um worker e SHA correto; (3) configuração real dos aliases Django, timeouts e permissões/identidade durante a jornada; (4) aceite operacional do responsável sobre risco residual, retenção/RPO/RTO e ausência de custos adicionais dentro do escopo; (5) preparação do operador/supervisor para reconciliação e encerramento. Não se deve inferir conclusão desses itens de provas administrativas parciais.
+
+**Resultado do bloco executado:** `PREFLIGHT_PARTIAL_PASS / OPERATIONAL_STOP_BEFORE_HTTP_WRITE`. Não houve seleção de `PRIVATE_SYNTHETIC_Q0`, inicialização de Gunicorn, login HTTP, POST Q0, restauração, criação/exclusão de branch, mudança de segredo ou workflow. O próximo passo é completar as condições no ambiente efetivo **sem repetir consultas já conclusivas**. Resultado incerto no futuro não admite retry.
+
 ## 8. Integridade da publicação
 
 Este documento é uma **proposta de revisão** em branch isolada e não modifica código, testes, workflows, parâmetros, dados ou gates. O resultado do preflight é observacional, restrito ao instante de consulta. **Sem merge**; qualquer integração futura depende de revisão independente, Freshness Gate e autorização expressa.
