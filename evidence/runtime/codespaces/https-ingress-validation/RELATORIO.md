@@ -105,3 +105,22 @@ O resultado offline demonstra a rejeição na validação nativa do Host. Os tes
 O coletor foi encerrado e seu processo recolhido. A inspeção final encontrou zero listeners TCP na porta 8000 e confirmou novamente `Private`. O encaminhamento preexistente permaneceu configurado. A campanha não ativou Django operacional, não conectou ao banco e não promoveu gates.
 
 Uma eventual Etapa B depende de decisão arquitetural autorizada sobre o Host, evidência suficiente sobre a proveniência do esquema, revisão independente e autorização posterior.
+
+## Verificação final da cadeia de confiança — CP349
+
+**Parecer sobre a configuração candidata: INCONCLUSIVO. Manter HOLD.** O responsável aprovou condicionalmente a preferência por `USE_X_FORWARDED_HOST=True`, com `ALLOWED_HOSTS` nominal, `USE_X_FORWARDED_PORT=False` e a configuração existente de esquema HTTPS. A decisão autoriza a avaliação da candidata. A ativação operacional permanece em HOLD. O FAIL anterior continua válido para a configuração que usa o `Host` convencional.
+
+### Freshness Gate e alcance
+
+A `main` remota coincidiu com `3ee2b1a733ee412078c5f5859f5aeb30d5fa915d` e a branch do PR #45 com `28105a4880944612a1d2054f0155238e40975e34`. Foram reaproveitados o CP349, os documentos canônicos, a decisão HTTPS versionada e as evidências anteriores. A configuração operacional não foi alterada.
+
+| Cabeçalho | Evidência reaproveitada | Limite e resultado |
+| --- | --- | --- |
+| `X-Forwarded-Proto` | No HTTPS autenticado normal, sem valor definido no cliente, o coletor recebeu uma ocorrência com `https`. | **INCONCLUSIVO** sob entrada controlada pelo cliente. Casos divergentes, listas em ambas as ordens e duplicatas sem nova execução. |
+| `X-Forwarded-Host` | No HTTPS autenticado normal, sem valor definido no cliente, o coletor recebeu uma ocorrência igual ao host nominal da origem. | **INCONCLUSIVO** sob entrada controlada pelo cliente. Casos divergentes, valores múltiplos e duplicatas sem nova execução. |
+
+A matriz dirigida à manipulação de cabeçalhos de confiança no ingresso real ficou sem execução. A matriz histórica de navegador documenta os valores solicitados e o que chegou ao coletor. O envio efetivo não foi comprovado. Assim, os registros existentes não estabelecem preservação, substituição, concatenação ou rejeição para entradas efetivamente transmitidas nesses casos. A correspondência nominal no caso normal sustenta a avaliação da candidata, cuja cadeia de confiança segue sem comprovação. A preferência arquitetural permanece condicional à evidência sobre ambos os cabeçalhos e à revisão independente.
+
+### Encerramento
+
+A inspeção administrativa no Codespace existente confirmou novamente a porta 8000 como `Private`. A inspeção local encontrou zero listeners TCP nessa porta. Nenhum coletor foi iniciado nesta verificação. O escopo publicado limita-se ao relatório. Os invariantes e gates registrados acima foram preservados.
