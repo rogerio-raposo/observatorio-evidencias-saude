@@ -62,7 +62,28 @@ Consultas administrativas Neon (somente leitura) indicaram:
 
 **Não comprovado:** restauração efetiva do ponto no tempo, RPO/RTO operacional, preservação consistente dos registros preexistentes em uma restauração, custos atuais/limites de franquia, backup alternativo nem tempo de retomada. Uma janela de histórico configurada **não** equivale a capacidade de recuperação já testada.
 
-**Decisão de risco proposta, ainda sujeita a aceite expresso:** aceitar perda somente dos **novos dados sintéticos** da campanha se a tentativa estiver adequadamente classificada; não aceitar perda dos registros preexistentes; nenhum RTO garantido; priorizar reutilização de recuperação existente sem criar snapshots, modificar retenção, restaurar ou comprar recursos automaticamente. **Se não houver evidência suficiente de proteção dos registros preexistentes, STOP antes da escrita.** RPO não pode ser apresentado como zero garantido para registros anteriores sem prova.
+**Decisão de risco proposta, ainda sujeita a aceite expresso:** aceitar perda somente dos **novos dados sintéticos** da campanha se a tentativa estiver adequadamente classificada; não aceitar perda dos registros preexistentes; nenhum RTO garantido. A inspeção posterior identificou que o PITR e snapshots manuais descritos pelo Neon são direcionados a **branches raiz**, ao passo que a branch experimental é **filha**. Portanto a retenção histórica de seis horas não é um mecanismo de recuperação aplicável automaticamente a ela. Foi autorizada e criada uma **branch de segurança por copy-on-write**, descrita em §5.1. A preservação dessa cópia é distinta de demonstração de restauração; não declarar RPO zero nem RTO garantido. **Se não houver proteção suficiente dos registros preexistentes, STOP antes da escrita.**
+
+### 5.1. Proteção adicional executada — branch de segurança Neon (2026-11-18)
+
+**Ação conectada previamente autorizada, concluída:** criado um clone *copy-on-write* da branch experimental **sem compute**, sem alterações dos registros de origem, sem acesso SQL e sem ativar Django ou Q0. Estado administrativo reconsultado após a criação:
+
+| Campo | Evidência observada |
+| --- | --- |
+| Projeto / plano | `weathered-boat-65779510` / organização Free |
+| Origem | `br-gentle-hall-b6jaxehf` (branch filha de `br-wild-field-b6qg7k3p`) |
+| Branch de segurança | `oes-m3c-pretrial-safety-20261118` |
+| ID da segurança | `br-silent-dream-b6mvn50u` |
+| Estado | `ready` |
+| Criação (UTC) | `2026-11-18T05:04:42Z` |
+| Ponto de origem informado pelo Neon | `parent_lsn=0/2CF88F0`; `parent_timestamp=2026-11-18T04:46:06Z` |
+| Compute / consumo computacional da segurança | 0 endpoints; tempo de compute observado 0 |
+| Branches do projeto após criação | 3 (limite Free documentado: 10) |
+| Expiração programada | Nenhuma informada na resposta administrativa |
+
+**Qualificação crítica:** `parent_timestamp` e `created_at` são campos diferentes; não presumir que o estado é precisamente o do instante da solicitação ou da criação. A metadata `parent_lsn` documenta o ponto de origem reportado, mas **não constitui restauração testada** nem comprovação de todos os objetos por inspeção SQL. Antes da submissão, comparar a continuidade das alterações na origem e os objetos/catálogos relevantes; se ocorrerem escritas na origem depois do ponto de origem, a cópia não deve ser tratada automaticamente como estado pré-ensaio definitivo. A eventual recuperação usará destino separado e autorização específica; não sobrescrever a origem e não criar compute ou despesa automaticamente.
+
+**Referências externas verificadas em 2026-11-18:** [Instant Restore — root branch](https://neon.com/docs/postgres/backup-restore/branch-restore); [Backup & Restore — manual snapshots em root](https://neon.com/docs/guides/backup-restore); [Branching — copy-on-write](https://neon.com/docs/introduction/branching). A nova branch atende à **preservação administrativa de um ponto independente**, não a uma garantia absoluta de recuperação.
 
 ## 6. Parecer independente do Codex e conciliação técnica (2026-11-18)
 
@@ -70,7 +91,7 @@ Consultas administrativas Neon (somente leitura) indicaram:
 
 | Tema | Classificação do parecer | Conciliação proporcional |
 | --- | --- | --- |
-| Recuperabilidade dos registros preexistentes | CONFIRMADO — pendência material | D3 não é backup/restauração. Retenção de seis horas não comprova restauração. Snapshot adicional não é condição automática: fundamentar recuperação utilizável, ponto, responsáveis e janela. |
+| Recuperabilidade dos registros preexistentes | CONFIRMADO — pendência material | D3 não é backup/restauração. Retenção de seis horas não comprova restauração. A hipótese anterior de PITR da própria branch experimental foi afastada após verificar que ela é filha; snapshot manual direto também não é o caminho documentado. A cópia isolada §5.1 foi criada; confirmar cobertura do ponto, responsável, custódia e recuperação em destino separado. |
 | Alegação de que `rolconnlimit=1` inviabiliza os três aliases | NÃO PROCEDENTE | O limite é só de Auth; três logins distintos podem coexistir. Exigir janela serial, um worker, sem consumidores paralelos de Auth, sem ampliar limites ou adicionar pool por precaução abstrata. |
 | Garantia geral do ingresso HTTPS | INCONCLUSIVO | Os três casos contraditórios simples favorecem a configuração restrita; não cobrem listas/duplicatas ou autenticação universal do loopback. Cabe custódia local/porta Private, Host/CSRF exatos e aceite delimitado de risco, sem homologação pública. |
 | Suficiência integral do preflight P1/P2 | PARCIALMENTE PROCEDENTE | Reaproveitar verificadores e completar **apenas** privilégios por coluna, TRUNCATE, Auth/PreparerIdentity e modos efetivos das sessões relevantes; READ ONLY administrativo não comprova sessão Django gravável. Divergência material => STOP. |
@@ -82,21 +103,21 @@ O parecer é **favorável à submissão de autorização operacional condicionad
 
 **Objeto protegido:** tanto os cinco objetos científicos quanto esquema/constraints, Auth, `PreparerIdentity` e vínculos necessários para interpretação e consulta consistente dos registros preexistentes; não confundir recuperação científica com recuperação apenas do recibo da tentativa.
 
-1. **Antes da janela:** responsável nomeia operador, supervisor e administrador para intervenção; identifica formalmente branch original, banco e estado anterior à nova submissão. Registra o **instante/ponto de recuperação pretendido** imediatamente anterior ao ensaio, em UTC, por mecanismo administrativo já disponível; não inferir um LSN ou ponto exato sem observação real.
-2. **Disponibilidade:** administrador comprova que a funcionalidade de recuperação histórica pode ser utilizada **no projeto/plano e na branch reais**, seu alcance, restrições, elegibilidade e eventual custo, com documentação atual e/ou metadados que sustentem a afirmação. A mera configuração `history_retention_seconds=21600` não basta. Na ausência de evidência suficiente, STOP.
-3. **Janela de detecção/intervenção:** planejar conclusão, reconciliação e eventual decisão de recuperação com folga **dentro** das seis horas de histórico observadas, sujeitas a revalidação; a sessão Django de 900 s não estende a retenção. Se a origem do incidente for incerta, a janela não reinicia no momento da detecção. Responsável deve aceitar explicitamente o risco de expiração e definir quem acionará a intervenção.
+1. **Antes da janela:** responsável nomeia operador, supervisor e administrador para intervenção; identifica formalmente a branch original, a branch de segurança §5.1, banco e estado anterior à nova submissão. Confronta a continuidade dos registros e o **ponto concreto** já informado pelo Neon (`parent_lsn=0/2CF88F0`, `parent_timestamp=2026-11-18T04:46:06Z`) com qualquer mudança posterior da origem; não confundir o timestamp do pai com o instante de criação da cópia.
+2. **Disponibilidade:** administrador confirma que a cópia `br-silent-dream-b6mvn50u` permanece `ready`, acessível administrativamente e preserva o escopo necessário; define como criar, caso autorizado, um destino de recuperação privado distinto, com compute apenas se necessário e explicitamente aprovado. Branch de segurança sem compute comprova preservação administrativa, não acesso SQL nem restauração. Não usar como substituto o PITR de branch raiz ou snapshot manual não aplicável à origem filha. Na ausência de evidência suficiente, STOP.
+3. **Janela de detecção/intervenção:** a cópia `copy-on-write` não tem a mesma dependência direta da janela de PITR de seis horas, mas é necessário preservar sua existência, integridade e elegibilidade no plano Free até decisão de encerramento; não a excluir automaticamente. Definir tempo máximo de observação, supervisor e acionamento de intervenção, sem prometer RTO.
 4. **RPO/RTO e risco:** o responsável deve decidir por escrito quais **novos** dados sintéticos podem ser perdidos e qual exposição residual dos registros **preexistentes** é tolerável diante da capacidade comprovada. Não declarar RPO zero nem RTO garantido. Se a política exigir ausência absoluta de perda preexistente, mas isso não puder ser demonstrado, manter HOLD.
 5. **Falha:** cessar novas admissões; preservar IDs, horários, erro sanitizado, evidências e estado observado. Quando necessário, reconciliar a tentativa pelo reader/D3 autorizado, **sem** reenviar escrita. D3 pode provar persistência/integridade da tentativa, mas não recompõe dados destruídos.
 6. **Recuperação propriamente dita:** qualquer restauração exige autorização própria e destino privado não produtivo separado, sem substituir/sobrescrever a branch de origem nem presumir custo autorizado. Validar schema, restrições, papéis/ACL, Auth, identidade, recibos, autoria e consistência por referências autorizadas; revisar sessões/flags/senhas restauradas antes de qualquer reabertura. Este termo **não executa nem autoriza restauração**.
 7. **Prova de suficiência:** registrar documento ou observação concreta da capacidade de recuperar o ponto relevante, plano de ação e janela operacional viável; decidir se evidência administrativa preexistente basta sem teste restaurativo. Se não houver proteção aceitável, STOP antes da submissão.
 
-A ausência de snapshots não invalida automaticamente o histórico recuperável; inversamente, histórico configurado não demonstra por si só proteção efetiva dos preexistentes. Registros criados antes da janela de seis horas podem integrar um estado restaurado a partir de ponto dentro da janela; **não** se conclui que registros antigos estejam fora da recuperação.
+A inexistência de snapshots não inviabiliza a **cópia por branching**, mas a existência de seis horas de histórico tampouco confere PITR à branch filha. A proteção atualmente observada é a branch isolada sem compute. Sua criação antecede a M3-C, mas a adequação do ponto original e a capacidade de recuperação para uma aplicação futura ainda exigem decisão operacional informada.
 
 ### 6.2. Sequência operacional proposta — não autorizada
 
 A decisão futura será **uma campanha integrada**, não novas aprovações por requisição/SQL. Suas classes de efeito, identidades, manifesto e parâmetros deverão constar expressamente do despacho operacional.
 
-1. **Custódia e preflight:** validar SHA e integridade; porta `Private`; nenhum processo indevido na porta 8000; nenhum acesso ao loopback por outro processo/usuário não autorizado; custódia das três credenciais; Host e CSRF nominais; parâmetros de capacidade/timeout e ausência de despesas ou provisionamento não aprovados; recuperação `§6.1` fundamentada.
+1. **Custódia e preflight:** validar SHA e integridade; porta `Private`; nenhum processo indevido na porta 8000; nenhum acesso ao loopback por outro processo/usuário não autorizado; custódia das três credenciais; Host e CSRF nominais; parâmetros de capacidade/timeout e ausência de despesas ou provisionamento não aprovados; branch de segurança §5.1 `ready`, ponto de origem e ausência de alterações incompatíveis confirmados; recuperação §6.1 fundamentada.
 2. **Sessões e privilégios efetivos:** com autorização READ ONLY pertinente e reutilizando os verificadores P1/P2, confirmar catálogos, permissões por coluna e TRUNCATE, consultas Auth/`PreparerIdentity`, falta de privilégio writer indevido, modos efetivos Auth/writer/reader, limites de sessão e papel. Privilegios por tabela demonstrados anteriormente não substituem o recorte por coluna. Não alterar grants ou settings diante de divergência.
 3. **Admissão controlada:** operador confirma **uma** janela serial sem ferramentas auxiliares consumindo `oes_auth_trial_login`, workers sobrepostos ou segundo Django; evitar duas sessões Auth concorrentes. Um worker sync e `CONN_MAX_AGE=0` são compatíveis com a proposta, não prova de capacidade medida.
 4. **Abertura explícita:** apenas mediante autorização operacional futura, selecionar temporariamente `OES_MB_OC1_RELEASE_MODE=PRIVATE_SYNTHETIC_Q0` e HTTPS candidato, reiniciando o único servidor Gunicorn para aplicação dos settings. Verificar ingresso e autenticação sintética, sem público, dados reais, perfis legados ou bypass.
@@ -113,6 +134,16 @@ A decisão futura será **uma campanha integrada**, não novas aprovações por 
 4. Identificadores inéditos, manifesto e conteúdo estritamente sintético aprovados; uma única tentativa, sem retry. Falha ou confirmação de COMMIT desconhecida => STOP, preservar referências e reconciliar apenas pelo reader/D3 autorizado.
 5. Eventual autorização operacional **explícita e delimitada**, com sequência de início, login/POST, observação D3, consulta posterior, encerramento/revogação e retorno a HOLD; não usar `runserver` ou ativar perfis legados.
 6. Avaliação posterior: resultado técnico da campanha não promove Q0 geral, Q1, E9, Fase 5 nem encerra automaticamente Marco B.
+
+### 7.1. Proposta de despacho operacional integrado — texto preparatório, SEM AUTORIZAÇÃO
+
+Objeto: uma campanha M3-C privada, supervisionada e com dados estritamente sintéticos, na branch `br-gentle-hall-b6jaxehf` e banco `oes_sandbox`; preservar `br-silent-dream-b6mvn50u` como ponto isolado, sem compute.
+
+**Condições suspensivas, anteriores a qualquer POST:** (a) confirmar adequação do ponto da cópia de segurança e proteção dos preexistentes; (b) designar operador/supervisor/admin e aceitar expressamente RPO/RTO e risco residual; (c) confirmar custo zero ou custo explicitamente aprovado; (d) preflight de permissões e transações efetivas apenas das lacunas P1/P2; (e) HTTPS privado/custódia e Auth serial; (f) manifesto sintético, referências únicas e SHA do artefato aprovados. Qualquer falha => STOP e `HOLD`.
+
+**Efeitos que dependerão de aprovação operacional específica:** iniciar Gunicorn privado com `PRIVATE_SYNTHETIC_Q0` e configuração nominal, login Django sintético, **um** POST de escrita Q0, leitura independente D3, recuperação por GET, logout/revogação e retorno ao `HOLD`. Não autoriza SQL DDL/GRANT/REVOKE, exclusão ou restauração de branches, execução de workflows, consumidores adicionais, despesas ou dados reais. Resultado de COMMIT desconhecido => não repetir; preservar referências para reconciliação.
+
+**Depois da campanha:** preservar branch de segurança e registros/recibos até decisão explícita de retenção. Não promover automaticamente qualquer gate. Este texto é minuta e **não é uma concessão antecipada** dos efeitos listados.
 
 ## 8. Integridade da publicação
 
