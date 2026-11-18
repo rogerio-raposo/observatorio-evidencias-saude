@@ -102,6 +102,82 @@ class HttpsHostCsrfTests(SimpleTestCase):
             with self.assertRaises(RuntimeError):
                 private_configuration({**self.environment, 'OES_MB_OC1_TLS_TERMINATION': mode})
 
+    def csrf_exception_environment(self):
+        host = 'oes-synthetic-8000.app.github.dev'
+        return {**self.environment, 'OES_MB_OC1_HOST': host, 'OES_MB_OC1_ORIGIN': 'https://' + host,
+            'OES_MB_OC1_RELEASE_MODE': 'PRIVATE_SYNTHETIC_Q0',
+            'OES_CODESPACES_USE_X_FORWARDED_HOST': '1'}
+
+    def test_csrf_local_exception_changes_only_the_exact_trusted_origin_list(self):
+        from config.mb_oc1 import private_configuration
+        env = self.csrf_exception_environment()
+        name = 'OES_CODESPACES_CSRF_LOCALHOST_ORIGIN'
+        baseline = private_configuration(env)
+        self.assertEqual(baseline['CSRF_TRUSTED_ORIGINS'], [env['OES_MB_OC1_ORIGIN']])
+        self.assertEqual(private_configuration({**env, name: '0'}), baseline)
+        self.assertEqual(private_configuration({**env, name: '1'}), {**baseline,
+            'CSRF_TRUSTED_ORIGINS': [env['OES_MB_OC1_ORIGIN'], 'https://localhost:8000']})
+        for value in ('', 'true', '2', ' 1 ', None, True, 1, '*', 'https://localhost:8001'):
+            with self.subTest(value=value), self.assertRaises(RuntimeError):
+                private_configuration({**env, name: value})
+
+    def test_csrf_local_exception_requires_all_experimental_conditions(self):
+        from config.mb_oc1 import private_configuration
+        env = {**self.csrf_exception_environment(), 'OES_CODESPACES_CSRF_LOCALHOST_ORIGIN': '1'}
+        for change in ({'OES_MB_OC1_RELEASE_MODE': 'HOLD'},
+                {'OES_MB_OC1_TLS_TERMINATION': 'wsgi'},
+                {'OES_CODESPACES_USE_X_FORWARDED_HOST': '0'},
+                {'OES_MB_OC1_HOST': 'oes.private.test', 'OES_MB_OC1_ORIGIN': 'https://oes.private.test'},
+                {'OES_MB_OC1_HOST': 'oes.app.github.dev.invalid', 'OES_MB_OC1_ORIGIN': 'https://oes.app.github.dev.invalid'},
+                {'OES_MB_OC1_HOST': '*.app.github.dev', 'OES_MB_OC1_ORIGIN': 'https://*.app.github.dev'},
+                {'OES_MB_OC1_ORIGIN': 'http://' + env['OES_MB_OC1_HOST']},
+                {'OES_MB_OC1_ORIGIN': 'https://other.app.github.dev'}):
+            with self.subTest(change=change), self.assertRaises(RuntimeError):
+                private_configuration({**env, **change})
+        for name in ('OES_MB_OC1_RELEASE_MODE', 'OES_CODESPACES_USE_X_FORWARDED_HOST'):
+            missing = dict(env); del missing[name]
+            with self.subTest(missing=name), self.assertRaises(RuntimeError):
+                private_configuration(missing)
+
+    def test_native_csrf_local_exception_still_requires_token_and_rejects_other_origins(self):
+        from config.mb_oc1 import private_configuration
+        from django.conf import settings
+        from django.http import HttpResponse
+        from django.middleware.csrf import CsrfViewMiddleware, get_token
+        from django.test import RequestFactory
+        env = self.csrf_exception_environment()
+        seed = RequestFactory().get('/')
+        token = get_token(seed)
+        wrong = ('a' if token[0] != 'a' else 'b') + token[1:]
+        for opt_in in ('0', '1'):
+            profile = private_configuration({**env, 'OES_CODESPACES_CSRF_LOCALHOST_ORIGIN': opt_in})
+            http = {k: v for k, v in profile.items() if k not in ('DATABASES', 'LOGGING')}
+            with self.settings(**http):
+                for origin, value, cookie in (
+                        (env['OES_MB_OC1_ORIGIN'], token, True),
+                        ('https://localhost:8000', token, True),
+                        ('https://localhost:8000', None, True), ('https://localhost:8000', wrong, True),
+                        ('https://localhost:8000', 'invalid!', True), ('https://localhost:8000', token, False),
+                        ('http://localhost:8000', token, True), ('https://localhost:8001', token, True),
+                        ('https://127.0.0.1:8000', token, True), ('https://unexpected.invalid', token, True)):
+                    with self.subTest(opt_in=opt_in, origin=origin, token=value, cookie=cookie):
+                        data = {} if value is None else {'csrfmiddlewaretoken': value}
+                        request = RequestFactory().post('/accounts/login/', data,
+                            HTTP_HOST='backend.invalid:8000', HTTP_X_FORWARDED_HOST=env['OES_MB_OC1_HOST'],
+                            HTTP_X_FORWARDED_PROTO='https', HTTP_ORIGIN=origin)
+                        if cookie:
+                            request.COOKIES[settings.CSRF_COOKIE_NAME] = seed.META['CSRF_COOKIE']
+                        middleware = CsrfViewMiddleware(lambda request: HttpResponse())
+                        middleware.process_request(request)
+                        # Only the native CSRF check runs: no login view, backend or Q0 submission.
+                        response = middleware.process_view(request, lambda request: HttpResponse(), (), {})
+                        allowed = cookie and value == token and (origin == env['OES_MB_OC1_ORIGIN']
+                            or opt_in == '1' and origin == 'https://localhost:8000')
+                        if allowed:
+                            self.assertIsNone(response)
+                        else:
+                            self.assertEqual(response.status_code, 403)
+
     def test_is_secure_uses_first_stripped_component_or_wsgi_fallback(self):
         # A header overrides WSGI when configured, even if the peer is untrusted.
         for secure, proto, expected in (
