@@ -78,3 +78,30 @@ O caso normal demonstra que os três campos encaminhados foram acrescentados ent
 O processo cliente local alcançou diretamente o único listener observado, via loopback, sem passar pelo HTTPS gerenciado. O coletor também observou par loopback no caso autorizado via ingresso. Assim, a observação do endereço do par, por si só, não identifica o caminho da requisição. A custódia declarada reduz o risco administrativo, sem estabelecer isolamento entre processos.
 
 Ao fim, o coletor foi encerrado, a porta encaminhada permanecia `Private` e a inspeção encontrou zero listeners TCP na porta 8000. O Codespace existente permaneceu em uso para publicação. A Etapa B permanece pendente de evidência suficiente de proveniência do esquema e de avaliação da divergência de `Host`. Nenhum gate foi promovido.
+
+## Ensaio complementar — 2026-11-18 UTC
+
+**Etapa A: FAIL.** A hipótese de compatibilidade do `Host` convencional (H2) foi **REFUTADA** para o caminho exercitado e o contrato nominal. A hipótese de influência indevida do cliente sobre o esquema (H1) permanece **INCONCLUSIVA**. A tentativa de homologação foi interrompida após a incompatibilidade material de H2.
+
+### Base e método
+
+O Freshness Gate confirmou a `main` remota em `3ee2b1a733ee412078c5f5859f5aeb30d5fa915d` e a branch `codex/oes-https-ingress-validation` em `22a7826f1c9f46eb94d4af394ac7836fdd774d41` antes do ensaio e da publicação. Foram consultados o CP349, os três documentos canônicos, as duas tentativas deste relatório e os testes de Host do PR #44.
+
+No Codespace existente, um coletor Python temporário, com ambiente vazio, escutou somente em `127.0.0.1:8000`. A GitHub CLI confirmou a porta `Private` antes e durante a execução. Um cliente autenticado fez uma requisição HTTPS normal com validação TLS e identificador aleatório, sem cabeçalhos encaminhados definidos pelo cliente. HTTP 200 com marcador e registro do coletor confirmou a correlação. Os valores de autoridade foram comparados em memória. A evidência persistida contém apenas propriedades e resultados da comparação.
+
+### Resultados
+
+| Hipótese e caso | Observação | Classificação |
+| --- | --- | --- |
+| H1 — esquema ausente no cliente | O cliente não definiu `X-Forwarded-Proto`. O coletor registrou uma ocorrência com `https`. Há evidência de inserção no caminho exercitado para esse caso. A camada interna responsável não foi instrumentada. | Caso normal observado. |
+| H1 — influência de valores divergentes, múltiplos ou duplicados | Esses casos não foram executados neste ensaio. A matriz histórica de navegador não confirmou a transmissão efetiva. Substituição, concatenação e preservação diante de entrada do cliente continuam indeterminadas. | **INCONCLUSIVA** |
+| H2 — comparação das autoridades | A origem HTTPS nominal usou o hostname esperado, sem porta explícita. O coletor recebeu um único `Host`, sintaticamente válido, em minúsculas, sem ponto final, com porta explícita 8000 e hostname diferente da origem mesmo após a normalização do Django. `X-Forwarded-Host` coincidiu com o hostname nominal. | Diferença material de hostname confirmada. |
+| H2 — validação Django offline | Em processo isolado, `HttpRequest.get_host()` do Django 5.2.19 aceitou o controle nominal e levantou `DisallowedHost` para a autoridade capturada, com `ALLOWED_HOSTS` limitado ao hostname nominal e `USE_X_FORWARDED_HOST=False`. O campo encaminhado nominal estava presente em ambos os casos. | Hipótese de compatibilidade **REFUTADA**. |
+
+O resultado offline demonstra a rejeição na validação nativa do Host. Os testes integrados do PR #44 registram HTTP 400 para Host inválido no fluxo testado. Nenhuma resposta do Django operacional foi observada no Codespace. O achado se limita ao caminho e à configuração nominal exercitados.
+
+### STOP e encerramento
+
+O coletor foi encerrado e seu processo recolhido. A inspeção final encontrou zero listeners TCP na porta 8000 e confirmou novamente `Private`. O encaminhamento preexistente permaneceu configurado. A campanha não ativou Django operacional, não conectou ao banco e não promoveu gates.
+
+Uma eventual Etapa B depende de decisão arquitetural autorizada sobre o Host, evidência suficiente sobre a proveniência do esquema, revisão independente e autorização posterior.
