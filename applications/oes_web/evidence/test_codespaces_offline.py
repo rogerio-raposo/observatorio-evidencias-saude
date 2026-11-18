@@ -167,6 +167,97 @@ class HttpsHostCsrfTests(SimpleTestCase):
                     HTTP_X_FORWARDED_PROTO='https', HTTP_X_FORWARDED_HOST=self.host)
                 self.assertEqual(response.status_code, 400)
 
+    def test_forwarded_host_selection_is_explicit_reversible_and_only_configuration(self):
+        from config.mb_oc1 import private_configuration, _require_release
+        from evidence.question_preparation import PreparationHold
+        name = 'OES_CODESPACES_USE_X_FORWARDED_HOST'
+        for mode in ('wsgi', 'trusted_proxy'):
+            baseline = private_configuration({**self.environment, 'OES_MB_OC1_TLS_TERMINATION': mode})
+            self.assertFalse(baseline['USE_X_FORWARDED_HOST'])
+            for value in ('1', '0', '1', '0'):
+                with self.subTest(mode=mode, value=value):
+                    candidate = private_configuration({**self.environment,
+                        'OES_MB_OC1_TLS_TERMINATION': mode, name: value})
+                    self.assertEqual(candidate, {**baseline, 'USE_X_FORWARDED_HOST': value == '1'})
+                    self.assertFalse(candidate['USE_X_FORWARDED_PORT'])
+                    # Full candidate config cannot release the actual source gate.
+                    http = {k: v for k, v in candidate.items() if k not in ('DATABASES', 'LOGGING')}
+                    with self.settings(**http), self.assertRaises(PreparationHold):
+                        _require_release()
+        for value in ('', 'true', 'False', 'automatic', '2', ' 1 ', None, True, 1):
+            with self.subTest(invalid=value), self.assertRaises(RuntimeError):
+                private_configuration({**self.environment, name: value})
+
+    def test_selected_forwarded_host_validates_nominal_authority_and_absolute_urls(self):
+        from django.core.exceptions import DisallowedHost
+        from django.test import Client
+        from config.mb_oc1 import private_configuration
+        c = private_configuration({**self.environment, 'OES_CODESPACES_USE_X_FORWARDED_HOST': '1'})
+        with self.settings(USE_X_FORWARDED_HOST=c['USE_X_FORWARDED_HOST']):
+            request = self.request(host='backend.invalid:8000', proto='https',
+                HTTP_X_FORWARDED_HOST=self.host, HTTP_X_FORWARDED_PORT='9999')
+            self.assertEqual(request.get_host(), self.host)
+            self.assertEqual(request.build_absolute_uri(), self.origin + request.get_full_path())
+            self.assertEqual(request.get_port(), '80')
+            for authority in ('unexpected.invalid', self.host + '.unexpected.invalid',
+                    self.host + ',unexpected.invalid', 'unexpected.invalid,' + self.host, ''):
+                with self.subTest(authority=authority):
+                    # Even an approved conventional Host cannot override a bad forwarded Host.
+                    request = self.request(proto='https', HTTP_X_FORWARDED_HOST=authority)
+                    with self.assertRaises(DisallowedHost):
+                        request.get_host()
+                    with self.assertRaises(DisallowedHost):
+                        request.build_absolute_uri()
+                    response = Client().get('/accounts/login/', HTTP_HOST=self.host,
+                        HTTP_X_FORWARDED_PROTO='https', HTTP_X_FORWARDED_HOST=authority)
+                    self.assertEqual(response.status_code, 400)
+            # Native Django falls back only when the header is absent, validating Host too.
+            self.assertEqual(self.request(proto='https').get_host(), self.host)
+            with self.assertRaises(DisallowedHost):
+                self.request(host='backend.invalid:8000', proto='https').get_host()
+        with self.assertRaises(DisallowedHost):
+            self.request(host='backend.invalid:8000', proto='https', HTTP_X_FORWARDED_HOST=self.host).get_host()
+
+    def test_selected_forwarded_host_redirects_to_nominal_https_without_loop(self):
+        from django.test import Client
+        with self.settings(USE_X_FORWARDED_HOST=True):
+            client = Client(HTTP_HOST='backend.invalid:8000', HTTP_X_FORWARDED_HOST=self.host)
+            path = '/accounts/login/?next=%2Fquestions%2Fq0%2Fregister%2F'
+            response = client.get(path, HTTP_X_FORWARDED_PROTO='http')
+            self.assertEqual(response.status_code, 301)
+            self.assertEqual(response['Location'], self.origin + path)
+            final = client.get(path, HTTP_X_FORWARDED_PROTO='https')
+            self.assertEqual(final.status_code, 423)
+            self.assertNotIn('Location', final)
+
+    def test_selected_forwarded_host_csrf_and_mutating_routes_remain_held(self):
+        from config.mb_oc1 import _require_release
+        with self.settings(USE_X_FORWARDED_HOST=True):
+            client, token, _ = self.csrf_client()
+            client.defaults.update(HTTP_HOST='backend.invalid:8000',
+                HTTP_X_FORWARDED_HOST=self.host, HTTP_X_FORWARDED_PROTO='https')
+            for headers, value, expected in (
+                    ({'HTTP_ORIGIN': self.origin}, token, 423),
+                    ({'HTTP_ORIGIN': 'https://backend.invalid:8000'}, token, 403),
+                    ({'HTTP_ORIGIN': 'https://unexpected.invalid'}, token, 403),
+                    ({'HTTP_ORIGIN': self.origin}, '', 403),
+                    ({'HTTP_ORIGIN': self.origin}, 'invalid!', 403),
+                    ({'HTTP_REFERER': self.origin + '/accounts/login/'}, token, 423),
+                    ({'HTTP_REFERER': 'https://backend.invalid:8000/'}, token, 403),
+                    ({}, token, 403)):
+                with self.subTest(headers=headers, expected=expected):
+                    response = client.post('/questions/q0/register/',
+                        {'csrfmiddlewaretoken': value}, **headers)
+                    self.assertEqual(response.status_code, expected)
+            with patch('config.mb_oc1._require_release', wraps=_require_release) as release, \
+                 patch('evidence.forms.prepare_q0_submission', side_effect=AssertionError('writer reached')), \
+                 patch('evidence.forms.prepare_q0_reference', side_effect=AssertionError('reader reached')):
+                for path in ('/accounts/login/', '/accounts/logout/', '/questions/q0/register/', '/questions/q0/review/'):
+                    self.assertEqual(client.post(path, {'csrfmiddlewaretoken': token},
+                        HTTP_ORIGIN=self.origin).status_code, 423)
+                # The GET-only reference view rejects POST before even consulting release.
+                self.assertEqual(release.call_count, 3)
+
     def test_csrf_origin_and_token_matrix_reaches_only_the_held_view(self):
         from config.mb_oc1 import _require_release
         client, token, _ = self.csrf_client()
@@ -216,17 +307,20 @@ class HttpsHostCsrfTests(SimpleTestCase):
         from django.contrib.sessions.middleware import SessionMiddleware
         from django.contrib.sessions.backends.db import SessionStore
         from django.http import HttpResponse
-        _, _, csrf_response = self.csrf_client()
-        request = self.request(proto='https')
-        request.COOKIES[settings.SESSION_COOKIE_NAME] = 'a' * 32
-        middleware = SessionMiddleware(lambda request: HttpResponse())
-        middleware.process_request(request)
-        # Stub only persistence: assert real middleware cookie emission, not a DB session proof.
-        with patch.object(SessionStore, 'load', return_value={}), patch.object(SessionStore, 'save') as save:
-            request.session['offline'] = True
-            response = middleware.process_response(request, HttpResponse())
-        save.assert_called_once()
-        for cookie in (csrf_response.cookies[settings.CSRF_COOKIE_NAME], response.cookies[settings.SESSION_COOKIE_NAME]):
-            self.assertTrue(cookie['secure'])
-            self.assertTrue(cookie['httponly'])
-            self.assertEqual(cookie['samesite'], 'Lax')
+        for forwarded in (False, True):
+            with self.subTest(forwarded=forwarded), self.settings(USE_X_FORWARDED_HOST=forwarded):
+                _, _, csrf_response = self.csrf_client()
+                request = self.request(proto='https', host='backend.invalid:8000' if forwarded else self.host,
+                    HTTP_X_FORWARDED_HOST=self.host)
+                request.COOKIES[settings.SESSION_COOKIE_NAME] = 'a' * 32
+                middleware = SessionMiddleware(lambda request: HttpResponse())
+                middleware.process_request(request)
+                # Stub only persistence: real cookie emission isn't a DB session proof.
+                with patch.object(SessionStore, 'load', return_value={}), patch.object(SessionStore, 'save') as save:
+                    request.session['offline'] = True
+                    response = middleware.process_response(request, HttpResponse())
+                save.assert_called_once()
+                for cookie in (csrf_response.cookies[settings.CSRF_COOKIE_NAME], response.cookies[settings.SESSION_COOKIE_NAME]):
+                    self.assertTrue(cookie['secure'])
+                    self.assertTrue(cookie['httponly'])
+                    self.assertEqual(cookie['samesite'], 'Lax')

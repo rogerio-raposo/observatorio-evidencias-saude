@@ -31,6 +31,11 @@ def private_configuration(environ):
     tls = environ.get('OES_MB_OC1_TLS_TERMINATION')
     if tls not in ('wsgi', 'trusted_proxy'):
         raise RuntimeError('HOLD: MB-OC1 TLS termination must be explicit')
+    # Experimental Codespaces candidate (Doc 362, §5.1), not proxy attestation
+    # or operational authorization. Unset/0 preserves conventional Host; 1 opts in.
+    forwarded_host = environ.get('OES_CODESPACES_USE_X_FORWARDED_HOST', '0')
+    if forwarded_host not in ('0', '1'):
+        raise RuntimeError('HOLD: invalid Codespaces forwarded-host selection')
     names = ['OES_MB_OC1_AUTH_PASSWORD', 'OES_MB_OC1_READER_PASSWORD', 'OES_MB_OC1_WRITER_PASSWORD']
     passwords = [environ.get(n, '') for n in names]
     if any(not isinstance(p, str) or not p for p in passwords) or len(set(passwords)) != len(passwords):
@@ -46,6 +51,7 @@ def private_configuration(environ):
     databases['oes_q0_writer'] = database('oes_qprep_login', passwords[2], '')
     return dict(DEBUG=False, SECRET_KEY=key, SECRET_KEY_FALLBACKS=[], ALLOWED_HOSTS=[host],
         CSRF_TRUSTED_ORIGINS=[origin], SECURE_SSL_REDIRECT=True,
+        USE_X_FORWARDED_HOST=forwarded_host == '1', USE_X_FORWARDED_PORT=False,
         X_FRAME_OPTIONS='DENY', SECURE_CONTENT_TYPE_NOSNIFF=True, SECURE_REFERRER_POLICY='same-origin',
         SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https') if tls == 'trusted_proxy' else None,
         SESSION_COOKIE_SECURE=True, SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax',
