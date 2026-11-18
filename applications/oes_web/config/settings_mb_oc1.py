@@ -1,4 +1,4 @@
-"""Unconfigured by default; source release remains closed even with full config."""
+"""Private profile, unconfigured by default; experimental release is explicit."""
 import os
 from .mb_oc1 import private_configuration
 _private = private_configuration(os.environ)

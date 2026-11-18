@@ -29,6 +29,42 @@ class PrivateProfileTests(SimpleTestCase):
         self.assertNotIn('MB_OC1_ROLE',p)
         with override_settings(**p),self.assertRaises(PreparationHold): require_mb_oc1()
 
+    def test_experimental_release_is_explicit_reversible_and_does_not_connect(self):
+        name='OES_MB_OC1_RELEASE_MODE'
+        for mode in ('PRIVATE_SYNTHETIC_Q0','HOLD','PRIVATE_SYNTHETIC_Q0','HOLD'):
+            profile=private_configuration({**self.env(),name:mode})
+            with self.subTest(mode=mode),override_settings(**profile),patch(
+                    'django.db.backends.postgresql.base.DatabaseWrapper.get_new_connection',
+                    side_effect=AssertionError('release must not connect')):
+                if mode=='HOLD':
+                    with self.assertRaises(PreparationHold): require_mb_oc1()
+                else:
+                    require_mb_oc1()
+        for value in ('', '1', 'true', 'Q1', 'PRODUCTION', None, True):
+            with self.subTest(value=value),self.assertRaises(RuntimeError):
+                private_configuration({**self.env(),name:value})
+        # Environment alone does not modify the default Django profile.
+        with patch.dict('os.environ',{name:'PRIVATE_SYNTHETIC_Q0'}),self.assertRaises(PreparationHold):
+            require_mb_oc1()
+
+    def test_selected_release_keeps_private_profile_and_historical_gates(self):
+        profile=private_configuration({**self.env(),'OES_MB_OC1_RELEASE_MODE':'PRIVATE_SYNTHETIC_Q0'})
+        with override_settings(**profile):
+            for change in ({'DEBUG':True},{'MB_OC1_CONFIGURED':False},{'MB_OC1_ROLE':'A'},
+                           {'ROOT_URLCONF':'config.urls'},{'SESSION_ENGINE':'django.contrib.sessions.backends.signed_cookies'},
+                           {'DATABASES':{'default':{}}}):
+                with self.subTest(change=change),override_settings(**change),self.assertRaises(PreparationHold):
+                    require_mb_oc1()
+            from evidence.question_orm_q0_repository_dormant import DjangoQ0Repository,_require_first_trial_source_activation
+            from evidence.question_orm_q0_connected_recipe_dormant import execute_connected_q0
+            for gate in (DjangoQ0Repository,_require_first_trial_source_activation,execute_connected_q0):
+                with self.assertRaises(PreparationHold): gate()
+        for name in ('OES_MB_OC1_HOST','OES_MB_OC1_ORIGIN','OES_MB_OC1_WRITER_PASSWORD',
+                     'OES_MB_OC1_READER_PASSWORD','OES_MB_OC1_CONNECT_TIMEOUT_SECONDS'):
+            env={**self.env(),'OES_MB_OC1_RELEASE_MODE':'PRIVATE_SYNTHETIC_Q0'}
+            del env[name]
+            with self.subTest(missing=name),self.assertRaises(RuntimeError): private_configuration(env)
+
     def test_incomplete_or_incompatible_configuration_rejected(self):
         for key in self.env():
             env=self.env(); del env[key]
