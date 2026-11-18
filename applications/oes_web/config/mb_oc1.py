@@ -39,6 +39,14 @@ def private_configuration(environ):
     forwarded_host = environ.get('OES_CODESPACES_USE_X_FORWARDED_HOST', '0')
     if forwarded_host not in ('0', '1'):
         raise RuntimeError('HOLD: invalid Codespaces forwarded-host selection')
+    csrf_local = environ.get('OES_CODESPACES_CSRF_LOCALHOST_ORIGIN', '0')
+    if csrf_local not in ('0', '1'):
+        raise RuntimeError('HOLD: invalid Codespaces CSRF exception selection')
+    if csrf_local == '1' and (release_mode != 'PRIVATE_SYNTHETIC_Q0'
+            or not host.endswith('.app.github.dev') or tls != 'trusted_proxy' or forwarded_host != '1'):
+        raise RuntimeError('HOLD: Codespaces CSRF exception requires the private experimental profile')
+    # Accepted experimental loss of Origin provenance; token validation remains native.
+    csrf_origins = [origin] + (['https://localhost:8000'] if csrf_local == '1' else [])
     names = ['OES_MB_OC1_AUTH_PASSWORD', 'OES_MB_OC1_READER_PASSWORD', 'OES_MB_OC1_WRITER_PASSWORD']
     passwords = [environ.get(n, '') for n in names]
     if any(not isinstance(p, str) or not p for p in passwords) or len(set(passwords)) != len(passwords):
@@ -53,7 +61,7 @@ def private_configuration(environ):
                  'oes_synthetic_reader': database('oes_pg_a4_reader', passwords[1], '-c default_transaction_read_only=on')}
     databases['oes_q0_writer'] = database('oes_qprep_login', passwords[2], '')
     return dict(DEBUG=False, SECRET_KEY=key, SECRET_KEY_FALLBACKS=[], ALLOWED_HOSTS=[host],
-        CSRF_TRUSTED_ORIGINS=[origin], SECURE_SSL_REDIRECT=True,
+        CSRF_TRUSTED_ORIGINS=csrf_origins, SECURE_SSL_REDIRECT=True,
         USE_X_FORWARDED_HOST=forwarded_host == '1', USE_X_FORWARDED_PORT=False,
         X_FRAME_OPTIONS='DENY', SECURE_CONTENT_TYPE_NOSNIFF=True, SECURE_REFERRER_POLICY='same-origin',
         SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https') if tls == 'trusted_proxy' else None,

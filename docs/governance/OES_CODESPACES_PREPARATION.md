@@ -26,6 +26,14 @@ Gunicorn fica em 127.0.0.1:8000, sem exposição direta e sem confiança automá
 
 **STOP operacional se a confiança no esquema/proxy não puder ser demonstrada.** Não introduzimos proxy adicional ou alteramos validadores para simular essa comprovação. Não há incompatibilidade sintática entre o hostname HTTPS real esperado e o validador atual; a topologia/headers só podem ser comprovados no ambiente real.
 
+## Exceção CSRF M3-C — candidata offline, não ativada
+
+Por decisão expressa do responsável, `OES_CODESPACES_CSRF_LOCALHOST_ORIGIN=1` acrescenta **somente** `https://localhost:8000` à origem pública nominal. Exige simultaneamente o modo `PRIVATE_SYNTHETIC_Q0`, hostname nominal terminado em `.app.github.dev` (sem wildcard), origem pública HTTPS correspondente, `trusted_proxy` e `OES_CODESPACES_USE_X_FORWARDED_HOST=1`. Ausência ou `0` preserva a lista original; outros valores ou combinação incompatível falham fechados. Não altera ALLOWED_HOSTS, cookies, sessões, token CSRF, autorização ou P1/D3; não é política geral ou de produção do P2.
+
+O operador observou origem pública no navegador e `https://localhost:8000` no WSGI. Confiar excepcionalmente nessa origem interna reduz a garantia de procedência: se o intermediário converter também origens externas não autorizadas para o mesmo valor, a checagem de Origin não consegue distingui-las. Token válido, autenticação e autorização continuam obrigatórios, mas não eliminam integralmente esse risco. A exceção só é admissível em demonstração sintética, privada, supervisionada e de duração delimitada, sob autorização operacional específica. Esta implementação não a concede; **M3-C STOP até validação**.
+
+Ativação futura exige revisão do artefato, aprovação da janela/risco e configuração nominal completa, com aplicação dos settings por reinício autorizado do processo. Para desativar, remover a opção ou definir `0` e reiniciar; para encerrar a liberação funcional, retornar também `OES_MB_OC1_RELEASE_MODE=HOLD`, respeitando a ordem de reconciliação/logout do P2. Deixar a exceção em `1` ao retornar a HOLD é configuração incompatível e impede carregar o perfil. Nenhum desses parâmetros foi selecionado operacionalmente neste trabalho.
+
 ## Validação e início supervisionado
 
 Verificação local sem rede: executar os testes offline de configuração, que carregam o arquivo Gunicorn com ambiente sintético e bloqueiam conexão. `gunicorn --check-config` pode importar o WSGI e carregar settings: não usar esse comando com segredos reais como se fosse teste sem efeitos. Não usar --print-config (pode expor ambiente/settings).
@@ -38,7 +46,7 @@ python -m gunicorn --config config/gunicorn_codespaces.py
 
 Não adicionar flags que substituam bind, settings, logs, workers ou headers fora da revisão aprovada. A configuração fixa config.wsgi:application e DJANGO_SETTINGS_MODULE=config.settings_mb_oc1; não usa runserver. Não executa migrations, SQL ou provisionamento. A importação Django não é prova de conexão/ACL; requests Auth podem conectar ao PostgreSQL, mesmo sem escrita científica. Portanto, iniciar/encaminhar/acessar com secrets não está autorizado neste despacho.
 
-O `_require_release()` continua raise incondicional: login/logout/registro/consulta privados ficam bloqueados (423), mesmo com configuração completa. Nenhum script altera esse gate. A liberação científica exige revisão/autorização separadas conforme P2. Leitura D3 continua exclusivamente em oes_synthetic_reader, independente do atomic em oes_q0_writer, com Auth em default; não reintroduzir A/B nem repetir CP348.
+Após M3-A, `_require_release()` mantém login/logout/registro/consulta privados em HOLD (423) por padrão; a capacidade experimental exige seleção explícita no perfil completo e autorização operacional separada conforme P2. Nenhum script altera esse controle. Leitura D3 continua exclusivamente em oes_synthetic_reader, independente do atomic em oes_q0_writer, com Auth em default; não reintroduzir A/B nem repetir CP348.
 
 ## Parada e limites
 
