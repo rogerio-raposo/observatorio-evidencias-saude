@@ -13,6 +13,7 @@ from evidence.question_orm_q0_evidence_dormant import (
     _WriterTrace, _expected_receipt, _collect_q0_commit_evidence,
     _capture_q0_writer_transaction, _review_q0_privileges, _recover_q0_commit_evidence,
 )
+from evidence.question_uow_offline import Receipt
 from preparer_identity.models import PreparerIdentity
 
 E = "evidence.question_orm_q0_evidence_dormant."
@@ -142,6 +143,46 @@ class EvidenceD3Tests(SimpleTestCase):
 
     def collect(self, trace=None):
         return _collect_q0_commit_evidence(command=self.command, actor_id=self.actor, trace=trace)
+
+    def simulate_closed_q0(self, *, linked_successor=True):
+        from .models import OesQuestionVersion
+
+        # Build the real lazy payload subquery, but simulate every ORM read.
+        self.models["OesQuestionVersion"].objects.filter.side_effect = OesQuestionVersion.objects.filter
+        versions = self.models["OesEntityVersion"].objects.using.return_value
+
+        def filter_version(*predicates, **fields):
+            if fields.get("pk") == self.v:
+                matches = (fields.get("version_status") == "superseded"
+                           and fields.get("valid_to__isnull") is False
+                           and fields.get("created_by") == self.actor
+                           and fields.get("entity_uuid") == self.e
+                           and fields.get("version_no") == 1)
+            else:
+                matches = (linked_successor and len(predicates) == 1
+                           and fields.get("supersedes_version_uuid") == self.v
+                           and fields.get("entity_uuid") == self.e
+                           and fields.get("version_no") == 2
+                           and fields.get("version_status") == "current")
+            return Mock(count=Mock(return_value=int(matches)))
+
+        versions.filter.side_effect = filter_version
+
+    def test_historical_replay_and_conflict_after_q1(self):
+        self.simulate_closed_q0()
+        self.repo.find_receipt.return_value = self.expected
+        self.assertEqual(self.canonical()["version"], 1)
+        self.repo.insert_receipt.assert_not_called()
+        self.repo.find_receipt.return_value = Receipt(
+            self.actor, self.command.request_id, "f" * 64, self.command.question_id, 1, "REGISTER_Q0")
+        with self.assertRaises(PreparationConflict):
+            self.canonical()
+        self.repo.insert_receipt.assert_not_called()
+
+    def test_closed_q0_cannot_confirm_new_candidate_with_lost_acknowledgement(self):
+        self.simulate_closed_q0()
+        self.assertEqual(self.collect(self.trace())["outcome"], "INDETERMINATE")
+        self.assertEqual(self.collect()["outcome"], "PERSISTED")
 
     def canonical(self):
         # Unit-test replacement only. No production constructor activation or
