@@ -210,6 +210,7 @@ def _collect_q0_commit_evidence(*, command, actor_id, trace=None):
                     fingerprint=expected.fingerprint, entity_uuid=record.question_entity_uuid,
                     version_uuid=record.resulting_version_uuid, original_text=command.original_text,
                     _snapshot_reader=reader,
+                    _allow_historical=trace is None or trace.candidate is None,
                 )
                 result = _classify_q0_commit_observation(expected_receipt=expected,
                     observed_receipt=receipt, boundary="UNKNOWN",
@@ -351,8 +352,8 @@ def _recover_q0_reference(*, user, request_id, question_id, fingerprint):
     finally:
         if reader is not None:
             reader.close()
-    # Discovery was not a snapshot proof. The collector reopens its own session,
-    # snapshot and five-record verification; contradictions remain fail-closed.
+    # Discovery is provisional. The owned snapshot verifies the five records
+    # and, for a closed Q0, the direct successor that explains its closure.
     require_question_preparer(user)
     if persisted_preparer_actor_id(user) != actor:
         return _indeterminate()

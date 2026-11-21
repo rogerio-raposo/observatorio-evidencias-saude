@@ -495,7 +495,7 @@ def _rollback_recipe(*, alias, actor_id, request_id, question_id, original_text,
 def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
                                   request_id, question_id, fingerprint,
                                   entity_uuid, version_uuid, original_text,
-                                  _snapshot_reader=None):
+                                  _snapshot_reader=None, _allow_historical=False):
     """Dormant, internal positive readback; NOT a writer or execution gate.
 
     Caller must separately establish a successful authorized commit and
@@ -517,6 +517,8 @@ def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
     owned_snapshot = _snapshot_reader is reader
     if _snapshot_reader is not None and not owned_snapshot:
         raise PreparationHold("HOLD: invalid owned readback snapshot")
+    if _allow_historical and not owned_snapshot:
+        raise PreparationHold("HOLD: historical Q0 requires an owned snapshot")
     try:
         if (reader.vendor != "postgresql"
                 or (not owned_snapshot and (reader.in_atomic_block or not reader.get_autocommit()))
@@ -537,15 +539,36 @@ def _verify_committed_q0_readback(*, writer_alias, read_alias, actor_id,
                 cursor.execute("SELECT current_setting('transaction_isolation'),pg_is_in_recovery()")
                 if cursor.fetchone() != ("repeatable read", False):
                     raise PreparationHold("HOLD: readback requires consistent primary snapshot")
+        versions = OesEntityVersion.objects.using(read_alias)
+        q0_identity = dict(pk=version_uuid, entity_uuid=entity_uuid, version_no=1, created_by=actor_id)
+        version_verified = versions.filter(**q0_identity, version_status="current").count() == 1
+        if not version_verified and _allow_historical:
+            # Q1 closes the entity version. The Q0 question version and
+            # original receipt still address the same immutable UUIDs.
+            from django.db.models import Exists, OuterRef
+
+            q1_payload = OesQuestionVersion.objects.filter(
+                entity_uuid=OuterRef("entity_uuid"), version_uuid=OuterRef("version_uuid"),
+                preparation_stage="q1_proposed", original_text=original_text,
+                normalized_text__isnull=False,
+            ).exclude(normalized_text="")
+            version_verified = (
+                versions.filter(**q0_identity, version_status="superseded",
+                                valid_to__isnull=False).count() == 1
+                and versions.filter(
+                    Exists(q1_payload), entity_uuid=entity_uuid, version_no=2,
+                    supersedes_version_uuid=version_uuid, version_status="current",
+                    valid_to__isnull=True, created_by=actor_id,
+                    change_type="normalization_proposed",
+                ).count() == 1
+            )
         checks = (
             OesEntity.objects.using(read_alias).filter(
                 pk=entity_uuid, oes_id=question_id, entity_type="Question",
                 created_by=actor_id).count() == 1,
             OesQuestion.objects.using(read_alias).filter(
                 pk=entity_uuid, responsible_actor_id=actor_id).count() == 1,
-            OesEntityVersion.objects.using(read_alias).filter(
-                pk=version_uuid, entity_uuid=entity_uuid, version_no=1,
-                version_status="current", created_by=actor_id).count() == 1,
+            version_verified,
             OesQuestionVersion.objects.using(read_alias).filter(
                 pk=version_uuid, entity_uuid=entity_uuid,
                 original_text=original_text, preparation_stage="q0_draft",

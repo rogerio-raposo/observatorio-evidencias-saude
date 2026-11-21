@@ -8,9 +8,9 @@ from .models import (
     OesEntity, OesQuestion, OesEntityVersion,
     OesQuestionVersion, OesQuestionCommandReceipt,
 )
-from .question_preparation import PreparationHold
+from .question_preparation import PreparationConflict, PreparationHold, validate_propose_q1
 from .question_uow_offline import Receipt
-from .question_orm_transaction_offline import scoped_current_question, request_receipt
+from .question_orm_transaction_offline import scoped_current_question, request_receipt, q1_version_transition
 
 
 from contextlib import contextmanager
@@ -29,6 +29,7 @@ class _TrialScope:
     transaction_used: bool = False
     observation: object = None
     conflict_before_insert: bool = False
+    q1: bool = False
 
 
 _trial_scope = ContextVar("q0_first_trial_scope", default=None)
@@ -95,6 +96,42 @@ def _application_q0_scope(*, user, command):
         _trial_scope.reset(token)
 
 
+def _require_q1_source_activation():
+    raise PreparationHold("HOLD: connected Q1 not authorized")
+
+
+@contextmanager
+def _application_q1_scope(*, user, command):
+    _require_q1_source_activation()
+    from .preparation_auth import require_question_preparer
+    from .question_preparation import command_fingerprint
+    from preparer_identity.resolver import persisted_preparer_actor_id
+    require_question_preparer(user)
+    validate_propose_q1(command)
+    if _trial_scope.get() is not None:
+        raise PreparationHold("HOLD: nested Q1 application scope")
+    scope = _TrialScope(user, command, persisted_preparer_actor_id(user),
+                        command_fingerprint(command), q1=True)
+    token = _trial_scope.set(scope)
+    try:
+        yield scope
+    finally:
+        scope.active = False
+        scope.binding = None
+        _trial_scope.reset(token)
+
+
+def _expected_scope_receipt(scope):
+    from .question_orm_q0_evidence_dormant import _expected_receipt
+    if scope.q1:
+        command = scope.command
+        return Receipt(scope.actor, command.request_id, scope.fingerprint,
+                       command.question_id, command.expected_version + 1,
+                       "PROPOSE_Q1", command.justification)
+    return _expected_receipt(scope.command, scope.actor)
+
+
+
 def _require_restricted_q0_construction(*, user=None, command=None):
     scope = _trial_scope.get()
     if type(scope) is not _TrialScope or not scope.active:
@@ -119,8 +156,7 @@ def _bind_trial_transaction(writer, trace):
         yield
         return
     _require_restricted_q0_construction()
-    from .question_orm_q0_evidence_dormant import _expected_receipt
-    if (trace.expected != _expected_receipt(scope.command, scope.actor)
+    if (trace.expected != _expected_scope_receipt(scope)
             or trace.atomic_entered is not True
             or scope.transaction_used or scope.binding is not None or not trace.xid or not trace.writer_privileges
             or trace.writer_identity != ("oes_qprep_login", "oes_sandbox", "off")
@@ -141,14 +177,13 @@ def _bind_trial_transaction(writer, trace):
 def _check_trial_binding(writer, expected=None):
     scope = _require_restricted_q0_construction()
     binding = scope.binding
-    from .question_orm_q0_evidence_dormant import _expected_receipt
     if (binding is None or (expected is not None and binding is not expected)
             or writer is not binding[0] or writer.connection is not binding[1]
             or not writer.atomic_blocks or writer.atomic_blocks[-1] is not binding[2]
             or not writer.in_atomic_block or writer.get_autocommit()
             or writer.closed_in_transaction is True or writer.needs_rollback is True
             or binding[3].xid != binding[4]
-            or binding[3].expected != _expected_receipt(scope.command, scope.actor)):
+            or binding[3].expected != _expected_scope_receipt(scope)):
         raise PreparationHold("HOLD: trial transaction binding mismatch")
     return binding
 
@@ -218,6 +253,44 @@ class DjangoQ0Repository:
             original_text=original_text, normalized_text=None,
             preparation_stage="q0_draft",
         )
+
+    def propose_q1(self, command, actor_id, next_uuid):
+        from django.db import connections
+        from django.db.models import Exists, OuterRef
+        from django.db.models.functions import Now
+
+        scope = _require_restricted_q0_construction()
+        if not scope.q1 or scope.command != command or scope.actor != actor_id:
+            raise PreparationHold("HOLD: Q1 scope mismatch")
+        _check_trial_binding(connections[self.alias], self._trial_binding)
+        draft = OesQuestionVersion.objects.filter(
+            entity_uuid=OuterRef("entity_uuid"), version_uuid=OuterRef("version_uuid"),
+            original_text=command.original_text, preparation_stage="q0_draft",
+            normalized_text__isnull=True,
+        )
+        prior = scoped_current_question(question_id=command.question_id, actor_id=actor_id).using(
+            self.alias).filter(Exists(draft), version_no=command.expected_version).select_for_update(
+            of=("self",)).values("entity_uuid", "version_uuid").first()
+        if prior is None:
+            raise PreparationConflict("HOLD: stale, incompatible or inaccessible Q0")
+        entity_uuid, previous_uuid = prior["entity_uuid"], prior["version_uuid"]
+        updated = q1_version_transition(version_uuid=previous_uuid, entity_uuid=entity_uuid,
+                                        expected_version=command.expected_version).using(self.alias).update(
+            version_status="superseded", valid_to=Now())
+        if updated != 1:
+            raise PreparationConflict("HOLD: Q1 version update conflict")
+        OesEntityVersion.objects.using(self.alias).create(
+            version_uuid=next_uuid, entity_uuid=entity_uuid,
+            version_no=command.expected_version + 1, version_status="current",
+            supersedes_version_uuid=previous_uuid, created_by=actor_id,
+            change_type="normalization_proposed",
+        )
+        OesQuestionVersion.objects.using(self.alias).create(
+            version_uuid=next_uuid, entity_uuid=entity_uuid,
+            original_text=command.original_text, normalized_text=command.normalized_text,
+            preparation_stage="q1_proposed",
+        )
+        return entity_uuid
 
     def insert_receipt(self, receipt, entity_uuid, version_uuid):
         from django.db import connections

@@ -152,6 +152,18 @@ class ReferenceRecoveryTests(SimpleTestCase):
         self.f.record.actor_id='other'
         result=self.review(); self.assertEqual(result['outcome'],'INDETERMINATE'); self.assertNotIn('original_text',result)
 
+    def test_reference_keeps_q0_after_linked_q1_closes_it(self):
+        self.assertEqual(self.review()["outcome"], "PERSISTED")
+        self.f.simulate_closed_q0()
+        historical = self.review()
+        self.assertEqual(historical["outcome"], "PERSISTED")
+        self.assertEqual(historical["version"], 1)
+        self.assertEqual(historical["original_text"], self.f.command.original_text)
+        self.assertEqual(historical["fingerprint"], self.data["fingerprint"])
+        self.f.simulate_closed_q0(linked_successor=False)
+        self.assertEqual(self.review()["outcome"], "INDETERMINATE")
+        self.f.writer.cursor.assert_not_called()
+
     def test_discovery_is_not_success_and_missing_receipt_not_absence(self):
         self.f.bad_reader_identity=True
         self.assertEqual(self.review()['outcome'],'INDETERMINATE'); self.f.bad_reader_identity=False
