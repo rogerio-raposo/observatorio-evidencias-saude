@@ -275,8 +275,14 @@ def _require_q0_application_recovery_activation():
 
 
 def _require_q0_read_recovery_source_activation(*, user=None, command=None):
-    """General application reader only; old CP348 approval cannot activate it."""
-    _require_q0_application_recovery_activation()
+    """Application reader or exact private-trial command; CP348 stays retired."""
+    from scripts import pf_i04_a44_trial as trial
+
+    trial_actor = None
+    if command is not None and trial._window.get() is not None:
+        trial_actor = trial._require_operation(user=user, command=command, operation="q0-read")
+    else:
+        _require_q0_application_recovery_activation()
     from .question_preparation import validate_register_q0
     from .question_orm_q0_connected_recipe_dormant import _review_q0_reader_configuration
     from .preparation_auth import require_question_preparer
@@ -287,19 +293,22 @@ def _require_q0_read_recovery_source_activation(*, user=None, command=None):
     # recovery reviews ONLY the reader; a configured or failed writer must
     # never be opened, inspected or reused here.
     _review_q0_reader_configuration(connections.databases)
+    return trial_actor
 
 
 def _recover_q0_commit_evidence(*, user, command):
     """Independent application reader recovery, including process loss.
 
     No operational injection, alternate constructor or caller-provided trace.
-    This path requires application release; its scientific reader remains separate.
+    Admission requires application release or the bound read-only trial phase.
     """
     from .preparation_auth import require_question_preparer
     from preparer_identity.resolver import persisted_preparer_actor_id
     require_question_preparer(user)
-    _require_q0_read_recovery_source_activation(user=user, command=command)
+    trial_actor = _require_q0_read_recovery_source_activation(user=user, command=command)
     actor = persisted_preparer_actor_id(user)
+    if trial_actor is not None and actor != trial_actor:
+        raise PreparationHold("HOLD: Q0 trial actor mismatch")
     _expected_receipt(command, actor)
     return _collect_q0_commit_evidence(command=command, actor_id=actor)
 
