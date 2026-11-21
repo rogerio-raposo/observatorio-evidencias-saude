@@ -137,7 +137,9 @@ def propose_authenticated_q1(*, user, command, unit_of_work=None):
     if type(unit_of_work) is not OfflineQuestionUnitOfWork:
         raise PreparationHold("HOLD: Q1 persistence unavailable")
     actor = persisted_preparer_actor_id(user)
-    result = submit_authenticated_question_command(user=user, command=command, unit_of_work=unit_of_work)
+    # Bind submission and subsequent readback to the same resolved actor.
+    result = submit_question_command(user=user, command=command, unit_of_work=unit_of_work,
+                                     actor_id_resolver=lambda _: actor)
     review_authenticated_q1_offline(user=user, command=command, unit_of_work=unit_of_work, _expected_actor=actor)
     return result
 
