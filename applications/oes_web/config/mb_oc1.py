@@ -88,8 +88,7 @@ def _require_release():
         raise PreparationHold('HOLD: MB-OC1 experimental release not selected')
 
 
-def require_mb_oc1():
-    _require_release()
+def _require_private_profile():
     from django.conf import settings
     from evidence.question_preparation import PreparationHold
     if (settings.DEBUG or getattr(settings, 'MB_OC1_CONFIGURED', False) is not True
@@ -98,3 +97,8 @@ def require_mb_oc1():
             or settings.SESSION_ENGINE != 'django.contrib.sessions.backends.db'
             or set(settings.DATABASES) != {'default', 'oes_q0_writer', 'oes_synthetic_reader'}):
         raise PreparationHold('HOLD: MB-OC1 private application unavailable')
+
+
+def require_mb_oc1():
+    _require_release()
+    _require_private_profile()

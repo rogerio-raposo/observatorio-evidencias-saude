@@ -111,7 +111,9 @@ class Q1OrmTests(SimpleTestCase):
         with self.assertRaises(PreparationHold):
             with repo._supervised_q1_trial(user=self.user, command=self.command, actor=self.actor, write=True):
                 self.fail("source gate opened")
-        with patch.object(repo, "_require_q1_trial_release"):
+        with patch.object(repo, "_require_q1_trial_release"), patch(
+            "scripts.pf_i04_a44_trial._require_operation", return_value=self.actor
+        ):
             with repo._supervised_q1_trial(user=self.user, command=self.command, actor=self.actor, write=False):
                 self.assertEqual(repo._require_q1_source_activation(user=self.user, command=self.command), self.actor)
                 for user, command, write in (

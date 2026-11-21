@@ -83,10 +83,18 @@ def _application_q0_scope(*, user, command):
     from preparer_identity.resolver import persisted_preparer_actor_id
     require_question_preparer(user)
     validate_register_q0(command)
-    _require_q0_application_write_activation()
+    from scripts import pf_i04_a44_trial as trial
+    trial_actor = None
+    if trial._window.get() is not None:
+        trial_actor = trial._require_operation(user=user, command=command, operation="q0-write")
+    else:
+        _require_q0_application_write_activation()
     if _trial_scope.get() is not None:
         raise PreparationHold("HOLD: nested Q0 application scope")
-    scope = _TrialScope(user, command, persisted_preparer_actor_id(user), command_fingerprint(command))
+    actor = persisted_preparer_actor_id(user)
+    if trial_actor is not None and actor != trial_actor:
+        raise PreparationHold("HOLD: Q0 trial actor mismatch")
+    scope = _TrialScope(user, command, actor, command_fingerprint(command))
     token = _trial_scope.set(scope)
     try:
         yield scope
@@ -100,12 +108,18 @@ _q1_trial = ContextVar("q1_supervised_trial", default=None)
 
 
 def _require_q1_trial_release():
-    raise PreparationHold("HOLD: connected Q1 not authorized")
+    from scripts.pf_i04_a44_trial import _require_window
+    _require_window()
 
 
 @contextmanager
 def _supervised_q1_trial(*, user, command, actor, write):
     _require_q1_trial_release()
+    from scripts.pf_i04_a44_trial import _require_operation
+    expected_actor = _require_operation(user=user, command=command,
+                                        operation="q1-write" if write else "q1-read")
+    if expected_actor != actor:
+        raise PreparationHold("HOLD: Q1 trial actor mismatch")
     if _q1_trial.get() is not None:
         raise PreparationHold("HOLD: nested Q1 supervised trial")
     token = _q1_trial.set((user, command, actor, write))
