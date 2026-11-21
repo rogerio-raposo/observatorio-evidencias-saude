@@ -2,7 +2,7 @@
 - **Marco técnico:** M3-C `SUCCESS / PERSISTED / Q0_RECORDS`, com uma única tentativa HTTP Q0 e recuperação GET independente; recibo e cinco objetos vinculados verificados no Neon. Detalhes e limites: [encerramento M3-C](docs/governance/OES_M3C_ENCERRAMENTO_TECNICO_2026-11-21.md).
 - **Referências:** solicitação `OES-M3C-20261118-R01`; questão `OES-M3C-20261118-Q01`; commit observado `2026-11-21T13:30:16.169Z`. Exceção CSRF Codespaces integrada pelo [PR #48](https://github.com/rogerio-raposo/observatorio-evidencias-saude/pull/48), com risco residual aceito para este ensaio.
 - **Fechamento operacional:** logout, Gunicorn encerrado e ambos os terminais com `OES_MB_OC1_RELEASE_MODE=HOLD` e `OES_CODESPACES_CSRF_LOCALHOST_ORIGIN=0`, segundo operador. Branch de segurança Neon `br-silent-dream-b6mvn50u` preservada; sem teste de restauração ou garantia RPO/RTO. Sem nova escrita Q0 autorizada.
-- **Continuidade:** [CP350](archive/handoffs/oes/OES_Continuidade_2026-11-21_CP350.md), sucessor do CP349. Base documental `main` `6029b39a71f7aa1cce1af6e137a34a5fde686ef7`; documentação em branch isolada até revisão/merge.
+- **Continuidade:** [CP350](archive/handoffs/oes/OES_Continuidade_2026-11-21_CP350.md), sucessor do CP349. Base documental `main` `6029b39a71f7aa1cce1af6e137a34a5fde686ef7`; documentação elaborada em branch isolada; conferir integração do [PR #49](https://github.com/rogerio-raposo/observatorio-evidencias-saude/pull/49) na retomada.
 - **Gates inalterados:** Marco B OPEN; Q0 geral HARD HOLD; Q1 conectado HOLD; E9 NO-GO; Fase 4 CLOSED_METHODOLOGICAL_DOCUMENTARY_ONLY; Fase 5 NOT_STARTED.
 
 ## 2026-11-17 — CP349: continuidade proporcional, arquitetura HTTPS e condições Codex
