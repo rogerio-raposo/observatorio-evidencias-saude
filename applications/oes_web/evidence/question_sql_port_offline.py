@@ -7,7 +7,7 @@ Incomplete authorization/write semantics fail closed until a separate gate.
 from contextlib import contextmanager
 from uuid import uuid4
 
-from .question_preparation import PreparationHold
+from .question_preparation import PreparationConflict, PreparationHold, validate_propose_q1
 from .question_uow_offline import Receipt
 
 
@@ -178,15 +178,10 @@ class _QuestionSQLTransaction:
         self._pending_q0 = (command.question_id, actor_id, entity_id, version_id)
 
     def propose_q1(self, command, actor_id):
-        if (not self._locked or self._lock_identity[0] != actor_id
+        validate_propose_q1(command)
+        if (self._lock_identity != (actor_id, command.request_id)
                 or self._pending_q0 is not None or self._pending_q1 is not None):
             raise PreparationHold("HOLD: Q1 transaction unavailable")
-        if (not isinstance(command.question_id, str) or not command.question_id
-                or type(command.expected_version) is not int or command.expected_version < 1
-                or not isinstance(command.original_text, str) or not command.original_text
-                or not isinstance(command.normalized_text, str) or not command.normalized_text
-                or not isinstance(command.justification, str) or not command.justification.strip()):
-            raise PreparationHold("HOLD: invalid Q1")
         # Re-check scope under the same question advisory lock.
         self.lock_question(command.question_id)
         self.cursor.execute(
@@ -198,13 +193,14 @@ class _QuestionSQLTransaction:
             "ON qv.entity_uuid = ev.entity_uuid AND qv.version_uuid = ev.version_uuid "
             "WHERE e.oes_id = %s AND q.responsible_actor_id = %s "
             "AND ev.version_status = 'current' AND ev.valid_to IS NULL "
+            "AND qv.preparation_stage = 'q0_draft' AND qv.normalized_text IS NULL "
             "FOR UPDATE OF ev",
             (command.question_id, actor_id))
         row = self.cursor.fetchone()
         if (not isinstance(row, (tuple, list)) or len(row) != 4
                 or type(row[2]) is not int or row[2] != command.expected_version
                 or row[3] != command.original_text or row[0] is None or row[1] is None):
-            raise PreparationHold("HOLD: Q1 stale or inaccessible")
+            raise PreparationConflict("HOLD: Q1 stale or inaccessible")
         entity_id, previous_version_id = row[0], row[1]
         next_version_id = uuid4()
         self.cursor.execute(
@@ -213,7 +209,7 @@ class _QuestionSQLTransaction:
             "AND version_no = %s AND version_status = %s AND valid_to IS NULL",
             ("superseded", previous_version_id, entity_id, command.expected_version, "current"))
         if self.cursor.rowcount != 1:
-            raise PreparationHold("HOLD: Q1 version update conflict")
+            raise PreparationConflict("HOLD: Q1 version update conflict")
         self.cursor.execute(
             "INSERT INTO core.entity_version "
             "(version_uuid, entity_uuid, version_no, version_status, supersedes_version_uuid, "
