@@ -2,7 +2,7 @@
 from unittest.mock import patch
 
 from django.test import SimpleTestCase
-from django.urls import reverse
+from django.urls import Resolver404, resolve, reverse
 
 
 class NavigationTests(SimpleTestCase):
@@ -40,6 +40,29 @@ class NavigationTests(SimpleTestCase):
             self.assertContains(response, text)
         for nct in ("NCT01438697", "NCT07836491"):
             self.assertContains(response, reverse("signal-detail", args=[nct]))
+
+    def test_signal_navigation_preserves_catalog_context_and_source_sections(self):
+        home = reverse("home")
+        catalog = self.client.get(home)
+        for nct, other in (("NCT01438697", "NCT07836491"), ("NCT07836491", "NCT01438697")):
+            with self.subTest(nct=nct):
+                detail = reverse("signal-detail", args=[nct])
+                sibling = reverse("signal-detail", args=[other])
+                self.assertContains(catalog, f'id="sinal-{nct}"')
+                self.assertContains(catalog, f'href="{detail}"')
+                response = self.client.get(detail)
+                self.assertContains(response, f'href="{home}#sinal-{nct}"', count=2)
+                self.assertContains(response, f'href="{sibling}"')
+                for section in ("identity-title", "trajectory-title", "limits-title"):
+                    self.assertContains(response, f'href="#{section}"')
+                    self.assertContains(response, f'id="{section}"')
+
+    def test_documentary_destinations_are_absent_from_private_urlconf(self):
+        for name, args, _ in self.destinations[1:]:
+            with self.subTest(name=name), self.assertRaises(Resolver404):
+                resolve(reverse(name, args=args), urlconf="config.urls_mb_oc1")
+        with self.assertRaises(Resolver404):
+            resolve(reverse("signal-detail", args=["NCT01438697"]), urlconf="config.urls_mb_oc1")
 
     def test_hold_pages_keep_navigation_and_return_links(self):
         from evidence.p2_presentation import SyntheticPresentationHold

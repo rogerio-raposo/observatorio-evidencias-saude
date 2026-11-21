@@ -1,1 +1,1 @@
-<nav class="demo-return" aria-label="Navegação documental"><a href="{% url 'home' %}">Retornar ao catálogo documental e início</a> · <a href="#conteudo">Voltar ao início do conteúdo</a></nav>
+<nav class="demo-return" aria-label="Navegação documental"><a href="{% url 'home' %}{% if catalog_nct %}#sinal-{{ catalog_nct }}{% endif %}">Retornar ao catálogo documental{% if catalog_nct %} — {{ catalog_nct }}{% endif %}</a> · <a href="#conteudo">Voltar ao início do conteúdo</a></nav>
