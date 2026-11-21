@@ -13,7 +13,7 @@ from .question_uow_offline import Receipt
 
 class DormantQ0OrmPort:
     def __init__(self, *, atomic_factory=None, repository_factory=None,
-                 readback_verifier=None, writer_alias=None, read_alias=None):
+                 readback_verifier=None, writer_alias=None, read_alias=None, q1=False):
         if not callable(atomic_factory) or not callable(repository_factory):
             raise PreparationHold("HOLD: Q0 ORM backend not configured")
         if readback_verifier is not None and (
@@ -25,6 +25,7 @@ class DormantQ0OrmPort:
         self.readback_verifier = readback_verifier
         self.writer_alias = writer_alias
         self.read_alias = read_alias
+        self.q1 = q1
         self.atomic_factory = atomic_factory
         self.repository_factory = repository_factory
         self.last_completed_q0 = None
@@ -78,7 +79,7 @@ class DormantQ0OrmPort:
         try:
             with self.atomic_factory():
                 with self.repository_factory() as repo:
-                    tx = _Q0Transaction(repo)
+                    tx = _Q0Transaction(repo, q1=self.q1)
                     yield tx
                     if tx.pending is not None:
                         raise PreparationHold("HOLD: receipt missing; rollback")
@@ -118,8 +119,10 @@ class DormantQ0OrmPort:
 
 
 class _Q0Transaction:
-    def __init__(self, repository):
+    def __init__(self, repository, *, q1=False):
         self.repo = repository
+        self.q1 = q1
+        self.pending_q1 = None
         self.request = None
         self.pending = None
         self.created_q0 = None
@@ -151,7 +154,7 @@ class _Q0Transaction:
 
     def register_q0(self, command, actor_id):
         self._require_lock(actor_id)
-        if self.pending is not None or command.expected_version != 0 or command.normalized_text is not None:
+        if self.q1 or self.pending is not None or command.expected_version != 0 or command.normalized_text is not None:
             raise PreparationHold("HOLD: invalid Q0 transition")
         self._lock_question(command.question_id)
         entity_uuid, version_uuid = uuid4(), uuid4()
@@ -173,13 +176,26 @@ class _Q0Transaction:
         self.repo.insert_question_version(version_uuid, entity_uuid, command.original_text)
 
     def propose_q1(self, command, actor_id):
-        raise PreparationHold("HOLD: Django ORM Q1 backend not implemented")
+        from .question_preparation import validate_propose_q1
+        if not self.q1 or self.request != (actor_id, command.request_id) or self.pending is not None or self.receipt_saved:
+            raise PreparationHold("HOLD: Django ORM Q1 transaction unavailable")
+        validate_propose_q1(command)
+        self._lock_question(command.question_id)
+        version_uuid = uuid4()
+        entity_uuid = self.repo.propose_q1(command, actor_id, version_uuid)
+        self.pending = (actor_id, command.question_id, entity_uuid, version_uuid)
+        self.pending_q1 = Receipt(actor_id, command.request_id, command_fingerprint(command),
+                                  command.question_id, command.expected_version + 1,
+                                  "PROPOSE_Q1", command.justification)
 
     def save_receipt(self, receipt):
         if self.pending is None or not isinstance(receipt, Receipt):
             raise PreparationHold("HOLD: unexpected receipt")
         actor_id, question_id, entity_uuid, version_uuid = self.pending
-        if (receipt.actor_id != actor_id or receipt.question_id != question_id
+        if self.q1:
+            if receipt != self.pending_q1:
+                raise PreparationHold("HOLD: Q1 receipt mismatch")
+        elif (receipt.actor_id != actor_id or receipt.question_id != question_id
                 or receipt.command_kind != "REGISTER_Q0" or receipt.version != 1
                 or receipt.justification):
             raise PreparationHold("HOLD: receipt mismatch")

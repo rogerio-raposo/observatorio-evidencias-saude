@@ -134,7 +134,7 @@ class DormantQ0Tests(SimpleTestCase):
                 writer_alias="synthetic_writer", read_alias="synthetic_reader")
 
     def test_q1_remains_explicitly_blocked(self):
-        with self.assertRaisesRegex(PreparationHold, "Q1 backend not implemented"):
+        with self.assertRaisesRegex(PreparationHold, "Django ORM Q1 transaction unavailable"):
             with self.port.begin() as tx:
                 tx.lock_request("actor", "r1")
                 tx.propose_q1(QuestionCommand("r1", "Q", 1, "Q0", "Q1", "because"), "actor")
