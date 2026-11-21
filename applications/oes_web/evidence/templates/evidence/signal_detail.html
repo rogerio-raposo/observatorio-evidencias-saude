@@ -7,23 +7,28 @@
 <main>
 {% include "evidence/navigation.html" with current="" %}
 <div id="conteudo" tabindex="-1">
-<nav aria-label="Localização"><a href="{% url 'home' %}">Catálogo documental</a> → <span aria-current="page">Sinal {{ signal.nct }}</span></nav>
+<nav aria-label="Localização"><a href="{% url 'home' %}#sinal-{{ signal.nct }}">Catálogo documental</a> → <span aria-current="page">Sinal {{ signal.nct }}</span></nav>
 <p>NCT é o identificador de registro do ensaio no ClinicalTrials.gov; sua presença não equivale à identificação científica reconciliada.</p>
 <p class="notice">DEMONSTRAÇÃO DOCUMENTAL — não constitui atualização científica ou avaliação independente</p>
 <h1>Sinal de evidência: {{ signal.nct }}</h1>
+<nav aria-label="Nesta página">
+<a href="#identity-title">Identidade e relatórios</a> ·
+<a href="#trajectory-title">Trajetória e fontes históricas</a> ·
+<a href="#limits-title">Proveniência e limites</a>
+</nav>
 <section class="reading-guide" aria-labelledby="route-title"><h2 id="route-title">Como ler este percurso documental</h2>
 <p class="reading-path">Sinal identificado <span aria-hidden="true">→</span> identidade documental <span aria-hidden="true">→</span> {% if signal.study_reference %}estudo e relatórios vinculados{% else %}estudo não reconciliado e nenhum relatório vinculado{% endif %} <span aria-hidden="true">→</span> fontes e limites</p>
 <p class="boundary">{% if signal.study_reference %}A associação apresentada é histórica e documental; dois relatórios não representam dois estudos.{% else %}A ausência de correspondência no inventário delimitado não estabelece novidade, inelegibilidade ou exclusão.{% endif %}</p>
 </section>
 <section aria-labelledby="identity-title">
-<h2 id="identity-title">Identidade e relatórios</h2>
+<h2 id="identity-title" tabindex="-1">Identidade e relatórios</h2>
 <dl><dt>Estado documental</dt><dd>{{ identity_label }}</dd>
 <dt>Estudo</dt><dd>{{ signal.study_label|default:"Não reconciliado" }}</dd>
-<dt>Relatórios documentados</dt><dd>{% if signal.reports %}<ul>{% for report in signal.reports %}<li>{{ report }}</li>{% endfor %}</ul>{% else %}Nenhum vínculo estabelecido{% endif %}</dd></dl>
+<dt>Relatórios documentados</dt><dd>{% if signal.reports %}<ul>{% for report in signal.reports %}<li>{{ report }}</li>{% endfor %}</ul>{% else %}Nenhum vínculo estabelecido no inventário consultado{% endif %}</dd></dl>
 <p>Um estudo pode possuir vários relatórios; a contagem de relatórios não é contagem de estudos.</p>
 </section>
 <section aria-labelledby="trajectory-title">
-<h2 id="trajectory-title">Trajetória documental retrospectiva</h2>
+<h2 id="trajectory-title" tabindex="-1">Trajetória documental retrospectiva</h2>
 <p>Marcos de documentação em ordem de apresentação; não são eventos operacionais executados pela aplicação.</p>
 <ol class="timeline">{% for entry in milestones %}
 <li><strong>{{ entry.item.description }}</strong>
@@ -34,7 +39,7 @@
 {% endfor %}</ol>
 </section>
 <section aria-labelledby="limits-title">
-<h2 id="limits-title">Limitações e avaliação científica</h2>
+<h2 id="limits-title" tabindex="-1">Limitações e avaliação científica</h2>
 <dl><dt>Proveniência</dt><dd>{{ signal.provenance }}
 {% for link in provenance_links %}<a href="{{ link.url }}" rel="noopener noreferrer" target="_blank">{{ link.label }}</a>{% if not forloop.last %}; {% endif %}{% endfor %}
 </dd>
@@ -42,7 +47,15 @@
 <dt>Encaminhamento</dt><dd>Avaliação humana pendente; nenhum julgamento executado nesta interface.</dd></dl>
 <p>Nenhuma avaliação científica nova foi realizada nesta trajetória.</p>
 </section>
-<nav aria-label="Exemplos"><a href="/signals/NCT01438697/">Identidade conhecida</a> · <a href="/signals/NCT07836491/">Identidade indeterminada</a></nav>
+{% if signal.nct == 'NCT01438697' or signal.nct == 'NCT07836491' %}
+<nav aria-label="Outro sinal do catálogo">
+{% if signal.nct == 'NCT01438697' %}
+<a href="{% url 'signal-detail' 'NCT07836491' %}">NCT07836491 — não identificado no inventário consultado</a>
+{% else %}
+<a href="{% url 'signal-detail' 'NCT01438697' %}">NCT01438697 — identidade documentada</a>
+{% endif %}
+</nav>
+{% endif %}
 </div>
-{% include "evidence/return_navigation.html" %}
+{% include "evidence/return_navigation.html" with catalog_nct=signal.nct %}
 </main></body></html>

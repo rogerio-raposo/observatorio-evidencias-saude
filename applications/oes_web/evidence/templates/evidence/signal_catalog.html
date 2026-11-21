@@ -12,7 +12,7 @@
 <p>Identificadores e estados conforme registros documentais delimitados. Consulte cada sinal para suas fontes e limites.</p>
 <section aria-labelledby="demo-guide-title">
 <h2 id="demo-guide-title">Explore o demonstrador</h2>
-<p>Comece pelo catálogo abaixo ou escolha uma das apresentações no menu comum.</p>
+<p>Comece pelos <a href="#signals-heading">sinais do catálogo</a>. A ficha N2 e a prévia Q0 → Q1 → Q2 são exemplos independentes, acessíveis pelo menu do demonstrador.</p>
 <ul>
 <li><strong>Documental:</strong> sinais, fontes e vínculos históricos delimitados.</li>
 <li><strong>Sintético:</strong> percurso ilustrativo e prévia Q0 com validação local, sem envio ou gravação.</li>
@@ -25,10 +25,10 @@
 <section aria-labelledby="signals-heading"><h2 id="signals-heading">Sinais representados</h2>
 <ul class="catalog">
 {% for entry in entries %}
-<li><h3><a href="{% url 'signal-detail' entry.signal.nct %}">{{ entry.signal.nct }}</a></h3>
+<li><h3 id="sinal-{{ entry.signal.nct }}" tabindex="-1"><a href="{% url 'signal-detail' entry.signal.nct %}">{{ entry.signal.nct }}</a></h3>
 <p>Estado documental: {{ entry.identity_label }}</p>
 {% if entry.signal.study_label %}<p>Estudo: {{ entry.signal.study_label }}</p>{% else %}<p>Estudo: identidade não reconciliada</p>{% endif %}
-<p>Relatórios vinculados: {% if entry.signal.reports %}{{ entry.signal.reports|length }} relatórios documentados para o mesmo estudo{% else %}nenhum vínculo estabelecido{% endif %}</p>
+<p>Relatórios vinculados: {% if entry.signal.reports %}{{ entry.signal.reports|length }} relatórios documentados para o mesmo estudo{% else %}nenhum vínculo estabelecido no inventário consultado{% endif %}</p>
 <p class="boundary">Limite: {{ entry.signal.limitation }}</p>
 </li>
 {% empty %}<li>Nenhum sinal demonstrativo disponível.</li>{% endfor %}
