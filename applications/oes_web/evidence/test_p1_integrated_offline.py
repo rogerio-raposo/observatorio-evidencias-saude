@@ -318,18 +318,30 @@ class P1EvidenceTests(SimpleTestCase):
         self.f.has_receipt = False
         self.assertEqual(self.f.collect(self.f.trace())["outcome"], "INDETERMINATE")
 
-    def test_column_only_insert_update_grants_fail_existing_acl_verifier(self):
-        for connection, row in ((self.f.reader, (True, False, False, True, False)),
-                                (self.f.reader, (True, False, False, False, True)),
-                                (self.f.writer, (True, True, False, True, True))):
+    def test_acl_verifier_rejects_missing_or_excess_effective_grants(self):
+        version = "core.entity_version"
+        allowed = ["valid_to", "version_status"]
+        for connection, table, row in (
+                (self.f.reader, version, (True, True, False, True, [])),
+                (self.f.reader, version, (True, False, False, True, [])),
+                (self.f.reader, version, (True, False, False, False, ["valid_to"])),
+                (self.f.reader, version, (True, False, True, False, [])),
+                (self.f.writer, version, (True, True, True, True, allowed)),
+                (self.f.writer, version, (True, True, False, True, [])),
+                (self.f.writer, version, (True, True, False, True, ["valid_to"])),
+                (self.f.writer, version, (True, True, False, True, ["version_status"])),
+                (self.f.writer, version, (True, True, False, True, ["created_by", *allowed])),
+                (self.f.writer, "core.entity", (True, True, False, True, ["created_by"]))):
             cursor = connection.cursor.return_value.__enter__.return_value
             original = cursor.execute.side_effect
             def query(sql, params=None, original=original, row=row, cursor=cursor):
                 original(sql, params)
-                if "has_table_privilege" in sql:
+                if "has_table_privilege" in sql and params[0] == table:
+                    self.assertIn("'UPDATE,DELETE,TRUNCATE'", sql)
                     self.assertIn("has_any_column_privilege", sql)
+                    self.assertIn("has_column_privilege(current_user,attrelid,attnum,'UPDATE')", sql)
                     cursor.fetchone.return_value = row
-            with self.subTest(alias=connection.alias, row=row), patch.object(cursor, "execute", side_effect=query):
+            with self.subTest(alias=connection.alias, table=table, row=row), patch.object(cursor, "execute", side_effect=query):
                 with self.assertRaises(PreparationHold):
                     _review_q0_privileges(connection)
 

@@ -70,15 +70,21 @@ def _review_q0_privileges(connection):
                 "has_table_privilege(current_user,%s,'INSERT'), "
                 "has_table_privilege(current_user,%s,'UPDATE,DELETE,TRUNCATE'), "
                 "has_any_column_privilege(current_user,%s,'INSERT'), "
-                "has_any_column_privilege(current_user,%s,'UPDATE')",
+                "ARRAY(SELECT attname::text FROM pg_catalog.pg_attribute "
+                "WHERE attrelid = %s::regclass AND attnum > 0 AND NOT attisdropped "
+                "AND has_column_privilege(current_user,attrelid,attnum,'UPDATE') "
+                'ORDER BY attname::text COLLATE "C")',
                 [table, table, table, table, table],
             )
             row = cursor.fetchone()
-            expected = (True, True, False, True, False) if connection.alias == WRITER else (True, False, False, False, False)
+            writer = connection.alias == WRITER
+            expected = (True, writer, False, writer)
+            updates = ["valid_to", "version_status"] if writer and table == "core.entity_version" else []
             if (not isinstance(row, tuple) or len(row) != 5
-                    or any(value is not wanted for value, wanted in zip(row, expected))):
+                    or any(value is not wanted for value, wanted in zip(row[:4], expected))
+                    or row[4] != updates):
                 raise PreparationHold("HOLD: D3 effective privileges mismatch")
-            observed.append((table, row))
+            observed.append((table, (*row[:4], tuple(row[4]))))
     return tuple(observed)
 
 

@@ -59,9 +59,11 @@ class EvidenceD3Tests(SimpleTestCase):
                 if "has_schema_privilege" in sql:
                     row = (not self.bad_privileges,)
                 elif "has_table_privilege" in sql:
-                    row = (True, True, False, True, False) if connection is self.writer else (True, False, False, False, False)
+                    writer = connection is self.writer
+                    updates = ["valid_to", "version_status"] if writer and params[0] == "core.entity_version" else []
+                    row = (True, writer, False, writer, updates)
                     if self.bad_privileges:
-                        row = (True, True, True, True, True)
+                        row = (True, True, True, True, ["created_by"])
                 elif "pg_current_xact_id" in sql:
                     row = ("100",)
                 elif "pg_xact_status" in sql:

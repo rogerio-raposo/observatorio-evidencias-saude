@@ -39,7 +39,8 @@ class PersistenceD1OfflineTests(SimpleTestCase):
             if "has_schema_privilege" in sql:
                 writer_cursor.fetchone.return_value = (True,)
             elif "has_table_privilege" in sql:
-                writer_cursor.fetchone.return_value = (True, True, False, True, False)
+                updates = ["valid_to", "version_status"] if params[0] == "core.entity_version" else []
+                writer_cursor.fetchone.return_value = (True, True, False, True, updates)
             elif "pg_current_xact_id" in sql:
                 writer_cursor.fetchone.return_value = ("100",)
             else:
@@ -52,7 +53,7 @@ class PersistenceD1OfflineTests(SimpleTestCase):
         reader_cursor = reader.cursor.return_value.__enter__.return_value
         def reader_query(sql, params=None):
             reader_cursor.fetchone.return_value = ((True,) if "has_schema_privilege" in sql
-                else (True, False, False, False, False) if "has_table_privilege" in sql
+                else (True, False, False, False, []) if "has_table_privilege" in sql
                 else ("oes_pg_a4_reader", "oes_sandbox", "on"))
         reader_cursor.execute.side_effect = reader_query
         configs = {}

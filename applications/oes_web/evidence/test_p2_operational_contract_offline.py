@@ -117,16 +117,26 @@ class P2OperationalContractTests(SimpleTestCase):
     def test_document_acl_matrix_matches_single_p1_verifier(self):
         self.assertEqual(set(TABLES), {t["table"] for t in self.contract["tables"]})
         rows = matrix_rows("q0-acl-matrix")
-        self.assertEqual(len(rows), 2)
-        self.assertEqual({row[0] for row in rows}, {"oes_q0_writer", "oes_synthetic_reader"})
-        for alias, role, *values in rows:
-            self.assertEqual(len(values), 5)
+        self.assertEqual({(alias, table) for alias, _, table, *_ in rows}, {
+            ("oes_q0_writer", "core.entity_version"), ("oes_q0_writer", "demais"),
+            ("oes_synthetic_reader", "todas"),
+        })
+        expected = {}
+        for alias, role, scope, *values, columns in rows:
+            self.assertEqual(len(values), 4)
             self.assertTrue(all(v in ("true", "false") for v in values))
-            row = tuple(v == "true" for v in values)
+            updates = columns.split(", ") if columns != "nenhuma" else []
+            row = (*(v == "true" for v in values), updates)
+            for table in TABLES:
+                if scope == "todas" or scope == table or (scope == "demais" and table != "core.entity_version"):
+                    expected[alias, table] = row
+            self.assertEqual(role, "oes_qprep_login" if alias == "oes_q0_writer" else "oes_pg_a4_reader")
+        for alias in ("oes_q0_writer", "oes_synthetic_reader"):
             connection = MagicMock(alias=alias)
             cursor = connection.cursor.return_value.__enter__.return_value
-            cursor.fetchone.side_effect = [(True,), (True,), *[row for _ in TABLES]]
+            rights = [expected[alias, table] for table in TABLES]
+            cursor.fetchone.side_effect = [(True,), (True,), *rights]
             observed = _review_q0_privileges(connection)
             self.assertEqual(len(observed), 7)
-            self.assertEqual({r for _, r in observed[2:]}, {row})
-            self.assertEqual(role, "oes_qprep_login" if alias == "oes_q0_writer" else "oes_pg_a4_reader")
+            self.assertEqual(observed[2:], tuple(
+                (table, (*row[:4], tuple(row[4]))) for table, row in zip(TABLES, rights)))
