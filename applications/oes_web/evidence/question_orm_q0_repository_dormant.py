@@ -96,13 +96,37 @@ def _application_q0_scope(*, user, command):
         _trial_scope.reset(token)
 
 
-def _require_q1_source_activation():
+_q1_trial = ContextVar("q1_supervised_trial", default=None)
+
+
+def _require_q1_trial_release():
     raise PreparationHold("HOLD: connected Q1 not authorized")
 
 
 @contextmanager
+def _supervised_q1_trial(*, user, command, actor, write):
+    _require_q1_trial_release()
+    if _q1_trial.get() is not None:
+        raise PreparationHold("HOLD: nested Q1 supervised trial")
+    token = _q1_trial.set((user, command, actor, write))
+    try:
+        yield
+    finally:
+        _q1_trial.reset(token)
+
+
+def _require_q1_source_activation(*, user, command, write=False):
+    _require_q1_trial_release()
+    context = _q1_trial.get()
+    if (context is None or context[0] is not user or context[1] != command
+            or (write and context[3] is not True)):
+        raise PreparationHold("HOLD: Q1 supervised trial context required")
+    return context[2]
+
+
+@contextmanager
 def _application_q1_scope(*, user, command):
-    _require_q1_source_activation()
+    trial_actor = _require_q1_source_activation(user=user, command=command, write=True)
     from .preparation_auth import require_question_preparer
     from .question_preparation import command_fingerprint
     from preparer_identity.resolver import persisted_preparer_actor_id
@@ -110,8 +134,10 @@ def _application_q1_scope(*, user, command):
     validate_propose_q1(command)
     if _trial_scope.get() is not None:
         raise PreparationHold("HOLD: nested Q1 application scope")
-    scope = _TrialScope(user, command, persisted_preparer_actor_id(user),
-                        command_fingerprint(command), q1=True)
+    actor = persisted_preparer_actor_id(user)
+    if actor != trial_actor:
+        raise PreparationHold("HOLD: Q1 trial actor mismatch")
+    scope = _TrialScope(user, command, actor, command_fingerprint(command), q1=True)
     token = _trial_scope.set(scope)
     try:
         yield scope

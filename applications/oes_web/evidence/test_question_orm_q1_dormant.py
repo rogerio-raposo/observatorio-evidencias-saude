@@ -26,7 +26,11 @@ class Q1OrmTests(SimpleTestCase):
         self.writer.get_autocommit.side_effect = lambda: not self.writer.in_atomic_block
         self.reader.get_autocommit.return_value = True
         self.connections = MagicMock()
-        self.connections.__getitem__.side_effect = {q1.WRITER: self.writer, q1.READER: self.reader}.__getitem__
+        self.auth = MagicMock(in_atomic_block=False)
+        self.auth.close.side_effect = lambda: self.events.append("auth closed")
+        self.connections.__getitem__.side_effect = {
+            "default": self.auth, q1.WRITER: self.writer, q1.READER: self.reader,
+        }.__getitem__
         self.enterContext(patch.object(q1, "connections", self.connections))
         self.enterContext(patch("django.db.connections", self.connections))
         self.enterContext(patch.object(q1, "_review_q0_database_configuration"))
@@ -101,7 +105,55 @@ class Q1OrmTests(SimpleTestCase):
 
     def activate(self):
         for module in (q1, repo):
-            self.enterContext(patch.object(module, "_require_q1_source_activation"))
+            self.enterContext(patch.object(module, "_require_q1_source_activation", return_value=self.actor))
+
+    def test_supervised_context_requires_source_release_and_binds_operation(self):
+        with self.assertRaises(PreparationHold):
+            with repo._supervised_q1_trial(user=self.user, command=self.command, actor=self.actor, write=True):
+                self.fail("source gate opened")
+        with patch.object(repo, "_require_q1_trial_release"):
+            with repo._supervised_q1_trial(user=self.user, command=self.command, actor=self.actor, write=False):
+                self.assertEqual(repo._require_q1_source_activation(user=self.user, command=self.command), self.actor)
+                for user, command, write in (
+                    (self.user, self.command, True),
+                    (self.user, replace(self.command, justification="different"), False),
+                    (object(), self.command, False),
+                ):
+                    with self.assertRaises(PreparationHold):
+                        repo._require_q1_source_activation(user=user, command=command, write=write)
+            with self.assertRaises(PreparationHold):
+                repo._require_q1_source_activation(user=self.user, command=self.command)
+
+    def test_cli_context_and_source_hold_precede_auth_store(self):
+        from scripts import pf_i04_a44_trial as trial
+
+        run_id = "af0d0d21-285b-42be-a5da-0f3b25bc8173"
+        args = ["propose", "--run-id", run_id, "--user-id", "42", "--actor", self.actor]
+        with patch.dict("os.environ", {"OES_PF_I04_A44_TRIAL": ""}), patch("django.setup") as setup:
+            self.assertEqual(trial.main(args), 2)
+            setup.assert_not_called()
+        with patch.dict("os.environ", {"OES_PF_I04_A44_TRIAL": run_id,
+                                       "DJANGO_SETTINGS_MODULE": "config.settings_mb_oc1"}), \
+                patch("django.setup"), patch("django.contrib.auth.get_user_model") as users:
+            self.assertEqual(trial.main(args), 1)
+            users.assert_not_called()
+        self.connections.__getitem__.assert_not_called()
+
+    def test_readback_requires_current_open_version_and_noncyclic_link(self):
+        self.activate()
+        self.submit()
+        query = self.create_version.filter.call_args_list[0].kwargs
+        self.assertEqual(query["version_status"], "current")
+        self.assertIs(query["valid_to__isnull"], True)
+        self.assertEqual(query["version_uuid"], self.record.resulting_version_uuid)
+        self.connections.reset_mock()
+        for version in (None, SimpleNamespace(version_uuid=self.record.resulting_version_uuid,
+                                               supersedes_version_uuid=self.record.resulting_version_uuid)):
+            self.create_version.filter.return_value.first.return_value = version
+            with self.assertRaisesRegex(PreparationHold, "Q1 version not verified"):
+                q1.review_authenticated_q1(user=self.user, command=self.command)
+        self.assertTrue(all(call.args == (q1.READER,) for call in self.connections.__getitem__.call_args_list))
+        self.ledger.create.assert_called_once()
 
     def submit(self, command=None):
         return q1.propose_authenticated_q1_orm(user=self.user, command=command or self.command)
@@ -116,7 +168,9 @@ class Q1OrmTests(SimpleTestCase):
     def test_request_lock_precedes_empty_receipt_lookup_and_replay(self):
         self.activate()
         self.assertEqual(self.submit()["version"], 2)
-        self.assertEqual(self.events[:3], ["13:offline-actor:9:offline-r", "receipt lookup", "oes:question:offline-q"])
+        self.assertEqual(self.events[:4], [
+            "auth closed", "13:offline-actor:9:offline-r", "receipt lookup", "oes:question:offline-q",
+        ])
         sql = [call.args[0] for call in self.writer.cursor.return_value.__enter__.return_value.execute.call_args_list]
         self.assertEqual(sql[0], "SET TRANSACTION ISOLATION LEVEL READ COMMITTED")
         self.update.assert_called_once()
