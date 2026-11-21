@@ -26,10 +26,12 @@ class MBSessionTests(TestCase):
         self.enterContext(self.settings(MB_OC1_RELEASE_MODE='PRIVATE_SYNTHETIC_Q0'))
         self.client=Client(enforce_csrf_checks=True)
 
-    def login(self,password='offline-only-test-password'):
-        response=self.client.get('/accounts/login/',secure=True)
+    def login(self,password='offline-only-test-password',*,client=None,user=None):
+        client=self.client if client is None else client
+        user=self.user if user is None else user
+        response=client.get('/accounts/login/',secure=True)
         token=response.cookies['csrftoken'].value
-        return self.client.post('/accounts/login/',{'username':self.user.username,'password':password,
+        return client.post('/accounts/login/',{'username':user.username,'password':password,
             'csrfmiddlewaretoken':token},secure=True,HTTP_ORIGIN='https://testserver')
 
     def no_dml(self,queries):
@@ -74,6 +76,23 @@ class MBSessionTests(TestCase):
         # Native Auth may DELETE its invalid session; only scientific recovery is READ ONLY.
         self.assertFalse(Session.objects.filter(expire_date__gt=timezone.now()).exists())
 
+    def test_missing_or_invalid_session_cannot_reach_reference_recovery(self):
+        from django.conf import settings
+        reference={'request_id':'offline-session-request','question_id':'OFFLINE-SESSION-Q0','fingerprint':'0'*64}
+        for invalid in ('missing','bad-signature'):
+            with self.subTest(session=invalid):
+                self.assertEqual(self.login().status_code,302)
+                cookie=self.client.cookies[settings.SESSION_COOKIE_NAME]
+                if invalid=='missing':
+                    self.client.cookies[settings.SESSION_COOKIE_NAME]='z'*32  # No matching session.
+                else:
+                    Session.objects.filter(session_key=cookie.value).update(session_data='invalid-signature')
+                with patch('evidence.question_preparation.review_authenticated_q0_reference',
+                           side_effect=AssertionError('unauthenticated recovery')) as recover:
+                    response=self.client.get('/questions/q0/review/',reference,secure=True)
+                self.assertEqual(response.status_code,403)
+                recover.assert_not_called()
+
     def test_source_release_remains_closed(self):
         with self.settings(MB_OC1_RELEASE_MODE='HOLD'):
             self.assertEqual(self.client.get('/accounts/login/',secure=True).status_code,423)
@@ -97,6 +116,11 @@ class MBSessionTests(TestCase):
 
     def test_real_session_to_form_uow_canonical_orm_and_d3_simulated(self):
         self.assertEqual(self.login().status_code,302)
+        other=get_user_model().objects.create_user(username='mb-offline-other-preparer',password='offline-only-test-password')
+        other.user_permissions.add(Permission.objects.get(codename='prepare_question'))
+        other_identity=PreparerIdentity.objects.create(user=other)
+        other_client=Client(enforce_csrf_checks=True)
+        self.assertEqual(self.login(client=other_client,user=other).status_code,302)
         self.client.get('/questions/q0/register/',secure=True)
         token=self.client.cookies['csrftoken'].value
         real_using=PreparerIdentity.objects.using
@@ -108,6 +132,7 @@ class MBSessionTests(TestCase):
         identity=real_using('default').get(user_id=self.user.pk)
         identity.actor_uuid=UUID(fixture.f.actor.removeprefix('oes:actor:'))
         identity.save(using='default',update_fields=['actor_uuid'])
+        self.assertNotEqual(identity.actor_uuid,other_identity.actor_uuid)
         with patch('preparer_identity.resolver.PreparerIdentity.objects.using',side_effect=real_using):
             response=self.client.post('/questions/q0/register/',{**fixture.data,'csrfmiddlewaretoken':token},secure=True,HTTP_ORIGIN='https://testserver')
         self.assertEqual(response.status_code,200,response.content.decode())
@@ -127,10 +152,13 @@ class MBSessionTests(TestCase):
         with patch('preparer_identity.resolver.PreparerIdentity.objects.using',side_effect=real_using):
             response=self.client.get('/questions/q0/review/',reference,secure=True)
             self.assertEqual(response.status_code,200,response.content.decode())
-            fixture.f.record.actor_id='oes:actor:other'
-            denied=self.client.get('/questions/q0/review/',reference,secure=True)
+            # The receipt stays owned by the first actor. A separately logged-in,
+            # equally permitted preparer cannot read it or substitute that actor.
+            denied=other_client.get('/questions/q0/review/',reference,secure=True)
             self.assertEqual(denied.status_code,503)
             self.assertNotIn(fixture.f.command.original_text.strip(),denied.content.decode())
+            fixture.f.lookup_receipt.assert_called_with(actor_id='oes:actor:'+str(other_identity.actor_uuid),
+                                                       request_id=reference['request_id'])
         fixture.f.writer.cursor.assert_not_called(); fixture.f.writer.close.assert_not_called()
         self.assertTrue(all(c.kwargs['using']=='oes_synthetic_reader' for c in fixture.f.atomic.call_args_list))
         for model in fixture.f.models.values():
@@ -139,7 +167,7 @@ class MBSessionTests(TestCase):
 
     def test_private_routes_do_not_expose_historical_reader_or_q1_q2(self):
         from django.urls import resolve,Resolver404
-        for path in ('/synthetic-pg-links/','/questions/q1/propose/','/questions/q2/routing/'):
+        for path in ('/synthetic-pg-links/','/questions/q1/propose/','/questions/q2/routing/','/investigations/open/'):
             with self.assertRaises(Resolver404): resolve(path)
         for path in ('/accounts/login/','/accounts/logout/','/questions/q0/register/','/questions/q0/review/'):
             self.assertTrue(callable(resolve(path).func))
