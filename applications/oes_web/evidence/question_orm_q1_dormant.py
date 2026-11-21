@@ -30,6 +30,12 @@ def _submit_q1(*, user, command):
 
         @contextmanager
         def writer_atomic():
+            # The private CLI has no request-finished lifecycle. Give back its
+            # Auth slot before waiting for the scientific advisory lock.
+            auth = connections["default"]
+            if auth.in_atomic_block:
+                raise PreparationHold("HOLD: Q1 requires an independent Auth boundary")
+            auth.close()
             _review_q0_session_boundary(writer=writer, reader=reader)
             try:
                 _review_q0_privileges(reader)
@@ -83,8 +89,8 @@ def _observe_q1(*, user, command, actor):
                 if cursor.fetchone() != ("oes_pg_a4_reader", "oes_sandbox", "on", False):
                     raise PreparationHold("HOLD: Q1 reader identity mismatch")
             _review_q0_privileges(reader)
-            owned = OesQuestion.objects.filter(responsible_actor_id=actor, entity_uuid__in=(
-                OesEntity.objects.filter(oes_id=command.question_id, entity_type="Question").values("entity_uuid")
+            owned = OesQuestion.objects.using(READER).filter(responsible_actor_id=actor, entity_uuid__in=(
+                OesEntity.objects.using(READER).filter(oes_id=command.question_id, entity_type="Question").values("entity_uuid")
             )).values("entity_uuid")
             record = request_receipt(actor_id=actor, request_id=command.request_id).using(READER).first()
             if record is None or Receipt(
@@ -96,11 +102,12 @@ def _observe_q1(*, user, command, actor):
             version = OesEntityVersion.objects.using(READER).filter(
                 version_uuid=record.resulting_version_uuid, entity_uuid=record.question_entity_uuid,
                 entity_uuid__in=owned, version_no=expected.version, created_by=actor,
-                change_type="normalization_proposed",
+                change_type="normalization_proposed", version_status="current", valid_to__isnull=True,
             ).first()
-            if version is None or version.supersedes_version_uuid is None:
+            if (version is None or version.supersedes_version_uuid is None
+                    or version.supersedes_version_uuid == version.version_uuid):
                 raise PreparationHold("HOLD: Q1 version not verified")
-            previous_draft = OesQuestionVersion.objects.filter(
+            previous_draft = OesQuestionVersion.objects.using(READER).filter(
                 version_uuid=OuterRef("version_uuid"), entity_uuid=OuterRef("entity_uuid"),
                 original_text=command.original_text, normalized_text__isnull=True,
                 preparation_stage="q0_draft",
@@ -124,12 +131,12 @@ def _observe_q1(*, user, command, actor):
 
 def review_authenticated_q1(*, user, command, _expected_actor=None):
     """Independent positive receipt proof, or HOLD. Never resubmits."""
-    _require_q1_source_activation()
+    trial_actor = _require_q1_source_activation(user=user, command=command)
     validate_propose_q1(command)
     from preparer_identity.resolver import persisted_preparer_actor_id
     require_question_preparer(user)
     actor = persisted_preparer_actor_id(user)
-    if _expected_actor is not None and actor != _expected_actor:
+    if actor != trial_actor or (_expected_actor is not None and actor != _expected_actor):
         raise PreparationHold("HOLD: Q1 actor binding changed")
     try:
         receipt = _observe_q1(user=user, command=command, actor=actor)
