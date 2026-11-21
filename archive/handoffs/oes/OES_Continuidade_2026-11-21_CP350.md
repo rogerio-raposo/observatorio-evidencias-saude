@@ -1,6 +1,6 @@
 # OES — CP350 | Continuidade após encerramento técnico M3-C
 
-**Data:** 2026-11-21 (America/Recife). **Estado documental:** branch de revisão `review/oes-m3c-closure-cp350-20261121`; não representa merge.  
+**Data:** 2026-11-21 (America/Recife). **Origem documental:** branch de revisão `review/oes-m3c-closure-cp350-20261121`; verificar integração por meio do [PR #49](https://github.com/rogerio-raposo/observatorio-evidencias-saude/pull/49).  
 **Fonte canônica:** `main`, SHA de base `6029b39a71f7aa1cce1af6e137a34a5fde686ef7`, a reconfirmar com Freshness Gate na retomada.  
 **Registro detalhado:** [Encerramento M3-C](../../../docs/governance/OES_M3C_ENCERRAMENTO_TECNICO_2026-11-21.md). 
 
@@ -20,10 +20,10 @@ Neon: projeto `weathered-boat-65779510`; origem `br-gentle-hall-b6jaxehf`, `oes_
 
 **Forma de trabalho:** [Documento 362](../../../docs/governance/362-decisao-simplificacao-proporcional-governanca-tecnica-oes-cp329.md), [Estratégia ChatGPT–Codex–GitHub](../../../docs/governance/OES_ESTRATEGIA_DESENVOLVIMENTO_CHATGPT_CODEX_GITHUB_2026-11-07.md), [AGENTS.md](../../../AGENTS.md). ChatGPT coordena/revisa/documenta; Codex desenvolve/testa sob despacho, GitHub main é canônico. Não introduzir microgates, não repetir preflights já conclusivos; contraditório técnico fundamentado e Freshness Gate obrigatórios.
 
-**Próxima atividade recomendada:** revisar e integrar a documentação de encerramento mediante autorização específica de PR/merge; em seguida reavaliar macroatividades funcionais do piloto, sobretudo demonstração de perfis de acesso, sem reviver o problema de ingresso Codespaces. Não alterar infraestrutura ou grants apenas para demonstrar perfis sem motivação.
+**Próxima atividade recomendada:** reavaliar macroatividades funcionais do piloto, sobretudo demonstração de perfis de acesso, sem reviver o problema de ingresso Codespaces. Não alterar infraestrutura ou grants apenas para demonstrar perfis sem motivação.
 
 ## Retomada em nova conversa
 
 1. Ler `archive/handoffs/oes/README.md`, este CP350, o registro de encerramento M3-C, Documento 362, estratégia e `AGENTS.md`.
-2. Aplicar Freshness Gate à `main` e conferir situação da branch documental `review/oes-m3c-closure-cp350-20261121`; não assumir que foi integrada.
+2. Aplicar Freshness Gate à `main` e conferir a integração do PR #49 e o estado da branch documental `review/oes-m3c-closure-cp350-20261121`.
 3. Preservar todos os gates, a branch de segurança e a ausência de nova submissão Q0; decidir prioridades funcionais após persistência.
